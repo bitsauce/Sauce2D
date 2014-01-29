@@ -1,9 +1,0 @@
-Tile::Tile()
-
-Temps: 
-
-Variables: 
- 000: Tile this
-
-
-    0   0 *    RET      1

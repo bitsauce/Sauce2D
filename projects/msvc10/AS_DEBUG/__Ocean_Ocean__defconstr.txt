@@ -1,9 +1,0 @@
-Ocean::Ocean()
-
-Temps: 
-
-Variables: 
- 000: Ocean this
-
-
-    0   0 *    RET      1

@@ -1,0 +1,11 @@
+*.log
+*.obj
+*.tlog
+*.sbr
+*.pch
+*.suo
+*.ilk
+*.pdb
+*.user
+*.idb
+*.bsc

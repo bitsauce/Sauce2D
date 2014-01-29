@@ -1,9 +1,0 @@
-A::A()
-
-Temps: 
-
-Variables: 
- 000: A this
-
-
-    0   0 *    RET      1

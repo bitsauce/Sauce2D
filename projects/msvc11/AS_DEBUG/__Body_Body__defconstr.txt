@@ -1,9 +1,0 @@
-Body::Body()
-
-Temps: 
-
-Variables: 
- 000: Body this
-
-
-    0   0 *    RET      1

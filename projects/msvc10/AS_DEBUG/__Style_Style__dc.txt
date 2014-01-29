@@ -1,9 +1,0 @@
-Style::Style()
-
-Temps: 
-
-Variables: 
- 000: Style this
-
-
-    0   0 *    RET      1

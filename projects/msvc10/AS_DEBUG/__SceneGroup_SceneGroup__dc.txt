@@ -1,9 +1,0 @@
-SceneGroup::SceneGroup()
-
-Temps: 
-
-Variables: 
- 000: SceneGroup this
-
-
-    0   0 *    RET      1

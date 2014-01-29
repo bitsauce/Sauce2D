@@ -1,9 +1,0 @@
-C::C()
-
-Temps: 
-
-Variables: 
- 000: C this
-
-
-    0   0 *    RET      1
