@@ -1,49 +1,41 @@
-D:\X2D GAME ENGINE\LIB\VLD-2.2.3\SRC\DEBUG\VLD_X86.PCH
-D:\X2D GAME ENGINE\LIB\VLD-2.2.3\SRC\DEBUG\VLD_X86.PCHAST
-D:\X2D GAME ENGINE\LIB\VLD-2.2.3\SRC\DEBUG\STDAFX.OBJ
-D:\X2D GAME ENGINE\LIB\VLD-2.2.3\SRC\DEBUG\VC110.PDB
-D:\X2D GAME ENGINE\LIB\VLD-2.2.3\SRC\DEBUG\CALLSTACK.OBJ
-D:\X2D GAME ENGINE\LIB\VLD-2.2.3\SRC\DEBUG\DLLSPATCHES.OBJ
-D:\X2D GAME ENGINE\LIB\VLD-2.2.3\SRC\DEBUG\NTAPI.OBJ
-D:\X2D GAME ENGINE\LIB\VLD-2.2.3\SRC\DEBUG\UTILITY.OBJ
-D:\X2D GAME ENGINE\LIB\VLD-2.2.3\SRC\DEBUG\VLD.OBJ
-D:\X2D GAME ENGINE\LIB\VLD-2.2.3\SRC\DEBUG\VLDAPI.OBJ
-D:\X2D GAME ENGINE\LIB\VLD-2.2.3\SRC\DEBUG\VLDHEAP.OBJ
-D:\X2D GAME ENGINE\LIB\VLD-2.2.3\SRC\DEBUG\VLD_HOOKS.OBJ
-D:\X2D GAME ENGINE\LIB\VLD-2.2.3\LIB\VLD_X86.ILK
-D:\X2D GAME ENGINE\LIB\VLD-2.2.3\LIB\VLD_X86.DLL
-D:\X2D GAME ENGINE\LIB\VLD-2.2.3\LIB\VLD_X86.PDB
-D:\X2D GAME ENGINE\LIB\VLD-2.2.3\SRC\DEBUG\VLD.RES
-D:\x2D Game Engine\lib\vld-2.2.3\lib\vld_x86.lib
-D:\x2D Game Engine\lib\vld-2.2.3\lib\vld_x86.exp
-D:\x2D Game Engine\lib\vld-2.2.3\src\Debug\callstack.obj
-D:\x2D Game Engine\lib\vld-2.2.3\src\Debug\dllspatches.obj
-D:\x2D Game Engine\lib\vld-2.2.3\src\Debug\ntapi.obj
-D:\x2D Game Engine\lib\vld-2.2.3\src\Debug\stdafx.obj
-D:\x2D Game Engine\lib\vld-2.2.3\src\Debug\utility.obj
-D:\x2D Game Engine\lib\vld-2.2.3\src\Debug\vld.obj
-D:\x2D Game Engine\lib\vld-2.2.3\src\Debug\vldapi.obj
-D:\x2D Game Engine\lib\vld-2.2.3\src\Debug\vldheap.obj
-D:\x2D Game Engine\lib\vld-2.2.3\src\Debug\vld_hooks.obj
-D:\x2D Game Engine\lib\vld-2.2.3\src\Debug\cl.command.1.tlog
-D:\x2D Game Engine\lib\vld-2.2.3\src\Debug\CL.read.1.tlog
-D:\x2D Game Engine\lib\vld-2.2.3\src\Debug\CL.write.1.tlog
-D:\x2D Game Engine\lib\vld-2.2.3\src\Debug\link-cvtres.read.1.tlog
-D:\x2D Game Engine\lib\vld-2.2.3\src\Debug\link-cvtres.write.1.tlog
-D:\x2D Game Engine\lib\vld-2.2.3\src\Debug\link-rc.read.1.tlog
-D:\x2D Game Engine\lib\vld-2.2.3\src\Debug\link-rc.write.1.tlog
-D:\x2D Game Engine\lib\vld-2.2.3\src\Debug\link.command.1.tlog
-D:\x2D Game Engine\lib\vld-2.2.3\src\Debug\link.read.1.tlog
-D:\x2D Game Engine\lib\vld-2.2.3\src\Debug\link.write.1.tlog
-D:\x2D Game Engine\lib\vld-2.2.3\src\Debug\rc.command.1.tlog
-D:\x2D Game Engine\lib\vld-2.2.3\src\Debug\rc.read.1.tlog
-D:\x2D Game Engine\lib\vld-2.2.3\src\Debug\rc.write.1.tlog
-D:\x2D Game Engine\lib\vld-2.2.3\src\Debug\vld.write.1.tlog
-D:\x2D Game Engine\lib\vld-2.2.3\src\Debug\vld.res
-D:\x2D Game Engine\lib\vld-2.2.3\src\Debug\vld_x86.pch
-D:\x2D Game Engine\lib\vld-2.2.3\src\Debug\vld_x86.pchast
-D:\x2D Game Engine\lib\vld-2.2.3\src\Debug\vc110.idb
-D:\x2D Game Engine\lib\vld-2.2.3\src\Debug\vc110.pdb
-D:\x2D Game Engine\projects\msvc11\..\..\lib\vld-2.2.3\lib\vld_x86.pdb
-D:\x2D Game Engine\projects\msvc11\..\..\lib\vld-2.2.3\lib\vld_x86.dll
-D:\x2D Game Engine\projects\msvc11\..\..\lib\vld-2.2.3\lib\vld_x86.ilk
+c:\users\marcus\documents\github\x2d-game-engine\lib\vld-2.2.3\src\debug\vld_x86.pch
+c:\users\marcus\documents\github\x2d-game-engine\lib\vld-2.2.3\src\debug\vc120.pdb
+c:\users\marcus\documents\github\x2d-game-engine\lib\vld-2.2.3\src\debug\vc120.idb
+c:\users\marcus\documents\github\x2d-game-engine\lib\vld-2.2.3\src\debug\vld_x86.pchast
+c:\users\marcus\documents\github\x2d-game-engine\lib\vld-2.2.3\src\debug\stdafx.nativecodeanalysis.xml
+c:\users\marcus\documents\github\x2d-game-engine\lib\vld-2.2.3\src\debug\stdafx.obj
+c:\users\marcus\documents\github\x2d-game-engine\lib\vld-2.2.3\src\debug\vld_hooks.nativecodeanalysis.xml
+c:\users\marcus\documents\github\x2d-game-engine\lib\vld-2.2.3\src\debug\vldheap.nativecodeanalysis.xml
+c:\users\marcus\documents\github\x2d-game-engine\lib\vld-2.2.3\src\debug\vldapi.nativecodeanalysis.xml
+c:\users\marcus\documents\github\x2d-game-engine\lib\vld-2.2.3\src\debug\vld.nativecodeanalysis.xml
+c:\users\marcus\documents\github\x2d-game-engine\lib\vld-2.2.3\src\debug\utility.nativecodeanalysis.xml
+c:\users\marcus\documents\github\x2d-game-engine\lib\vld-2.2.3\src\debug\ntapi.nativecodeanalysis.xml
+c:\users\marcus\documents\github\x2d-game-engine\lib\vld-2.2.3\src\debug\dllspatches.nativecodeanalysis.xml
+c:\users\marcus\documents\github\x2d-game-engine\lib\vld-2.2.3\src\debug\callstack.nativecodeanalysis.xml
+c:\users\marcus\documents\github\x2d-game-engine\lib\vld-2.2.3\src\debug\callstack.obj
+c:\users\marcus\documents\github\x2d-game-engine\lib\vld-2.2.3\src\debug\dllspatches.obj
+c:\users\marcus\documents\github\x2d-game-engine\lib\vld-2.2.3\src\debug\ntapi.obj
+c:\users\marcus\documents\github\x2d-game-engine\lib\vld-2.2.3\src\debug\utility.obj
+c:\users\marcus\documents\github\x2d-game-engine\lib\vld-2.2.3\src\debug\vld.obj
+c:\users\marcus\documents\github\x2d-game-engine\lib\vld-2.2.3\src\debug\vldapi.obj
+c:\users\marcus\documents\github\x2d-game-engine\lib\vld-2.2.3\src\debug\vldheap.obj
+c:\users\marcus\documents\github\x2d-game-engine\lib\vld-2.2.3\src\debug\vld_hooks.obj
+c:\users\marcus\documents\github\x2d-game-engine\lib\vld-2.2.3\lib\vld_x86.ilk
+c:\users\marcus\documents\github\x2d-game-engine\lib\vld-2.2.3\lib\vld_x86.dll
+c:\users\marcus\documents\github\x2d-game-engine\lib\vld-2.2.3\lib\vld_x86.pdb
+c:\users\marcus\documents\github\x2d-game-engine\lib\vld-2.2.3\src\debug\vld.res
+c:\users\marcus\documents\github\x2d-game-engine\lib\vld-2.2.3\lib\vld_x86.lib
+c:\users\marcus\documents\github\x2d-game-engine\lib\vld-2.2.3\lib\vld_x86.exp
+c:\users\marcus\documents\github\x2d-game-engine\projects\msvc12\..\..\lib\vld-2.2.3\lib\vld_x86.pdb
+c:\users\marcus\documents\github\x2d-game-engine\projects\msvc12\..\..\lib\vld-2.2.3\lib\vld_x86.dll
+c:\users\marcus\documents\github\x2d-game-engine\projects\msvc12\..\..\lib\vld-2.2.3\lib\vld_x86.ilk
+c:\users\marcus\documents\github\x2d-game-engine\lib\vld-2.2.3\src\debug\vld.tlog\cl.command.1.tlog
+c:\users\marcus\documents\github\x2d-game-engine\lib\vld-2.2.3\src\debug\vld.tlog\cl.read.1.tlog
+c:\users\marcus\documents\github\x2d-game-engine\lib\vld-2.2.3\src\debug\vld.tlog\cl.write.1.tlog
+c:\users\marcus\documents\github\x2d-game-engine\lib\vld-2.2.3\src\debug\vld.tlog\link.command.1.tlog
+c:\users\marcus\documents\github\x2d-game-engine\lib\vld-2.2.3\src\debug\vld.tlog\link.read.1.tlog
+c:\users\marcus\documents\github\x2d-game-engine\lib\vld-2.2.3\src\debug\vld.tlog\link.write.1.tlog
+c:\users\marcus\documents\github\x2d-game-engine\lib\vld-2.2.3\src\debug\vld.tlog\rc.command.1.tlog
+c:\users\marcus\documents\github\x2d-game-engine\lib\vld-2.2.3\src\debug\vld.tlog\rc.read.1.tlog
+c:\users\marcus\documents\github\x2d-game-engine\lib\vld-2.2.3\src\debug\vld.tlog\rc.write.1.tlog
+c:\users\marcus\documents\github\x2d-game-engine\lib\vld-2.2.3\src\debug\vld.tlog\vld.write.1u.tlog

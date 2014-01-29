@@ -1,70 +1,43 @@
-D:\X2D GAME ENGINE\LIB\ZLIB-1.2.5\LIB\ZLIB_D.BSC
-D:\X2D GAME ENGINE\LIB\LPNG154\PROJECTS\VSTUDIO\ZLIB\DEBUG\ADLER32.SBR
-D:\X2D GAME ENGINE\LIB\LPNG154\PROJECTS\VSTUDIO\ZLIB\DEBUG\COMPRESS.SBR
-D:\X2D GAME ENGINE\LIB\LPNG154\PROJECTS\VSTUDIO\ZLIB\DEBUG\CRC32.SBR
-D:\X2D GAME ENGINE\LIB\LPNG154\PROJECTS\VSTUDIO\ZLIB\DEBUG\DEFLATE.SBR
-D:\X2D GAME ENGINE\LIB\LPNG154\PROJECTS\VSTUDIO\ZLIB\DEBUG\INFBACK.SBR
-D:\X2D GAME ENGINE\LIB\LPNG154\PROJECTS\VSTUDIO\ZLIB\DEBUG\INFFAST.SBR
-D:\X2D GAME ENGINE\LIB\LPNG154\PROJECTS\VSTUDIO\ZLIB\DEBUG\INFLATE.SBR
-D:\X2D GAME ENGINE\LIB\LPNG154\PROJECTS\VSTUDIO\ZLIB\DEBUG\INFTREES.SBR
-D:\X2D GAME ENGINE\LIB\LPNG154\PROJECTS\VSTUDIO\ZLIB\DEBUG\TREES.SBR
-D:\X2D GAME ENGINE\LIB\LPNG154\PROJECTS\VSTUDIO\ZLIB\DEBUG\UNCOMPR.SBR
-D:\X2D GAME ENGINE\LIB\LPNG154\PROJECTS\VSTUDIO\ZLIB\DEBUG\ZUTIL.SBR
-D:\X2D GAME ENGINE\LIB\LPNG154\PROJECTS\VSTUDIO\ZLIB\DEBUG\ZUTIL.OBJ
-D:\X2D GAME ENGINE\LIB\LPNG154\PROJECTS\VSTUDIO\ZLIB\DEBUG\UNCOMPR.OBJ
-D:\X2D GAME ENGINE\LIB\LPNG154\PROJECTS\VSTUDIO\ZLIB\DEBUG\TREES.OBJ
-D:\X2D GAME ENGINE\LIB\LPNG154\PROJECTS\VSTUDIO\ZLIB\DEBUG\INFTREES.OBJ
-D:\X2D GAME ENGINE\LIB\LPNG154\PROJECTS\VSTUDIO\ZLIB\DEBUG\INFLATE.OBJ
-D:\X2D GAME ENGINE\LIB\LPNG154\PROJECTS\VSTUDIO\ZLIB\DEBUG\INFFAST.OBJ
-D:\X2D GAME ENGINE\LIB\LPNG154\PROJECTS\VSTUDIO\ZLIB\DEBUG\INFBACK.OBJ
-D:\X2D GAME ENGINE\LIB\LPNG154\PROJECTS\VSTUDIO\ZLIB\DEBUG\DEFLATE.OBJ
-D:\X2D GAME ENGINE\LIB\LPNG154\PROJECTS\VSTUDIO\ZLIB\DEBUG\CRC32.OBJ
-D:\X2D GAME ENGINE\LIB\LPNG154\PROJECTS\VSTUDIO\ZLIB\DEBUG\COMPRESS.OBJ
-D:\X2D GAME ENGINE\LIB\LPNG154\PROJECTS\VSTUDIO\ZLIB\DEBUG\ADLER32.OBJ
-D:\X2D GAME ENGINE\LIB\LPNG154\PROJECTS\VSTUDIO\ZLIB\DEBUG\VC110.PDB
-D:\X2D GAME ENGINE\LIB\ZLIB-1.2.5\LIB\ZLIB_D.ILK
-D:\X2D GAME ENGINE\LIB\ZLIB-1.2.5\LIB\ZLIB_D.DLL
-D:\X2D GAME ENGINE\LIB\ZLIB-1.2.5\LIB\ZLIB_D.PDB
-D:\x2D Game Engine\lib\zlib-1.2.5\lib\zlib_d.lib
-D:\x2D Game Engine\lib\zlib-1.2.5\lib\zlib_d.exp
-D:\x2D Game Engine\lib\lpng154\projects\vstudio\zlib\Debug\adler32.obj
-D:\x2D Game Engine\lib\lpng154\projects\vstudio\zlib\Debug\compress.obj
-D:\x2D Game Engine\lib\lpng154\projects\vstudio\zlib\Debug\crc32.obj
-D:\x2D Game Engine\lib\lpng154\projects\vstudio\zlib\Debug\deflate.obj
-D:\x2D Game Engine\lib\lpng154\projects\vstudio\zlib\Debug\infback.obj
-D:\x2D Game Engine\lib\lpng154\projects\vstudio\zlib\Debug\inffast.obj
-D:\x2D Game Engine\lib\lpng154\projects\vstudio\zlib\Debug\inflate.obj
-D:\x2D Game Engine\lib\lpng154\projects\vstudio\zlib\Debug\inftrees.obj
-D:\x2D Game Engine\lib\lpng154\projects\vstudio\zlib\Debug\trees.obj
-D:\x2D Game Engine\lib\lpng154\projects\vstudio\zlib\Debug\uncompr.obj
-D:\x2D Game Engine\lib\lpng154\projects\vstudio\zlib\Debug\zutil.obj
-D:\x2D Game Engine\lib\lpng154\projects\vstudio\zlib\Debug\BscMake.command.1.tlog
-D:\x2D Game Engine\lib\lpng154\projects\vstudio\zlib\Debug\bscmake.read.1.tlog
-D:\x2D Game Engine\lib\lpng154\projects\vstudio\zlib\Debug\bscmake.write.1.tlog
-D:\x2D Game Engine\lib\lpng154\projects\vstudio\zlib\Debug\cl.command.1.tlog
-D:\x2D Game Engine\lib\lpng154\projects\vstudio\zlib\Debug\CL.read.1.tlog
-D:\x2D Game Engine\lib\lpng154\projects\vstudio\zlib\Debug\CL.write.1.tlog
-D:\x2D Game Engine\lib\lpng154\projects\vstudio\zlib\Debug\link-cvtres.read.1.tlog
-D:\x2D Game Engine\lib\lpng154\projects\vstudio\zlib\Debug\link-cvtres.write.1.tlog
-D:\x2D Game Engine\lib\lpng154\projects\vstudio\zlib\Debug\link-rc.read.1.tlog
-D:\x2D Game Engine\lib\lpng154\projects\vstudio\zlib\Debug\link-rc.write.1.tlog
-D:\x2D Game Engine\lib\lpng154\projects\vstudio\zlib\Debug\link.command.1.tlog
-D:\x2D Game Engine\lib\lpng154\projects\vstudio\zlib\Debug\link.read.1.tlog
-D:\x2D Game Engine\lib\lpng154\projects\vstudio\zlib\Debug\link.write.1.tlog
-D:\x2D Game Engine\lib\lpng154\projects\vstudio\zlib\Debug\zlib.write.1.tlog
-D:\x2D Game Engine\lib\lpng154\projects\vstudio\zlib\Debug\vc110.pdb
-D:\x2D Game Engine\lib\lpng154\projects\vstudio\zlib\Debug\adler32.sbr
-D:\x2D Game Engine\lib\lpng154\projects\vstudio\zlib\Debug\compress.sbr
-D:\x2D Game Engine\lib\lpng154\projects\vstudio\zlib\Debug\crc32.sbr
-D:\x2D Game Engine\lib\lpng154\projects\vstudio\zlib\Debug\deflate.sbr
-D:\x2D Game Engine\lib\lpng154\projects\vstudio\zlib\Debug\infback.sbr
-D:\x2D Game Engine\lib\lpng154\projects\vstudio\zlib\Debug\inffast.sbr
-D:\x2D Game Engine\lib\lpng154\projects\vstudio\zlib\Debug\inflate.sbr
-D:\x2D Game Engine\lib\lpng154\projects\vstudio\zlib\Debug\inftrees.sbr
-D:\x2D Game Engine\lib\lpng154\projects\vstudio\zlib\Debug\trees.sbr
-D:\x2D Game Engine\lib\lpng154\projects\vstudio\zlib\Debug\uncompr.sbr
-D:\x2D Game Engine\lib\lpng154\projects\vstudio\zlib\Debug\zutil.sbr
-D:\x2D Game Engine\projects\msvc11\..\..\lib\zlib-1.2.5\lib\zlib_d.pdb
-D:\x2D Game Engine\projects\msvc11\..\..\lib\zlib-1.2.5\lib\zlib_d.dll
-D:\x2D Game Engine\projects\msvc11\..\..\lib\zlib-1.2.5\lib\zlib_d.bsc
-D:\x2D Game Engine\projects\msvc11\..\..\lib\zlib-1.2.5\lib\zlib_d.ilk
+c:\users\marcus\documents\github\x2d-game-engine\lib\zlib-1.2.5\lib\zlib_d.bsc
+c:\users\marcus\documents\github\x2d-game-engine\lib\lpng154\projects\vstudio\zlib\debug\vc120.pdb
+c:\users\marcus\documents\github\x2d-game-engine\lib\lpng154\projects\vstudio\zlib\debug\adler32.sbr
+c:\users\marcus\documents\github\x2d-game-engine\lib\lpng154\projects\vstudio\zlib\debug\compress.sbr
+c:\users\marcus\documents\github\x2d-game-engine\lib\lpng154\projects\vstudio\zlib\debug\crc32.sbr
+c:\users\marcus\documents\github\x2d-game-engine\lib\lpng154\projects\vstudio\zlib\debug\deflate.sbr
+c:\users\marcus\documents\github\x2d-game-engine\lib\lpng154\projects\vstudio\zlib\debug\infback.sbr
+c:\users\marcus\documents\github\x2d-game-engine\lib\lpng154\projects\vstudio\zlib\debug\inffast.sbr
+c:\users\marcus\documents\github\x2d-game-engine\lib\lpng154\projects\vstudio\zlib\debug\inflate.sbr
+c:\users\marcus\documents\github\x2d-game-engine\lib\lpng154\projects\vstudio\zlib\debug\inftrees.sbr
+c:\users\marcus\documents\github\x2d-game-engine\lib\lpng154\projects\vstudio\zlib\debug\trees.sbr
+c:\users\marcus\documents\github\x2d-game-engine\lib\lpng154\projects\vstudio\zlib\debug\uncompr.sbr
+c:\users\marcus\documents\github\x2d-game-engine\lib\lpng154\projects\vstudio\zlib\debug\zutil.sbr
+c:\users\marcus\documents\github\x2d-game-engine\lib\lpng154\projects\vstudio\zlib\debug\zutil.obj
+c:\users\marcus\documents\github\x2d-game-engine\lib\lpng154\projects\vstudio\zlib\debug\uncompr.obj
+c:\users\marcus\documents\github\x2d-game-engine\lib\lpng154\projects\vstudio\zlib\debug\trees.obj
+c:\users\marcus\documents\github\x2d-game-engine\lib\lpng154\projects\vstudio\zlib\debug\inftrees.obj
+c:\users\marcus\documents\github\x2d-game-engine\lib\lpng154\projects\vstudio\zlib\debug\inflate.obj
+c:\users\marcus\documents\github\x2d-game-engine\lib\lpng154\projects\vstudio\zlib\debug\inffast.obj
+c:\users\marcus\documents\github\x2d-game-engine\lib\lpng154\projects\vstudio\zlib\debug\infback.obj
+c:\users\marcus\documents\github\x2d-game-engine\lib\lpng154\projects\vstudio\zlib\debug\deflate.obj
+c:\users\marcus\documents\github\x2d-game-engine\lib\lpng154\projects\vstudio\zlib\debug\crc32.obj
+c:\users\marcus\documents\github\x2d-game-engine\lib\lpng154\projects\vstudio\zlib\debug\compress.obj
+c:\users\marcus\documents\github\x2d-game-engine\lib\lpng154\projects\vstudio\zlib\debug\adler32.obj
+c:\users\marcus\documents\github\x2d-game-engine\lib\zlib-1.2.5\lib\zlib_d.ilk
+c:\users\marcus\documents\github\x2d-game-engine\lib\zlib-1.2.5\lib\zlib_d.dll
+c:\users\marcus\documents\github\x2d-game-engine\lib\zlib-1.2.5\lib\zlib_d.pdb
+c:\users\marcus\documents\github\x2d-game-engine\lib\zlib-1.2.5\lib\zlib_d.lib
+c:\users\marcus\documents\github\x2d-game-engine\lib\zlib-1.2.5\lib\zlib_d.exp
+c:\users\marcus\documents\github\x2d-game-engine\projects\msvc12\..\..\lib\zlib-1.2.5\lib\zlib_d.pdb
+c:\users\marcus\documents\github\x2d-game-engine\projects\msvc12\..\..\lib\zlib-1.2.5\lib\zlib_d.dll
+c:\users\marcus\documents\github\x2d-game-engine\projects\msvc12\..\..\lib\zlib-1.2.5\lib\zlib_d.bsc
+c:\users\marcus\documents\github\x2d-game-engine\projects\msvc12\..\..\lib\zlib-1.2.5\lib\zlib_d.ilk
+c:\users\marcus\documents\github\x2d-game-engine\lib\lpng154\projects\vstudio\zlib\debug\zlib.tlog\bscmake.command.1.tlog
+c:\users\marcus\documents\github\x2d-game-engine\lib\lpng154\projects\vstudio\zlib\debug\zlib.tlog\bscmake.read.1.tlog
+c:\users\marcus\documents\github\x2d-game-engine\lib\lpng154\projects\vstudio\zlib\debug\zlib.tlog\bscmake.write.1.tlog
+c:\users\marcus\documents\github\x2d-game-engine\lib\lpng154\projects\vstudio\zlib\debug\zlib.tlog\cl.command.1.tlog
+c:\users\marcus\documents\github\x2d-game-engine\lib\lpng154\projects\vstudio\zlib\debug\zlib.tlog\cl.read.1.tlog
+c:\users\marcus\documents\github\x2d-game-engine\lib\lpng154\projects\vstudio\zlib\debug\zlib.tlog\cl.write.1.tlog
+c:\users\marcus\documents\github\x2d-game-engine\lib\lpng154\projects\vstudio\zlib\debug\zlib.tlog\link.command.1.tlog
+c:\users\marcus\documents\github\x2d-game-engine\lib\lpng154\projects\vstudio\zlib\debug\zlib.tlog\link.read.1.tlog
+c:\users\marcus\documents\github\x2d-game-engine\lib\lpng154\projects\vstudio\zlib\debug\zlib.tlog\link.write.1.tlog
+c:\users\marcus\documents\github\x2d-game-engine\lib\lpng154\projects\vstudio\zlib\debug\zlib.tlog\zlib.write.1u.tlog

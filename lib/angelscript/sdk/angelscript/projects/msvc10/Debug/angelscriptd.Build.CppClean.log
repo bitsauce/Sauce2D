@@ -1,95 +1,51 @@
-D:\x2D Game Engine\lib\angelscript\sdk\angelscript\lib\angelscriptd.lib
-D:\x2D Game Engine\lib\angelscript\sdk\angelscript\lib\angelscriptd.exp
-D:\X2D GAME ENGINE\LIB\ANGELSCRIPT\SDK\ANGELSCRIPT\PROJECTS\MSVC10\DEBUG\AS_GC.OBJ
-D:\X2D GAME ENGINE\LIB\ANGELSCRIPT\SDK\ANGELSCRIPT\PROJECTS\MSVC10\DEBUG\AS_DATATYPE.OBJ
-D:\X2D GAME ENGINE\LIB\ANGELSCRIPT\SDK\ANGELSCRIPT\PROJECTS\MSVC10\DEBUG\AS_CONTEXT.OBJ
-D:\X2D GAME ENGINE\LIB\ANGELSCRIPT\SDK\ANGELSCRIPT\PROJECTS\MSVC10\DEBUG\AS_CONFIGGROUP.OBJ
-D:\X2D GAME ENGINE\LIB\ANGELSCRIPT\SDK\ANGELSCRIPT\PROJECTS\MSVC10\DEBUG\AS_COMPILER.OBJ
-D:\X2D GAME ENGINE\LIB\ANGELSCRIPT\SDK\ANGELSCRIPT\PROJECTS\MSVC10\DEBUG\AS_CALLFUNC_XENON.OBJ
-D:\X2D GAME ENGINE\LIB\ANGELSCRIPT\SDK\ANGELSCRIPT\PROJECTS\MSVC10\DEBUG\AS_CALLFUNC_X86.OBJ
-D:\X2D GAME ENGINE\LIB\ANGELSCRIPT\SDK\ANGELSCRIPT\PROJECTS\MSVC10\DEBUG\AS_CALLFUNC_X64_MSVC.OBJ
-D:\X2D GAME ENGINE\LIB\ANGELSCRIPT\SDK\ANGELSCRIPT\PROJECTS\MSVC10\DEBUG\AS_CALLFUNC_X64_MINGW.OBJ
-D:\X2D GAME ENGINE\LIB\ANGELSCRIPT\SDK\ANGELSCRIPT\PROJECTS\MSVC10\DEBUG\AS_CALLFUNC_X64_GCC.OBJ
-D:\X2D GAME ENGINE\LIB\ANGELSCRIPT\SDK\ANGELSCRIPT\PROJECTS\MSVC10\DEBUG\AS_CALLFUNC_SH4.OBJ
-D:\X2D GAME ENGINE\LIB\ANGELSCRIPT\SDK\ANGELSCRIPT\PROJECTS\MSVC10\DEBUG\AS_CALLFUNC_PPC_64.OBJ
-D:\X2D GAME ENGINE\LIB\ANGELSCRIPT\SDK\ANGELSCRIPT\PROJECTS\MSVC10\DEBUG\AS_CALLFUNC_PPC.OBJ
-D:\X2D GAME ENGINE\LIB\ANGELSCRIPT\SDK\ANGELSCRIPT\PROJECTS\MSVC10\DEBUG\AS_CALLFUNC_MIPS.OBJ
-D:\X2D GAME ENGINE\LIB\ANGELSCRIPT\SDK\ANGELSCRIPT\PROJECTS\MSVC10\DEBUG\AS_CALLFUNC_ARM_ANDROID.OBJ
-D:\X2D GAME ENGINE\LIB\ANGELSCRIPT\SDK\ANGELSCRIPT\PROJECTS\MSVC10\DEBUG\AS_CALLFUNC_ARM.OBJ
-D:\X2D GAME ENGINE\LIB\ANGELSCRIPT\SDK\ANGELSCRIPT\PROJECTS\MSVC10\DEBUG\AS_CALLFUNC.OBJ
-D:\X2D GAME ENGINE\LIB\ANGELSCRIPT\SDK\ANGELSCRIPT\PROJECTS\MSVC10\DEBUG\AS_BYTECODE.OBJ
-D:\X2D GAME ENGINE\LIB\ANGELSCRIPT\SDK\ANGELSCRIPT\PROJECTS\MSVC10\DEBUG\AS_BUILDER.OBJ
-D:\X2D GAME ENGINE\LIB\ANGELSCRIPT\SDK\ANGELSCRIPT\PROJECTS\MSVC10\DEBUG\AS_ATOMIC.OBJ
-D:\X2D GAME ENGINE\LIB\ANGELSCRIPT\SDK\ANGELSCRIPT\PROJECTS\MSVC10\DEBUG\AS_VARIABLESCOPE.OBJ
-D:\X2D GAME ENGINE\LIB\ANGELSCRIPT\SDK\ANGELSCRIPT\PROJECTS\MSVC10\DEBUG\AS_TYPEINFO.OBJ
-D:\X2D GAME ENGINE\LIB\ANGELSCRIPT\SDK\ANGELSCRIPT\PROJECTS\MSVC10\DEBUG\AS_TOKENIZER.OBJ
-D:\X2D GAME ENGINE\LIB\ANGELSCRIPT\SDK\ANGELSCRIPT\PROJECTS\MSVC10\DEBUG\AS_THREAD.OBJ
-D:\X2D GAME ENGINE\LIB\ANGELSCRIPT\SDK\ANGELSCRIPT\PROJECTS\MSVC10\DEBUG\AS_STRING_UTIL.OBJ
-D:\X2D GAME ENGINE\LIB\ANGELSCRIPT\SDK\ANGELSCRIPT\PROJECTS\MSVC10\DEBUG\AS_STRING.OBJ
-D:\X2D GAME ENGINE\LIB\ANGELSCRIPT\SDK\ANGELSCRIPT\PROJECTS\MSVC10\DEBUG\AS_SCRIPTOBJECT.OBJ
-D:\X2D GAME ENGINE\LIB\ANGELSCRIPT\SDK\ANGELSCRIPT\PROJECTS\MSVC10\DEBUG\AS_SCRIPTNODE.OBJ
-D:\X2D GAME ENGINE\LIB\ANGELSCRIPT\SDK\ANGELSCRIPT\PROJECTS\MSVC10\DEBUG\AS_SCRIPTFUNCTION.OBJ
-D:\X2D GAME ENGINE\LIB\ANGELSCRIPT\SDK\ANGELSCRIPT\PROJECTS\MSVC10\DEBUG\AS_SCRIPTENGINE.OBJ
-D:\X2D GAME ENGINE\LIB\ANGELSCRIPT\SDK\ANGELSCRIPT\PROJECTS\MSVC10\DEBUG\AS_SCRIPTCODE.OBJ
-D:\X2D GAME ENGINE\LIB\ANGELSCRIPT\SDK\ANGELSCRIPT\PROJECTS\MSVC10\DEBUG\AS_RESTORE.OBJ
-D:\X2D GAME ENGINE\LIB\ANGELSCRIPT\SDK\ANGELSCRIPT\PROJECTS\MSVC10\DEBUG\AS_PARSER.OBJ
-D:\X2D GAME ENGINE\LIB\ANGELSCRIPT\SDK\ANGELSCRIPT\PROJECTS\MSVC10\DEBUG\AS_OUTPUTBUFFER.OBJ
-D:\X2D GAME ENGINE\LIB\ANGELSCRIPT\SDK\ANGELSCRIPT\PROJECTS\MSVC10\DEBUG\AS_OBJECTTYPE.OBJ
-D:\X2D GAME ENGINE\LIB\ANGELSCRIPT\SDK\ANGELSCRIPT\PROJECTS\MSVC10\DEBUG\AS_MODULE.OBJ
-D:\X2D GAME ENGINE\LIB\ANGELSCRIPT\SDK\ANGELSCRIPT\PROJECTS\MSVC10\DEBUG\AS_MEMORY.OBJ
-D:\X2D GAME ENGINE\LIB\ANGELSCRIPT\SDK\ANGELSCRIPT\PROJECTS\MSVC10\DEBUG\AS_GLOBALPROPERTY.OBJ
-D:\X2D GAME ENGINE\LIB\ANGELSCRIPT\SDK\ANGELSCRIPT\PROJECTS\MSVC10\DEBUG\AS_GENERIC.OBJ
-D:\X2D GAME ENGINE\LIB\ANGELSCRIPT\SDK\ANGELSCRIPT\PROJECTS\MSVC10\DEBUG\VC110.PDB
-D:\X2D GAME ENGINE\LIB\ANGELSCRIPT\SDK\ANGELSCRIPT\LIB\ANGELSCRIPTD.DLL
-D:\x2D Game Engine\lib\angelscript\sdk\angelscript\projects\msvc10\Debug\as_atomic.obj
-D:\x2D Game Engine\lib\angelscript\sdk\angelscript\projects\msvc10\Debug\as_builder.obj
-D:\x2D Game Engine\lib\angelscript\sdk\angelscript\projects\msvc10\Debug\as_bytecode.obj
-D:\x2D Game Engine\lib\angelscript\sdk\angelscript\projects\msvc10\Debug\as_callfunc.obj
-D:\x2D Game Engine\lib\angelscript\sdk\angelscript\projects\msvc10\Debug\as_callfunc_arm.obj
-D:\x2D Game Engine\lib\angelscript\sdk\angelscript\projects\msvc10\Debug\as_callfunc_arm_android.obj
-D:\x2D Game Engine\lib\angelscript\sdk\angelscript\projects\msvc10\Debug\as_callfunc_mips.obj
-D:\x2D Game Engine\lib\angelscript\sdk\angelscript\projects\msvc10\Debug\as_callfunc_ppc.obj
-D:\x2D Game Engine\lib\angelscript\sdk\angelscript\projects\msvc10\Debug\as_callfunc_ppc_64.obj
-D:\x2D Game Engine\lib\angelscript\sdk\angelscript\projects\msvc10\Debug\as_callfunc_sh4.obj
-D:\x2D Game Engine\lib\angelscript\sdk\angelscript\projects\msvc10\Debug\as_callfunc_x64_gcc.obj
-D:\x2D Game Engine\lib\angelscript\sdk\angelscript\projects\msvc10\Debug\as_callfunc_x64_mingw.obj
-D:\x2D Game Engine\lib\angelscript\sdk\angelscript\projects\msvc10\Debug\as_callfunc_x64_msvc.obj
-D:\x2D Game Engine\lib\angelscript\sdk\angelscript\projects\msvc10\Debug\as_callfunc_x86.obj
-D:\x2D Game Engine\lib\angelscript\sdk\angelscript\projects\msvc10\Debug\as_callfunc_xenon.obj
-D:\x2D Game Engine\lib\angelscript\sdk\angelscript\projects\msvc10\Debug\as_compiler.obj
-D:\x2D Game Engine\lib\angelscript\sdk\angelscript\projects\msvc10\Debug\as_configgroup.obj
-D:\x2D Game Engine\lib\angelscript\sdk\angelscript\projects\msvc10\Debug\as_context.obj
-D:\x2D Game Engine\lib\angelscript\sdk\angelscript\projects\msvc10\Debug\as_datatype.obj
-D:\x2D Game Engine\lib\angelscript\sdk\angelscript\projects\msvc10\Debug\as_gc.obj
-D:\x2D Game Engine\lib\angelscript\sdk\angelscript\projects\msvc10\Debug\as_generic.obj
-D:\x2D Game Engine\lib\angelscript\sdk\angelscript\projects\msvc10\Debug\as_globalproperty.obj
-D:\x2D Game Engine\lib\angelscript\sdk\angelscript\projects\msvc10\Debug\as_memory.obj
-D:\x2D Game Engine\lib\angelscript\sdk\angelscript\projects\msvc10\Debug\as_module.obj
-D:\x2D Game Engine\lib\angelscript\sdk\angelscript\projects\msvc10\Debug\as_objecttype.obj
-D:\x2D Game Engine\lib\angelscript\sdk\angelscript\projects\msvc10\Debug\as_outputbuffer.obj
-D:\x2D Game Engine\lib\angelscript\sdk\angelscript\projects\msvc10\Debug\as_parser.obj
-D:\x2D Game Engine\lib\angelscript\sdk\angelscript\projects\msvc10\Debug\as_restore.obj
-D:\x2D Game Engine\lib\angelscript\sdk\angelscript\projects\msvc10\Debug\as_scriptcode.obj
-D:\x2D Game Engine\lib\angelscript\sdk\angelscript\projects\msvc10\Debug\as_scriptengine.obj
-D:\x2D Game Engine\lib\angelscript\sdk\angelscript\projects\msvc10\Debug\as_scriptfunction.obj
-D:\x2D Game Engine\lib\angelscript\sdk\angelscript\projects\msvc10\Debug\as_scriptnode.obj
-D:\x2D Game Engine\lib\angelscript\sdk\angelscript\projects\msvc10\Debug\as_scriptobject.obj
-D:\x2D Game Engine\lib\angelscript\sdk\angelscript\projects\msvc10\Debug\as_string.obj
-D:\x2D Game Engine\lib\angelscript\sdk\angelscript\projects\msvc10\Debug\as_string_util.obj
-D:\x2D Game Engine\lib\angelscript\sdk\angelscript\projects\msvc10\Debug\as_thread.obj
-D:\x2D Game Engine\lib\angelscript\sdk\angelscript\projects\msvc10\Debug\as_tokenizer.obj
-D:\x2D Game Engine\lib\angelscript\sdk\angelscript\projects\msvc10\Debug\as_typeinfo.obj
-D:\x2D Game Engine\lib\angelscript\sdk\angelscript\projects\msvc10\Debug\as_variablescope.obj
-D:\x2D Game Engine\lib\angelscript\sdk\angelscript\projects\msvc10\Debug\angelscript.write.1.tlog
-D:\x2D Game Engine\lib\angelscript\sdk\angelscript\projects\msvc10\Debug\cl.command.1.tlog
-D:\x2D Game Engine\lib\angelscript\sdk\angelscript\projects\msvc10\Debug\CL.read.1.tlog
-D:\x2D Game Engine\lib\angelscript\sdk\angelscript\projects\msvc10\Debug\CL.write.1.tlog
-D:\x2D Game Engine\lib\angelscript\sdk\angelscript\projects\msvc10\Debug\link-cvtres.read.1.tlog
-D:\x2D Game Engine\lib\angelscript\sdk\angelscript\projects\msvc10\Debug\link-cvtres.write.1.tlog
-D:\x2D Game Engine\lib\angelscript\sdk\angelscript\projects\msvc10\Debug\link-rc.read.1.tlog
-D:\x2D Game Engine\lib\angelscript\sdk\angelscript\projects\msvc10\Debug\link-rc.write.1.tlog
-D:\x2D Game Engine\lib\angelscript\sdk\angelscript\projects\msvc10\Debug\link.command.1.tlog
-D:\x2D Game Engine\lib\angelscript\sdk\angelscript\projects\msvc10\Debug\link.read.1.tlog
-D:\x2D Game Engine\lib\angelscript\sdk\angelscript\projects\msvc10\Debug\link.write.1.tlog
-D:\x2D Game Engine\lib\angelscript\sdk\angelscript\projects\msvc10\Debug\vc110.pdb
-D:\x2D Game Engine\lib\angelscript\sdk\angelscript\projects\msvc10\..\..\lib\angelscriptd.dll
+c:\users\marcus\documents\github\x2d-game-engine\lib\angelscript\sdk\angelscript\lib\angelscriptd.lib
+c:\users\marcus\documents\github\x2d-game-engine\lib\angelscript\sdk\angelscript\lib\angelscriptd.exp
+c:\users\marcus\documents\github\x2d-game-engine\lib\angelscript\sdk\angelscript\projects\msvc10\debug\vc120.pdb
+c:\users\marcus\documents\github\x2d-game-engine\lib\angelscript\sdk\angelscript\projects\msvc10\debug\as_gc.obj
+c:\users\marcus\documents\github\x2d-game-engine\lib\angelscript\sdk\angelscript\projects\msvc10\debug\as_datatype.obj
+c:\users\marcus\documents\github\x2d-game-engine\lib\angelscript\sdk\angelscript\projects\msvc10\debug\as_context.obj
+c:\users\marcus\documents\github\x2d-game-engine\lib\angelscript\sdk\angelscript\projects\msvc10\debug\as_configgroup.obj
+c:\users\marcus\documents\github\x2d-game-engine\lib\angelscript\sdk\angelscript\projects\msvc10\debug\as_compiler.obj
+c:\users\marcus\documents\github\x2d-game-engine\lib\angelscript\sdk\angelscript\projects\msvc10\debug\as_callfunc_xenon.obj
+c:\users\marcus\documents\github\x2d-game-engine\lib\angelscript\sdk\angelscript\projects\msvc10\debug\as_callfunc_x86.obj
+c:\users\marcus\documents\github\x2d-game-engine\lib\angelscript\sdk\angelscript\projects\msvc10\debug\as_callfunc_x64_msvc.obj
+c:\users\marcus\documents\github\x2d-game-engine\lib\angelscript\sdk\angelscript\projects\msvc10\debug\as_callfunc_x64_mingw.obj
+c:\users\marcus\documents\github\x2d-game-engine\lib\angelscript\sdk\angelscript\projects\msvc10\debug\as_callfunc_x64_gcc.obj
+c:\users\marcus\documents\github\x2d-game-engine\lib\angelscript\sdk\angelscript\projects\msvc10\debug\as_callfunc_sh4.obj
+c:\users\marcus\documents\github\x2d-game-engine\lib\angelscript\sdk\angelscript\projects\msvc10\debug\as_callfunc_ppc_64.obj
+c:\users\marcus\documents\github\x2d-game-engine\lib\angelscript\sdk\angelscript\projects\msvc10\debug\as_callfunc_ppc.obj
+c:\users\marcus\documents\github\x2d-game-engine\lib\angelscript\sdk\angelscript\projects\msvc10\debug\as_callfunc_mips.obj
+c:\users\marcus\documents\github\x2d-game-engine\lib\angelscript\sdk\angelscript\projects\msvc10\debug\as_callfunc_arm_android.obj
+c:\users\marcus\documents\github\x2d-game-engine\lib\angelscript\sdk\angelscript\projects\msvc10\debug\as_callfunc_arm.obj
+c:\users\marcus\documents\github\x2d-game-engine\lib\angelscript\sdk\angelscript\projects\msvc10\debug\as_callfunc.obj
+c:\users\marcus\documents\github\x2d-game-engine\lib\angelscript\sdk\angelscript\projects\msvc10\debug\as_bytecode.obj
+c:\users\marcus\documents\github\x2d-game-engine\lib\angelscript\sdk\angelscript\projects\msvc10\debug\as_builder.obj
+c:\users\marcus\documents\github\x2d-game-engine\lib\angelscript\sdk\angelscript\projects\msvc10\debug\as_atomic.obj
+c:\users\marcus\documents\github\x2d-game-engine\lib\angelscript\sdk\angelscript\projects\msvc10\debug\as_variablescope.obj
+c:\users\marcus\documents\github\x2d-game-engine\lib\angelscript\sdk\angelscript\projects\msvc10\debug\as_typeinfo.obj
+c:\users\marcus\documents\github\x2d-game-engine\lib\angelscript\sdk\angelscript\projects\msvc10\debug\as_tokenizer.obj
+c:\users\marcus\documents\github\x2d-game-engine\lib\angelscript\sdk\angelscript\projects\msvc10\debug\as_thread.obj
+c:\users\marcus\documents\github\x2d-game-engine\lib\angelscript\sdk\angelscript\projects\msvc10\debug\as_string_util.obj
+c:\users\marcus\documents\github\x2d-game-engine\lib\angelscript\sdk\angelscript\projects\msvc10\debug\as_string.obj
+c:\users\marcus\documents\github\x2d-game-engine\lib\angelscript\sdk\angelscript\projects\msvc10\debug\as_scriptobject.obj
+c:\users\marcus\documents\github\x2d-game-engine\lib\angelscript\sdk\angelscript\projects\msvc10\debug\as_scriptnode.obj
+c:\users\marcus\documents\github\x2d-game-engine\lib\angelscript\sdk\angelscript\projects\msvc10\debug\as_scriptfunction.obj
+c:\users\marcus\documents\github\x2d-game-engine\lib\angelscript\sdk\angelscript\projects\msvc10\debug\as_scriptengine.obj
+c:\users\marcus\documents\github\x2d-game-engine\lib\angelscript\sdk\angelscript\projects\msvc10\debug\as_scriptcode.obj
+c:\users\marcus\documents\github\x2d-game-engine\lib\angelscript\sdk\angelscript\projects\msvc10\debug\as_restore.obj
+c:\users\marcus\documents\github\x2d-game-engine\lib\angelscript\sdk\angelscript\projects\msvc10\debug\as_parser.obj
+c:\users\marcus\documents\github\x2d-game-engine\lib\angelscript\sdk\angelscript\projects\msvc10\debug\as_outputbuffer.obj
+c:\users\marcus\documents\github\x2d-game-engine\lib\angelscript\sdk\angelscript\projects\msvc10\debug\as_objecttype.obj
+c:\users\marcus\documents\github\x2d-game-engine\lib\angelscript\sdk\angelscript\projects\msvc10\debug\as_module.obj
+c:\users\marcus\documents\github\x2d-game-engine\lib\angelscript\sdk\angelscript\projects\msvc10\debug\as_memory.obj
+c:\users\marcus\documents\github\x2d-game-engine\lib\angelscript\sdk\angelscript\projects\msvc10\debug\as_globalproperty.obj
+c:\users\marcus\documents\github\x2d-game-engine\lib\angelscript\sdk\angelscript\projects\msvc10\debug\as_generic.obj
+c:\users\marcus\documents\github\x2d-game-engine\lib\angelscript\sdk\angelscript\lib\angelscriptd.dll
+c:\users\marcus\documents\github\x2d-game-engine\lib\angelscript\sdk\angelscript\projects\msvc10\..\..\lib\angelscriptd.dll
+c:\users\marcus\documents\github\x2d-game-engine\lib\angelscript\sdk\angelscript\projects\msvc10\debug\angelscript.tlog\angelscript.write.1u.tlog
+c:\users\marcus\documents\github\x2d-game-engine\lib\angelscript\sdk\angelscript\projects\msvc10\debug\angelscript.tlog\cl.command.1.tlog
+c:\users\marcus\documents\github\x2d-game-engine\lib\angelscript\sdk\angelscript\projects\msvc10\debug\angelscript.tlog\cl.read.1.tlog
+c:\users\marcus\documents\github\x2d-game-engine\lib\angelscript\sdk\angelscript\projects\msvc10\debug\angelscript.tlog\cl.write.1.tlog
+c:\users\marcus\documents\github\x2d-game-engine\lib\angelscript\sdk\angelscript\projects\msvc10\debug\angelscript.tlog\link.command.1.tlog
+c:\users\marcus\documents\github\x2d-game-engine\lib\angelscript\sdk\angelscript\projects\msvc10\debug\angelscript.tlog\link.read.1.tlog
+c:\users\marcus\documents\github\x2d-game-engine\lib\angelscript\sdk\angelscript\projects\msvc10\debug\angelscript.tlog\link.write.1.tlog

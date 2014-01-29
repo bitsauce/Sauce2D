@@ -9,3 +9,6 @@
 *.user
 *.idb
 *.bsc
+*.exp
+*.res
+*.opensdf

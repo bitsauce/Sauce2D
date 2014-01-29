@@ -1,111 +1,51 @@
-D:\X2D GAME ENGINE\LIB\FREETYPE-2.4.8\BUILDS\WIN32\VC2010\DEBUG\FTBITMAP.OBJ
-D:\X2D GAME ENGINE\LIB\FREETYPE-2.4.8\BUILDS\WIN32\VC2010\DEBUG\FTGLYPH.OBJ
-D:\X2D GAME ENGINE\LIB\FREETYPE-2.4.8\BUILDS\WIN32\VC2010\DEBUG\FTBBOX.OBJ
-D:\X2D GAME ENGINE\LIB\FREETYPE-2.4.8\BUILDS\WIN32\VC2010\DEBUG\FTWINFNT.OBJ
-D:\X2D GAME ENGINE\LIB\FREETYPE-2.4.8\BUILDS\WIN32\VC2010\DEBUG\SFNT.OBJ
-D:\X2D GAME ENGINE\LIB\FREETYPE-2.4.8\BUILDS\WIN32\VC2010\DEBUG\FTBASE.OBJ
-D:\X2D GAME ENGINE\LIB\FREETYPE-2.4.8\BUILDS\WIN32\VC2010\DEBUG\SMOOTH.OBJ
-D:\X2D GAME ENGINE\LIB\FREETYPE-2.4.8\BUILDS\WIN32\VC2010\DEBUG\FTGXVAL.OBJ
-D:\X2D GAME ENGINE\LIB\FREETYPE-2.4.8\BUILDS\WIN32\VC2010\DEBUG\PSMODULE.OBJ
-D:\X2D GAME ENGINE\LIB\FREETYPE-2.4.8\BUILDS\WIN32\VC2010\DEBUG\WINFNT.OBJ
-D:\X2D GAME ENGINE\LIB\FREETYPE-2.4.8\BUILDS\WIN32\VC2010\DEBUG\BDF.OBJ
-D:\X2D GAME ENGINE\LIB\FREETYPE-2.4.8\BUILDS\WIN32\VC2010\DEBUG\FTINIT.OBJ
-D:\X2D GAME ENGINE\LIB\FREETYPE-2.4.8\BUILDS\WIN32\VC2010\DEBUG\FTSYNTH.OBJ
-D:\X2D GAME ENGINE\LIB\FREETYPE-2.4.8\BUILDS\WIN32\VC2010\DEBUG\PFR.OBJ
-D:\X2D GAME ENGINE\LIB\FREETYPE-2.4.8\BUILDS\WIN32\VC2010\DEBUG\TYPE42.OBJ
-D:\X2D GAME ENGINE\LIB\FREETYPE-2.4.8\BUILDS\WIN32\VC2010\DEBUG\FTCACHE.OBJ
-D:\X2D GAME ENGINE\LIB\FREETYPE-2.4.8\BUILDS\WIN32\VC2010\DEBUG\FTSTROKE.OBJ
-D:\X2D GAME ENGINE\LIB\FREETYPE-2.4.8\BUILDS\WIN32\VC2010\DEBUG\FTLCDFIL.OBJ
-D:\X2D GAME ENGINE\LIB\FREETYPE-2.4.8\BUILDS\WIN32\VC2010\DEBUG\PSAUX.OBJ
-D:\X2D GAME ENGINE\LIB\FREETYPE-2.4.8\BUILDS\WIN32\VC2010\DEBUG\FTGASP.OBJ
-D:\X2D GAME ENGINE\LIB\FREETYPE-2.4.8\BUILDS\WIN32\VC2010\DEBUG\FTLZW.OBJ
-D:\X2D GAME ENGINE\LIB\FREETYPE-2.4.8\BUILDS\WIN32\VC2010\DEBUG\FTMM.OBJ
-D:\X2D GAME ENGINE\LIB\FREETYPE-2.4.8\BUILDS\WIN32\VC2010\DEBUG\FTXF86.OBJ
-D:\X2D GAME ENGINE\LIB\FREETYPE-2.4.8\BUILDS\WIN32\VC2010\DEBUG\PSHINTER.OBJ
-D:\X2D GAME ENGINE\LIB\FREETYPE-2.4.8\BUILDS\WIN32\VC2010\DEBUG\AUTOFIT.OBJ
-D:\X2D GAME ENGINE\LIB\FREETYPE-2.4.8\BUILDS\WIN32\VC2010\DEBUG\FTPATENT.OBJ
-D:\X2D GAME ENGINE\LIB\FREETYPE-2.4.8\BUILDS\WIN32\VC2010\DEBUG\TRUETYPE.OBJ
-D:\X2D GAME ENGINE\LIB\FREETYPE-2.4.8\BUILDS\WIN32\VC2010\DEBUG\CFF.OBJ
-D:\X2D GAME ENGINE\LIB\FREETYPE-2.4.8\BUILDS\WIN32\VC2010\DEBUG\FTSYSTEM.OBJ
-D:\X2D GAME ENGINE\LIB\FREETYPE-2.4.8\BUILDS\WIN32\VC2010\DEBUG\FTTYPE1.OBJ
-D:\X2D GAME ENGINE\LIB\FREETYPE-2.4.8\BUILDS\WIN32\VC2010\DEBUG\PCF.OBJ
-D:\X2D GAME ENGINE\LIB\FREETYPE-2.4.8\BUILDS\WIN32\VC2010\DEBUG\TYPE1.OBJ
-D:\X2D GAME ENGINE\LIB\FREETYPE-2.4.8\BUILDS\WIN32\VC2010\DEBUG\FTFSTYPE.OBJ
-D:\X2D GAME ENGINE\LIB\FREETYPE-2.4.8\BUILDS\WIN32\VC2010\DEBUG\FTGZIP.OBJ
-D:\X2D GAME ENGINE\LIB\FREETYPE-2.4.8\BUILDS\WIN32\VC2010\DEBUG\FTPFR.OBJ
-D:\X2D GAME ENGINE\LIB\FREETYPE-2.4.8\BUILDS\WIN32\VC2010\DEBUG\FTOTVAL.OBJ
-D:\X2D GAME ENGINE\LIB\FREETYPE-2.4.8\BUILDS\WIN32\VC2010\DEBUG\RASTER.OBJ
-D:\X2D GAME ENGINE\LIB\FREETYPE-2.4.8\BUILDS\WIN32\VC2010\DEBUG\TYPE1CID.OBJ
-D:\X2D GAME ENGINE\LIB\FREETYPE-2.4.8\BUILDS\WIN32\VC2010\DEBUG\VC110.PDB
-D:\X2D GAME ENGINE\LIB\FREETYPE-2.4.8\BUILDS\WIN32\VC2010\DEBUG\FTDEBUG.OBJ
-D:\x2D Game Engine\lib\freetype-2.4.8\lib\freetype248_d.lib
-D:\x2D Game Engine\lib\freetype-2.4.8\lib\freetype248_d.exp
-D:\X2D GAME ENGINE\LIB\FREETYPE-2.4.8\LIB\FREETYPE248_D.DLL
-D:\x2D Game Engine\lib\freetype-2.4.8\builds\win32\vc2010\Debug\autofit.obj
-D:\x2D Game Engine\lib\freetype-2.4.8\builds\win32\vc2010\Debug\bdf.obj
-D:\x2D Game Engine\lib\freetype-2.4.8\builds\win32\vc2010\Debug\cff.obj
-D:\x2D Game Engine\lib\freetype-2.4.8\builds\win32\vc2010\Debug\ftbase.obj
-D:\x2D Game Engine\lib\freetype-2.4.8\builds\win32\vc2010\Debug\ftbbox.obj
-D:\x2D Game Engine\lib\freetype-2.4.8\builds\win32\vc2010\Debug\ftbitmap.obj
-D:\x2D Game Engine\lib\freetype-2.4.8\builds\win32\vc2010\Debug\ftcache.obj
-D:\x2D Game Engine\lib\freetype-2.4.8\builds\win32\vc2010\Debug\ftdebug.obj
-D:\x2D Game Engine\lib\freetype-2.4.8\builds\win32\vc2010\Debug\ftfstype.obj
-D:\x2D Game Engine\lib\freetype-2.4.8\builds\win32\vc2010\Debug\ftgasp.obj
-D:\x2D Game Engine\lib\freetype-2.4.8\builds\win32\vc2010\Debug\ftglyph.obj
-D:\x2D Game Engine\lib\freetype-2.4.8\builds\win32\vc2010\Debug\ftgxval.obj
-D:\x2D Game Engine\lib\freetype-2.4.8\builds\win32\vc2010\Debug\ftgzip.obj
-D:\x2D Game Engine\lib\freetype-2.4.8\builds\win32\vc2010\Debug\ftinit.obj
-D:\x2D Game Engine\lib\freetype-2.4.8\builds\win32\vc2010\Debug\ftlcdfil.obj
-D:\x2D Game Engine\lib\freetype-2.4.8\builds\win32\vc2010\Debug\ftlzw.obj
-D:\x2D Game Engine\lib\freetype-2.4.8\builds\win32\vc2010\Debug\ftmm.obj
-D:\x2D Game Engine\lib\freetype-2.4.8\builds\win32\vc2010\Debug\ftotval.obj
-D:\x2D Game Engine\lib\freetype-2.4.8\builds\win32\vc2010\Debug\ftpatent.obj
-D:\x2D Game Engine\lib\freetype-2.4.8\builds\win32\vc2010\Debug\ftpfr.obj
-D:\x2D Game Engine\lib\freetype-2.4.8\builds\win32\vc2010\Debug\ftstroke.obj
-D:\x2D Game Engine\lib\freetype-2.4.8\builds\win32\vc2010\Debug\ftsynth.obj
-D:\x2D Game Engine\lib\freetype-2.4.8\builds\win32\vc2010\Debug\ftsystem.obj
-D:\x2D Game Engine\lib\freetype-2.4.8\builds\win32\vc2010\Debug\fttype1.obj
-D:\x2D Game Engine\lib\freetype-2.4.8\builds\win32\vc2010\Debug\ftwinfnt.obj
-D:\x2D Game Engine\lib\freetype-2.4.8\builds\win32\vc2010\Debug\ftxf86.obj
-D:\x2D Game Engine\lib\freetype-2.4.8\builds\win32\vc2010\Debug\pcf.obj
-D:\x2D Game Engine\lib\freetype-2.4.8\builds\win32\vc2010\Debug\pfr.obj
-D:\x2D Game Engine\lib\freetype-2.4.8\builds\win32\vc2010\Debug\psaux.obj
-D:\x2D Game Engine\lib\freetype-2.4.8\builds\win32\vc2010\Debug\pshinter.obj
-D:\x2D Game Engine\lib\freetype-2.4.8\builds\win32\vc2010\Debug\psmodule.obj
-D:\x2D Game Engine\lib\freetype-2.4.8\builds\win32\vc2010\Debug\raster.obj
-D:\x2D Game Engine\lib\freetype-2.4.8\builds\win32\vc2010\Debug\sfnt.obj
-D:\x2D Game Engine\lib\freetype-2.4.8\builds\win32\vc2010\Debug\smooth.obj
-D:\x2D Game Engine\lib\freetype-2.4.8\builds\win32\vc2010\Debug\truetype.obj
-D:\x2D Game Engine\lib\freetype-2.4.8\builds\win32\vc2010\Debug\type1.obj
-D:\x2D Game Engine\lib\freetype-2.4.8\builds\win32\vc2010\Debug\type1cid.obj
-D:\x2D Game Engine\lib\freetype-2.4.8\builds\win32\vc2010\Debug\type42.obj
-D:\x2D Game Engine\lib\freetype-2.4.8\builds\win32\vc2010\Debug\winfnt.obj
-D:\x2D Game Engine\lib\freetype-2.4.8\builds\win32\vc2010\Debug\CL.1496.read.1.tlog
-D:\x2D Game Engine\lib\freetype-2.4.8\builds\win32\vc2010\Debug\CL.1496.write.1.tlog
-D:\x2D Game Engine\lib\freetype-2.4.8\builds\win32\vc2010\Debug\CL.5384.read.1.tlog
-D:\x2D Game Engine\lib\freetype-2.4.8\builds\win32\vc2010\Debug\CL.5384.write.1.tlog
-D:\x2D Game Engine\lib\freetype-2.4.8\builds\win32\vc2010\Debug\CL.5756.read.1.tlog
-D:\x2D Game Engine\lib\freetype-2.4.8\builds\win32\vc2010\Debug\CL.5756.write.1.tlog
-D:\x2D Game Engine\lib\freetype-2.4.8\builds\win32\vc2010\Debug\CL.7416.read.1.tlog
-D:\x2D Game Engine\lib\freetype-2.4.8\builds\win32\vc2010\Debug\CL.7416.write.1.tlog
-D:\x2D Game Engine\lib\freetype-2.4.8\builds\win32\vc2010\Debug\CL.7480.read.1.tlog
-D:\x2D Game Engine\lib\freetype-2.4.8\builds\win32\vc2010\Debug\CL.7480.write.1.tlog
-D:\x2D Game Engine\lib\freetype-2.4.8\builds\win32\vc2010\Debug\CL.7488.read.1.tlog
-D:\x2D Game Engine\lib\freetype-2.4.8\builds\win32\vc2010\Debug\CL.7488.write.1.tlog
-D:\x2D Game Engine\lib\freetype-2.4.8\builds\win32\vc2010\Debug\CL.7784.read.1.tlog
-D:\x2D Game Engine\lib\freetype-2.4.8\builds\win32\vc2010\Debug\CL.7784.write.1.tlog
-D:\x2D Game Engine\lib\freetype-2.4.8\builds\win32\vc2010\Debug\CL.7868.read.1.tlog
-D:\x2D Game Engine\lib\freetype-2.4.8\builds\win32\vc2010\Debug\CL.7868.write.1.tlog
-D:\x2D Game Engine\lib\freetype-2.4.8\builds\win32\vc2010\Debug\cl.command.1.tlog
-D:\x2D Game Engine\lib\freetype-2.4.8\builds\win32\vc2010\Debug\CL.read.1.tlog
-D:\x2D Game Engine\lib\freetype-2.4.8\builds\win32\vc2010\Debug\CL.write.1.tlog
-D:\x2D Game Engine\lib\freetype-2.4.8\builds\win32\vc2010\Debug\freetype.write.1.tlog
-D:\x2D Game Engine\lib\freetype-2.4.8\builds\win32\vc2010\Debug\link-cvtres.read.1.tlog
-D:\x2D Game Engine\lib\freetype-2.4.8\builds\win32\vc2010\Debug\link-cvtres.write.1.tlog
-D:\x2D Game Engine\lib\freetype-2.4.8\builds\win32\vc2010\Debug\link-rc.read.1.tlog
-D:\x2D Game Engine\lib\freetype-2.4.8\builds\win32\vc2010\Debug\link-rc.write.1.tlog
-D:\x2D Game Engine\lib\freetype-2.4.8\builds\win32\vc2010\Debug\link.command.1.tlog
-D:\x2D Game Engine\lib\freetype-2.4.8\builds\win32\vc2010\Debug\link.read.1.tlog
-D:\x2D Game Engine\lib\freetype-2.4.8\builds\win32\vc2010\Debug\link.write.1.tlog
-D:\x2D Game Engine\lib\freetype-2.4.8\builds\win32\vc2010\Debug\vc110.pdb
-D:\x2D Game Engine\projects\msvc11\..\..\lib\freetype-2.4.8\lib\freetype248_d.dll
+c:\users\marcus\documents\github\x2d-game-engine\lib\freetype-2.4.8\builds\win32\vc2010\debug\vc120.pdb
+c:\users\marcus\documents\github\x2d-game-engine\lib\freetype-2.4.8\builds\win32\vc2010\debug\ftdebug.obj
+c:\users\marcus\documents\github\x2d-game-engine\lib\freetype-2.4.8\lib\freetype248_d.lib
+c:\users\marcus\documents\github\x2d-game-engine\lib\freetype-2.4.8\lib\freetype248_d.exp
+c:\users\marcus\documents\github\x2d-game-engine\lib\freetype-2.4.8\lib\freetype248_d.dll
+c:\users\marcus\documents\github\x2d-game-engine\lib\freetype-2.4.8\builds\win32\vc2010\debug\autofit.obj
+c:\users\marcus\documents\github\x2d-game-engine\lib\freetype-2.4.8\builds\win32\vc2010\debug\bdf.obj
+c:\users\marcus\documents\github\x2d-game-engine\lib\freetype-2.4.8\builds\win32\vc2010\debug\cff.obj
+c:\users\marcus\documents\github\x2d-game-engine\lib\freetype-2.4.8\builds\win32\vc2010\debug\ftbase.obj
+c:\users\marcus\documents\github\x2d-game-engine\lib\freetype-2.4.8\builds\win32\vc2010\debug\ftbbox.obj
+c:\users\marcus\documents\github\x2d-game-engine\lib\freetype-2.4.8\builds\win32\vc2010\debug\ftbitmap.obj
+c:\users\marcus\documents\github\x2d-game-engine\lib\freetype-2.4.8\builds\win32\vc2010\debug\ftcache.obj
+c:\users\marcus\documents\github\x2d-game-engine\lib\freetype-2.4.8\builds\win32\vc2010\debug\ftfstype.obj
+c:\users\marcus\documents\github\x2d-game-engine\lib\freetype-2.4.8\builds\win32\vc2010\debug\ftgasp.obj
+c:\users\marcus\documents\github\x2d-game-engine\lib\freetype-2.4.8\builds\win32\vc2010\debug\ftglyph.obj
+c:\users\marcus\documents\github\x2d-game-engine\lib\freetype-2.4.8\builds\win32\vc2010\debug\ftgxval.obj
+c:\users\marcus\documents\github\x2d-game-engine\lib\freetype-2.4.8\builds\win32\vc2010\debug\ftgzip.obj
+c:\users\marcus\documents\github\x2d-game-engine\lib\freetype-2.4.8\builds\win32\vc2010\debug\ftinit.obj
+c:\users\marcus\documents\github\x2d-game-engine\lib\freetype-2.4.8\builds\win32\vc2010\debug\ftlcdfil.obj
+c:\users\marcus\documents\github\x2d-game-engine\lib\freetype-2.4.8\builds\win32\vc2010\debug\ftlzw.obj
+c:\users\marcus\documents\github\x2d-game-engine\lib\freetype-2.4.8\builds\win32\vc2010\debug\ftmm.obj
+c:\users\marcus\documents\github\x2d-game-engine\lib\freetype-2.4.8\builds\win32\vc2010\debug\ftotval.obj
+c:\users\marcus\documents\github\x2d-game-engine\lib\freetype-2.4.8\builds\win32\vc2010\debug\ftpatent.obj
+c:\users\marcus\documents\github\x2d-game-engine\lib\freetype-2.4.8\builds\win32\vc2010\debug\ftpfr.obj
+c:\users\marcus\documents\github\x2d-game-engine\lib\freetype-2.4.8\builds\win32\vc2010\debug\ftstroke.obj
+c:\users\marcus\documents\github\x2d-game-engine\lib\freetype-2.4.8\builds\win32\vc2010\debug\ftsynth.obj
+c:\users\marcus\documents\github\x2d-game-engine\lib\freetype-2.4.8\builds\win32\vc2010\debug\ftsystem.obj
+c:\users\marcus\documents\github\x2d-game-engine\lib\freetype-2.4.8\builds\win32\vc2010\debug\fttype1.obj
+c:\users\marcus\documents\github\x2d-game-engine\lib\freetype-2.4.8\builds\win32\vc2010\debug\ftwinfnt.obj
+c:\users\marcus\documents\github\x2d-game-engine\lib\freetype-2.4.8\builds\win32\vc2010\debug\ftxf86.obj
+c:\users\marcus\documents\github\x2d-game-engine\lib\freetype-2.4.8\builds\win32\vc2010\debug\pcf.obj
+c:\users\marcus\documents\github\x2d-game-engine\lib\freetype-2.4.8\builds\win32\vc2010\debug\pfr.obj
+c:\users\marcus\documents\github\x2d-game-engine\lib\freetype-2.4.8\builds\win32\vc2010\debug\psaux.obj
+c:\users\marcus\documents\github\x2d-game-engine\lib\freetype-2.4.8\builds\win32\vc2010\debug\pshinter.obj
+c:\users\marcus\documents\github\x2d-game-engine\lib\freetype-2.4.8\builds\win32\vc2010\debug\psmodule.obj
+c:\users\marcus\documents\github\x2d-game-engine\lib\freetype-2.4.8\builds\win32\vc2010\debug\raster.obj
+c:\users\marcus\documents\github\x2d-game-engine\lib\freetype-2.4.8\builds\win32\vc2010\debug\sfnt.obj
+c:\users\marcus\documents\github\x2d-game-engine\lib\freetype-2.4.8\builds\win32\vc2010\debug\smooth.obj
+c:\users\marcus\documents\github\x2d-game-engine\lib\freetype-2.4.8\builds\win32\vc2010\debug\truetype.obj
+c:\users\marcus\documents\github\x2d-game-engine\lib\freetype-2.4.8\builds\win32\vc2010\debug\type1.obj
+c:\users\marcus\documents\github\x2d-game-engine\lib\freetype-2.4.8\builds\win32\vc2010\debug\type1cid.obj
+c:\users\marcus\documents\github\x2d-game-engine\lib\freetype-2.4.8\builds\win32\vc2010\debug\type42.obj
+c:\users\marcus\documents\github\x2d-game-engine\lib\freetype-2.4.8\builds\win32\vc2010\debug\winfnt.obj
+c:\users\marcus\documents\github\x2d-game-engine\projects\msvc12\..\..\lib\freetype-2.4.8\lib\freetype248_d.dll
+c:\users\marcus\documents\github\x2d-game-engine\lib\freetype-2.4.8\builds\win32\vc2010\debug\freetype.tlog\cl.command.1.tlog
+c:\users\marcus\documents\github\x2d-game-engine\lib\freetype-2.4.8\builds\win32\vc2010\debug\freetype.tlog\cl.read.1.tlog
+c:\users\marcus\documents\github\x2d-game-engine\lib\freetype-2.4.8\builds\win32\vc2010\debug\freetype.tlog\cl.write.1.tlog
+c:\users\marcus\documents\github\x2d-game-engine\lib\freetype-2.4.8\builds\win32\vc2010\debug\freetype.tlog\freetype.write.1u.tlog
+c:\users\marcus\documents\github\x2d-game-engine\lib\freetype-2.4.8\builds\win32\vc2010\debug\freetype.tlog\link.command.1.tlog
+c:\users\marcus\documents\github\x2d-game-engine\lib\freetype-2.4.8\builds\win32\vc2010\debug\freetype.tlog\link.read.1.tlog
+c:\users\marcus\documents\github\x2d-game-engine\lib\freetype-2.4.8\builds\win32\vc2010\debug\freetype.tlog\link.write.1.tlog
