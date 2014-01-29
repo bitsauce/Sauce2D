@@ -1,0 +1,317 @@
+
+Total count
+PopPtr     : 1
+PshC4      : 845
+PshV4      : 2612
+PSF        : 23
+NOT        : 9
+PshG4      : 66
+CALL       : 266
+RET        : 376
+BSLL       : 384
+PshVPtr    : 28
+RDSPtr     : 14
+PshRPtr    : 4
+STR        : 4
+CALLSYS    : 1457
+SUSPEND    : 2737
+ALLOC      : 1
+FREE       : 22
+LOADOBJ    : 1
+STOREOBJ   : 2
+REFCPY     : 1
+GETREF     : 31
+OBJTYPE    : 1
+SetV4      : 641
+ADDSi      : 15
+CpyVtoV4   : 812
+CpyVtoR4   : 139
+CpyVtoG4   : 1
+CpyRtoV4   : 135
+WRTV1      : 7
+WRTV4      : 8
+RDR1       : 11
+RDR4       : 9
+VAR        : 31
+iTOf       : 264
+fTOi       : 2
+ubTOi      : 512
+ADDi       : 512
+ADDf       : 544
+SetG4      : 1
+CALLINTF   : 6
+SetV1      : 519
+LoadThisR  : 21
+RefCpyV    : 14
+JLowZ      : 11
+
+Never executed
+PshGPtr   
+SwapPtr   
+LdGRdR4   
+JMP       
+JZ        
+JNZ       
+JS        
+JNS       
+JP        
+JNP       
+TZ        
+TNZ       
+TS        
+TNS       
+TP        
+TNP       
+NEGi      
+NEGf      
+NEGd      
+INCi16    
+INCi8     
+DECi16    
+DECi8     
+INCi      
+DECi      
+INCf      
+DECf      
+INCd      
+DECd      
+IncVi     
+DecVi     
+BNOT      
+BAND      
+BOR       
+BXOR      
+BSRL      
+BSRA      
+COPY      
+PshC8     
+CMPd      
+CMPu      
+CMPf      
+CMPi      
+CMPIi     
+CMPIf     
+CMPIu     
+JMPP      
+PopRPtr   
+CALLBND   
+GETOBJ    
+CHKREF    
+GETOBJREF 
+PshNull   
+ClrVPtr   
+TYPEID    
+SetV8     
+CpyVtoV8  
+CpyVtoR8  
+CpyRtoV8  
+CpyGtoV4  
+WRTV2     
+WRTV8     
+RDR2      
+RDR8      
+LDG       
+LDV       
+PGA       
+CmpPtr    
+uTOf      
+fTOu      
+sbTOi     
+swTOi     
+uwTOi     
+dTOi      
+dTOu      
+dTOf      
+iTOd      
+uTOd      
+fTOd      
+SUBi      
+MULi      
+DIVi      
+MODi      
+SUBf      
+MULf      
+DIVf      
+MODf      
+ADDd      
+SUBd      
+MULd      
+DIVd      
+MODd      
+ADDIi     
+SUBIi     
+MULIi     
+ADDIf     
+SUBIf     
+MULIf     
+ChkRefS   
+ChkNullV  
+iTOb      
+iTOw      
+SetV2     
+Cast      
+i64TOi    
+uTOi64    
+iTOi64    
+fTOi64    
+dTOi64    
+fTOu64    
+dTOu64    
+i64TOf    
+u64TOf    
+i64TOd    
+u64TOd    
+NEGi64    
+INCi64    
+DECi64    
+BNOT64    
+ADDi64    
+SUBi64    
+MULi64    
+DIVi64    
+MODi64    
+BAND64    
+BOR64     
+BXOR64    
+BSLL64    
+BSRL64    
+BSRA64    
+CMPi64    
+CMPu64    
+ChkNullS  
+ClrHi     
+JitEntry  
+CallPtr   
+FuncPtr   
+PshV8     
+DIVu      
+MODu      
+DIVu64    
+MODu64    
+LoadRObjR 
+LoadVObjR 
+JLowNZ    
+
+Sequences
+PopPtr    , SUSPEND    : 1
+PshC4     , PshC4      : 396
+PshC4     , CALL       : 137
+PshC4     , PshVPtr    : 14
+PshC4     , STR        : 1
+PshC4     , CALLSYS    : 229
+PshC4     , CpyVtoV4   : 68
+PshV4     , PshC4      : 147
+PshV4     , PshV4      : 568
+PshV4     , CALL       : 128
+PshV4     , PshVPtr    : 2
+PshV4     , CALLSYS    : 975
+PshV4     , GETREF     : 4
+PshV4     , CpyVtoV4   : 132
+PshV4     , ADDf       : 272
+PshV4     , SetV1      : 384
+PSF       , CALLSYS    : 15
+PSF       , ALLOC      : 1
+PSF       , GETREF     : 7
+NOT       , CpyVtoR4   : 9
+PshG4     , PshVPtr    : 2
+PshG4     , CALLSYS    : 64
+CALL      , PSF        : 1
+CALL      , SUSPEND    : 264
+CALL      , OBJTYPE    : 1
+RET       , SUSPEND    : 244
+RET       , LOADOBJ    : 1
+RET       , STOREOBJ   : 2
+RET       , CpyRtoV4   : 128
+BSLL      , ADDi       : 384
+PshVPtr   , PshVPtr    : 1
+PshVPtr   , CALLSYS    : 6
+PshVPtr   , ADDSi      : 15
+PshVPtr   , CALLINTF   : 6
+RDSPtr    , RefCpyV    : 14
+PshRPtr   , PSF        : 4
+STR       , CALLSYS    : 4
+CALLSYS   , PshV4      : 1
+CALLSYS   , PSF        : 7
+CALLSYS   , RET        : 1
+CALLSYS   , PshRPtr    : 4
+CALLSYS   , SUSPEND    : 1407
+CALLSYS   , FREE       : 2
+CALLSYS   , CpyVtoV4   : 11
+CALLSYS   , CpyRtoV4   : 7
+CALLSYS   , WRTV4      : 6
+CALLSYS   , RDR4       : 8
+CALLSYS   , VAR        : 3
+SUSPEND   , PshC4      : 302
+SUSPEND   , PshV4      : 582
+SUSPEND   , PshG4      : 66
+SUSPEND   , CALL       : 1
+SUSPEND   , RET        : 238
+SUSPEND   , PshVPtr    : 2
+SUSPEND   , STR        : 3
+SUSPEND   , CALLSYS    : 138
+SUSPEND   , SUSPEND    : 9
+SUSPEND   , FREE       : 7
+SUSPEND   , SetV4      : 257
+SUSPEND   , CpyVtoV4   : 576
+SUSPEND   , CpyVtoR4   : 128
+SUSPEND   , VAR        : 8
+SUSPEND   , ADDf       : 272
+SUSPEND   , SetG4      : 1
+SUSPEND   , SetV1      : 135
+SUSPEND   , LoadThisR  : 12
+ALLOC     , SUSPEND    : 1
+FREE      , PopPtr     : 1
+FREE      , RET        : 7
+FREE      , SUSPEND    : 8
+FREE      , FREE       : 6
+LOADOBJ   , RET        : 1
+STOREOBJ  , PshVPtr    : 1
+STOREOBJ  , SUSPEND    : 1
+REFCPY    , FREE       : 1
+GETREF    , CALLSYS    : 11
+GETREF    , GETREF     : 20
+OBJTYPE   , CALLSYS    : 1
+SetV4     , BSLL       : 384
+SetV4     , SUSPEND    : 256
+SetV4     , LoadThisR  : 1
+ADDSi     , RDSPtr     : 14
+ADDSi     , REFCPY     : 1
+CpyVtoV4  , SUSPEND    : 12
+CpyVtoV4  , CpyVtoV4   : 24
+CpyVtoV4  , iTOf       : 264
+CpyVtoV4  , ubTOi      : 512
+CpyVtoR4  , RET        : 128
+CpyVtoR4  , JLowZ      : 11
+CpyVtoG4  , SUSPEND    : 1
+CpyRtoV4  , PshV4      : 128
+CpyRtoV4  , PSF        : 4
+CpyRtoV4  , CpyVtoV4   : 1
+CpyRtoV4  , CpyVtoG4   : 1
+CpyRtoV4  , LoadThisR  : 1
+WRTV1     , SUSPEND    : 7
+WRTV4     , SUSPEND    : 2
+WRTV4     , FREE       : 6
+RDR1      , NOT        : 9
+RDR1      , CpyVtoR4   : 2
+RDR4      , PshV4      : 7
+RDR4      , fTOi       : 2
+VAR       , PshV4      : 4
+VAR       , PSF        : 7
+VAR       , VAR        : 20
+iTOf      , PshV4      : 264
+fTOi      , PshV4      : 2
+ubTOi     , SetV4      : 384
+ubTOi     , ADDi       : 128
+ADDi      , SUSPEND    : 512
+ADDf      , PshV4      : 544
+SetG4     , RET        : 1
+CALLINTF  , PshVPtr    : 6
+SetV1     , PshV4      : 512
+SetV1     , LoadThisR  : 7
+LoadThisR , WRTV1      : 7
+LoadThisR , WRTV4      : 2
+LoadThisR , RDR1       : 11
+LoadThisR , RDR4       : 1
+RefCpyV   , CALLSYS    : 14
+JLowZ     , SUSPEND    : 11
+LABEL     , SUSPEND    : 1

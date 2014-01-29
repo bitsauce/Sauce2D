@@ -1,0 +1,44 @@
+rect2::rect2(vec2, vec2)
+
+Temps: 
+
+Variables: 
+ -001: vec2 pos
+ -002: vec2 size
+ 000: rect2 this
+
+
+- 18,7 -
+    0   0 *    VarDecl  0
+    0   0 *    VarDecl  1
+    0   0 *    SUSPEND
+    1   0 *    PshVPtr  v0
+    2   1 *    ADDSi    v20, 134217745
+    4   1 *    ALLOC    0x7df3e0, 132             (type:vec2)
+- 19,7 -
+    7   0 *    SUSPEND
+    8   0 *    PshVPtr  v0
+    9   1 *    ADDSi    v24, 134217745
+   11   1 *    ALLOC    0x7df3e0, 132             (type:vec2)
+- 14,3 -
+   14   0 *    SUSPEND
+   15   0 *    PshVPtr  v-1
+   16   1 *    PshVPtr  v0
+   17   2 *    ADDSi    v20, 134217745
+   19   2 *    RDSPtr
+   20   2 *    COPY     v2, 67108877
+   22   1 *    PopPtr
+- 15,3 -
+   23   0 *    SUSPEND
+   24   0 *    PshVPtr  v-2
+   25   1 *    PshVPtr  v0
+   26   2 *    ADDSi    v24, 134217745
+   28   2 *    RDSPtr
+   29   2 *    COPY     v2, 67108877
+   31   1 *    PopPtr
+- 16,3 -
+   32   0 *    SUSPEND
+   33   0 * 0:
+   33   0 *    FREE     v-1, 8254432
+   35   0 *    FREE     v-2, 8254432
+   37   0 *    RET      3

@@ -1,0 +1,64 @@
+void SlimeSpawnTable::onDraw(DrawEvent)
+
+Temps: 2, 4, 6, 7, 8, 10, 11
+
+Variables: 
+ -001: DrawEvent e
+ 000: SlimeSpawnTable this
+ 011: CTexture {noname}
+ 002: Vector2 {noname}
+ 004: Vector2 {noname}
+ 006: Vector2 {noname}
+ 010: Vector2 {noname}
+
+
+    0  11 *    VarDecl  0
+    0  11 *    PshVPtr  v0
+    1  12 *    CALLSYS  2           (void _builtin_object_::_beh_4_())
+- 19,3 -
+    3  11 *    SUSPEND
+    4  11 *    PshVPtr  v0
+    5  12 *    ADDSi    v20, 134217841
+    7  12 *    RDSPtr
+    8  12 *    RefCpyV  v11, 111987200
+   10  12 *    PopPtr
+   11  11 *    VAR      v11
+   12  12 *    PSF      v2
+   13  13 *    PshVPtr  v0
+   14  14 *    CALLINTF 1099           (Vector2 SceneObject::size() const)
+   16  12 *    ObjInfo  v2, 1
+   16  12 *    VAR      v2
+   17  13 *    PshC4    0x41800000          (i:1098907648, f:16)
+   19  14 *    PshC4    0x0          (i:0, f:0)
+   21  15 *    PSF      v6
+   22  16 *    CALLSYS  132           (void Vector2::_beh_0_(float, float))
+   24  13 *    ObjInfo  v6, 1
+   24  13 *    VAR      v6
+   25  14 *    PSF      v10
+   26  15 *    PSF      v4
+   27  16 *    PshVPtr  v0
+   28  17 *    CALLINTF 1092           (Vector2 SceneObject::pos() const)
+   30  15 *    ObjInfo  v4, 1
+   30  15 *    PSF      v4
+   31  16 *    GETREF   2
+   32  16 *    CALLSYS  139           (Vector2 Vector2::opSub(const Vector2&in) const)
+   34  13 *    ObjInfo  v10, 1
+   34  13 *    ObjInfo  v6, 0
+   34  13 *    PSF      v10
+   35  14 *    ObjInfo  v4, 0
+   35  14 *    PopPtr
+   36  13 *    VAR      v10
+   37  14 *    PshGPtr  112336760
+   39  15 *    CHKREF
+   40  15 *    GETREF   1
+   41  15 *    GETREF   2
+   42  15 *    GETOBJ   3
+   43  15 *    CALLSYS  456           (void CGFX::drawTexture(const Vector2&in, const Vector2&in, CTexture@))
+- 20,3 -
+   45  11 *    ObjInfo  v2, 0
+   45  11 *    ObjInfo  v10, 0
+   45  11 *    SUSPEND
+   46  11 * 0:
+   46  11 *    FREE     v-1, 112324336
+   48  11 *    FREE     v0, 152272520
+   50  11 *    RET      2

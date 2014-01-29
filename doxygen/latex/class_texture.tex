@@ -1,0 +1,177 @@
+\hypertarget{class_texture}{\section{Texture Class Reference}
+\label{class_texture}\index{Texture@{Texture}}
+}
+
+
+The \hyperlink{class_texture}{Texture} class provides a interface to load textures into memory and drawing them on-\/screen.  
+
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_texture_a38d93b339061e4dd1a08e8ffa29a1a44}{Texture} (string file=\char`\"{}\char`\"{})
+\item 
+void \hyperlink{class_texture_ae40122ca5f4db8841cd2f8af4a806394}{create} (const uint \hyperlink{class_texture_a7f6ae152488c02fd955f5deda6e352d2}{width}, const uint \hyperlink{class_texture_ab098175db1d10781eb8f446964ba3ca6}{height})
+\item 
+void \hyperlink{class_texture_a0ea04189337a9ab01defe670280d9c56}{load} (const string \&file\-Path, const bool instantiate=false)
+\item 
+void \hyperlink{class_texture_ac8bb3912a3ce86b15842e79d0b421204}{clear} ()
+\item 
+void \hyperlink{class_texture_a98ee56ba9d8e7eb322310227d9a01ee9}{export\-To\-File} (const string \&file\-Path)
+\item 
+string \hyperlink{class_texture_ae07e8b59383d2dafbb5ad4641f8c86c3}{file\-Name} () const 
+\item 
+Vector2 \hyperlink{class_texture_aee725f563b16e074dc415626b4655beb}{size} () const 
+\item 
+uint \hyperlink{class_texture_a7f6ae152488c02fd955f5deda6e352d2}{width} () const 
+\item 
+uint \hyperlink{class_texture_ab098175db1d10781eb8f446964ba3ca6}{height} () const 
+\item 
+bool \hyperlink{class_texture_aac1b70a2ed67ead038c4d3f5ac4d8a81}{is\-Valid} () const 
+\item 
+vector$<$ vector$<$ Color $>$ $>$ \hyperlink{class_texture_a18729343f3dbcea6fcfa71020de2ffe2}{pixels} ()
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+The \hyperlink{class_texture}{Texture} class provides a interface to load textures into memory and drawing them on-\/screen. 
+
+The texture class stores the Open\-G\-L texture I\-D of a loaded texture. You can load a texture by constructing an instance of this class, or by calling G\-F\-X.\-load\-Texture()
+
+
+\begin{DoxyCode}
+CTexture @texture = @CTexture(\textcolor{stringliteral}{"images/a\_texture.png"});
+\end{DoxyCode}
+
+
+\begin{DoxyRefDesc}{Todo}
+\item[\hyperlink{todo__todo000001}{Todo}]We can currently only load png textures, but more format support is planed for future versions.\end{DoxyRefDesc}
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{class_texture_a38d93b339061e4dd1a08e8ffa29a1a44}{\index{Texture@{Texture}!Texture@{Texture}}
+\index{Texture@{Texture}!Texture@{Texture}}
+\subsubsection[{Texture}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Texture} (
+\begin{DoxyParamCaption}
+\item[{string}]{file = {\ttfamily \char`\"{}\char`\"{}}}
+\end{DoxyParamCaption}
+)}}\label{class_texture_a38d93b339061e4dd1a08e8ffa29a1a44}
+Constructs a texture 
+\begin{DoxyParams}{Parameters}
+{\em file} & \mbox{[}optional\mbox{]} The texture image file \\
+\hline
+\end{DoxyParams}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{class_texture_ac8bb3912a3ce86b15842e79d0b421204}{\index{Texture@{Texture}!clear@{clear}}
+\index{clear@{clear}!Texture@{Texture}}
+\subsubsection[{clear}]{\setlength{\rightskip}{0pt plus 5cm}void clear (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{class_texture_ac8bb3912a3ce86b15842e79d0b421204}
+Clears the texture data of the currently loaded texture \hypertarget{class_texture_ae40122ca5f4db8841cd2f8af4a806394}{\index{Texture@{Texture}!create@{create}}
+\index{create@{create}!Texture@{Texture}}
+\subsubsection[{create}]{\setlength{\rightskip}{0pt plus 5cm}void create (
+\begin{DoxyParamCaption}
+\item[{const uint}]{width, }
+\item[{const uint}]{height}
+\end{DoxyParamCaption}
+)}}\label{class_texture_ae40122ca5f4db8841cd2f8af4a806394}
+Creates an empty texture with an size of {\itshape width} and {\itshape height} 
+\begin{DoxyParams}{Parameters}
+{\em width} & The new width of the texture \\
+\hline
+{\em height} & The new height of the texture \\
+\hline
+\end{DoxyParams}
+\hypertarget{class_texture_a98ee56ba9d8e7eb322310227d9a01ee9}{\index{Texture@{Texture}!export\-To\-File@{export\-To\-File}}
+\index{export\-To\-File@{export\-To\-File}!Texture@{Texture}}
+\subsubsection[{export\-To\-File}]{\setlength{\rightskip}{0pt plus 5cm}void export\-To\-File (
+\begin{DoxyParamCaption}
+\item[{const string \&}]{file\-Path}
+\end{DoxyParamCaption}
+)}}\label{class_texture_a98ee56ba9d8e7eb322310227d9a01ee9}
+Exports the texture data to the file at {\itshape file\-Path} 
+\begin{DoxyParams}{Parameters}
+{\em file\-Path} & The file path to export to \\
+\hline
+\end{DoxyParams}
+\hypertarget{class_texture_ae07e8b59383d2dafbb5ad4641f8c86c3}{\index{Texture@{Texture}!file\-Name@{file\-Name}}
+\index{file\-Name@{file\-Name}!Texture@{Texture}}
+\subsubsection[{file\-Name}]{\setlength{\rightskip}{0pt plus 5cm}string file\-Name (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}\label{class_texture_ae07e8b59383d2dafbb5ad4641f8c86c3}
+\begin{DoxyReturn}{Returns}
+The file\-Name of the texture 
+\end{DoxyReturn}
+\hypertarget{class_texture_ab098175db1d10781eb8f446964ba3ca6}{\index{Texture@{Texture}!height@{height}}
+\index{height@{height}!Texture@{Texture}}
+\subsubsection[{height}]{\setlength{\rightskip}{0pt plus 5cm}uint height (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}\label{class_texture_ab098175db1d10781eb8f446964ba3ca6}
+\begin{DoxyReturn}{Returns}
+The height of the texture 
+\end{DoxyReturn}
+\hypertarget{class_texture_aac1b70a2ed67ead038c4d3f5ac4d8a81}{\index{Texture@{Texture}!is\-Valid@{is\-Valid}}
+\index{is\-Valid@{is\-Valid}!Texture@{Texture}}
+\subsubsection[{is\-Valid}]{\setlength{\rightskip}{0pt plus 5cm}bool is\-Valid (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}\label{class_texture_aac1b70a2ed67ead038c4d3f5ac4d8a81}
+\begin{DoxyReturn}{Returns}
+True if the texture is a valid texture 
+\end{DoxyReturn}
+\hypertarget{class_texture_a0ea04189337a9ab01defe670280d9c56}{\index{Texture@{Texture}!load@{load}}
+\index{load@{load}!Texture@{Texture}}
+\subsubsection[{load}]{\setlength{\rightskip}{0pt plus 5cm}void load (
+\begin{DoxyParamCaption}
+\item[{const string \&}]{file\-Path, }
+\item[{const bool}]{instantiate = {\ttfamily false}}
+\end{DoxyParamCaption}
+)}}\label{class_texture_a0ea04189337a9ab01defe670280d9c56}
+\begin{DoxyVerb}Loads the \e filePath as a texture
+\end{DoxyVerb}
+ 
+\begin{DoxyParams}{Parameters}
+{\em file\-Path} & The file to load \\
+\hline
+{\em instantiate} & True if the loaded texture sould be represented through an instance \\
+\hline
+\end{DoxyParams}
+\hypertarget{class_texture_a18729343f3dbcea6fcfa71020de2ffe2}{\index{Texture@{Texture}!pixels@{pixels}}
+\index{pixels@{pixels}!Texture@{Texture}}
+\subsubsection[{pixels}]{\setlength{\rightskip}{0pt plus 5cm}vector$<$ vector$<$ Color $>$ $>$ pixels (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{class_texture_a18729343f3dbcea6fcfa71020de2ffe2}
+\begin{DoxyReturn}{Returns}
+The pixels of the texture 
+\end{DoxyReturn}
+\hypertarget{class_texture_aee725f563b16e074dc415626b4655beb}{\index{Texture@{Texture}!size@{size}}
+\index{size@{size}!Texture@{Texture}}
+\subsubsection[{size}]{\setlength{\rightskip}{0pt plus 5cm}Vector2 size (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}\label{class_texture_aee725f563b16e074dc415626b4655beb}
+\begin{DoxyReturn}{Returns}
+The size of the texture 
+\end{DoxyReturn}
+\hypertarget{class_texture_a7f6ae152488c02fd955f5deda6e352d2}{\index{Texture@{Texture}!width@{width}}
+\index{width@{width}!Texture@{Texture}}
+\subsubsection[{width}]{\setlength{\rightskip}{0pt plus 5cm}uint width (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}\label{class_texture_a7f6ae152488c02fd955f5deda6e352d2}
+\begin{DoxyReturn}{Returns}
+The width of the texture 
+\end{DoxyReturn}

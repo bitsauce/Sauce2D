@@ -1,0 +1,65 @@
+UiElement::UiElement(UiElement@)
+
+Temps: 1, 2, 3, 4, 5
+
+Variables: 
+ -001: UiElement@ parent
+ 000: UiElement this
+ 001: UiElement {noname}
+ 004: array {noname}
+
+
+- 40,28 -
+    0   5 *    VarDecl  0
+    0   5 *    SUSPEND
+    1   5 *    CALL     1096           (UiElement@[]@ factstub())
+    3   5 *    STOREOBJ v4
+    4   5 *    PshVPtr  v4
+    5   6 *    PshVPtr  v0
+    6   7 *    ADDSi    v24, 134217755
+    8   7 *    REFCPY   0x473fb80
+   10   6 *    PopPtr
+   11   5 *    FREE     v4, 74709888
+- 47,16 -
+   13   5 *    SUSPEND
+   14   5 *    PshVPtr  v0
+   15   6 *    ADDSi    v36, 134217755
+   17   6 *    ALLOC    0x4604ca0, 240             (type:rect2)
+- 48,16 -
+   20   5 *    SUSPEND
+   21   5 *    PshVPtr  v0
+   22   6 *    ADDSi    v40, 134217755
+   24   6 *    ALLOC    0x4604ca0, 240             (type:rect2)
+- 51,7 -
+   27   5 *    SUSPEND
+   28   5 *    SetV1    v5, 0x1
+   30   5 *    LoadThisR v44, 134217755
+   32   5 *    WRTV1    v5
+- 55,3 -
+   33   5 *    SUSPEND
+   34   5 *    PshVPtr  v-1
+   35   6 *    RefCpyV  v1, 74282504
+   37   6 *    PopPtr
+   38   5 *    VAR      v1
+   39   6 *    PshVPtr  v0
+   40   7 *    GETOBJ   1
+   41   7 *    CALLINTF 1088           (void UiElement::setParent(UiElement@))
+- 56,3 -
+   43   5 *    SUSPEND
+   44   5 *    SetV4    v2, 0x3          (i:3, f:4.2039e-045)
+   46   5 *    LoadThisR v28, 134217755
+   48   5 *    WRTV4    v2
+- 57,3 -
+   49   5 *    SUSPEND
+   50   5 *    SetV4    v3, 0x0          (i:0, f:0)
+   52   5 *    LoadThisR v32, 134217755
+   54   5 *    WRTV4    v3
+- 58,3 -
+   55   5 *    SUSPEND
+   56   5 *    PshVPtr  v0
+   57   6 *    CALLINTF 1089           (void UiElement::updateRect())
+- 59,3 -
+   59   5 *    SUSPEND
+   60   5 * 0:
+   60   5 *    FREE     v-1, 74282504
+   62   5 *    RET      2

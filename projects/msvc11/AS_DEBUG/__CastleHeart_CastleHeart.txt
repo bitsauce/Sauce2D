@@ -1,0 +1,163 @@
+CastleHeart::CastleHeart(Team)
+
+Temps: 1, 2, 3, 4, 11, 12, 13, 14, 15, 16, 17, 18, 19
+
+Variables: 
+ -001: Team team
+ 000: CastleHeart this
+ 001: array {noname}
+ 002: CastleHeart {noname}
+ 003: CastleHeart {noname}
+ 011: string {noname}
+
+
+- 16,3 -
+    0  19 *    VarDecl  0
+    0  19 *    SUSPEND
+    1  19 *    PshV4    v-1
+    2  20 *    PshGPtr  75075944
+    4  21 *    CHKREF
+    5  21 *    RefCpyV  v1, 75066560
+    7  21 *    CALLSYS  977           (CastleHeart@& array::opIndex(uint))
+    9  19 *    PshRPtr
+   10  20 *    RDSPtr
+   11  20 *    RefCpyV  v2, 74743592
+   13  20 *    PopPtr
+   14  19 *    ClrVPtr  v3
+   15  19 *    CmpPtr   v2, v3
+   17  19 *    TNZ
+   18  19 *    CpyRtoV4 v4
+   19  19 *    FREE     v2, 74743592
+   21  19 *    FREE     v3, 74743592
+   23  19 *    FREE     v1, 75066560
+   25  19 *    CpyVtoR4 v4
+   26  19 *    JLowZ    +21              (d:49)
+- 18,4 -
+   28  19 * {
+   28  19 *    SUSPEND
+   29  19 *    PshVPtr  v0
+   30  20 *    CALLINTF 1020           (void Entity::remove())
+- 19,4 -
+   32  19 *    SUSPEND
+   33  19 *    STR      51         (l:51 s:"Error: Tea")
+   34  21 *    CALLSYS  33           (const string& _string_factory_(const int, const uint8&))
+   36  19 *    PshRPtr
+   37  20 *    PSF      v11
+   38  21 *    CALLSYS  35           (string::string(const string&in))
+   40  19 *    ObjInfo  v11, 1
+   40  19 *    PSF      v11
+   41  20 *    CALLSYS  304           (void print(const string&in))
+   43  19 *    PSF      v11
+   44  20 *    CALLSYS  36           (string::~string())
+- 20,4 -
+   46  19 *    ObjInfo  v11, 0
+   46  19 *    SUSPEND
+   47  19 * {
+   47  19 * }
+   47  19 *    JMP      +133              (d:182)
+- 22,3 -
+   49  18   }
+   49  19 * 1:
+   49  19 *    SUSPEND
+   50  19 *    PshVPtr  v0
+   51  20 *    RefCpyV  v2, 74743592
+   53  20 *    PopPtr
+   54  19 *    VAR      v2
+   55  20 *    PshV4    v-1
+   56  21 *    PshGPtr  75075944
+   58  22 *    CHKREF
+   59  22 *    RefCpyV  v1, 75066560
+   61  22 *    CALLSYS  977           (CastleHeart@& array::opIndex(uint))
+   63  20 *    PshRPtr
+   64  21 *    GETOBJREF 1
+   65  21 *    REFCPY   0x4747f28
+   67  20 *    FREE     v2, 74743592
+   69  20 *    PopPtr
+   70  19 *    FREE     v1, 75066560
+- 25,3 -
+   72  19 *    SUSPEND
+   73  19 *    PshV4    v-1
+   74  20 *    PshVPtr  v0
+   75  21 *    CALL     718           (Structure::Structure(const Team))
+- 28,3 -
+   77  19 *    SUSPEND
+   78  19 *    PshC4    0x42800000          (i:1115684864, f:64)
+   80  20 *    PshC4    0x42400000          (i:1111490560, f:48)
+   82  21 *    PshVPtr  v0
+   83  22 *    ADDSi    v24, 134217752
+   85  22 *    RDSPtr
+   86  22 *    CALLSYS  145           (void vec2::set(const float, const float))
+- 29,3 -
+   88  19 *    SUSPEND
+   89  19 *    PshC4    0xa          (i:10, f:1.4013e-044)
+   91  20 *    PshVPtr  v0
+   92  21 *    ADDSi    v52, 134217752
+   94  21 *    RDSPtr
+   95  21 *    CALLINTF 1166           (void Health::setMax(int))
+- 32,3 -
+   97  19 *    SUSPEND
+   98  19 *    CALLSYS  536           (int b2dCreateBody())
+  100  19 *    CpyRtoV4 v12
+  101  19 *    LoadThisR v80, 134217752
+  103  19 *    WRTV4    v12
+- 33,3 -
+  104  19 *    SUSPEND
+  105  19 *    PshC4    0x0          (i:0, f:0)
+  107  20 *    PshC4    0x0          (i:0, f:0)
+  109  21 *    PshC4    0x0          (i:0, f:0)
+  111  22 *    LoadThisR v80, 134217752
+  113  22 *    RDR4     v14
+  114  22 *    PshV4    v14
+  115  23 *    CALLSYS  543           (void b2dSetBodyTransform(int, float, float, float))
+- 34,3 -
+  117  19 *    SUSPEND
+  118  19 *    PshC4    0x0          (i:0, f:0)
+  120  20 *    LoadThisR v80, 134217752
+  122  20 *    RDR4     v4
+  123  20 *    PshV4    v4
+  124  21 *    CALLSYS  538           (void b2dSetBodyType(int, BodyType))
+- 37,3 -
+  126  19 *    SUSPEND
+  127  19 *    PshC4    0x41a00000          (i:1101004800, f:20)
+  129  20 *    PshC4    0x0          (i:0, f:0)
+  131  21 *    PshC4    0x0          (i:0, f:0)
+  133  22 *    PshC4    0x0          (i:0, f:0)
+  135  23 *    PshVPtr  v0
+  136  24 *    ADDSi    v24, 134217752
+  138  24 *    RDSPtr
+  139  24 *    ADDSi    v4, 67108877
+  141  24 *    PopRPtr
+  142  23 *    RDR4     v16
+  143  23 *    PshV4    v16
+  144  24 *    PshVPtr  v0
+  145  25 *    ADDSi    v24, 134217752
+  147  25 *    RDSPtr
+  148  25 *    ADDSi    v0, 67108877
+  150  25 *    PopRPtr
+  151  24 *    RDR4     v17
+  152  24 *    PshV4    v17
+  153  25 *    LoadThisR v80, 134217752
+  155  25 *    RDR4     v18
+  156  25 *    PshV4    v18
+  157  26 *    CALLSYS  555           (int b2dCreateFixtureBox(int, float, float, float, float, float, float))
+  159  19 *    CpyRtoV4 v19
+  160  19 *    LoadThisR v84, 134217752
+  162  19 *    WRTV4    v19
+- 38,3 -
+  163  19 *    SUSPEND
+  164  19 *    PshC4    0x8          (i:8, f:1.12104e-044)
+  166  20 *    LoadThisR v84, 134217752
+  168  20 *    RDR4     v19
+  169  20 *    PshV4    v19
+  170  21 *    CALLSYS  561           (void b2dSetFixtureCategoryBits(int, int))
+- 39,3 -
+  172  19 *    SUSPEND
+  173  19 *    PshC4    0x13          (i:19, f:2.66247e-044)
+  175  20 *    LoadThisR v84, 134217752
+  177  20 *    RDR4     v19
+  178  20 *    PshV4    v19
+  179  21 *    CALLSYS  560           (void b2dSetFixtureMaskBits(int, int))
+- 40,3 -
+  181  19 *    SUSPEND
+  182  19 * 0:
+  182  19 *    RET      2

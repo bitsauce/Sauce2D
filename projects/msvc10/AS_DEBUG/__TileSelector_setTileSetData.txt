@@ -1,0 +1,221 @@
+void TileSelector::setTileSetData(TileSetData@)
+
+Temps: 2, 3, 4, 5, 7, 8, 11, 12, 13, 14, 15, 16, 17, 18
+
+Variables: 
+ -001: TileSetData@ tileSetData
+ 001: int tw
+ 006: CFrameBuffer fbo
+ 009: uint x
+ 010: Tile@ tile
+ 000: TileSelector this
+ 007: CTexture {noname}
+ 012: grid {noname}
+ 013: Tile {noname}
+ 008: Color {noname}
+
+
+    0  18 *    VarDecl  0
+    0  18 *    PshVPtr  v0
+    1  19 *    CALLSYS  2           (void _builtin_object_::_beh_4_())
+- 185,3 -
+    3  18 *    SUSPEND
+    4  18 *    VAR      v-1
+    5  19 *    PshVPtr  v0
+    6  20 *    ADDSi    v52, 134217809
+    8  20 *    GETOBJREF 1
+    9  20 *    REFCPY   0x912bba0
+   11  19 *    PopPtr
+- 188,3 -
+   12  18 *    SUSPEND
+   13  18 *    VarDecl  1
+   13  18 *    LoadRObjR v-1, v32, 134217805
+   16  18 *    RDR4     v2
+   17  18 *    SetV4    v3, 0x4          (i:4, f:5.60519e-045)
+   19  18 *    DIVu     v2, v2, v3
+   21  18 *    ADDIi    v1, v2, 1
+- 189,3 -
+   24  18 *    SUSPEND
+   25  18 *    PshC4    0x40          (i:64, f:8.96831e-044)
+   27  19 *    CpyVtoV4 v4, v1
+   29  19 *    iTOf     v4
+   30  19 *    MULIf    v2, v4, 64.000000
+   33  19 *    fTOu     v2
+   34  19 *    PshV4    v2
+   35  20 *    PshVPtr  v0
+   36  21 *    ADDSi    v56, 134217809
+   38  21 *    RDSPtr
+   39  21 *    CALLSYS  501           (void CTexture::create(const uint, const uint))
+- 190,3 -
+   41  18 *    SUSPEND
+   42  18 *    VarDecl  2
+   42  18 *    CALLSYS  251           (CFrameBuffer@ _beh_2_())
+   44  18 *    STOREOBJ v6
+- 190,21 -
+   45  18 *    SUSPEND
+   46  18 *    PshVPtr  v6
+   47  19 *    CALLSYS  433           (void CFrameBuffer::bind())
+- 191,3 -
+   49  18 *    SUSPEND
+   50  18 *    PshVPtr  v0
+   51  19 *    ADDSi    v56, 134217809
+   53  19 *    RDSPtr
+   54  19 *    RefCpyV  v7, 111987200
+   56  19 *    PopPtr
+   57  18 *    VAR      v7
+   58  19 *    PshVPtr  v6
+   59  20 *    GETOBJ   1
+   60  20 *    CALLSYS  436           (void CFrameBuffer::attachToTexture(CTexture@))
+- 194,3 -
+   62  18 *    SUSPEND
+   63  18 *    PSF      v8
+   64  19 *    CALLSYS  176           (void Color::_beh_0_())
+   66  18 *    ObjInfo  v8, 1
+   66  18 *    PshGPtr  112028272
+   68  19 *    CHKREF
+   69  19 *    PSF      v8
+   70  20 *    COPY     v1, 67108879
+   72  19 *    PopPtr
+   73  18 *    VAR      v8
+   74  19 *    PshC4    0x42800000          (i:1115684864, f:64)
+   76  20 *    PshC4    0x42800000          (i:1115684864, f:64)
+   78  21 *    PshC4    0x0          (i:0, f:0)
+   80  22 *    PshC4    0x0          (i:0, f:0)
+   82  23 *    PshGPtr  112336760
+   84  24 *    CHKREF
+   85  24 *    GETREF   5
+   86  24 *    CALLSYS  445           (void CGFX::drawRect(const float, const float, const float, const float, const Color&in arg4 = Color ( )))
+- 197,7 -
+   88  18 *    ObjInfo  v8, 0
+   88  18 *    SUSPEND
+   89  18 *    VarDecl  3
+   89  18 *    SetV4    v9, 0x1          (i:1, f:1.4013e-045)
+   91  18 *    JMP      +92              (d:185)
+   93  18 * 4:
+   93  18 *    SUSPEND
+- 198,4 -
+   94  18 * {
+   94  18 *    SUSPEND
+   95  18 *    VarDecl  4
+   95  18 *    LoadRObjR v-1, v36, 134217805
+   98  18 *    RDR4     v5
+   99  18 *    SUBIi    v2, v5, 2
+  102  18 *    PshV4    v2
+  103  19 *    SUBIi    v5, v9, 1
+  106  19 *    MULIi    v3, v5, 4
+  109  19 *    ADDIi    v4, v3, 1
+  112  19 *    PshV4    v4
+  113  20 *    PshVPtr  v-1
+  114  21 *    ADDSi    v48, 134217805
+  116  21 *    RDSPtr
+  117  21 *    RefCpyV  v12, 152783752
+  119  21 *    CALLSYS  1253           (Tile& grid::at(uint, uint))
+  121  18 *    PshRPtr
+  122  19 *    RefCpyV  v13, 152267792
+  124  19 *    PopPtr
+  125  18 *    PshVPtr  v13
+  126  19 *    RefCpyV  v10, 152267792
+  128  19 *    FREE     v13, 152267792
+  130  19 *    PopPtr
+  131  18 *    FREE     v12, 152783752
+- 199,4 -
+  133  18 *    SUSPEND
+  134  18 *    LoadRObjR v10, v32, 134217781
+  137  18 *    RDR4     v2
+  138  18 *    PshV4    v2
+  139  19 *    LoadRObjR v10, v28, 134217781
+  142  19 *    RDR4     v4
+  143  19 *    PshV4    v4
+  144  20 *    LoadRObjR v10, v24, 134217781
+  147  20 *    RDR4     v14
+  148  20 *    PshV4    v14
+  149  21 *    LoadRObjR v10, v20, 134217781
+  152  21 *    RDR4     v15
+  153  21 *    PshV4    v15
+  154  22 *    PshVPtr  v-1
+  155  23 *    ADDSi    v28, 134217805
+  157  23 *    RDSPtr
+  158  23 *    RefCpyV  v7, 111987200
+  160  23 *    PopPtr
+  161  22 *    VAR      v7
+  162  23 *    PshC4    0x42800000          (i:1115684864, f:64)
+  164  24 *    PshC4    0x42800000          (i:1115684864, f:64)
+  166  25 *    PshC4    0x0          (i:0, f:0)
+  168  26 *    CpyVtoV4 v11, v9
+  170  26 *    uTOf     v11
+  171  26 *    MULIf    v3, v11, 64.000000
+  174  26 *    PshV4    v3
+  175  27 *    PshGPtr  112336760
+  177  28 *    CHKREF
+  178  28 *    GETOBJ   5
+  179  28 *    CALLSYS  458           (void CGFX::drawTextureCoord(const float, const float, const float, const float, CTexture@, const float arg5 = 1.0f, const float arg6 = 1.0f, const float arg7 = 1.0f, const float arg8 = 1.0f))
+  181  18 *    FREE     v10, 152267792
+- 197,27 -
+  183  18 * }
+  183  18 * 3:
+  183  18 *    SUSPEND
+  184  18 *    IncVi    v9
+- 197,19 -
+  185  18 * 1:
+  185  18 *    SUSPEND
+  186  18 *    CMPi     v9, v1
+  188  18 *    JS       -97              (d:93)
+- 203,3 -
+  190  18 * 2:
+  190  18 *    SUSPEND
+  191  18 *    PshVPtr  v6
+  192  19 *    CALLSYS  434           (void CFrameBuffer::unbind())
+- 206,3 -
+  194  18 *    SUSPEND
+  195  18 *    PshC4    0x40          (i:64, f:8.96831e-044)
+  197  19 *    CpyVtoV4 v11, v1
+  199  19 *    iTOf     v11
+  200  19 *    MULIf    v2, v11, 64.000000
+  203  19 *    fTOu     v2
+  204  19 *    PshV4    v2
+  205  20 *    PshVPtr  v0
+  206  21 *    CALLINTF 1095           (void SceneObject::setSize(const uint, const uint))
+- 207,3 -
+  208  18 *    SUSPEND
+  209  18 *    PshC4    0x43160000          (i:1125515264, f:150)
+  211  19 *    PshVPtr  v0
+  212  20 *    CALLINTF 1101           (float SceneObject::height() const)
+  214  19 *    CpyRtoV4 v5
+  215  19 *    ADDIf    v4, v5, 16.000000
+  218  19 *    PshV4    v4
+  219  20 *    CALL     1076           (float min(float, float))
+  221  18 *    CpyRtoV4 v2
+  222  18 *    fTOu     v2
+  223  18 *    PshV4    v2
+  224  19 *    PshC4    0x43800000          (i:1132462080, f:256)
+  226  20 *    PshVPtr  v0
+  227  21 *    CALLINTF 1100           (float SceneObject::width() const)
+  229  20 *    CpyRtoV4 v3
+  230  20 *    ADDIf    v11, v3, 16.000000
+  233  20 *    PshV4    v11
+  234  21 *    CALL     1076           (float min(float, float))
+  236  19 *    CpyRtoV4 v4
+  237  19 *    fTOu     v4
+  238  19 *    PshV4    v4
+  239  20 *    PshVPtr  v0
+  240  21 *    ADDSi    v64, 134217809
+  242  21 *    RDSPtr
+  243  21 *    CALLINTF 1095           (void SceneObject::setSize(const uint, const uint))
+- 208,3 -
+  245  18 *    SUSPEND
+  246  18 *    PshVPtr  v0
+  247  19 *    ADDSi    v64, 134217809
+  249  19 *    RDSPtr
+  250  19 *    CALLINTF 1389           (void ScrollArea::updateScrollArea())
+- 209,3 -
+  252  18 *    SUSPEND
+  253  18 *    SetV4    v18, 0x0          (i:0, f:0)
+  255  18 *    LoadThisR v60, 134217809
+  257  18 *    WRTV4    v18
+- 210,3 -
+  258  18 *    SUSPEND
+  259  18 *    FREE     v6, 112078864
+  261  18 * 0:
+  261  18 *    FREE     v-1, 152222624
+  263  18 *    FREE     v0, 152234968
+  265  18 *    RET      2

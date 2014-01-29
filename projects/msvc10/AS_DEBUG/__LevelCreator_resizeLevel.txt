@@ -1,0 +1,35 @@
+void LevelCreator::resizeLevel(uint, uint)
+
+Temps: 
+
+Variables: 
+ -001: uint width
+ -002: uint height
+ 000: LevelCreator this
+
+
+    0   0 *    VarDecl  0
+    0   0 *    VarDecl  1
+    0   0 *    PshVPtr  v0
+    1   1 *    CALLSYS  2           (void _builtin_object_::_beh_4_())
+- 497,3 -
+    3   0 *    SUSPEND
+    4   0 *    PshV4    v-2
+    5   1 *    PshV4    v-1
+    6   2 *    PshVPtr  v0
+    7   3 *    ADDSi    v208, 134217814
+    9   3 *    RDSPtr
+   10   3 *    CALLSYS  117           (void grid::resize(uint, uint))
+- 498,3 -
+   12   0 *    SUSPEND
+   13   0 *    LoadThisR v64, 134217814
+   15   0 *    WRTV4    v-1
+- 499,3 -
+   16   0 *    SUSPEND
+   17   0 *    LoadThisR v68, 134217814
+   19   0 *    WRTV4    v-2
+- 500,3 -
+   20   0 *    SUSPEND
+   21   0 * 0:
+   21   0 *    FREE     v0, 152243168
+   23   0 *    RET      3

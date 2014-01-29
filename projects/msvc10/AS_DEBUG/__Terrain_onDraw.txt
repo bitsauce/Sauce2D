@@ -1,0 +1,54 @@
+void Terrain::onDraw(DrawEvent)
+
+Temps: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11
+
+Variables: 
+ -001: DrawEvent e
+ 000: Terrain this
+ 011: CTexture {noname}
+
+
+    0  11 *    VarDecl  0
+    0  11 *    PshVPtr  v0
+    1  12 *    CALLSYS  2           (void _builtin_object_::_beh_4_())
+- 66,3 -
+    3  11 *    SUSPEND
+    4  11 *    PshC4    0x3f800000          (i:1065353216, f:1)
+    6  12 *    PshC4    0x3f800000          (i:1065353216, f:1)
+    8  13 *    PshC4    0x3f800000          (i:1065353216, f:1)
+   10  14 *    PshC4    0x0          (i:0, f:0)
+   12  15 *    PshC4    0x0          (i:0, f:0)
+   14  16 *    PshC4    0x0          (i:0, f:0)
+   16  17 *    PshC4    0x0          (i:0, f:0)
+   18  18 *    PshC4    0x3f800000          (i:1065353216, f:1)
+   20  19 *    LoadThisR v44, 134217780
+   22  19 *    RDR4     v9
+   23  19 *    PshV4    v9
+   24  20 *    LoadThisR v44, 134217780
+   26  20 *    RDR4     v10
+   27  20 *    PshV4    v10
+   28  21 *    PshGPtr  87164528
+   30  22 *    CHKREF
+   31  22 *    CALLSYS  461           (void CGFX::pushScale(const float, const float, const float, const float arg3 = 0.0f, const float arg4 = 0.0f, const float arg5 = 0.0f, const float arg6 = 0.0f, const float arg7 = 1.0f, const float arg8 = 1.0f, const float arg9 = 1.0f))
+- 67,3 -
+   33  11 *    SUSPEND
+   34  11 *    PshVPtr  v0
+   35  12 *    ADDSi    v24, 134217780
+   37  12 *    RDSPtr
+   38  12 *    RefCpyV  v11, 86906544
+   40  12 *    PopPtr
+   41  11 *    VAR      v11
+   42  12 *    PshC4    0x44160000          (i:1142292480, f:600)
+   44  13 *    PshC4    0x44480000          (i:1145569280, f:800)
+   46  14 *    PshC4    0x0          (i:0, f:0)
+   48  15 *    PshC4    0x0          (i:0, f:0)
+   50  16 *    PshGPtr  87164528
+   52  17 *    CHKREF
+   53  17 *    GETOBJ   5
+   54  17 *    CALLSYS  441           (void CGFX::drawTexture(const float, const float, const float, const float, CTexture@))
+- 68,3 -
+   56  11 *    SUSPEND
+   57  11 * 0:
+   57  11 *    FREE     v-1, 87151680
+   59  11 *    FREE     v0, 87282968
+   61  11 *    RET      2

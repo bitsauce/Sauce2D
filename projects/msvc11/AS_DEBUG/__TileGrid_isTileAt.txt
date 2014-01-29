@@ -1,0 +1,50 @@
+bool TileGrid::isTileAt(const int, const int)
+
+Temps: 1, 2, 3, 4
+
+Variables: 
+ -001: const int x
+ -002: const int y
+ 000: TileGrid this
+ 002: grid {noname}
+
+
+    0   4 *    VarDecl  0
+    0   4 *    VarDecl  1
+    0   4 *    PshVPtr  v0
+    1   5 *    CALLSYS  2           (void _builtin_object_::_beh_5_())
+- 340,3 -
+    3   4 *    SUSPEND
+    4   4 *    PshV4    v-2
+    5   5 *    PshV4    v-1
+    6   6 *    PshVPtr  v0
+    7   7 *    ADDSi    v20, 134217765
+    9   7 *    RDSPtr
+   10   7 *    CALLSYS  128           (bool grid::isIndex(uint, uint) const)
+   12   4 *    JLowNZ   +4              (d:18)
+   14   4 *    SetV4    v4, 0x0          (i:0, f:0)
+   16   4 *    JMP      +23              (d:41)
+   18   4 * 1:
+   18   4 *    PshV4    v-2
+   19   5 *    PshV4    v-1
+   20   6 *    PshVPtr  v0
+   21   7 *    ADDSi    v20, 134217765
+   23   7 *    RDSPtr
+   24   7 *    RefCpyV  v2, 74728928
+   26   7 *    CALLSYS  1136           (Tile& grid::at(uint, uint))
+   28   4 *    PshRPtr
+   29   5 *    ADDSi    v36, 134217756
+   31   5 *    PopRPtr
+   32   4 *    RDR4     v3
+   33   4 *    FREE     v2, 74728928
+   35   4 *    CMPIi    v3, 0
+   37   4 *    TNZ
+   38   4 *    CpyRtoV4 v3
+   39   4 *    CpyVtoV4 v4, v3
+   41   4 * 2:
+   41   4 * {
+   41   4 * }
+   41   4 *    CpyVtoR4 v4
+   42   4 * 0:
+   42   4 *    FREE     v0, 74296904
+   44   4 *    RET      3

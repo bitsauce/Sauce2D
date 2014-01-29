@@ -1,0 +1,45 @@
+bool sortDrawOrder(int, int)
+
+Temps: 1, 2, 3, 4
+
+Variables: 
+ 000: int a
+ -001: int b
+ 001: array {noname}
+ 002: array {noname}
+
+
+- 32,2 -
+    0   4 *    VarDecl  0
+    0   4 *    VarDecl  1
+    0   4 *    SUSPEND
+    1   4 *    PshV4    v0
+    2   5 *    PshGPtr  74557704
+    4   6 *    CHKREF
+    5   6 *    RefCpyV  v1, 74548680
+    7   6 *    CALLSYS  900           (Entity@& array::opIndex(uint))
+    9   4 *    PshRPtr
+   10   5 *    RDSPtr
+   11   5 *    ADDSi    v32, 134217748
+   13   5 *    PopRPtr
+   14   4 *    RDR4     v3
+   15   4 *    PshV4    v-1
+   16   5 *    PshGPtr  74557704
+   18   6 *    CHKREF
+   19   6 *    RefCpyV  v2, 74548680
+   21   6 *    CALLSYS  900           (Entity@& array::opIndex(uint))
+   23   4 *    PshRPtr
+   24   5 *    RDSPtr
+   25   5 *    ADDSi    v32, 134217748
+   27   5 *    PopRPtr
+   28   4 *    RDR4     v4
+   29   4 *    FREE     v1, 74548680
+   31   4 *    FREE     v2, 74548680
+   33   4 *    CMPi     v3, v4
+   35   4 *    TS
+   36   4 *    CpyRtoV4 v3
+   37   4 * {
+   37   4 * }
+   37   4 *    CpyVtoR4 v3
+   38   4 * 0:
+   38   4 *    RET      2

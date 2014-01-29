@@ -1,0 +1,15 @@
+void AiPlayer::update()
+
+Temps: 
+
+Variables: 
+ 000: AiPlayer this
+
+
+    0   0 *    PshVPtr  v0
+    1   1 *    CALLSYS  2           (void _builtin_object_::_beh_5_())
+- 30,3 -
+    3   0 *    SUSPEND
+    4   0 * 0:
+    4   0 *    FREE     v0, 74310144
+    6   0 *    RET      1

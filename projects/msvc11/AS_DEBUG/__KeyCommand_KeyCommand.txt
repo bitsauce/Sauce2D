@@ -1,0 +1,34 @@
+KeyCommand::KeyCommand(VirtualKey, CommandEvent@)
+
+Temps: 1
+
+Variables: 
+ -001: VirtualKey key
+ -002: CommandEvent@ func
+ 000: KeyCommand this
+
+
+- 16,7 -
+    0   1 *    VarDecl  0
+    0   1 *    VarDecl  1
+    0   1 *    SUSPEND
+    1   1 *    SetV1    v1, 0x0
+    3   1 *    LoadThisR v28, 134217753
+    5   1 *    WRTV1    v1
+- 11,3 -
+    6   1 *    SUSPEND
+    7   1 *    LoadThisR v20, 134217753
+    9   1 *    WRTV4    v-1
+- 12,3 -
+   10   1 *    SUSPEND
+   11   1 *    VAR      v-2
+   12   2 *    PshVPtr  v0
+   13   3 *    ADDSi    v24, 134217753
+   15   3 *    GETOBJREF 1
+   16   3 *    REFCPY   0x45e4d64
+   18   2 *    PopPtr
+- 13,3 -
+   19   1 *    SUSPEND
+   20   1 * 0:
+   20   1 *    FREE     v-2, 73289060
+   22   1 *    RET      3

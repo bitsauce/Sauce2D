@@ -1,0 +1,65 @@
+void EditorRoom::drawRoom(Color)
+
+Temps: 5, 6, 7, 8, 9, 10
+
+Variables: 
+ -001: Color roomColor
+ 004: Rect2 roomBounds
+ 000: EditorRoom this
+ 010: Color {noname}
+
+
+    0  10 *    VarDecl  0
+    0  10 *    PshVPtr  v0
+    1  11 *    CALLSYS  2           (void _builtin_object_::_beh_4_())
+- 466,3 -
+    3  10 *    SUSPEND
+    4  10 *    VarDecl  1
+    4  10 *    LoadThisR v28, 134217785
+    6  10 *    RDR4     v5
+    7  10 *    iTOf     v5
+    8  10 *    MULIf    v5, v5, 64.000000
+   11  10 *    PshV4    v5
+   12  11 *    LoadThisR v24, 134217785
+   14  11 *    RDR4     v6
+   15  11 *    iTOf     v6
+   16  11 *    MULIf    v6, v6, 64.000000
+   19  11 *    PshV4    v6
+   20  12 *    LoadThisR v20, 134217785
+   22  12 *    RDR4     v7
+   23  12 *    iTOf     v7
+   24  12 *    MULIf    v7, v7, 64.000000
+   27  12 *    PshV4    v7
+   28  13 *    LoadThisR v16, 134217785
+   30  13 *    RDR4     v8
+   31  13 *    iTOf     v8
+   32  13 *    MULIf    v8, v8, 64.000000
+   35  13 *    PshV4    v8
+   36  14 *    PSF      v4
+   37  15 *    CALLSYS  157           (void Rect2::_beh_0_(const float, const float, const float, const float))
+- 468,3 -
+   39  10 *    ObjInfo  v4, 1
+   39  10 *    SUSPEND
+   40  10 *    PshC4    0x40000000          (i:1073741824, f:2)
+   42  11 *    PSF      v10
+   43  12 *    PshVPtr  v-1
+   44  13 *    CALLSYS  188           (Color Color::opMul(float) const)
+   46  10 *    ObjInfo  v10, 1
+   46  10 *    VAR      v10
+   47  11 *    PshC4    0x40400000          (i:1077936128, f:3)
+   49  12 *    VAR      v-1
+   50  13 *    VAR      v4
+   51  14 *    PshGPtr  112336760
+   53  15 *    CHKREF
+   54  15 *    GETREF   1
+   55  15 *    GETOBJREF 2
+   56  15 *    GETREF   4
+   57  15 *    CALLSYS  450           (void CGFX::drawRectOutlined(const Rect2&in, const Color&in arg1 = Color ( ), const float arg2 = 1.0f, const Color&in arg3 = Color ( 0 , 0 , 0 )))
+- 469,3 -
+   59  10 *    ObjInfo  v10, 0
+   59  10 *    SUSPEND
+   60  10 *    ObjInfo  v4, 0
+   60  10 * 0:
+   60  10 *    FREE     v-1, 112018136
+   62  10 *    FREE     v0, 152236880
+   64  10 *    RET      2

@@ -1,0 +1,21 @@
+void Frame::setBorder(const int)
+
+Temps: 
+
+Variables: 
+ -001: const int px
+ 000: Frame this
+
+
+    0   0 *    VarDecl  0
+    0   0 *    PshVPtr  v0
+    1   1 *    CALLSYS  2           (void _builtin_object_::_beh_5_())
+- 22,3 -
+    3   0 *    SUSPEND
+    4   0 *    LoadThisR v52, 134217781
+    6   0 *    WRTV4    v-1
+- 23,3 -
+    7   0 *    SUSPEND
+    8   0 * 0:
+    8   0 *    FREE     v0, 74307120
+   10   0 *    RET      2

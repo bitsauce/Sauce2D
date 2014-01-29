@@ -1,0 +1,15 @@
+GameConsole::~GameConsole()
+
+Temps: 
+
+Variables: 
+ 000: GameConsole this
+
+
+    0   0 *    PshVPtr  v0
+    1   1 *    CALLSYS  2           (void _builtin_object_::_beh_4_())
+- 20,3 -
+    3   0 *    SUSPEND
+    4   0 * 0:
+    4   0 *    FREE     v0, 152247296
+    6   0 *    RET      1

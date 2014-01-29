@@ -1,0 +1,78 @@
+void Fog::revealAll()
+
+Temps: 2, 4
+
+Variables: 
+ 001: uint y
+ 003: uint x
+ 000: Fog this
+ 004: grid {noname}
+
+
+    0   4 *    PshVPtr  v0
+    1   5 *    CALLSYS  2           (void _builtin_object_::_beh_5_())
+- 107,7 -
+    3   4 *    SUSPEND
+    4   4 *    VarDecl  0
+    4   4 *    SetV4    v1, 0x0          (i:0, f:0)
+    6   4 *    JMP      +39              (d:47)
+    8   4 * 4:
+    8   4 *    SUSPEND
+- 109,8 -
+    9   4 * {
+    9   4 *    SUSPEND
+   10   4 *    VarDecl  1
+   10   4 *    SetV4    v3, 0x0          (i:0, f:0)
+   12   4 *    JMP      +19              (d:33)
+   14   4 * 8:
+   14   4 *    SUSPEND
+- 111,5 -
+   15   4 * {
+   15   4 *    SUSPEND
+   16   4 *    SetV4    v2, 0x0          (i:0, f:0)
+   18   4 *    PshV4    v1
+   19   5 *    PshV4    v3
+   20   6 *    PshVPtr  v0
+   21   7 *    ADDSi    v44, 134217767
+   23   7 *    RDSPtr
+   24   7 *    RefCpyV  v4, 74378872
+   26   7 *    CALLSYS  667           (int& grid::at(uint, uint))
+   28   4 *    WRTV4    v2
+   29   4 *    FREE     v4, 74378872
+- 109,46 -
+   31   4 * }
+   31   4 * 7:
+   31   4 *    SUSPEND
+   32   4 *    IncVi    v3
+- 109,20 -
+   33   4 * 5:
+   33   4 *    SUSPEND
+   34   4 *    PshVPtr  v0
+   35   5 *    ADDSi    v44, 134217767
+   37   5 *    RDSPtr
+   38   5 *    CALLSYS  125           (uint grid::width() const)
+   40   4 *    CpyRtoV4 v2
+   41   4 *    CMPu     v3, v2
+   43   4 *    JS       -31              (d:14)
+- 107,46 -
+   45   4 * 6:
+   45   4 * }
+   45   4 * 3:
+   45   4 *    SUSPEND
+   46   4 *    IncVi    v1
+- 107,19 -
+   47   4 * 1:
+   47   4 *    SUSPEND
+   48   4 *    PshVPtr  v0
+   49   5 *    ADDSi    v44, 134217767
+   51   5 *    RDSPtr
+   52   5 *    CALLSYS  126           (uint grid::height() const)
+   54   4 *    CpyRtoV4 v2
+   55   4 *    CMPu     v1, v2
+   57   4 *    JS       -51              (d:8)
+- 114,3 -
+   59   4 * 2:
+   59   4 *    SUSPEND
+   60   4 * 0:
+   60   4 *    FREE     v0, 74298416
+   62   4 *    RET      1

@@ -1,0 +1,121 @@
+void NetworkController::onKeyPress(KeyEvent)
+
+Temps: 1, 2, 3, 5, 6
+
+Variables: 
+ -001: KeyEvent e
+ 004: Cursor c
+ 004: Cursor c
+ 000: NetworkController this
+ 003: string {noname}
+ 005: Cursor {noname}
+
+
+    0   6 *    VarDecl  0
+    0   6 *    PshVPtr  v0
+    1   7 *    CALLSYS  2           (void _builtin_object_::_beh_4_())
+- 329,3 -
+    3   6 *    SUSPEND
+    4   6 *    LoadRObjR v-1, v4, 67108908
+    7   6 *    RDR4     v1
+    8   6 *    CMPIi    v1, 67
+   10   6 *    JNZ      +49              (d:61)
+- 332,4 -
+   12   6 * {
+   12   6 *    SUSPEND
+   13   6 *    SetV2    v2, 0x1402
+   15   6 *    PshV4    v2
+   16   7 *    PSF      v3
+   17   8 *    STR      3         (l:14 s:"127.0.0.1:")
+   18  10 *    CALLSYS  32           (const string& _string_factory_(const int, const uint8&))
+   20   8 *    PshRPtr
+   21   9 *    ALLOC    0x2d5cab8, 34             (type:string)
+   24   7 *    VAR      v3
+   25   8 *    PshGPtr  113434048
+   27   9 *    CHKREF
+   28   9 *    GETOBJ   1
+   29   9 *    CALLSYS  300           (void CClient::connect(const string, const uint16))
+- 333,4 -
+   31   6 *    SUSPEND
+   32   6 *    VarDecl  1
+   32   6 *    CALL     634           (Cursor@ Cursor())
+   34   6 *    STOREOBJ v4
+- 334,4 -
+   35   6 *    SUSPEND
+   36   6 *    TYPEID   0x48000033          'Cursor@'
+   38   7 *    PshVPtr  v4
+   39   8 *    RefCpyV  v5, 113547656
+   41   8 *    PopPtr
+   42   7 *    VAR      v5
+   43   8 *    PshGPtr  113434048
+   45   9 *    CHKREF
+   46   9 *    GETREF   1
+   47   9 *    CALLSYS  302           (void CClient::addClientObject(?&in))
+   49   6 *    FREE     v5, 113547656
+- 335,4 -
+   51   6 *    SUSPEND
+   52   6 *    SetV1    v2, 0x1
+   54   6 *    LoadThisR v20, 134217780
+   56   6 *    WRTV1    v2
+   57   6 *    FREE     v4, 113547656
+   59   6 * }
+   59   6 *    JMP      +49              (d:110)
+- 336,9 -
+   61   6 * 1:
+   61   6 *    SUSPEND
+   62   6 *    LoadRObjR v-1, v4, 67108908
+   65   6 *    RDR4     v1
+   66   6 *    CMPIi    v1, 83
+   68   6 *    JNZ      +40              (d:110)
+- 339,4 -
+   70   6 * {
+   70   6 *    SUSPEND
+   71   6 *    SetV2    v2, 0x0
+   73   6 *    PshV4    v2
+   74   7 *    SetV2    v6, 0x1400
+   76   7 *    PshV4    v6
+   77   8 *    PshGPtr  113434392
+   79   9 *    CHKREF
+   80   9 *    CALLSYS  363           (void CServer::host(const uint16, const uint16 arg1 = 0))
+- 340,4 -
+   82   6 *    SUSPEND
+   83   6 *    VarDecl  2
+   83   6 *    CALL     634           (Cursor@ Cursor())
+   85   6 *    STOREOBJ v4
+- 341,4 -
+   86   6 *    SUSPEND
+   87   6 *    TYPEID   0x48000033          'Cursor@'
+   89   7 *    PshVPtr  v4
+   90   8 *    RefCpyV  v5, 113547656
+   92   8 *    PopPtr
+   93   7 *    VAR      v5
+   94   8 *    PshGPtr  113434048
+   96   9 *    CHKREF
+   97   9 *    GETREF   1
+   98   9 *    CALLSYS  302           (void CClient::addClientObject(?&in))
+  100   6 *    FREE     v5, 113547656
+- 345,4 -
+  102   6 *    SUSPEND
+  103   6 *    SetV1    v6, 0x1
+  105   6 *    LoadThisR v21, 134217780
+  107   6 *    WRTV1    v6
+  108   6 *    FREE     v4, 113547656
+- 349,3 -
+  110   6 * }
+  110   6 * 3:
+  110   6 * 2:
+  110   6 *    SUSPEND
+  111   6 *    LoadRObjR v-1, v4, 67108908
+  114   6 *    RDR4     v1
+  115   6 *    CMPIi    v1, 81
+  117   6 *    JNZ      +3              (d:122)
+- 350,4 -
+  119   6 *    SUSPEND
+  120   6 *    CALLSYS  547           (void exit())
+- 351,3 -
+  122   6 * 4:
+  122   6 *    SUSPEND
+  123   6 * 0:
+  123   6 *    FREE     v-1, 113426640
+  125   6 *    FREE     v0, 113548336
+  127   6 *    RET      2

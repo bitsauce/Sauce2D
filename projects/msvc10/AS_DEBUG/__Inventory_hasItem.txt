@@ -1,0 +1,19 @@
+void Inventory::hasItem(int, int arg1 = 1)
+
+Temps: 
+
+Variables: 
+ -001: int item
+ -002: int amt
+ 000: Inventory this
+
+
+    0   0 *    VarDecl  0
+    0   0 *    VarDecl  1
+    0   0 *    PshVPtr  v0
+    1   1 *    CALLSYS  2           (void _builtin_object_::_beh_4_())
+- 61,3 -
+    3   0 *    SUSPEND
+    4   0 * 0:
+    4   0 *    FREE     v0, 152246288
+    6   0 *    RET      3

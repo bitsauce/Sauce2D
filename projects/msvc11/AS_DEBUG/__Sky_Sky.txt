@@ -1,0 +1,318 @@
+Sky::Sky()
+
+Temps: 1, 2, 3, 10, 18, 25, 26, 27, 28, 29, 30, 31, 32, 33, 37, 38, 39
+
+Variables: 
+ 011: uint i
+ 000: Sky this
+ 001: Sky {noname}
+ 002: Sky {noname}
+ 028: array {noname}
+ 029: array {noname}
+ 033: Sun {noname}
+ 038: array {noname}
+ 039: array {noname}
+ 010: string {noname}
+ 018: string {noname}
+ 025: string {noname}
+ 037: vec4 {noname}
+
+
+- 26,6 -
+    0  39 *    SUSPEND
+    1  39 *    CALL     812           (Sun@ Sun())
+    3  39 *    STOREOBJ v33
+    4  39 *    PshVPtr  v33
+    5  40 *    PshVPtr  v0
+    6  41 *    ADDSi    v80, 134217788
+    8  41 *    REFCPY   0x46de7f8
+   10  40 *    PopPtr
+   11  39 *    FREE     v33, 74311672
+   13  39 *    PshVPtr  v0
+   14  40 *    CALL     584           (Entity::Entity())
+- 15,15 -
+   16  39 *    SUSPEND
+   17  39 *    PshVPtr  v0
+   18  40 *    ADDSi    v44, 134217788
+   20  40 *    ALLOC    0x4600fd0, 216             (type:vec4)
+   23  39 *    SetV1    v27, 0xff
+   25  39 *    PshV4    v27
+   26  40 *    SetV1    v31, 0xff
+   28  40 *    PshV4    v31
+   29  41 *    SetV1    v3, 0xff
+   31  41 *    PshV4    v3
+   32  42 *    SetV1    v30, 0xff
+   34  42 *    PshV4    v30
+   35  43 *    PSF      v37
+   36  44 *    CALL     938           (vec4 rgbvec(const uint8, const uint8, const uint8, const uint8 = 255))
+   38  39 *    ObjInfo  v37, 1
+   38  39 *    PSF      v37
+   39  40 *    PshVPtr  v0
+   40  41 *    ADDSi    v44, 134217788
+   42  41 *    RDSPtr
+   43  41 *    COPY     v4, 67108880
+   45  40 *    ObjInfo  v37, 0
+   45  40 *    PopPtr
+- 16,15 -
+   46  39 *    SUSPEND
+   47  39 *    PshVPtr  v0
+   48  40 *    ADDSi    v48, 134217788
+   50  40 *    ALLOC    0x4600fd0, 216             (type:vec4)
+   53  39 *    SetV1    v27, 0xff
+   55  39 *    PshV4    v27
+   56  40 *    SetV1    v31, 0xff
+   58  40 *    PshV4    v31
+   59  41 *    SetV1    v30, 0xaa
+   61  41 *    PshV4    v30
+   62  42 *    SetV1    v3, 0x5a
+   64  42 *    PshV4    v3
+   65  43 *    PSF      v37
+   66  44 *    CALL     938           (vec4 rgbvec(const uint8, const uint8, const uint8, const uint8 = 255))
+   68  39 *    ObjInfo  v37, 1
+   68  39 *    PSF      v37
+   69  40 *    PshVPtr  v0
+   70  41 *    ADDSi    v48, 134217788
+   72  41 *    RDSPtr
+   73  41 *    COPY     v4, 67108880
+   75  40 *    ObjInfo  v37, 0
+   75  40 *    PopPtr
+- 17,16 -
+   76  39 *    SUSPEND
+   77  39 *    SetV4    v27, 0x44340000          (i:1144258560, f:720)
+   79  39 *    LoadThisR v52, 134217788
+   81  39 *    WRTV4    v27
+- 18,14 -
+   82  39 *    SUSPEND
+   83  39 *    SetV1    v31, 0x0
+   85  39 *    PshV4    v31
+   86  40 *    PshC4    0x0          (i:0, f:0)
+   88  41 *    STR      87         (l:35 s:":/sprites/")
+   89  43 *    CALLSYS  33           (const string& _string_factory_(const int, const uint8&))
+   91  41 *    PshRPtr
+   92  42 *    PSF      v10
+   93  43 *    CALLSYS  35           (string::string(const string&in))
+   95  41 *    ObjInfo  v10, 1
+   95  41 *    PSF      v10
+   96  42 *    CALLSYS  472           (int gfxLoadImage(const string&in, const TextureFilter = NearestFilter, const bool = false))
+   98  39 *    CpyRtoV4 v30
+   99  39 *    PSF      v10
+  100  40 *    CALLSYS  36           (string::~string())
+  102  39 *    ObjInfo  v10, 0
+  102  39 *    LoadThisR v56, 134217788
+  104  39 *    WRTV4    v30
+- 19,14 -
+  105  39 *    SUSPEND
+  106  39 *    SetV1    v27, 0x0
+  108  39 *    PshV4    v27
+  109  40 *    PshC4    0x0          (i:0, f:0)
+  111  41 *    STR      87         (l:35 s:":/sprites/")
+  112  43 *    CALLSYS  33           (const string& _string_factory_(const int, const uint8&))
+  114  41 *    PshRPtr
+  115  42 *    PSF      v18
+  116  43 *    CALLSYS  35           (string::string(const string&in))
+  118  41 *    ObjInfo  v18, 1
+  118  41 *    PSF      v18
+  119  42 *    CALLSYS  472           (int gfxLoadImage(const string&in, const TextureFilter = NearestFilter, const bool = false))
+  121  39 *    CpyRtoV4 v30
+  122  39 *    PSF      v18
+  123  40 *    CALLSYS  36           (string::~string())
+  125  39 *    ObjInfo  v18, 0
+  125  39 *    LoadThisR v60, 134217788
+  127  39 *    WRTV4    v30
+- 20,14 -
+  128  39 *    SUSPEND
+  129  39 *    SetV1    v31, 0x0
+  131  39 *    PshV4    v31
+  132  40 *    PshC4    0x0          (i:0, f:0)
+  134  41 *    STR      88         (l:30 s:":/sprites/")
+  135  43 *    CALLSYS  33           (const string& _string_factory_(const int, const uint8&))
+  137  41 *    PshRPtr
+  138  42 *    PSF      v10
+  139  43 *    CALLSYS  35           (string::string(const string&in))
+  141  41 *    ObjInfo  v10, 1
+  141  41 *    PSF      v10
+  142  42 *    CALLSYS  472           (int gfxLoadImage(const string&in, const TextureFilter = NearestFilter, const bool = false))
+  144  39 *    CpyRtoV4 v30
+  145  39 *    PSF      v10
+  146  40 *    CALLSYS  36           (string::~string())
+  148  39 *    ObjInfo  v10, 0
+  148  39 *    LoadThisR v64, 134217788
+  150  39 *    WRTV4    v30
+- 21,16 -
+  151  39 *    SUSPEND
+  152  39 *    SetV4    v27, 0x0          (i:0, f:0)
+  154  39 *    LoadThisR v68, 134217788
+  156  39 *    WRTV4    v27
+- 23,21 -
+  157  39 *    SUSPEND
+  158  39 *    PshC4    0x5          (i:5, f:7.00649e-045)
+  160  40 *    CALL     986           (int[]@ factstub(uint))
+  162  39 *    STOREOBJ v38
+  163  39 *    PshVPtr  v38
+  164  40 *    PshVPtr  v0
+  165  41 *    ADDSi    v72, 134217788
+  167  41 *    REFCPY   0x472f098
+  169  40 *    FREE     v38, 74641560
+  171  40 *    PopPtr
+- 24,22 -
+  172  39 *    SUSPEND
+  173  39 *    PshC4    0x5          (i:5, f:7.00649e-045)
+  175  40 *    CALL     360           (vec2[]@ factstub(uint))
+  177  39 *    STOREOBJ v39
+  178  39 *    PshVPtr  v39
+  179  40 *    PshVPtr  v0
+  180  41 *    ADDSi    v76, 134217788
+  182  41 *    REFCPY   0x46159f0
+  184  40 *    FREE     v39, 73488880
+  186  40 *    PopPtr
+- 31,3 -
+  187  39 *    SUSPEND
+  188  39 *    PshGPtr  74609888
+  190  40 *    RefCpyV  v1, 74312560
+  192  40 *    PopPtr
+  193  39 *    ClrVPtr  v2
+  194  39 *    CmpPtr   v1, v2
+  196  39 *    TNZ
+  197  39 *    CpyRtoV4 v3
+  198  39 *    FREE     v1, 74312560
+  200  39 *    FREE     v2, 74312560
+  202  39 *    CpyVtoR4 v3
+  203  39 *    JLowZ    +21              (d:226)
+- 33,4 -
+  205  39 * {
+  205  39 *    SUSPEND
+  206  39 *    STR      84         (l:29 s:"Error: the")
+  207  41 *    CALLSYS  33           (const string& _string_factory_(const int, const uint8&))
+  209  39 *    PshRPtr
+  210  40 *    PSF      v10
+  211  41 *    CALLSYS  35           (string::string(const string&in))
+  213  39 *    ObjInfo  v10, 1
+  213  39 *    PSF      v10
+  214  40 *    CALLSYS  304           (void print(const string&in))
+  216  39 *    PSF      v10
+  217  40 *    CALLSYS  36           (string::~string())
+- 34,4 -
+  219  39 *    ObjInfo  v10, 0
+  219  39 *    SUSPEND
+  220  39 *    PshVPtr  v0
+  221  40 *    CALLINTF 1016           (void Entity::remove())
+- 35,4 -
+  223  39 *    SUSPEND
+  224  39 * {
+  224  39 * }
+  224  39 *    JMP      +126              (d:352)
+- 37,3 -
+  226  38   }
+  226  39 * 1:
+  226  39 *    SUSPEND
+  227  39 *    PshVPtr  v0
+  228  40 *    RefCpyV  v1, 74312560
+  230  40 *    PopPtr
+  231  39 *    VAR      v1
+  232  40 *    PGA      74609888
+  234  41 *    GETOBJREF 1
+  235  41 *    REFCPY   0x46deb70
+  237  40 *    FREE     v1, 74312560
+  239  40 *    PopPtr
+- 40,7 -
+  240  39 *    SUSPEND
+  241  39 *    VarDecl  0
+  241  39 *    SetV4    v11, 0x0          (i:0, f:0)
+  243  39 *    JMP      +89              (d:334)
+  245  39 * 5:
+  245  39 *    SUSPEND
+- 42,4 -
+  246  39 * {
+  246  39 *    SUSPEND
+  247  39 *    SetV1    v3, 0x0
+  249  39 *    PshV4    v3
+  250  40 *    PshC4    0x0          (i:0, f:0)
+  252  41 *    STR      86         (l:4 s:".png")
+  253  43 *    CALLSYS  33           (const string& _string_factory_(const int, const uint8&))
+  255  41 *    PshRPtr
+  256  42 *    PSF      v18
+  257  43 *    CALLSYS  35           (string::string(const string&in))
+  259  41 *    ObjInfo  v18, 1
+  259  41 *    VAR      v18
+  260  42 *    PSF      v25
+  261  43 *    PshV4    v11
+  262  44 *    PSF      v10
+  263  45 *    STR      85         (l:25 s:":/sprites/")
+  264  47 *    CALLSYS  33           (const string& _string_factory_(const int, const uint8&))
+  266  45 *    PshRPtr
+  267  46 *    CALLSYS  59           (string string::opAdd(uint) const)
+  269  43 *    ObjInfo  v10, 1
+  269  43 *    PSF      v10
+  270  44 *    GETREF   2
+  271  44 *    CALLSYS  41           (string string::opAdd(const string&in) const)
+  273  41 *    ObjInfo  v25, 1
+  273  41 *    PSF      v18
+  274  42 *    CALLSYS  36           (string::~string())
+  276  41 *    ObjInfo  v18, 0
+  276  41 *    PSF      v25
+  277  42 *    PSF      v10
+  278  43 *    CALLSYS  36           (string::~string())
+  280  42 *    ObjInfo  v10, 0
+  280  42 *    PopPtr
+  281  41 *    PSF      v25
+  282  42 *    CALLSYS  472           (int gfxLoadImage(const string&in, const TextureFilter = NearestFilter, const bool = false))
+  284  39 *    CpyRtoV4 v27
+  285  39 *    PSF      v25
+  286  40 *    CALLSYS  36           (string::~string())
+  288  39 *    ObjInfo  v25, 0
+  288  39 *    PshV4    v11
+  289  40 *    PshVPtr  v0
+  290  41 *    ADDSi    v72, 134217788
+  292  41 *    RDSPtr
+  293  41 *    RefCpyV  v28, 74641560
+  295  41 *    CALLSYS  989           (int& array::opIndex(uint))
+  297  39 *    WRTV4    v27
+  298  39 *    FREE     v28, 74641560
+- 43,4 -
+  300  39 *    SUSPEND
+  301  39 *    PshC4    0x0          (i:0, f:0)
+  303  40 *    PshGPtr  74560968
+  305  41 *    ADDSi    v0, 67108877
+  307  41 *    PopRPtr
+  308  40 *    RDR4     v3
+  309  40 *    fTOi     v3
+  310  40 *    PshV4    v3
+  311  41 *    PshC4    0x0          (i:0, f:0)
+  313  42 *    CALLSYS  339           (int randomInt(const int, const int))
+  315  40 *    CpyRtoV4 v30
+  316  40 *    iTOf     v30
+  317  40 *    PshV4    v30
+  318  41 *    PshV4    v11
+  319  42 *    PshVPtr  v0
+  320  43 *    ADDSi    v76, 134217788
+  322  43 *    RDSPtr
+  323  43 *    RefCpyV  v29, 73488880
+  325  43 *    CALLSYS  363           (vec2& array::opIndex(uint))
+  327  41 *    PshRPtr
+  328  42 *    CALLSYS  145           (void vec2::set(const float, const float))
+  330  39 *    FREE     v29, 73488880
+- 40,26 -
+  332  39 * }
+  332  39 * 4:
+  332  39 *    SUSPEND
+  333  39 *    IncVi    v11
+- 40,19 -
+  334  39 * 2:
+  334  39 *    SUSPEND
+  335  39 *    CMPIu    v11, 5
+  337  39 *    JS       -94              (d:245)
+- 47,3 -
+  339  39 * 3:
+  339  39 *    SUSPEND
+  340  39 *    PshC4    0x2          (i:2, f:2.8026e-045)
+  342  40 *    PshVPtr  v0
+  343  41 *    CALLINTF 1017           (void Entity::setRenderPass(const RenderPass))
+- 48,3 -
+  345  39 *    SUSPEND
+  346  39 *    SetV4    v3, 0xffffff9c          (i:-100, f:-1.#QNAN)
+  348  39 *    LoadThisR v32, 134217788
+  350  39 *    WRTV4    v3
+- 49,3 -
+  351  39 *    SUSPEND
+  352  39 * 0:
+  352  39 *    RET      1

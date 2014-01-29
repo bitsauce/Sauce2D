@@ -1,0 +1,102 @@
+CMetaObject@ LevelManager::getLevelEntry(const string)
+
+Temps: 2, 3, 11, 19, 20
+
+Variables: 
+ -001: const string entryName
+ 001: uint i
+ 000: LevelManager this
+ 003: array {noname}
+ 020: CMetaObject {noname}
+ 011: string {noname}
+ 019: string {noname}
+
+
+    0  20 *    VarDecl  0
+    0  20 *    PshVPtr  v0
+    1  21 *    CALLSYS  2           (void _builtin_object_::_beh_4_())
+- 167,7 -
+    3  20 *    SUSPEND
+    4  20 *    VarDecl  1
+    4  20 *    SetV4    v1, 0x0          (i:0, f:0)
+    6  20 *    JMP      +62              (d:70)
+    8  20 * 4:
+    8  20 *    SUSPEND
+- 169,4 -
+    9  20 * {
+    9  20 *    SUSPEND
+   10  20 *    VAR      v-1
+   11  21 *    STR      9         (l:4 s:"name")
+   12  23 *    CALLSYS  32           (const string& _string_factory_(const int, const uint8&))
+   14  21 *    PshRPtr
+   15  22 *    PSF      v11
+   16  23 *    CALLSYS  34           (void string::_beh_0_(const string&in))
+   18  21 *    ObjInfo  v11, 1
+   18  21 *    VAR      v11
+   19  22 *    PSF      v19
+   20  23 *    PshV4    v1
+   21  24 *    PshVPtr  v0
+   22  25 *    ADDSi    v32, 134217815
+   24  25 *    RDSPtr
+   25  25 *    RefCpyV  v3, 153017176
+   27  25 *    CALLSYS  1461           (CMetaObject& array::opIndex(uint))
+   29  23 *    PshRPtr
+   30  24 *    GETREF   2
+   31  24 *    CALLSYS  278           (string CMetaObject::property(const string&in))
+   33  21 *    ObjInfo  v19, 1
+   33  21 *    PSF      v11
+   34  22 *    CALLSYS  35           (void string::_beh_1_())
+   36  21 *    ObjInfo  v11, 0
+   36  21 *    FREE     v3, 153017176
+   38  21 *    PSF      v19
+   39  22 *    GETOBJREF 1
+   40  22 *    CALLSYS  38           (bool string::opEquals(const string&in) const)
+   42  20 *    CpyRtoV4 v2
+   43  20 *    PSF      v19
+   44  21 *    CALLSYS  35           (void string::_beh_1_())
+   46  20 *    ObjInfo  v19, 0
+   46  20 *    CpyVtoR4 v2
+   47  20 *    JLowZ    +19              (d:68)
+- 170,5 -
+   49  20 *    SUSPEND
+   50  20 *    PshV4    v1
+   51  21 *    PshVPtr  v0
+   52  22 *    ADDSi    v32, 134217815
+   54  22 *    RDSPtr
+   55  22 *    RefCpyV  v3, 153017176
+   57  22 *    CALLSYS  1461           (CMetaObject& array::opIndex(uint))
+   59  20 *    PshRPtr
+   60  21 *    RefCpyV  v20, 112063888
+   62  21 *    PopPtr
+   63  20 *    FREE     v3, 153017176
+   65  20 * {
+   65  20 * }
+   65  20 *    LOADOBJ  v20
+   66  20 *    JMP      +18              (d:86)
+- 167,41 -
+   68  20 * 5:
+   68  20 * }
+   68  20 * 3:
+   68  20 *    SUSPEND
+   69  20 *    IncVi    v1
+- 167,19 -
+   70  20 * 1:
+   70  20 *    SUSPEND
+   71  20 *    PshVPtr  v0
+   72  21 *    ADDSi    v32, 134217815
+   74  21 *    RDSPtr
+   75  21 *    CALLSYS  86           (uint array::size() const)
+   77  20 *    CpyRtoV4 v2
+   78  20 *    CMPu     v1, v2
+   80  20 *    JS       -74              (d:8)
+- 172,3 -
+   82  20 * 2:
+   82  20 *    SUSPEND
+   83  20 *    FREE     v20, 112063888
+   85  20 * {
+   85  20 * }
+   85  20 *    LOADOBJ  v20
+   86  20 * 0:
+   86  20 *    FREE     v-1, 51694408
+   88  20 *    FREE     v0, 152275144
+   90  20 *    RET      2

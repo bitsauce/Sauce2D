@@ -1,0 +1,65 @@
+void GuiToggleGroup::untoggleAll()
+
+Temps: 2, 3, 4
+
+Variables: 
+ 001: uint i
+ 000: GuiToggleGroup this
+ 003: array {noname}
+ 004: UiObject {noname}
+
+
+    0   4 *    PshVPtr  v0
+    1   5 *    CALLSYS  2           (void _builtin_object_::_beh_4_())
+- 50,7 -
+    3   4 *    SUSPEND
+    4   4 *    VarDecl  0
+    4   4 *    SetV4    v1, 0x0          (i:0, f:0)
+    6   4 *    JMP      +23              (d:31)
+    8   4 * 4:
+    8   4 *    SUSPEND
+- 51,4 -
+    9   4 *    SUSPEND
+   10   4 *    SetV1    v2, 0x0
+   12   4 *    PshV4    v1
+   13   5 *    PshVPtr  v0
+   14   6 *    ADDSi    v24, 134217797
+   16   6 *    RDSPtr
+   17   6 *    RefCpyV  v3, 150902720
+   19   6 *    CALLSYS  1291           (UiObject@& array::opIndex(uint))
+   21   4 *    PshRPtr
+   22   5 *    RDSPtr
+   23   5 *    ADDSi    v36, 134217780
+   25   5 *    PopRPtr
+   26   4 *    WRTV1    v2
+   27   4 *    FREE     v3, 150902720
+- 50,40 -
+   29   4 * 3:
+   29   4 *    SUSPEND
+   30   4 *    IncVi    v1
+- 50,19 -
+   31   4 * 1:
+   31   4 *    SUSPEND
+   32   4 *    PshVPtr  v0
+   33   5 *    ADDSi    v24, 134217797
+   35   5 *    RDSPtr
+   36   5 *    CALLSYS  86           (uint array::size() const)
+   38   4 *    CpyRtoV4 v2
+   39   4 *    CMPu     v1, v2
+   41   4 *    JS       -35              (d:8)
+- 52,3 -
+   43   4 * 2:
+   43   4 *    SUSPEND
+   44   4 *    FREE     v4, 150271928
+   46   4 *    VAR      v4
+   47   5 *    PshVPtr  v0
+   48   6 *    ADDSi    v52, 134217797
+   50   6 *    GETOBJREF 1
+   51   6 *    REFCPY   0x8f4f7b8
+   53   5 *    FREE     v4, 150271928
+   55   5 *    PopPtr
+- 53,3 -
+   56   4 *    SUSPEND
+   57   4 * 0:
+   57   4 *    FREE     v0, 150276928
+   59   4 *    RET      1

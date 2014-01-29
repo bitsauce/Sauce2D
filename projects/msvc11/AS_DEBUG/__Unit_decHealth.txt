@@ -1,0 +1,98 @@
+void Unit::decHealth(int, Unit@ = null)
+
+Temps: 1, 2, 3, 4, 5, 6
+
+Variables: 
+ -001: int amt
+ -002: Unit@ attacker
+ 000: Unit this
+ 002: Unit {noname}
+ 005: array {noname}
+ 006: Unit {noname}
+
+
+    0   6 *    VarDecl  0
+    0   6 *    VarDecl  1
+    0   6 *    PshVPtr  v0
+    1   7 *    CALLSYS  2           (void _builtin_object_::_beh_5_())
+- 78,3 -
+    3   6 *    SUSPEND
+    4   6 *    LoadThisR v56, 134217749
+    6   6 *    RDR4     v1
+    7   6 *    SUBi     v1, v1, v-1
+    9   6 *    WRTV4    v1
+- 81,3 -
+   10   6 *    SUSPEND
+   11   6 *    ClrVPtr  v2
+   12   6 *    CmpPtr   v-2, v2
+   14   6 *    TNZ
+   15   6 *    CpyRtoV4 v1
+   16   6 *    FREE     v2, 97819360
+   18   6 *    CpyVtoR4 v1
+   19   6 *    JLowZ    +60              (d:81)
+- 83,4 -
+   21   6 * {
+   21   6 *    SUSPEND
+   22   6 *    LoadThisR v48, 134217749
+   24   6 *    RDR4     v1
+   25   6 *    CMPIi    v1, 0
+   27   6 *    JNS      +4              (d:33)
+   29   6 *    SetV4    v3, 0x0          (i:0, f:0)
+   31   6 *    JMP      +15              (d:48)
+   33   6 * 3:
+   33   6 *    LoadThisR v48, 134217749
+   35   6 *    RDR4     v4
+   36   6 *    PshGPtr  98111360
+   38   7 *    CHKREF
+   39   7 *    CALLSYS  88           (uint array::size() const)
+   41   6 *    CpyRtoV4 v3
+   42   6 *    CMPi     v4, v3
+   44   6 *    TS
+   45   6 *    CpyRtoV4 v4
+   46   6 *    CpyVtoV4 v3, v4
+   48   6 * 4:
+   48   6 *    CpyVtoR4 v3
+   49   6 *    JLowZ    +30              (d:81)
+- 84,5 -
+   51   6 *    SUSPEND
+   52   6 *    PshVPtr  v-2
+   53   7 *    RefCpyV  v6, 97819360
+   55   7 *    PopPtr
+   56   6 *    VAR      v6
+   57   7 *    PshVPtr  v0
+   58   8 *    RefCpyV  v2, 97819360
+   60   8 *    PopPtr
+   61   7 *    VAR      v2
+   62   8 *    LoadThisR v48, 134217749
+   64   8 *    RDR4     v1
+   65   8 *    PshV4    v1
+   66   9 *    PshGPtr  98111360
+   68  10 *    CHKREF
+   69  10 *    RefCpyV  v5, 98101976
+   71  10 *    CALLSYS  836           (Player@& array::opIndex(uint))
+   73   8 *    PshRPtr
+   74   9 *    RDSPtr
+   75   9 *    GETOBJ   1
+   76   9 *    GETOBJ   2
+   77   9 *    CALLINTF 1072           (void Player::unitAttacked(Unit@, Unit@))
+   79   6 *    FREE     v5, 98101976
+- 88,3 -
+   81   6 * 2:
+   81   6 * }
+   81   6 * 1:
+   81   6 *    SUSPEND
+   82   6 *    LoadThisR v56, 134217749
+   84   6 *    RDR4     v1
+   85   6 *    CMPIi    v1, 0
+   87   6 *    JP       +4              (d:93)
+- 89,4 -
+   89   6 *    SUSPEND
+   90   6 *    PshVPtr  v0
+   91   7 *    CALLINTF 897           (void Entity::remove())
+- 90,3 -
+   93   6 * 5:
+   93   6 *    SUSPEND
+   94   6 * 0:
+   94   6 *    FREE     v-2, 97819360
+   96   6 *    FREE     v0, 97819360
+   98   6 *    RET      3

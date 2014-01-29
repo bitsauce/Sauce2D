@@ -1,0 +1,418 @@
+void main()
+
+Temps: 1, 9, 10, 13, 22, 25, 26, 27, 28, 29
+
+Variables: 
+ 011: FrameBuffer fbo
+ 012: int blendImage
+ 014: int tile0
+ 023: int tile1
+ 024: int blend
+ 009: string {noname}
+ 022: string {noname}
+
+
+- 126,2 -
+    0  29 *    SUSPEND
+    1  29 *    PshC4    0x12          (i:18, f:2.52234e-044)
+    3  30 *    STR      1         (l:5 s:"Arial")
+    4  32 *    CALLSYS  32           (const string& _string_factory_(const int, const uint8&))
+    6  30 *    PshRPtr
+    7  31 *    PSF      v9
+    8  32 *    CALLSYS  34           (void string::_beh_0_(const string&in))
+   10  30 *    ObjInfo  v9, 1
+   10  30 *    PSF      v9
+   11  31 *    CALLSYS  335           (int gfxLoadFont(const string&in, const uint))
+   13  29 *    CpyRtoV4 v10
+   14  29 *    PSF      v9
+   15  30 *    CALLSYS  35           (void string::_beh_1_())
+   17  29 *    ObjInfo  v9, 0
+   17  29 *    PshV4    v10
+   18  30 *    CALLSYS  336           (void gfxSetFont(const uint))
+- 128,2 -
+   20  29 *    SUSPEND
+   21  29 *    VarDecl  0
+   21  29 *    CALL     363           (FrameBuffer@ FrameBuffer())
+   23  29 *    STOREOBJ v11
+- 129,2 -
+   24  29 *    SUSPEND
+   25  29 *    PshVPtr  v11
+   26  30 *    CALLINTF 373           (void FrameBuffer::bind())
+- 130,2 -
+   28  29 *    SUSPEND
+- 131,2 -
+   29  29 *    VarDecl  1
+   29  29 *    SUSPEND
+   30  29 *    PshC4    0x10          (i:16, f:2.24208e-044)
+   32  30 *    PshC4    0x10          (i:16, f:2.24208e-044)
+   34  31 *    CALLSYS  353           (int gfxCreateImage(const uint, const uint))
+   36  29 *    CpyRtoV4 v13
+   37  29 *    CpyVtoV4 v12, v13
+- 132,2 -
+   39  29 *    SUSPEND
+   40  29 *    PshC4    0x10          (i:16, f:2.24208e-044)
+   42  30 *    PshC4    0x20          (i:32, f:4.48416e-044)
+   44  31 *    CALLSYS  353           (int gfxCreateImage(const uint, const uint))
+   46  29 *    CpyRtoV4 v10
+   47  29 *    CpyVtoG4 v10, 75060224
+- 133,2 -
+   49  29 *    SUSPEND
+   50  29 *    VarDecl  2
+   50  29 *    STR      2         (l:9 s:"tile0.png")
+   51  31 *    CALLSYS  32           (const string& _string_factory_(const int, const uint8&))
+   53  29 *    PshRPtr
+   54  30 *    PSF      v9
+   55  31 *    CALLSYS  34           (void string::_beh_0_(const string&in))
+   57  29 *    ObjInfo  v9, 1
+   57  29 *    VAR      v9
+   58  30 *    PSF      v22
+   59  31 *    GETREF   1
+   60  31 *    CALLSYS  315           (string appGetWorkPath(const string&in))
+   62  29 *    ObjInfo  v22, 1
+   62  29 *    PSF      v9
+   63  30 *    CALLSYS  35           (void string::_beh_1_())
+   65  29 *    ObjInfo  v9, 0
+   65  29 *    PSF      v22
+   66  30 *    CALLSYS  354           (int gfxLoadImage(const string&in))
+   68  29 *    CpyRtoV4 v10
+   69  29 *    PSF      v22
+   70  30 *    CALLSYS  35           (void string::_beh_1_())
+   72  29 *    ObjInfo  v22, 0
+   72  29 *    CpyVtoV4 v14, v10
+- 134,2 -
+   74  29 *    SUSPEND
+   75  29 *    VarDecl  3
+   75  29 *    STR      3         (l:9 s:"tile1.png")
+   76  31 *    CALLSYS  32           (const string& _string_factory_(const int, const uint8&))
+   78  29 *    PshRPtr
+   79  30 *    PSF      v9
+   80  31 *    CALLSYS  34           (void string::_beh_0_(const string&in))
+   82  29 *    ObjInfo  v9, 1
+   82  29 *    VAR      v9
+   83  30 *    PSF      v22
+   84  31 *    GETREF   1
+   85  31 *    CALLSYS  315           (string appGetWorkPath(const string&in))
+   87  29 *    ObjInfo  v22, 1
+   87  29 *    PSF      v9
+   88  30 *    CALLSYS  35           (void string::_beh_1_())
+   90  29 *    ObjInfo  v9, 0
+   90  29 *    PSF      v22
+   91  30 *    CALLSYS  354           (int gfxLoadImage(const string&in))
+   93  29 *    CpyRtoV4 v10
+   94  29 *    PSF      v22
+   95  30 *    CALLSYS  35           (void string::_beh_1_())
+   97  29 *    ObjInfo  v22, 0
+   97  29 *    CpyVtoV4 v23, v10
+- 135,2 -
+   99  29 *    SUSPEND
+  100  29 *    VarDecl  4
+  100  29 *    STR      4         (l:14 s:"blendImage")
+  101  31 *    CALLSYS  32           (const string& _string_factory_(const int, const uint8&))
+  103  29 *    PshRPtr
+  104  30 *    PSF      v9
+  105  31 *    CALLSYS  34           (void string::_beh_0_(const string&in))
+  107  29 *    ObjInfo  v9, 1
+  107  29 *    VAR      v9
+  108  30 *    PSF      v22
+  109  31 *    GETREF   1
+  110  31 *    CALLSYS  315           (string appGetWorkPath(const string&in))
+  112  29 *    ObjInfo  v22, 1
+  112  29 *    PSF      v9
+  113  30 *    CALLSYS  35           (void string::_beh_1_())
+  115  29 *    ObjInfo  v9, 0
+  115  29 *    PSF      v22
+  116  30 *    CALLSYS  354           (int gfxLoadImage(const string&in))
+  118  29 *    CpyRtoV4 v10
+  119  29 *    PSF      v22
+  120  30 *    CALLSYS  35           (void string::_beh_1_())
+  122  29 *    ObjInfo  v22, 0
+  122  29 *    CpyVtoV4 v24, v10
+- 138,2 -
+  124  29 *    SUSPEND
+  125  29 *    PshV4    v12
+  126  30 *    PshVPtr  v11
+  127  31 *    CALLINTF 375           (void FrameBuffer::attachImage(const int))
+- 140,2 -
+  129  29 *    SUSPEND
+  130  29 *    PshC4    0x0          (i:0, f:0)
+  132  30 *    PshC4    0x1          (i:1, f:1.4013e-045)
+  134  31 *    CALLSYS  349           (void gfxSetBlendFunc(const uint, const uint))
+- 142,2 -
+  136  29 *    SUSPEND
+  137  29 *    PshV4    v14
+  138  30 *    CALLSYS  346           (void gfxSetDrawImage(const uint))
+- 143,2 -
+  140  29 *    SUSPEND
+  141  29 *    PshC4    0x7          (i:7, f:9.80909e-045)
+  143  30 *    CALLSYS  339           (void gfxBeginPoly(const uint))
+- 144,2 -
+  145  29 *    SUSPEND
+  146  29 *    PshC4    0x3f800000          (i:1065353216, f:1)
+  148  30 *    PshC4    0x3f800000          (i:1065353216, f:1)
+  150  31 *    PshC4    0x0          (i:0, f:0)
+  152  32 *    PshC4    0x0          (i:0, f:0)
+  154  33 *    PshC4    0x41800000          (i:1098907648, f:16)
+  156  34 *    PshC4    0x41800000          (i:1098907648, f:16)
+  158  35 *    PshC4    0x0          (i:0, f:0)
+  160  36 *    PshC4    0x0          (i:0, f:0)
+  162  37 *    CALL     370           (void gfxDrawImageQuad(const float, const float, const float, const float, const float, const float, const float, const float))
+- 145,2 -
+  164  29 *    SUSPEND
+  165  29 *    CALLSYS  341           (void gfxEndPoly())
+- 146,2 -
+  167  29 *    SUSPEND
+  168  29 *    PshC4    0x0          (i:0, f:0)
+  170  30 *    CALLSYS  346           (void gfxSetDrawImage(const uint))
+- 148,2 -
+  172  29 *    SUSPEND
+  173  29 *    PshC4    0x0          (i:0, f:0)
+  175  30 *    PshC4    0x306          (i:774, f:1.08461e-042)
+  177  31 *    CALLSYS  349           (void gfxSetBlendFunc(const uint, const uint))
+- 150,2 -
+  179  29 *    SUSPEND
+  180  29 *    PshV4    v24
+  181  30 *    CALLSYS  346           (void gfxSetDrawImage(const uint))
+- 151,2 -
+  183  29 *    SUSPEND
+  184  29 *    PshC4    0x7          (i:7, f:9.80909e-045)
+  186  30 *    CALLSYS  339           (void gfxBeginPoly(const uint))
+- 152,2 -
+  188  29 *    SUSPEND
+  189  29 *    PshC4    0x3f800000          (i:1065353216, f:1)
+  191  30 *    PshC4    0x3e800000          (i:1048576000, f:0.25)
+  193  31 *    PshC4    0x0          (i:0, f:0)
+  195  32 *    PshC4    0x3e400000          (i:1044381696, f:0.1875)
+  197  33 *    PshC4    0x41800000          (i:1098907648, f:16)
+  199  34 *    PshC4    0x41800000          (i:1098907648, f:16)
+  201  35 *    PshC4    0x0          (i:0, f:0)
+  203  36 *    PshC4    0x0          (i:0, f:0)
+  205  37 *    CALL     370           (void gfxDrawImageQuad(const float, const float, const float, const float, const float, const float, const float, const float))
+- 153,2 -
+  207  29 *    SUSPEND
+  208  29 *    CALLSYS  341           (void gfxEndPoly())
+- 154,2 -
+  210  29 *    SUSPEND
+  211  29 *    PshC4    0x0          (i:0, f:0)
+  213  30 *    CALLSYS  346           (void gfxSetDrawImage(const uint))
+- 157,2 -
+  215  29 *    SUSPEND
+  216  29 *    PshG4    75060224
+  218  30 *    PshVPtr  v11
+  219  31 *    CALLINTF 375           (void FrameBuffer::attachImage(const int))
+- 159,2 -
+  221  29 *    SUSPEND
+  222  29 *    PshC4    0x0          (i:0, f:0)
+  224  30 *    PshC4    0x1          (i:1, f:1.4013e-045)
+  226  31 *    CALLSYS  349           (void gfxSetBlendFunc(const uint, const uint))
+- 161,2 -
+  228  29 *    SUSPEND
+  229  29 *    PshV4    v23
+  230  30 *    CALLSYS  346           (void gfxSetDrawImage(const uint))
+- 162,2 -
+  232  29 *    SUSPEND
+  233  29 *    PshC4    0x7          (i:7, f:9.80909e-045)
+  235  30 *    CALLSYS  339           (void gfxBeginPoly(const uint))
+- 163,2 -
+  237  29 *    SUSPEND
+  238  29 *    PshC4    0x3f800000          (i:1065353216, f:1)
+  240  30 *    PshC4    0x3f800000          (i:1065353216, f:1)
+  242  31 *    PshC4    0x0          (i:0, f:0)
+  244  32 *    PshC4    0x0          (i:0, f:0)
+  246  33 *    PshC4    0x41800000          (i:1098907648, f:16)
+  248  34 *    PshC4    0x41800000          (i:1098907648, f:16)
+  250  35 *    PshC4    0x0          (i:0, f:0)
+  252  36 *    PshC4    0x0          (i:0, f:0)
+  254  37 *    CALL     370           (void gfxDrawImageQuad(const float, const float, const float, const float, const float, const float, const float, const float))
+- 164,2 -
+  256  29 *    SUSPEND
+  257  29 *    CALLSYS  341           (void gfxEndPoly())
+- 165,2 -
+  259  29 *    SUSPEND
+  260  29 *    PshC4    0x0          (i:0, f:0)
+  262  30 *    CALLSYS  346           (void gfxSetDrawImage(const uint))
+- 167,2 -
+  264  29 *    SUSPEND
+  265  29 *    PshC4    0x1          (i:1, f:1.4013e-045)
+  267  30 *    PshC4    0x1          (i:1, f:1.4013e-045)
+  269  31 *    PshC4    0x303          (i:771, f:1.0804e-042)
+  271  32 *    PshC4    0x302          (i:770, f:1.079e-042)
+  273  33 *    CALLSYS  350           (void gfxSetBlendFuncExt(const uint, const uint, const uint, const uint))
+- 169,2 -
+  275  29 *    SUSPEND
+  276  29 *    PshV4    v12
+  277  30 *    CALLSYS  346           (void gfxSetDrawImage(const uint))
+- 170,2 -
+  279  29 *    SUSPEND
+  280  29 *    PshC4    0x7          (i:7, f:9.80909e-045)
+  282  30 *    CALLSYS  339           (void gfxBeginPoly(const uint))
+- 171,2 -
+  284  29 *    SUSPEND
+  285  29 *    PshC4    0x3f800000          (i:1065353216, f:1)
+  287  30 *    PshC4    0x3f800000          (i:1065353216, f:1)
+  289  31 *    PshC4    0x0          (i:0, f:0)
+  291  32 *    PshC4    0x0          (i:0, f:0)
+  293  33 *    PshC4    0x41800000          (i:1098907648, f:16)
+  295  34 *    PshC4    0x41800000          (i:1098907648, f:16)
+  297  35 *    PshC4    0x0          (i:0, f:0)
+  299  36 *    PshC4    0x0          (i:0, f:0)
+  301  37 *    CALL     370           (void gfxDrawImageQuad(const float, const float, const float, const float, const float, const float, const float, const float))
+- 172,2 -
+  303  29 *    SUSPEND
+  304  29 *    CALLSYS  341           (void gfxEndPoly())
+- 173,2 -
+  306  29 *    SUSPEND
+  307  29 *    PshC4    0x0          (i:0, f:0)
+  309  30 *    CALLSYS  346           (void gfxSetDrawImage(const uint))
+- 176,2 -
+  311  29 *    SUSPEND
+  312  29 *    PshV4    v12
+  313  30 *    PshVPtr  v11
+  314  31 *    CALLINTF 375           (void FrameBuffer::attachImage(const int))
+- 177,2 -
+  316  29 *    SUSPEND
+  317  29 *    CALLSYS  331           (void gfxClearColorBit())
+- 179,2 -
+  319  29 *    SUSPEND
+  320  29 *    PshC4    0x0          (i:0, f:0)
+  322  30 *    PshC4    0x1          (i:1, f:1.4013e-045)
+  324  31 *    CALLSYS  349           (void gfxSetBlendFunc(const uint, const uint))
+- 181,2 -
+  326  29 *    SUSPEND
+  327  29 *    PshV4    v23
+  328  30 *    CALLSYS  346           (void gfxSetDrawImage(const uint))
+- 182,2 -
+  330  29 *    SUSPEND
+  331  29 *    PshC4    0x7          (i:7, f:9.80909e-045)
+  333  30 *    CALLSYS  339           (void gfxBeginPoly(const uint))
+- 183,2 -
+  335  29 *    SUSPEND
+  336  29 *    PshC4    0x3f800000          (i:1065353216, f:1)
+  338  30 *    PshC4    0x3f800000          (i:1065353216, f:1)
+  340  31 *    PshC4    0x0          (i:0, f:0)
+  342  32 *    PshC4    0x0          (i:0, f:0)
+  344  33 *    PshC4    0x41800000          (i:1098907648, f:16)
+  346  34 *    PshC4    0x41800000          (i:1098907648, f:16)
+  348  35 *    PshC4    0x0          (i:0, f:0)
+  350  36 *    PshC4    0x0          (i:0, f:0)
+  352  37 *    CALL     370           (void gfxDrawImageQuad(const float, const float, const float, const float, const float, const float, const float, const float))
+- 184,2 -
+  354  29 *    SUSPEND
+  355  29 *    CALLSYS  341           (void gfxEndPoly())
+- 185,2 -
+  357  29 *    SUSPEND
+  358  29 *    PshC4    0x0          (i:0, f:0)
+  360  30 *    CALLSYS  346           (void gfxSetDrawImage(const uint))
+- 187,2 -
+  362  29 *    SUSPEND
+  363  29 *    PshC4    0x0          (i:0, f:0)
+  365  30 *    PshC4    0x306          (i:774, f:1.08461e-042)
+  367  31 *    CALLSYS  349           (void gfxSetBlendFunc(const uint, const uint))
+- 189,2 -
+  369  29 *    SUSPEND
+  370  29 *    PshV4    v24
+  371  30 *    CALLSYS  346           (void gfxSetDrawImage(const uint))
+- 190,2 -
+  373  29 *    SUSPEND
+  374  29 *    PshC4    0x7          (i:7, f:9.80909e-045)
+  376  30 *    CALLSYS  339           (void gfxBeginPoly(const uint))
+- 191,2 -
+  378  29 *    SUSPEND
+  379  29 *    PshC4    0x3f800000          (i:1065353216, f:1)
+  381  30 *    PshC4    0x3f000000          (i:1056964608, f:0.5)
+  383  31 *    PshC4    0x0          (i:0, f:0)
+  385  32 *    PshC4    0x3ee00000          (i:1054867456, f:0.4375)
+  387  33 *    PshC4    0x41800000          (i:1098907648, f:16)
+  389  34 *    PshC4    0x41800000          (i:1098907648, f:16)
+  391  35 *    PshC4    0x0          (i:0, f:0)
+  393  36 *    PshC4    0x0          (i:0, f:0)
+  395  37 *    CALL     370           (void gfxDrawImageQuad(const float, const float, const float, const float, const float, const float, const float, const float))
+- 192,2 -
+  397  29 *    SUSPEND
+  398  29 *    CALLSYS  341           (void gfxEndPoly())
+- 193,2 -
+  400  29 *    SUSPEND
+  401  29 *    PshC4    0x0          (i:0, f:0)
+  403  30 *    CALLSYS  346           (void gfxSetDrawImage(const uint))
+- 196,2 -
+  405  29 *    SUSPEND
+  406  29 *    PshG4    75060224
+  408  30 *    PshVPtr  v11
+  409  31 *    CALLINTF 375           (void FrameBuffer::attachImage(const int))
+- 197,2 -
+  411  29 *    SUSPEND
+  412  29 *    PshC4    0x0          (i:0, f:0)
+  414  30 *    PshC4    0x1          (i:1, f:1.4013e-045)
+  416  31 *    CALLSYS  349           (void gfxSetBlendFunc(const uint, const uint))
+- 199,2 -
+  418  29 *    SUSPEND
+  419  29 *    PshV4    v14
+  420  30 *    CALLSYS  346           (void gfxSetDrawImage(const uint))
+- 200,2 -
+  422  29 *    SUSPEND
+  423  29 *    PshC4    0x7          (i:7, f:9.80909e-045)
+  425  30 *    CALLSYS  339           (void gfxBeginPoly(const uint))
+- 201,2 -
+  427  29 *    SUSPEND
+  428  29 *    PshC4    0x3f800000          (i:1065353216, f:1)
+  430  30 *    PshC4    0x3f800000          (i:1065353216, f:1)
+  432  31 *    PshC4    0x0          (i:0, f:0)
+  434  32 *    PshC4    0x0          (i:0, f:0)
+  436  33 *    PshC4    0x41800000          (i:1098907648, f:16)
+  438  34 *    PshC4    0x41800000          (i:1098907648, f:16)
+  440  35 *    PshC4    0x0          (i:0, f:0)
+  442  36 *    PshC4    0x41800000          (i:1098907648, f:16)
+  444  37 *    CALL     370           (void gfxDrawImageQuad(const float, const float, const float, const float, const float, const float, const float, const float))
+- 202,2 -
+  446  29 *    SUSPEND
+  447  29 *    CALLSYS  341           (void gfxEndPoly())
+- 203,2 -
+  449  29 *    SUSPEND
+  450  29 *    PshC4    0x0          (i:0, f:0)
+  452  30 *    CALLSYS  346           (void gfxSetDrawImage(const uint))
+- 205,2 -
+  454  29 *    SUSPEND
+  455  29 *    PshC4    0x1          (i:1, f:1.4013e-045)
+  457  30 *    PshC4    0x1          (i:1, f:1.4013e-045)
+  459  31 *    PshC4    0x303          (i:771, f:1.0804e-042)
+  461  32 *    PshC4    0x302          (i:770, f:1.079e-042)
+  463  33 *    CALLSYS  350           (void gfxSetBlendFuncExt(const uint, const uint, const uint, const uint))
+- 207,2 -
+  465  29 *    SUSPEND
+  466  29 *    PshV4    v12
+  467  30 *    CALLSYS  346           (void gfxSetDrawImage(const uint))
+- 208,2 -
+  469  29 *    SUSPEND
+  470  29 *    PshC4    0x7          (i:7, f:9.80909e-045)
+  472  30 *    CALLSYS  339           (void gfxBeginPoly(const uint))
+- 209,2 -
+  474  29 *    SUSPEND
+  475  29 *    PshC4    0x3f800000          (i:1065353216, f:1)
+  477  30 *    PshC4    0x3f800000          (i:1065353216, f:1)
+  479  31 *    PshC4    0x0          (i:0, f:0)
+  481  32 *    PshC4    0x0          (i:0, f:0)
+  483  33 *    PshC4    0x41800000          (i:1098907648, f:16)
+  485  34 *    PshC4    0x41800000          (i:1098907648, f:16)
+  487  35 *    PshC4    0x0          (i:0, f:0)
+  489  36 *    PshC4    0x41800000          (i:1098907648, f:16)
+  491  37 *    CALL     370           (void gfxDrawImageQuad(const float, const float, const float, const float, const float, const float, const float, const float))
+- 210,2 -
+  493  29 *    SUSPEND
+  494  29 *    CALLSYS  341           (void gfxEndPoly())
+- 211,2 -
+  496  29 *    SUSPEND
+  497  29 *    PshC4    0x0          (i:0, f:0)
+  499  30 *    CALLSYS  346           (void gfxSetDrawImage(const uint))
+- 213,2 -
+  501  29 *    SUSPEND
+  502  29 *    PshVPtr  v11
+  503  30 *    CALLINTF 374           (void FrameBuffer::unbind())
+- 215,2 -
+  505  29 *    SUSPEND
+  506  29 *    PshC4    0x303          (i:771, f:1.0804e-042)
+  508  30 *    PshC4    0x302          (i:770, f:1.079e-042)
+  510  31 *    CALLSYS  349           (void gfxSetBlendFunc(const uint, const uint))
+- 216,2 -
+  512  29 *    SUSPEND
+  513  29 *    FREE     v11, 75042192
+  515  29 * 0:
+  515  29 *    RET      0

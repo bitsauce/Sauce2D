@@ -1,0 +1,228 @@
+PlayerPanel::PlayerPanel(UiElement@, bool)
+
+Temps: 1, 2, 9, 10, 11, 12
+
+Variables: 
+ -001: UiElement@ parent
+ -002: bool localPlayer
+ 000: PlayerPanel this
+ 009: string {noname}
+
+
+- 15,3 -
+    0  12 *    VarDecl  0
+    0  12 *    VarDecl  1
+    0  12 *    SUSPEND
+    1  12 *    VAR      v-1
+    2  13 *    PshVPtr  v0
+    3  14 *    GETOBJ   1
+    4  14 *    CALL     633           (UiElement::UiElement(UiElement@))
+- 3,6 -
+    6  12 *    SUSPEND
+    7  12 *    SetV4    v1, 0xffffffff          (i:-1, f:-1.#QNAN)
+    9  12 *    LoadThisR v48, 134217783
+   11  12 *    WRTV4    v1
+- 4,6 -
+   12  12 *    SUSPEND
+   13  12 *    SetV4    v1, 0xffffffff          (i:-1, f:-1.#QNAN)
+   15  12 *    LoadThisR v52, 134217783
+   17  12 *    WRTV4    v1
+- 5,6 -
+   18  12 *    SUSPEND
+   19  12 *    SetV4    v1, 0xffffffff          (i:-1, f:-1.#QNAN)
+   21  12 *    LoadThisR v56, 134217783
+   23  12 *    WRTV4    v1
+- 6,6 -
+   24  12 *    SUSPEND
+   25  12 *    SetV4    v1, 0xffffffff          (i:-1, f:-1.#QNAN)
+   27  12 *    LoadThisR v60, 134217783
+   29  12 *    WRTV4    v1
+- 8,8 -
+   30  12 *    SUSPEND
+   31  12 *    SetV4    v1, 0x3f000000          (i:1056964608, f:0.5)
+   33  12 *    LoadThisR v64, 134217783
+   35  12 *    WRTV4    v1
+- 9,8 -
+   36  12 *    SUSPEND
+   37  12 *    SetV4    v1, 0x0          (i:0, f:0)
+   39  12 *    LoadThisR v68, 134217783
+   41  12 *    WRTV4    v1
+- 16,3 -
+   42  12 *    SUSPEND
+   43  12 *    CpyVtoR4 v-2
+   44  12 *    JLowZ    +94              (d:140)
+- 17,4 -
+   46  12 * {
+   46  12 *    SUSPEND
+   47  12 *    SetV1    v1, 0x0
+   49  12 *    PshV4    v1
+   50  13 *    PshC4    0x0          (i:0, f:0)
+   52  14 *    STR      62         (l:29 s:":/sprites/")
+   53  16 *    CALLSYS  33           (const string& _string_factory_(const int, const uint8&))
+   55  14 *    PshRPtr
+   56  15 *    PSF      v9
+   57  16 *    CALLSYS  35           (string::string(const string&in))
+   59  14 *    ObjInfo  v9, 1
+   59  14 *    PSF      v9
+   60  15 *    CALLSYS  472           (int gfxLoadImage(const string&in, const TextureFilter = NearestFilter, const bool = false))
+   62  12 *    CpyRtoV4 v10
+   63  12 *    PSF      v9
+   64  13 *    CALLSYS  36           (string::~string())
+   66  12 *    ObjInfo  v9, 0
+   66  12 *    LoadThisR v48, 134217783
+   68  12 *    WRTV4    v10
+- 18,4 -
+   69  12 *    SUSPEND
+   70  12 *    SetV1    v1, 0x0
+   72  12 *    PshV4    v1
+   73  13 *    PshC4    0x0          (i:0, f:0)
+   75  14 *    STR      63         (l:29 s:":/sprites/")
+   76  16 *    CALLSYS  33           (const string& _string_factory_(const int, const uint8&))
+   78  14 *    PshRPtr
+   79  15 *    PSF      v9
+   80  16 *    CALLSYS  35           (string::string(const string&in))
+   82  14 *    ObjInfo  v9, 1
+   82  14 *    PSF      v9
+   83  15 *    CALLSYS  472           (int gfxLoadImage(const string&in, const TextureFilter = NearestFilter, const bool = false))
+   85  12 *    CpyRtoV4 v10
+   86  12 *    PSF      v9
+   87  13 *    CALLSYS  36           (string::~string())
+   89  12 *    ObjInfo  v9, 0
+   89  12 *    LoadThisR v52, 134217783
+   91  12 *    WRTV4    v10
+- 19,4 -
+   92  12 *    SUSPEND
+   93  12 *    SetV1    v1, 0x0
+   95  12 *    PshV4    v1
+   96  13 *    PshC4    0x0          (i:0, f:0)
+   98  14 *    STR      64         (l:29 s:":/sprites/")
+   99  16 *    CALLSYS  33           (const string& _string_factory_(const int, const uint8&))
+  101  14 *    PshRPtr
+  102  15 *    PSF      v9
+  103  16 *    CALLSYS  35           (string::string(const string&in))
+  105  14 *    ObjInfo  v9, 1
+  105  14 *    PSF      v9
+  106  15 *    CALLSYS  472           (int gfxLoadImage(const string&in, const TextureFilter = NearestFilter, const bool = false))
+  108  12 *    CpyRtoV4 v10
+  109  12 *    PSF      v9
+  110  13 *    CALLSYS  36           (string::~string())
+  112  12 *    ObjInfo  v9, 0
+  112  12 *    LoadThisR v56, 134217783
+  114  12 *    WRTV4    v10
+- 20,4 -
+  115  12 *    SUSPEND
+  116  12 *    SetV1    v1, 0x0
+  118  12 *    PshV4    v1
+  119  13 *    PshC4    0x0          (i:0, f:0)
+  121  14 *    STR      65         (l:29 s:":/sprites/")
+  122  16 *    CALLSYS  33           (const string& _string_factory_(const int, const uint8&))
+  124  14 *    PshRPtr
+  125  15 *    PSF      v9
+  126  16 *    CALLSYS  35           (string::string(const string&in))
+  128  14 *    ObjInfo  v9, 1
+  128  14 *    PSF      v9
+  129  15 *    CALLSYS  472           (int gfxLoadImage(const string&in, const TextureFilter = NearestFilter, const bool = false))
+  131  12 *    CpyRtoV4 v10
+  132  12 *    PSF      v9
+  133  13 *    CALLSYS  36           (string::~string())
+  135  12 *    ObjInfo  v9, 0
+  135  12 *    LoadThisR v60, 134217783
+  137  12 *    WRTV4    v10
+  138  12 * }
+  138  12 *    JMP      +92              (d:232)
+- 22,4 -
+  140  12 * 1:
+  140  12 * {
+  140  12 *    SUSPEND
+  141  12 *    SetV1    v1, 0x0
+  143  12 *    PshV4    v1
+  144  13 *    PshC4    0x0          (i:0, f:0)
+  146  14 *    STR      66         (l:31 s:":/sprites/")
+  147  16 *    CALLSYS  33           (const string& _string_factory_(const int, const uint8&))
+  149  14 *    PshRPtr
+  150  15 *    PSF      v9
+  151  16 *    CALLSYS  35           (string::string(const string&in))
+  153  14 *    ObjInfo  v9, 1
+  153  14 *    PSF      v9
+  154  15 *    CALLSYS  472           (int gfxLoadImage(const string&in, const TextureFilter = NearestFilter, const bool = false))
+  156  12 *    CpyRtoV4 v10
+  157  12 *    PSF      v9
+  158  13 *    CALLSYS  36           (string::~string())
+  160  12 *    ObjInfo  v9, 0
+  160  12 *    LoadThisR v48, 134217783
+  162  12 *    WRTV4    v10
+- 23,4 -
+  163  12 *    SUSPEND
+  164  12 *    SetV1    v1, 0x0
+  166  12 *    PshV4    v1
+  167  13 *    PshC4    0x0          (i:0, f:0)
+  169  14 *    STR      67         (l:31 s:":/sprites/")
+  170  16 *    CALLSYS  33           (const string& _string_factory_(const int, const uint8&))
+  172  14 *    PshRPtr
+  173  15 *    PSF      v9
+  174  16 *    CALLSYS  35           (string::string(const string&in))
+  176  14 *    ObjInfo  v9, 1
+  176  14 *    PSF      v9
+  177  15 *    CALLSYS  472           (int gfxLoadImage(const string&in, const TextureFilter = NearestFilter, const bool = false))
+  179  12 *    CpyRtoV4 v10
+  180  12 *    PSF      v9
+  181  13 *    CALLSYS  36           (string::~string())
+  183  12 *    ObjInfo  v9, 0
+  183  12 *    LoadThisR v52, 134217783
+  185  12 *    WRTV4    v10
+- 24,4 -
+  186  12 *    SUSPEND
+  187  12 *    SetV1    v1, 0x0
+  189  12 *    PshV4    v1
+  190  13 *    PshC4    0x0          (i:0, f:0)
+  192  14 *    STR      68         (l:31 s:":/sprites/")
+  193  16 *    CALLSYS  33           (const string& _string_factory_(const int, const uint8&))
+  195  14 *    PshRPtr
+  196  15 *    PSF      v9
+  197  16 *    CALLSYS  35           (string::string(const string&in))
+  199  14 *    ObjInfo  v9, 1
+  199  14 *    PSF      v9
+  200  15 *    CALLSYS  472           (int gfxLoadImage(const string&in, const TextureFilter = NearestFilter, const bool = false))
+  202  12 *    CpyRtoV4 v10
+  203  12 *    PSF      v9
+  204  13 *    CALLSYS  36           (string::~string())
+  206  12 *    ObjInfo  v9, 0
+  206  12 *    LoadThisR v56, 134217783
+  208  12 *    WRTV4    v10
+- 25,4 -
+  209  12 *    SUSPEND
+  210  12 *    SetV1    v1, 0x0
+  212  12 *    PshV4    v1
+  213  13 *    PshC4    0x0          (i:0, f:0)
+  215  14 *    STR      69         (l:31 s:":/sprites/")
+  216  16 *    CALLSYS  33           (const string& _string_factory_(const int, const uint8&))
+  218  14 *    PshRPtr
+  219  15 *    PSF      v9
+  220  16 *    CALLSYS  35           (string::string(const string&in))
+  222  14 *    ObjInfo  v9, 1
+  222  14 *    PSF      v9
+  223  15 *    CALLSYS  472           (int gfxLoadImage(const string&in, const TextureFilter = NearestFilter, const bool = false))
+  225  12 *    CpyRtoV4 v10
+  226  12 *    PSF      v9
+  227  13 *    CALLSYS  36           (string::~string())
+  229  12 *    ObjInfo  v9, 0
+  229  12 *    LoadThisR v60, 134217783
+  231  12 *    WRTV4    v10
+- 27,3 -
+  232  12 * }
+  232  12 * 2:
+  232  12 *    SUSPEND
+  233  12 *    CpyVtoR4 v-2
+  234  12 *    JLowZ    +4              (d:240)
+  236  12 *    SetV4    v11, 0x0          (i:0, f:0)
+  238  12 *    JMP      +2              (d:242)
+  240  12 * 4:
+  240  12 *    SetV4    v11, 0x1          (i:1, f:1.4013e-045)
+  242  12 * 3:
+  242  12 *    LoadThisR v72, 134217783
+  244  12 *    WRTV4    v11
+- 28,3 -
+  245  12 *    SUSPEND
+  246  12 * 0:
+  246  12 *    FREE     v-1, 74282504
+  248  12 *    RET      3

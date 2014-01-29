@@ -1,0 +1,76 @@
+void LineEdit::textChanged()
+
+Temps: 9, 10, 11, 12, 13
+
+Variables: 
+ 001: CFunctionPtr@ callback
+ 000: LineEdit this
+ 010: string {noname}
+ 011: CFunctionPtr {noname}
+ 009: string {noname}
+
+
+    0  13 *    PshVPtr  v0
+    1  14 *    CALLSYS  2           (void _builtin_object_::_beh_4_())
+- 148,3 -
+    3  13 *    SUSPEND
+    4  13 *    VarDecl  0
+    4  13 *    PSF      v10
+    5  14 *    STR      156         (l:13 s:"onTextChan")
+    6  16 *    PSF      v9
+    7  17 *    CALLSYS  31           (string _string_factory_(const int, const uint8&))
+    9  14 *    ObjInfo  v9, 1
+    9  14 *    PSF      v9
+   10  15 *    ALLOC    0x2b7c1f0, 33             (type:string)
+   13  13 *    PSF      v9
+   14  14 *    CALLSYS  34           (void string::_beh_1_())
+   16  13 *    ObjInfo  v9, 0
+   16  13 *    VAR      v10
+   17  14 *    PshVPtr  v0
+   18  15 *    GETOBJ   1
+   19  15 *    CALLINTF 1136           (CFunctionPtr@ UiObject::findCallback(string))
+   21  13 *    STOREOBJ v11
+   22  13 *    PshVPtr  v11
+   23  15 *    RefCpyV  v1, 84683872
+   25  14 *    FREE     v11, 84683872
+   27  14 *    PopPtr
+- 149,3 -
+   28  13 *    SUSPEND
+   29  13 *    ClrVPtr  v11
+   30  13 *    CmpPtr   v1, v11
+   32  13 *    TNZ
+   33  13 *    CpyRtoV4 v12
+   34  13 *    FREE     v11, 84683872
+   36  13 *    CpyVtoR4 v12
+   37  13 *    JLowNZ   +4              (d:43)
+   39  13 *    SetV4    v12, 0x0          (i:0, f:0)
+   41  13 *    JMP      +6              (d:49)
+   43  13 * 2:
+   43  13 *    PshVPtr  v1
+   44  14 *    CALLSYS  306           (bool CFunctionPtr::isFuncDefined())
+   46  13 *    CpyRtoV4 v13
+   47  13 *    CpyVtoV4 v12, v13
+   49  13 * 3:
+   49  13 *    CpyVtoR4 v12
+   50  13 *    JLowNZ   +4              (d:56)
+   52  13 *    SetV4    v12, 0x0          (i:0, f:0)
+   54  13 *    JMP      +6              (d:62)
+   56  13 * 4:
+   56  13 *    PshVPtr  v1
+   57  14 *    CALLSYS  307           (bool CFunctionPtr::isArgsDefined())
+   59  13 *    CpyRtoV4 v13
+   60  13 *    CpyVtoV4 v12, v13
+   62  13 * 5:
+   62  13 *    CpyVtoR4 v12
+   63  13 *    JLowZ    +4              (d:69)
+- 150,4 -
+   65  13 *    SUSPEND
+   66  13 *    PshVPtr  v1
+   67  14 *    CALLSYS  300           (void CFunctionPtr::call())
+- 151,3 -
+   69  13 * 1:
+   69  13 *    SUSPEND
+   70  13 *    FREE     v1, 84683872
+   72  13 * 0:
+   72  13 *    FREE     v0, 147692568
+   74  13 *    RET      1

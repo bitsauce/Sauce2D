@@ -1,0 +1,109 @@
+void Mob::loadMetaData(MetaData)
+
+Temps: 1, 2, 11, 12, 13, 15
+
+Variables: 
+ -001: MetaData data
+ 003: int posx
+ 014: int posy
+ 000: Mob this
+ 001: Room {noname}
+ 002: Mob {noname}
+ 011: string {noname}
+
+
+    0  15 *    VarDecl  0
+    0  15 *    PshVPtr  v0
+    1  16 *    CALLSYS  2           (void _builtin_object_::_beh_4_())
+- 18,3 -
+    3  15 *    SUSPEND
+    4  15 *    PshGPtr  152631936
+    6  16 *    RefCpyV  v1, 152276032
+    8  16 *    PopPtr
+    9  15 *    VAR      v1
+   10  16 *    PshVPtr  v0
+   11  17 *    ADDSi    v32, 134217789
+   13  17 *    GETOBJREF 1
+   14  17 *    REFCPY   0x9138c40
+   16  16 *    FREE     v1, 152276032
+   18  16 *    PopPtr
+- 21,3 -
+   19  15 *    SUSPEND
+   20  15 *    PshVPtr  v0
+   21  16 *    RefCpyV  v2, 152261008
+   23  16 *    PopPtr
+   24  15 *    VAR      v2
+   25  16 *    PshVPtr  v0
+   26  17 *    ADDSi    v32, 134217789
+   28  17 *    RDSPtr
+   29  17 *    ADDSi    v16, 134217788
+   31  17 *    RDSPtr
+   32  17 *    GETREF   1
+   33  17 *    CALLSYS  1488           (void array::insertLast(Mob@const&in))
+   35  15 *    FREE     v2, 152261008
+- 24,3 -
+   37  15 *    SUSPEND
+   38  15 *    VarDecl  1
+   38  15 *    PshVPtr  v0
+   39  16 *    ADDSi    v32, 134217789
+   41  16 *    RDSPtr
+   42  16 *    ADDSi    v56, 134217788
+   44  16 *    PopRPtr
+   45  15 *    RDR4     v13
+   46  15 *    STR      145         (l:1 s:"x")
+   47  17 *    CALLSYS  32           (const string& _string_factory_(const int, const uint8&))
+   49  15 *    PshRPtr
+   50  16 *    PSF      v11
+   51  17 *    CALLSYS  34           (void string::_beh_0_(const string&in))
+   53  15 *    ObjInfo  v11, 1
+   53  15 *    VAR      v11
+   54  16 *    PshVPtr  v-1
+   55  17 *    GETREF   1
+   56  17 *    CALLSYS  287           (int MetaData::readInteger(const string&in) const)
+   58  15 *    CpyRtoV4 v12
+   59  15 *    PSF      v11
+   60  16 *    CALLSYS  35           (void string::_beh_1_())
+   62  15 *    ObjInfo  v11, 0
+   62  15 *    ADDi     v3, v13, v12
+- 25,3 -
+   64  15 *    SUSPEND
+   65  15 *    VarDecl  2
+   65  15 *    PshVPtr  v0
+   66  16 *    ADDSi    v32, 134217789
+   68  16 *    RDSPtr
+   69  16 *    ADDSi    v60, 134217788
+   71  16 *    PopRPtr
+   72  15 *    RDR4     v12
+   73  15 *    STR      144         (l:1 s:"y")
+   74  17 *    CALLSYS  32           (const string& _string_factory_(const int, const uint8&))
+   76  15 *    PshRPtr
+   77  16 *    PSF      v11
+   78  17 *    CALLSYS  34           (void string::_beh_0_(const string&in))
+   80  15 *    ObjInfo  v11, 1
+   80  15 *    VAR      v11
+   81  16 *    PshVPtr  v-1
+   82  17 *    GETREF   1
+   83  17 *    CALLSYS  287           (int MetaData::readInteger(const string&in) const)
+   85  15 *    CpyRtoV4 v13
+   86  15 *    PSF      v11
+   87  16 *    CALLSYS  35           (void string::_beh_1_())
+   89  15 *    ObjInfo  v11, 0
+   89  15 *    ADDi     v14, v12, v13
+- 26,3 -
+   91  15 *    SUSPEND
+   92  15 *    CpyVtoV4 v13, v14
+   94  15 *    iTOf     v13
+   95  15 *    MULIf    v13, v13, 64.000000
+   98  15 *    PshV4    v13
+   99  16 *    CpyVtoV4 v12, v3
+  101  16 *    iTOf     v12
+  102  16 *    MULIf    v12, v12, 64.000000
+  105  16 *    PshV4    v12
+  106  17 *    PshVPtr  v0
+  107  18 *    CALLINTF 1088           (void SceneObject::setPos(const float, const float))
+- 27,3 -
+  109  15 *    SUSPEND
+  110  15 * 0:
+  110  15 *    FREE     v-1, 112103440
+  112  15 *    FREE     v0, 152261008
+  114  15 *    RET      2

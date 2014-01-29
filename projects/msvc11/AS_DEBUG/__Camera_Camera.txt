@@ -1,0 +1,153 @@
+Camera::Camera()
+
+Temps: 1, 2, 3, 10, 12, 13
+
+Variables: 
+ 000: Camera this
+ 001: Camera {noname}
+ 002: Camera {noname}
+ 010: string {noname}
+ 012: vec2 {noname}
+
+
+- 11,7 -
+    0  13 *    SUSPEND
+    1  13 *    PshVPtr  v0
+    2  14 *    ADDSi    v44, 134217794
+    4  14 *    ALLOC    0x45f8270, 132             (type:vec2)
+- 19,7 -
+    7  13 *    SUSPEND
+    8  13 *    PshVPtr  v0
+    9  14 *    ADDSi    v68, 134217794
+   11  14 *    ALLOC    0x45f8270, 132             (type:vec2)
+- 30,6 -
+   14  13 *    SUSPEND
+   15  13 *    PshVPtr  v0
+   16  14 *    CALL     584           (Entity::Entity())
+- 12,8 -
+   18  13 *    SUSPEND
+   19  13 *    SetV4    v3, 0x3f59999a          (i:1062836634, f:0.85)
+   21  13 *    LoadThisR v48, 134217794
+   23  13 *    WRTV4    v3
+- 14,8 -
+   24  13 *    SUSPEND
+   25  13 *    SetV4    v13, 0x420c0000          (i:1108082688, f:35)
+   27  13 *    LoadThisR v52, 134217794
+   29  13 *    WRTV4    v13
+- 15,8 -
+   30  13 *    SUSPEND
+   31  13 *    CpyGtoV4 v3, 74607976
+   33  13 *    MULIf    v3, v3, 50.000000
+   36  13 *    LoadThisR v56, 134217794
+   38  13 *    WRTV4    v3
+- 16,8 -
+   39  13 *    SUSPEND
+   40  13 *    SetV4    v13, 0x3f59999a          (i:1062836634, f:0.85)
+   42  13 *    LoadThisR v60, 134217794
+   44  13 *    WRTV4    v13
+- 18,7 -
+   45  13 *    SUSPEND
+   46  13 *    SetV1    v3, 0x0
+   48  13 *    LoadThisR v64, 134217794
+   50  13 *    WRTV1    v3
+- 20,8 -
+   51  13 *    SUSPEND
+   52  13 *    SetV4    v13, 0x3fc00000          (i:1069547520, f:1.5)
+   54  13 *    LoadThisR v72, 134217794
+   56  13 *    WRTV4    v13
+- 22,8 -
+   57  13 *    SUSPEND
+   58  13 *    SetV4    v3, 0x3eb33333          (i:1051931443, f:0.35)
+   60  13 *    LoadThisR v76, 134217794
+   62  13 *    WRTV4    v3
+- 23,8 -
+   63  13 *    SUSPEND
+   64  13 *    SetV4    v13, 0x3f666666          (i:1063675494, f:0.9)
+   66  13 *    LoadThisR v80, 134217794
+   68  13 *    WRTV4    v13
+- 24,8 -
+   69  13 *    SUSPEND
+   70  13 *    SetV4    v3, 0x0          (i:0, f:0)
+   72  13 *    LoadThisR v84, 134217794
+   74  13 *    WRTV4    v3
+- 35,3 -
+   75  13 *    SUSPEND
+   76  13 *    PshGPtr  74609304
+   78  14 *    RefCpyV  v1, 74317176
+   80  14 *    PopPtr
+   81  13 *    ClrVPtr  v2
+   82  13 *    CmpPtr   v1, v2
+   84  13 *    TNZ
+   85  13 *    CpyRtoV4 v3
+   86  13 *    FREE     v1, 74317176
+   88  13 *    FREE     v2, 74317176
+   90  13 *    CpyVtoR4 v3
+   91  13 *    JLowZ    +21              (d:114)
+- 37,4 -
+   93  13 * {
+   93  13 *    SUSPEND
+   94  13 *    STR      99         (l:32 s:"Error: the")
+   95  15 *    CALLSYS  33           (const string& _string_factory_(const int, const uint8&))
+   97  13 *    PshRPtr
+   98  14 *    PSF      v10
+   99  15 *    CALLSYS  35           (string::string(const string&in))
+  101  13 *    ObjInfo  v10, 1
+  101  13 *    PSF      v10
+  102  14 *    CALLSYS  304           (void print(const string&in))
+  104  13 *    PSF      v10
+  105  14 *    CALLSYS  36           (string::~string())
+- 38,4 -
+  107  13 *    ObjInfo  v10, 0
+  107  13 *    SUSPEND
+  108  13 *    PshVPtr  v0
+  109  14 *    CALLINTF 1016           (void Entity::remove())
+- 39,4 -
+  111  13 *    SUSPEND
+  112  13 * {
+  112  13 * }
+  112  13 *    JMP      +49              (d:163)
+- 41,3 -
+  114  12   }
+  114  13 * 1:
+  114  13 *    SUSPEND
+  115  13 *    PshVPtr  v0
+  116  14 *    RefCpyV  v1, 74317176
+  118  14 *    PopPtr
+  119  13 *    VAR      v1
+  120  14 *    PGA      74609304
+  122  15 *    GETOBJREF 1
+  123  15 *    REFCPY   0x46dfd78
+  125  14 *    FREE     v1, 74317176
+  127  14 *    PopPtr
+- 44,3 -
+  128  13 *    SUSPEND
+  129  13 *    PshG4    74563528
+  131  14 *    PSF      v12
+  132  15 *    PshGPtr  74560968
+  134  16 *    CHKREF
+  135  16 *    CALLSYS  144           (vec2 vec2::opDiv(const float) const)
+  137  13 *    ObjInfo  v12, 1
+  137  13 *    PSF      v12
+  138  14 *    PshVPtr  v0
+  139  15 *    ADDSi    v24, 134217794
+  141  15 *    RDSPtr
+  142  15 *    COPY     v2, 67108877
+  144  14 *    ObjInfo  v12, 0
+  144  14 *    PopPtr
+- 45,3 -
+  145  13 *    SUSPEND
+  146  13 *    SetV4    v3, 0x63          (i:99, f:1.38729e-043)
+  148  13 *    LoadThisR v32, 134217794
+  150  13 *    WRTV4    v3
+- 46,3 -
+  151  13 *    SUSPEND
+  152  13 *    PshC4    0x44bb8000          (i:1153138688, f:1500)
+  154  14 *    PshC4    0x44480000          (i:1145569280, f:800)
+  156  15 *    PshVPtr  v0
+  157  16 *    ADDSi    v20, 134217794
+  159  16 *    RDSPtr
+  160  16 *    CALLSYS  145           (void vec2::set(const float, const float))
+- 47,3 -
+  162  13 *    SUSPEND
+  163  13 * 0:
+  163  13 *    RET      1

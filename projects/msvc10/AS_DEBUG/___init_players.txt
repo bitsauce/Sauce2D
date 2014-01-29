@@ -1,0 +1,18 @@
+<unrecognized token> _unnamed_function_()
+
+Temps: 1
+
+Variables: 
+ 001: array {noname}
+
+
+- 15,16 -
+    0   1 *    SUSPEND
+    1   1 *    CALL     1075           (Player@[]@ factstub())
+    3   1 *    STOREOBJ v1
+    4   1 *    PshVPtr  v1
+    5   2 *    PGA      150721288
+    7   3 *    REFCPY   0x8fbb170
+    9   2 *    PopPtr
+   10   1 *    FREE     v1, 150712688
+   12   1 *    RET      0

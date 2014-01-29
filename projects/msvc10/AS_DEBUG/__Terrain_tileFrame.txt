@@ -1,0 +1,241 @@
+uint Terrain::tileFrame(const int)
+
+Temps: 2, 3, 5
+
+Variables: 
+ -001: const int state
+ 001: bool r
+ 004: bool t
+ 006: bool l
+ 007: bool b
+ 000: Terrain this
+
+
+    0   7 *    VarDecl  0
+    0   7 *    PshVPtr  v0
+    1   8 *    CALLSYS  2           (void _builtin_object_::_beh_4_())
+- 125,3 -
+    3   7 *    SUSPEND
+    4   7 *    VarDecl  1
+    4   7 *    SetV4    v2, 0x2          (i:2, f:2.8026e-045)
+    6   7 *    BAND     v2, v-1, v2
+    8   7 *    CMPIu    v2, 0
+   10   7 *    TZ
+   11   7 *    CpyRtoV4 v2
+   12   7 *    CpyVtoV4 v1, v2
+- 126,3 -
+   14   7 *    SUSPEND
+   15   7 *    VarDecl  2
+   15   7 *    SetV4    v3, 0x1          (i:1, f:1.4013e-045)
+   17   7 *    BAND     v2, v-1, v3
+   19   7 *    CMPIu    v2, 0
+   21   7 *    TZ
+   22   7 *    CpyRtoV4 v3
+   23   7 *    CpyVtoV4 v4, v3
+- 127,3 -
+   25   7 *    SUSPEND
+   26   7 *    VarDecl  3
+   26   7 *    SetV4    v5, 0x8          (i:8, f:1.12104e-044)
+   28   7 *    BAND     v3, v-1, v5
+   30   7 *    CMPIu    v3, 0
+   32   7 *    TZ
+   33   7 *    CpyRtoV4 v5
+   34   7 *    CpyVtoV4 v6, v5
+- 128,3 -
+   36   7 *    SUSPEND
+   37   7 *    VarDecl  4
+   37   7 *    SetV4    v2, 0x4          (i:4, f:5.60519e-045)
+   39   7 *    BAND     v5, v-1, v2
+   41   7 *    CMPIu    v5, 0
+   43   7 *    TZ
+   44   7 *    CpyRtoV4 v2
+   45   7 *    CpyVtoV4 v7, v2
+- 130,3 -
+   47   7 *    SUSPEND
+   48   7 *    CpyVtoR4 v1
+   49   7 *    JLowZ    +76              (d:127)
+- 130,9 -
+   51   7 *    SUSPEND
+   52   7 *    CpyVtoR4 v4
+   53   7 *    JLowZ    +36              (d:91)
+- 130,15 -
+   55   7 *    SUSPEND
+   56   7 *    CpyVtoR4 v6
+   57   7 *    JLowZ    +16              (d:75)
+- 130,21 -
+   59   7 *    SUSPEND
+   60   7 *    CpyVtoR4 v7
+   61   7 *    JLowZ    +6              (d:69)
+- 130,27 -
+   63   7 *    SUSPEND
+   64   7 *    SetV4    v3, 0x0          (i:0, f:0)
+   66   7 * {
+   66   7 * }
+   66   7 *    CpyVtoR4 v3
+   67   7 *    JMP      +132              (d:201)
+- 131,35 -
+   69   7 * 4:
+   69   7 *    SUSPEND
+   70   7 *    SetV4    v2, 0x5          (i:5, f:7.00649e-045)
+   72   7 * {
+   72   7 * }
+   72   7 *    CpyVtoR4 v2
+   73   7 *    JMP      +126              (d:201)
+- 132,29 -
+   75   7 * 3:
+   75   7 *    SUSPEND
+   76   7 *    CpyVtoR4 v7
+   77   7 *    JLowZ    +6              (d:85)
+- 132,35 -
+   79   7 *    SUSPEND
+   80   7 *    SetV4    v3, 0x7          (i:7, f:9.80909e-045)
+   82   7 * {
+   82   7 * }
+   82   7 *    CpyVtoR4 v3
+   83   7 *    JMP      +116              (d:201)
+- 133,29 -
+   85   7 * 5:
+   85   7 *    SUSPEND
+   86   7 *    SetV4    v2, 0x6          (i:6, f:8.40779e-045)
+   88   7 * {
+   88   7 * }
+   88   7 *    CpyVtoR4 v2
+   89   7 *    JMP      +110              (d:201)
+- 134,24 -
+   91   7 * 2:
+   91   7 *    SUSPEND
+   92   7 *    CpyVtoR4 v6
+   93   7 *    JLowZ    +16              (d:111)
+- 134,30 -
+   95   7 *    SUSPEND
+   96   7 *    CpyVtoR4 v7
+   97   7 *    JLowZ    +6              (d:105)
+- 134,36 -
+   99   7 *    SUSPEND
+  100   7 *    SetV4    v3, 0x1          (i:1, f:1.4013e-045)
+  102   7 * {
+  102   7 * }
+  102   7 *    CpyVtoR4 v3
+  103   7 *    JMP      +96              (d:201)
+- 135,35 -
+  105   7 * 7:
+  105   7 *    SUSPEND
+  106   7 *    SetV4    v2, 0x9          (i:9, f:1.26117e-044)
+  108   7 * {
+  108   7 * }
+  108   7 *    CpyVtoR4 v2
+  109   7 *    JMP      +90              (d:201)
+- 136,24 -
+  111   7 * 6:
+  111   7 *    SUSPEND
+  112   7 *    CpyVtoR4 v7
+  113   7 *    JLowZ    +6              (d:121)
+- 136,30 -
+  115   7 *    SUSPEND
+  116   7 *    SetV4    v3, 0x8          (i:8, f:1.12104e-044)
+  118   7 * {
+  118   7 * }
+  118   7 *    CpyVtoR4 v3
+  119   7 *    JMP      +80              (d:201)
+- 137,24 -
+  121   7 * 8:
+  121   7 *    SUSPEND
+  122   7 *    SetV4    v2, 0xb          (i:11, f:1.54143e-044)
+  124   7 * {
+  124   7 * }
+  124   7 *    CpyVtoR4 v2
+  125   7 *    JMP      +74              (d:201)
+- 138,8 -
+  127   7 * 1:
+  127   7 *    SUSPEND
+  128   7 *    CpyVtoR4 v4
+  129   7 *    JLowZ    +36              (d:167)
+- 138,14 -
+  131   7 *    SUSPEND
+  132   7 *    CpyVtoR4 v6
+  133   7 *    JLowZ    +16              (d:151)
+- 138,20 -
+  135   7 *    SUSPEND
+  136   7 *    CpyVtoR4 v7
+  137   7 *    JLowZ    +6              (d:145)
+- 138,26 -
+  139   7 *    SUSPEND
+  140   7 *    SetV4    v3, 0x3          (i:3, f:4.2039e-045)
+  142   7 * {
+  142   7 * }
+  142   7 *    CpyVtoR4 v3
+  143   7 *    JMP      +56              (d:201)
+- 139,34 -
+  145   7 * 11:
+  145   7 *    SUSPEND
+  146   7 *    SetV4    v2, 0x4          (i:4, f:5.60519e-045)
+  148   7 * {
+  148   7 * }
+  148   7 *    CpyVtoR4 v2
+  149   7 *    JMP      +50              (d:201)
+- 140,28 -
+  151   7 * 10:
+  151   7 *    SUSPEND
+  152   7 *    CpyVtoR4 v7
+  153   7 *    JLowZ    +6              (d:161)
+- 140,34 -
+  155   7 *    SUSPEND
+  156   7 *    SetV4    v3, 0xc          (i:12, f:1.68156e-044)
+  158   7 * {
+  158   7 * }
+  158   7 *    CpyVtoR4 v3
+  159   7 *    JMP      +40              (d:201)
+- 141,19 -
+  161   7 * 12:
+  161   7 *    SUSPEND
+  162   7 *    SetV4    v2, 0xe          (i:14, f:1.96182e-044)
+  164   7 * {
+  164   7 * }
+  164   7 *    CpyVtoR4 v2
+  165   7 *    JMP      +34              (d:201)
+- 142,13 -
+  167   7 * 9:
+  167   7 *    SUSPEND
+  168   7 *    CpyVtoR4 v6
+  169   7 *    JLowZ    +16              (d:187)
+- 142,19 -
+  171   7 *    SUSPEND
+  172   7 *    CpyVtoR4 v7
+  173   7 *    JLowZ    +6              (d:181)
+- 142,25 -
+  175   7 *    SUSPEND
+  176   7 *    SetV4    v3, 0x2          (i:2, f:2.8026e-045)
+  178   7 * {
+  178   7 * }
+  178   7 *    CpyVtoR4 v3
+  179   7 *    JMP      +20              (d:201)
+- 143,13 -
+  181   7 * 14:
+  181   7 *    SUSPEND
+  182   7 *    SetV4    v2, 0xa          (i:10, f:1.4013e-044)
+  184   7 * {
+  184   7 * }
+  184   7 *    CpyVtoR4 v2
+  185   7 *    JMP      +14              (d:201)
+- 144,8 -
+  187   7 * 13:
+  187   7 *    SUSPEND
+  188   7 *    CpyVtoR4 v7
+  189   7 *    JLowZ    +6              (d:197)
+- 144,14 -
+  191   7 *    SUSPEND
+  192   7 *    SetV4    v3, 0xd          (i:13, f:1.82169e-044)
+  194   7 * {
+  194   7 * }
+  194   7 *    CpyVtoR4 v3
+  195   7 *    JMP      +4              (d:201)
+- 145,8 -
+  197   7 * 15:
+  197   7 *    SUSPEND
+  198   7 *    SetV4    v2, 0xf          (i:15, f:2.10195e-044)
+  200   7 * {
+  200   7 * }
+  200   7 *    CpyVtoR4 v2
+  201   7 * 0:
+  201   7 *    FREE     v0, 104324232
+  203   7 *    RET      2

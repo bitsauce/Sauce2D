@@ -1,0 +1,38 @@
+<unrecognized token> _unnamed_function_()
+
+Temps: 7, 14, 15, 16
+
+Variables: 
+ 015: string {noname}
+ 007: string {noname}
+ 014: string {noname}
+
+
+- 124,5 -
+    0  16 *    SUSPEND
+    1  16 *    PSF      v15
+    2  17 *    STR      10         (l:28 s:"sprites/ca")
+    3  19 *    CALLSYS  33           (const string& _string_factory_(const int, const uint8&))
+    5  17 *    PshRPtr
+    6  18 *    PSF      v7
+    7  19 *    CALLSYS  35           (string::string(const string&in))
+    9  17 *    ObjInfo  v7, 1
+    9  17 *    VAR      v7
+   10  18 *    PSF      v14
+   11  19 *    GETREF   1
+   12  19 *    CALLSYS  404           (string appGetWorkPath(const string&in))
+   14  17 *    ObjInfo  v14, 1
+   14  17 *    PSF      v7
+   15  18 *    CALLSYS  36           (string::~string())
+   17  17 *    ObjInfo  v7, 0
+   17  17 *    PSF      v14
+   18  18 *    ALLOC    0x403100, 35             (type:string)
+   21  16 *    PSF      v14
+   22  17 *    CALLSYS  36           (string::~string())
+   24  16 *    ObjInfo  v14, 0
+   24  16 *    VAR      v15
+   25  17 *    GETOBJ   0
+   26  17 *    CALL     883           (int gfxLoadImage(const string))
+   28  16 *    CpyRtoV4 v16
+   29  16 *    CpyVtoG4 v16, 117232384
+   31  16 *    RET      0

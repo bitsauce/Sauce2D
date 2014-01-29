@@ -1,0 +1,22 @@
+Item::Item()
+
+Temps: 1, 2
+
+Variables: 
+ 000: Item this
+
+
+- 15,8 -
+    0   2 *    SUSPEND
+    1   2 *    PshVPtr  v0
+    2   3 *    CALL     581           (SceneObject::SceneObject())
+- 20,3 -
+    4   2 *    SUSPEND
+    5   2 *    PshC4    0x20          (i:32, f:4.48416e-044)
+    7   3 *    PshC4    0x20          (i:32, f:4.48416e-044)
+    9   4 *    PshVPtr  v0
+   10   5 *    CALLINTF 1095           (void SceneObject::setSize(const uint, const uint))
+- 21,3 -
+   12   2 *    SUSPEND
+   13   2 * 0:
+   13   2 *    RET      1

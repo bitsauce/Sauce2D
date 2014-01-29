@@ -1,0 +1,39 @@
+void CastleDoor::open()
+
+Temps: 1, 2, 3, 4
+
+Variables: 
+ 000: CastleDoor this
+
+
+    0   4 *    PshVPtr  v0
+    1   5 *    CALLSYS  2           (void _builtin_object_::_beh_4_())
+- 67,3 -
+    3   4 *    SUSPEND
+    4   4 *    SetV1    v1, 0x1
+    6   4 *    LoadThisR v36, 134217818
+    8   4 *    WRTV1    v1
+- 68,3 -
+    9   4 *    SUSPEND
+   10   4 *    PshC4    0x0          (i:0, f:0)
+   12   5 *    PshVPtr  v0
+   13   6 *    CALLINTF 1081           (float SceneObject::y() const)
+   15   5 *    CpyRtoV4 v1
+   16   5 *    SetV4    v2, 0x42800000          (i:1115684864, f:64)
+   18   5 *    DIVf     v1, v1, v2
+   20   5 *    fTOu     v1
+   21   5 *    PshV4    v1
+   22   6 *    PshVPtr  v0
+   23   7 *    CALLINTF 1080           (float SceneObject::x() const)
+   25   6 *    CpyRtoV4 v2
+   26   6 *    SetV4    v3, 0x42800000          (i:1115684864, f:64)
+   28   6 *    DIVf     v2, v2, v3
+   30   6 *    fTOu     v2
+   31   6 *    PshV4    v2
+   32   7 *    PshGPtr  143684504
+   34   8 *    CALLINTF 1408           (void LevelManager::setCollision(uint, uint, uint))
+- 69,3 -
+   36   4 *    SUSPEND
+   37   4 * 0:
+   37   4 *    FREE     v0, 143343328
+   39   4 *    RET      1

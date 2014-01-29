@@ -1,0 +1,18 @@
+<unrecognized token> _unnamed_function_()
+
+Temps: 1
+
+Variables: 
+ 001: FrameBuffer {noname}
+
+
+- 78,13 -
+    0   1 *    SUSPEND
+    1   1 *    CALL     598           (FrameBuffer@ FrameBuffer())
+    3   1 *    STOREOBJ v1
+    4   1 *    PshVPtr  v1
+    5   2 *    PGA      74579144
+    7   3 *    REFCPY   0x46d4188
+    9   2 *    PopPtr
+   10   1 *    FREE     v1, 74269064
+   12   1 *    RET      0

@@ -1,0 +1,28 @@
+void ActionSlot::startDrag()
+
+Temps: 2
+
+Variables: 
+ 001: ActionCard card
+ 000: ActionSlot this
+ 002: ActionSlot {noname}
+
+
+    0   2 *    PshVPtr  v0
+    1   3 *    CALLSYS  2           (void _builtin_object_::_beh_5_())
+- 57,3 -
+    3   2 *    SUSPEND
+    4   2 *    VarDecl  0
+    4   2 *    PshVPtr  v0
+    5   3 *    RefCpyV  v2, 74309136
+    7   3 *    PopPtr
+    8   2 *    VAR      v2
+    9   3 *    GETOBJ   0
+   10   3 *    CALL     786           (ActionCard@ ActionCard(ActionSlot@))
+   12   2 *    STOREOBJ v1
+- 58,3 -
+   13   2 *    SUSPEND
+   14   2 *    FREE     v1, 74308632
+   16   2 * 0:
+   16   2 *    FREE     v0, 74309136
+   18   2 *    RET      1

@@ -1,0 +1,21 @@
+void UiObject::setToggleOnClick(const bool)
+
+Temps: 
+
+Variables: 
+ -001: const bool toggleOnClick
+ 000: UiObject this
+
+
+    0   0 *    VarDecl  0
+    0   0 *    PshVPtr  v0
+    1   1 *    CALLSYS  2           (void _builtin_object_::_beh_4_())
+- 270,52 -
+    3   0 *    SUSPEND
+    4   0 *    LoadThisR v37, 134217780
+    6   0 *    WRTV1    v-1
+- 270,89 -
+    7   0 *    SUSPEND
+    8   0 * 0:
+    8   0 *    FREE     v0, 150271928
+   10   0 *    RET      2

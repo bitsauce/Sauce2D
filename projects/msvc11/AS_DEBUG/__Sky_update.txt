@@ -1,0 +1,403 @@
+void Sky::update()
+
+Temps: 2, 3, 5, 7, 11, 13, 14, 15, 16, 17, 19
+
+Variables: 
+ 001: int hour
+ 004: int minute
+ 006: float minscale
+ 006: float minscale
+ 006: float f
+ 018: uint i
+ 000: Sky this
+ 016: vec2 {noname}
+ 019: array {noname}
+ 011: vec4 {noname}
+ 013: vec2 {noname}
+
+
+    0  19 *    PshVPtr  v0
+    1  20 *    CALLSYS  2           (void _builtin_object_::_beh_5_())
+- 76,3 -
+    3  19 *    SUSPEND
+    4  19 *    VarDecl  0
+    4  19 *    LoadThisR v52, 134217788
+    6  19 *    RDR4     v2
+    7  19 *    SetV4    v3, 0x42700000          (i:1114636288, f:60)
+    9  19 *    DIVf     v2, v2, v3
+   11  19 *    PshV4    v2
+   12  20 *    CALLSYS  324           (int floor(const float))
+   14  19 *    CpyRtoV4 v3
+   15  19 *    CpyVtoV4 v1, v3
+- 77,3 -
+   17  19 *    SUSPEND
+   18  19 *    VarDecl  1
+   18  19 *    LoadThisR v52, 134217788
+   20  19 *    RDR4     v5
+   21  19 *    CpyVtoV4 v2, v1
+   23  19 *    iTOf     v2
+   24  19 *    MULIf    v2, v2, 60.000000
+   27  19 *    SUBf     v3, v5, v2
+   29  19 *    PshV4    v3
+   30  20 *    CALLSYS  324           (int floor(const float))
+   32  19 *    CpyRtoV4 v2
+   33  19 *    CpyVtoV4 v4, v2
+- 80,3 -
+   35  19 *    SUSPEND
+   36  19 *    CMPIi    v1, 0
+   38  19 *    JNS      +4              (d:44)
+   40  19 *    SetV4    v5, 0x0          (i:0, f:0)
+   42  19 *    JMP      +6              (d:50)
+   44  19 * 2:
+   44  19 *    CMPIi    v1, 6
+   46  19 *    TS
+   47  19 *    CpyRtoV4 v3
+   48  19 *    CpyVtoV4 v5, v3
+   50  19 * 3:
+   50  19 *    CpyVtoR4 v5
+   51  19 *    JLowZ    +4              (d:57)
+   53  19 *    SetV1    v2, 0x1
+   55  19 *    JMP      +16              (d:73)
+   57  19 * 6:
+   57  19 *    CMPIi    v1, 18
+   59  19 *    JNS      +4              (d:65)
+   61  19 *    SetV4    v3, 0x0          (i:0, f:0)
+   63  19 *    JMP      +6              (d:71)
+   65  19 * 4:
+   65  19 *    CMPIi    v1, 24
+   67  19 *    TNP
+   68  19 *    CpyRtoV4 v2
+   69  19 *    CpyVtoV4 v3, v2
+   71  19 * 5:
+   71  19 *    CpyVtoV4 v2, v3
+   73  19 * 7:
+   73  19 *    CpyVtoR4 v2
+   74  19 *    JLowZ    +82              (d:158)
+- 83,4 -
+   76  19 * {
+   76  19 *    SUSPEND
+   77  19 *    CMPIi    v1, 18
+   79  19 *    JNS      +4              (d:85)
+   81  19 *    SetV4    v5, 0x0          (i:0, f:0)
+   83  19 *    JMP      +6              (d:91)
+   85  19 * 9:
+   85  19 *    CMPIi    v1, 20
+   87  19 *    TNP
+   88  19 *    CpyRtoV4 v3
+   89  19 *    CpyVtoV4 v5, v3
+   91  19 * 10:
+   91  19 *    CpyVtoR4 v5
+   92  19 *    JLowZ    +14              (d:108)
+- 86,5 -
+   94  19 * {
+   94  19 *    SUSPEND
+   95  19 *    VarDecl  2
+   95  19 *    SetV4    v5, 0x449d8000          (i:1151172608, f:1260)
+   97  19 *    LoadThisR v52, 134217788
+   99  19 *    RDR4     v2
+  100  19 *    SUBf     v3, v5, v2
+  102  19 *    SetV4    v7, 0x43340000          (i:1127481344, f:180)
+  104  19 *    DIVf     v6, v3, v7
+  106  19 * }
+  106  19 *    JMP      +48              (d:156)
+- 94,5 -
+  108  19 * 8:
+  108  19 * {
+  108  19 *    SUSPEND
+  109  19 *    SetV1    v7, 0xff
+  111  19 *    PshV4    v7
+  112  20 *    SetV1    v5, 0x0
+  114  20 *    PshV4    v5
+  115  21 *    SetV1    v2, 0x0
+  117  21 *    PshV4    v2
+  118  22 *    SetV1    v3, 0x0
+  120  22 *    PshV4    v3
+  121  23 *    PSF      v11
+  122  24 *    CALL     938           (vec4 rgbvec(const uint8, const uint8, const uint8, const uint8 = 255))
+  124  19 *    ObjInfo  v11, 1
+  124  19 *    PSF      v11
+  125  20 *    PshVPtr  v0
+  126  21 *    ADDSi    v44, 134217788
+  128  21 *    RDSPtr
+  129  21 *    COPY     v4, 67108880
+  131  20 *    ObjInfo  v11, 0
+  131  20 *    PopPtr
+- 95,5 -
+  132  19 *    SUSPEND
+  133  19 *    SetV1    v7, 0xff
+  135  19 *    PshV4    v7
+  136  20 *    SetV1    v5, 0x6e
+  138  20 *    PshV4    v5
+  139  21 *    SetV1    v3, 0x3c
+  141  21 *    PshV4    v3
+  142  22 *    SetV1    v2, 0xa
+  144  22 *    PshV4    v2
+  145  23 *    PSF      v11
+  146  24 *    CALL     938           (vec4 rgbvec(const uint8, const uint8, const uint8, const uint8 = 255))
+  148  19 *    ObjInfo  v11, 1
+  148  19 *    PSF      v11
+  149  20 *    PshVPtr  v0
+  150  21 *    ADDSi    v48, 134217788
+  152  21 *    RDSPtr
+  153  21 *    COPY     v4, 67108880
+  155  20 *    ObjInfo  v11, 0
+  155  20 *    PopPtr
+  156  19 * }
+  156  19 * 11:
+  156  19 * }
+  156  19 *    JMP      +80              (d:238)
+- 102,4 -
+  158  19 * 1:
+  158  19 * {
+  158  19 *    SUSPEND
+  159  19 *    CMPIi    v1, 6
+  161  19 *    JNS      +4              (d:167)
+  163  19 *    SetV4    v7, 0x0          (i:0, f:0)
+  165  19 *    JMP      +6              (d:173)
+  167  19 * 14:
+  167  19 *    CMPIi    v1, 8
+  169  19 *    TNP
+  170  19 *    CpyRtoV4 v2
+  171  19 *    CpyVtoV4 v7, v2
+  173  19 * 15:
+  173  19 *    CpyVtoR4 v7
+  174  19 *    JLowZ    +14              (d:190)
+- 105,5 -
+  176  19 * {
+  176  19 *    SUSPEND
+  177  19 *    VarDecl  3
+  177  19 *    SetV4    v2, 0x44070000          (i:1141309440, f:540)
+  179  19 *    LoadThisR v52, 134217788
+  181  19 *    RDR4     v7
+  182  19 *    SUBf     v3, v2, v7
+  184  19 *    SetV4    v5, 0x43340000          (i:1127481344, f:180)
+  186  19 *    DIVf     v6, v3, v5
+  188  19 * }
+  188  19 *    JMP      +48              (d:238)
+- 113,5 -
+  190  19 * 13:
+  190  19 * {
+  190  19 *    SUSPEND
+  191  19 *    SetV1    v5, 0xff
+  193  19 *    PshV4    v5
+  194  20 *    SetV1    v2, 0xff
+  196  20 *    PshV4    v2
+  197  21 *    SetV1    v7, 0xff
+  199  21 *    PshV4    v7
+  200  22 *    SetV1    v3, 0xff
+  202  22 *    PshV4    v3
+  203  23 *    PSF      v11
+  204  24 *    CALL     938           (vec4 rgbvec(const uint8, const uint8, const uint8, const uint8 = 255))
+  206  19 *    ObjInfo  v11, 1
+  206  19 *    PSF      v11
+  207  20 *    PshVPtr  v0
+  208  21 *    ADDSi    v44, 134217788
+  210  21 *    RDSPtr
+  211  21 *    COPY     v4, 67108880
+  213  20 *    ObjInfo  v11, 0
+  213  20 *    PopPtr
+- 114,5 -
+  214  19 *    SUSPEND
+  215  19 *    SetV1    v5, 0xff
+  217  19 *    PshV4    v5
+  218  20 *    SetV1    v2, 0xff
+  220  20 *    PshV4    v2
+  221  21 *    SetV1    v3, 0xaa
+  223  21 *    PshV4    v3
+  224  22 *    SetV1    v7, 0x5a
+  226  22 *    PshV4    v7
+  227  23 *    PSF      v11
+  228  24 *    CALL     938           (vec4 rgbvec(const uint8, const uint8, const uint8, const uint8 = 255))
+  230  19 *    ObjInfo  v11, 1
+  230  19 *    PSF      v11
+  231  20 *    PshVPtr  v0
+  232  21 *    ADDSi    v48, 134217788
+  234  21 *    RDSPtr
+  235  21 *    COPY     v4, 67108880
+  237  20 *    ObjInfo  v11, 0
+  237  20 *    PopPtr
+- 119,3 -
+  238  19 * }
+  238  19 * 16:
+  238  19 * }
+  238  19 * 12:
+  238  19 *    SUSPEND
+  239  19 *    VarDecl  4
+  239  19 *    SetV4    v7, 0x448e8000          (i:1150189568, f:1140)
+  241  19 *    LoadThisR v52, 134217788
+  243  19 *    RDR4     v5
+  244  19 *    SUBf     v3, v7, v5
+  246  19 *    SetV4    v2, 0x44430000          (i:1145241600, f:780)
+  248  19 *    DIVf     v6, v3, v2
+- 120,3 -
+  250  19 *    SUSPEND
+  251  19 *    PSF      v16
+  252  20 *    PshGPtr  74560968
+  254  21 *    ADDSi    v4, 67108877
+  256  21 *    PopRPtr
+  257  20 *    RDR4     v2
+  258  20 *    PSF      v13
+  259  21 *    PshVPtr  v0
+  260  22 *    ADDSi    v80, 134217788
+  262  22 *    RDSPtr
+  263  22 *    CALLINTF 1025           (vec2 Entity::getSize())
+  265  20 *    ObjInfo  v13, 1
+  265  20 *    LoadVObjR v13, v4, 67108877
+  268  20 *    RDR4     v5
+  269  20 *    ObjInfo  v13, 0
+  269  20 *    ADDf     v3, v2, v5
+  271  20 *    CpyGtoV4 v7, 74590896
+  273  20 *    MULf     v5, v7, v6
+  275  20 *    PshV4    v5
+  276  21 *    CALLSYS  329           (float sin(const float))
+  278  20 *    CpyRtoV4 v7
+  279  20 *    PshGPtr  74560968
+  281  21 *    ADDSi    v4, 67108877
+  283  21 *    PopRPtr
+  284  20 *    RDR4     v5
+  285  20 *    PSF      v13
+  286  21 *    PshVPtr  v0
+  287  22 *    ADDSi    v80, 134217788
+  289  22 *    RDSPtr
+  290  22 *    CALLINTF 1025           (vec2 Entity::getSize())
+  292  20 *    ObjInfo  v13, 1
+  292  20 *    LoadVObjR v13, v4, 67108877
+  295  20 *    RDR4     v2
+  296  20 *    ObjInfo  v13, 0
+  296  20 *    SUBf     v5, v5, v2
+  298  20 *    MULf     v2, v7, v5
+  300  20 *    SUBf     v5, v3, v2
+  302  20 *    PshV4    v5
+  303  21 *    PshGPtr  74560968
+  305  22 *    ADDSi    v0, 67108877
+  307  22 *    PopRPtr
+  308  21 *    RDR4     v2
+  309  21 *    SetV4    v3, 0x40000000          (i:1073741824, f:2)
+  311  21 *    DIVf     v7, v2, v3
+  313  21 *    CpyGtoV4 v3, 74590896
+  315  21 *    MULf     v2, v3, v6
+  317  21 *    PshV4    v2
+  318  22 *    CALLSYS  328           (float cos(const float))
+  320  21 *    CpyRtoV4 v3
+  321  21 *    PshGPtr  74560968
+  323  22 *    ADDSi    v0, 67108877
+  325  22 *    PopRPtr
+  326  21 *    RDR4     v2
+  327  21 *    SetV4    v14, 0x40000000          (i:1073741824, f:2)
+  329  21 *    DIVf     v2, v2, v14
+  331  21 *    PSF      v13
+  332  22 *    PshVPtr  v0
+  333  23 *    ADDSi    v80, 134217788
+  335  23 *    RDSPtr
+  336  23 *    CALLINTF 1025           (vec2 Entity::getSize())
+  338  21 *    ObjInfo  v13, 1
+  338  21 *    LoadVObjR v13, v0, 67108877
+  341  21 *    RDR4     v15
+  342  21 *    ObjInfo  v13, 0
+  342  21 *    SUBf     v14, v2, v15
+  344  21 *    MULf     v2, v3, v14
+  346  21 *    ADDf     v14, v7, v2
+  348  21 *    PshV4    v14
+  349  22 *    PSF      v13
+  350  23 *    CALLSYS  135           (vec2::vec2(float, float))
+  352  20 *    ObjInfo  v13, 1
+  352  20 *    PSF      v13
+  353  21 *    ALLOC    0x45f8270, 133             (type:vec2)
+  356  19 *    ObjInfo  v13, 0
+  356  19 *    VAR      v16
+  357  20 *    PshVPtr  v0
+  358  21 *    ADDSi    v80, 134217788
+  360  21 *    RDSPtr
+  361  21 *    GETOBJ   1
+  362  21 *    CALLINTF 1022           (void Entity::setPos(vec2))
+- 127,3 -
+  364  19 *    SUSPEND
+  365  19 *    PshC4    0x3          (i:3, f:4.2039e-045)
+  367  20 *    CALLSYS  353           (bool getKeyState(const VirtualKey))
+  369  19 *    JLowZ    +10              (d:381)
+- 127,25 -
+  371  19 *    SUSPEND
+  372  19 *    LoadThisR v52, 134217788
+  374  19 *    RDR4     v2
+  375  19 *    ADDIf    v15, v2, 5.000000
+  378  19 *    WRTV4    v15
+  379  19 *    JMP      +25              (d:406)
+- 128,8 -
+  381  19 * 17:
+  381  19 *    SUSPEND
+  382  19 *    PshC4    0xc          (i:12, f:1.68156e-044)
+  384  20 *    CALLSYS  353           (bool getKeyState(const VirtualKey))
+  386  19 *    JLowZ    +10              (d:398)
+- 128,30 -
+  388  19 *    SUSPEND
+  389  19 *    LoadThisR v52, 134217788
+  391  19 *    RDR4     v2
+  392  19 *    SUBIf    v7, v2, 5.000000
+  395  19 *    WRTV4    v7
+  396  19 *    JMP      +8              (d:406)
+- 129,8 -
+  398  19 * 19:
+  398  19 *    SUSPEND
+  399  19 *    LoadThisR v52, 134217788
+  401  19 *    RDR4     v15
+  402  19 *    ADDIf    v2, v15, 0.033333
+  405  19 *    WRTV4    v2
+- 132,3 -
+  406  19 * 20:
+  406  19 * 18:
+  406  19 *    SUSPEND
+  407  19 *    LoadThisR v52, 134217788
+  409  19 *    RDR4     v7
+  410  19 *    CMPIf    v7, 1440.000000
+  412  19 *    JS       +6              (d:420)
+- 133,4 -
+  414  19 *    SUSPEND
+  415  19 *    SetV4    v2, 0x0          (i:0, f:0)
+  417  19 *    LoadThisR v52, 134217788
+  419  19 *    WRTV4    v2
+- 136,3 -
+  420  19 * 21:
+  420  19 *    SUSPEND
+  421  19 *    LoadThisR v68, 134217788
+  423  19 *    RDR4     v15
+  424  19 *    ADDIf    v7, v15, 0.500000
+  427  19 *    WRTV4    v7
+- 139,7 -
+  428  19 *    SUSPEND
+  429  19 *    VarDecl  5
+  429  19 *    SetV4    v18, 0x0          (i:0, f:0)
+  431  19 *    JMP      +27              (d:460)
+  433  19 * 25:
+  433  19 *    SUSPEND
+- 140,4 -
+  434  19 *    SUSPEND
+  435  19 *    MULIi    v7, v18, 5
+  438  19 *    uTOf     v7
+  439  19 *    PshV4    v18
+  440  20 *    PshVPtr  v0
+  441  21 *    ADDSi    v76, 134217788
+  443  21 *    RDSPtr
+  444  21 *    RefCpyV  v19, 73488880
+  446  21 *    CALLSYS  363           (vec2& array::opIndex(uint))
+  448  19 *    PshRPtr
+  449  20 *    ADDSi    v0, 67108877
+  451  20 *    PopRPtr
+  452  19 *    RDR4     v3
+  453  19 *    ADDf     v2, v3, v7
+  455  19 *    WRTV4    v2
+  456  19 *    FREE     v19, 73488880
+- 139,26 -
+  458  19 * 24:
+  458  19 *    SUSPEND
+  459  19 *    IncVi    v18
+- 139,19 -
+  460  19 * 22:
+  460  19 *    SUSPEND
+  461  19 *    CMPIu    v18, 5
+  463  19 *    JS       -32              (d:433)
+- 141,3 -
+  465  19 * 23:
+  465  19 *    SUSPEND
+  466  19 * 0:
+  466  19 *    FREE     v0, 74312560
+  468  19 *    RET      1

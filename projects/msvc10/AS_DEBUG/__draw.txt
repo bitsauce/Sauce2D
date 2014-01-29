@@ -1,0 +1,97 @@
+void draw()
+
+Temps: 2, 4, 5, 6, 7, 8, 9, 10
+
+Variables: 
+ 001: int w
+ 003: int h
+
+
+- 251,2 -
+    0  10 *    SUSPEND
+    1  10 *    VarDecl  0
+    1  10 *    SetV4    v1, 0x20          (i:32, f:4.48416e-044)
+- 252,2 -
+    3  10 *    SUSPEND
+    4  10 *    VarDecl  1
+    4  10 *    SetV4    v3, 0x10          (i:16, f:2.24208e-044)
+- 254,2 -
+    6  10 *    SUSPEND
+    7  10 *    SetV1    v2, 0xff
+    9  10 *    PshV4    v2
+   10  11 *    SetV1    v4, 0x0
+   12  11 *    PshV4    v4
+   13  12 *    SetV1    v5, 0xff
+   15  12 *    PshV4    v5
+   16  13 *    SetV1    v6, 0x0
+   18  13 *    PshV4    v6
+   19  14 *    CALL     371           (uint rgb(const uint8, const uint8, const uint8, const uint8 arg3 = 255))
+   21  10 *    CpyRtoV4 v7
+   22  10 *    PshV4    v7
+   23  11 *    CALLSYS  348           (void gfxSetDrawColor(const uint))
+- 255,2 -
+   25  10 *    SUSPEND
+   26  10 *    PshC4    0x7          (i:7, f:9.80909e-045)
+   28  11 *    CALLSYS  339           (void gfxBeginPoly(const uint))
+- 256,2 -
+   30  10 *    SUSPEND
+   31  10 *    CpyVtoV4 v7, v3
+   33  10 *    iTOf     v7
+   34  10 *    PshV4    v7
+   35  11 *    CpyVtoV4 v2, v1
+   37  11 *    iTOf     v2
+   38  11 *    PshV4    v2
+   39  12 *    PshC4    0x0          (i:0, f:0)
+   41  13 *    PshC4    0x0          (i:0, f:0)
+   43  14 *    CALL     369           (void gfxDrawQuad(const float, const float, const float, const float))
+- 257,2 -
+   45  10 *    SUSPEND
+   46  10 *    CALLSYS  341           (void gfxEndPoly())
+- 258,2 -
+   48  10 *    SUSPEND
+   49  10 *    SetV1    v4, 0xff
+   51  10 *    PshV4    v4
+   52  11 *    SetV1    v5, 0xff
+   54  11 *    PshV4    v5
+   55  12 *    SetV1    v6, 0xff
+   57  12 *    PshV4    v6
+   58  13 *    SetV1    v2, 0xff
+   60  13 *    PshV4    v2
+   61  14 *    CALL     371           (uint rgb(const uint8, const uint8, const uint8, const uint8 arg3 = 255))
+   63  10 *    CpyRtoV4 v7
+   64  10 *    PshV4    v7
+   65  11 *    CALLSYS  348           (void gfxSetDrawColor(const uint))
+- 260,2 -
+   67  10 *    SUSPEND
+   68  10 *    PshG4    75060224
+   70  11 *    CALLSYS  346           (void gfxSetDrawImage(const uint))
+- 261,2 -
+   72  10 *    SUSPEND
+   73  10 *    PshC4    0x7          (i:7, f:9.80909e-045)
+   75  11 *    CALLSYS  339           (void gfxBeginPoly(const uint))
+- 262,2 -
+   77  10 *    SUSPEND
+   78  10 *    PshC4    0x3f800000          (i:1065353216, f:1)
+   80  11 *    PshC4    0x3f800000          (i:1065353216, f:1)
+   82  12 *    PshC4    0x0          (i:0, f:0)
+   84  13 *    PshC4    0x0          (i:0, f:0)
+   86  14 *    CpyVtoV4 v5, v3
+   88  14 *    iTOf     v5
+   89  14 *    PshV4    v5
+   90  15 *    CpyVtoV4 v8, v1
+   92  15 *    iTOf     v8
+   93  15 *    PshV4    v8
+   94  16 *    PshC4    0x0          (i:0, f:0)
+   96  17 *    PshC4    0x0          (i:0, f:0)
+   98  18 *    CALL     370           (void gfxDrawImageQuad(const float, const float, const float, const float, const float, const float, const float, const float))
+- 263,2 -
+  100  10 *    SUSPEND
+  101  10 *    CALLSYS  341           (void gfxEndPoly())
+- 264,2 -
+  103  10 *    SUSPEND
+  104  10 *    PshC4    0x0          (i:0, f:0)
+  106  11 *    CALLSYS  346           (void gfxSetDrawImage(const uint))
+- 265,2 -
+  108  10 *    SUSPEND
+  109  10 * 0:
+  109  10 *    RET      0

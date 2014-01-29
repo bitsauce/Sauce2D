@@ -1,0 +1,332 @@
+void UiElement::updateRect()
+
+Temps: 1, 2, 3, 4, 5, 6, 8, 10, 11, 13
+
+Variables: 
+ 012: uint i
+ 000: UiElement this
+ 001: UiElement {noname}
+ 002: UiElement {noname}
+ 013: array {noname}
+ 008: vec2 {noname}
+ 010: vec2 {noname}
+
+
+    0  13 *    PshVPtr  v0
+    1  14 *    CALLSYS  2           (void _builtin_object_::_beh_5_())
+- 111,3 -
+    3  13 *    SUSPEND
+    4  13 *    PshVPtr  v0
+    5  14 *    ADDSi    v20, 134217755
+    7  14 *    RDSPtr
+    8  14 *    RefCpyV  v1, 74282504
+   10  14 *    PopPtr
+   11  13 *    ClrVPtr  v2
+   12  13 *    CmpPtr   v1, v2
+   14  13 *    TNZ
+   15  13 *    CpyRtoV4 v3
+   16  13 *    FREE     v1, 74282504
+   18  13 *    FREE     v2, 74282504
+   20  13 *    CpyVtoR4 v3
+   21  13 *    JLowZ    +320              (d:343)
+- 113,4 -
+   23  13 * {
+   23  13 *    SUSPEND
+   24  13 *    LoadThisR v28, 134217755
+   26  13 *    RDR4     v4
+   27  13 *    SetV4    v3, 0x4          (i:4, f:5.60519e-045)
+   29  13 *    BAND     v3, v4, v3
+   31  13 *    CMPIu    v3, 0
+   33  13 *    JZ       +29              (d:64)
+- 114,5 -
+   35  13 *    SUSPEND
+   36  13 *    PshVPtr  v0
+   37  14 *    ADDSi    v20, 134217755
+   39  14 *    RDSPtr
+   40  14 *    ADDSi    v36, 134217755
+   42  14 *    RDSPtr
+   43  14 *    CALLSYS  257           (float rect2::get_right() const)
+   45  13 *    CpyRtoV4 v5
+   46  13 *    PshVPtr  v0
+   47  14 *    ADDSi    v40, 134217755
+   49  14 *    RDSPtr
+   50  14 *    CALLSYS  257           (float rect2::get_right() const)
+   52  13 *    CpyRtoV4 v3
+   53  13 *    SUBf     v5, v5, v3
+   55  13 *    PshV4    v5
+   56  14 *    PshVPtr  v0
+   57  15 *    ADDSi    v36, 134217755
+   59  15 *    RDSPtr
+   60  15 *    CALLSYS  248           (void rect2::set_x(const float))
+   62  13 *    JMP      +76              (d:140)
+- 115,9 -
+   64  13 * 2:
+   64  13 *    SUSPEND
+   65  13 *    LoadThisR v28, 134217755
+   67  13 *    RDR4     v4
+   68  13 *    SetV4    v5, 0x20          (i:32, f:4.48416e-044)
+   70  13 *    BAND     v3, v4, v5
+   72  13 *    CMPIu    v3, 0
+   74  13 *    JZ       +37              (d:113)
+- 116,5 -
+   76  13 *    SUSPEND
+   77  13 *    PSF      v8
+   78  14 *    PshVPtr  v0
+   79  15 *    ADDSi    v20, 134217755
+   81  15 *    RDSPtr
+   82  15 *    ADDSi    v36, 134217755
+   84  15 *    RDSPtr
+   85  15 *    CALLSYS  256           (vec2 rect2::get_center() const)
+   87  13 *    ObjInfo  v8, 1
+   87  13 *    LoadVObjR v8, v0, 67108877
+   90  13 *    RDR4     v6
+   91  13 *    PSF      v10
+   92  14 *    PshVPtr  v0
+   93  15 *    ADDSi    v40, 134217755
+   95  15 *    RDSPtr
+   96  15 *    CALLSYS  256           (vec2 rect2::get_center() const)
+   98  13 *    ObjInfo  v10, 1
+   98  13 *    LoadVObjR v10, v0, 67108877
+  101  13 *    RDR4     v5
+  102  13 *    ObjInfo  v8, 0
+  102  13 *    ObjInfo  v10, 0
+  102  13 *    SUBf     v3, v6, v5
+  104  13 *    PshV4    v3
+  105  14 *    PshVPtr  v0
+  106  15 *    ADDSi    v36, 134217755
+  108  15 *    RDSPtr
+  109  15 *    CALLSYS  248           (void rect2::set_x(const float))
+  111  13 *    JMP      +27              (d:140)
+- 118,5 -
+  113  13 * 4:
+  113  13 *    SUSPEND
+  114  13 *    PshVPtr  v0
+  115  14 *    ADDSi    v20, 134217755
+  117  14 *    RDSPtr
+  118  14 *    ADDSi    v36, 134217755
+  120  14 *    RDSPtr
+  121  14 *    CALLSYS  259           (float rect2::get_left() const)
+  123  13 *    CpyRtoV4 v6
+  124  13 *    PshVPtr  v0
+  125  14 *    ADDSi    v40, 134217755
+  127  14 *    RDSPtr
+  128  14 *    CALLSYS  259           (float rect2::get_left() const)
+  130  13 *    CpyRtoV4 v3
+  131  13 *    ADDf     v5, v6, v3
+  133  13 *    PshV4    v5
+  134  14 *    PshVPtr  v0
+  135  15 *    ADDSi    v36, 134217755
+  137  15 *    RDSPtr
+  138  15 *    CALLSYS  248           (void rect2::set_x(const float))
+- 119,4 -
+  140  13 * 5:
+  140  13 * 3:
+  140  13 *    SUSPEND
+  141  13 *    LoadThisR v28, 134217755
+  143  13 *    RDR4     v4
+  144  13 *    SetV4    v5, 0x8          (i:8, f:1.12104e-044)
+  146  13 *    BAND     v6, v4, v5
+  148  13 *    CMPIu    v6, 0
+  150  13 *    JZ       +29              (d:181)
+- 120,5 -
+  152  13 *    SUSPEND
+  153  13 *    PshVPtr  v0
+  154  14 *    ADDSi    v20, 134217755
+  156  14 *    RDSPtr
+  157  14 *    ADDSi    v36, 134217755
+  159  14 *    RDSPtr
+  160  14 *    CALLSYS  258           (float rect2::get_bottom() const)
+  162  13 *    CpyRtoV4 v3
+  163  13 *    PshVPtr  v0
+  164  14 *    ADDSi    v40, 134217755
+  166  14 *    RDSPtr
+  167  14 *    CALLSYS  258           (float rect2::get_bottom() const)
+  169  13 *    CpyRtoV4 v5
+  170  13 *    SUBf     v6, v3, v5
+  172  13 *    PshV4    v6
+  173  14 *    PshVPtr  v0
+  174  15 *    ADDSi    v36, 134217755
+  176  15 *    RDSPtr
+  177  15 *    CALLSYS  250           (void rect2::set_y(const float))
+  179  13 *    JMP      +76              (d:257)
+- 121,9 -
+  181  13 * 6:
+  181  13 *    SUSPEND
+  182  13 *    LoadThisR v28, 134217755
+  184  13 *    RDR4     v4
+  185  13 *    SetV4    v5, 0x10          (i:16, f:2.24208e-044)
+  187  13 *    BAND     v3, v4, v5
+  189  13 *    CMPIu    v3, 0
+  191  13 *    JZ       +37              (d:230)
+- 122,5 -
+  193  13 *    SUSPEND
+  194  13 *    PSF      v10
+  195  14 *    PshVPtr  v0
+  196  15 *    ADDSi    v20, 134217755
+  198  15 *    RDSPtr
+  199  15 *    ADDSi    v36, 134217755
+  201  15 *    RDSPtr
+  202  15 *    CALLSYS  256           (vec2 rect2::get_center() const)
+  204  13 *    ObjInfo  v10, 1
+  204  13 *    LoadVObjR v10, v4, 67108877
+  207  13 *    RDR4     v5
+  208  13 *    PSF      v8
+  209  14 *    PshVPtr  v0
+  210  15 *    ADDSi    v40, 134217755
+  212  15 *    RDSPtr
+  213  15 *    CALLSYS  256           (vec2 rect2::get_center() const)
+  215  13 *    ObjInfo  v8, 1
+  215  13 *    LoadVObjR v8, v4, 67108877
+  218  13 *    RDR4     v6
+  219  13 *    ObjInfo  v10, 0
+  219  13 *    ObjInfo  v8, 0
+  219  13 *    SUBf     v3, v5, v6
+  221  13 *    PshV4    v3
+  222  14 *    PshVPtr  v0
+  223  15 *    ADDSi    v36, 134217755
+  225  15 *    RDSPtr
+  226  15 *    CALLSYS  250           (void rect2::set_y(const float))
+  228  13 *    JMP      +27              (d:257)
+- 124,5 -
+  230  13 * 8:
+  230  13 *    SUSPEND
+  231  13 *    PshVPtr  v0
+  232  14 *    ADDSi    v20, 134217755
+  234  14 *    RDSPtr
+  235  14 *    ADDSi    v36, 134217755
+  237  14 *    RDSPtr
+  238  14 *    CALLSYS  260           (float rect2::get_top() const)
+  240  13 *    CpyRtoV4 v5
+  241  13 *    PshVPtr  v0
+  242  14 *    ADDSi    v40, 134217755
+  244  14 *    RDSPtr
+  245  14 *    CALLSYS  260           (float rect2::get_top() const)
+  247  13 *    CpyRtoV4 v3
+  248  13 *    ADDf     v6, v5, v3
+  250  13 *    PshV4    v6
+  251  14 *    PshVPtr  v0
+  252  15 *    ADDSi    v36, 134217755
+  254  15 *    RDSPtr
+  255  15 *    CALLSYS  250           (void rect2::set_y(const float))
+- 127,4 -
+  257  13 * 9:
+  257  13 * 7:
+  257  13 *    SUSPEND
+  258  13 *    LoadThisR v32, 134217755
+  260  13 *    RDR4     v11
+  261  13 *    SetV4    v3, 0x1          (i:1, f:1.4013e-045)
+  263  13 *    BAND     v6, v11, v3
+  265  13 *    CMPIu    v6, 0
+  267  13 *    JZ       +18              (d:287)
+- 128,5 -
+  269  13 *    SUSPEND
+  270  13 *    PshVPtr  v0
+  271  14 *    ADDSi    v20, 134217755
+  273  14 *    RDSPtr
+  274  14 *    ADDSi    v36, 134217755
+  276  14 *    RDSPtr
+  277  14 *    CALLSYS  252           (float rect2::get_width() const)
+  279  13 *    CpyRtoV4 v5
+  280  13 *    PshV4    v5
+  281  14 *    PshVPtr  v0
+  282  15 *    ADDSi    v36, 134217755
+  284  15 *    RDSPtr
+  285  15 *    CALLSYS  253           (void rect2::set_width(const float))
+- 129,4 -
+  287  13 * 10:
+  287  13 *    SUSPEND
+  288  13 *    LoadThisR v32, 134217755
+  290  13 *    RDR4     v11
+  291  13 *    SetV4    v3, 0x2          (i:2, f:2.8026e-045)
+  293  13 *    BAND     v6, v11, v3
+  295  13 *    CMPIu    v6, 0
+  297  13 *    JZ       +18              (d:317)
+- 130,5 -
+  299  13 *    SUSPEND
+  300  13 *    PshVPtr  v0
+  301  14 *    ADDSi    v20, 134217755
+  303  14 *    RDSPtr
+  304  14 *    ADDSi    v36, 134217755
+  306  14 *    RDSPtr
+  307  14 *    CALLSYS  254           (float rect2::get_height() const)
+  309  13 *    CpyRtoV4 v5
+  310  13 *    PshV4    v5
+  311  14 *    PshVPtr  v0
+  312  15 *    ADDSi    v36, 134217755
+  314  15 *    RDSPtr
+  315  15 *    CALLSYS  255           (void rect2::set_height(const float))
+- 131,4 -
+  317  13 * 11:
+  317  13 *    SUSPEND
+  318  13 *    LoadThisR v32, 134217755
+  320  13 *    RDR4     v11
+  321  13 *    CMPIi    v11, 0
+  323  13 *    JNZ      +16              (d:341)
+- 132,5 -
+  325  13 *    SUSPEND
+  326  13 *    PshVPtr  v0
+  327  14 *    ADDSi    v40, 134217755
+  329  14 *    RDSPtr
+  330  14 *    ADDSi    v8, 67108881
+  332  14 *    PshVPtr  v0
+  333  15 *    ADDSi    v36, 134217755
+  335  15 *    RDSPtr
+  336  15 *    ADDSi    v8, 67108881
+  338  15 *    COPY     v2, 67108877
+  340  14 *    PopPtr
+  341  13 * 12:
+  341  13 * }
+  341  13 *    JMP      +12              (d:355)
+- 134,4 -
+  343  13 * 1:
+  343  13 * {
+  343  13 *    SUSPEND
+  344  13 *    PshVPtr  v0
+  345  14 *    ADDSi    v40, 134217755
+  347  14 *    RDSPtr
+  348  14 *    PshVPtr  v0
+  349  15 *    ADDSi    v36, 134217755
+  351  15 *    RDSPtr
+  352  15 *    COPY     v4, 67108881
+  354  14 *    PopPtr
+- 137,7 -
+  355  13 * }
+  355  13 * 13:
+  355  13 *    SUSPEND
+  356  13 *    VarDecl  0
+  356  13 *    SetV4    v12, 0x0          (i:0, f:0)
+  358  13 *    JMP      +19              (d:379)
+  360  13 * 17:
+  360  13 *    SUSPEND
+- 138,4 -
+  361  13 *    SUSPEND
+  362  13 *    PshV4    v12
+  363  14 *    PshVPtr  v0
+  364  15 *    ADDSi    v24, 134217755
+  366  15 *    RDSPtr
+  367  15 *    RefCpyV  v13, 74709888
+  369  15 *    CALLSYS  1100           (UiElement@& array::opIndex(uint))
+  371  13 *    PshRPtr
+  372  14 *    RDSPtr
+  373  14 *    CALLINTF 1089           (void UiElement::updateRect())
+  375  13 *    FREE     v13, 74709888
+- 137,40 -
+  377  13 * 16:
+  377  13 *    SUSPEND
+  378  13 *    IncVi    v12
+- 137,19 -
+  379  13 * 14:
+  379  13 *    SUSPEND
+  380  13 *    PshVPtr  v0
+  381  14 *    ADDSi    v24, 134217755
+  383  14 *    RDSPtr
+  384  14 *    CALLSYS  88           (uint array::size() const)
+  386  13 *    CpyRtoV4 v6
+  387  13 *    CMPu     v12, v6
+  389  13 *    JS       -31              (d:360)
+- 139,3 -
+  391  13 * 15:
+  391  13 *    SUSPEND
+  392  13 * 0:
+  392  13 *    FREE     v0, 74282504
+  394  13 *    RET      1

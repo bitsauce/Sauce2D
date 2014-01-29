@@ -1,0 +1,15 @@
+void Player::draw()
+
+Temps: 
+
+Variables: 
+ 000: Player this
+
+
+    0   0 *    PshVPtr  v0
+    1   1 *    CALLSYS  2           (void _builtin_object_::_beh_5_())
+- 106,3 -
+    3   0 *    SUSPEND
+    4   0 * 0:
+    4   0 *    FREE     v0, 74316168
+    6   0 *    RET      1

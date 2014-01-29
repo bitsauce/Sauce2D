@@ -1,0 +1,67 @@
+void EditorRoom::tileChanged()
+
+Temps: 2
+
+Variables: 
+ 001: uint y
+ 003: uint x
+ 000: EditorRoom this
+
+
+    0   3 *    PshVPtr  v0
+    1   4 *    CALLSYS  2           (void _builtin_object_::_beh_4_())
+- 437,7 -
+    3   3 *    SUSPEND
+    4   3 *    VarDecl  0
+    4   3 *    SetV4    v1, 0x0          (i:0, f:0)
+    6   3 *    JMP      +29              (d:37)
+    8   3 * 4:
+    8   3 *    SUSPEND
+- 438,8 -
+    9   3 *    SUSPEND
+   10   3 *    VarDecl  1
+   10   3 *    SetV4    v3, 0x0          (i:0, f:0)
+   12   3 *    JMP      +9              (d:23)
+   14   3 * 8:
+   14   3 *    SUSPEND
+- 439,5 -
+   15   3 *    SUSPEND
+   16   3 *    PshV4    v1
+   17   4 *    PshV4    v3
+   18   5 *    PshVPtr  v0
+   19   6 *    CALLINTF 1263           (void EditorRoom::updateTile(const int, const int))
+- 438,42 -
+   21   3 * 7:
+   21   3 *    SUSPEND
+   22   3 *    IncVi    v3
+- 438,20 -
+   23   3 * 5:
+   23   3 *    SUSPEND
+   24   3 *    PshVPtr  v0
+   25   4 *    ADDSi    v40, 134217785
+   27   4 *    RDSPtr
+   28   4 *    CALLSYS  123           (uint grid::width() const)
+   30   3 *    CpyRtoV4 v2
+   31   3 *    CMPu     v3, v2
+   33   3 *    JS       -21              (d:14)
+- 437,42 -
+   35   3 * 6:
+   35   3 * 3:
+   35   3 *    SUSPEND
+   36   3 *    IncVi    v1
+- 437,19 -
+   37   3 * 1:
+   37   3 *    SUSPEND
+   38   3 *    PshVPtr  v0
+   39   4 *    ADDSi    v40, 134217785
+   41   4 *    RDSPtr
+   42   4 *    CALLSYS  124           (uint grid::height() const)
+   44   3 *    CpyRtoV4 v2
+   45   3 *    CMPu     v1, v2
+   47   3 *    JS       -41              (d:8)
+- 440,3 -
+   49   3 * 2:
+   49   3 *    SUSPEND
+   50   3 * 0:
+   50   3 *    FREE     v0, 152236880
+   52   3 *    RET      1

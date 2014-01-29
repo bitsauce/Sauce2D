@@ -1,0 +1,59 @@
+int gfxCreateImage(const int, const int, const TextureFilter = NearestFilter)
+
+Temps: 2, 3, 4, 5
+
+Variables: 
+ 000: const int w
+ -001: const int h
+ -002: const TextureFilter filter
+ 001: int id
+ 004: array {noname}
+
+
+- 66,2 -
+    0   5 *    VarDecl  0
+    0   5 *    VarDecl  1
+    0   5 *    VarDecl  2
+    0   5 *    SUSPEND
+    1   5 *    VarDecl  3
+    1   5 *    CALLSYS  457           (int gfxCreateTexture())
+    3   5 *    CpyRtoV4 v2
+    4   5 *    CpyVtoV4 v1, v2
+- 67,2 -
+    6   5 *    SUSPEND
+    7   5 *    SetV1    v5, 0x0
+    9   5 *    PshV4    v5
+   10   6 *    SetV4    v3, 0x0          (i:0, f:0)
+   12   6 *    VAR      v3
+   13   7 *    MULi     v2, v0, v-1
+   15   7 *    PshV4    v2
+   16   8 *    GETREF   1
+   17   8 *    CALL     466           (uint[]@ factstub(uint, const uint&in))
+   19   6 *    STOREOBJ v4
+   20   6 *    ChkNullV v4
+   21   6 *    VAR      v4
+   22   7 *    PshV4    v-1
+   23   8 *    PshV4    v0
+   24   9 *    PshV4    v1
+   25  10 *    GETOBJREF 3
+   26  10 *    CALLSYS  477           (void gfxSetTextureData(const int, const int, const int, const uint[]&in, const bool = false))
+   28   5 *    FREE     v4, 66976464
+- 68,2 -
+   30   5 *    SUSPEND
+   31   5 *    PshV4    v-2
+   32   6 *    PshC4    0x2801          (i:10241, f:1.43507e-041)
+   34   7 *    PshV4    v1
+   35   8 *    CALLSYS  460           (void gfxSetTextureParam(const int, const int, const int))
+- 69,2 -
+   37   5 *    SUSPEND
+   38   5 *    PshV4    v-2
+   39   6 *    PshC4    0x2800          (i:10240, f:1.43493e-041)
+   41   7 *    PshV4    v1
+   42   8 *    CALLSYS  460           (void gfxSetTextureParam(const int, const int, const int))
+- 70,2 -
+   44   5 *    SUSPEND
+   45   5 * {
+   45   5 * }
+   45   5 *    CpyVtoR4 v1
+   46   5 * 0:
+   46   5 *    RET      3

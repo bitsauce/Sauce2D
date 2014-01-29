@@ -1,0 +1,24 @@
+void SfxSource::setLooping(const bool)
+
+Temps: 1
+
+Variables: 
+ -001: const bool looping
+ 000: SfxSource this
+
+
+    0   1 *    VarDecl  0
+    0   1 *    PshVPtr  v0
+    1   2 *    CALLSYS  2           (void _builtin_object_::_beh_5_())
+- 72,3 -
+    3   1 *    SUSPEND
+    4   1 *    PshV4    v-1
+    5   2 *    LoadThisR v20, 134217762
+    7   2 *    RDR4     v1
+    8   2 *    PshV4    v1
+    9   3 *    CALLSYS  400           (void sfxSetSourceLooping(const int, const bool))
+- 73,3 -
+   11   1 *    SUSPEND
+   12   1 * 0:
+   12   1 *    FREE     v0, 74270112
+   14   1 *    RET      2

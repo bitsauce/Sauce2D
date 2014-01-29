@@ -1,0 +1,18 @@
+void SceneObject::onUnpack(UnpackEvent)
+
+Temps: 
+
+Variables: 
+ -001: UnpackEvent e
+ 000: SceneObject this
+
+
+    0   0 *    VarDecl  0
+    0   0 *    PshVPtr  v0
+    1   1 *    CALLSYS  2           (void _builtin_object_::_beh_4_())
+- 1,2445 -
+    3   0 *    SUSPEND
+    4   0 * 0:
+    4   0 *    FREE     v-1, 104631928
+    6   0 *    FREE     v0, 104704768
+    8   0 *    RET      2

@@ -1,0 +1,116 @@
+void Terrain::setTiles(grid<int>)
+
+Temps: 1, 2, 5
+
+Variables: 
+ -001: grid<int> tileIds
+ 003: int y
+ 004: int x
+ 000: Terrain this
+ 005: grid {noname}
+
+
+    0   5 *    VarDecl  0
+    0   5 *    PshVPtr  v0
+    1   6 *    CALLSYS  2           (void _builtin_object_::_beh_5_())
+- 158,3 -
+    3   5 *    SUSPEND
+    4   5 *    PshVPtr  v-1
+    5   6 *    CALLSYS  125           (uint grid::width() const)
+    7   5 *    CpyRtoV4 v1
+    8   5 *    LoadThisR v52, 134217762
+   10   5 *    WRTV4    v1
+- 159,3 -
+   11   5 *    SUSPEND
+   12   5 *    PshVPtr  v-1
+   13   6 *    CALLSYS  126           (uint grid::height() const)
+   15   5 *    CpyRtoV4 v1
+   16   5 *    LoadThisR v56, 134217762
+   18   5 *    WRTV4    v1
+- 162,3 -
+   19   5 *    SUSPEND
+   20   5 *    PshVPtr  v-1
+   21   6 *    CALLSYS  126           (uint grid::height() const)
+   23   5 *    CpyRtoV4 v1
+   24   5 *    PshV4    v1
+   25   6 *    PshVPtr  v-1
+   26   7 *    CALLSYS  125           (uint grid::width() const)
+   28   6 *    CpyRtoV4 v2
+   29   6 *    PshV4    v2
+   30   7 *    PshVPtr  v0
+   31   8 *    ADDSi    v48, 134217762
+   33   8 *    RDSPtr
+   34   8 *    CALLSYS  119           (void grid::resize(uint, uint))
+- 163,7 -
+   36   5 *    SUSPEND
+   37   5 *    VarDecl  1
+   37   5 *    SetV4    v3, 0x0          (i:0, f:0)
+   39   5 *    JMP      +47              (d:88)
+   41   5 * 4:
+   41   5 *    SUSPEND
+- 165,8 -
+   42   5 * {
+   42   5 *    SUSPEND
+   43   5 *    VarDecl  2
+   43   5 *    SetV4    v4, 0x0          (i:0, f:0)
+   45   5 *    JMP      +27              (d:74)
+   47   5 * 8:
+   47   5 *    SUSPEND
+- 167,5 -
+   48   5 * {
+   48   5 *    SUSPEND
+   49   5 *    PshV4    v3
+   50   6 *    PshV4    v4
+   51   7 *    PshVPtr  v-1
+   52   8 *    CALLSYS  586           (int& grid::at(uint, uint))
+   54   5 *    RDR4     v1
+   55   5 *    PshV4    v3
+   56   6 *    PshV4    v4
+   57   7 *    PshVPtr  v0
+   58   8 *    ADDSi    v48, 134217762
+   60   8 *    RDSPtr
+   61   8 *    RefCpyV  v5, 115958160
+   63   8 *    CALLSYS  976           (Tile& grid::at(uint, uint))
+   65   5 *    PshRPtr
+   66   6 *    ADDSi    v36, 134217745
+   68   6 *    PopRPtr
+   69   5 *    WRTV4    v1
+   70   5 *    FREE     v5, 115958160
+- 165,46 -
+   72   5 * }
+   72   5 * 7:
+   72   5 *    SUSPEND
+   73   5 *    IncVi    v4
+- 165,19 -
+   74   5 * 5:
+   74   5 *    SUSPEND
+   75   5 *    PshVPtr  v0
+   76   6 *    ADDSi    v48, 134217762
+   78   6 *    RDSPtr
+   79   6 *    CALLSYS  125           (uint grid::width() const)
+   81   5 *    CpyRtoV4 v2
+   82   5 *    CMPi     v4, v2
+   84   5 *    JS       -39              (d:47)
+- 163,46 -
+   86   5 * 6:
+   86   5 * }
+   86   5 * 3:
+   86   5 *    SUSPEND
+   87   5 *    IncVi    v3
+- 163,18 -
+   88   5 * 1:
+   88   5 *    SUSPEND
+   89   5 *    PshVPtr  v0
+   90   6 *    ADDSi    v48, 134217762
+   92   6 *    RDSPtr
+   93   6 *    CALLSYS  126           (uint grid::height() const)
+   95   5 *    CpyRtoV4 v2
+   96   5 *    CMPi     v3, v2
+   98   5 *    JS       -59              (d:41)
+- 170,3 -
+  100   5 * 2:
+  100   5 *    SUSPEND
+  101   5 * 0:
+  101   5 *    FREE     v-1, 115866664
+  103   5 *    FREE     v0, 115804032
+  105   5 *    RET      2

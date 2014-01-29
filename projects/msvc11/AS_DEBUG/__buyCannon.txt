@@ -1,0 +1,59 @@
+void buyCannon()
+
+Temps: 1, 2, 3, 4, 11, 12
+
+Variables: 
+ 003: StructureData {noname}
+ 004: Placement {noname}
+ 012: string {noname}
+ 011: string {noname}
+
+
+- 4,2 -
+    0  12 *    SUSPEND
+    1  12 *    PshC4    0x64          (i:100, f:1.4013e-043)
+    3  13 *    PshGPtr  74561424
+    5  14 *    ADDSi    v48, 134217751
+    7  14 *    RDSPtr
+    8  14 *    CALLINTF 1248           (bool Economy::afford(int))
+   10  12 *    JLowZ    +16              (d:28)
+- 6,3 -
+   12  12 * {
+   12  12 *    SUSPEND
+   13  12 *    PshGPtr  74657168
+   15  13 *    CHKREF
+   16  13 *    RefCpyV  v3, 74301768
+   18  13 *    PopPtr
+   19  12 *    VAR      v3
+   20  13 *    GETOBJ   0
+   21  13 *    CALL     727           (Placement@ Placement(StructureData@))
+   23  12 *    STOREOBJ v4
+   24  12 *    FREE     v4, 74302352
+   26  12 * }
+   26  12 *    JMP      +22              (d:50)
+- 8,3 -
+   28  12 * 1:
+   28  12 * {
+   28  12 *    SUSPEND
+   29  12 *    PSF      v12
+   30  13 *    STR      46         (l:17 s:"Insufficie")
+   31  15 *    CALLSYS  33           (const string& _string_factory_(const int, const uint8&))
+   33  13 *    PshRPtr
+   34  14 *    PSF      v11
+   35  15 *    CALLSYS  35           (string::string(const string&in))
+   37  13 *    ObjInfo  v11, 1
+   37  13 *    PSF      v11
+   38  14 *    ALLOC    0x45ebf60, 35             (type:string)
+   41  12 *    PSF      v11
+   42  13 *    CALLSYS  36           (string::~string())
+   44  12 *    ObjInfo  v11, 0
+   44  12 *    VAR      v12
+   45  13 *    PshGPtr  74291288
+   47  14 *    GETOBJ   1
+   48  14 *    CALLINTF 1180           (void Hud::setBottomText(string))
+- 10,2 -
+   50  12 * }
+   50  12 * 2:
+   50  12 *    SUSPEND
+   51  12 * 0:
+   51  12 *    RET      0

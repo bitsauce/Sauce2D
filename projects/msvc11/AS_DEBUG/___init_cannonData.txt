@@ -1,0 +1,49 @@
+<unrecognized token> _unnamed_function_()
+
+Temps: 1, 2, 9, 10, 11, 12
+
+Variables: 
+ 011: string {noname}
+ 012: StructureData {noname}
+ 009: string {noname}
+
+
+- 76,1557 -
+    0  12 *    SUSPEND
+    1  12 *    SetV1    v1, 0x0
+    3  12 *    PshV4    v1
+    4  13 *    PshC4    0x0          (i:0, f:0)
+    6  14 *    STR      13         (l:31 s:":/sprites/")
+    7  16 *    CALLSYS  33           (const string& _string_factory_(const int, const uint8&))
+    9  14 *    PshRPtr
+   10  15 *    PSF      v9
+   11  16 *    CALLSYS  35           (string::string(const string&in))
+   13  14 *    ObjInfo  v9, 1
+   13  14 *    PSF      v9
+   14  15 *    CALLSYS  472           (int gfxLoadImage(const string&in, const TextureFilter = NearestFilter, const bool = false))
+   16  12 *    CpyRtoV4 v10
+   17  12 *    PSF      v9
+   18  13 *    CALLSYS  36           (string::~string())
+   20  12 *    ObjInfo  v9, 0
+   20  12 *    PshV4    v10
+   21  13 *    PSF      v11
+   22  14 *    STR      32         (l:6 s:"Cannon")
+   23  16 *    CALLSYS  33           (const string& _string_factory_(const int, const uint8&))
+   25  14 *    PshRPtr
+   26  15 *    PSF      v9
+   27  16 *    CALLSYS  35           (string::string(const string&in))
+   29  14 *    ObjInfo  v9, 1
+   29  14 *    PSF      v9
+   30  15 *    ALLOC    0x45ebf60, 35             (type:string)
+   33  13 *    PSF      v9
+   34  14 *    CALLSYS  36           (string::~string())
+   36  13 *    ObjInfo  v9, 0
+   36  13 *    VAR      v11
+   37  14 *    GETOBJ   0
+   38  14 *    CALL     723           (StructureData@ StructureData(string, int))
+   40  12 *    STOREOBJ v12
+   41  12 *    PshVPtr  v12
+   42  13 *    PGA      74657168
+   44  14 *    REFCPY   0x46dc148
+   46  13 *    FREE     v12, 74301768
+   48  12 *    RET      0

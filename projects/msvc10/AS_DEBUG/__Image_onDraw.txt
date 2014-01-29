@@ -1,0 +1,73 @@
+void Image::onDraw(DrawEvent)
+
+Temps: 4, 6, 8, 9
+
+Variables: 
+ -001: DrawEvent e
+ 002: Vector2 guiPos
+ 000: Image this
+ 009: CTexture {noname}
+ 004: Vector2 {noname}
+ 006: Vector2 {noname}
+ 008: Vector2 {noname}
+
+
+    0   9 *    VarDecl  0
+    0   9 *    PshVPtr  v0
+    1  10 *    CALLSYS  2           (void _builtin_object_::_beh_4_())
+- 32,3 -
+    3   9 *    SUSPEND
+    4   9 *    VarDecl  1
+    4   9 *    PSF      v2
+    5  10 *    CALLSYS  130           (void Vector2::_beh_0_())
+    7   9 *    ObjInfo  v2, 1
+    7   9 *    PSF      v6
+    8  10 *    PshVPtr  v0
+    9  11 *    CALLINTF 1092           (Vector2 SceneObject::pos() const)
+   11   9 *    ObjInfo  v6, 1
+   11   9 *    VAR      v6
+   12  10 *    PSF      v8
+   13  11 *    PSF      v4
+   14  12 *    PshGPtr  112337720
+   16  13 *    CHKREF
+   17  13 *    CALLSYS  394           (Vector2 CViewport::gamePos() const)
+   19  11 *    ObjInfo  v4, 1
+   19  11 *    PSF      v4
+   20  12 *    GETREF   2
+   21  12 *    CALLSYS  138           (Vector2 Vector2::opAdd(const Vector2&in) const)
+   23   9 *    ObjInfo  v8, 1
+   23   9 *    ObjInfo  v6, 0
+   23   9 *    PSF      v8
+   24  10 *    ObjInfo  v4, 0
+   24  10 *    PSF      v2
+   25  11 *    COPY     v2, 67108877
+   27  10 *    ObjInfo  v8, 0
+   27  10 *    PopPtr
+- 33,3 -
+   28   9 *    SUSPEND
+   29   9 *    PshVPtr  v0
+   30  10 *    ADDSi    v56, 134217798
+   32  10 *    RDSPtr
+   33  10 *    RefCpyV  v9, 111987200
+   35  10 *    PopPtr
+   36   9 *    VAR      v9
+   37  10 *    PSF      v6
+   38  11 *    PshVPtr  v0
+   39  12 *    CALLINTF 1099           (Vector2 SceneObject::size() const)
+   41  10 *    ObjInfo  v6, 1
+   41  10 *    VAR      v6
+   42  11 *    VAR      v2
+   43  12 *    PshGPtr  112336760
+   45  13 *    CHKREF
+   46  13 *    GETREF   1
+   47  13 *    GETREF   2
+   48  13 *    GETOBJ   3
+   49  13 *    CALLSYS  456           (void CGFX::drawTexture(const Vector2&in, const Vector2&in, CTexture@))
+- 34,3 -
+   51   9 *    ObjInfo  v6, 0
+   51   9 *    SUSPEND
+   52   9 *    ObjInfo  v2, 0
+   52   9 * 0:
+   52   9 *    FREE     v-1, 112324336
+   54   9 *    FREE     v0, 152251224
+   56   9 *    RET      2

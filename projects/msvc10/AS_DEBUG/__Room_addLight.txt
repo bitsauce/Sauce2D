@@ -1,0 +1,187 @@
+LightSource@ Room::addLight(Color)
+
+Temps: 2, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14
+
+Variables: 
+ -001: Color lightColor
+ 001: LightSource light
+ 003: CTexture lightTexture
+ 000: Room this
+ 002: LightSource {noname}
+ 007: CTexture {noname}
+ 010: Color {noname}
+ 014: Color {noname}
+
+
+    0  14 *    VarDecl  0
+    0  14 *    PshVPtr  v0
+    1  15 *    CALLSYS  2           (void _builtin_object_::_beh_4_())
+- 277,3 -
+    3  14 *    SUSPEND
+    4  14 *    VarDecl  1
+    4  14 *    CALL     1034           (LightSource@ LightSource())
+    6  14 *    STOREOBJ v1
+- 278,3 -
+    7  14 *    SUSPEND
+    8  14 *    PshVPtr  v-1
+    9  15 *    PshVPtr  v1
+   10  16 *    ADDSi    v24, 134217793
+   12  16 *    RDSPtr
+   13  16 *    COPY     v1, 67108879
+   15  15 *    PopPtr
+- 279,3 -
+   16  14 *    SUSPEND
+   17  14 *    PshVPtr  v1
+   18  15 *    RefCpyV  v2, 152276536
+   20  15 *    PopPtr
+   21  14 *    VAR      v2
+   22  15 *    PshVPtr  v0
+   23  16 *    ADDSi    v48, 134217788
+   25  16 *    RDSPtr
+   26  16 *    GETREF   1
+   27  16 *    CALLSYS  1554           (void array::insertLast(LightSource@const&in))
+   29  14 *    FREE     v2, 152276536
+- 281,3 -
+   31  14 *    SUSPEND
+   32  14 *    VarDecl  2
+   32  14 *    CALLSYS  257           (CTexture@ _beh_2_())
+   34  14 *    STOREOBJ v3
+- 282,3 -
+   35  14 *    SUSPEND
+   36  14 *    LoadRObjR v1, v28, 134217793
+   39  14 *    RDR4     v4
+   40  14 *    MULIf    v4, v4, 2.000000
+   43  14 *    fTOu     v4
+   44  14 *    PshV4    v4
+   45  15 *    LoadRObjR v1, v28, 134217793
+   48  15 *    RDR4     v5
+   49  15 *    MULIf    v5, v5, 2.000000
+   52  15 *    fTOu     v5
+   53  15 *    PshV4    v5
+   54  16 *    PshVPtr  v3
+   55  17 *    CALLSYS  501           (void CTexture::create(const uint, const uint))
+- 283,3 -
+   57  14 *    SUSPEND
+   58  14 *    PshVPtr  v0
+   59  15 *    ADDSi    v44, 134217788
+   61  15 *    RDSPtr
+   62  15 *    CALLSYS  433           (void CFrameBuffer::bind())
+- 283,15 -
+   64  14 *    SUSPEND
+   65  14 *    PshVPtr  v3
+   66  15 *    RefCpyV  v7, 111987200
+   68  15 *    PopPtr
+   69  14 *    VAR      v7
+   70  15 *    PshVPtr  v0
+   71  16 *    ADDSi    v44, 134217788
+   73  16 *    RDSPtr
+   74  16 *    GETOBJ   1
+   75  16 *    CALLSYS  436           (void CFrameBuffer::attachToTexture(CTexture@))
+- 286,3 -
+   77  14 *    SUSPEND
+   78  14 *    PshC4    0x0          (i:0, f:0)
+   80  15 *    PshC4    0x1          (i:1, f:1.4013e-045)
+   82  16 *    PshGPtr  112336760
+   84  17 *    CHKREF
+   85  17 *    CALLSYS  470           (void CGFX::setBlendFunc(const BlendFunc, const BlendFunc))
+- 287,3 -
+   87  14 *    SUSPEND
+   88  14 *    SetV1    v6, 0x0
+   90  14 *    PshV4    v6
+   91  15 *    SetV1    v4, 0x0
+   93  15 *    PshV4    v4
+   94  16 *    SetV1    v5, 0x0
+   96  16 *    PshV4    v5
+   97  17 *    SetV1    v11, 0x0
+   99  17 *    PshV4    v11
+  100  18 *    PSF      v10
+  101  19 *    CALLSYS  178           (void Color::_beh_0_(uint8, uint8, uint8, uint8 arg3 = 255))
+  103  14 *    ObjInfo  v10, 1
+  103  14 *    VAR      v10
+  104  15 *    LoadRObjR v1, v28, 134217793
+  107  15 *    RDR4     v6
+  108  15 *    MULIf    v5, v6, 2.000000
+  111  15 *    PshV4    v5
+  112  16 *    LoadRObjR v1, v28, 134217793
+  115  16 *    RDR4     v11
+  116  16 *    MULIf    v4, v11, 2.000000
+  119  16 *    PshV4    v4
+  120  17 *    PshC4    0x0          (i:0, f:0)
+  122  18 *    PshC4    0x0          (i:0, f:0)
+  124  19 *    PshGPtr  112336760
+  126  20 *    CHKREF
+  127  20 *    GETREF   5
+  128  20 *    CALLSYS  445           (void CGFX::drawRect(const float, const float, const float, const float, const Color&in arg4 = Color ( )))
+- 288,3 -
+  130  14 *    ObjInfo  v10, 0
+  130  14 *    SUSPEND
+  131  14 *    PshC4    0x0          (i:0, f:0)
+  133  15 *    PshGPtr  112336760
+  135  16 *    CHKREF
+  136  16 *    CALLSYS  471           (void CGFX::setBlendMode(const BlendMode))
+- 291,3 -
+  138  14 *    SUSPEND
+  139  14 *    PshC4    0x40          (i:64, f:8.96831e-044)
+  141  15 *    SetV1    v5, 0x0
+  143  15 *    PshV4    v5
+  144  16 *    SetV1    v11, 0x0
+  146  16 *    PshV4    v11
+  147  17 *    SetV1    v6, 0x0
+  149  17 *    PshV4    v6
+  150  18 *    SetV1    v4, 0x0
+  152  18 *    PshV4    v4
+  153  19 *    PSF      v10
+  154  20 *    CALLSYS  178           (void Color::_beh_0_(uint8, uint8, uint8, uint8 arg3 = 255))
+  156  15 *    ObjInfo  v10, 1
+  156  15 *    VAR      v10
+  157  16 *    PshVPtr  v1
+  158  17 *    ADDSi    v24, 134217793
+  160  17 *    RDSPtr
+  161  17 *    PSF      v14
+  162  18 *    CALLSYS  177           (void Color::_beh_0_(const Color&in))
+  164  16 *    ObjInfo  v14, 1
+  164  16 *    VAR      v14
+  165  17 *    LoadRObjR v1, v28, 134217793
+  168  17 *    RDR4     v5
+  169  17 *    PshV4    v5
+  170  18 *    LoadRObjR v1, v28, 134217793
+  173  18 *    RDR4     v4
+  174  18 *    PshV4    v4
+  175  19 *    LoadRObjR v1, v28, 134217793
+  178  19 *    RDR4     v6
+  179  19 *    PshV4    v6
+  180  20 *    PshGPtr  112336760
+  182  21 *    CHKREF
+  183  21 *    GETREF   4
+  184  21 *    GETREF   5
+  185  21 *    CALLSYS  451           (void CGFX::drawGradientCircle(const float, const float, const float, const Color&in, const Color&in, const int arg5 = 64))
+- 293,3 -
+  187  14 *    ObjInfo  v10, 0
+  187  14 *    ObjInfo  v14, 0
+  187  14 *    SUSPEND
+  188  14 *    PshVPtr  v0
+  189  15 *    ADDSi    v44, 134217788
+  191  15 *    RDSPtr
+  192  15 *    CALLSYS  434           (void CFrameBuffer::unbind())
+- 294,3 -
+  194  14 *    SUSPEND
+  195  14 *    PshVPtr  v3
+  196  15 *    RefCpyV  v7, 111987200
+  198  15 *    PopPtr
+  199  14 *    VAR      v7
+  200  15 *    PshVPtr  v1
+  201  16 *    ADDSi    v16, 134217793
+  203  16 *    GETOBJREF 1
+  204  16 *    REFCPY   0x6acca00
+  206  15 *    FREE     v7, 111987200
+  208  15 *    PopPtr
+- 296,3 -
+  209  14 *    SUSPEND
+  210  14 * {
+  210  14 *    FREE     v3, 111987200
+  212  14 * }
+  212  14 *    LOADOBJ  v1
+  213  14 * 0:
+  213  14 *    FREE     v-1, 112018136
+  215  14 *    FREE     v0, 152276032
+  217  14 *    RET      2

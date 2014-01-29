@@ -1,0 +1,56 @@
+SandgullHole::SandgullHole()
+
+Temps: 1, 2, 10, 18, 19
+
+Variables: 
+ 000: SandgullHole this
+ 019: CTexture {noname}
+ 010: string {noname}
+ 018: string {noname}
+
+
+    0  19 *    PshVPtr  v0
+    1  20 *    CALL     581           (SceneObject::SceneObject())
+- 130,12 -
+    3  19 *    SUSPEND
+    4  19 *    STR      201         (l:21 s:"sprites/mo")
+    5  21 *    CALLSYS  32           (const string& _string_factory_(const int, const uint8&))
+    7  19 *    PshRPtr
+    8  20 *    PSF      v10
+    9  21 *    CALLSYS  34           (void string::_beh_0_(const string&in))
+   11  19 *    ObjInfo  v10, 1
+   11  19 *    VAR      v10
+   12  20 *    PSF      v18
+   13  21 *    PshGPtr  112334928
+   15  22 *    CHKREF
+   16  22 *    GETREF   2
+   17  22 *    CALLSYS  432           (string CX2DApp::workPath(const string&in))
+   19  19 *    ObjInfo  v18, 1
+   19  19 *    PSF      v10
+   20  20 *    CALLSYS  35           (void string::_beh_1_())
+   22  19 *    ObjInfo  v10, 0
+   22  19 *    VAR      v18
+   23  20 *    PshGPtr  112336760
+   25  21 *    CHKREF
+   26  21 *    GETREF   1
+   27  21 *    CALLSYS  467           (CTexture@ CGFX::loadTexture(const string&in))
+   29  19 *    STOREOBJ v19
+   30  19 *    PSF      v18
+   31  20 *    CALLSYS  35           (void string::_beh_1_())
+   33  19 *    ObjInfo  v18, 0
+   33  19 *    PshVPtr  v19
+   34  20 *    PshVPtr  v0
+   35  21 *    ADDSi    v20, 134217834
+   37  21 *    REFCPY   0x6acca00
+   39  20 *    FREE     v19, 111987200
+   41  20 *    PopPtr
+- 134,3 -
+   42  19 *    SUSPEND
+   43  19 *    PshC4    0x20          (i:32, f:4.48416e-044)
+   45  20 *    PshC4    0x40          (i:64, f:8.96831e-044)
+   47  21 *    PshVPtr  v0
+   48  22 *    CALLINTF 1095           (void SceneObject::setSize(const uint, const uint))
+- 135,3 -
+   50  19 *    SUSPEND
+   51  19 * 0:
+   51  19 *    RET      1

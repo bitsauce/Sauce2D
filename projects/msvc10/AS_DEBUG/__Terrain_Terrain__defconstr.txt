@@ -1,0 +1,123 @@
+Terrain::Terrain()
+
+Temps: 1, 2, 3, 4, 5, 6, 7
+
+Variables: 
+ 000: Terrain this
+ 001: CFrameBuffer {noname}
+ 002: CTexture {noname}
+ 003: Color {noname}
+
+
+- 3,15 -
+    0   7 *    SUSPEND
+    1   7 *    CALLSYS  236           (CFrameBuffer@ _beh_2_())
+    3   7 *    STOREOBJ v1
+    4   7 *    PshVPtr  v1
+    5   8 *    PshVPtr  v0
+    6   9 *    ADDSi    v16, 134217782
+    8   9 *    REFCPY   0x63903d8
+   10   8 *    PopPtr
+   11   7 *    FREE     v1, 104399832
+- 4,11 -
+   13   7 *    SUSPEND
+   14   7 *    CALLSYS  242           (CTexture@ _beh_2_())
+   16   7 *    STOREOBJ v2
+   17   7 *    PshVPtr  v2
+   18   8 *    PshVPtr  v0
+   19   9 *    ADDSi    v20, 134217782
+   21   9 *    REFCPY   0x63916b0
+   23   8 *    PopPtr
+   24   7 *    FREE     v2, 104404656
+- 5,8 -
+   26   7 *    SUSPEND
+   27   7 *    PshVPtr  v0
+   28   8 *    ADDSi    v24, 134217782
+   30   8 *    ALLOC    0x6384470, 176             (type:Color)
+   33   7 *    SetV1    v4, 0xff
+   35   7 *    PshV4    v4
+   36   8 *    SetV1    v5, 0xcc
+   38   8 *    PshV4    v5
+   39   9 *    SetV1    v6, 0x48
+   41   9 *    PshV4    v6
+   42  10 *    SetV1    v7, 0x3f
+   44  10 *    PshV4    v7
+   45  11 *    PSF      v3
+   46  12 *    CALLSYS  178           (void Color::_beh_0_(uint8, uint8, uint8, uint8 arg3 = 255))
+   48   7 *    ObjInfo  v3, 1
+   48   7 *    PSF      v3
+   49   8 *    PshVPtr  v0
+   50   9 *    ADDSi    v24, 134217782
+   52   9 *    RDSPtr
+   53   9 *    COPY     v1, 67108879
+   55   8 *    ObjInfo  v3, 0
+   55   8 *    PopPtr
+- 6,8 -
+   56   7 *    SUSPEND
+   57   7 *    PshVPtr  v0
+   58   8 *    ADDSi    v28, 134217782
+   60   8 *    ALLOC    0x6384470, 176             (type:Color)
+   63   7 *    SetV1    v4, 0xff
+   65   7 *    PshV4    v4
+   66   8 *    SetV1    v7, 0xe8
+   68   8 *    PshV4    v7
+   69   9 *    SetV1    v6, 0xa2
+   71   9 *    PshV4    v6
+   72  10 *    SetV1    v5, 0x0
+   74  10 *    PshV4    v5
+   75  11 *    PSF      v3
+   76  12 *    CALLSYS  178           (void Color::_beh_0_(uint8, uint8, uint8, uint8 arg3 = 255))
+   78   7 *    ObjInfo  v3, 1
+   78   7 *    PSF      v3
+   79   8 *    PshVPtr  v0
+   80   9 *    ADDSi    v28, 134217782
+   82   9 *    RDSPtr
+   83   9 *    COPY     v1, 67108879
+   85   8 *    ObjInfo  v3, 0
+   85   8 *    PopPtr
+- 7,8 -
+   86   7 *    SUSPEND
+   87   7 *    PshVPtr  v0
+   88   8 *    ADDSi    v32, 134217782
+   90   8 *    ALLOC    0x6384470, 176             (type:Color)
+   93   7 *    SetV1    v4, 0xff
+   95   7 *    PshV4    v4
+   96   8 *    SetV1    v5, 0x4c
+   98   8 *    PshV4    v5
+   99   9 *    SetV1    v6, 0xb1
+  101   9 *    PshV4    v6
+  102  10 *    SetV1    v7, 0x22
+  104  10 *    PshV4    v7
+  105  11 *    PSF      v3
+  106  12 *    CALLSYS  178           (void Color::_beh_0_(uint8, uint8, uint8, uint8 arg3 = 255))
+  108   7 *    ObjInfo  v3, 1
+  108   7 *    PSF      v3
+  109   8 *    PshVPtr  v0
+  110   9 *    ADDSi    v32, 134217782
+  112   9 *    RDSPtr
+  113   9 *    COPY     v1, 67108879
+  115   8 *    ObjInfo  v3, 0
+  115   8 *    PopPtr
+- 8,8 -
+  116   7 *    SUSPEND
+  117   7 *    PshVPtr  v0
+  118   8 *    ADDSi    v36, 134217782
+  120   8 *    ALLOC    0x6384470, 176             (type:Color)
+  123   7 *    SetV1    v4, 0xff
+  125   7 *    PshV4    v4
+  126   8 *    SetV1    v7, 0x8f
+  128   8 *    PshV4    v7
+  129   9 *    SetV1    v6, 0xd9
+  131   9 *    PshV4    v6
+  132  10 *    SetV1    v5, 0xe9
+  134  10 *    PshV4    v5
+  135  11 *    PSF      v3
+  136  12 *    CALLSYS  178           (void Color::_beh_0_(uint8, uint8, uint8, uint8 arg3 = 255))
+  138   7 *    ObjInfo  v3, 1
+  138   7 *    PSF      v3
+  139   8 *    PshVPtr  v0
+  140   9 *    ADDSi    v36, 134217782
+  142   9 *    RDSPtr
+  143   9 *    COPY     v1, 67108879
+  145   8 *    ObjInfo  v3, 0
+  145   7 *    RET      1

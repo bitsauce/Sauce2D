@@ -1,0 +1,84 @@
+EditorButton::EditorButton(string, CTexture@, CFunctionPtr@, UiObject@ arg3 = null)
+
+Temps: 1, 2, 3
+
+Variables: 
+ -001: string text
+ -002: CTexture@ image
+ -003: CFunctionPtr@ func
+ -004: UiObject@ parent
+ 000: EditorButton this
+
+
+- 276,9 -
+    0   3 *    VarDecl  0
+    0   3 *    VarDecl  1
+    0   3 *    VarDecl  2
+    0   3 *    VarDecl  3
+    0   3 *    SUSPEND
+    1   3 *    PshVPtr  v0
+    2   4 *    ADDSi    v52, 134217812
+    4   4 *    ALLOC    0x314cb48, 33             (type:string)
+- 277,8 -
+    7   3 *    SUSPEND
+    8   3 *    PshVPtr  v0
+    9   4 *    ADDSi    v56, 134217812
+   11   4 *    ALLOC    0x6ad42d8, 176             (type:Color)
+- 303,3 -
+   14   3 *    SUSPEND
+   15   3 *    VAR      v-4
+   16   4 *    PshVPtr  v0
+   17   5 *    GETOBJ   1
+   18   5 *    CALL     639           (UiObject::UiObject(UiObject@ arg0 = null))
+- 304,3 -
+   20   3 *    SUSPEND
+   21   3 *    VAR      v-3
+   22   4 *    PshVPtr  v0
+   23   5 *    ADDSi    v64, 134217812
+   25   5 *    GETOBJREF 1
+   26   5 *    REFCPY   0x6aded38
+   28   4 *    PopPtr
+- 305,3 -
+   29   3 *    SUSPEND
+   30   3 *    VAR      v-2
+   31   4 *    PshVPtr  v0
+   32   5 *    ADDSi    v60, 134217812
+   34   5 *    GETOBJREF 1
+   35   5 *    REFCPY   0x6acca00
+   37   4 *    PopPtr
+- 306,3 -
+   38   3 *    SUSPEND
+   39   3 *    VAR      v-1
+   40   4 *    PshVPtr  v0
+   41   5 *    ADDSi    v52, 134217812
+   43   5 *    RDSPtr
+   44   5 *    GETOBJREF 1
+   45   5 *    CALLSYS  36           (string& string::opAssign(const string&in))
+- 307,3 -
+   47   3 *    SUSPEND
+   48   3 *    PshGPtr  112028272
+   50   4 *    CHKREF
+   51   4 *    PshVPtr  v0
+   52   5 *    ADDSi    v56, 134217812
+   54   5 *    RDSPtr
+   55   5 *    COPY     v1, 67108879
+   57   4 *    PopPtr
+- 308,3 -
+   58   3 *    SUSPEND
+   59   3 *    SetV4    v1, 0x0          (i:0, f:0)
+   61   3 *    LoadThisR v68, 134217812
+   63   3 *    WRTV4    v1
+- 309,3 -
+   64   3 *    SUSPEND
+   65   3 *    PshC4    0x40          (i:64, f:8.96831e-044)
+   67   4 *    PshC4    0x40          (i:64, f:8.96831e-044)
+   69   5 *    PshVPtr  v0
+   70   6 *    CALLINTF 1095           (void SceneObject::setSize(const uint, const uint))
+- 310,3 -
+   72   3 *    SUSPEND
+   73   3 * 0:
+   73   3 *    FREE     v-1, 51694408
+   75   3 *    FREE     v-2, 111987200
+   77   3 *    FREE     v-3, 112061752
+   79   3 *    FREE     v-4, 152204136
+   81   3 *    RET      5

@@ -1,0 +1,84 @@
+void UiObject::setCallback(string, CFunctionPtr@)
+
+Temps: 1, 2, 3, 4, 6
+
+Variables: 
+ -001: string name
+ -002: CFunctionPtr@ callback
+ 005: UiCallback cb
+ 000: UiObject this
+ 001: string {noname}
+ 002: CFunctionPtr {noname}
+ 003: CFunctionPtr {noname}
+ 006: UiCallback {noname}
+
+
+    0   6 *    VarDecl  0
+    0   6 *    VarDecl  1
+    0   6 *    PshVPtr  v0
+    1   7 *    CALLSYS  2           (void _builtin_object_::_beh_4_())
+- 314,3 -
+    3   6 *    SUSPEND
+    4   6 *    PSF      v1
+    5   7 *    PshVPtr  v-1
+    6   8 *    ALLOC    0x305cbc8, 34             (type:string)
+    9   6 *    VAR      v1
+   10   7 *    PshVPtr  v0
+   11   8 *    GETOBJ   1
+   12   8 *    CALLINTF 1285           (CFunctionPtr@ UiObject::findCallback(string))
+   14   6 *    STOREOBJ v2
+   15   6 *    ClrVPtr  v3
+   16   6 *    CmpPtr   v2, v3
+   18   6 *    TNZ
+   19   6 *    CpyRtoV4 v4
+   20   6 *    FREE     v2, 88924136
+   22   6 *    FREE     v3, 88924136
+   24   6 *    CpyVtoR4 v4
+   25   6 *    JLowZ    +3              (d:30)
+- 315,4 -
+   27   6 *    SUSPEND
+   28   6 * {
+   28   6 * }
+   28   6 *    JMP      +40              (d:70)
+- 317,3 -
+   30   6 * 1:
+   30   6 *    SUSPEND
+   31   6 *    VarDecl  2
+   31   6 *    CALL     680           (UiCallback@ UiCallback())
+   33   6 *    STOREOBJ v5
+- 318,3 -
+   34   6 *    SUSPEND
+   35   6 *    VAR      v-1
+   36   7 *    PshVPtr  v5
+   37   8 *    ADDSi    v16, 134217782
+   39   8 *    RDSPtr
+   40   8 *    GETOBJREF 1
+   41   8 *    CALLSYS  36           (string& string::opAssign(const string&in))
+- 319,3 -
+   43   6 *    SUSPEND
+   44   6 *    VAR      v-2
+   45   7 *    PshVPtr  v5
+   46   8 *    ADDSi    v20, 134217782
+   48   8 *    GETOBJREF 1
+   49   8 *    REFCPY   0x54cdfe8
+   51   7 *    PopPtr
+- 320,3 -
+   52   6 *    SUSPEND
+   53   6 *    PshVPtr  v5
+   54   7 *    RefCpyV  v6, 150273552
+   56   7 *    PopPtr
+   57   6 *    VAR      v6
+   58   7 *    PshVPtr  v0
+   59   8 *    ADDSi    v48, 134217780
+   61   8 *    RDSPtr
+   62   8 *    GETREF   1
+   63   8 *    CALLSYS  1322           (void array::insertLast(UiCallback@const&in))
+   65   6 *    FREE     v6, 150273552
+- 321,3 -
+   67   6 *    SUSPEND
+   68   6 *    FREE     v5, 150273552
+   70   6 * 0:
+   70   6 *    FREE     v-1, 50711496
+   72   6 *    FREE     v-2, 88924136
+   74   6 *    FREE     v0, 150271928
+   76   6 *    RET      3

@@ -1,0 +1,49 @@
+PlayerInfo::PlayerInfo()
+
+Temps: 1, 2
+
+Variables: 
+ 000: PlayerInfo this
+
+
+- 116,16 -
+    0   2 *    SUSPEND
+    1   2 *    PshVPtr  v0
+    2   3 *    ADDSi    v20, 134217771
+    4   3 *    ALLOC    0x45ebf60, 34             (type:string)
+- 119,14 -
+    7   2 *    SUSPEND
+    8   2 *    SetV1    v1, 0x0
+   10   2 *    LoadThisR v24, 134217771
+   12   2 *    WRTV1    v1
+- 120,13 -
+   13   2 *    SUSPEND
+   14   2 *    SetV4    v1, 0x0          (i:0, f:0)
+   16   2 *    LoadThisR v28, 134217771
+   18   2 *    WRTV4    v1
+- 123,13 -
+   19   2 *    SUSPEND
+   20   2 *    SetV4    v1, 0x0          (i:0, f:0)
+   22   2 *    LoadThisR v32, 134217771
+   24   2 *    WRTV4    v1
+- 126,13 -
+   25   2 *    SUSPEND
+   26   2 *    SetV4    v1, 0x0          (i:0, f:0)
+   28   2 *    LoadThisR v36, 134217771
+   30   2 *    WRTV4    v1
+- 129,14 -
+   31   2 *    SUSPEND
+   32   2 *    SetV1    v1, 0x0
+   34   2 *    LoadThisR v40, 134217771
+   36   2 *    WRTV1    v1
+- 132,14 -
+   37   2 *    SUSPEND
+   38   2 *    SetV4    v2, 0x0          (i:0, f:0)
+   40   2 *    LoadThisR v44, 134217771
+   42   2 *    WRTV4    v2
+- 135,13 -
+   43   2 *    SUSPEND
+   44   2 *    SetV4    v1, 0xffffffff          (i:-1, f:-1.#QNAN)
+   46   2 *    LoadThisR v48, 134217771
+   48   2 *    WRTV4    v1
+   49   2 *    RET      1

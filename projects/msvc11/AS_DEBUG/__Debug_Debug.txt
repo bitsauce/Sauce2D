@@ -1,0 +1,24 @@
+Debug::Debug()
+
+Temps: 1
+
+Variables: 
+ 000: Debug this
+
+
+    0   1 *    PshVPtr  v0
+    1   2 *    CALL     434           (Entity::Entity())
+- 13,3 -
+    3   1 *    SUSPEND
+    4   1 *    SetV4    v1, 0x4          (i:4, f:5.60519e-045)
+    6   1 *    LoadThisR v36, 134217780
+    8   1 *    WRTV4    v1
+- 14,3 -
+    9   1 *    SUSPEND
+   10   1 *    SetV4    v1, 0x3f800000          (i:1065353216, f:1)
+   12   1 *    LoadThisR v28, 134217780
+   14   1 *    WRTV4    v1
+- 15,3 -
+   15   1 *    SUSPEND
+   16   1 * 0:
+   16   1 *    RET      1

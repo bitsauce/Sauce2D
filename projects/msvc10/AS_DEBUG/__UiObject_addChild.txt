@@ -1,0 +1,26 @@
+void UiObject::addChild(UiObject@)
+
+Temps: 
+
+Variables: 
+ -001: UiObject@ child
+ 000: UiObject this
+
+
+    0   0 *    VarDecl  0
+    0   0 *    PshVPtr  v0
+    1   1 *    CALLSYS  2           (void _builtin_object_::_beh_4_())
+- 274,35 -
+    3   0 *    SUSPEND
+    4   0 *    VAR      v-1
+    5   1 *    PshVPtr  v0
+    6   2 *    ADDSi    v24, 134217780
+    8   2 *    RDSPtr
+    9   2 *    GETREF   1
+   10   2 *    CALLSYS  1296           (void array::insertLast(UiObject@const&in))
+- 274,65 -
+   12   0 *    SUSPEND
+   13   0 * 0:
+   13   0 *    FREE     v-1, 150271928
+   15   0 *    FREE     v0, 150271928
+   17   0 *    RET      2

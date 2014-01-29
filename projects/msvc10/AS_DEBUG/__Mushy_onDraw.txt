@@ -1,0 +1,73 @@
+void Mushy::onDraw(DrawEvent)
+
+Temps: 1, 2, 3, 4
+
+Variables: 
+ -001: DrawEvent e
+ 000: Mushy this
+ 002: CSprite {noname}
+ 003: CSprite {noname}
+ 001: Color {noname}
+
+
+    0   4 *    VarDecl  0
+    0   4 *    PshVPtr  v0
+    1   5 *    CALLSYS  2           (void _builtin_object_::_beh_4_())
+- 125,3 -
+    3   4 *    SUSPEND
+    4   4 *    PshVPtr  v0
+    5   5 *    ADDSi    v56, 134217832
+    7   5 *    RDSPtr
+    8   5 *    PSF      v1
+    9   6 *    CALLSYS  177           (void Color::_beh_0_(const Color&in))
+   11   4 *    ObjInfo  v1, 1
+   11   4 *    VAR      v1
+   12   5 *    PshGPtr  112336760
+   14   6 *    CHKREF
+   15   6 *    GETREF   1
+   16   6 *    CALLSYS  472           (void CGFX::setBlendColor(const Color&in))
+- 126,3 -
+   18   4 *    ObjInfo  v1, 0
+   18   4 *    SUSPEND
+   19   4 *    PshVPtr  v0
+   20   5 *    ADDSi    v48, 134217832
+   22   5 *    RDSPtr
+   23   5 *    RefCpyV  v2, 112081552
+   25   5 *    PopPtr
+   26   4 *    ClrVPtr  v3
+   27   4 *    CmpPtr   v2, v3
+   29   4 *    TNZ
+   30   4 *    CpyRtoV4 v4
+   31   4 *    FREE     v2, 112081552
+   33   4 *    FREE     v3, 112081552
+   35   4 *    CpyVtoR4 v4
+   36   4 *    JLowZ    +7              (d:45)
+- 127,4 -
+   38   4 *    SUSPEND
+   39   4 *    PshVPtr  v0
+   40   5 *    ADDSi    v48, 134217832
+   42   5 *    RDSPtr
+   43   5 *    CALLSYS  479           (void CSprite::draw())
+- 128,3 -
+   45   4 * 1:
+   45   4 *    SUSPEND
+   46   4 *    PSF      v1
+   47   5 *    CALLSYS  176           (void Color::_beh_0_())
+   49   4 *    ObjInfo  v1, 1
+   49   4 *    PshGPtr  112028688
+   51   5 *    CHKREF
+   52   5 *    PSF      v1
+   53   6 *    COPY     v1, 67108879
+   55   5 *    PopPtr
+   56   4 *    VAR      v1
+   57   5 *    PshGPtr  112336760
+   59   6 *    CHKREF
+   60   6 *    GETREF   1
+   61   6 *    CALLSYS  472           (void CGFX::setBlendColor(const Color&in))
+- 129,3 -
+   63   4 *    ObjInfo  v1, 0
+   63   4 *    SUSPEND
+   64   4 * 0:
+   64   4 *    FREE     v-1, 112324336
+   66   4 *    FREE     v0, 152263104
+   68   4 *    RET      2

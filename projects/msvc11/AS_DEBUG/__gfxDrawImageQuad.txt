@@ -1,0 +1,97 @@
+void gfxDrawImageQuad(const vec2, const vec2, const float arg2 = 0.0f, const float arg3 = 0.0f, const float arg4 = 1.0f, const float arg5 = 1.0f)
+
+Temps: 1, 2, 3, 4, 5
+
+Variables: 
+ 000: const vec2 pos
+ -001: const vec2 size
+ -002: const float x0
+ -003: const float y0
+ -004: const float x1
+ -005: const float y1
+
+
+- 31,2 -
+    0   5 *    VarDecl  0
+    0   5 *    VarDecl  1
+    0   5 *    VarDecl  2
+    0   5 *    VarDecl  3
+    0   5 *    VarDecl  4
+    0   5 *    VarDecl  5
+    0   5 *    SUSPEND
+    1   5 *    PshV4    v-5
+    2   6 *    PshV4    v-2
+    3   7 *    CALLSYS  332           (void gfxSetImageCoord(const float, const float))
+- 31,28 -
+    5   5 *    SUSPEND
+    6   5 *    PshC4    0x0          (i:0, f:0)
+    8   6 *    LoadThisR v4, 67108877
+   10   6 *    RDR4     v2
+   11   6 *    PshV4    v2
+   12   7 *    LoadThisR v0, 67108877
+   14   7 *    RDR4     v3
+   15   7 *    PshV4    v3
+   16   8 *    CALLSYS  325           (void gfxAddVertex(const float, const float, const float arg2 = 0.0f))
+- 32,2 -
+   18   5 *    SUSPEND
+   19   5 *    PshV4    v-3
+   20   6 *    PshV4    v-2
+   21   7 *    CALLSYS  332           (void gfxSetImageCoord(const float, const float))
+- 32,28 -
+   23   5 *    SUSPEND
+   24   5 *    PshC4    0x0          (i:0, f:0)
+   26   6 *    LoadThisR v4, 67108877
+   28   6 *    RDR4     v1
+   29   6 *    LoadRObjR v-1, v4, 67108877
+   32   6 *    RDR4     v3
+   33   6 *    ADDf     v2, v1, v3
+   35   6 *    PshV4    v2
+   36   7 *    LoadThisR v0, 67108877
+   38   7 *    RDR4     v3
+   39   7 *    PshV4    v3
+   40   8 *    CALLSYS  325           (void gfxAddVertex(const float, const float, const float arg2 = 0.0f))
+- 33,2 -
+   42   5 *    SUSPEND
+   43   5 *    PshV4    v-3
+   44   6 *    PshV4    v-4
+   45   7 *    CALLSYS  332           (void gfxSetImageCoord(const float, const float))
+- 33,28 -
+   47   5 *    SUSPEND
+   48   5 *    PshC4    0x0          (i:0, f:0)
+   50   6 *    LoadThisR v4, 67108877
+   52   6 *    RDR4     v1
+   53   6 *    LoadRObjR v-1, v4, 67108877
+   56   6 *    RDR4     v3
+   57   6 *    ADDf     v2, v1, v3
+   59   6 *    PshV4    v2
+   60   7 *    LoadThisR v0, 67108877
+   62   7 *    RDR4     v3
+   63   7 *    LoadRObjR v-1, v0, 67108877
+   66   7 *    RDR4     v1
+   67   7 *    ADDf     v4, v3, v1
+   69   7 *    PshV4    v4
+   70   8 *    CALLSYS  325           (void gfxAddVertex(const float, const float, const float arg2 = 0.0f))
+- 34,2 -
+   72   5 *    SUSPEND
+   73   5 *    PshV4    v-5
+   74   6 *    PshV4    v-4
+   75   7 *    CALLSYS  332           (void gfxSetImageCoord(const float, const float))
+- 34,28 -
+   77   5 *    SUSPEND
+   78   5 *    PshC4    0x0          (i:0, f:0)
+   80   6 *    LoadThisR v4, 67108877
+   82   6 *    RDR4     v5
+   83   6 *    PshV4    v5
+   84   7 *    LoadThisR v0, 67108877
+   86   7 *    RDR4     v1
+   87   7 *    LoadRObjR v-1, v0, 67108877
+   90   7 *    RDR4     v4
+   91   7 *    ADDf     v2, v1, v4
+   93   7 *    PshV4    v2
+   94   8 *    CALLSYS  325           (void gfxAddVertex(const float, const float, const float arg2 = 0.0f))
+- 35,2 -
+   96   5 *    SUSPEND
+   97   5 * 0:
+   97   5 *    FREE     v0, 6964208
+   99   5 *    FREE     v-1, 6964208
+  101   5 *    RET      6

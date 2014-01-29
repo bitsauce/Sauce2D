@@ -1,0 +1,265 @@
+Rocket::Rocket(Team)
+
+Temps: 1, 2, 3, 4, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16
+
+Variables: 
+ -001: Team team
+ 000: Rocket this
+ 002: ParticleEmitter {noname}
+ 003: SfxSource {noname}
+ 014: _builtin_function_ {noname}
+ 016: Tile {noname}
+ 006: vec2 {noname}
+
+
+- 4,7 -
+    0  16 *    VarDecl  0
+    0  16 *    SUSPEND
+    1  16 *    CALL     684           (Tile@ Tile())
+    3  16 *    STOREOBJ v16
+    4  16 *    PshVPtr  v16
+    5  17 *    PshVPtr  v0
+    6  18 *    ADDSi    v92, 134217778
+    8  18 *    REFCPY   0x46db040
+   10  17 *    PopPtr
+   11  16 *    FREE     v16, 74297408
+- 15,3 -
+   13  16 *    SUSPEND
+   14  16 *    PshV4    v-1
+   15  17 *    PshVPtr  v0
+   16  18 *    CALL     708           (UnitBase::UnitBase(const Team))
+- 5,8 -
+   18  16 *    SUSPEND
+   19  16 *    SetV4    v1, 0x43fa0000          (i:1140457472, f:500)
+   21  16 *    LoadThisR v96, 134217778
+   23  16 *    WRTV4    v1
+- 7,18 -
+   24  16 *    SUSPEND
+   25  16 *    PshG4    74640840
+   27  17 *    CALL     853           (ParticleEmitter@ ParticleEmitter(const int))
+   29  16 *    STOREOBJ v2
+   30  16 *    PshVPtr  v2
+   31  17 *    PshVPtr  v0
+   32  18 *    ADDSi    v100, 134217778
+   34  18 *    REFCPY   0x46df740
+   36  17 *    FREE     v2, 74315584
+   38  17 *    PopPtr
+- 8,7 -
+   39  16 *    SUSPEND
+   40  16 *    SetV1    v1, 0x0
+   42  16 *    LoadThisR v104, 134217778
+   44  16 *    WRTV1    v1
+- 10,12 -
+   45  16 *    SUSPEND
+   46  16 *    PshG4    74652584
+   48  17 *    CALL     611           (SfxSource@ SfxSource(const int))
+   50  16 *    STOREOBJ v3
+   51  16 *    PshVPtr  v3
+   52  17 *    PshVPtr  v0
+   53  18 *    ADDSi    v108, 134217778
+   55  18 *    REFCPY   0x46d45a0
+   57  17 *    FREE     v3, 74270112
+   59  17 *    PopPtr
+- 11,12 -
+   60  16 *    SUSPEND
+   61  16 *    PshG4    74654080
+   63  17 *    CALL     611           (SfxSource@ SfxSource(const int))
+   65  16 *    STOREOBJ v3
+   66  16 *    PshVPtr  v3
+   67  17 *    PshVPtr  v0
+   68  18 *    ADDSi    v112, 134217778
+   70  18 *    REFCPY   0x46d45a0
+   72  17 *    FREE     v3, 74270112
+   74  17 *    PopPtr
+- 17,3 -
+   75  16 *    SUSPEND
+   76  16 *    PshC4    0x32          (i:50, f:7.00649e-044)
+   78  17 *    PshVPtr  v0
+   79  18 *    ADDSi    v52, 134217778
+   81  18 *    RDSPtr
+   82  18 *    CALLINTF 1163           (void Health::setMax(int))
+- 19,3 -
+   84  16 *    SUSPEND
+   85  16 *    SetV1    v1, 0x1
+   87  16 *    PshV4    v1
+   88  17 *    PshVPtr  v0
+   89  18 *    ADDSi    v108, 134217778
+   91  18 *    RDSPtr
+   92  18 *    CALLINTF 1041           (void SfxSource::setLooping(const bool))
+- 20,3 -
+   94  16 *    SUSPEND
+   95  16 *    PshC4    0x43fa0000          (i:1140457472, f:500)
+   97  17 *    PshC4    0x437a0000          (i:1132068864, f:250)
+   99  18 *    PshVPtr  v0
+  100  19 *    ADDSi    v108, 134217778
+  102  19 *    RDSPtr
+  103  19 *    CALLINTF 1040           (void SfxSource::setDistances(float, float))
+- 21,3 -
+  105  16 *    SUSPEND
+  106  16 *    PshVPtr  v0
+  107  17 *    ADDSi    v108, 134217778
+  109  17 *    RDSPtr
+  110  17 *    CALLINTF 1042           (void SfxSource::play())
+- 22,3 -
+  112  16 *    SUSPEND
+  113  16 *    PshC4    0x43fa0000          (i:1140457472, f:500)
+  115  17 *    PshC4    0x437a0000          (i:1132068864, f:250)
+  117  18 *    PshVPtr  v0
+  118  19 *    ADDSi    v112, 134217778
+  120  19 *    RDSPtr
+  121  19 *    CALLINTF 1040           (void SfxSource::setDistances(float, float))
+- 25,3 -
+  123  16 *    SUSPEND
+  124  16 *    PshC4    0x41800000          (i:1098907648, f:16)
+  126  17 *    PshC4    0x41800000          (i:1098907648, f:16)
+  128  18 *    PshVPtr  v0
+  129  19 *    ADDSi    v100, 134217778
+  131  19 *    RDSPtr
+  132  19 *    ADDSi    v32, 134217793
+  134  19 *    RDSPtr
+  135  19 *    CALLSYS  145           (void vec2::set(const float, const float))
+- 26,3 -
+  137  16 *    SUSPEND
+  138  16 *    PshC4    0x42480000          (i:1112014848, f:50)
+  140  17 *    PSF      v6
+  141  18 *    CALLSYS  134           (vec2::vec2(float))
+  143  16 *    ObjInfo  v6, 1
+  143  16 *    PSF      v6
+  144  17 *    PshVPtr  v0
+  145  18 *    ADDSi    v100, 134217778
+  147  18 *    RDSPtr
+  148  18 *    ADDSi    v56, 134217793
+  150  18 *    RDSPtr
+  151  18 *    COPY     v2, 67108877
+  153  17 *    ObjInfo  v6, 0
+  153  17 *    PopPtr
+- 27,3 -
+  154  16 *    SUSPEND
+  155  16 *    SetV4    v4, 0x3c23d70a          (i:1008981770, f:0.01)
+  157  16 *    PshVPtr  v0
+  158  17 *    ADDSi    v100, 134217778
+  160  17 *    RDSPtr
+  161  17 *    ADDSi    v40, 134217793
+  163  17 *    PopRPtr
+  164  16 *    WRTV4    v4
+- 28,3 -
+  165  16 *    SUSPEND
+  166  16 *    SetV4    v1, 0x40a00000          (i:1084227584, f:5)
+  168  16 *    PshVPtr  v0
+  169  17 *    ADDSi    v100, 134217778
+  171  17 *    RDSPtr
+  172  17 *    ADDSi    v48, 134217793
+  174  17 *    PopRPtr
+  175  16 *    WRTV4    v1
+- 29,3 -
+  176  16 *    SUSPEND
+  177  16 *    SetV4    v4, 0x3f400000          (i:1061158912, f:0.75)
+  179  16 *    PshVPtr  v0
+  180  17 *    ADDSi    v100, 134217778
+  182  17 *    RDSPtr
+  183  17 *    ADDSi    v64, 134217793
+  185  17 *    PopRPtr
+  186  16 *    WRTV4    v4
+- 30,3 -
+  187  16 *    SUSPEND
+  188  16 *    PshC4    0xbf800000          (i:-1082130432, f:-1)
+  190  17 *    PshC4    0x0          (i:0, f:0)
+  192  18 *    PSF      v6
+  193  19 *    CALLSYS  135           (vec2::vec2(float, float))
+  195  16 *    ObjInfo  v6, 1
+  195  16 *    PSF      v6
+  196  17 *    PshVPtr  v0
+  197  18 *    ADDSi    v100, 134217778
+  199  18 *    RDSPtr
+  200  18 *    ADDSi    v52, 134217793
+  202  18 *    RDSPtr
+  203  18 *    COPY     v2, 67108877
+  205  17 *    ObjInfo  v6, 0
+  205  17 *    PopPtr
+- 33,3 -
+  206  16 *    SUSPEND
+  207  16 *    CALLSYS  536           (int b2dCreateBody())
+  209  16 *    CpyRtoV4 v4
+  210  16 *    LoadThisR v80, 134217778
+  212  16 *    WRTV4    v4
+- 34,3 -
+  213  16 *    SUSPEND
+  214  16 *    PshC4    0x0          (i:0, f:0)
+  216  17 *    PshC4    0x0          (i:0, f:0)
+  218  18 *    PshC4    0x0          (i:0, f:0)
+  220  19 *    LoadThisR v80, 134217778
+  222  19 *    RDR4     v8
+  223  19 *    PshV4    v8
+  224  20 *    CALLSYS  543           (void b2dSetBodyTransform(int, float, float, float))
+- 35,3 -
+  226  16 *    SUSPEND
+  227  16 *    PshC4    0x2          (i:2, f:2.8026e-045)
+  229  17 *    LoadThisR v80, 134217778
+  231  17 *    RDR4     v1
+  232  17 *    PshV4    v1
+  233  18 *    CALLSYS  538           (void b2dSetBodyType(int, BodyType))
+- 38,3 -
+  235  16 *    SUSPEND
+  236  16 *    PshC4    0x40a00000          (i:1084227584, f:5)
+  238  17 *    PshC4    0x0          (i:0, f:0)
+  240  18 *    PshC4    0x0          (i:0, f:0)
+  242  19 *    PshC4    0x0          (i:0, f:0)
+  244  20 *    PshG4    74607976
+  246  21 *    PshG4    74607976
+  248  22 *    LoadThisR v80, 134217778
+  250  22 *    RDR4     v12
+  251  22 *    PshV4    v12
+  252  23 *    CALLSYS  555           (int b2dCreateFixtureBox(int, float, float, float, float, float, float))
+  254  16 *    CpyRtoV4 v13
+  255  16 *    LoadThisR v84, 134217778
+  257  16 *    WRTV4    v13
+- 39,3 -
+  258  16 *    SUSPEND
+  259  16 *    PshC4    0x40a00000          (i:1084227584, f:5)
+  261  17 *    LoadThisR v84, 134217778
+  263  17 *    RDR4     v13
+  264  17 *    PshV4    v13
+  265  18 *    CALLSYS  559           (void b2dSetFixtureDensity(int, float))
+- 40,3 -
+  267  16 *    SUSPEND
+  268  16 *    PshC4    0x10          (i:16, f:2.24208e-044)
+  270  17 *    LoadThisR v84, 134217778
+  272  17 *    RDR4     v13
+  273  17 *    PshV4    v13
+  274  18 *    CALLSYS  561           (void b2dSetFixtureCategoryBits(int, int))
+- 41,3 -
+  276  16 *    SUSPEND
+  277  16 *    PshC4    0x1d          (i:29, f:4.06377e-044)
+  279  17 *    LoadThisR v84, 134217778
+  281  17 *    RDR4     v13
+  282  17 *    PshV4    v13
+  283  18 *    CALLSYS  560           (void b2dSetFixtureMaskBits(int, int))
+- 43,3 -
+  285  16 *    SUSPEND
+  286  16 *    PshVPtr  v0
+  287  17 *    FuncPtr  74861144
+  289  18 *    CALLSYS  18           (_builtin_function_@ %delegate_factory(int&in, int&in))
+  291  16 *    STOREOBJ v14
+  292  16 *    VAR      v14
+  293  17 *    LoadThisR v80, 134217778
+  295  17 *    RDR4     v12
+  296  17 *    PshV4    v12
+  297  18 *    GETOBJ   1
+  298  18 *    CALLSYS  529           (void b2dAddBodyBeginContactCallback(int, ContactCallback@))
+- 46,3 -
+  300  16 *    SUSPEND
+  301  16 *    PshG4    74607976
+  303  17 *    PshG4    74607976
+  305  18 *    PshVPtr  v0
+  306  19 *    ADDSi    v24, 134217778
+  308  19 *    RDSPtr
+  309  19 *    CALLSYS  145           (void vec2::set(const float, const float))
+- 47,3 -
+  311  16 *    SUSPEND
+  312  16 *    PshC4    0x1          (i:1, f:1.4013e-045)
+  314  17 *    PshVPtr  v0
+  315  18 *    CALLINTF 1017           (void Entity::setRenderPass(const RenderPass))
+- 48,3 -
+  317  16 *    SUSPEND
+  318  16 * 0:
+  318  16 *    RET      2

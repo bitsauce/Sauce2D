@@ -1,0 +1,51 @@
+void Door::onUpdate(UpdateEvent)
+
+Temps: 1, 2, 3
+
+Variables: 
+ -001: UpdateEvent e
+ 000: Door this
+
+
+    0   3 *    VarDecl  0
+    0   3 *    PshVPtr  v0
+    1   4 *    CALLSYS  2           (void _builtin_object_::_beh_4_())
+- 51,3 -
+    3   3 *    SUSPEND
+    4   3 *    LoadThisR v28, 134217839
+    6   3 *    RDR4     v1
+    7   3 *    CMPIi    v1, 0
+    9   3 *    JNZ      +28              (d:39)
+- 52,4 -
+   11   3 * {
+   11   3 *    SUSPEND
+   12   3 *    LoadThisR v36, 134217839
+   14   3 *    RDR1     v2
+   15   3 *    NOT      v2
+   16   3 *    CpyVtoR4 v2
+   17   3 *    JLowNZ   +4              (d:23)
+   19   3 *    SetV4    v2, 0x0          (i:0, f:0)
+   21   3 *    JMP      +9              (d:32)
+   23   3 * 3:
+   23   3 *    PshVPtr  v0
+   24   4 *    ADDSi    v24, 134217839
+   26   4 *    RDSPtr
+   27   4 *    CALLINTF 1470           (bool Room::isClearOfMobs())
+   29   3 *    CpyRtoV4 v3
+   30   3 *    CpyVtoV4 v2, v3
+   32   3 * 4:
+   32   3 *    CpyVtoR4 v2
+   33   3 *    JLowZ    +4              (d:39)
+- 53,5 -
+   35   3 *    SUSPEND
+   36   3 *    PshVPtr  v0
+   37   4 *    CALLINTF 1413           (void Door::open())
+- 55,3 -
+   39   3 * 2:
+   39   3 * }
+   39   3 * 1:
+   39   3 *    SUSPEND
+   40   3 * 0:
+   40   3 *    FREE     v-1, 112323680
+   42   3 *    FREE     v0, 152271432
+   44   3 *    RET      2

@@ -1,0 +1,24 @@
+Entry::Entry()
+
+Temps: 
+
+Variables: 
+ 000: Entry this
+
+
+- 29,9 -
+    0   0 *    SUSPEND
+    1   0 *    PshVPtr  v0
+    2   1 *    ADDSi    v16, 134217838
+    4   1 *    ALLOC    0x314cb48, 33             (type:string)
+- 34,9 -
+    7   0 *    SUSPEND
+    8   0 *    PshVPtr  v0
+    9   1 *    ADDSi    v28, 134217838
+   11   1 *    ALLOC    0x314cb48, 33             (type:string)
+- 35,9 -
+   14   0 *    SUSPEND
+   15   0 *    PshVPtr  v0
+   16   1 *    ADDSi    v32, 134217838
+   18   1 *    ALLOC    0x314cb48, 33             (type:string)
+   21   0 *    RET      1

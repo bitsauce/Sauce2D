@@ -1,0 +1,80 @@
+\hypertarget{classtinyxml2_1_1_x_m_l_unknown}{\section{X\-M\-L\-Unknown Class Reference}
+\label{classtinyxml2_1_1_x_m_l_unknown}\index{X\-M\-L\-Unknown@{X\-M\-L\-Unknown}}
+}
+
+
+Inherits \hyperlink{classtinyxml2_1_1_x_m_l_node}{X\-M\-L\-Node}.
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classtinyxml2_1_1_x_m_l_unknown_aa9fa4034089ded1476d7994093c8d3a2}{virtual \hyperlink{classtinyxml2_1_1_x_m_l_unknown}{X\-M\-L\-Unknown} $\ast$ \hyperlink{classtinyxml2_1_1_x_m_l_unknown_aa9fa4034089ded1476d7994093c8d3a2}{To\-Unknown} ()}\label{classtinyxml2_1_1_x_m_l_unknown_aa9fa4034089ded1476d7994093c8d3a2}
+
+\begin{DoxyCompactList}\small\item\em Safely cast to an Unknown, or null. \end{DoxyCompactList}\item 
+virtual bool \hyperlink{classtinyxml2_1_1_x_m_l_unknown_a66d46e7527ec62912b49400b27137eba}{Accept} (\hyperlink{classtinyxml2_1_1_x_m_l_visitor}{X\-M\-L\-Visitor} $\ast$visitor) const 
+\item 
+virtual \hyperlink{classtinyxml2_1_1_x_m_l_node}{X\-M\-L\-Node} $\ast$ \hyperlink{classtinyxml2_1_1_x_m_l_unknown_a4267351368d51803f98480981d622c00}{Shallow\-Clone} (\hyperlink{classtinyxml2_1_1_x_m_l_document}{X\-M\-L\-Document} $\ast$document) const 
+\item 
+virtual bool \hyperlink{classtinyxml2_1_1_x_m_l_unknown_aa4032d1d6b59a8392a1dc6a081618bbc}{Shallow\-Equal} (const \hyperlink{classtinyxml2_1_1_x_m_l_node}{X\-M\-L\-Node} $\ast$compare) const 
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Any tag that tiny\-Xml doesn't recognize is saved as an unknown. It is a tag of text, but should not be modified. It will be written back to the X\-M\-L, unchanged, when the file is saved.
+
+D\-T\-D tags get thrown into Ti\-Xml\-Unknowns. 
+
+\subsection{Member Function Documentation}
+\hypertarget{classtinyxml2_1_1_x_m_l_unknown_a66d46e7527ec62912b49400b27137eba}{\index{tinyxml2\-::\-X\-M\-L\-Unknown@{tinyxml2\-::\-X\-M\-L\-Unknown}!Accept@{Accept}}
+\index{Accept@{Accept}!tinyxml2::XMLUnknown@{tinyxml2\-::\-X\-M\-L\-Unknown}}
+\subsubsection[{Accept}]{\setlength{\rightskip}{0pt plus 5cm}bool Accept (
+\begin{DoxyParamCaption}
+\item[{{\bf X\-M\-L\-Visitor} $\ast$}]{visitor}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [virtual]}}}\label{classtinyxml2_1_1_x_m_l_unknown_a66d46e7527ec62912b49400b27137eba}
+Accept a hierarchical visit of the nodes in the Tiny\-X\-M\-L D\-O\-M. Every node in the X\-M\-L tree will be conditionally visited and the host will be called back via the Ti\-Xml\-Visitor interface.
+
+This is essentially a S\-A\-X interface for Tiny\-X\-M\-L. (Note however it doesn't re-\/parse the X\-M\-L for the callbacks, so the performance of Tiny\-X\-M\-L is unchanged by using this interface versus any other.)
+
+The interface has been based on ideas from\-:
+\begin{DoxyItemize}
+\item \href{http://www.saxproject.org/}{\tt http\-://www.\-saxproject.\-org/}
+\item \href{http://c2.com/cgi/wiki?HierarchicalVisitorPattern}{\tt http\-://c2.\-com/cgi/wiki?\-Hierarchical\-Visitor\-Pattern}
+\end{DoxyItemize}
+
+Which are both good references for \char`\"{}visiting\char`\"{}.
+
+An example of using \hyperlink{classtinyxml2_1_1_x_m_l_unknown_a66d46e7527ec62912b49400b27137eba}{Accept()}\-: \begin{DoxyVerb}TiXmlPrinter printer;
+tinyxmlDoc.Accept( &printer );
+const char* xmlcstr = printer.CStr();
+\end{DoxyVerb}
+ 
+
+Implements \hyperlink{classtinyxml2_1_1_x_m_l_node_a22a4129c1b347686a3579664d9278cce}{X\-M\-L\-Node}.
+
+\hypertarget{classtinyxml2_1_1_x_m_l_unknown_a4267351368d51803f98480981d622c00}{\index{tinyxml2\-::\-X\-M\-L\-Unknown@{tinyxml2\-::\-X\-M\-L\-Unknown}!Shallow\-Clone@{Shallow\-Clone}}
+\index{Shallow\-Clone@{Shallow\-Clone}!tinyxml2::XMLUnknown@{tinyxml2\-::\-X\-M\-L\-Unknown}}
+\subsubsection[{Shallow\-Clone}]{\setlength{\rightskip}{0pt plus 5cm}{\bf X\-M\-L\-Node} $\ast$ Shallow\-Clone (
+\begin{DoxyParamCaption}
+\item[{{\bf X\-M\-L\-Document} $\ast$}]{document}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [virtual]}}}\label{classtinyxml2_1_1_x_m_l_unknown_a4267351368d51803f98480981d622c00}
+Make a copy of this node, but not its children. You may pass in a Document pointer that will be the owner of the new Node. If the 'document' is null, then the node returned will be allocated from the current Document. (this-\/$>$\hyperlink{classtinyxml2_1_1_x_m_l_node_a3e38841c0f0a0637e6d5cb0b5d637764}{Get\-Document()})
+
+Note\-: if called on a \hyperlink{classtinyxml2_1_1_x_m_l_document}{X\-M\-L\-Document}, this will return null. 
+
+Implements \hyperlink{classtinyxml2_1_1_x_m_l_node_ae565db17190bb2bb78121d9504161652}{X\-M\-L\-Node}.
+
+\hypertarget{classtinyxml2_1_1_x_m_l_unknown_aa4032d1d6b59a8392a1dc6a081618bbc}{\index{tinyxml2\-::\-X\-M\-L\-Unknown@{tinyxml2\-::\-X\-M\-L\-Unknown}!Shallow\-Equal@{Shallow\-Equal}}
+\index{Shallow\-Equal@{Shallow\-Equal}!tinyxml2::XMLUnknown@{tinyxml2\-::\-X\-M\-L\-Unknown}}
+\subsubsection[{Shallow\-Equal}]{\setlength{\rightskip}{0pt plus 5cm}bool Shallow\-Equal (
+\begin{DoxyParamCaption}
+\item[{const {\bf X\-M\-L\-Node} $\ast$}]{compare}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [virtual]}}}\label{classtinyxml2_1_1_x_m_l_unknown_aa4032d1d6b59a8392a1dc6a081618bbc}
+Test if 2 nodes are the same, but don't test children. The 2 nodes do not need to be in the same Document.
+
+Note\-: if called on a \hyperlink{classtinyxml2_1_1_x_m_l_document}{X\-M\-L\-Document}, this will return false. 
+
+Implements \hyperlink{classtinyxml2_1_1_x_m_l_node_a6d44ea557ea23ee19668984562d86cfc}{X\-M\-L\-Node}.
+

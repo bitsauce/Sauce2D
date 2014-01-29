@@ -1,0 +1,48 @@
+int Input::addCommand(VirtualKey, CommandEvent@)
+
+Temps: 1, 2, 3, 4
+
+Variables: 
+ -001: VirtualKey key
+ -002: CommandEvent@ func
+ 000: Input this
+ 001: _builtin_function_ {noname}
+ 002: KeyCommand {noname}
+
+
+    0   4 *    VarDecl  0
+    0   4 *    VarDecl  1
+    0   4 *    PshVPtr  v0
+    1   5 *    CALLSYS  2           (void _builtin_object_::_beh_5_())
+- 43,3 -
+    3   4 *    SUSPEND
+    4   4 *    PshVPtr  v-2
+    5   5 *    RefCpyV  v1, 73289060
+    7   5 *    PopPtr
+    8   4 *    VAR      v1
+    9   5 *    PshV4    v-1
+   10   6 *    GETOBJ   1
+   11   6 *    CALL     623           (KeyCommand@ KeyCommand(VirtualKey, CommandEvent@))
+   13   4 *    STOREOBJ v2
+   14   4 *    VAR      v2
+   15   5 *    PshVPtr  v0
+   16   6 *    ADDSi    v44, 134217763
+   18   6 *    RDSPtr
+   19   6 *    GETREF   1
+   20   6 *    CALLSYS  1063           (void array::insertLast(KeyCommand@const&in))
+   22   4 *    FREE     v2, 74271624
+- 44,3 -
+   24   4 *    SUSPEND
+   25   4 *    PshVPtr  v0
+   26   5 *    ADDSi    v44, 134217763
+   28   5 *    RDSPtr
+   29   5 *    CALLSYS  88           (uint array::size() const)
+   31   4 *    CpyRtoV4 v3
+   32   4 *    SUBIi    v3, v3, 1
+   35   4 * {
+   35   4 * }
+   35   4 *    CpyVtoR4 v3
+   36   4 * 0:
+   36   4 *    FREE     v-2, 73289060
+   38   4 *    FREE     v0, 74272224
+   40   4 *    RET      3

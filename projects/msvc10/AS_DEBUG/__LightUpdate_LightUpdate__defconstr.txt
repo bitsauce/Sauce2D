@@ -1,0 +1,20 @@
+LightUpdate::LightUpdate()
+
+Temps: 1
+
+Variables: 
+ 000: LightUpdate this
+ 001: array {noname}
+
+
+- 15,22 -
+    0   1 *    SUSPEND
+    1   1 *    CALL     1545           (LightSource@[]@ factstub())
+    3   1 *    STOREOBJ v1
+    4   1 *    PshVPtr  v1
+    5   2 *    PshVPtr  v0
+    6   3 *    ADDSi    v24, 134217792
+    8   3 *    REFCPY   0x91fcb60
+   10   2 *    PopPtr
+   11   1 *    FREE     v1, 153078624
+   13   1 *    RET      1

@@ -1,0 +1,11 @@
+Dog::Dog()
+
+Temps: 
+
+Variables: 
+ 000: Dog this
+
+
+    0   0 *    PshVPtr  v0
+    1   1 *    CALL     604           (SceneObject::SceneObject())
+    3   0 *    RET      1

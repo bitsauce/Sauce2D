@@ -1,0 +1,61 @@
+Mainframe::Mainframe(int)
+
+Temps: 1, 2, 9, 16, 17
+
+Variables: 
+ -001: int teamId
+ 000: Mainframe this
+ 017: string {noname}
+ 009: string {noname}
+ 016: string {noname}
+
+
+- 12,6 -
+    0  17 *    VarDecl  0
+    0  17 *    SUSPEND
+    1  17 *    PshVPtr  v0
+    2  18 *    CALL     519           (Entity::Entity())
+- 11,6 -
+    4  17 *    SUSPEND
+    5  17 *    PSF      v17
+    6  18 *    STR      71         (l:28 s:"sprites/ca")
+    7  20 *    CALLSYS  33           (const string& _string_factory_(const int, const uint8&))
+    9  18 *    PshRPtr
+   10  19 *    PSF      v9
+   11  20 *    CALLSYS  35           (string::string(const string&in))
+   13  18 *    ObjInfo  v9, 1
+   13  18 *    VAR      v9
+   14  19 *    PSF      v16
+   15  20 *    GETREF   1
+   16  20 *    CALLSYS  355           (string appGetWorkPath(const string&in))
+   18  18 *    ObjInfo  v16, 1
+   18  18 *    PSF      v9
+   19  19 *    CALLSYS  36           (string::~string())
+   21  18 *    ObjInfo  v9, 0
+   21  18 *    PSF      v16
+   22  19 *    ALLOC    0x4f2d20, 35             (type:string)
+   25  17 *    PSF      v16
+   26  18 *    CALLSYS  36           (string::~string())
+   28  17 *    ObjInfo  v16, 0
+   28  17 *    VAR      v17
+   29  18 *    GETOBJ   0
+   30  18 *    CALL     801           (int gfxLoadImage(const string))
+   32  17 *    CpyRtoV4 v1
+   33  17 *    LoadThisR v44, 134217783
+   35  17 *    WRTV4    v1
+- 16,3 -
+   36  17 *    SUSPEND
+   37  17 *    LoadThisR v48, 134217783
+   39  17 *    WRTV4    v-1
+- 17,3 -
+   40  17 *    SUSPEND
+   41  17 *    PshC4    0x42800000          (i:1115684864, f:64)
+   43  18 *    PshC4    0x42000000          (i:1107296256, f:32)
+   45  19 *    PshVPtr  v0
+   46  20 *    ADDSi    v24, 134217783
+   48  20 *    RDSPtr
+   49  20 *    CALLSYS  145           (void vec2::set(const float, const float))
+- 18,3 -
+   51  17 *    SUSPEND
+   52  17 * 0:
+   52  17 *    RET      2

@@ -1,0 +1,35 @@
+void Controller::onDraw(DrawEvent)
+
+Temps: 1, 2, 3, 4, 5
+
+Variables: 
+ -001: DrawEvent e
+ 000: Controller this
+ 001: CTexture {noname}
+
+
+    0   5 *    VarDecl  0
+    0   5 *    PshVPtr  v0
+    1   6 *    CALLSYS  2           (void _builtin_object_::_beh_4_())
+- 54,3 -
+    3   5 *    SUSPEND
+    4   5 *    PshVPtr  v0
+    5   6 *    ADDSi    v20, 134217779
+    7   6 *    RDSPtr
+    8   7 *    RefCpyV  v1, 112361224
+   10   6 *    PopPtr
+   11   5 *    VAR      v1
+   12   6 *    PshC4    0x44160000          (i:1142292480, f:600)
+   14   7 *    PshC4    0x44480000          (i:1145569280, f:800)
+   16   8 *    PshC4    0x0          (i:0, f:0)
+   18   9 *    PshC4    0x0          (i:0, f:0)
+   20  10 *    PshGPtr  112592900
+   22  11 *    CHKREF
+   23  11 *    GETOBJ   5
+   24  11 *    CALLSYS  481           (void CGFX::drawTexture(const float, const float, const float, const float, CTexture@))
+- 55,3 -
+   26   5 *    SUSPEND
+   27   5 * 0:
+   27   5 *    FREE     v-1, 112583312
+   29   5 *    FREE     v0, 112665696
+   31   5 *    RET      2

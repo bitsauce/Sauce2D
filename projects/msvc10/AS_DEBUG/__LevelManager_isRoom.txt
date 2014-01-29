@@ -1,0 +1,63 @@
+bool LevelManager::isRoom(const uint, const uint)
+
+Temps: 1, 2, 3, 4
+
+Variables: 
+ -001: const uint x
+ -002: const uint y
+ 000: LevelManager this
+ 002: grid {noname}
+ 003: Room {noname}
+ 004: Room {noname}
+
+
+    0   4 *    VarDecl  0
+    0   4 *    VarDecl  1
+    0   4 *    PshVPtr  v0
+    1   5 *    CALLSYS  2           (void _builtin_object_::_beh_4_())
+- 181,3 -
+    3   4 *    SUSPEND
+    4   4 *    PshV4    v-2
+    5   5 *    PshV4    v-1
+    6   6 *    PshVPtr  v0
+    7   7 *    ADDSi    v24, 134217815
+    9   7 *    RDSPtr
+   10   7 *    CALLSYS  126           (bool grid::isIndex(uint, uint) const)
+   12   4 *    CpyRtoV4 v1
+   13   4 *    NOT      v1
+   14   4 *    CpyVtoR4 v1
+   15   4 *    JLowZ    +6              (d:23)
+- 181,31 -
+   17   4 *    SUSPEND
+   18   4 *    SetV1    v1, 0x0
+   20   4 * {
+   20   4 * }
+   20   4 *    CpyVtoR4 v1
+   21   4 *    JMP      +28              (d:51)
+- 182,3 -
+   23   4 * 1:
+   23   4 *    SUSPEND
+   24   4 *    PshV4    v-2
+   25   5 *    PshV4    v-1
+   26   6 *    PshVPtr  v0
+   27   7 *    ADDSi    v24, 134217815
+   29   7 *    RDSPtr
+   30   7 *    RefCpyV  v2, 153001912
+   32   7 *    CALLSYS  1441           (Room@& grid::at(uint, uint))
+   34   4 *    PshRPtr
+   35   5 *    RDSPtr
+   36   5 *    RefCpyV  v3, 152276032
+   38   5 *    PopPtr
+   39   4 *    ClrVPtr  v4
+   40   4 *    CmpPtr   v3, v4
+   42   4 *    TNZ
+   43   4 *    CpyRtoV4 v1
+   44   4 *    FREE     v3, 152276032
+   46   4 *    FREE     v4, 152276032
+   48   4 *    FREE     v2, 153001912
+   50   4 * {
+   50   4 * }
+   50   4 *    CpyVtoR4 v1
+   51   4 * 0:
+   51   4 *    FREE     v0, 152275144
+   53   4 *    RET      3

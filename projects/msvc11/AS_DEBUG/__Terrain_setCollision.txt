@@ -1,0 +1,486 @@
+void Terrain::setCollision(int, int, int)
+
+Temps: 1, 5, 6, 7, 8, 9, 10, 11, 12, 13
+
+Variables: 
+ -001: int x
+ -002: int y
+ -003: int frame
+ 002: int state
+ 003: int fixture
+ 004: float[] vertices
+ 004: float[] vertices
+ 004: float[] vertices
+ 004: float[] vertices
+ 000: Terrain this
+ 007: array {noname}
+ 013: grid {noname}
+
+
+    0  13 *    VarDecl  0
+    0  13 *    VarDecl  1
+    0  13 *    VarDecl  2
+    0  13 *    PshVPtr  v0
+    1  14 *    CALLSYS  2           (void _builtin_object_::_beh_5_())
+- 99,3 -
+    3  13 *    SUSPEND
+    4  13 *    PshV4    v-2
+    5  14 *    PshV4    v-1
+    6  15 *    PshVPtr  v0
+    7  16 *    ADDSi    v48, 134217763
+    9  16 *    RDSPtr
+   10  16 *    CALLSYS  128           (bool grid::isIndex(uint, uint) const)
+   12  13 *    CpyRtoV4 v1
+   13  13 *    NOT      v1
+   14  13 *    CpyVtoR4 v1
+   15  13 *    JLowZ    +3              (d:20)
+- 99,31 -
+   17  13 *    SUSPEND
+   18  13 * {
+   18  13 * }
+   18  13 *    JMP      +593              (d:613)
+- 100,3 -
+   20  13 * 1:
+   20  13 *    SUSPEND
+   21  13 *    VarDecl  3
+   21  13 *    PshV4    v-2
+   22  14 *    PshV4    v-1
+   23  15 *    PshVPtr  v0
+   24  16 *    CALLINTF 971           (int Terrain::tileState(const int, const int))
+   26  13 *    CpyRtoV4 v1
+   27  13 *    CpyVtoV4 v2, v1
+- 102,3 -
+   29  13 *    SUSPEND
+- 103,3 -
+   30  13 *    VarDecl  4
+   30  13 *    SUSPEND
+   31  13 *    CMPIi    v-3, 3
+   33  13 *    JNZ      +122              (d:157)
+- 106,4 -
+   35  13 * {
+   35  13 *    SUSPEND
+   36  13 *    VarDecl  5
+   36  13 *    PshC4    0x6          (i:6, f:8.40779e-045)
+   38  14 *    CALL     460           (float[]@ factstub(uint))
+   40  13 *    STOREOBJ v4
+- 107,4 -
+   41  13 *    SUSPEND
+   42  13 *    CpyVtoV4 v5, v-1
+   44  13 *    iTOf     v5
+   45  13 *    CpyGtoV4 v1, 98098368
+   47  13 *    MULf     v5, v5, v1
+   49  13 *    PshC4    0x0          (i:0, f:0)
+   51  14 *    PshVPtr  v4
+   52  15 *    CALLSYS  463           (float& array::opIndex(uint))
+   54  13 *    WRTV4    v5
+- 107,32 -
+   55  13 *    SUSPEND
+   56  13 *    CpyVtoV4 v5, v-2
+   58  13 *    iTOf     v5
+   59  13 *    CpyGtoV4 v1, 98098368
+   61  13 *    MULf     v5, v5, v1
+   63  13 *    PshC4    0x1          (i:1, f:1.4013e-045)
+   65  14 *    PshVPtr  v4
+   66  15 *    CALLSYS  463           (float& array::opIndex(uint))
+   68  13 *    WRTV4    v5
+- 108,4 -
+   69  13 *    SUSPEND
+   70  13 *    ADDIi    v5, v-1, 1
+   73  13 *    iTOf     v5
+   74  13 *    CpyGtoV4 v6, 98098368
+   76  13 *    MULf     v1, v5, v6
+   78  13 *    PshC4    0x2          (i:2, f:2.8026e-045)
+   80  14 *    PshVPtr  v4
+   81  15 *    CALLSYS  463           (float& array::opIndex(uint))
+   83  13 *    WRTV4    v1
+- 108,35 -
+   84  13 *    SUSPEND
+   85  13 *    ADDIi    v1, v-2, 1
+   88  13 *    iTOf     v1
+   89  13 *    CpyGtoV4 v6, 98098368
+   91  13 *    MULf     v5, v1, v6
+   93  13 *    PshC4    0x3          (i:3, f:4.2039e-045)
+   95  14 *    PshVPtr  v4
+   96  15 *    CALLSYS  463           (float& array::opIndex(uint))
+   98  13 *    WRTV4    v5
+- 109,4 -
+   99  13 *    SUSPEND
+  100  13 *    CpyVtoV4 v5, v-1
+  102  13 *    iTOf     v5
+  103  13 *    CpyGtoV4 v1, 98098368
+  105  13 *    MULf     v6, v5, v1
+  107  13 *    PshC4    0x4          (i:4, f:5.60519e-045)
+  109  14 *    PshVPtr  v4
+  110  15 *    CALLSYS  463           (float& array::opIndex(uint))
+  112  13 *    WRTV4    v6
+- 109,32 -
+  113  13 *    SUSPEND
+  114  13 *    ADDIi    v6, v-2, 1
+  117  13 *    iTOf     v6
+  118  13 *    CpyGtoV4 v1, 98098368
+  120  13 *    MULf     v5, v6, v1
+  122  13 *    PshC4    0x5          (i:5, f:7.00649e-045)
+  124  14 *    PshVPtr  v4
+  125  15 *    CALLSYS  463           (float& array::opIndex(uint))
+  127  13 *    WRTV4    v5
+- 110,4 -
+  128  13 *    SUSPEND
+  129  13 *    PshC4    0x0          (i:0, f:0)
+  131  14 *    PshC4    0x3          (i:3, f:4.2039e-045)
+  133  15 *    CALL     459           (float[]@ factstub())
+  135  15 *    STOREOBJ v7
+  136  15 *    PshVPtr  v4
+  137  16 *    PshVPtr  v7
+  138  17 *    CALLSYS  81           (T[]& array::opAssign(const T[]&in))
+  140  15 *    VAR      v7
+  141  16 *    LoadThisR v44, 134217763
+  143  16 *    RDR4     v1
+  144  16 *    PshV4    v1
+  145  17 *    GETOBJREF 1
+  146  17 *    CALLSYS  497           (int b2dCreateFixture(int, float[]&in, int, float))
+  148  13 *    CpyRtoV4 v8
+  149  13 *    FREE     v7, 50149608
+  151  13 *    CpyVtoV4 v3, v8
+  153  13 *    FREE     v4, 50149608
+  155  13 * }
+  155  13 *    JMP      +431              (d:588)
+- 111,9 -
+  157  13 * 2:
+  157  13 *    SUSPEND
+  158  13 *    CMPIi    v-3, 9
+  160  13 *    JNZ      +123              (d:285)
+- 114,4 -
+  162  13 * {
+  162  13 *    SUSPEND
+  163  13 *    VarDecl  6
+  163  13 *    PshC4    0x6          (i:6, f:8.40779e-045)
+  165  14 *    CALL     460           (float[]@ factstub(uint))
+  167  13 *    STOREOBJ v4
+- 115,4 -
+  168  13 *    SUSPEND
+  169  13 *    ADDIi    v5, v-1, 1
+  172  13 *    iTOf     v5
+  173  13 *    CpyGtoV4 v6, 98098368
+  175  13 *    MULf     v8, v5, v6
+  177  13 *    PshC4    0x0          (i:0, f:0)
+  179  14 *    PshVPtr  v4
+  180  15 *    CALLSYS  463           (float& array::opIndex(uint))
+  182  13 *    WRTV4    v8
+- 115,35 -
+  183  13 *    SUSPEND
+  184  13 *    CpyVtoV4 v8, v-2
+  186  13 *    iTOf     v8
+  187  13 *    CpyGtoV4 v5, 98098368
+  189  13 *    MULf     v6, v8, v5
+  191  13 *    PshC4    0x1          (i:1, f:1.4013e-045)
+  193  14 *    PshVPtr  v4
+  194  15 *    CALLSYS  463           (float& array::opIndex(uint))
+  196  13 *    WRTV4    v6
+- 116,4 -
+  197  13 *    SUSPEND
+  198  13 *    ADDIi    v6, v-1, 1
+  201  13 *    iTOf     v6
+  202  13 *    CpyGtoV4 v1, 98098368
+  204  13 *    MULf     v8, v6, v1
+  206  13 *    PshC4    0x2          (i:2, f:2.8026e-045)
+  208  14 *    PshVPtr  v4
+  209  15 *    CALLSYS  463           (float& array::opIndex(uint))
+  211  13 *    WRTV4    v8
+- 116,35 -
+  212  13 *    SUSPEND
+  213  13 *    ADDIi    v8, v-2, 1
+  216  13 *    iTOf     v8
+  217  13 *    CpyGtoV4 v5, 98098368
+  219  13 *    MULf     v6, v8, v5
+  221  13 *    PshC4    0x3          (i:3, f:4.2039e-045)
+  223  14 *    PshVPtr  v4
+  224  15 *    CALLSYS  463           (float& array::opIndex(uint))
+  226  13 *    WRTV4    v6
+- 117,4 -
+  227  13 *    SUSPEND
+  228  13 *    CpyVtoV4 v6, v-1
+  230  13 *    iTOf     v6
+  231  13 *    CpyGtoV4 v8, 98098368
+  233  13 *    MULf     v5, v6, v8
+  235  13 *    PshC4    0x4          (i:4, f:5.60519e-045)
+  237  14 *    PshVPtr  v4
+  238  15 *    CALLSYS  463           (float& array::opIndex(uint))
+  240  13 *    WRTV4    v5
+- 117,32 -
+  241  13 *    SUSPEND
+  242  13 *    ADDIi    v5, v-2, 1
+  245  13 *    iTOf     v5
+  246  13 *    CpyGtoV4 v1, 98098368
+  248  13 *    MULf     v6, v5, v1
+  250  13 *    PshC4    0x5          (i:5, f:7.00649e-045)
+  252  14 *    PshVPtr  v4
+  253  15 *    CALLSYS  463           (float& array::opIndex(uint))
+  255  13 *    WRTV4    v6
+- 118,4 -
+  256  13 *    SUSPEND
+  257  13 *    PshC4    0x0          (i:0, f:0)
+  259  14 *    PshC4    0x3          (i:3, f:4.2039e-045)
+  261  15 *    CALL     459           (float[]@ factstub())
+  263  15 *    STOREOBJ v7
+  264  15 *    PshVPtr  v4
+  265  16 *    PshVPtr  v7
+  266  17 *    CALLSYS  81           (T[]& array::opAssign(const T[]&in))
+  268  15 *    VAR      v7
+  269  16 *    LoadThisR v44, 134217763
+  271  16 *    RDR4     v1
+  272  16 *    PshV4    v1
+  273  17 *    GETOBJREF 1
+  274  17 *    CALLSYS  497           (int b2dCreateFixture(int, float[]&in, int, float))
+  276  13 *    CpyRtoV4 v8
+  277  13 *    FREE     v7, 50149608
+  279  13 *    CpyVtoV4 v3, v8
+  281  13 *    FREE     v4, 50149608
+  283  13 * }
+  283  13 *    JMP      +303              (d:588)
+- 119,9 -
+  285  13 * 4:
+  285  13 *    SUSPEND
+  286  13 *    CMPIi    v-3, 5
+  288  13 *    JNZ      +121              (d:411)
+- 122,4 -
+  290  13 * {
+  290  13 *    SUSPEND
+  291  13 *    VarDecl  7
+  291  13 *    PshC4    0x6          (i:6, f:8.40779e-045)
+  293  14 *    CALL     460           (float[]@ factstub(uint))
+  295  13 *    STOREOBJ v4
+- 123,4 -
+  296  13 *    SUSPEND
+  297  13 *    CpyVtoV4 v6, v-1
+  299  13 *    iTOf     v6
+  300  13 *    CpyGtoV4 v8, 98098368
+  302  13 *    MULf     v1, v6, v8
+  304  13 *    PshC4    0x0          (i:0, f:0)
+  306  14 *    PshVPtr  v4
+  307  15 *    CALLSYS  463           (float& array::opIndex(uint))
+  309  13 *    WRTV4    v1
+- 123,32 -
+  310  13 *    SUSPEND
+  311  13 *    CpyVtoV4 v1, v-2
+  313  13 *    iTOf     v1
+  314  13 *    CpyGtoV4 v6, 98098368
+  316  13 *    MULf     v8, v1, v6
+  318  13 *    PshC4    0x1          (i:1, f:1.4013e-045)
+  320  14 *    PshVPtr  v4
+  321  15 *    CALLSYS  463           (float& array::opIndex(uint))
+  323  13 *    WRTV4    v8
+- 124,4 -
+  324  13 *    SUSPEND
+  325  13 *    ADDIi    v8, v-1, 1
+  328  13 *    iTOf     v8
+  329  13 *    CpyGtoV4 v5, 98098368
+  331  13 *    MULf     v1, v8, v5
+  333  13 *    PshC4    0x2          (i:2, f:2.8026e-045)
+  335  14 *    PshVPtr  v4
+  336  15 *    CALLSYS  463           (float& array::opIndex(uint))
+  338  13 *    WRTV4    v1
+- 124,35 -
+  339  13 *    SUSPEND
+  340  13 *    CpyVtoV4 v1, v-2
+  342  13 *    iTOf     v1
+  343  13 *    CpyGtoV4 v8, 98098368
+  345  13 *    MULf     v5, v1, v8
+  347  13 *    PshC4    0x3          (i:3, f:4.2039e-045)
+  349  14 *    PshVPtr  v4
+  350  15 *    CALLSYS  463           (float& array::opIndex(uint))
+  352  13 *    WRTV4    v5
+- 125,4 -
+  353  13 *    SUSPEND
+  354  13 *    CpyVtoV4 v5, v-1
+  356  13 *    iTOf     v5
+  357  13 *    CpyGtoV4 v1, 98098368
+  359  13 *    MULf     v8, v5, v1
+  361  13 *    PshC4    0x4          (i:4, f:5.60519e-045)
+  363  14 *    PshVPtr  v4
+  364  15 *    CALLSYS  463           (float& array::opIndex(uint))
+  366  13 *    WRTV4    v8
+- 125,32 -
+  367  13 *    SUSPEND
+  368  13 *    ADDIi    v8, v-2, 1
+  371  13 *    iTOf     v8
+  372  13 *    CpyGtoV4 v6, 98098368
+  374  13 *    MULf     v5, v8, v6
+  376  13 *    PshC4    0x5          (i:5, f:7.00649e-045)
+  378  14 *    PshVPtr  v4
+  379  15 *    CALLSYS  463           (float& array::opIndex(uint))
+  381  13 *    WRTV4    v5
+- 126,4 -
+  382  13 *    SUSPEND
+  383  13 *    PshC4    0x0          (i:0, f:0)
+  385  14 *    PshC4    0x3          (i:3, f:4.2039e-045)
+  387  15 *    CALL     459           (float[]@ factstub())
+  389  15 *    STOREOBJ v7
+  390  15 *    PshVPtr  v4
+  391  16 *    PshVPtr  v7
+  392  17 *    CALLSYS  81           (T[]& array::opAssign(const T[]&in))
+  394  15 *    VAR      v7
+  395  16 *    LoadThisR v44, 134217763
+  397  16 *    RDR4     v6
+  398  16 *    PshV4    v6
+  399  17 *    GETOBJREF 1
+  400  17 *    CALLSYS  497           (int b2dCreateFixture(int, float[]&in, int, float))
+  402  13 *    CpyRtoV4 v1
+  403  13 *    FREE     v7, 50149608
+  405  13 *    CpyVtoV4 v3, v1
+  407  13 *    FREE     v4, 50149608
+  409  13 * }
+  409  13 *    JMP      +177              (d:588)
+- 127,9 -
+  411  13 * 6:
+  411  13 *    SUSPEND
+  412  13 *    CMPIi    v-3, 7
+  414  13 *    JNZ      +122              (d:538)
+- 130,4 -
+  416  13 * {
+  416  13 *    SUSPEND
+  417  13 *    VarDecl  8
+  417  13 *    PshC4    0x6          (i:6, f:8.40779e-045)
+  419  14 *    CALL     460           (float[]@ factstub(uint))
+  421  13 *    STOREOBJ v4
+- 131,4 -
+  422  13 *    SUSPEND
+  423  13 *    CpyVtoV4 v5, v-1
+  425  13 *    iTOf     v5
+  426  13 *    CpyGtoV4 v1, 98098368
+  428  13 *    MULf     v6, v5, v1
+  430  13 *    PshC4    0x0          (i:0, f:0)
+  432  14 *    PshVPtr  v4
+  433  15 *    CALLSYS  463           (float& array::opIndex(uint))
+  435  13 *    WRTV4    v6
+- 131,32 -
+  436  13 *    SUSPEND
+  437  13 *    CpyVtoV4 v6, v-2
+  439  13 *    iTOf     v6
+  440  13 *    CpyGtoV4 v5, 98098368
+  442  13 *    MULf     v1, v6, v5
+  444  13 *    PshC4    0x1          (i:1, f:1.4013e-045)
+  446  14 *    PshVPtr  v4
+  447  15 *    CALLSYS  463           (float& array::opIndex(uint))
+  449  13 *    WRTV4    v1
+- 132,4 -
+  450  13 *    SUSPEND
+  451  13 *    ADDIi    v1, v-1, 1
+  454  13 *    iTOf     v1
+  455  13 *    CpyGtoV4 v8, 98098368
+  457  13 *    MULf     v6, v1, v8
+  459  13 *    PshC4    0x2          (i:2, f:2.8026e-045)
+  461  14 *    PshVPtr  v4
+  462  15 *    CALLSYS  463           (float& array::opIndex(uint))
+  464  13 *    WRTV4    v6
+- 132,35 -
+  465  13 *    SUSPEND
+  466  13 *    CpyVtoV4 v6, v-2
+  468  13 *    iTOf     v6
+  469  13 *    CpyGtoV4 v1, 98098368
+  471  13 *    MULf     v8, v6, v1
+  473  13 *    PshC4    0x3          (i:3, f:4.2039e-045)
+  475  14 *    PshVPtr  v4
+  476  15 *    CALLSYS  463           (float& array::opIndex(uint))
+  478  13 *    WRTV4    v8
+- 133,4 -
+  479  13 *    SUSPEND
+  480  13 *    ADDIi    v8, v-1, 1
+  483  13 *    iTOf     v8
+  484  13 *    CpyGtoV4 v5, 98098368
+  486  13 *    MULf     v6, v8, v5
+  488  13 *    PshC4    0x4          (i:4, f:5.60519e-045)
+  490  14 *    PshVPtr  v4
+  491  15 *    CALLSYS  463           (float& array::opIndex(uint))
+  493  13 *    WRTV4    v6
+- 133,35 -
+  494  13 *    SUSPEND
+  495  13 *    ADDIi    v6, v-2, 1
+  498  13 *    iTOf     v6
+  499  13 *    CpyGtoV4 v1, 98098368
+  501  13 *    MULf     v8, v6, v1
+  503  13 *    PshC4    0x5          (i:5, f:7.00649e-045)
+  505  14 *    PshVPtr  v4
+  506  15 *    CALLSYS  463           (float& array::opIndex(uint))
+  508  13 *    WRTV4    v8
+- 134,4 -
+  509  13 *    SUSPEND
+  510  13 *    PshC4    0x0          (i:0, f:0)
+  512  14 *    PshC4    0x3          (i:3, f:4.2039e-045)
+  514  15 *    CALL     459           (float[]@ factstub())
+  516  15 *    STOREOBJ v7
+  517  15 *    PshVPtr  v4
+  518  16 *    PshVPtr  v7
+  519  17 *    CALLSYS  81           (T[]& array::opAssign(const T[]&in))
+  521  15 *    VAR      v7
+  522  16 *    LoadThisR v44, 134217763
+  524  16 *    RDR4     v1
+  525  16 *    PshV4    v1
+  526  17 *    GETOBJREF 1
+  527  17 *    CALLSYS  497           (int b2dCreateFixture(int, float[]&in, int, float))
+  529  13 *    CpyRtoV4 v5
+  530  13 *    FREE     v7, 50149608
+  532  13 *    CpyVtoV4 v3, v5
+  534  13 *    FREE     v4, 50149608
+  536  13 * }
+  536  13 *    JMP      +50              (d:588)
+- 137,4 -
+  538  13 * 8:
+  538  13 * {
+  538  13 *    SUSPEND
+  539  13 *    PshC4    0x0          (i:0, f:0)
+  541  14 *    PshC4    0x0          (i:0, f:0)
+  543  15 *    CpyVtoV4 v8, v-2
+  545  15 *    iTOf     v8
+  546  15 *    CpyGtoV4 v6, 98098368
+  548  15 *    MULf     v5, v8, v6
+  550  15 *    CpyGtoV4 v6, 98098368
+  552  15 *    SetV4    v8, 0x40000000          (i:1073741824, f:2)
+  554  15 *    DIVf     v1, v6, v8
+  556  15 *    ADDf     v8, v5, v1
+  558  15 *    PshV4    v8
+  559  16 *    CpyVtoV4 v5, v-1
+  561  16 *    iTOf     v5
+  562  16 *    CpyGtoV4 v1, 98098368
+  564  16 *    MULf     v6, v5, v1
+  566  16 *    CpyGtoV4 v1, 98098368
+  568  16 *    SetV4    v5, 0x40000000          (i:1073741824, f:2)
+  570  16 *    DIVf     v1, v1, v5
+  572  16 *    ADDf     v5, v6, v1
+  574  16 *    PshV4    v5
+  575  17 *    PshG4    98098368
+  577  18 *    PshG4    98098368
+  579  19 *    LoadThisR v44, 134217763
+  581  19 *    RDR4     v11
+  582  19 *    PshV4    v11
+  583  20 *    CALLSYS  495           (int b2dCreateFixtureBox(int, float, float, float, float, float, float))
+  585  13 *    CpyRtoV4 v12
+  586  13 *    CpyVtoV4 v3, v12
+- 141,3 -
+  588  13 * }
+  588  13 * 9:
+  588  13 * 7:
+  588  13 * 5:
+  588  13 * 3:
+  588  13 *    SUSPEND
+  589  13 *    PshC4    0x1          (i:1, f:1.4013e-045)
+  591  14 *    PshV4    v3
+  592  15 *    CALLSYS  501           (void b2dSetFixtureCategoryBits(int, int))
+- 142,3 -
+  594  13 *    SUSPEND
+  595  13 *    PshV4    v-2
+  596  14 *    PshV4    v-1
+  597  15 *    PshVPtr  v0
+  598  16 *    ADDSi    v48, 134217763
+  600  16 *    RDSPtr
+  601  16 *    RefCpyV  v13, 98193464
+  603  16 *    CALLSYS  985           (Tile& grid::at(uint, uint))
+  605  13 *    PshRPtr
+  606  14 *    ADDSi    v40, 134217745
+  608  14 *    PopRPtr
+  609  13 *    WRTV4    v3
+  610  13 *    FREE     v13, 98193464
+- 143,3 -
+  612  13 *    SUSPEND
+  613  13 * 0:
+  613  13 *    FREE     v0, 97816632
+  615  13 *    RET      4

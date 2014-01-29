@@ -1,0 +1,20 @@
+float todeg(float)
+
+Temps: 1, 2
+
+Variables: 
+ 000: float rad
+
+
+- 42,2 -
+    0   2 *    VarDecl  0
+    0   2 *    SUSPEND
+    1   2 *    SetV4    v2, 0x43340000          (i:1127481344, f:180)
+    3   2 *    CpyGtoV4 v1, 71908976
+    5   2 *    DIVf     v2, v2, v1
+    7   2 *    MULf     v1, v0, v2
+    9   2 * {
+    9   2 * }
+    9   2 *    CpyVtoR4 v1
+   10   2 * 0:
+   10   2 *    RET      1

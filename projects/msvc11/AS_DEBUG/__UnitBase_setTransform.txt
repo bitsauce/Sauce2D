@@ -1,0 +1,59 @@
+void UnitBase::setTransform(vec2, float = 0.0f)
+
+Temps: 1, 2, 3, 4
+
+Variables: 
+ -001: vec2 pos
+ -002: float ang
+ 000: UnitBase this
+
+
+    0   4 *    VarDecl  0
+    0   4 *    VarDecl  1
+    0   4 *    PshVPtr  v0
+    1   5 *    CALLSYS  2           (void _builtin_object_::_beh_5_())
+- 83,3 -
+    3   4 *    SUSPEND
+    4   4 *    PshV4    v-2
+    5   5 *    LoadRObjR v-1, v4, 67108877
+    8   5 *    RDR4     v3
+    9   5 *    PshVPtr  v0
+   10   6 *    ADDSi    v24, 134217750
+   12   6 *    RDSPtr
+   13   6 *    ADDSi    v4, 67108877
+   15   6 *    PopRPtr
+   16   5 *    RDR4     v1
+   17   5 *    SetV4    v2, 0x40000000          (i:1073741824, f:2)
+   19   5 *    DIVf     v1, v1, v2
+   21   5 *    ADDf     v2, v3, v1
+   23   5 *    PshV4    v2
+   24   6 *    LoadRObjR v-1, v0, 67108877
+   27   6 *    RDR4     v4
+   28   6 *    PshVPtr  v0
+   29   7 *    ADDSi    v24, 134217750
+   31   7 *    RDSPtr
+   32   7 *    ADDSi    v0, 67108877
+   34   7 *    PopRPtr
+   35   6 *    RDR4     v1
+   36   6 *    SetV4    v3, 0x40000000          (i:1073741824, f:2)
+   38   6 *    DIVf     v1, v1, v3
+   40   6 *    ADDf     v3, v4, v1
+   42   6 *    PshV4    v3
+   43   7 *    LoadThisR v80, 134217750
+   45   7 *    RDR4     v1
+   46   7 *    PshV4    v1
+   47   8 *    CALLSYS  543           (void b2dSetBodyTransform(int, float, float, float))
+- 84,3 -
+   49   4 *    SUSPEND
+   50   4 *    PshVPtr  v-1
+   51   5 *    PshVPtr  v0
+   52   6 *    ADDSi    v20, 134217750
+   54   6 *    RDSPtr
+   55   6 *    COPY     v2, 67108877
+   57   5 *    PopPtr
+- 85,3 -
+   58   4 *    SUSPEND
+   59   4 * 0:
+   59   4 *    FREE     v-1, 73368176
+   61   4 *    FREE     v0, 74300496
+   63   4 *    RET      3

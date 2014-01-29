@@ -1,0 +1,104 @@
+void Dog::onKeyPress(KeyEvent)
+
+Temps: 1, 2, 3, 4, 5, 6
+
+Variables: 
+ -001: KeyEvent e
+ 000: Dog this
+ 003: Color {noname}
+
+
+    0   6 *    VarDecl  0
+    0   6 *    PshVPtr  v0
+    1   7 *    CALLSYS  2           (void _builtin_object_::_beh_4_())
+- 13,3 -
+    3   6 *    SUSPEND
+    4   6 *    LoadRObjR v-1, v4, 67108911
+    7   6 *    RDR4     v1
+    8   6 *    CMPIi    v1, 82
+   10   6 *    JNZ      +26              (d:38)
+- 14,4 -
+   12   6 *    SUSPEND
+   13   6 *    SetV1    v2, 0xff
+   15   6 *    PshV4    v2
+   16   7 *    SetV1    v4, 0x0
+   18   7 *    PshV4    v4
+   19   8 *    SetV1    v5, 0x0
+   21   8 *    PshV4    v5
+   22   9 *    SetV1    v6, 0xff
+   24   9 *    PshV4    v6
+   25  10 *    PSF      v3
+   26  11 *    CALLSYS  225           (void Color::_beh_0_(uint8, uint8, uint8, uint8 arg3 = 255))
+   28   6 *    ObjInfo  v3, 1
+   28   6 *    PSF      v3
+   29   7 *    PshVPtr  v0
+   30   8 *    ADDSi    v20, 134217780
+   32   8 *    RDSPtr
+   33   8 *    COPY     v1, 67108882
+   35   7 *    ObjInfo  v3, 0
+   35   7 *    PopPtr
+   36   6 *    JMP      +68              (d:106)
+- 15,8 -
+   38   6 * 1:
+   38   6 *    SUSPEND
+   39   6 *    LoadRObjR v-1, v4, 67108911
+   42   6 *    RDR4     v1
+   43   6 *    CMPIi    v1, 71
+   45   6 *    JNZ      +26              (d:73)
+- 16,4 -
+   47   6 *    SUSPEND
+   48   6 *    SetV1    v6, 0xff
+   50   6 *    PshV4    v6
+   51   7 *    SetV1    v2, 0x0
+   53   7 *    PshV4    v2
+   54   8 *    SetV1    v5, 0xff
+   56   8 *    PshV4    v5
+   57   9 *    SetV1    v4, 0x0
+   59   9 *    PshV4    v4
+   60  10 *    PSF      v3
+   61  11 *    CALLSYS  225           (void Color::_beh_0_(uint8, uint8, uint8, uint8 arg3 = 255))
+   63   6 *    ObjInfo  v3, 1
+   63   6 *    PSF      v3
+   64   7 *    PshVPtr  v0
+   65   8 *    ADDSi    v20, 134217780
+   67   8 *    RDSPtr
+   68   8 *    COPY     v1, 67108882
+   70   7 *    ObjInfo  v3, 0
+   70   7 *    PopPtr
+   71   6 *    JMP      +33              (d:106)
+- 17,8 -
+   73   6 * 3:
+   73   6 *    SUSPEND
+   74   6 *    LoadRObjR v-1, v4, 67108911
+   77   6 *    RDR4     v1
+   78   6 *    CMPIi    v1, 66
+   80   6 *    JNZ      +24              (d:106)
+- 18,4 -
+   82   6 *    SUSPEND
+   83   6 *    SetV1    v4, 0xff
+   85   6 *    PshV4    v4
+   86   7 *    SetV1    v6, 0xff
+   88   7 *    PshV4    v6
+   89   8 *    SetV1    v5, 0x0
+   91   8 *    PshV4    v5
+   92   9 *    SetV1    v2, 0x0
+   94   9 *    PshV4    v2
+   95  10 *    PSF      v3
+   96  11 *    CALLSYS  225           (void Color::_beh_0_(uint8, uint8, uint8, uint8 arg3 = 255))
+   98   6 *    ObjInfo  v3, 1
+   98   6 *    PSF      v3
+   99   7 *    PshVPtr  v0
+  100   8 *    ADDSi    v20, 134217780
+  102   8 *    RDSPtr
+  103   8 *    COPY     v1, 67108882
+  105   7 *    ObjInfo  v3, 0
+  105   7 *    PopPtr
+- 19,3 -
+  106   6 * 5:
+  106   6 * 4:
+  106   6 * 2:
+  106   6 *    SUSPEND
+  107   6 * 0:
+  107   6 *    FREE     v-1, 85135320
+  109   6 *    FREE     v0, 85217520
+  111   6 *    RET      2

@@ -1,0 +1,34 @@
+void LevelManager::onPack(PackEvent)
+
+Temps: 8
+
+Variables: 
+ -001: PackEvent e
+ 000: LevelManager this
+ 008: string {noname}
+
+
+    0   8 *    VarDecl  0
+    0   8 *    PshVPtr  v0
+    1   9 *    CALLSYS  2           (void _builtin_object_::_beh_4_())
+- 261,3 -
+    3   8 *    SUSPEND
+    4   8 *    PshVPtr  v0
+    5   9 *    ADDSi    v36, 134217815
+    7   9 *    RDSPtr
+    8   9 *    PSF      v8
+    9  10 *    CALLSYS  34           (void string::_beh_0_(const string&in))
+   11   8 *    ObjInfo  v8, 1
+   11   8 *    VAR      v8
+   12   9 *    PshVPtr  v-1
+   13  10 *    GETREF   1
+   14  10 *    CALLSYS  575           (void PackEvent::writeString(const string&in))
+   16   8 *    PSF      v8
+   17   9 *    CALLSYS  35           (void string::_beh_1_())
+- 262,3 -
+   19   8 *    ObjInfo  v8, 0
+   19   8 *    SUSPEND
+   20   8 * 0:
+   20   8 *    FREE     v-1, 112324888
+   22   8 *    FREE     v0, 152275144
+   24   8 *    RET      2

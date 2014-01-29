@@ -1,0 +1,50 @@
+void Sun::update()
+
+Temps: 1, 2, 3
+
+Variables: 
+ 000: Sun this
+
+
+    0   3 *    PshVPtr  v0
+    1   4 *    CALLSYS  2           (void _builtin_object_::_beh_5_())
+- 64,3 -
+    3   3 *    SUSPEND
+    4   3 *    PshGPtr  74560968
+    6   4 *    ADDSi    v4, 67108877
+    8   4 *    PopRPtr
+    9   3 *    RDR4     v1
+   10   3 *    PshVPtr  v0
+   11   4 *    ADDSi    v20, 134217787
+   13   4 *    RDSPtr
+   14   4 *    ADDSi    v4, 67108877
+   16   4 *    PopRPtr
+   17   3 *    RDR4     v2
+   18   3 *    SUBf     v1, v1, v2
+   20   3 *    PshGPtr  74560968
+   22   4 *    ADDSi    v4, 67108877
+   24   4 *    PopRPtr
+   25   3 *    RDR4     v3
+   26   3 *    DIVf     v2, v1, v3
+   28   3 *    PshV4    v2
+   29   4 *    PshVPtr  v0
+   30   5 *    ADDSi    v20, 134217787
+   32   5 *    RDSPtr
+   33   5 *    ADDSi    v0, 67108877
+   35   5 *    PopRPtr
+   36   4 *    RDR4     v3
+   37   4 *    PshGPtr  74560968
+   39   5 *    ADDSi    v0, 67108877
+   41   5 *    PopRPtr
+   42   4 *    RDR4     v1
+   43   4 *    DIVf     v3, v3, v1
+   45   4 *    PshV4    v3
+   46   5 *    PshVPtr  v0
+   47   6 *    ADDSi    v68, 134217787
+   49   6 *    RDSPtr
+   50   6 *    CALLSYS  145           (void vec2::set(const float, const float))
+- 65,3 -
+   52   3 *    SUSPEND
+   53   3 * 0:
+   53   3 *    FREE     v0, 74311672
+   55   3 *    RET      1

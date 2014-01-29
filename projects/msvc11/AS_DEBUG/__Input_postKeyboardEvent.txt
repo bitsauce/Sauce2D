@@ -1,0 +1,64 @@
+void Input::postKeyboardEvent(string)
+
+Temps: 2, 3, 4, 5
+
+Variables: 
+ -001: string c
+ 001: uint i
+ 000: Input this
+ 003: array {noname}
+ 004: _builtin_function_ {noname}
+ 005: string {noname}
+
+
+    0   5 *    VarDecl  0
+    0   5 *    PshVPtr  v0
+    1   6 *    CALLSYS  2           (void _builtin_object_::_beh_5_())
+- 37,7 -
+    3   5 *    SUSPEND
+    4   5 *    VarDecl  1
+    4   5 *    SetV4    v1, 0x0          (i:0, f:0)
+    6   5 *    JMP      +30              (d:38)
+    8   5 * 4:
+    8   5 *    SUSPEND
+- 38,4 -
+    9   5 *    SUSPEND
+   10   5 *    PSF      v5
+   11   6 *    PshVPtr  v-1
+   12   7 *    ALLOC    0x45ebf60, 35             (type:string)
+   15   5 *    VAR      v5
+   16   6 *    PshV4    v1
+   17   7 *    PshVPtr  v0
+   18   8 *    ADDSi    v48, 134217763
+   20   8 *    RDSPtr
+   21   8 *    RefCpyV  v3, 74697176
+   23   8 *    CALLSYS  1074           (KeyEvent@& array::opIndex(uint))
+   25   6 *    PshRPtr
+   26   7 *    RDSPtr
+   27   7 *    RefCpyV  v4, 73289060
+   29   7 *    PopPtr
+   30   6 *    GETOBJ   0
+   31   6 *    CallPtr  v4
+   32   5 *    FREE     v3, 74697176
+   34   5 *    FREE     v4, 73289060
+- 37,41 -
+   36   5 * 3:
+   36   5 *    SUSPEND
+   37   5 *    IncVi    v1
+- 37,19 -
+   38   5 * 1:
+   38   5 *    SUSPEND
+   39   5 *    PshVPtr  v0
+   40   6 *    ADDSi    v48, 134217763
+   42   6 *    RDSPtr
+   43   6 *    CALLSYS  88           (uint array::size() const)
+   45   5 *    CpyRtoV4 v2
+   46   5 *    CMPu     v1, v2
+   48   5 *    JS       -42              (d:8)
+- 39,3 -
+   50   5 * 2:
+   50   5 *    SUSPEND
+   51   5 * 0:
+   51   5 *    FREE     v-1, 73318240
+   53   5 *    FREE     v0, 74272224
+   55   5 *    RET      2

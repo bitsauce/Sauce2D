@@ -1,0 +1,238 @@
+void Terrain::draw()
+
+Temps: 2, 3, 6, 9, 14, 15, 16, 17, 18, 19, 20, 21
+
+Variables: 
+ 001: float cw
+ 004: float ch
+ 005: int x0
+ 007: int y0
+ 008: int x1
+ 010: int y1
+ 011: int y
+ 012: int x
+ 013: Tile@ tile
+ 000: Terrain this
+ 014: grid {noname}
+ 015: Tile {noname}
+
+
+    0  21 *    PshVPtr  v0
+    1  22 *    CALLSYS  2           (void _builtin_object_::_beh_4_())
+- 273,3 -
+    3  21 *    SUSPEND
+    4  21 *    VarDecl  0
+    4  21 *    PshGPtr  104387704
+    6  22 *    ADDSi    v20, 134217751
+    8  22 *    RDSPtr
+    9  22 *    ADDSi    v0, 67108877
+   11  22 *    PopRPtr
+   12  21 *    RDR4     v2
+   13  21 *    SetV4    v3, 0x40000000          (i:1073741824, f:2)
+   15  21 *    DIVf     v1, v2, v3
+- 274,3 -
+   17  21 *    SUSPEND
+   18  21 *    VarDecl  1
+   18  21 *    PshGPtr  104387704
+   20  22 *    ADDSi    v20, 134217751
+   22  22 *    RDSPtr
+   23  22 *    ADDSi    v4, 67108877
+   25  22 *    PopRPtr
+   26  21 *    RDR4     v3
+   27  21 *    SetV4    v2, 0x40000000          (i:1073741824, f:2)
+   29  21 *    DIVf     v4, v3, v2
+- 275,3 -
+   31  21 *    SUSPEND
+   32  21 *    VarDecl  2
+   32  21 *    PshGPtr  104384072
+   34  22 *    ADDSi    v0, 67108877
+   36  22 *    PopRPtr
+   37  21 *    RDR4     v2
+   38  21 *    SUBf     v3, v2, v1
+   40  21 *    CpyGtoV4 v6, 104385776
+   42  21 *    DIVf     v2, v3, v6
+   44  21 *    PshV4    v2
+   45  22 *    CALLSYS  250           (int floor(const float))
+   47  21 *    CpyRtoV4 v6
+   48  21 *    CpyVtoV4 v5, v6
+- 276,3 -
+   50  21 *    SUSPEND
+   51  21 *    VarDecl  3
+   51  21 *    PshGPtr  104384072
+   53  22 *    ADDSi    v4, 67108877
+   55  22 *    PopRPtr
+   56  21 *    RDR4     v3
+   57  21 *    SUBf     v6, v3, v4
+   59  21 *    CpyGtoV4 v2, 104385776
+   61  21 *    DIVf     v3, v6, v2
+   63  21 *    PshV4    v3
+   64  22 *    CALLSYS  250           (int floor(const float))
+   66  21 *    CpyRtoV4 v2
+   67  21 *    CpyVtoV4 v7, v2
+- 277,3 -
+   69  21 *    SUSPEND
+   70  21 *    VarDecl  4
+   70  21 *    PshGPtr  104384072
+   72  22 *    ADDSi    v0, 67108877
+   74  22 *    PopRPtr
+   75  21 *    RDR4     v6
+   76  21 *    ADDf     v2, v6, v1
+   78  21 *    CpyGtoV4 v3, 104385776
+   80  21 *    DIVf     v6, v2, v3
+   82  21 *    PshV4    v6
+   83  22 *    CALLSYS  250           (int floor(const float))
+   85  21 *    CpyRtoV4 v3
+   86  21 *    ADDIi    v8, v3, 1
+- 278,3 -
+   89  21 *    SUSPEND
+   90  21 *    VarDecl  5
+   90  21 *    PshGPtr  104384072
+   92  22 *    ADDSi    v4, 67108877
+   94  22 *    PopRPtr
+   95  21 *    RDR4     v9
+   96  21 *    ADDf     v2, v9, v4
+   98  21 *    CpyGtoV4 v6, 104385776
+  100  21 *    DIVf     v9, v2, v6
+  102  21 *    PshV4    v9
+  103  22 *    CALLSYS  250           (int floor(const float))
+  105  21 *    CpyRtoV4 v6
+  106  21 *    ADDIi    v10, v6, 1
+- 281,7 -
+  109  21 *    SUSPEND
+  110  21 *    VarDecl  6
+  110  21 *    CpyVtoV4 v11, v7
+  112  21 *    JMP      +138              (d:252)
+  114  21 * 4:
+  114  21 *    SUSPEND
+- 283,8 -
+  115  21 * {
+  115  21 *    SUSPEND
+  116  21 *    VarDecl  7
+  116  21 *    CpyVtoV4 v12, v5
+  118  21 *    JMP      +125              (d:245)
+  120  21 * 8:
+  120  21 *    SUSPEND
+- 286,5 -
+  121  21 * {
+  121  21 *    SUSPEND
+  122  21 *    PshV4    v11
+  123  22 *    PshV4    v12
+  124  23 *    PshVPtr  v0
+  125  24 *    ADDSi    v32, 134217749
+  127  24 *    RDSPtr
+  128  24 *    CALLSYS  128           (bool grid::isIndex(uint, uint) const)
+  130  21 *    CpyRtoV4 v3
+  131  21 *    NOT      v3
+  132  21 *    CpyVtoR4 v3
+  133  21 *    JLowZ    +3              (d:138)
+- 287,6 -
+  135  21 *    SUSPEND
+  136  21 * {
+  136  21 * }
+  136  21 *    JMP      +105              (d:243)
+- 290,5 -
+  138  21 * 9:
+  138  21 *    SUSPEND
+  139  21 *    VarDecl  8
+  139  21 *    PshV4    v11
+  140  22 *    PshV4    v12
+  141  23 *    PshVPtr  v0
+  142  24 *    ADDSi    v32, 134217749
+  144  24 *    RDSPtr
+  145  24 *    RefCpyV  v14, 104350960
+  147  24 *    CALLSYS  398           (Tile& grid::at(uint, uint))
+  149  21 *    PshRPtr
+  150  22 *    RefCpyV  v15, 104324816
+  152  22 *    PopPtr
+  153  21 *    PshVPtr  v15
+  154  22 *    RefCpyV  v13, 104324816
+  156  22 *    FREE     v15, 104324816
+  158  22 *    PopPtr
+  159  21 *    FREE     v14, 104350960
+- 291,5 -
+  161  21 *    SUSPEND
+  162  21 *    SetV1    v2, 0xff
+  164  21 *    PshV4    v2
+  165  22 *    SetV1    v9, 0xff
+  167  22 *    PshV4    v9
+  168  23 *    SetV1    v6, 0xff
+  170  23 *    PshV4    v6
+  171  24 *    SetV1    v3, 0xff
+  173  24 *    PshV4    v3
+  174  25 *    CALL     436           (uint rgb(const uint8, const uint8, const uint8, const uint8 arg3 = 255))
+  176  21 *    CpyRtoV4 v16
+  177  21 *    PshV4    v16
+  178  22 *    CALLSYS  346           (void gfxSetDrawColor(const uint))
+- 292,5 -
+  180  21 *    SUSPEND
+  181  21 *    LoadRObjR v13, v20, 134217744
+  184  21 *    RDR4     v2
+  185  21 *    CMPIi    v2, -1
+  187  21 *    JZ       +52              (d:241)
+- 293,6 -
+  189  21 * {
+  189  21 *    SUSPEND
+  190  21 *    LoadRObjR v13, v20, 134217744
+  193  21 *    RDR4     v16
+  194  21 *    PshV4    v16
+  195  22 *    CALLSYS  344           (void gfxSetDrawImage(const uint))
+- 294,6 -
+  197  21 *    SUSPEND
+  198  21 *    PshC4    0x7          (i:7, f:9.80909e-045)
+  200  22 *    CALLSYS  337           (void gfxBeginPoly(const uint))
+- 295,6 -
+  202  21 *    SUSPEND
+  203  21 *    PshC4    0x3f800000          (i:1065353216, f:1)
+  205  22 *    PshC4    0x3f800000          (i:1065353216, f:1)
+  207  23 *    PshC4    0x0          (i:0, f:0)
+  209  24 *    PshC4    0x0          (i:0, f:0)
+  211  25 *    PshG4    104385776
+  213  26 *    PshG4    104385776
+  215  27 *    CpyVtoV4 v3, v11
+  217  27 *    iTOf     v3
+  218  27 *    CpyGtoV4 v16, 104385776
+  220  27 *    MULf     v2, v3, v16
+  222  27 *    PshV4    v2
+  223  28 *    CpyVtoV4 v3, v12
+  225  28 *    iTOf     v3
+  226  28 *    CpyGtoV4 v16, 104385776
+  228  28 *    MULf     v6, v3, v16
+  230  28 *    PshV4    v6
+  231  29 *    CALL     435           (void gfxDrawImageQuad(const float, const float, const float, const float, const float, const float, const float, const float))
+- 296,6 -
+  233  21 *    SUSPEND
+  234  21 *    CALLSYS  339           (void gfxEndPoly())
+- 297,6 -
+  236  21 *    SUSPEND
+  237  21 *    PshC4    0x0          (i:0, f:0)
+  239  22 *    CALLSYS  344           (void gfxSetDrawImage(const uint))
+  241  21 * }
+  241  21 * 10:
+  241  21 *    FREE     v13, 104324816
+- 283,28 -
+  243  21 * }
+  243  21 * 7:
+  243  21 *    SUSPEND
+  244  21 *    IncVi    v12
+- 283,20 -
+  245  21 * 5:
+  245  21 *    SUSPEND
+  246  21 *    CMPi     v12, v8
+  248  21 *    JS       -130              (d:120)
+- 281,27 -
+  250  21 * 6:
+  250  21 * }
+  250  21 * 3:
+  250  21 *    SUSPEND
+  251  21 *    IncVi    v11
+- 281,19 -
+  252  21 * 1:
+  252  21 *    SUSPEND
+  253  21 *    CMPi     v11, v10
+  255  21 *    JS       -143              (d:114)
+- 301,3 -
+  257  21 * 2:
+  257  21 *    SUSPEND
+  258  21 * 0:
+  258  21 *    FREE     v0, 104324232
+  260  21 *    RET      1

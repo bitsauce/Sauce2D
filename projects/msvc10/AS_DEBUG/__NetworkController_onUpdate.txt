@@ -1,0 +1,179 @@
+void NetworkController::onUpdate(UpdateEvent)
+
+Temps: 1, 2, 3, 6, 7, 8, 9, 11
+
+Variables: 
+ -001: UpdateEvent e
+ 004: Bullet b
+ 010: Ship s
+ 000: NetworkController this
+ 007: Vector2 {noname}
+ 008: Bullet {noname}
+ 011: Ship {noname}
+ 006: Vector2 {noname}
+
+
+    0  11 *    VarDecl  0
+    0  11 *    PshVPtr  v0
+    1  12 *    CALLSYS  2           (void _builtin_object_::_beh_4_())
+- 305,3 -
+    3  11 *    SUSPEND
+    4  11 *    LoadThisR v20, 134217780
+    6  11 *    RDR1     v1
+    7  11 *    CpyVtoR4 v1
+    8  11 *    JLowZ    +4              (d:14)
+   10  11 *    SetV1    v1, 0x1
+   12  11 *    JMP      +5              (d:19)
+   14  11 * 2:
+   14  11 *    LoadThisR v21, 134217780
+   16  11 *    RDR1     v2
+   17  11 *    CpyVtoV4 v1, v2
+   19  11 * 3:
+   19  11 *    CpyVtoR4 v1
+   20  11 *    JLowNZ   +4              (d:26)
+   22  11 *    SetV4    v3, 0x0          (i:0, f:0)
+   24  11 *    JMP      +9              (d:35)
+   26  11 * 4:
+   26  11 *    LoadThisR v24, 134217780
+   28  11 *    RDR4     v2
+   29  11 *    CMPIf    v2, 3.000000
+   31  11 *    TNS
+   32  11 *    CpyRtoV4 v2
+   33  11 *    CpyVtoV4 v3, v2
+   35  11 * 5:
+   35  11 *    CpyVtoR4 v3
+   36  11 *    JLowNZ   +4              (d:42)
+   38  11 *    SetV4    v1, 0x0          (i:0, f:0)
+   40  11 *    JMP      +7              (d:49)
+   42  11 * 6:
+   42  11 *    PshC4    0x1          (i:1, f:1.4013e-045)
+   44  12 *    CALLSYS  551           (bool getKeyState(int))
+   46  11 *    CpyRtoV4 v2
+   47  11 *    CpyVtoV4 v1, v2
+   49  11 * 7:
+   49  11 *    CpyVtoR4 v1
+   50  11 *    JLowZ    +45              (d:97)
+- 307,4 -
+   52  11 * {
+   52  11 *    SUSPEND
+   53  11 *    VarDecl  1
+   53  11 *    CALL     623           (Bullet@ Bullet())
+   55  11 *    STOREOBJ v4
+- 308,4 -
+   56  11 *    SUSPEND
+   57  11 *    PSF      v7
+   58  12 *    PSF      v6
+   59  13 *    PshGPtr  113432016
+   61  14 *    CHKREF
+   62  14 *    CALLSYS  417           (Vector2 CX2DApp::cursorGamePos() const)
+   64  12 *    ObjInfo  v6, 1
+   64  12 *    PSF      v6
+   65  13 *    ALLOC    0x6bdcd88, 131             (type:Vector2)
+   68  11 *    ObjInfo  v6, 0
+   68  11 *    VAR      v7
+   69  12 *    PshVPtr  v4
+   70  13 *    GETOBJ   1
+   71  13 *    CALLINTF 655           (void SceneObject::setPos(const Vector2))
+- 309,4 -
+   73  11 *    SUSPEND
+   74  11 *    TYPEID   0x48000032          'Bullet@'
+   76  12 *    PshVPtr  v4
+   77  13 *    RefCpyV  v8, 113546992
+   79  13 *    PopPtr
+   80  12 *    VAR      v8
+   81  13 *    PshGPtr  113434048
+   83  14 *    CHKREF
+   84  14 *    GETREF   1
+   85  14 *    CALLSYS  302           (void CClient::addClientObject(?&in))
+   87  11 *    FREE     v8, 113546992
+- 310,4 -
+   89  11 *    SUSPEND
+   90  11 *    SetV4    v3, 0x0          (i:0, f:0)
+   92  11 *    LoadThisR v24, 134217780
+   94  11 *    WRTV4    v3
+   95  11 *    FREE     v4, 113546992
+- 314,3 -
+   97  11 * }
+   97  11 * 1:
+   97  11 *    SUSPEND
+   98  11 *    LoadThisR v21, 134217780
+  100  11 *    RDR1     v9
+  101  11 *    CpyVtoR4 v9
+  102  11 *    JLowNZ   +4              (d:108)
+  104  11 *    SetV4    v1, 0x0          (i:0, f:0)
+  106  11 *    JMP      +9              (d:117)
+  108  11 * 9:
+  108  11 *    LoadThisR v24, 134217780
+  110  11 *    RDR4     v2
+  111  11 *    CMPIf    v2, 3.000000
+  113  11 *    TNS
+  114  11 *    CpyRtoV4 v3
+  115  11 *    CpyVtoV4 v1, v3
+  117  11 * 10:
+  117  11 *    CpyVtoR4 v1
+  118  11 *    JLowNZ   +4              (d:124)
+  120  11 *    SetV4    v2, 0x0          (i:0, f:0)
+  122  11 *    JMP      +7              (d:131)
+  124  11 * 11:
+  124  11 *    PshC4    0x2          (i:2, f:2.8026e-045)
+  126  12 *    CALLSYS  551           (bool getKeyState(int))
+  128  11 *    CpyRtoV4 v3
+  129  11 *    CpyVtoV4 v2, v3
+  131  11 * 12:
+  131  11 *    CpyVtoR4 v2
+  132  11 *    JLowZ    +45              (d:179)
+- 316,4 -
+  134  11 * {
+  134  11 *    SUSPEND
+  135  11 *    VarDecl  2
+  135  11 *    CALL     615           (Ship@ Ship())
+  137  11 *    STOREOBJ v10
+- 317,4 -
+  138  11 *    SUSPEND
+  139  11 *    PSF      v7
+  140  12 *    PSF      v6
+  141  13 *    PshGPtr  113432016
+  143  14 *    CHKREF
+  144  14 *    CALLSYS  417           (Vector2 CX2DApp::cursorGamePos() const)
+  146  12 *    ObjInfo  v6, 1
+  146  12 *    PSF      v6
+  147  13 *    ALLOC    0x6bdcd88, 131             (type:Vector2)
+  150  11 *    ObjInfo  v6, 0
+  150  11 *    VAR      v7
+  151  12 *    PshVPtr  v10
+  152  13 *    GETOBJ   1
+  153  13 *    CALLINTF 655           (void SceneObject::setPos(const Vector2))
+- 318,4 -
+  155  11 *    SUSPEND
+  156  11 *    TYPEID   0x48000030          'Ship@'
+  158  12 *    PshVPtr  v10
+  159  13 *    RefCpyV  v11, 113546488
+  161  13 *    PopPtr
+  162  12 *    VAR      v11
+  163  13 *    PshGPtr  113434048
+  165  14 *    CHKREF
+  166  14 *    GETREF   1
+  167  14 *    CALLSYS  302           (void CClient::addClientObject(?&in))
+  169  11 *    FREE     v11, 113546488
+- 319,4 -
+  171  11 *    SUSPEND
+  172  11 *    SetV4    v1, 0x0          (i:0, f:0)
+  174  11 *    LoadThisR v24, 134217780
+  176  11 *    WRTV4    v1
+  177  11 *    FREE     v10, 113546488
+- 323,3 -
+  179  11 * }
+  179  11 * 8:
+  179  11 *    SUSPEND
+  180  11 *    LoadRObjR v-1, v4, 67108903
+  183  11 *    RDR4     v3
+  184  11 *    LoadThisR v24, 134217780
+  186  11 *    RDR4     v2
+  187  11 *    ADDf     v1, v2, v3
+  189  11 *    WRTV4    v1
+- 324,3 -
+  190  11 *    SUSPEND
+  191  11 * 0:
+  191  11 *    FREE     v-1, 113421480
+  193  11 *    FREE     v0, 113548336
+  195  11 *    RET      2

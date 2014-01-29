@@ -1,0 +1,25 @@
+void initCanvas()
+
+Temps: 1
+
+Variables: 
+ 001: UiElement {noname}
+
+
+- 31,2 -
+    0   1 *    SUSPEND
+    1   1 *    FREE     v1, 74282504
+    3   1 *    VAR      v1
+    4   2 *    GETOBJ   0
+    5   2 *    CALL     634           (UiElement@ UiElement(UiElement@))
+    7   1 *    STOREOBJ v1
+    8   1 *    VAR      v1
+    9   2 *    PGA      74596608
+   11   3 *    GETOBJREF 1
+   12   3 *    REFCPY   0x46d7608
+   14   2 *    FREE     v1, 74282504
+   16   2 *    PopPtr
+- 32,2 -
+   17   1 *    SUSPEND
+   18   1 * 0:
+   18   1 *    RET      0

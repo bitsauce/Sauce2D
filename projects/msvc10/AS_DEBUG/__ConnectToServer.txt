@@ -1,0 +1,47 @@
+void ConnectToServer(string)
+
+Temps: 8, 16, 17, 18
+
+Variables: 
+ 000: string ip
+ 018: string {noname}
+ 008: string {noname}
+ 016: string {noname}
+
+
+- 33,2 -
+    0  18 *    VarDecl  0
+    0  18 *    SUSPEND
+    1  18 *    SetV2    v17, 0x1402
+    3  18 *    PshV4    v17
+    4  19 *    PSF      v18
+    5  20 *    STR      219         (l:5 s:":5120")
+    6  22 *    CALLSYS  32           (const string& _string_factory_(const int, const uint8&))
+    8  20 *    PshRPtr
+    9  21 *    PSF      v8
+   10  22 *    CALLSYS  34           (void string::_beh_0_(const string&in))
+   12  20 *    ObjInfo  v8, 1
+   12  20 *    VAR      v8
+   13  21 *    PSF      v16
+   14  22 *    PshVPtr  v0
+   15  23 *    GETREF   2
+   16  23 *    CALLSYS  40           (string string::opAdd(const string&in) const)
+   18  20 *    ObjInfo  v16, 1
+   18  20 *    PSF      v8
+   19  21 *    CALLSYS  35           (void string::_beh_1_())
+   21  20 *    ObjInfo  v8, 0
+   21  20 *    PSF      v16
+   22  21 *    ALLOC    0x314cb48, 34             (type:string)
+   25  19 *    PSF      v16
+   26  20 *    CALLSYS  35           (void string::_beh_1_())
+   28  19 *    ObjInfo  v16, 0
+   28  19 *    VAR      v18
+   29  20 *    PshGPtr  112337016
+   31  21 *    CHKREF
+   32  21 *    GETOBJ   1
+   33  21 *    CALLSYS  312           (void CClient::connect(const string, const uint16))
+- 34,2 -
+   35  18 *    SUSPEND
+   36  18 * 0:
+   36  18 *    FREE     v0, 51694408
+   38  18 *    RET      1

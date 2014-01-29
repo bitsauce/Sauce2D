@@ -1,0 +1,150 @@
+﻿  array.cpp
+  assetloader.cpp
+d:\x2d game engine\include\x2d\math/rectPacker.h(49): warning C4251: 'RectPacker::Result::rectList' : class 'std::vector<_Ty>' needs to have dll-interface to be used by clients of struct 'RectPacker::Result'
+          with
+          [
+              _Ty=RectPacker::Rect
+          ]
+d:\x2d game engine\include\x2d\math/rectPacker.h(57): warning C4251: 'RectPacker::rectList' : class 'std::vector<_Ty>' needs to have dll-interface to be used by clients of class 'RectPacker'
+          with
+          [
+              _Ty=RectPacker::Rect
+          ]
+D:\x2D Game Engine\include\x2d/gfx.h(167): warning C4244: 'argument' : conversion from 'const int' to 'float', possible loss of data
+..\..\source\assetloader.cpp(170): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+          C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\include\stdio.h(218) : see declaration of 'fopen'
+  engine.cpp
+d:\x2d game engine\include\x2d\math/rectPacker.h(49): warning C4251: 'RectPacker::Result::rectList' : class 'std::vector<_Ty>' needs to have dll-interface to be used by clients of struct 'RectPacker::Result'
+          with
+          [
+              _Ty=RectPacker::Rect
+          ]
+d:\x2d game engine\include\x2d\math/rectPacker.h(57): warning C4251: 'RectPacker::rectList' : class 'std::vector<_Ty>' needs to have dll-interface to be used by clients of class 'RectPacker'
+          with
+          [
+              _Ty=RectPacker::Rect
+          ]
+D:\x2D Game Engine\include\x2d/gfx.h(167): warning C4244: 'argument' : conversion from 'const int' to 'float', possible loss of data
+D:\x2D Game Engine\include\x2d/math/profiler.h(39): warning C4251: 'X2DProfiler::m_rootName' : class 'std::basic_string<_Elem,_Traits,_Alloc>' needs to have dll-interface to be used by clients of class 'X2DProfiler'
+          with
+          [
+              _Elem=char,
+              _Traits=std::char_traits<char>,
+              _Alloc=std::allocator<char>
+          ]
+D:\x2D Game Engine\include\x2d/math/profiler.h(41): warning C4251: 'X2DProfiler::m_profiles' : class 'std::map<_Kty,_Ty>' needs to have dll-interface to be used by clients of class 'X2DProfiler'
+          with
+          [
+              _Kty=std::string,
+              _Ty=Profile
+          ]
+..\..\source\engine.cpp(610): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+          C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\include\stdio.h(357) : see declaration of 'sprintf'
+  iosystem.cpp
+d:\x2d game engine\include\x2d\math/rectPacker.h(49): warning C4251: 'RectPacker::Result::rectList' : class 'std::vector<_Ty>' needs to have dll-interface to be used by clients of struct 'RectPacker::Result'
+          with
+          [
+              _Ty=RectPacker::Rect
+          ]
+d:\x2d game engine\include\x2d\math/rectPacker.h(57): warning C4251: 'RectPacker::rectList' : class 'std::vector<_Ty>' needs to have dll-interface to be used by clients of class 'RectPacker'
+          with
+          [
+              _Ty=RectPacker::Rect
+          ]
+..\..\source\iosystem.cpp(170): warning C4996: 'vsprintf': This function or variable may be unsafe. Consider using vsprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+          C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\include\stdio.h(357) : see declaration of 'vsprintf'
+..\..\source\iosystem.cpp(196): warning C4996: 'vsprintf': This function or variable may be unsafe. Consider using vsprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+          C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\include\stdio.h(357) : see declaration of 'vsprintf'
+..\..\source\iosystem.cpp(222): warning C4996: 'vsprintf': This function or variable may be unsafe. Consider using vsprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+          C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\include\stdio.h(357) : see declaration of 'vsprintf'
+..\..\source\iosystem.cpp(248): warning C4996: 'vsprintf': This function or variable may be unsafe. Consider using vsprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+          C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\include\stdio.h(357) : see declaration of 'vsprintf'
+..\..\source\iosystem.cpp(273): warning C4996: 'vsprintf': This function or variable may be unsafe. Consider using vsprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+          C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\include\stdio.h(357) : see declaration of 'vsprintf'
+  math.cpp
+d:\x2d game engine\include\x2d\math/rectPacker.h(49): warning C4251: 'RectPacker::Result::rectList' : class 'std::vector<_Ty>' needs to have dll-interface to be used by clients of struct 'RectPacker::Result'
+          with
+          [
+              _Ty=RectPacker::Rect
+          ]
+d:\x2d game engine\include\x2d\math/rectPacker.h(57): warning C4251: 'RectPacker::rectList' : class 'std::vector<_Ty>' needs to have dll-interface to be used by clients of class 'RectPacker'
+          with
+          [
+              _Ty=RectPacker::Rect
+          ]
+..\..\source\math\math.cpp(31): warning C4244: 'return' : conversion from 'double' to 'float', possible loss of data
+..\..\source\math\math.cpp(75): warning C4244: 'return' : conversion from 'int' to 'float', possible loss of data
+  matrix.cpp
+  rect.cpp
+  rectPacker.cpp
+d:\x2d game engine\include\x2d\math/rectPacker.h(49): warning C4251: 'RectPacker::Result::rectList' : class 'std::vector<_Ty>' needs to have dll-interface to be used by clients of struct 'RectPacker::Result'
+          with
+          [
+              _Ty=RectPacker::Rect
+          ]
+d:\x2d game engine\include\x2d\math/rectPacker.h(57): warning C4251: 'RectPacker::rectList' : class 'std::vector<_Ty>' needs to have dll-interface to be used by clients of class 'RectPacker'
+          with
+          [
+              _Ty=RectPacker::Rect
+          ]
+D:\x2D Game Engine\include\x2d/gfx.h(167): warning C4244: 'argument' : conversion from 'const int' to 'float', possible loss of data
+  vector.cpp
+  profiler.cpp
+D:\x2D Game Engine\include\x2d/math/profiler.h(39): warning C4251: 'X2DProfiler::m_rootName' : class 'std::basic_string<_Elem,_Traits,_Alloc>' needs to have dll-interface to be used by clients of class 'X2DProfiler'
+          with
+          [
+              _Elem=char,
+              _Traits=std::char_traits<char>,
+              _Alloc=std::allocator<char>
+          ]
+D:\x2D Game Engine\include\x2d/math/profiler.h(41): warning C4251: 'X2DProfiler::m_profiles' : class 'std::map<_Kty,_Ty>' needs to have dll-interface to be used by clients of class 'X2DProfiler'
+          with
+          [
+              _Kty=std::string,
+              _Ty=Profile
+          ]
+d:\x2d game engine\include\x2d\math/rectPacker.h(49): warning C4251: 'RectPacker::Result::rectList' : class 'std::vector<_Ty>' needs to have dll-interface to be used by clients of struct 'RectPacker::Result'
+          with
+          [
+              _Ty=RectPacker::Rect
+          ]
+d:\x2d game engine\include\x2d\math/rectPacker.h(57): warning C4251: 'RectPacker::rectList' : class 'std::vector<_Ty>' needs to have dll-interface to be used by clients of class 'RectPacker'
+          with
+          [
+              _Ty=RectPacker::Rect
+          ]
+..\..\source\profiler.cpp(96): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+          C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\include\stdio.h(357) : see declaration of 'sprintf'
+..\..\source\profiler.cpp(109): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+          C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\include\stdio.h(357) : see declaration of 'sprintf'
+..\..\source\profiler.cpp(114): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+          C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\include\stdio.h(357) : see declaration of 'sprintf'
+..\..\source\profiler.cpp(119): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+          C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\include\stdio.h(357) : see declaration of 'sprintf'
+..\..\source\profiler.cpp(124): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+          C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\include\stdio.h(357) : see declaration of 'sprintf'
+  scripts.cpp
+d:\x2d game engine\include\x2d\math/rectPacker.h(49): warning C4251: 'RectPacker::Result::rectList' : class 'std::vector<_Ty>' needs to have dll-interface to be used by clients of struct 'RectPacker::Result'
+          with
+          [
+              _Ty=RectPacker::Rect
+          ]
+d:\x2d game engine\include\x2d\math/rectPacker.h(57): warning C4251: 'RectPacker::rectList' : class 'std::vector<_Ty>' needs to have dll-interface to be used by clients of class 'RectPacker'
+          with
+          [
+              _Ty=RectPacker::Rect
+          ]
+..\..\source\scripts.cpp(114): warning C4244: 'argument' : conversion from 'double' to 'asQWORD', possible loss of data
+..\..\source\scripts.cpp(328): warning C4244: 'argument' : conversion from 'double' to 'asQWORD', possible loss of data
+..\..\source\scripts.cpp(433): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+          C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\include\stdio.h(357) : see declaration of 'sprintf'
+  scriptarray.cpp
+  scriptbuilder.cpp
+  scriptgrid.cpp
+  scripthelper.cpp
+  scriptstdstring.cpp
+  scriptstdstring_utils.cpp
+     Creating library D:\x2D Game Engine\projects\msvc11\..\..\build\Win32\Release DLL\x2d.lib and object D:\x2D Game Engine\projects\msvc11\..\..\build\Win32\Release DLL\x2d.exp
+  Generating code
+  Finished generating code
+  x2d.vcxproj -> D:\x2D Game Engine\projects\msvc11\..\..\build\Win32\Release DLL\x2d.dll

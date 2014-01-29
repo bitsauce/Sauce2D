@@ -1,0 +1,31 @@
+void Hud::draw()
+
+Temps: 1, 2, 3, 4, 11, 32, 39, 55, 70, 71, 82
+
+Variables: 
+ 018: string goldStr
+ 025: string incomeStr
+ 040: int hour
+ 041: int minute
+ 048: string hourStr
+ 062: string minStr
+ 069: string timeStr
+ 078: string menuStr
+ 000: Hud this
+ 071: vec4 {noname}
+ 011: string {noname}
+ 032: string {noname}
+ 039: string {noname}
+ 055: string {noname}
+ 082: vec4 {noname}
+
+
+    0  82 *    PshVPtr  v0
+    1  83 *    CALLSYS  2           (void _builtin_object_::_beh_5_())
+- 117,3 -
+    3  82 *    SUSPEND
+    4  82 * {
+    4  82 * }
+    4  82 * 0:
+    4  82 *    FREE     v0, 74303864
+    6  82 *    RET      1

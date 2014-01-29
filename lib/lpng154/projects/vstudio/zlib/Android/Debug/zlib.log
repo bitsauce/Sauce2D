@@ -1,0 +1,342 @@
+﻿C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V110\Platforms\Android\Microsoft.Cpp.Android.Targets(459,5): warning : The x86 toolchain isn't fully tested with vs-android. Use at your own risk.
+  adler32.c
+  D:\x2D Game Engine\lib\zlib-1.2.5\zutil.h(22): includes this header: 0,
+  D:\x2D Game Engine\lib\lpng154\projects\zlib-1.2.5\adler32.c(8): 
+  ../../../../zlib-1.2.5/zlib.h: In function '__declspec':
+D:\x2D Game Engine\lib\zlib-1.2.5\zlib.h(246,9): error : expected '=', ',', ';', 'asm' or '__attribute__' before 'int'
+D:\x2D Game Engine\lib\zlib-1.2.5\zlib.h(352,9): error : expected '=', ',', ';', 'asm' or '__attribute__' before 'int'
+D:\x2D Game Engine\lib\zlib-1.2.5\zlib.h(391,9): error : expected '=', ',', ';', 'asm' or '__attribute__' before 'int'
+D:\x2D Game Engine\lib\zlib-1.2.5\zlib.h(499,9): error : expected '=', ',', ';', 'asm' or '__attribute__' before 'int'
+D:\x2D Game Engine\lib\zlib-1.2.5\zlib.h(578,9): error : expected '=', ',', ';', 'asm' or '__attribute__' before 'int'
+D:\x2D Game Engine\lib\zlib-1.2.5\zlib.h(617,9): error : expected '=', ',', ';', 'asm' or '__attribute__' before 'int'
+D:\x2D Game Engine\lib\zlib-1.2.5\zlib.h(635,9): error : expected '=', ',', ';', 'asm' or '__attribute__' before 'int'
+D:\x2D Game Engine\lib\zlib-1.2.5\zlib.h(646,9): error : expected '=', ',', ';', 'asm' or '__attribute__' before 'int'
+D:\x2D Game Engine\lib\zlib-1.2.5\zlib.h(667,9): error : expected '=', ',', ';', 'asm' or '__attribute__' before 'int'
+D:\x2D Game Engine\lib\zlib-1.2.5\zlib.h(684,9): error : expected '=', ',', ';', 'asm' or '__attribute__' before 'uLong'
+D:\x2D Game Engine\lib\zlib-1.2.5\zlib.h(694,9): error : expected '=', ',', ';', 'asm' or '__attribute__' before 'int'
+D:\x2D Game Engine\lib\zlib-1.2.5\zlib.h(710,9): error : expected '=', ',', ';', 'asm' or '__attribute__' before 'int'
+D:\x2D Game Engine\lib\zlib-1.2.5\zlib.h(784,9): error : expected '=', ',', ';', 'asm' or '__attribute__' before 'int'
+D:\x2D Game Engine\lib\zlib-1.2.5\zlib.h(806,9): error : expected '=', ',', ';', 'asm' or '__attribute__' before 'int'
+D:\x2D Game Engine\lib\zlib-1.2.5\zlib.h(821,9): error : expected '=', ',', ';', 'asm' or '__attribute__' before 'int'
+D:\x2D Game Engine\lib\zlib-1.2.5\zlib.h(837,9): error : expected '=', ',', ';', 'asm' or '__attribute__' before 'int'
+D:\x2D Game Engine\lib\zlib-1.2.5\zlib.h(847,9): error : expected '=', ',', ';', 'asm' or '__attribute__' before 'int'
+D:\x2D Game Engine\lib\zlib-1.2.5\zlib.h(859,9): error : expected '=', ',', ';', 'asm' or '__attribute__' before 'int'
+D:\x2D Game Engine\lib\zlib-1.2.5\zlib.h(880,9): error : expected '=', ',', ';', 'asm' or '__attribute__' before 'long'
+D:\x2D Game Engine\lib\zlib-1.2.5\zlib.h(908,9): error : expected '=', ',', ';', 'asm' or '__attribute__' before 'int'
+D:\x2D Game Engine\lib\zlib-1.2.5\zlib.h(970,20): error : storage class specified for parameter 'in_func'
+D:\x2D Game Engine\lib\zlib-1.2.5\zlib.h(971,15): error : storage class specified for parameter 'out_func'
+D:\x2D Game Engine\lib\zlib-1.2.5\zlib.h(973,9): error : expected '=', ',', ';', 'asm' or '__attribute__' before 'int'
+D:\x2D Game Engine\lib\zlib-1.2.5\zlib.h(1042,9): error : expected '=', ',', ';', 'asm' or '__attribute__' before 'int'
+D:\x2D Game Engine\lib\zlib-1.2.5\zlib.h(1050,9): error : expected '=', ',', ';', 'asm' or '__attribute__' before 'uLong'
+D:\x2D Game Engine\lib\zlib-1.2.5\zlib.h(1102,9): error : expected '=', ',', ';', 'asm' or '__attribute__' before 'int'
+D:\x2D Game Engine\lib\zlib-1.2.5\zlib.h(1116,9): error : expected '=', ',', ';', 'asm' or '__attribute__' before 'int'
+D:\x2D Game Engine\lib\zlib-1.2.5\zlib.h(1132,9): error : expected '=', ',', ';', 'asm' or '__attribute__' before 'uLong'
+D:\x2D Game Engine\lib\zlib-1.2.5\zlib.h(1139,9): error : expected '=', ',', ';', 'asm' or '__attribute__' before 'int'
+D:\x2D Game Engine\lib\zlib-1.2.5\zlib.h(1165,15): error : storage class specified for parameter 'gzFile'
+D:\x2D Game Engine\lib\zlib-1.2.5\zlib.h(1190,9): error : expected '=', ',', ';', 'asm' or '__attribute__' before 'gzFile'
+D:\x2D Game Engine\lib\zlib-1.2.5\zlib.h(1209,9): error : expected '=', ',', ';', 'asm' or '__attribute__' before 'int'
+D:\x2D Game Engine\lib\zlib-1.2.5\zlib.h(1226,9): error : expected '=', ',', ';', 'asm' or '__attribute__' before 'int'
+D:\x2D Game Engine\lib\zlib-1.2.5\zlib.h(1235,9): error : expected '=', ',', ';', 'asm' or '__attribute__' before 'int'
+D:\x2D Game Engine\lib\zlib-1.2.5\zlib.h(1251,9): error : expected '=', ',', ';', 'asm' or '__attribute__' before 'int'
+D:\x2D Game Engine\lib\zlib-1.2.5\zlib.h(1259,9): error : expected '=', ',', ';', 'asm' or '__attribute__' before 'int'
+D:\x2D Game Engine\lib\zlib-1.2.5\zlib.h(1274,9): error : expected '=', ',', ';', 'asm' or '__attribute__' before 'int'
+D:\x2D Game Engine\lib\zlib-1.2.5\zlib.h(1282,9): error : expected '=', ',', ';', 'asm' or '__attribute__' before 'char'
+D:\x2D Game Engine\lib\zlib-1.2.5\zlib.h(1295,9): error : expected '=', ',', ';', 'asm' or '__attribute__' before 'int'
+D:\x2D Game Engine\lib\zlib-1.2.5\zlib.h(1301,9): error : expected '=', ',', ';', 'asm' or '__attribute__' before 'int'
+D:\x2D Game Engine\lib\zlib-1.2.5\zlib.h(1307,9): error : expected '=', ',', ';', 'asm' or '__attribute__' before 'int'
+D:\x2D Game Engine\lib\zlib-1.2.5\zlib.h(1319,9): error : expected '=', ',', ';', 'asm' or '__attribute__' before 'int'
+D:\x2D Game Engine\lib\zlib-1.2.5\zlib.h(1354,9): error : expected '=', ',', ';', 'asm' or '__attribute__' before 'int'
+D:\x2D Game Engine\lib\zlib-1.2.5\zlib.h(1382,9): error : expected '=', ',', ';', 'asm' or '__attribute__' before 'int'
+D:\x2D Game Engine\lib\zlib-1.2.5\zlib.h(1397,9): error : expected '=', ',', ';', 'asm' or '__attribute__' before 'int'
+D:\x2D Game Engine\lib\zlib-1.2.5\zlib.h(1413,9): error : expected '=', ',', ';', 'asm' or '__attribute__' before 'int'
+D:\x2D Game Engine\lib\zlib-1.2.5\zlib.h(1425,9): error : expected '=', ',', ';', 'asm' or '__attribute__' before 'int'
+D:\x2D Game Engine\lib\zlib-1.2.5\zlib.h(1426,9): error : expected '=', ',', ';', 'asm' or '__attribute__' before 'int'
+D:\x2D Game Engine\lib\zlib-1.2.5\zlib.h(1437,9): error : expected '=', ',', ';', 'asm' or '__attribute__' before 'const'
+D:\x2D Game Engine\lib\zlib-1.2.5\zlib.h(1453,9): error : expected '=', ',', ';', 'asm' or '__attribute__' before 'void'
+D:\x2D Game Engine\lib\zlib-1.2.5\zlib.h(1469,9): error : expected '=', ',', ';', 'asm' or '__attribute__' before 'uLong'
+D:\x2D Game Engine\lib\zlib-1.2.5\zlib.h(1498,9): error : expected '=', ',', ';', 'asm' or '__attribute__' before 'uLong'
+D:\x2D Game Engine\lib\zlib-1.2.5\zlib.h(1532,9): error : expected '=', ',', ';', 'asm' or '__attribute__' before 'int'
+D:\x2D Game Engine\lib\zlib-1.2.5\zlib.h(1534,9): error : expected '=', ',', ';', 'asm' or '__attribute__' before 'int'
+D:\x2D Game Engine\lib\zlib-1.2.5\zlib.h(1536,9): error : expected '=', ',', ';', 'asm' or '__attribute__' before 'int'
+D:\x2D Game Engine\lib\zlib-1.2.5\zlib.h(1540,9): error : expected '=', ',', ';', 'asm' or '__attribute__' before 'int'
+D:\x2D Game Engine\lib\zlib-1.2.5\zlib.h(1542,9): error : expected '=', ',', ';', 'asm' or '__attribute__' before 'int'
+D:\x2D Game Engine\lib\zlib-1.2.5\zlib.h(1590,12): error : expected '=', ',', ';', 'asm' or '__attribute__' before 'gzFile'
+D:\x2D Game Engine\lib\zlib-1.2.5\zlib.h(1591,12): error : expected '=', ',', ';', 'asm' or '__attribute__' before 'long'
+D:\x2D Game Engine\lib\zlib-1.2.5\zlib.h(1592,12): error : expected '=', ',', ';', 'asm' or '__attribute__' before 'long'
+D:\x2D Game Engine\lib\zlib-1.2.5\zlib.h(1593,12): error : expected '=', ',', ';', 'asm' or '__attribute__' before 'long'
+D:\x2D Game Engine\lib\zlib-1.2.5\zlib.h(1594,12): error : expected '=', ',', ';', 'asm' or '__attribute__' before 'uLong'
+D:\x2D Game Engine\lib\zlib-1.2.5\zlib.h(1595,12): error : expected '=', ',', ';', 'asm' or '__attribute__' before 'uLong'
+D:\x2D Game Engine\lib\zlib-1.2.5\zlib.h(1604,9): error : expected '=', ',', ';', 'asm' or '__attribute__' before 'const'
+D:\x2D Game Engine\lib\zlib-1.2.5\zlib.h(1605,9): error : expected '=', ',', ';', 'asm' or '__attribute__' before 'int'
+D:\x2D Game Engine\lib\zlib-1.2.5\zlib.h(1606,9): error : expected '=', ',', ';', 'asm' or '__attribute__' before 'const'
+D:\x2D Game Engine\lib\zlib-1.2.5\zlib.h(1607,9): error : expected '=', ',', ';', 'asm' or '__attribute__' before 'int'
+  C:\Android\android-ndk-r9c\platforms\android-14\arch-x86\usr\include\string.h(33): includes this header: 0,
+                   from ../../../../zlib-1.2.5/zutil.h:28,
+  D:\x2D Game Engine\lib\lpng154\projects\zlib-1.2.5\adler32.c(8): 
+C:\Android\android-ndk-r9c\platforms\android-14\arch-x86\usr\include\malloc.h(30,28): error : storage class specified for parameter 'malloc'
+C:\Android\android-ndk-r9c\platforms\android-14\arch-x86\usr\include\malloc.h(30,1): warning : 'malloc' attribute ignored [-Wattributes]
+C:\Android\android-ndk-r9c\platforms\android-14\arch-x86\usr\include\malloc.h(31,28): error : storage class specified for parameter 'calloc'
+C:\Android\android-ndk-r9c\platforms\android-14\arch-x86\usr\include\malloc.h(31,1): warning : 'malloc' attribute ignored [-Wattributes]
+C:\Android\android-ndk-r9c\platforms\android-14\arch-x86\usr\include\malloc.h(32,15): error : storage class specified for parameter 'realloc'
+C:\Android\android-ndk-r9c\platforms\android-14\arch-x86\usr\include\malloc.h(33,15): error : storage class specified for parameter 'free'
+C:\Android\android-ndk-r9c\platforms\android-14\arch-x86\usr\include\malloc.h(35,15): error : storage class specified for parameter 'memalign'
+C:\Android\android-ndk-r9c\platforms\android-14\arch-x86\usr\include\malloc.h(36,15): error : storage class specified for parameter 'malloc_usable_size'
+C:\Android\android-ndk-r9c\platforms\android-14\arch-x86\usr\include\malloc.h(38,15): error : storage class specified for parameter 'valloc'
+C:\Android\android-ndk-r9c\platforms\android-14\arch-x86\usr\include\malloc.h(39,15): error : storage class specified for parameter 'pvalloc'
+C:\Android\android-ndk-r9c\platforms\android-14\arch-x86\usr\include\malloc.h(43,1): warning : empty declaration [enabled by default]
+C:\Android\android-ndk-r9c\platforms\android-14\arch-x86\usr\include\malloc.h(57,24): error : storage class specified for parameter 'mallinfo'
+  D:\x2D Game Engine\lib\zlib-1.2.5\zutil.h(28): includes this header: 0,
+  D:\x2D Game Engine\lib\lpng154\projects\zlib-1.2.5\adler32.c(8): 
+C:\Android\android-ndk-r9c\platforms\android-14\arch-x86\usr\include\string.h(37,15): error : storage class specified for parameter 'memccpy'
+C:\Android\android-ndk-r9c\platforms\android-14\arch-x86\usr\include\string.h(38,15): error : storage class specified for parameter 'memchr'
+C:\Android\android-ndk-r9c\platforms\android-14\arch-x86\usr\include\string.h(39,15): error : storage class specified for parameter 'memrchr'
+C:\Android\android-ndk-r9c\platforms\android-14\arch-x86\usr\include\string.h(40,15): error : storage class specified for parameter 'memcmp'
+C:\Android\android-ndk-r9c\platforms\android-14\arch-x86\usr\include\string.h(41,15): error : storage class specified for parameter 'memcpy'
+C:\Android\android-ndk-r9c\platforms\android-14\arch-x86\usr\include\string.h(42,15): error : storage class specified for parameter 'memmove'
+C:\Android\android-ndk-r9c\platforms\android-14\arch-x86\usr\include\string.h(43,15): error : storage class specified for parameter 'memset'
+C:\Android\android-ndk-r9c\platforms\android-14\arch-x86\usr\include\string.h(44,15): error : storage class specified for parameter 'memmem'
+C:\Android\android-ndk-r9c\platforms\android-14\arch-x86\usr\include\string.h(45,15): error : storage class specified for parameter 'memswap'
+C:\Android\android-ndk-r9c\platforms\android-14\arch-x86\usr\include\string.h(47,15): error : storage class specified for parameter 'index'
+C:\Android\android-ndk-r9c\platforms\android-14\arch-x86\usr\include\string.h(48,15): error : storage class specified for parameter 'rindex'
+C:\Android\android-ndk-r9c\platforms\android-14\arch-x86\usr\include\string.h(49,15): error : storage class specified for parameter 'strchr'
+C:\Android\android-ndk-r9c\platforms\android-14\arch-x86\usr\include\string.h(50,15): error : storage class specified for parameter 'strrchr'
+C:\Android\android-ndk-r9c\platforms\android-14\arch-x86\usr\include\string.h(52,15): error : storage class specified for parameter 'strlen'
+C:\Android\android-ndk-r9c\platforms\android-14\arch-x86\usr\include\string.h(53,15): error : storage class specified for parameter 'strcmp'
+C:\Android\android-ndk-r9c\platforms\android-14\arch-x86\usr\include\string.h(54,15): error : storage class specified for parameter 'strcpy'
+C:\Android\android-ndk-r9c\platforms\android-14\arch-x86\usr\include\string.h(55,15): error : storage class specified for parameter 'strcat'
+C:\Android\android-ndk-r9c\platforms\android-14\arch-x86\usr\include\string.h(57,15): error : storage class specified for parameter 'strcasecmp'
+C:\Android\android-ndk-r9c\platforms\android-14\arch-x86\usr\include\string.h(58,15): error : storage class specified for parameter 'strncasecmp'
+C:\Android\android-ndk-r9c\platforms\android-14\arch-x86\usr\include\string.h(59,15): error : storage class specified for parameter 'strdup'
+C:\Android\android-ndk-r9c\platforms\android-14\arch-x86\usr\include\string.h(61,15): error : storage class specified for parameter 'strstr'
+C:\Android\android-ndk-r9c\platforms\android-14\arch-x86\usr\include\string.h(62,15): error : storage class specified for parameter 'strcasestr'
+C:\Android\android-ndk-r9c\platforms\android-14\arch-x86\usr\include\string.h(63,15): error : storage class specified for parameter 'strtok'
+C:\Android\android-ndk-r9c\platforms\android-14\arch-x86\usr\include\string.h(64,15): error : storage class specified for parameter 'strtok_r'
+C:\Android\android-ndk-r9c\platforms\android-14\arch-x86\usr\include\string.h(66,15): error : storage class specified for parameter 'strerror'
+C:\Android\android-ndk-r9c\platforms\android-14\arch-x86\usr\include\string.h(67,15): error : storage class specified for parameter 'strerror_r'
+C:\Android\android-ndk-r9c\platforms\android-14\arch-x86\usr\include\string.h(69,15): error : storage class specified for parameter 'strnlen'
+C:\Android\android-ndk-r9c\platforms\android-14\arch-x86\usr\include\string.h(70,15): error : storage class specified for parameter 'strncat'
+C:\Android\android-ndk-r9c\platforms\android-14\arch-x86\usr\include\string.h(71,15): error : storage class specified for parameter 'strndup'
+C:\Android\android-ndk-r9c\platforms\android-14\arch-x86\usr\include\string.h(72,15): error : storage class specified for parameter 'strncmp'
+C:\Android\android-ndk-r9c\platforms\android-14\arch-x86\usr\include\string.h(73,15): error : storage class specified for parameter 'strncpy'
+C:\Android\android-ndk-r9c\platforms\android-14\arch-x86\usr\include\string.h(75,15): error : storage class specified for parameter 'strlcat'
+C:\Android\android-ndk-r9c\platforms\android-14\arch-x86\usr\include\string.h(76,15): error : storage class specified for parameter 'strlcpy'
+C:\Android\android-ndk-r9c\platforms\android-14\arch-x86\usr\include\string.h(78,15): error : storage class specified for parameter 'strcspn'
+C:\Android\android-ndk-r9c\platforms\android-14\arch-x86\usr\include\string.h(79,15): error : storage class specified for parameter 'strpbrk'
+C:\Android\android-ndk-r9c\platforms\android-14\arch-x86\usr\include\string.h(80,15): error : storage class specified for parameter 'strsep'
+C:\Android\android-ndk-r9c\platforms\android-14\arch-x86\usr\include\string.h(81,15): error : storage class specified for parameter 'strspn'
+C:\Android\android-ndk-r9c\platforms\android-14\arch-x86\usr\include\string.h(83,15): error : storage class specified for parameter 'strsignal'
+C:\Android\android-ndk-r9c\platforms\android-14\arch-x86\usr\include\string.h(85,15): error : storage class specified for parameter 'strcoll'
+C:\Android\android-ndk-r9c\platforms\android-14\arch-x86\usr\include\string.h(86,15): error : storage class specified for parameter 'strxfrm'
+  C:\Android\android-ndk-r9c\platforms\android-14\arch-x86\usr\include\stdlib.h(42): includes this header: 0,
+                   from ../../../../zlib-1.2.5/zutil.h:29,
+  D:\x2D Game Engine\lib\lpng154\projects\zlib-1.2.5\adler32.c(8): 
+C:\Android\android-ndk-r9c\platforms\android-14\arch-x86\usr\include\strings.h(50,7): error : redefinition of parameter 'index'
+  C:\Android\android-ndk-r9c\platforms\android-14\arch-x86\usr\include\string.h(47,15):  note: previous definition of 'index' was here
+C:\Android\android-ndk-r9c\platforms\android-14\arch-x86\usr\include\strings.h(51,7): error : redefinition of parameter 'rindex'
+  C:\Android\android-ndk-r9c\platforms\android-14\arch-x86\usr\include\string.h(48,15):  note: previous definition of 'rindex' was here
+C:\Android\android-ndk-r9c\platforms\android-14\arch-x86\usr\include\strings.h(52,6): error : redefinition of parameter 'strcasecmp'
+  C:\Android\android-ndk-r9c\platforms\android-14\arch-x86\usr\include\string.h(57,15):  note: previous definition of 'strcasecmp' was here
+C:\Android\android-ndk-r9c\platforms\android-14\arch-x86\usr\include\strings.h(53,6): error : redefinition of parameter 'strncasecmp'
+  C:\Android\android-ndk-r9c\platforms\android-14\arch-x86\usr\include\string.h(58,15):  note: previous definition of 'strncasecmp' was here
+  D:\x2D Game Engine\lib\zlib-1.2.5\zutil.h(29): includes this header: 0,
+  D:\x2D Game Engine\lib\lpng154\projects\zlib-1.2.5\adler32.c(8): 
+C:\Android\android-ndk-r9c\platforms\android-14\arch-x86\usr\include\stdlib.h(50,24): error : storage class specified for parameter 'exit'
+C:\Android\android-ndk-r9c\platforms\android-14\arch-x86\usr\include\stdlib.h(51,24): error : storage class specified for parameter 'abort'
+C:\Android\android-ndk-r9c\platforms\android-14\arch-x86\usr\include\stdlib.h(52,12): error : storage class specified for parameter 'atexit'
+C:\Android\android-ndk-r9c\platforms\android-14\arch-x86\usr\include\stdlib.h(54,14): error : storage class specified for parameter 'getenv'
+C:\Android\android-ndk-r9c\platforms\android-14\arch-x86\usr\include\stdlib.h(55,12): error : storage class specified for parameter 'putenv'
+C:\Android\android-ndk-r9c\platforms\android-14\arch-x86\usr\include\stdlib.h(56,12): error : storage class specified for parameter 'setenv'
+C:\Android\android-ndk-r9c\platforms\android-14\arch-x86\usr\include\stdlib.h(57,12): error : storage class specified for parameter 'unsetenv'
+C:\Android\android-ndk-r9c\platforms\android-14\arch-x86\usr\include\stdlib.h(58,12): error : storage class specified for parameter 'clearenv'
+C:\Android\android-ndk-r9c\platforms\android-14\arch-x86\usr\include\stdlib.h(60,14): error : storage class specified for parameter 'mkdtemp'
+C:\Android\android-ndk-r9c\platforms\android-14\arch-x86\usr\include\stdlib.h(61,14): error : storage class specified for parameter 'mktemp'
+C:\Android\android-ndk-r9c\platforms\android-14\arch-x86\usr\include\stdlib.h(62,12): error : storage class specified for parameter 'mkstemp'
+C:\Android\android-ndk-r9c\platforms\android-14\arch-x86\usr\include\stdlib.h(64,13): error : storage class specified for parameter 'strtol'
+C:\Android\android-ndk-r9c\platforms\android-14\arch-x86\usr\include\stdlib.h(65,18): error : storage class specified for parameter 'strtoll'
+C:\Android\android-ndk-r9c\platforms\android-14\arch-x86\usr\include\stdlib.h(66,22): error : storage class specified for parameter 'strtoul'
+C:\Android\android-ndk-r9c\platforms\android-14\arch-x86\usr\include\stdlib.h(67,27): error : storage class specified for parameter 'strtoull'
+C:\Android\android-ndk-r9c\platforms\android-14\arch-x86\usr\include\stdlib.h(68,15): error : storage class specified for parameter 'strtod'
+C:\Android\android-ndk-r9c\platforms\android-14\arch-x86\usr\include\stdlib.h(72,1): error : expected '=', ',', ';', 'asm' or '__attribute__' before '{' token
+C:\Android\android-ndk-r9c\platforms\android-14\arch-x86\usr\include\stdlib.h(76,12): error : storage class specified for parameter 'atoi'
+C:\Android\android-ndk-r9c\platforms\android-14\arch-x86\usr\include\stdlib.h(77,13): error : storage class specified for parameter 'atol'
+C:\Android\android-ndk-r9c\platforms\android-14\arch-x86\usr\include\stdlib.h(78,18): error : storage class specified for parameter 'atoll'
+C:\Android\android-ndk-r9c\platforms\android-14\arch-x86\usr\include\stdlib.h(82,1): error : expected '=', ',', ';', 'asm' or '__attribute__' before '{' token
+C:\Android\android-ndk-r9c\platforms\android-14\arch-x86\usr\include\stdlib.h(86,36): error : expected '=', ',', ';', 'asm' or '__attribute__' before '{' token
+C:\Android\android-ndk-r9c\platforms\android-14\arch-x86\usr\include\stdlib.h(90,39): error : expected '=', ',', ';', 'asm' or '__attribute__' before '{' token
+C:\Android\android-ndk-r9c\platforms\android-14\arch-x86\usr\include\stdlib.h(94,50): error : expected '=', ',', ';', 'asm' or '__attribute__' before '{' token
+C:\Android\android-ndk-r9c\platforms\android-14\arch-x86\usr\include\stdlib.h(98,15): error : storage class specified for parameter 'realpath'
+C:\Android\android-ndk-r9c\platforms\android-14\arch-x86\usr\include\stdlib.h(99,12): error : storage class specified for parameter 'system'
+C:\Android\android-ndk-r9c\platforms\android-14\arch-x86\usr\include\stdlib.h(101,15): error : storage class specified for parameter 'bsearch'
+C:\Android\android-ndk-r9c\platforms\android-14\arch-x86\usr\include\stdlib.h(105,13): error : storage class specified for parameter 'qsort'
+C:\Android\android-ndk-r9c\platforms\android-14\arch-x86\usr\include\stdlib.h(107,13): error : storage class specified for parameter 'jrand48'
+C:\Android\android-ndk-r9c\platforms\android-14\arch-x86\usr\include\stdlib.h(108,13): error : storage class specified for parameter 'mrand48'
+C:\Android\android-ndk-r9c\platforms\android-14\arch-x86\usr\include\stdlib.h(109,13): error : storage class specified for parameter 'nrand48'
+C:\Android\android-ndk-r9c\platforms\android-14\arch-x86\usr\include\stdlib.h(110,13): error : storage class specified for parameter 'lrand48'
+C:\Android\android-ndk-r9c\platforms\android-14\arch-x86\usr\include\stdlib.h(111,24): error : storage class specified for parameter 'seed48'
+C:\Android\android-ndk-r9c\platforms\android-14\arch-x86\usr\include\stdlib.h(112,15): error : storage class specified for parameter 'erand48'
+C:\Android\android-ndk-r9c\platforms\android-14\arch-x86\usr\include\stdlib.h(113,15): error : storage class specified for parameter 'drand48'
+C:\Android\android-ndk-r9c\platforms\android-14\arch-x86\usr\include\stdlib.h(114,13): error : storage class specified for parameter 'srand48'
+C:\Android\android-ndk-r9c\platforms\android-14\arch-x86\usr\include\stdlib.h(115,21): error : storage class specified for parameter 'arc4random'
+C:\Android\android-ndk-r9c\platforms\android-14\arch-x86\usr\include\stdlib.h(116,13): error : storage class specified for parameter 'arc4random_stir'
+C:\Android\android-ndk-r9c\platforms\android-14\arch-x86\usr\include\stdlib.h(117,13): error : storage class specified for parameter 'arc4random_addrandom'
+C:\Android\android-ndk-r9c\platforms\android-14\arch-x86\usr\include\stdlib.h(120,34): error : expected '=', ',', ';', 'asm' or '__attribute__' before '{' token
+C:\Android\android-ndk-r9c\platforms\android-14\arch-x86\usr\include\stdlib.h(123,48): error : expected '=', ',', ';', 'asm' or '__attribute__' before '{' token
+C:\Android\android-ndk-r9c\platforms\android-14\arch-x86\usr\include\stdlib.h(127,1): error : expected '=', ',', ';', 'asm' or '__attribute__' before '{' token
+C:\Android\android-ndk-r9c\platforms\android-14\arch-x86\usr\include\stdlib.h(131,1): error : expected '=', ',', ';', 'asm' or '__attribute__' before '{' token
+C:\Android\android-ndk-r9c\platforms\android-14\arch-x86\usr\include\stdlib.h(137,15): error : storage class specified for parameter 'unlockpt'
+C:\Android\android-ndk-r9c\platforms\android-14\arch-x86\usr\include\stdlib.h(138,15): error : storage class specified for parameter 'ptsname'
+C:\Android\android-ndk-r9c\platforms\android-14\arch-x86\usr\include\stdlib.h(139,15): error : storage class specified for parameter 'ptsname_r'
+C:\Android\android-ndk-r9c\platforms\android-14\arch-x86\usr\include\stdlib.h(140,15): error : storage class specified for parameter 'getpt'
+C:\Android\android-ndk-r9c\platforms\android-14\arch-x86\usr\include\stdlib.h(143,1): error : expected '=', ',', ';', 'asm' or '__attribute__' before '{' token
+C:\Android\android-ndk-r9c\platforms\android-14\arch-x86\usr\include\stdlib.h(151,3): error : storage class specified for parameter 'div_t'
+C:\Android\android-ndk-r9c\platforms\android-14\arch-x86\usr\include\stdlib.h(153,16): error : expected '=', ',', ';', 'asm' or '__attribute__' before 'div'
+C:\Android\android-ndk-r9c\platforms\android-14\arch-x86\usr\include\stdlib.h(158,3): error : storage class specified for parameter 'ldiv_t'
+C:\Android\android-ndk-r9c\platforms\android-14\arch-x86\usr\include\stdlib.h(160,17): error : expected '=', ',', ';', 'asm' or '__attribute__' before 'ldiv'
+C:\Android\android-ndk-r9c\platforms\android-14\arch-x86\usr\include\stdlib.h(165,3): error : storage class specified for parameter 'lldiv_t'
+C:\Android\android-ndk-r9c\platforms\android-14\arch-x86\usr\include\stdlib.h(167,18): error : expected '=', ',', ';', 'asm' or '__attribute__' before 'lldiv'
+C:\Android\android-ndk-r9c\platforms\android-14\arch-x86\usr\include\stdlib.h(171,17): error : storage class specified for parameter 'mblen'
+C:\Android\android-ndk-r9c\platforms\android-14\arch-x86\usr\include\stdlib.h(172,17): error : storage class specified for parameter 'mbstowcs'
+C:\Android\android-ndk-r9c\platforms\android-14\arch-x86\usr\include\stdlib.h(173,17): error : storage class specified for parameter 'mbtowc'
+C:\Android\android-ndk-r9c\platforms\android-14\arch-x86\usr\include\stdlib.h(176,12): error : storage class specified for parameter 'wctomb'
+C:\Android\android-ndk-r9c\platforms\android-14\arch-x86\usr\include\stdlib.h(177,15): error : storage class specified for parameter 'wcstombs'
+  D:\x2D Game Engine\lib\zlib-1.2.5\adler32.c(8): includes this header: 0:
+D:\x2D Game Engine\lib\zlib-1.2.5\zutil.h(37,24): error : storage class specified for parameter 'uch'
+D:\x2D Game Engine\lib\zlib-1.2.5\zutil.h(38,17): error : expected '=', ',', ';', 'asm' or '__attribute__' before 'uchf'
+D:\x2D Game Engine\lib\zlib-1.2.5\zutil.h(39,24): error : storage class specified for parameter 'ush'
+D:\x2D Game Engine\lib\zlib-1.2.5\zutil.h(40,17): error : expected '=', ',', ';', 'asm' or '__attribute__' before 'ushf'
+D:\x2D Game Engine\lib\zlib-1.2.5\zutil.h(41,24): error : storage class specified for parameter 'ulg'
+D:\x2D Game Engine\lib\zlib-1.2.5\zutil.h(43,27): error : storage class specified for parameter 'z_errmsg'
+D:\x2D Game Engine\lib\zlib-1.2.5\zutil.h(164,13): error : expected '=', ',', ';', 'asm' or '__attribute__' before 'uLong'
+D:\x2D Game Engine\lib\zlib-1.2.5\zutil.h(165,13): error : expected '=', ',', ';', 'asm' or '__attribute__' before 'uLong'
+D:\x2D Game Engine\lib\zlib-1.2.5\zutil.h(265,1): warning : 'visibility' attribute ignored [-Wattributes]
+D:\x2D Game Engine\lib\zlib-1.2.5\zutil.h(267,1): warning : 'visibility' attribute ignored [-Wattributes]
+D:\x2D Game Engine\lib\zlib-1.2.5\adler32.c(12,13): error : storage class specified for parameter 'adler32_combine_'
+D:\x2D Game Engine\lib\zlib-1.2.5\adler32.c(61,5): error : expected '=', ',', ';', 'asm' or '__attribute__' before 'uLong'
+D:\x2D Game Engine\lib\zlib-1.2.5\adler32.c(63,10): error : declaration for parameter 'len' but no such parameter
+D:\x2D Game Engine\lib\zlib-1.2.5\adler32.c(62,18): error : declaration for parameter 'buf' but no such parameter
+D:\x2D Game Engine\lib\zlib-1.2.5\adler32.c(12,13): error : declaration for parameter 'adler32_combine_' but no such parameter
+D:\x2D Game Engine\lib\zlib-1.2.5\zutil.h(267,20): error : declaration for parameter 'zcfree' but no such parameter
+D:\x2D Game Engine\lib\zlib-1.2.5\zutil.h(265,22): error : declaration for parameter 'zcalloc' but no such parameter
+D:\x2D Game Engine\lib\zlib-1.2.5\zutil.h(43,27): error : declaration for parameter 'z_errmsg' but no such parameter
+D:\x2D Game Engine\lib\zlib-1.2.5\zutil.h(41,24): error : declaration for parameter 'ulg' but no such parameter
+D:\x2D Game Engine\lib\zlib-1.2.5\zutil.h(39,24): error : declaration for parameter 'ush' but no such parameter
+D:\x2D Game Engine\lib\zlib-1.2.5\zutil.h(37,24): error : declaration for parameter 'uch' but no such parameter
+C:\Android\android-ndk-r9c\platforms\android-14\arch-x86\usr\include\stdlib.h(177,15): error : declaration for parameter 'wcstombs' but no such parameter
+C:\Android\android-ndk-r9c\platforms\android-14\arch-x86\usr\include\stdlib.h(176,12): error : declaration for parameter 'wctomb' but no such parameter
+C:\Android\android-ndk-r9c\platforms\android-14\arch-x86\usr\include\stdlib.h(173,17): error : declaration for parameter 'mbtowc' but no such parameter
+C:\Android\android-ndk-r9c\platforms\android-14\arch-x86\usr\include\stdlib.h(172,17): error : declaration for parameter 'mbstowcs' but no such parameter
+C:\Android\android-ndk-r9c\platforms\android-14\arch-x86\usr\include\stdlib.h(171,17): error : declaration for parameter 'mblen' but no such parameter
+C:\Android\android-ndk-r9c\platforms\android-14\arch-x86\usr\include\stdlib.h(165,3): error : declaration for parameter 'lldiv_t' but no such parameter
+C:\Android\android-ndk-r9c\platforms\android-14\arch-x86\usr\include\stdlib.h(158,3): error : declaration for parameter 'ldiv_t' but no such parameter
+C:\Android\android-ndk-r9c\platforms\android-14\arch-x86\usr\include\stdlib.h(151,3): error : declaration for parameter 'div_t' but no such parameter
+C:\Android\android-ndk-r9c\platforms\android-14\arch-x86\usr\include\stdlib.h(140,15): error : declaration for parameter 'getpt' but no such parameter
+C:\Android\android-ndk-r9c\platforms\android-14\arch-x86\usr\include\stdlib.h(139,15): error : declaration for parameter 'ptsname_r' but no such parameter
+C:\Android\android-ndk-r9c\platforms\android-14\arch-x86\usr\include\stdlib.h(138,15): error : declaration for parameter 'ptsname' but no such parameter
+C:\Android\android-ndk-r9c\platforms\android-14\arch-x86\usr\include\stdlib.h(137,15): error : declaration for parameter 'unlockpt' but no such parameter
+C:\Android\android-ndk-r9c\platforms\android-14\arch-x86\usr\include\stdlib.h(117,13): error : declaration for parameter 'arc4random_addrandom' but no such parameter
+C:\Android\android-ndk-r9c\platforms\android-14\arch-x86\usr\include\stdlib.h(116,13): error : declaration for parameter 'arc4random_stir' but no such parameter
+C:\Android\android-ndk-r9c\platforms\android-14\arch-x86\usr\include\stdlib.h(115,21): error : declaration for parameter 'arc4random' but no such parameter
+C:\Android\android-ndk-r9c\platforms\android-14\arch-x86\usr\include\stdlib.h(114,13): error : declaration for parameter 'srand48' but no such parameter
+C:\Android\android-ndk-r9c\platforms\android-14\arch-x86\usr\include\stdlib.h(113,15): error : declaration for parameter 'drand48' but no such parameter
+C:\Android\android-ndk-r9c\platforms\android-14\arch-x86\usr\include\stdlib.h(112,15): error : declaration for parameter 'erand48' but no such parameter
+C:\Android\android-ndk-r9c\platforms\android-14\arch-x86\usr\include\stdlib.h(111,24): error : declaration for parameter 'seed48' but no such parameter
+C:\Android\android-ndk-r9c\platforms\android-14\arch-x86\usr\include\stdlib.h(110,13): error : declaration for parameter 'lrand48' but no such parameter
+C:\Android\android-ndk-r9c\platforms\android-14\arch-x86\usr\include\stdlib.h(109,13): error : declaration for parameter 'nrand48' but no such parameter
+C:\Android\android-ndk-r9c\platforms\android-14\arch-x86\usr\include\stdlib.h(108,13): error : declaration for parameter 'mrand48' but no such parameter
+C:\Android\android-ndk-r9c\platforms\android-14\arch-x86\usr\include\stdlib.h(107,13): error : declaration for parameter 'jrand48' but no such parameter
+C:\Android\android-ndk-r9c\platforms\android-14\arch-x86\usr\include\stdlib.h(105,13): error : declaration for parameter 'qsort' but no such parameter
+C:\Android\android-ndk-r9c\platforms\android-14\arch-x86\usr\include\stdlib.h(101,15): error : declaration for parameter 'bsearch' but no such parameter
+C:\Android\android-ndk-r9c\platforms\android-14\arch-x86\usr\include\stdlib.h(99,12): error : declaration for parameter 'system' but no such parameter
+C:\Android\android-ndk-r9c\platforms\android-14\arch-x86\usr\include\stdlib.h(98,15): error : declaration for parameter 'realpath' but no such parameter
+C:\Android\android-ndk-r9c\platforms\android-14\arch-x86\usr\include\stdlib.h(78,18): error : declaration for parameter 'atoll' but no such parameter
+C:\Android\android-ndk-r9c\platforms\android-14\arch-x86\usr\include\stdlib.h(77,13): error : declaration for parameter 'atol' but no such parameter
+C:\Android\android-ndk-r9c\platforms\android-14\arch-x86\usr\include\stdlib.h(76,12): error : declaration for parameter 'atoi' but no such parameter
+C:\Android\android-ndk-r9c\platforms\android-14\arch-x86\usr\include\stdlib.h(68,15): error : declaration for parameter 'strtod' but no such parameter
+C:\Android\android-ndk-r9c\platforms\android-14\arch-x86\usr\include\stdlib.h(67,27): error : declaration for parameter 'strtoull' but no such parameter
+C:\Android\android-ndk-r9c\platforms\android-14\arch-x86\usr\include\stdlib.h(66,22): error : declaration for parameter 'strtoul' but no such parameter
+C:\Android\android-ndk-r9c\platforms\android-14\arch-x86\usr\include\stdlib.h(65,18): error : declaration for parameter 'strtoll' but no such parameter
+C:\Android\android-ndk-r9c\platforms\android-14\arch-x86\usr\include\stdlib.h(64,13): error : declaration for parameter 'strtol' but no such parameter
+C:\Android\android-ndk-r9c\platforms\android-14\arch-x86\usr\include\stdlib.h(62,12): error : declaration for parameter 'mkstemp' but no such parameter
+C:\Android\android-ndk-r9c\platforms\android-14\arch-x86\usr\include\stdlib.h(61,14): error : declaration for parameter 'mktemp' but no such parameter
+C:\Android\android-ndk-r9c\platforms\android-14\arch-x86\usr\include\stdlib.h(60,14): error : declaration for parameter 'mkdtemp' but no such parameter
+C:\Android\android-ndk-r9c\platforms\android-14\arch-x86\usr\include\stdlib.h(58,12): error : declaration for parameter 'clearenv' but no such parameter
+C:\Android\android-ndk-r9c\platforms\android-14\arch-x86\usr\include\stdlib.h(57,12): error : declaration for parameter 'unsetenv' but no such parameter
+C:\Android\android-ndk-r9c\platforms\android-14\arch-x86\usr\include\stdlib.h(56,12): error : declaration for parameter 'setenv' but no such parameter
+C:\Android\android-ndk-r9c\platforms\android-14\arch-x86\usr\include\stdlib.h(55,12): error : declaration for parameter 'putenv' but no such parameter
+C:\Android\android-ndk-r9c\platforms\android-14\arch-x86\usr\include\stdlib.h(54,14): error : declaration for parameter 'getenv' but no such parameter
+C:\Android\android-ndk-r9c\platforms\android-14\arch-x86\usr\include\stdlib.h(52,12): error : declaration for parameter 'atexit' but no such parameter
+C:\Android\android-ndk-r9c\platforms\android-14\arch-x86\usr\include\stdlib.h(51,24): error : declaration for parameter 'abort' but no such parameter
+C:\Android\android-ndk-r9c\platforms\android-14\arch-x86\usr\include\stdlib.h(50,24): error : declaration for parameter 'exit' but no such parameter
+C:\Android\android-ndk-r9c\platforms\android-14\arch-x86\usr\include\strings.h(53,6): error : declaration for parameter 'strncasecmp' but no such parameter
+C:\Android\android-ndk-r9c\platforms\android-14\arch-x86\usr\include\strings.h(52,6): error : declaration for parameter 'strcasecmp' but no such parameter
+C:\Android\android-ndk-r9c\platforms\android-14\arch-x86\usr\include\strings.h(51,7): error : declaration for parameter 'rindex' but no such parameter
+C:\Android\android-ndk-r9c\platforms\android-14\arch-x86\usr\include\strings.h(50,7): error : declaration for parameter 'index' but no such parameter
+C:\Android\android-ndk-r9c\platforms\android-14\arch-x86\usr\include\strings.h(49,6): error : declaration for parameter 'ffs' but no such parameter
+C:\Android\android-ndk-r9c\platforms\android-14\arch-x86\usr\include\strings.h(48,7): error : declaration for parameter 'bzero' but no such parameter
+C:\Android\android-ndk-r9c\platforms\android-14\arch-x86\usr\include\strings.h(47,7): error : declaration for parameter 'bcopy' but no such parameter
+C:\Android\android-ndk-r9c\platforms\android-14\arch-x86\usr\include\strings.h(46,6): error : declaration for parameter 'bcmp' but no such parameter
+C:\Android\android-ndk-r9c\platforms\android-14\arch-x86\usr\include\string.h(86,15): error : declaration for parameter 'strxfrm' but no such parameter
+C:\Android\android-ndk-r9c\platforms\android-14\arch-x86\usr\include\string.h(85,15): error : declaration for parameter 'strcoll' but no such parameter
+C:\Android\android-ndk-r9c\platforms\android-14\arch-x86\usr\include\string.h(83,15): error : declaration for parameter 'strsignal' but no such parameter
+C:\Android\android-ndk-r9c\platforms\android-14\arch-x86\usr\include\string.h(81,15): error : declaration for parameter 'strspn' but no such parameter
+C:\Android\android-ndk-r9c\platforms\android-14\arch-x86\usr\include\string.h(80,15): error : declaration for parameter 'strsep' but no such parameter
+C:\Android\android-ndk-r9c\platforms\android-14\arch-x86\usr\include\string.h(79,15): error : declaration for parameter 'strpbrk' but no such parameter
+C:\Android\android-ndk-r9c\platforms\android-14\arch-x86\usr\include\string.h(78,15): error : declaration for parameter 'strcspn' but no such parameter
+C:\Android\android-ndk-r9c\platforms\android-14\arch-x86\usr\include\string.h(76,15): error : declaration for parameter 'strlcpy' but no such parameter
+C:\Android\android-ndk-r9c\platforms\android-14\arch-x86\usr\include\string.h(75,15): error : declaration for parameter 'strlcat' but no such parameter
+C:\Android\android-ndk-r9c\platforms\android-14\arch-x86\usr\include\string.h(73,15): error : declaration for parameter 'strncpy' but no such parameter
+C:\Android\android-ndk-r9c\platforms\android-14\arch-x86\usr\include\string.h(72,15): error : declaration for parameter 'strncmp' but no such parameter
+C:\Android\android-ndk-r9c\platforms\android-14\arch-x86\usr\include\string.h(71,15): error : declaration for parameter 'strndup' but no such parameter
+C:\Android\android-ndk-r9c\platforms\android-14\arch-x86\usr\include\string.h(70,15): error : declaration for parameter 'strncat' but no such parameter
+C:\Android\android-ndk-r9c\platforms\android-14\arch-x86\usr\include\string.h(69,15): error : declaration for parameter 'strnlen' but no such parameter
+C:\Android\android-ndk-r9c\platforms\android-14\arch-x86\usr\include\string.h(67,15): error : declaration for parameter 'strerror_r' but no such parameter
+C:\Android\android-ndk-r9c\platforms\android-14\arch-x86\usr\include\string.h(66,15): error : declaration for parameter 'strerror' but no such parameter
+C:\Android\android-ndk-r9c\platforms\android-14\arch-x86\usr\include\string.h(64,15): error : declaration for parameter 'strtok_r' but no such parameter
+C:\Android\android-ndk-r9c\platforms\android-14\arch-x86\usr\include\string.h(63,15): error : declaration for parameter 'strtok' but no such parameter
+C:\Android\android-ndk-r9c\platforms\android-14\arch-x86\usr\include\string.h(62,15): error : declaration for parameter 'strcasestr' but no such parameter
+C:\Android\android-ndk-r9c\platforms\android-14\arch-x86\usr\include\string.h(61,15): error : declaration for parameter 'strstr' but no such parameter
+C:\Android\android-ndk-r9c\platforms\android-14\arch-x86\usr\include\string.h(59,15): error : declaration for parameter 'strdup' but no such parameter
+C:\Android\android-ndk-r9c\platforms\android-14\arch-x86\usr\include\string.h(58,15): error : declaration for parameter 'strncasecmp' but no such parameter
+C:\Android\android-ndk-r9c\platforms\android-14\arch-x86\usr\include\string.h(57,15): error : declaration for parameter 'strcasecmp' but no such parameter
+C:\Android\android-ndk-r9c\platforms\android-14\arch-x86\usr\include\string.h(55,15): error : declaration for parameter 'strcat' but no such parameter
+C:\Android\android-ndk-r9c\platforms\android-14\arch-x86\usr\include\string.h(54,15): error : declaration for parameter 'strcpy' but no such parameter
+C:\Android\android-ndk-r9c\platforms\android-14\arch-x86\usr\include\string.h(53,15): error : declaration for parameter 'strcmp' but no such parameter
+C:\Android\android-ndk-r9c\platforms\android-14\arch-x86\usr\include\string.h(52,15): error : declaration for parameter 'strlen' but no such parameter
+C:\Android\android-ndk-r9c\platforms\android-14\arch-x86\usr\include\string.h(50,15): error : declaration for parameter 'strrchr' but no such parameter
+C:\Android\android-ndk-r9c\platforms\android-14\arch-x86\usr\include\string.h(49,15): error : declaration for parameter 'strchr' but no such parameter
+C:\Android\android-ndk-r9c\platforms\android-14\arch-x86\usr\include\string.h(48,15): error : declaration for parameter 'rindex' but no such parameter
+C:\Android\android-ndk-r9c\platforms\android-14\arch-x86\usr\include\string.h(47,15): error : declaration for parameter 'index' but no such parameter
+C:\Android\android-ndk-r9c\platforms\android-14\arch-x86\usr\include\string.h(45,15): error : declaration for parameter 'memswap' but no such parameter
+C:\Android\android-ndk-r9c\platforms\android-14\arch-x86\usr\include\string.h(44,15): error : declaration for parameter 'memmem' but no such parameter
+C:\Android\android-ndk-r9c\platforms\android-14\arch-x86\usr\include\string.h(43,15): error : declaration for parameter 'memset' but no such parameter
+C:\Android\android-ndk-r9c\platforms\android-14\arch-x86\usr\include\string.h(42,15): error : declaration for parameter 'memmove' but no such parameter
+C:\Android\android-ndk-r9c\platforms\android-14\arch-x86\usr\include\string.h(41,15): error : declaration for parameter 'memcpy' but no such parameter
+C:\Android\android-ndk-r9c\platforms\android-14\arch-x86\usr\include\string.h(40,15): error : declaration for parameter 'memcmp' but no such parameter
+C:\Android\android-ndk-r9c\platforms\android-14\arch-x86\usr\include\string.h(39,15): error : declaration for parameter 'memrchr' but no such parameter
+C:\Android\android-ndk-r9c\platforms\android-14\arch-x86\usr\include\string.h(38,15): error : declaration for parameter 'memchr' but no such parameter
+C:\Android\android-ndk-r9c\platforms\android-14\arch-x86\usr\include\string.h(37,15): error : declaration for parameter 'memccpy' but no such parameter
+C:\Android\android-ndk-r9c\platforms\android-14\arch-x86\usr\include\malloc.h(57,24): error : declaration for parameter 'mallinfo' but no such parameter
+C:\Android\android-ndk-r9c\platforms\android-14\arch-x86\usr\include\malloc.h(39,15): error : declaration for parameter 'pvalloc' but no such parameter
+C:\Android\android-ndk-r9c\platforms\android-14\arch-x86\usr\include\malloc.h(38,15): error : declaration for parameter 'valloc' but no such parameter
+C:\Android\android-ndk-r9c\platforms\android-14\arch-x86\usr\include\malloc.h(36,15): error : declaration for parameter 'malloc_usable_size' but no such parameter
+C:\Android\android-ndk-r9c\platforms\android-14\arch-x86\usr\include\malloc.h(35,15): error : declaration for parameter 'memalign' but no such parameter
+C:\Android\android-ndk-r9c\platforms\android-14\arch-x86\usr\include\malloc.h(33,15): error : declaration for parameter 'free' but no such parameter
+C:\Android\android-ndk-r9c\platforms\android-14\arch-x86\usr\include\malloc.h(32,15): error : declaration for parameter 'realloc' but no such parameter
+C:\Android\android-ndk-r9c\platforms\android-14\arch-x86\usr\include\malloc.h(31,28): error : declaration for parameter 'calloc' but no such parameter
+C:\Android\android-ndk-r9c\platforms\android-14\arch-x86\usr\include\malloc.h(30,28): error : declaration for parameter 'malloc' but no such parameter
+D:\x2D Game Engine\lib\zlib-1.2.5\zlib.h(1165,15): error : declaration for parameter 'gzFile' but no such parameter
+D:\x2D Game Engine\lib\zlib-1.2.5\zlib.h(971,15): error : declaration for parameter 'out_func' but no such parameter
+D:\x2D Game Engine\lib\zlib-1.2.5\zlib.h(970,20): error : declaration for parameter 'in_func' but no such parameter
+D:\x2D Game Engine\lib\zlib-1.2.5\zlib.h(216,30): error : declaration for parameter 'zlibVersion' but no such parameter
+D:\x2D Game Engine\lib\zlib-1.2.5\adler32.c(69,13): error : 'adler' undeclared (first use in this function)
+  D:\x2D Game Engine\lib\zlib-1.2.5\adler32.c(69,13):  note: each undeclared identifier is reported only once for each function it appears in
+  File D:\X2D GAME ENGINE\LIB\ZLIB-1.2.5\COMPRESS.C is missing it's .d file: D:\x2D Game Engine\lib\lpng154\projects\vstudio\zlib\Android\Debug\compress.d
+  File D:\X2D GAME ENGINE\LIB\ZLIB-1.2.5\CRC32.C is missing it's .d file: D:\x2D Game Engine\lib\lpng154\projects\vstudio\zlib\Android\Debug\crc32.d
+  File D:\X2D GAME ENGINE\LIB\ZLIB-1.2.5\DEFLATE.C is missing it's .d file: D:\x2D Game Engine\lib\lpng154\projects\vstudio\zlib\Android\Debug\deflate.d
+  File D:\X2D GAME ENGINE\LIB\ZLIB-1.2.5\INFBACK.C is missing it's .d file: D:\x2D Game Engine\lib\lpng154\projects\vstudio\zlib\Android\Debug\infback.d
+  File D:\X2D GAME ENGINE\LIB\ZLIB-1.2.5\INFFAST.C is missing it's .d file: D:\x2D Game Engine\lib\lpng154\projects\vstudio\zlib\Android\Debug\inffast.d
+  File D:\X2D GAME ENGINE\LIB\ZLIB-1.2.5\INFLATE.C is missing it's .d file: D:\x2D Game Engine\lib\lpng154\projects\vstudio\zlib\Android\Debug\inflate.d
+  File D:\X2D GAME ENGINE\LIB\ZLIB-1.2.5\INFTREES.C is missing it's .d file: D:\x2D Game Engine\lib\lpng154\projects\vstudio\zlib\Android\Debug\inftrees.d
+  File D:\X2D GAME ENGINE\LIB\ZLIB-1.2.5\TREES.C is missing it's .d file: D:\x2D Game Engine\lib\lpng154\projects\vstudio\zlib\Android\Debug\trees.d
+  File D:\X2D GAME ENGINE\LIB\ZLIB-1.2.5\UNCOMPR.C is missing it's .d file: D:\x2D Game Engine\lib\lpng154\projects\vstudio\zlib\Android\Debug\uncompr.d
+  File D:\X2D GAME ENGINE\LIB\ZLIB-1.2.5\ZUTIL.C is missing it's .d file: D:\x2D Game Engine\lib\lpng154\projects\vstudio\zlib\Android\Debug\zutil.d

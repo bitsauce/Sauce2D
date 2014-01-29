@@ -1,0 +1,228 @@
+void Deathmatch::loadOutPlayer(Player@)
+
+Temps: 2, 3, 4, 5, 8, 9, 11, 13, 14, 15
+
+Variables: 
+ -001: Player@ player
+ 001: uint idx
+ 006: int spawnx
+ 007: Nebula mainframe
+ 010: Gate g
+ 000: Deathmatch this
+ 005: array {noname}
+ 008: Nebula {noname}
+ 009: Nebula {noname}
+ 015: vec2 {noname}
+ 013: vec2 {noname}
+
+
+    0  15 *    VarDecl  0
+    0  15 *    PshVPtr  v0
+    1  16 *    CALLSYS  2           (void _builtin_object_::_beh_5_())
+- 79,3 -
+    3  15 *    SUSPEND
+    4  15 *    VarDecl  1
+    4  15 *    PshVPtr  v0
+    5  16 *    ADDSi    v20, 134217760
+    7  16 *    RDSPtr
+    8  16 *    CALLSYS  88           (uint array::size() const)
+   10  15 *    CpyRtoV4 v2
+   11  15 *    SUBIi    v2, v2, 1
+   14  15 *    PshV4    v2
+   15  16 *    PshC4    0x0          (i:0, f:0)
+   17  17 *    CALLSYS  318           (int randomInt(int, int))
+   19  15 *    CpyRtoV4 v4
+   20  15 *    CpyVtoV4 v1, v4
+- 80,3 -
+   22  15 *    SUSPEND
+   23  15 * 1:
+   23  15 *    PshV4    v1
+   24  16 *    PshVPtr  v0
+   25  17 *    ADDSi    v24, 134217760
+   27  17 *    RDSPtr
+   28  17 *    RefCpyV  v5, 115825536
+   30  17 *    CALLSYS  828           (bool& array::opIndex(uint))
+   32  15 *    RDR1     v2
+   33  15 *    FREE     v5, 115825536
+   35  15 *    CpyVtoR4 v2
+   36  15 *    JLowZ    +20              (d:58)
+   38  15 *    SUSPEND
+- 82,4 -
+   39  15 * {
+   39  15 *    SUSPEND
+   40  15 *    IncVi    v1
+- 83,4 -
+   41  15 *    SUSPEND
+   42  15 *    PshVPtr  v0
+   43  16 *    ADDSi    v20, 134217760
+   45  16 *    RDSPtr
+   46  16 *    CALLSYS  88           (uint array::size() const)
+   48  15 *    CpyRtoV4 v2
+   49  15 *    CMPu     v1, v2
+   51  15 *    JS       +3              (d:56)
+- 84,5 -
+   53  15 *    SUSPEND
+   54  15 *    SetV4    v1, 0x0          (i:0, f:0)
+   56  15 * 3:
+   56  15 * }
+   56  15 *    JMP      -35              (d:23)
+- 88,3 -
+   58  15 * 2:
+   58  15 *    SUSPEND
+   59  15 *    VarDecl  2
+   59  15 *    SetV4    v6, 0x32          (i:50, f:7.00649e-044)
+- 92,3 -
+   61  15 *    SUSPEND
+   62  15 *    VarDecl  3
+   62  15 *    PshVPtr  v-1
+   63  16 *    ADDSi    v44, 134217749
+   65  16 *    RDSPtr
+   66  16 *    ADDSi    v44, 134217753
+   68  16 *    PopRPtr
+   69  15 *    RDR4     v2
+   70  15 *    PshV4    v2
+   71  16 *    CALL     662           (Nebula@ Nebula(int))
+   73  15 *    STOREOBJ v7
+- 93,3 -
+   74  15 *    SUSPEND
+   75  15 *    PshGPtr  116097640
+   77  16 *    RefCpyV  v8, 115809344
+   79  16 *    PopPtr
+   80  15 *    ClrVPtr  v9
+   81  15 *    CmpPtr   v8, v9
+   83  15 *    TZ
+   84  15 *    CpyRtoV4 v4
+   85  15 *    FREE     v8, 115809344
+   87  15 *    FREE     v9, 115809344
+   89  15 *    CpyVtoR4 v4
+   90  15 *    JLowZ    +24              (d:116)
+- 95,4 -
+   92  15 * {
+   92  15 *    SUSPEND
+   93  15 *    PshVPtr  v7
+   94  16 *    RefCpyV  v8, 115809344
+   96  16 *    PopPtr
+   97  15 *    VAR      v8
+   98  16 *    PGA      116097640
+  100  17 *    GETOBJREF 1
+  101  17 *    REFCPY   0x6e71c40
+  103  16 *    FREE     v8, 115809344
+  105  16 *    PopPtr
+- 96,4 -
+  106  15 *    SUSPEND
+  107  15 *    PshC4    0x12          (i:18, f:2.52234e-044)
+  109  16 *    PshC4    0x23          (i:35, f:4.90454e-044)
+  111  17 *    PshVPtr  v7
+  112  18 *    CALLINTF 1014           (void Nebula::place(int, int))
+  114  15 * }
+  114  15 *    JMP      +22              (d:138)
+- 98,5 -
+  116  15 * 4:
+  116  15 * {
+  116  15 *    SUSPEND
+  117  15 *    PshVPtr  v7
+  118  16 *    RefCpyV  v8, 115809344
+  120  16 *    PopPtr
+  121  15 *    VAR      v8
+  122  16 *    PGA      116098544
+  124  17 *    GETOBJREF 1
+  125  17 *    REFCPY   0x6e71c40
+  127  16 *    FREE     v8, 115809344
+  129  16 *    PopPtr
+- 99,4 -
+  130  15 *    SUSPEND
+  131  15 *    PshC4    0x12          (i:18, f:2.52234e-044)
+  133  16 *    PshC4    0xdc          (i:220, f:3.08286e-043)
+  135  17 *    PshVPtr  v7
+  136  18 *    CALLINTF 1014           (void Nebula::place(int, int))
+- 102,3 -
+  138  15 * }
+  138  15 * 5:
+  138  15 *    SUSPEND
+  139  15 *    VarDecl  4
+  139  15 *    PshC4    0x0          (i:0, f:0)
+  141  16 *    CALL     658           (Gate@ Gate(int))
+  143  15 *    STOREOBJ v10
+- 103,3 -
+  144  15 *    SUSPEND
+  145  15 *    PshC4    0x0          (i:0, f:0)
+  147  16 *    PSF      v15
+  148  17 *    CpyGtoV4 v4, 116073896
+  150  17 *    MULIf    v3, v4, 52.000000
+  153  17 *    PshV4    v3
+  154  18 *    CpyGtoV4 v4, 116073896
+  156  18 *    MULIf    v2, v4, 99.000000
+  159  18 *    SUBIf    v4, v2, 8.000000
+  162  18 *    PshV4    v4
+  163  19 *    PSF      v13
+  164  20 *    CALLSYS  135           (vec2::vec2(float, float))
+  166  17 *    ObjInfo  v13, 1
+  166  17 *    PSF      v13
+  167  18 *    ALLOC    0x4cef40, 133             (type:vec2)
+  170  16 *    ObjInfo  v13, 0
+  170  16 *    VAR      v15
+  171  17 *    PshVPtr  v10
+  172  18 *    GETOBJ   1
+  173  18 *    CALLINTF 1002           (void UnitBase::setTransform(vec2, float = 0.0f))
+- 106,3 -
+  175  15 *    SUSPEND
+  176  15 *    PshC4    0x64          (i:100, f:1.4013e-043)
+  178  16 *    PshVPtr  v-1
+  179  17 *    ADDSi    v52, 134217749
+  181  17 *    RDSPtr
+  182  17 *    CALLINTF 1056           (void Economy::addGold(int))
+- 109,3 -
+  184  15 *    SUSPEND
+  185  15 *    PshVPtr  v-1
+  186  16 *    ADDSi    v44, 134217749
+  188  16 *    RDSPtr
+  189  16 *    ADDSi    v40, 134217753
+  191  16 *    PopRPtr
+  192  15 *    RDR1     v14
+  193  15 *    CpyVtoR4 v14
+  194  15 *    JLowZ    +33              (d:229)
+- 110,4 -
+  196  15 * {
+  196  15 *    SUSPEND
+  197  15 *    PshV4    v6
+  198  16 *    PshGPtr  116073152
+  200  17 *    CALLINTF 956           (int Terrain::getGround(const int))
+  202  15 *    CpyRtoV4 v11
+  203  15 *    iTOf     v11
+  204  15 *    CpyGtoV4 v14, 116073896
+  206  15 *    MULf     v2, v11, v14
+  208  15 *    PshV4    v2
+  209  16 *    CpyVtoV4 v11, v6
+  211  16 *    iTOf     v11
+  212  16 *    CpyGtoV4 v14, 116073896
+  214  16 *    MULf     v3, v11, v14
+  216  16 *    PshV4    v3
+  217  17 *    PshGPtr  116075224
+  219  18 *    ADDSi    v20, 134217761
+  221  18 *    RDSPtr
+  222  18 *    CALLSYS  145           (void vec2::set(const float, const float))
+- 111,4 -
+  224  15 *    SUSPEND
+  225  15 *    PshGPtr  116075224
+  227  16 *    CALLINTF 889           (void Entity::update())
+- 115,3 -
+  229  15 * }
+  229  15 * 6:
+  229  15 *    SUSPEND
+  230  15 *    SetV1    v3, 0x1
+  232  15 *    PshV4    v1
+  233  16 *    PshVPtr  v0
+  234  17 *    ADDSi    v24, 134217760
+  236  17 *    RDSPtr
+  237  17 *    RefCpyV  v5, 115825536
+  239  17 *    CALLSYS  828           (bool& array::opIndex(uint))
+  241  15 *    WRTV1    v3
+  242  15 *    FREE     v5, 115825536
+- 116,3 -
+  244  15 *    SUSPEND
+  245  15 *    FREE     v10, 115808960
+  247  15 *    FREE     v7, 115809344
+  249  15 * 0:
+  249  15 *    FREE     v-1, 115830992
+  251  15 *    FREE     v0, 115788336
+  253  15 *    RET      2

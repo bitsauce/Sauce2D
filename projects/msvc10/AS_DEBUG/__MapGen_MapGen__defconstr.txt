@@ -1,0 +1,35 @@
+MapGen::MapGen()
+
+Temps: 1, 2
+
+Variables: 
+ 000: MapGen this
+ 001: SimplexNoise2D {noname}
+
+
+- 22,17 -
+    0   2 *    SUSPEND
+    1   2 *    CALL     423           (SimplexNoise2D@ SimplexNoise2D())
+    3   2 *    STOREOBJ v1
+    4   2 *    PshVPtr  v1
+    5   3 *    PshVPtr  v0
+    6   4 *    ADDSi    v40, 134217750
+    8   4 *    REFCPY   0x637e380
+   10   3 *    PopPtr
+   11   2 *    FREE     v1, 104326016
+- 17,6 -
+   13   2 *    SUSPEND
+   14   2 *    SetV4    v2, 0x0          (i:0, f:0)
+   16   2 *    LoadThisR v28, 134217750
+   18   2 *    WRTV4    v2
+- 18,8 -
+   19   2 *    SUSPEND
+   20   2 *    SetV4    v2, 0x3f000000          (i:1056964608, f:0.5)
+   22   2 *    LoadThisR v32, 134217750
+   24   2 *    WRTV4    v2
+- 19,8 -
+   25   2 *    SUSPEND
+   26   2 *    SetV4    v2, 0x3f400000          (i:1061158912, f:0.75)
+   28   2 *    LoadThisR v36, 134217750
+   30   2 *    WRTV4    v2
+   31   2 *    RET      1

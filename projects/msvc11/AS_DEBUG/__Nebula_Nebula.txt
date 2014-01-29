@@ -1,0 +1,27 @@
+Nebula::Nebula(int)
+
+Temps: 1, 2
+
+Variables: 
+ -001: int teamId
+ 000: Nebula this
+
+
+- 16,3 -
+    0   2 *    VarDecl  0
+    0   2 *    SUSPEND
+    1   2 *    PshV4    v-1
+    2   3 *    PshVPtr  v0
+    3   4 *    CALL     655           (Structure::Structure(const int))
+- 19,3 -
+    5   2 *    SUSPEND
+    6   2 *    PshC4    0x42800000          (i:1115684864, f:64)
+    8   3 *    PshC4    0x42000000          (i:1107296256, f:32)
+   10   4 *    PshVPtr  v0
+   11   5 *    ADDSi    v24, 134217769
+   13   5 *    RDSPtr
+   14   5 *    CALLSYS  145           (void vec2::set(const float, const float))
+- 20,3 -
+   16   2 *    SUSPEND
+   17   2 * 0:
+   17   2 *    RET      2

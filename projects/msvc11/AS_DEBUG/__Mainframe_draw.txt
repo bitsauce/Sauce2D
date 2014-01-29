@@ -1,0 +1,17 @@
+void Mainframe::draw()
+
+Temps: 1, 2, 3, 4, 5, 6, 7, 8, 9
+
+Variables: 
+ 000: Mainframe this
+
+
+    0   9 *    PshVPtr  v0
+    1  10 *    CALLSYS  2           (void _builtin_object_::_beh_5_())
+- 33,3 -
+    3   9 *    SUSPEND
+    4   9 * {
+    4   9 * }
+    4   9 * 0:
+    4   9 *    FREE     v0, 97847328
+    6   9 *    RET      1

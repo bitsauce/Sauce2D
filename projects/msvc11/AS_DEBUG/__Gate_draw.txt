@@ -1,0 +1,208 @@
+void Gate::draw()
+
+Temps: 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 17, 19, 23, 25, 27
+
+Variables: 
+ 001: float x
+ 002: float y
+ 003: float a
+ 000: Gate this
+ 017: vec2 {noname}
+ 019: vec2 {noname}
+ 023: rect2 {noname}
+ 025: vec2 {noname}
+ 027: vec2 {noname}
+
+
+    0  27 *    PshVPtr  v0
+    1  28 *    CALLSYS  2           (void _builtin_object_::_beh_5_())
+- 153,3 -
+    3  27 *    SUSPEND
+- 154,3 -
+    4  27 *    VarDecl  0
+    4  27 *    VarDecl  1
+    4  27 *    VarDecl  2
+    4  27 *    SUSPEND
+    5  27 *    VAR      v4
+    6  28 *    VAR      v5
+    7  29 *    VAR      v6
+    8  30 *    LoadThisR v80, 134217780
+   10  30 *    RDR4     v7
+   11  30 *    PshV4    v7
+   12  31 *    GETREF   1
+   13  31 *    GETREF   2
+   14  31 *    GETREF   3
+   15  31 *    CALLSYS  551           (void b2dGetBodyTransform(int, float&out, float&out, float&out))
+   17  27 *    CpyVtoV4 v3, v4
+   19  27 *    CpyVtoV4 v2, v5
+   21  27 *    CpyVtoV4 v1, v6
+- 156,3 -
+   23  27 *    SUSPEND
+   24  27 *    PshC4    0x3f800000          (i:1065353216, f:1)
+   26  28 *    PshC4    0x3f800000          (i:1065353216, f:1)
+   28  29 *    PshC4    0x3f800000          (i:1065353216, f:1)
+   30  30 *    PshC4    0x0          (i:0, f:0)
+   32  31 *    PshC4    0x0          (i:0, f:0)
+   34  32 *    SetV4    v6, 0x43340000          (i:1127481344, f:180)
+   36  32 *    CpyGtoV4 v7, 71908976
+   38  32 *    DIVf     v5, v6, v7
+   40  32 *    MULf     v7, v3, v5
+   42  32 *    PshV4    v7
+   43  33 *    PshV4    v2
+   44  34 *    PshV4    v1
+   45  35 *    CALLSYS  445           (void gfxPushTransform(const float, const float, const float = 0.0f, const float = 0.0f, const float = 0.0f, const float = 0.0f, const float = 1.0f, const float = 1.0f))
+- 159,3 -
+   47  27 *    SUSPEND
+   48  27 *    PshG4    71968616
+   50  28 *    CALLSYS  419           (void gfxSetTexture(const int))
+- 160,3 -
+   52  27 *    SUSPEND
+   53  27 *    PshC4    0x3          (i:3, f:4.2039e-045)
+   55  28 *    CALLSYS  433           (void gfxBegin(const DrawMode = DrawTriangles))
+- 161,3 -
+   57  27 *    SUSPEND
+   58  27 *    SetV1    v4, 0x0
+   60  27 *    PshV4    v4
+   61  28 *    PshC4    0x3f800000          (i:1065353216, f:1)
+   63  29 *    PshC4    0x3f800000          (i:1065353216, f:1)
+   65  30 *    PshC4    0x0          (i:0, f:0)
+   67  31 *    PshC4    0x0          (i:0, f:0)
+   69  32 *    PshVPtr  v0
+   70  33 *    ADDSi    v24, 134217780
+   72  33 *    RDSPtr
+   73  33 *    ADDSi    v4, 67108877
+   75  33 *    PopRPtr
+   76  32 *    RDR4     v14
+   77  32 *    PshV4    v14
+   78  33 *    PshVPtr  v0
+   79  34 *    ADDSi    v24, 134217780
+   81  34 *    RDSPtr
+   82  34 *    ADDSi    v0, 67108877
+   84  34 *    PopRPtr
+   85  33 *    RDR4     v15
+   86  33 *    PshV4    v15
+   87  34 *    PshVPtr  v0
+   88  35 *    ADDSi    v24, 134217780
+   90  35 *    RDSPtr
+   91  35 *    ADDSi    v4, 67108877
+   93  35 *    PopRPtr
+   94  34 *    RDR4     v7
+   95  34 *    NEGf     v7
+   96  34 *    SetV4    v6, 0x40000000          (i:1073741824, f:2)
+   98  34 *    DIVf     v5, v7, v6
+  100  34 *    PshV4    v5
+  101  35 *    PshVPtr  v0
+  102  36 *    ADDSi    v24, 134217780
+  104  36 *    RDSPtr
+  105  36 *    ADDSi    v0, 67108877
+  107  36 *    PopRPtr
+  108  35 *    RDR4     v6
+  109  35 *    NEGf     v6
+  110  35 *    SetV4    v7, 0x40000000          (i:1073741824, f:2)
+  112  35 *    DIVf     v11, v6, v7
+  114  35 *    PshV4    v11
+  115  36 *    CALLSYS  440           (void gfxAddRect(const float, const float, const float, const float, const float, const float, const float, const float, const bool = false))
+- 162,3 -
+  117  27 *    SUSPEND
+  118  27 *    CALLSYS  434           (void gfxEnd())
+- 165,3 -
+  120  27 *    SUSPEND
+  121  27 *    LoadThisR v93, 134217780
+  123  27 *    RDR1     v7
+  124  27 *    CpyVtoR4 v7
+  125  27 *    JLowZ    +35              (d:162)
+- 167,4 -
+  127  27 * {
+  127  27 *    SUSPEND
+  128  27 *    PshG4    71969352
+  130  28 *    CALLSYS  419           (void gfxSetTexture(const int))
+- 168,4 -
+  132  27 *    SUSPEND
+  133  27 *    PshC4    0x3          (i:3, f:4.2039e-045)
+  135  28 *    CALLSYS  433           (void gfxBegin(const DrawMode = DrawTriangles))
+- 169,4 -
+  137  27 *    SUSPEND
+  138  27 *    SetV1    v11, 0x0
+  140  27 *    PshV4    v11
+  141  28 *    PshC4    0x3f800000          (i:1065353216, f:1)
+  143  29 *    PshC4    0x3f800000          (i:1065353216, f:1)
+  145  30 *    PshC4    0x0          (i:0, f:0)
+  147  31 *    PshC4    0x0          (i:0, f:0)
+  149  32 *    PshC4    0x42480000          (i:1112014848, f:50)
+  151  33 *    PshC4    0x42000000          (i:1107296256, f:32)
+  153  34 *    PshC4    0x41700000          (i:1097859072, f:15)
+  155  35 *    PshC4    0x40a00000          (i:1084227584, f:5)
+  157  36 *    CALLSYS  440           (void gfxAddRect(const float, const float, const float, const float, const float, const float, const float, const float, const bool = false))
+- 170,4 -
+  159  27 *    SUSPEND
+  160  27 *    CALLSYS  434           (void gfxEnd())
+- 174,3 -
+  162  27 * }
+  162  27 * 1:
+  162  27 *    SUSPEND
+  163  27 *    PshC4    0x0          (i:0, f:0)
+  165  28 *    CALLSYS  419           (void gfxSetTexture(const int))
+- 175,3 -
+  167  27 *    SUSPEND
+  168  27 *    CALLSYS  447           (void gfxPopTransform())
+- 177,3 -
+  170  27 *    SUSPEND
+  171  27 *    PSF      v27
+  172  28 *    CALLSYS  132           (vec2::vec2())
+  174  27 *    ObjInfo  v27, 1
+  174  27 *    PshGPtr  71880608
+  176  28 *    CHKREF
+  177  28 *    PSF      v27
+  178  29 *    COPY     v2, 67108877
+  180  28 *    PopPtr
+  181  27 *    VAR      v27
+  182  28 *    PshVPtr  v0
+  183  29 *    ADDSi    v24, 134217780
+  185  29 *    RDSPtr
+  186  29 *    PSF      v25
+  187  30 *    CALLSYS  133           (vec2::vec2(const vec2&in))
+  189  28 *    ObjInfo  v25, 1
+  189  28 *    VAR      v25
+  190  29 *    PshC4    0x40000000          (i:1073741824, f:2)
+  192  30 *    PSF      v17
+  193  31 *    PshVPtr  v0
+  194  32 *    ADDSi    v24, 134217780
+  196  32 *    RDSPtr
+  197  32 *    CALLSYS  144           (vec2 vec2::opDiv(const float) const)
+  199  29 *    ObjInfo  v17, 1
+  199  29 *    VAR      v17
+  200  30 *    PSF      v19
+  201  31 *    PshVPtr  v0
+  202  32 *    ADDSi    v20, 134217780
+  204  32 *    RDSPtr
+  205  32 *    GETREF   2
+  206  32 *    CALLSYS  142           (vec2 vec2::opSub(const vec2&in) const)
+  208  29 *    ObjInfo  v19, 1
+  208  29 *    ObjInfo  v17, 0
+  208  29 *    PSF      v19
+  209  30 *    GETREF   1
+  210  30 *    PSF      v23
+  211  31 *    CALLSYS  243           (rect2::rect2(const vec2&in, const vec2&in))
+  213  28 *    ObjInfo  v25, 0
+  213  28 *    ObjInfo  v19, 0
+  213  28 *    ObjInfo  v23, 1
+  213  28 *    PSF      v23
+  214  29 *    GETREF   1
+  215  29 *    CALLSYS  244           (bool rect2::contains(const vec2&in) const)
+  217  27 *    CpyRtoV4 v4
+  218  27 *    ObjInfo  v27, 0
+  218  27 *    ObjInfo  v23, 0
+  218  27 *    CpyVtoR4 v4
+  219  27 *    JLowZ    +7              (d:228)
+- 178,4 -
+  221  27 *    SUSPEND
+  222  27 *    PshVPtr  v0
+  223  28 *    ADDSi    v52, 134217780
+  225  28 *    RDSPtr
+  226  28 *    CALLINTF 1200           (void Health::draw())
+- 179,3 -
+  228  27 * 2:
+  228  27 *    SUSPEND
+  229  27 * 0:
+  229  27 *    FREE     v0, 71594464
+  231  27 *    RET      1

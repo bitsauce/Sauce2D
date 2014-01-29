@@ -1,0 +1,58 @@
+bool LevelManager::isCollision(uint, uint, uint)
+
+Temps: 1, 2, 3
+
+Variables: 
+ -001: uint x
+ -002: uint y
+ -003: uint type
+ 000: LevelManager this
+ 002: grid {noname}
+
+
+    0   3 *    VarDecl  0
+    0   3 *    VarDecl  1
+    0   3 *    VarDecl  2
+    0   3 *    PshVPtr  v0
+    1   4 *    CALLSYS  2           (void _builtin_object_::_beh_4_())
+- 229,3 -
+    3   3 *    SUSPEND
+    4   3 *    PshV4    v-2
+    5   4 *    PshV4    v-1
+    6   5 *    PshVPtr  v0
+    7   6 *    ADDSi    v20, 134217815
+    9   6 *    RDSPtr
+   10   6 *    CALLSYS  126           (bool grid::isIndex(uint, uint) const)
+   12   3 *    CpyRtoV4 v1
+   13   3 *    NOT      v1
+   14   3 *    CpyVtoR4 v1
+   15   3 *    JLowZ    +6              (d:23)
+- 230,4 -
+   17   3 *    SUSPEND
+   18   3 *    SetV1    v1, 0x0
+   20   3 * {
+   20   3 * }
+   20   3 *    CpyVtoR4 v1
+   21   3 *    JMP      +21              (d:44)
+- 231,3 -
+   23   3 * 1:
+   23   3 *    SUSPEND
+   24   3 *    PshV4    v-2
+   25   4 *    PshV4    v-1
+   26   5 *    PshVPtr  v0
+   27   6 *    ADDSi    v20, 134217815
+   29   6 *    RDSPtr
+   30   6 *    RefCpyV  v2, 152995640
+   32   6 *    CALLSYS  1432           (uint& grid::at(uint, uint))
+   34   3 *    RDR4     v1
+   35   3 *    FREE     v2, 152995640
+   37   3 *    BAND     v1, v1, v-3
+   39   3 *    CMPIu    v1, 0
+   41   3 *    TNZ
+   42   3 *    CpyRtoV4 v1
+   43   3 * {
+   43   3 * }
+   43   3 *    CpyVtoR4 v1
+   44   3 * 0:
+   44   3 *    FREE     v0, 152275144
+   46   3 *    RET      4

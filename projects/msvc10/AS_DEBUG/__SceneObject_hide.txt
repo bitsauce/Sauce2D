@@ -1,0 +1,21 @@
+void SceneObject::hide()
+
+Temps: 
+
+Variables: 
+ 000: SceneObject this
+
+
+    0   0 *    PshVPtr  v0
+    1   1 *    CALLSYS  2           (void _builtin_object_::_beh_4_())
+- 1,1425 -
+    3   0 *    SUSPEND
+    4   0 *    PshVPtr  v0
+    5   1 *    ADDSi    v16, 134217770
+    7   1 *    RDSPtr
+    8   1 *    CALLSYS  315           (void CSceneObject::hide())
+- 1,1441 -
+   10   0 *    SUSPEND
+   11   0 * 0:
+   11   0 *    FREE     v0, 104704768
+   13   0 *    RET      1

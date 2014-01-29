@@ -1,0 +1,317 @@
+void Shadow::draw()
+
+Temps: 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19
+
+Variables: 
+ 000: Shadow this
+ 007: string {noname}
+
+
+    0  19 *    PshVPtr  v0
+    1  20 *    CALLSYS  2           (void _builtin_object_::_beh_5_())
+- 52,3 -
+    3  19 *    SUSPEND
+    4  19 *    STR      91         (l:13 s:"Clear Shad")
+    5  21 *    CALLSYS  33           (const string& _string_factory_(const int, const uint8&))
+    7  19 *    PshRPtr
+    8  20 *    PSF      v7
+    9  21 *    CALLSYS  35           (string::string(const string&in))
+   11  19 *    ObjInfo  v7, 1
+   11  19 *    PSF      v7
+   12  20 *    CALLSYS  349           (void appPushProfile(const string&in))
+   14  19 *    PSF      v7
+   15  20 *    CALLSYS  36           (string::~string())
+- 53,3 -
+   17  19 *    ObjInfo  v7, 0
+   17  19 *    SUSPEND
+   18  19 *    LoadThisR v56, 134217789
+   20  19 *    RDR4     v8
+   21  19 *    PshV4    v8
+   22  20 *    CALLSYS  469           (void gfxClearTexture(const int))
+- 54,3 -
+   24  19 *    SUSPEND
+   25  19 *    LoadThisR v44, 134217789
+   27  19 *    RDR4     v8
+   28  19 *    PshV4    v8
+   29  20 *    CALLSYS  469           (void gfxClearTexture(const int))
+- 55,3 -
+   31  19 *    SUSPEND
+   32  19 *    CALLSYS  350           (void appPopProfile())
+- 58,3 -
+   34  19 *    SUSPEND
+   35  19 *    PshVPtr  v0
+   36  20 *    ADDSi    v80, 134217789
+   38  20 *    RDSPtr
+   39  20 *    CALLINTF 1027           (void FrameBuffer::bind())
+- 59,3 -
+   41  19 *    SUSPEND
+   42  19 *    PshGPtr  74607232
+   44  20 *    ADDSi    v60, 134217764
+   46  20 *    PopRPtr
+   47  19 *    RDR4     v8
+   48  19 *    PshV4    v8
+   49  20 *    CALLSYS  420           (void gfxSetTexture(const int))
+- 60,3 -
+   51  19 *    SUSPEND
+   52  19 *    PshC4    0x3          (i:3, f:4.2039e-045)
+   54  20 *    CALLSYS  434           (void gfxBegin(const DrawMode = DrawTriangles))
+- 61,3 -
+   56  19 *    SUSPEND
+   57  19 *    SetV1    v12, 0x0
+   59  19 *    PshV4    v12
+   60  20 *    PshC4    0x3f800000          (i:1065353216, f:1)
+   62  21 *    PshC4    0x3f800000          (i:1065353216, f:1)
+   64  22 *    PshC4    0x0          (i:0, f:0)
+   66  23 *    PshC4    0x0          (i:0, f:0)
+   68  24 *    LoadThisR v64, 134217789
+   70  24 *    RDR4     v10
+   71  24 *    iTOf     v10
+   72  24 *    PshVPtr  v0
+   73  25 *    CALLINTF 1217           (float Shadow::getSamplePadding())
+   75  24 *    CpyRtoV4 v8
+   76  24 *    ADDf     v10, v10, v8
+   78  24 *    PshV4    v10
+   79  25 *    LoadThisR v60, 134217789
+   81  25 *    RDR4     v11
+   82  25 *    iTOf     v11
+   83  25 *    PshVPtr  v0
+   84  26 *    CALLINTF 1217           (float Shadow::getSamplePadding())
+   86  25 *    CpyRtoV4 v8
+   87  25 *    ADDf     v11, v11, v8
+   89  25 *    PshV4    v11
+   90  26 *    PshC4    0x0          (i:0, f:0)
+   92  27 *    PshC4    0x0          (i:0, f:0)
+   94  28 *    CALLSYS  441           (void gfxAddRect(const float, const float, const float, const float, const float, const float, const float, const float, const bool = false))
+- 62,3 -
+   96  19 *    SUSPEND
+   97  19 *    CALLSYS  435           (void gfxEnd())
+- 63,3 -
+   99  19 *    SUSPEND
+  100  19 *    PshC4    0x0          (i:0, f:0)
+  102  20 *    CALLSYS  420           (void gfxSetTexture(const int))
+- 66,3 -
+  104  19 *    SUSPEND
+  105  19 *    PshVPtr  v0
+  106  20 *    ADDSi    v80, 134217789
+  108  20 *    RDSPtr
+  109  20 *    CALLINTF 1028           (void FrameBuffer::unbind())
+- 67,3 -
+  111  19 *    SUSPEND
+  112  19 *    PshVPtr  v0
+  113  20 *    ADDSi    v84, 134217789
+  115  20 *    RDSPtr
+  116  20 *    CALLINTF 1027           (void FrameBuffer::bind())
+- 70,3 -
+  118  19 *    SUSPEND
+  119  19 *    LoadThisR v48, 134217789
+  121  19 *    RDR4     v17
+  122  19 *    PshV4    v17
+  123  20 *    CALLSYS  424           (void gfxSetShader(const int))
+- 73,3 -
+  125  19 *    SUSPEND
+  126  19 *    LoadThisR v68, 134217789
+  128  19 *    RDR4     v12
+  129  19 *    PshV4    v12
+  130  20 *    STR      92         (l:6 s:"radius")
+  131  22 *    CALLSYS  33           (const string& _string_factory_(const int, const uint8&))
+  133  20 *    PshRPtr
+  134  21 *    PSF      v7
+  135  22 *    CALLSYS  35           (string::string(const string&in))
+  137  20 *    ObjInfo  v7, 1
+  137  20 *    PSF      v7
+  138  21 *    CALLSYS  476           (void gfxSetUniform1i(const string&in, const int))
+  140  19 *    PSF      v7
+  141  20 *    CALLSYS  36           (string::~string())
+- 74,3 -
+  143  19 *    ObjInfo  v7, 0
+  143  19 *    SUSPEND
+  144  19 *    LoadThisR v72, 134217789
+  146  19 *    RDR4     v8
+  147  19 *    PshV4    v8
+  148  20 *    STR      93         (l:5 s:"steps")
+  149  22 *    CALLSYS  33           (const string& _string_factory_(const int, const uint8&))
+  151  20 *    PshRPtr
+  152  21 *    PSF      v7
+  153  22 *    CALLSYS  35           (string::string(const string&in))
+  155  20 *    ObjInfo  v7, 1
+  155  20 *    PSF      v7
+  156  21 *    CALLSYS  476           (void gfxSetUniform1i(const string&in, const int))
+  158  19 *    PSF      v7
+  159  20 *    CALLSYS  36           (string::~string())
+- 75,3 -
+  161  19 *    ObjInfo  v7, 0
+  161  19 *    SUSPEND
+  162  19 *    LoadThisR v76, 134217789
+  164  19 *    RDR4     v12
+  165  19 *    PshV4    v12
+  166  20 *    STR      94         (l:7 s:"falloff")
+  167  22 *    CALLSYS  33           (const string& _string_factory_(const int, const uint8&))
+  169  20 *    PshRPtr
+  170  21 *    PSF      v7
+  171  22 *    CALLSYS  35           (string::string(const string&in))
+  173  20 *    ObjInfo  v7, 1
+  173  20 *    PSF      v7
+  174  21 *    CALLSYS  480           (void gfxSetUniform1f(const string&in, const float))
+  176  19 *    PSF      v7
+  177  20 *    CALLSYS  36           (string::~string())
+- 76,3 -
+  179  19 *    ObjInfo  v7, 0
+  179  19 *    SUSPEND
+  180  19 *    LoadThisR v64, 134217789
+  182  19 *    RDR4     v17
+  183  19 *    iTOf     v17
+  184  19 *    PshVPtr  v0
+  185  20 *    CALLINTF 1217           (float Shadow::getSamplePadding())
+  187  19 *    CpyRtoV4 v8
+  188  19 *    ADDf     v12, v17, v8
+  190  19 *    PshV4    v12
+  191  20 *    LoadThisR v60, 134217789
+  193  20 *    RDR4     v17
+  194  20 *    iTOf     v17
+  195  20 *    PshVPtr  v0
+  196  21 *    CALLINTF 1217           (float Shadow::getSamplePadding())
+  198  20 *    CpyRtoV4 v8
+  199  20 *    ADDf     v11, v17, v8
+  201  20 *    PshV4    v11
+  202  21 *    STR      95         (l:7 s:"texsize")
+  203  23 *    CALLSYS  33           (const string& _string_factory_(const int, const uint8&))
+  205  21 *    PshRPtr
+  206  22 *    PSF      v7
+  207  23 *    CALLSYS  35           (string::string(const string&in))
+  209  21 *    ObjInfo  v7, 1
+  209  21 *    PSF      v7
+  210  22 *    CALLSYS  481           (void gfxSetUniform2f(const string&in, const float, const float))
+  212  19 *    PSF      v7
+  213  20 *    CALLSYS  36           (string::~string())
+- 79,3 -
+  215  19 *    ObjInfo  v7, 0
+  215  19 *    SUSPEND
+  216  19 *    LoadThisR v56, 134217789
+  218  19 *    RDR4     v17
+  219  19 *    PshV4    v17
+  220  20 *    STR      71         (l:7 s:"texture")
+  221  22 *    CALLSYS  33           (const string& _string_factory_(const int, const uint8&))
+  223  20 *    PshRPtr
+  224  21 *    PSF      v7
+  225  22 *    CALLSYS  35           (string::string(const string&in))
+  227  20 *    ObjInfo  v7, 1
+  227  20 *    PSF      v7
+  228  21 *    CALLSYS  484           (void gfxSetUniformTexture(const string&in, const int))
+  230  19 *    PSF      v7
+  231  20 *    CALLSYS  36           (string::~string())
+- 80,3 -
+  233  19 *    ObjInfo  v7, 0
+  233  19 *    SUSPEND
+  234  19 *    PshC4    0x3          (i:3, f:4.2039e-045)
+  236  20 *    CALLSYS  434           (void gfxBegin(const DrawMode = DrawTriangles))
+- 81,3 -
+  238  19 *    SUSPEND
+  239  19 *    SetV1    v13, 0x0
+  241  19 *    PshV4    v13
+  242  20 *    PshC4    0x3f800000          (i:1065353216, f:1)
+  244  21 *    PshC4    0x3f800000          (i:1065353216, f:1)
+  246  22 *    PshC4    0x0          (i:0, f:0)
+  248  23 *    PshC4    0x0          (i:0, f:0)
+  250  24 *    LoadThisR v64, 134217789
+  252  24 *    RDR4     v8
+  253  24 *    iTOf     v8
+  254  24 *    PshVPtr  v0
+  255  25 *    CALLINTF 1217           (float Shadow::getSamplePadding())
+  257  24 *    CpyRtoV4 v11
+  258  24 *    ADDf     v17, v8, v11
+  260  24 *    PshV4    v17
+  261  25 *    LoadThisR v60, 134217789
+  263  25 *    RDR4     v8
+  264  25 *    iTOf     v8
+  265  25 *    PshVPtr  v0
+  266  26 *    CALLINTF 1217           (float Shadow::getSamplePadding())
+  268  25 *    CpyRtoV4 v11
+  269  25 *    ADDf     v12, v8, v11
+  271  25 *    PshV4    v12
+  272  26 *    PshC4    0x0          (i:0, f:0)
+  274  27 *    PshC4    0x0          (i:0, f:0)
+  276  28 *    CALLSYS  441           (void gfxAddRect(const float, const float, const float, const float, const float, const float, const float, const float, const bool = false))
+- 82,3 -
+  278  19 *    SUSPEND
+  279  19 *    CALLSYS  435           (void gfxEnd())
+- 83,3 -
+  281  19 *    SUSPEND
+  282  19 *    PshC4    0x0          (i:0, f:0)
+  284  20 *    CALLSYS  424           (void gfxSetShader(const int))
+- 84,3 -
+  286  19 *    SUSPEND
+  287  19 *    PshC4    0x0          (i:0, f:0)
+  289  20 *    CALLSYS  420           (void gfxSetTexture(const int))
+- 87,3 -
+  291  19 *    SUSPEND
+  292  19 *    PshVPtr  v0
+  293  20 *    ADDSi    v84, 134217789
+  295  20 *    RDSPtr
+  296  20 *    CALLINTF 1028           (void FrameBuffer::unbind())
+- 90,3 -
+  298  19 *    SUSPEND
+  299  19 *    LoadThisR v44, 134217789
+  301  19 *    RDR4     v13
+  302  19 *    PshV4    v13
+  303  20 *    CALLSYS  420           (void gfxSetTexture(const int))
+- 91,3 -
+  305  19 *    SUSPEND
+  306  19 *    PshC4    0x3          (i:3, f:4.2039e-045)
+  308  20 *    CALLSYS  434           (void gfxBegin(const DrawMode = DrawTriangles))
+- 92,3 -
+  310  19 *    SUSPEND
+  311  19 *    SetV1    v14, 0x0
+  313  19 *    PshV4    v14
+  314  20 *    PshC4    0x3f800000          (i:1065353216, f:1)
+  316  21 *    PshC4    0x3f800000          (i:1065353216, f:1)
+  318  22 *    PshC4    0x0          (i:0, f:0)
+  320  23 *    PshC4    0x0          (i:0, f:0)
+  322  24 *    PshGPtr  74560968
+  324  25 *    ADDSi    v4, 67108877
+  326  25 *    PopRPtr
+  327  24 *    RDR4     v13
+  328  24 *    fTOi     v13
+  329  24 *    iTOf     v13
+  330  24 *    PshVPtr  v0
+  331  25 *    CALLINTF 1216           (float Shadow::getTerrainPadding())
+  333  24 *    CpyRtoV4 v8
+  334  24 *    ADDf     v11, v13, v8
+  336  24 *    PshV4    v11
+  337  25 *    PshGPtr  74560968
+  339  26 *    ADDSi    v0, 67108877
+  341  26 *    PopRPtr
+  342  25 *    RDR4     v8
+  343  25 *    fTOi     v8
+  344  25 *    iTOf     v8
+  345  25 *    PshVPtr  v0
+  346  26 *    CALLINTF 1216           (float Shadow::getTerrainPadding())
+  348  25 *    CpyRtoV4 v13
+  349  25 *    ADDf     v12, v8, v13
+  351  25 *    PshV4    v12
+  352  26 *    PshVPtr  v0
+  353  27 *    CALLINTF 1216           (float Shadow::getTerrainPadding())
+  355  26 *    CpyRtoV4 v13
+  356  26 *    NEGf     v13
+  357  26 *    SetV4    v8, 0x40000000          (i:1073741824, f:2)
+  359  26 *    DIVf     v17, v13, v8
+  361  26 *    PshV4    v17
+  362  27 *    PshVPtr  v0
+  363  28 *    CALLINTF 1216           (float Shadow::getTerrainPadding())
+  365  27 *    CpyRtoV4 v8
+  366  27 *    NEGf     v8
+  367  27 *    SetV4    v13, 0x40000000          (i:1073741824, f:2)
+  369  27 *    DIVf     v15, v8, v13
+  371  27 *    PshV4    v15
+  372  28 *    CALLSYS  441           (void gfxAddRect(const float, const float, const float, const float, const float, const float, const float, const float, const bool = false))
+- 93,3 -
+  374  19 *    SUSPEND
+  375  19 *    CALLSYS  435           (void gfxEnd())
+- 94,3 -
+  377  19 *    SUSPEND
+  378  19 *    PshC4    0x0          (i:0, f:0)
+  380  20 *    CALLSYS  420           (void gfxSetTexture(const int))
+- 95,3 -
+  382  19 *    SUSPEND
+  383  19 * 0:
+  383  19 *    FREE     v0, 74313064
+  385  19 *    RET      1

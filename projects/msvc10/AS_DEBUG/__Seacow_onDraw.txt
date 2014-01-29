@@ -1,0 +1,24 @@
+void Seacow::onDraw(DrawEvent)
+
+Temps: 
+
+Variables: 
+ -001: DrawEvent e
+ 000: Seacow this
+
+
+    0   0 *    VarDecl  0
+    0   0 *    PshVPtr  v0
+    1   1 *    CALLSYS  2           (void _builtin_object_::_beh_4_())
+- 32,3 -
+    3   0 *    SUSPEND
+    4   0 *    PshVPtr  v0
+    5   1 *    ADDSi    v28, 134217836
+    7   1 *    RDSPtr
+    8   1 *    CALLSYS  479           (void CSprite::draw())
+- 33,3 -
+   10   0 *    SUSPEND
+   11   0 * 0:
+   11   0 *    FREE     v-1, 112324336
+   13   0 *    FREE     v0, 152266448
+   15   0 *    RET      2

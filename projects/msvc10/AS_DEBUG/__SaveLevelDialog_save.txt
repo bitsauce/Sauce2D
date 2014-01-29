@@ -1,0 +1,31 @@
+void SaveLevelDialog::save()
+
+Temps: 
+
+Variables: 
+ 000: SaveLevelDialog this
+
+
+    0   0 *    PshVPtr  v0
+    1   1 *    CALLSYS  2           (void _builtin_object_::_beh_4_())
+- 128,3 -
+    3   0 *    SUSPEND
+    4   0 *    PshVPtr  v0
+    5   1 *    ADDSi    v56, 134217808
+    7   1 *    RDSPtr
+    8   1 *    CALLSYS  265           (void CFunctionPtr::call())
+- 129,3 -
+   10   0 *    SUSPEND
+   11   0 *    PshVPtr  v0
+   12   1 *    ADDSi    v52, 134217808
+   14   1 *    RDSPtr
+   15   1 *    CALLSYS  265           (void CFunctionPtr::call())
+- 130,3 -
+   17   0 *    SUSPEND
+   18   0 *    PshVPtr  v0
+   19   1 *    CALLINTF 1111           (void SceneObject::hide())
+- 131,3 -
+   21   0 *    SUSPEND
+   22   0 * 0:
+   22   0 *    FREE     v0, 152234304
+   24   0 *    RET      1

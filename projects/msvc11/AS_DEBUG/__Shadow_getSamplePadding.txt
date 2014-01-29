@@ -1,0 +1,29 @@
+float Shadow::getSamplePadding()
+
+Temps: 1, 2, 3, 4
+
+Variables: 
+ 000: Shadow this
+
+
+    0   4 *    PshVPtr  v0
+    1   5 *    CALLSYS  2           (void _builtin_object_::_beh_5_())
+- 46,3 -
+    3   4 *    SUSPEND
+    4   4 *    LoadThisR v68, 134217789
+    6   4 *    RDR4     v1
+    7   4 *    LoadThisR v72, 134217789
+    9   4 *    RDR4     v2
+   10   4 *    MULi     v1, v1, v2
+   12   4 *    iTOf     v1
+   13   4 *    MULIf    v2, v1, 2.000000
+   16   4 *    LoadThisR v52, 134217789
+   18   4 *    RDR4     v4
+   19   4 *    iTOf     v4
+   20   4 *    DIVf     v3, v2, v4
+   22   4 * {
+   22   4 * }
+   22   4 *    CpyVtoR4 v3
+   23   4 * 0:
+   23   4 *    FREE     v0, 74313064
+   25   4 *    RET      1

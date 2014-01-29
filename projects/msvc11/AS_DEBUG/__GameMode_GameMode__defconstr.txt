@@ -1,0 +1,9 @@
+GameMode::GameMode()
+
+Temps: 
+
+Variables: 
+ 000: GameMode this
+
+
+    0   0 *    RET      1

@@ -1,0 +1,31 @@
+Economy::Economy()
+
+Temps: 1
+
+Variables: 
+ 000: Economy this
+
+
+- 14,16 -
+    0   1 *    SUSPEND
+    1   1 *    PshVPtr  v0
+    2   2 *    CALL     584           (Entity::Entity())
+- 20,3 -
+    4   1 *    SUSPEND
+    5   1 *    SetV4    v1, 0x0          (i:0, f:0)
+    7   1 *    LoadThisR v44, 134217796
+    9   1 *    WRTV4    v1
+- 21,3 -
+   10   1 *    SUSPEND
+   11   1 *    SetV4    v1, 0x3dcccccd          (i:1036831949, f:0.1)
+   13   1 *    LoadThisR v48, 134217796
+   15   1 *    WRTV4    v1
+- 22,3 -
+   16   1 *    SUSPEND
+   17   1 *    SetV4    v1, 0x0          (i:0, f:0)
+   19   1 *    LoadThisR v52, 134217796
+   21   1 *    WRTV4    v1
+- 23,3 -
+   22   1 *    SUSPEND
+   23   1 * 0:
+   23   1 *    RET      1

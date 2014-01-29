@@ -1,0 +1,89 @@
+Minion::Minion(const Team)
+
+Temps: 1, 2
+
+Variables: 
+ -001: const Team team
+ 000: Minion this
+ 002: Action {noname}
+
+
+- 5,7 -
+    0   2 *    VarDecl  0
+    0   2 *    SUSPEND
+    1   2 *    PshVPtr  v0
+    2   3 *    ADDSi    v92, 134217774
+    4   3 *    ALLOC    0x57e6a38, 132             (type:vec2)
+- 22,3 -
+    7   2 *    SUSPEND
+    8   2 *    PshV4    v-1
+    9   3 *    PshVPtr  v0
+   10   4 *    CALL     706           (UnitBase::UnitBase(const Team))
+- 6,7 -
+   12   2 *    SUSPEND
+   13   2 *    SetV1    v1, 0x0
+   15   2 *    LoadThisR v96, 134217774
+   17   2 *    WRTV1    v1
+- 7,15 -
+   18   2 *    SUSPEND
+   19   2 *    SetV1    v1, 0x0
+   21   2 *    LoadThisR v97, 134217774
+   23   2 *    WRTV1    v1
+- 12,8 -
+   24   2 *    SUSPEND
+   25   2 *    SetV4    v1, 0x0          (i:0, f:0)
+   27   2 *    LoadThisR v108, 134217774
+   29   2 *    WRTV4    v1
+- 15,8 -
+   30   2 *    SUSPEND
+   31   2 *    SetV4    v1, 0x42f00000          (i:1123024896, f:120)
+   33   2 *    LoadThisR v112, 134217774
+   35   2 *    WRTV4    v1
+- 16,8 -
+   36   2 *    SUSPEND
+   37   2 *    SetV4    v1, 0x43480000          (i:1128792064, f:200)
+   39   2 *    LoadThisR v116, 134217774
+   41   2 *    WRTV4    v1
+- 17,7 -
+   42   2 *    SUSPEND
+   43   2 *    SetV1    v1, 0x0
+   45   2 *    LoadThisR v120, 134217774
+   47   2 *    WRTV1    v1
+- 18,8 -
+   48   2 *    SUSPEND
+   49   2 *    SetV4    v1, 0x3f800000          (i:1065353216, f:1)
+   51   2 *    LoadThisR v124, 134217774
+   53   2 *    WRTV4    v1
+- 24,3 -
+   54   2 *    SUSPEND
+   55   2 *    CALL     779           (Action@ Action())
+   57   2 *    STOREOBJ v2
+   58   2 *    VAR      v2
+   59   3 *    PshVPtr  v0
+   60   4 *    ADDSi    v100, 134217774
+   62   4 *    GETOBJREF 1
+   63   4 *    REFCPY   0x58d6b18
+   65   3 *    FREE     v2, 93154072
+   67   3 *    PopPtr
+- 25,3 -
+   68   2 *    SUSPEND
+   69   2 *    PshVPtr  v0
+   70   3 *    ADDSi    v100, 134217774
+   72   3 *    RDSPtr
+   73   3 *    RefCpyV  v2, 93154072
+   75   3 *    PopPtr
+   76   2 *    VAR      v2
+   77   3 *    PshVPtr  v0
+   78   4 *    ADDSi    v76, 134217774
+   80   4 *    RDSPtr
+   81   4 *    GETREF   1
+   82   4 *    CALLSYS  769           (void array::insertLast(Action@const&in))
+   84   2 *    FREE     v2, 93154072
+- 26,3 -
+   86   2 *    SUSPEND
+   87   2 *    PshVPtr  v0
+   88   3 *    CALLINTF 1199           (void Minion::hardContinue())
+- 27,3 -
+   90   2 *    SUSPEND
+   91   2 * 0:
+   91   2 *    RET      2

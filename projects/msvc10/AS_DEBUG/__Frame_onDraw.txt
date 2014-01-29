@@ -1,0 +1,386 @@
+void Frame::onDraw(DrawEvent)
+
+Temps: 1, 2, 3, 8, 10, 12, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24
+
+Variables: 
+ -001: DrawEvent e
+ 004: const float f
+ 006: Vector2 pos
+ 014: Vector2 size
+ 000: Frame this
+ 001: CTexture {noname}
+ 002: CTexture {noname}
+ 008: Vector2 {noname}
+ 010: Vector2 {noname}
+ 012: Vector2 {noname}
+
+
+    0  24 *    VarDecl  0
+    0  24 *    PshVPtr  v0
+    1  25 *    CALLSYS  2           (void _builtin_object_::_beh_4_())
+- 30,3 -
+    3  24 *    SUSPEND
+    4  24 *    PshVPtr  v0
+    5  25 *    ADDSi    v52, 134217802
+    7  25 *    RDSPtr
+    8  25 *    RefCpyV  v1, 88946072
+   10  25 *    PopPtr
+   11  24 *    ClrVPtr  v2
+   12  24 *    CmpPtr   v1, v2
+   14  24 *    TZ
+   15  24 *    CpyRtoV4 v3
+   16  24 *    FREE     v1, 88946072
+   18  24 *    FREE     v2, 88946072
+   20  24 *    CpyVtoR4 v3
+   21  24 *    JLowZ    +3              (d:26)
+- 31,4 -
+   23  24 *    SUSPEND
+   24  24 * {
+   24  24 * }
+   24  24 *    JMP      +512              (d:538)
+- 34,3 -
+   26  24 * 1:
+   26  24 *    SUSPEND
+   27  24 *    VarDecl  1
+   27  24 *    SetV4    v4, 0x3eaaaaab          (i:1051372203, f:0.333333)
+- 35,3 -
+   29  24 *    SUSPEND
+   30  24 *    VarDecl  2
+   30  24 *    PSF      v6
+   31  25 *    CALLSYS  130           (void Vector2::_beh_0_())
+   33  24 *    ObjInfo  v6, 1
+   33  24 *    PSF      v10
+   34  25 *    PshVPtr  v0
+   35  26 *    CALLINTF 1213           (Vector2 SceneObject::pos() const)
+   37  24 *    ObjInfo  v10, 1
+   37  24 *    VAR      v10
+   38  25 *    PSF      v12
+   39  26 *    PSF      v8
+   40  27 *    PshGPtr  89200256
+   42  28 *    CHKREF
+   43  28 *    CALLSYS  391           (Vector2 CViewport::gamePos() const)
+   45  26 *    ObjInfo  v8, 1
+   45  26 *    PSF      v8
+   46  27 *    GETREF   2
+   47  27 *    CALLSYS  138           (Vector2 Vector2::opAdd(const Vector2&in) const)
+   49  24 *    ObjInfo  v12, 1
+   49  24 *    ObjInfo  v10, 0
+   49  24 *    PSF      v12
+   50  25 *    ObjInfo  v8, 0
+   50  25 *    PSF      v6
+   51  26 *    COPY     v2, 67108877
+   53  25 *    ObjInfo  v12, 0
+   53  25 *    PopPtr
+- 36,3 -
+   54  24 *    SUSPEND
+   55  24 *    VarDecl  3
+   55  24 *    PSF      v14
+   56  25 *    CALLSYS  130           (void Vector2::_beh_0_())
+   58  24 *    ObjInfo  v14, 1
+   58  24 *    PSF      v10
+   59  25 *    PshVPtr  v0
+   60  26 *    CALLINTF 1220           (Vector2 SceneObject::size() const)
+   62  24 *    ObjInfo  v10, 1
+   62  24 *    PSF      v10
+   63  25 *    PSF      v14
+   64  26 *    COPY     v2, 67108877
+   66  25 *    ObjInfo  v10, 0
+   66  25 *    PopPtr
+- 39,3 -
+   67  24 *    SUSPEND
+   68  24 *    LoadVObjR v14, v0, 67108877
+   71  24 *    RDR4     v3
+   72  24 *    CMPIf    v3, 24.000000
+   74  24 *    JNS      +4              (d:80)
+   76  24 *    SetV1    v16, 0x1
+   78  24 *    JMP      +10              (d:90)
+   80  24 * 3:
+   80  24 *    LoadVObjR v14, v4, 67108877
+   83  24 *    RDR4     v15
+   84  24 *    CMPIf    v15, 24.000000
+   86  24 *    TS
+   87  24 *    CpyRtoV4 v15
+   88  24 *    CpyVtoV4 v16, v15
+   90  24 * 4:
+   90  24 *    CpyVtoR4 v16
+   91  24 *    JLowZ    +3              (d:96)
+- 40,4 -
+   93  24 *    SUSPEND
+   94  24 * {
+   94  24 *    ObjInfo  v14, 0
+   94  24 *    ObjInfo  v6, 0
+   94  24 * }
+   94  24 *    JMP      +442              (d:538)
+- 43,3 -
+   96  24 * 2:
+   96  24 *    SUSPEND
+   97  24 *    PshC4    0x3f2aaaab          (i:1059760811, f:0.666667)
+   99  25 *    PshC4    0x3f800000          (i:1065353216, f:1)
+  101  26 *    PshC4    0x0          (i:0, f:0)
+  103  27 *    PshC4    0x3eaaaaab          (i:1051372203, f:0.333333)
+  105  28 *    PshVPtr  v0
+  106  29 *    ADDSi    v52, 134217802
+  108  29 *    RDSPtr
+  109  29 *    RefCpyV  v1, 88946072
+  111  29 *    PopPtr
+  112  28 *    VAR      v1
+  113  29 *    PshC4    0x41000000          (i:1090519040, f:8)
+  115  30 *    PshC4    0x41000000          (i:1090519040, f:8)
+  117  31 *    LoadVObjR v6, v4, 67108877
+  120  31 *    RDR4     v3
+  121  31 *    LoadVObjR v14, v4, 67108877
+  124  31 *    RDR4     v16
+  125  31 *    ADDf     v15, v3, v16
+  127  31 *    SUBIf    v16, v15, 8.000000
+  130  31 *    PshV4    v16
+  131  32 *    LoadVObjR v6, v0, 67108877
+  134  32 *    RDR4     v15
+  135  32 *    PshV4    v15
+  136  33 *    PshGPtr  89185096
+  138  34 *    CHKREF
+  139  34 *    GETOBJ   5
+  140  34 *    CALLSYS  455           (void CGFX::drawTextureCoord(const float, const float, const float, const float, CTexture@, const float arg5 = 1.0f, const float arg6 = 1.0f, const float arg7 = 1.0f, const float arg8 = 1.0f))
+- 44,3 -
+  142  24 *    SUSPEND
+  143  24 *    PshC4    0x3f2aaaab          (i:1059760811, f:0.666667)
+  145  25 *    PshC4    0x3f800000          (i:1065353216, f:1)
+  147  26 *    PshC4    0x3eaaaaab          (i:1051372203, f:0.333333)
+  149  27 *    PshC4    0x3f2aaaab          (i:1059760811, f:0.666667)
+  151  28 *    PshVPtr  v0
+  152  29 *    ADDSi    v52, 134217802
+  154  29 *    RDSPtr
+  155  29 *    RefCpyV  v2, 88946072
+  157  29 *    PopPtr
+  158  28 *    VAR      v2
+  159  29 *    PshC4    0x41000000          (i:1090519040, f:8)
+  161  30 *    LoadVObjR v14, v0, 67108877
+  164  30 *    RDR4     v3
+  165  30 *    SUBIf    v16, v3, 16.000000
+  168  30 *    PshV4    v16
+  169  31 *    LoadVObjR v6, v4, 67108877
+  172  31 *    RDR4     v15
+  173  31 *    LoadVObjR v14, v4, 67108877
+  176  31 *    RDR4     v3
+  177  31 *    ADDf     v23, v15, v3
+  179  31 *    SUBIf    v3, v23, 8.000000
+  182  31 *    PshV4    v3
+  183  32 *    LoadVObjR v6, v0, 67108877
+  186  32 *    RDR4     v17
+  187  32 *    ADDIf    v22, v17, 8.000000
+  190  32 *    PshV4    v22
+  191  33 *    PshGPtr  89185096
+  193  34 *    CHKREF
+  194  34 *    GETOBJ   5
+  195  34 *    CALLSYS  455           (void CGFX::drawTextureCoord(const float, const float, const float, const float, CTexture@, const float arg5 = 1.0f, const float arg6 = 1.0f, const float arg7 = 1.0f, const float arg8 = 1.0f))
+- 45,3 -
+  197  24 *    SUSPEND
+  198  24 *    PshC4    0x3f2aaaab          (i:1059760811, f:0.666667)
+  200  25 *    PshC4    0x3f800000          (i:1065353216, f:1)
+  202  26 *    PshC4    0x3f2aaaab          (i:1059760811, f:0.666667)
+  204  27 *    PshC4    0x3f800000          (i:1065353216, f:1)
+  206  28 *    PshVPtr  v0
+  207  29 *    ADDSi    v52, 134217802
+  209  29 *    RDSPtr
+  210  29 *    RefCpyV  v1, 88946072
+  212  29 *    PopPtr
+  213  28 *    VAR      v1
+  214  29 *    PshC4    0x41000000          (i:1090519040, f:8)
+  216  30 *    PshC4    0x41000000          (i:1090519040, f:8)
+  218  31 *    LoadVObjR v6, v4, 67108877
+  221  31 *    RDR4     v23
+  222  31 *    LoadVObjR v14, v4, 67108877
+  225  31 *    RDR4     v22
+  226  31 *    ADDf     v3, v23, v22
+  228  31 *    SUBIf    v22, v3, 8.000000
+  231  31 *    PshV4    v22
+  232  32 *    LoadVObjR v6, v0, 67108877
+  235  32 *    RDR4     v17
+  236  32 *    LoadVObjR v14, v0, 67108877
+  239  32 *    RDR4     v3
+  240  32 *    ADDf     v16, v17, v3
+  242  32 *    SUBIf    v3, v16, 8.000000
+  245  32 *    PshV4    v3
+  246  33 *    PshGPtr  89185096
+  248  34 *    CHKREF
+  249  34 *    GETOBJ   5
+  250  34 *    CALLSYS  455           (void CGFX::drawTextureCoord(const float, const float, const float, const float, CTexture@, const float arg5 = 1.0f, const float arg6 = 1.0f, const float arg7 = 1.0f, const float arg8 = 1.0f))
+- 46,3 -
+  252  24 *    SUSPEND
+  253  24 *    PshC4    0x3eaaaaab          (i:1051372203, f:0.333333)
+  255  25 *    PshC4    0x3f2aaaab          (i:1059760811, f:0.666667)
+  257  26 *    PshC4    0x3f2aaaab          (i:1059760811, f:0.666667)
+  259  27 *    PshC4    0x3f800000          (i:1065353216, f:1)
+  261  28 *    PshVPtr  v0
+  262  29 *    ADDSi    v52, 134217802
+  264  29 *    RDSPtr
+  265  29 *    RefCpyV  v2, 88946072
+  267  29 *    PopPtr
+  268  28 *    VAR      v2
+  269  29 *    LoadVObjR v14, v4, 67108877
+  272  29 *    RDR4     v23
+  273  29 *    SUBIf    v22, v23, 16.000000
+  276  29 *    PshV4    v22
+  277  30 *    PshC4    0x41000000          (i:1090519040, f:8)
+  279  31 *    LoadVObjR v6, v4, 67108877
+  282  31 *    RDR4     v3
+  283  31 *    ADDIf    v21, v3, 8.000000
+  286  31 *    PshV4    v21
+  287  32 *    LoadVObjR v6, v0, 67108877
+  290  32 *    RDR4     v23
+  291  32 *    LoadVObjR v14, v0, 67108877
+  294  32 *    RDR4     v3
+  295  32 *    ADDf     v19, v23, v3
+  297  32 *    SUBIf    v3, v19, 8.000000
+  300  32 *    PshV4    v3
+  301  33 *    PshGPtr  89185096
+  303  34 *    CHKREF
+  304  34 *    GETOBJ   5
+  305  34 *    CALLSYS  455           (void CGFX::drawTextureCoord(const float, const float, const float, const float, CTexture@, const float arg5 = 1.0f, const float arg6 = 1.0f, const float arg7 = 1.0f, const float arg8 = 1.0f))
+- 47,3 -
+  307  24 *    SUSPEND
+  308  24 *    PshC4    0x0          (i:0, f:0)
+  310  25 *    PshC4    0x3eaaaaab          (i:1051372203, f:0.333333)
+  312  26 *    PshC4    0x3f2aaaab          (i:1059760811, f:0.666667)
+  314  27 *    PshC4    0x3f800000          (i:1065353216, f:1)
+  316  28 *    PshVPtr  v0
+  317  29 *    ADDSi    v52, 134217802
+  319  29 *    RDSPtr
+  320  29 *    RefCpyV  v1, 88946072
+  322  29 *    PopPtr
+  323  28 *    VAR      v1
+  324  29 *    PshC4    0x41000000          (i:1090519040, f:8)
+  326  30 *    PshC4    0x41000000          (i:1090519040, f:8)
+  328  31 *    LoadVObjR v6, v4, 67108877
+  331  31 *    RDR4     v24
+  332  31 *    PshV4    v24
+  333  32 *    LoadVObjR v6, v0, 67108877
+  336  32 *    RDR4     v17
+  337  32 *    LoadVObjR v14, v0, 67108877
+  340  32 *    RDR4     v3
+  341  32 *    ADDf     v21, v17, v3
+  343  32 *    SUBIf    v3, v21, 8.000000
+  346  32 *    PshV4    v3
+  347  33 *    PshGPtr  89185096
+  349  34 *    CHKREF
+  350  34 *    GETOBJ   5
+  351  34 *    CALLSYS  455           (void CGFX::drawTextureCoord(const float, const float, const float, const float, CTexture@, const float arg5 = 1.0f, const float arg6 = 1.0f, const float arg7 = 1.0f, const float arg8 = 1.0f))
+- 48,3 -
+  353  24 *    SUSPEND
+  354  24 *    PshC4    0x0          (i:0, f:0)
+  356  25 *    PshC4    0x3eaaaaab          (i:1051372203, f:0.333333)
+  358  26 *    PshC4    0x3eaaaaab          (i:1051372203, f:0.333333)
+  360  27 *    PshC4    0x3f2aaaab          (i:1059760811, f:0.666667)
+  362  28 *    PshVPtr  v0
+  363  29 *    ADDSi    v52, 134217802
+  365  29 *    RDSPtr
+  366  29 *    RefCpyV  v2, 88946072
+  368  29 *    PopPtr
+  369  28 *    VAR      v2
+  370  29 *    PshC4    0x41000000          (i:1090519040, f:8)
+  372  30 *    LoadVObjR v14, v0, 67108877
+  375  30 *    RDR4     v23
+  376  30 *    SUBIf    v24, v23, 16.000000
+  379  30 *    PshV4    v24
+  380  31 *    LoadVObjR v6, v4, 67108877
+  383  31 *    RDR4     v19
+  384  31 *    PshV4    v19
+  385  32 *    LoadVObjR v6, v0, 67108877
+  388  32 *    RDR4     v3
+  389  32 *    ADDIf    v15, v3, 8.000000
+  392  32 *    PshV4    v15
+  393  33 *    PshGPtr  89185096
+  395  34 *    CHKREF
+  396  34 *    GETOBJ   5
+  397  34 *    CALLSYS  455           (void CGFX::drawTextureCoord(const float, const float, const float, const float, CTexture@, const float arg5 = 1.0f, const float arg6 = 1.0f, const float arg7 = 1.0f, const float arg8 = 1.0f))
+- 49,3 -
+  399  24 *    SUSPEND
+  400  24 *    PshC4    0x0          (i:0, f:0)
+  402  25 *    PshC4    0x3eaaaaab          (i:1051372203, f:0.333333)
+  404  26 *    PshC4    0x0          (i:0, f:0)
+  406  27 *    PshC4    0x3eaaaaab          (i:1051372203, f:0.333333)
+  408  28 *    PshVPtr  v0
+  409  29 *    ADDSi    v52, 134217802
+  411  29 *    RDSPtr
+  412  29 *    RefCpyV  v1, 88946072
+  414  29 *    PopPtr
+  415  28 *    VAR      v1
+  416  29 *    PshC4    0x41000000          (i:1090519040, f:8)
+  418  30 *    PshC4    0x41000000          (i:1090519040, f:8)
+  420  31 *    LoadVObjR v6, v4, 67108877
+  423  31 *    RDR4     v21
+  424  31 *    PshV4    v21
+  425  32 *    LoadVObjR v6, v0, 67108877
+  428  32 *    RDR4     v17
+  429  32 *    PshV4    v17
+  430  33 *    PshGPtr  89185096
+  432  34 *    CHKREF
+  433  34 *    GETOBJ   5
+  434  34 *    CALLSYS  455           (void CGFX::drawTextureCoord(const float, const float, const float, const float, CTexture@, const float arg5 = 1.0f, const float arg6 = 1.0f, const float arg7 = 1.0f, const float arg8 = 1.0f))
+- 50,3 -
+  436  24 *    SUSPEND
+  437  24 *    PshC4    0x3eaaaaab          (i:1051372203, f:0.333333)
+  439  25 *    PshC4    0x3f2aaaab          (i:1059760811, f:0.666667)
+  441  26 *    PshC4    0x0          (i:0, f:0)
+  443  27 *    PshC4    0x3eaaaaab          (i:1051372203, f:0.333333)
+  445  28 *    PshVPtr  v0
+  446  29 *    ADDSi    v52, 134217802
+  448  29 *    RDSPtr
+  449  29 *    RefCpyV  v2, 88946072
+  451  29 *    PopPtr
+  452  28 *    VAR      v2
+  453  29 *    LoadVObjR v14, v4, 67108877
+  456  29 *    RDR4     v3
+  457  29 *    SUBIf    v21, v3, 16.000000
+  460  29 *    PshV4    v21
+  461  30 *    PshC4    0x41000000          (i:1090519040, f:8)
+  463  31 *    LoadVObjR v6, v4, 67108877
+  466  31 *    RDR4     v17
+  467  31 *    ADDIf    v20, v17, 8.000000
+  470  31 *    PshV4    v20
+  471  32 *    LoadVObjR v6, v0, 67108877
+  474  32 *    RDR4     v23
+  475  32 *    PshV4    v23
+  476  33 *    PshGPtr  89185096
+  478  34 *    CHKREF
+  479  34 *    GETOBJ   5
+  480  34 *    CALLSYS  455           (void CGFX::drawTextureCoord(const float, const float, const float, const float, CTexture@, const float arg5 = 1.0f, const float arg6 = 1.0f, const float arg7 = 1.0f, const float arg8 = 1.0f))
+- 51,3 -
+  482  24 *    SUSPEND
+  483  24 *    PshC4    0x3eaaaaab          (i:1051372203, f:0.333333)
+  485  25 *    PshC4    0x3f2aaaab          (i:1059760811, f:0.666667)
+  487  26 *    PshC4    0x3eaaaaab          (i:1051372203, f:0.333333)
+  489  27 *    PshC4    0x3f2aaaab          (i:1059760811, f:0.666667)
+  491  28 *    PshVPtr  v0
+  492  29 *    ADDSi    v52, 134217802
+  494  29 *    RDSPtr
+  495  29 *    RefCpyV  v1, 88946072
+  497  29 *    PopPtr
+  498  28 *    VAR      v1
+  499  29 *    LoadVObjR v14, v4, 67108877
+  502  29 *    RDR4     v3
+  503  29 *    SUBIf    v20, v3, 16.000000
+  506  29 *    PshV4    v20
+  507  30 *    LoadVObjR v14, v0, 67108877
+  510  30 *    RDR4     v23
+  511  30 *    SUBIf    v15, v23, 16.000000
+  514  30 *    PshV4    v15
+  515  31 *    LoadVObjR v6, v4, 67108877
+  518  31 *    RDR4     v3
+  519  31 *    ADDIf    v21, v3, 8.000000
+  522  31 *    PshV4    v21
+  523  32 *    LoadVObjR v6, v0, 67108877
+  526  32 *    RDR4     v23
+  527  32 *    ADDIf    v24, v23, 8.000000
+  530  32 *    PshV4    v24
+  531  33 *    PshGPtr  89185096
+  533  34 *    CHKREF
+  534  34 *    GETOBJ   5
+  535  34 *    CALLSYS  455           (void CGFX::drawTextureCoord(const float, const float, const float, const float, CTexture@, const float arg5 = 1.0f, const float arg6 = 1.0f, const float arg7 = 1.0f, const float arg8 = 1.0f))
+- 52,3 -
+  537  24 *    SUSPEND
+  538  24 *    ObjInfo  v14, 0
+  538  24 *    ObjInfo  v6, 0
+  538  24 * 0:
+  538  24 *    FREE     v-1, 89186840
+  540  24 *    FREE     v0, 150276424
+  542  24 *    RET      2

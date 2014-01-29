@@ -1,0 +1,39 @@
+RayCast::RayCast()
+
+Temps: 1, 2
+
+Variables: 
+ 000: RayCast this
+ 001: array {noname}
+
+
+- 13,22 -
+    0   2 *    SUSPEND
+    1   2 *    CALL     359           (vec2[]@ factstub())
+    3   2 *    STOREOBJ v1
+    4   2 *    PshVPtr  v1
+    5   3 *    PshVPtr  v0
+    6   4 *    ADDSi    v44, 134217795
+    8   4 *    REFCPY   0x46159f0
+   10   3 *    PopPtr
+   11   2 *    FREE     v1, 73488880
+- 14,7 -
+   13   2 *    SUSPEND
+   14   2 *    PshVPtr  v0
+   15   3 *    ADDSi    v48, 134217795
+   17   3 *    ALLOC    0x45f8270, 132             (type:vec2)
+- 17,15 -
+   20   2 *    SUSPEND
+   21   2 *    PshVPtr  v0
+   22   3 *    CALL     584           (Entity::Entity())
+- 20,8 -
+   24   2 *    SUSPEND
+   25   2 *    SetV4    v2, 0x3f800000          (i:1065353216, f:1)
+   27   2 *    LoadThisR v56, 134217795
+   29   2 *    WRTV4    v2
+- 23,8 -
+   30   2 *    SUSPEND
+   31   2 *    SetV4    v2, 0x0          (i:0, f:0)
+   33   2 *    LoadThisR v60, 134217795
+   35   2 *    WRTV4    v2
+   36   2 *    RET      1

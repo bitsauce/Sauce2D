@@ -1,0 +1,89 @@
+float SimplexNoise2D::valueAt(float, float)
+
+Temps: 2, 7, 8
+
+Variables: 
+ -001: float x
+ -002: float y
+ 001: float total
+ 003: float freq
+ 004: float amplitude
+ 005: float maxAmplitude
+ 006: int i
+ 000: SimplexNoise2D this
+
+
+    0   8 *    VarDecl  0
+    0   8 *    VarDecl  1
+    0   8 *    PshVPtr  v0
+    1   9 *    CALLSYS  2           (void _builtin_object_::_beh_4_())
+- 63,3 -
+    3   8 *    SUSPEND
+    4   8 *    VarDecl  2
+    4   8 *    SetV4    v1, 0x0          (i:0, f:0)
+- 64,3 -
+    6   8 *    SUSPEND
+    7   8 *    VarDecl  3
+    7   8 *    LoadThisR v24, 134217752
+    9   8 *    RDR4     v2
+   10   8 *    CpyVtoV4 v3, v2
+- 65,3 -
+   12   8 *    SUSPEND
+   13   8 *    VarDecl  4
+   13   8 *    SetV4    v4, 0x3f800000          (i:1065353216, f:1)
+- 69,3 -
+   15   8 *    SUSPEND
+   16   8 *    VarDecl  5
+   16   8 *    SetV4    v5, 0x0          (i:0, f:0)
+- 71,7 -
+   18   8 *    SUSPEND
+   19   8 *    VarDecl  6
+   19   8 *    SetV4    v6, 0x0          (i:0, f:0)
+   21   8 *    JMP      +31              (d:54)
+   23   8 * 4:
+   23   8 *    SUSPEND
+- 73,4 -
+   24   8 * {
+   24   8 *    SUSPEND
+   25   8 *    MULf     v2, v-2, v3
+   27   8 *    PshV4    v2
+   28   9 *    MULf     v7, v-1, v3
+   30   9 *    PshV4    v7
+   31  10 *    PshVPtr  v0
+   32  11 *    CALLINTF 512           (float SimplexNoise2D::rawNoise(float, float))
+   34   8 *    CpyRtoV4 v8
+   35   8 *    MULf     v2, v8, v4
+   37   8 *    ADDf     v1, v1, v2
+- 74,4 -
+   39   8 *    SUSPEND
+   40   8 *    MULIf    v3, v3, 2.000000
+- 75,4 -
+   43   8 *    SUSPEND
+   44   8 *    ADDf     v5, v5, v4
+- 76,4 -
+   46   8 *    SUSPEND
+   47   8 *    LoadThisR v20, 134217752
+   49   8 *    RDR4     v8
+   50   8 *    MULf     v4, v4, v8
+- 71,31 -
+   52   8 * }
+   52   8 * 3:
+   52   8 *    SUSPEND
+   53   8 *    IncVi    v6
+- 71,18 -
+   54   8 * 1:
+   54   8 *    SUSPEND
+   55   8 *    LoadThisR v16, 134217752
+   57   8 *    RDR4     v2
+   58   8 *    CMPi     v6, v2
+   60   8 *    JS       -39              (d:23)
+- 78,3 -
+   62   8 * 2:
+   62   8 *    SUSPEND
+   63   8 *    DIVf     v8, v1, v5
+   65   8 * {
+   65   8 * }
+   65   8 *    CpyVtoR4 v8
+   66   8 * 0:
+   66   8 *    FREE     v0, 104326016
+   68   8 *    RET      3

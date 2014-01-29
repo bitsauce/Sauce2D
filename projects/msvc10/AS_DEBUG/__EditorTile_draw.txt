@@ -1,0 +1,120 @@
+void EditorTile::draw(int, int)
+
+Temps: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12
+
+Variables: 
+ -001: int x
+ -002: int y
+ 000: EditorTile this
+ 001: TileSetData {noname}
+ 002: TileSetData {noname}
+ 010: CTexture {noname}
+
+
+    0  12 *    VarDecl  0
+    0  12 *    VarDecl  1
+    0  12 *    PshVPtr  v0
+    1  13 *    CALLSYS  2           (void _builtin_object_::_beh_4_())
+- 569,3 -
+    3  12 *    SUSPEND
+    4  12 *    PshVPtr  v0
+    5  13 *    ADDSi    v16, 134217782
+    7  13 *    RDSPtr
+    8  13 *    RefCpyV  v1, 152222624
+   10  13 *    PopPtr
+   11  12 *    ClrVPtr  v2
+   12  12 *    CmpPtr   v1, v2
+   14  12 *    TNZ
+   15  12 *    CpyRtoV4 v3
+   16  12 *    FREE     v1, 152222624
+   18  12 *    FREE     v2, 152222624
+   20  12 *    CpyVtoR4 v3
+   21  12 *    JLowNZ   +4              (d:27)
+   23  12 *    SetV4    v3, 0x0          (i:0, f:0)
+   25  12 *    JMP      +6              (d:33)
+   27  12 * 2:
+   27  12 *    LoadThisR v36, 134217782
+   29  12 *    RDR1     v4
+   30  12 *    NOT      v4
+   31  12 *    CpyVtoV4 v3, v4
+   33  12 * 3:
+   33  12 *    CpyVtoR4 v3
+   34  12 *    JLowZ    +102              (d:138)
+- 572,4 -
+   36  12 * {
+   36  12 *    SUSPEND
+   37  12 *    LoadThisR v28, 134217782
+   39  12 *    RDR4     v4
+   40  12 *    iTOf     v4
+   41  12 *    PshVPtr  v0
+   42  13 *    ADDSi    v16, 134217782
+   44  13 *    RDSPtr
+   45  13 *    ADDSi    v44, 134217805
+   47  13 *    PopRPtr
+   48  12 *    RDR4     v3
+   49  12 *    MULf     v4, v4, v3
+   51  12 *    PshV4    v4
+   52  13 *    LoadThisR v28, 134217782
+   54  13 *    RDR4     v3
+   55  13 *    ADDIi    v3, v3, 1
+   58  13 *    iTOf     v3
+   59  13 *    PshVPtr  v0
+   60  14 *    ADDSi    v16, 134217782
+   62  14 *    RDSPtr
+   63  14 *    ADDSi    v44, 134217805
+   65  14 *    PopRPtr
+   66  13 *    RDR4     v6
+   67  13 *    MULf     v5, v3, v6
+   69  13 *    PshV4    v5
+   70  14 *    LoadThisR v24, 134217782
+   72  14 *    RDR4     v6
+   73  14 *    iTOf     v6
+   74  14 *    PshVPtr  v0
+   75  15 *    ADDSi    v16, 134217782
+   77  15 *    RDSPtr
+   78  15 *    ADDSi    v40, 134217805
+   80  15 *    PopRPtr
+   81  14 *    RDR4     v3
+   82  14 *    MULf     v6, v6, v3
+   84  14 *    PshV4    v6
+   85  15 *    LoadThisR v24, 134217782
+   87  15 *    RDR4     v3
+   88  15 *    ADDIi    v3, v3, 1
+   91  15 *    iTOf     v3
+   92  15 *    PshVPtr  v0
+   93  16 *    ADDSi    v16, 134217782
+   95  16 *    RDSPtr
+   96  16 *    ADDSi    v40, 134217805
+   98  16 *    PopRPtr
+   99  15 *    RDR4     v8
+  100  15 *    MULf     v7, v3, v8
+  102  15 *    PshV4    v7
+  103  16 *    PshVPtr  v0
+  104  17 *    ADDSi    v16, 134217782
+  106  17 *    RDSPtr
+  107  17 *    ADDSi    v28, 134217805
+  109  17 *    RDSPtr
+  110  17 *    RefCpyV  v10, 111987200
+  112  17 *    PopPtr
+  113  16 *    VAR      v10
+  114  17 *    PshC4    0x42800000          (i:1115684864, f:64)
+  116  18 *    PshC4    0x42800000          (i:1115684864, f:64)
+  118  19 *    CpyVtoV4 v8, v-2
+  120  19 *    iTOf     v8
+  121  19 *    MULIf    v8, v8, 64.000000
+  124  19 *    PshV4    v8
+  125  20 *    CpyVtoV4 v3, v-1
+  127  20 *    iTOf     v3
+  128  20 *    MULIf    v3, v3, 64.000000
+  131  20 *    PshV4    v3
+  132  21 *    PshGPtr  112336760
+  134  22 *    CHKREF
+  135  22 *    GETOBJ   5
+  136  22 *    CALLSYS  458           (void CGFX::drawTextureCoord(const float, const float, const float, const float, CTexture@, const float arg5 = 1.0f, const float arg6 = 1.0f, const float arg7 = 1.0f, const float arg8 = 1.0f))
+- 576,3 -
+  138  12 * }
+  138  12 * 1:
+  138  12 *    SUSPEND
+  139  12 * 0:
+  139  12 *    FREE     v0, 152242000
+  141  12 *    RET      3

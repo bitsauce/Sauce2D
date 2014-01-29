@@ -1,0 +1,67 @@
+void Gate::hardOpen()
+
+Temps: 1, 2
+
+Variables: 
+ 000: Gate this
+ 002: _builtin_function_ {noname}
+
+
+    0   2 *    PshVPtr  v0
+    1   3 *    CALLSYS  2           (void _builtin_object_::_beh_5_())
+- 86,3 -
+    3   2 *    SUSPEND
+    4   2 *    SetV1    v1, 0x1
+    6   2 *    LoadThisR v92, 134217780
+    8   2 *    WRTV1    v1
+- 89,3 -
+    9   2 *    SUSPEND
+   10   2 *    STR      53         (l:10 s:"Close Gate")
+   11   4 *    CALLSYS  33           (const string& _string_factory_(const int, const uint8&))
+   13   2 *    PshRPtr
+   14   3 *    PshVPtr  v0
+   15   4 *    ADDSi    v96, 134217780
+   17   4 *    RDSPtr
+   18   4 *    ADDSi    v20, 134217747
+   20   4 *    RDSPtr
+   21   4 *    CALLSYS  37           (string& string::opAssign(const string&in))
+- 90,3 -
+   23   2 *    SUSPEND
+   24   2 *    STR      54         (l:37 s:"Stop your ")
+   25   4 *    CALLSYS  33           (const string& _string_factory_(const int, const uint8&))
+   27   2 *    PshRPtr
+   28   3 *    PshVPtr  v0
+   29   4 *    ADDSi    v96, 134217780
+   31   4 *    RDSPtr
+   32   4 *    ADDSi    v24, 134217747
+   34   4 *    RDSPtr
+   35   4 *    CALLSYS  37           (string& string::opAssign(const string&in))
+- 91,3 -
+   37   2 *    SUSPEND
+   38   2 *    CpyGtoV4 v1, 71965856
+   40   2 *    PshVPtr  v0
+   41   3 *    ADDSi    v96, 134217780
+   43   3 *    RDSPtr
+   44   3 *    ADDSi    v28, 134217747
+   46   3 *    PopRPtr
+   47   2 *    WRTV4    v1
+- 92,3 -
+   48   2 *    SUSPEND
+   49   2 *    PshVPtr  v0
+   50   3 *    FuncPtr  72126472
+   52   4 *    CALLSYS  18           (_builtin_function_@ %delegate_factory(int&in, int&in))
+   54   2 *    STOREOBJ v2
+   55   2 *    VAR      v2
+   56   3 *    PshVPtr  v0
+   57   4 *    ADDSi    v96, 134217780
+   59   4 *    RDSPtr
+   60   4 *    ADDSi    v36, 134217747
+   62   4 *    GETOBJREF 1
+   63   4 *    REFCPY   0x434071c
+   65   3 *    FREE     v2, 70518556
+   67   3 *    PopPtr
+- 93,3 -
+   68   2 *    SUSPEND
+   69   2 * 0:
+   69   2 *    FREE     v0, 71594464
+   71   2 *    RET      1

@@ -1,0 +1,605 @@
+void Footman::update()
+
+Temps: 1, 5, 7, 8, 9, 10, 11, 12, 13, 14, 16, 17, 18, 21, 23
+
+Variables: 
+ 003: vec2 deltaPos
+ 015: SfxSource@ source
+ 019: int i
+ 020: float limbAng
+ 022: float animAng
+ 024: float innerAng
+ 025: float outerAng
+ 026: float dtAng
+ 028: vec2 prevPos
+ 026: float animSpeed
+ 022: float x
+ 020: float y
+ 019: int i
+ 000: Footman this
+ 011: UnitBase {noname}
+ 012: UnitBase {noname}
+ 013: Anim {noname}
+ 016: array {noname}
+ 017: vec2 {noname}
+ 018: Footman {noname}
+ 021: array {noname}
+ 005: vec2 {noname}
+ 007: vec2 {noname}
+
+
+    0  28 *    PshVPtr  v0
+    1  29 *    CALLSYS  2           (void _builtin_object_::_beh_5_())
+- 259,3 -
+    3  28 *    SUSPEND
+    4  28 *    LoadThisR v128, 134217775
+    6  28 *    RDR1     v1
+    7  28 *    CpyVtoR4 v1
+    8  28 *    JLowZ    +3              (d:13)
+- 260,4 -
+   10  28 *    SUSPEND
+   11  28 * {
+   11  28 * }
+   11  28 *    JMP      +651              (d:664)
+- 264,3 -
+   13  28 * 1:
+   13  28 *    SUSPEND
+   14  28 *    VarDecl  0
+   14  28 *    PSF      v3
+   15  29 *    CALLSYS  132           (vec2::vec2())
+   17  28 *    ObjInfo  v3, 1
+   17  28 *    PshVPtr  v0
+   18  29 *    ADDSi    v20, 134217775
+   20  29 *    RDSPtr
+   21  29 *    PSF      v5
+   22  30 *    CALLSYS  133           (vec2::vec2(const vec2&in))
+   24  28 *    ObjInfo  v5, 1
+   24  28 *    VAR      v5
+   25  29 *    PSF      v7
+   26  30 *    PshVPtr  v0
+   27  31 *    ADDSi    v92, 134217775
+   29  31 *    RDSPtr
+   30  31 *    GETREF   2
+   31  31 *    CALLSYS  142           (vec2 vec2::opSub(const vec2&in) const)
+   33  28 *    ObjInfo  v7, 1
+   33  28 *    ObjInfo  v5, 0
+   33  28 *    PSF      v7
+   34  29 *    PSF      v3
+   35  30 *    COPY     v2, 67108877
+   37  29 *    ObjInfo  v7, 0
+   37  29 *    PopPtr
+- 265,3 -
+   38  28 *    SUSPEND
+   39  28 *    LoadThisR v152, 134217775
+   41  28 *    RDR1     v1
+   42  28 *    NOT      v1
+   43  28 *    CpyVtoR4 v1
+   44  28 *    JLowNZ   +4              (d:50)
+   46  28 *    SetV4    v9, 0x0          (i:0, f:0)
+   48  28 *    JMP      +10              (d:60)
+   50  28 * 3:
+   50  28 *    LoadVObjR v3, v0, 67108877
+   53  28 *    RDR4     v8
+   54  28 *    CMPIf    v8, 0.000000
+   56  28 *    TS
+   57  28 *    CpyRtoV4 v8
+   58  28 *    CpyVtoV4 v9, v8
+   60  28 * 4:
+   60  28 *    CpyVtoR4 v9
+   61  28 *    JLowZ    +4              (d:67)
+   63  28 *    SetV1    v10, 0x1
+   65  28 *    JMP      +22              (d:89)
+   67  28 * 7:
+   67  28 *    LoadThisR v152, 134217775
+   69  28 *    RDR1     v10
+   70  28 *    CpyVtoR4 v10
+   71  28 *    JLowNZ   +4              (d:77)
+   73  28 *    SetV4    v8, 0x0          (i:0, f:0)
+   75  28 *    JMP      +10              (d:87)
+   77  28 * 5:
+   77  28 *    LoadVObjR v3, v0, 67108877
+   80  28 *    RDR4     v1
+   81  28 *    CMPIf    v1, 0.000000
+   83  28 *    TP
+   84  28 *    CpyRtoV4 v1
+   85  28 *    CpyVtoV4 v8, v1
+   87  28 * 6:
+   87  28 *    CpyVtoV4 v10, v8
+   89  28 * 8:
+   89  28 *    CpyVtoR4 v10
+   90  28 *    JLowZ    +4              (d:96)
+- 266,4 -
+   92  28 *    SUSPEND
+   93  28 *    PshVPtr  v0
+   94  29 *    CALLINTF 1212           (void Footman::flipAnim())
+- 269,3 -
+   96  28 * 2:
+   96  28 *    SUSPEND
+   97  28 *    PshVPtr  v0
+   98  29 *    ADDSi    v104, 134217775
+  100  29 *    RDSPtr
+  101  29 *    RefCpyV  v11, 71591136
+  103  29 *    PopPtr
+  104  28 *    ClrVPtr  v12
+  105  28 *    CmpPtr   v11, v12
+  107  28 *    TZ
+  108  28 *    CpyRtoV4 v9
+  109  28 *    FREE     v11, 71591136
+  111  28 *    FREE     v12, 71591136
+  113  28 *    CpyVtoR4 v9
+  114  28 *    JLowZ    +3              (d:119)
+- 270,3 -
+  116  28 *    SUSPEND
+  117  28 * {
+  117  28 * }
+  117  28 *    JMP      +152              (d:271)
+- 273,4 -
+  119  28 * 9:
+  119  28 * {
+  119  28 *    SUSPEND
+  120  28 *    PshVPtr  v0
+  121  29 *    ADDSi    v104, 134217775
+  123  29 *    RDSPtr
+  124  29 *    ADDSi    v52, 134217750
+  126  29 *    RDSPtr
+  127  29 *    CALLINTF 1196           (bool Health::isDepleted())
+  129  28 *    JLowZ    +48              (d:179)
+- 275,5 -
+  131  28 * {
+  131  28 *    SUSPEND
+  132  28 *    FREE     v11, 71591136
+  134  28 *    VAR      v11
+  135  29 *    PshVPtr  v0
+  136  30 *    ADDSi    v104, 134217775
+  138  30 *    GETOBJREF 1
+  139  30 *    REFCPY   0x44464e0
+  141  29 *    FREE     v11, 71591136
+  143  29 *    PopPtr
+- 276,5 -
+  144  28 *    SUSPEND
+  145  28 *    PshVPtr  v0
+  146  29 *    ADDSi    v168, 134217775
+  148  29 *    RDSPtr
+  149  29 *    RefCpyV  v13, 71613160
+  151  29 *    PopPtr
+  152  28 *    VAR      v13
+  153  29 *    PshVPtr  v0
+  154  30 *    ADDSi    v156, 134217775
+  156  30 *    GETOBJREF 1
+  157  30 *    REFCPY   0x444bae8
+  159  29 *    FREE     v13, 71613160
+  161  29 *    PopPtr
+- 277,5 -
+  162  28 *    SUSPEND
+  163  28 *    SetV1    v9, 0x0
+  165  28 *    LoadThisR v96, 134217775
+  167  28 *    WRTV1    v9
+- 278,5 -
+  168  28 *    SUSPEND
+  169  28 *    PshC4    0x2          (i:2, f:2.8026e-045)
+  171  29 *    LoadThisR v80, 134217775
+  173  29 *    RDR4     v1
+  174  29 *    PshV4    v1
+  175  30 *    CALLSYS  537           (void b2dSetBodyType(int, BodyType))
+  177  28 * }
+  177  28 *    JMP      +92              (d:271)
+- 280,5 -
+  179  28 * 11:
+  179  28 * {
+  179  28 *    SUSPEND
+  180  28 *    CALLSYS  347           (float appGetTimeStep())
+  182  28 *    CpyRtoV4 v9
+  183  28 *    LoadThisR v64, 134217775
+  185  28 *    RDR4     v1
+  186  28 *    SUBf     v8, v1, v9
+  188  28 *    WRTV4    v8
+- 281,5 -
+  189  28 *    SUSPEND
+  190  28 *    LoadThisR v64, 134217775
+  192  28 *    RDR4     v9
+  193  28 *    CMPIf    v9, 0.000000
+  195  28 *    JP       +74              (d:271)
+- 283,6 -
+  197  28 * {
+  197  28 *    SUSPEND
+  198  28 *    VarDecl  1
+  198  28 *    PshVPtr  v0
+  199  29 *    ADDSi    v172, 134217775
+  201  29 *    RDSPtr
+  202  29 *    CALLSYS  88           (uint array::size() const)
+  204  28 *    CpyRtoV4 v8
+  205  28 *    PshV4    v8
+  206  29 *    PshC4    0x0          (i:0, f:0)
+  208  30 *    CALLSYS  339           (int randomInt(const int, const int))
+  210  28 *    CpyRtoV4 v9
+  211  28 *    PshV4    v9
+  212  29 *    PshVPtr  v0
+  213  30 *    ADDSi    v172, 134217775
+  215  30 *    RDSPtr
+  216  30 *    RefCpyV  v16, 72109392
+  218  30 *    CALLSYS  1223           (SfxSource@& array::opIndex(uint))
+  220  28 *    PshRPtr
+  221  29 *    RDSPtr
+  222  29 *    RefCpyV  v15, 71562000
+  224  29 *    PopPtr
+  225  28 *    FREE     v16, 72109392
+- 284,6 -
+  227  28 *    SUSPEND
+  228  28 *    PSF      v17
+  229  29 *    PshVPtr  v0
+  230  30 *    ADDSi    v20, 134217775
+  232  30 *    RDSPtr
+  233  30 *    ALLOC    0x4353a20, 133             (type:vec2)
+  236  28 *    VAR      v17
+  237  29 *    PshVPtr  v15
+  238  30 *    GETOBJ   1
+  239  30 *    CALLINTF 1072           (void SfxSource::setPosition(vec2))
+- 285,6 -
+  241  28 *    SUSPEND
+  242  28 *    PshVPtr  v15
+  243  29 *    CALLINTF 1077           (void SfxSource::play())
+- 286,6 -
+  245  28 *    SUSPEND
+  246  28 *    PshVPtr  v0
+  247  29 *    RefCpyV  v18, 71592408
+  249  29 *    PopPtr
+  250  28 *    VAR      v18
+  251  29 *    PshC4    0x1          (i:1, f:1.4013e-045)
+  253  30 *    PshVPtr  v0
+  254  31 *    ADDSi    v104, 134217775
+  256  31 *    RDSPtr
+  257  31 *    ADDSi    v52, 134217750
+  259  31 *    RDSPtr
+  260  31 *    GETOBJ   2
+  261  31 *    CALLINTF 1198           (void Health::dec(int, UnitBase@))
+- 287,6 -
+  263  28 *    SUSPEND
+  264  28 *    SetV4    v8, 0x40000000          (i:1073741824, f:2)
+  266  28 *    LoadThisR v64, 134217775
+  268  28 *    WRTV4    v8
+  269  28 *    FREE     v15, 71562000
+- 293,7 -
+  271  28 * }
+  271  28 * 13:
+  271  28 * }
+  271  28 * 12:
+  271  28 * }
+  271  28 * 10:
+  271  28 *    SUSPEND
+  272  28 *    VarDecl  2
+  272  28 *    SetV4    v19, 0x0          (i:0, f:0)
+  274  28 *    JMP      +145              (d:421)
+  276  28 * 17:
+  276  28 *    SUSPEND
+- 295,4 -
+  277  28 * {
+  277  28 *    SUSPEND
+  278  28 *    VarDecl  3
+  278  28 *    PshV4    v19
+  279  29 *    PshVPtr  v0
+  280  30 *    ADDSi    v136, 134217775
+  282  30 *    RDSPtr
+  283  30 *    RefCpyV  v21, 71972784
+  285  30 *    CALLSYS  1022           (int& array::opIndex(uint))
+  287  28 *    RDR4     v10
+  288  28 *    PshV4    v10
+  289  29 *    CALLSYS  576           (float b2dGetRevoluteJointAngle(int))
+  291  28 *    CpyRtoV4 v1
+  292  28 *    FREE     v21, 71972784
+  294  28 *    CpyVtoV4 v20, v1
+- 296,4 -
+  296  28 *    SUSPEND
+  297  28 *    VarDecl  4
+  297  28 *    LoadThisR v152, 134217775
+  299  28 *    RDR1     v8
+  300  28 *    CpyVtoR4 v8
+  301  28 *    JLowZ    +14              (d:317)
+  303  28 *    LdGRdR4  v9, 71909472
+  305  28 *    PshV4    v19
+  306  29 *    PshVPtr  v0
+  307  30 *    ADDSi    v156, 134217775
+  309  30 *    RDSPtr
+  310  30 *    CALLINTF 1248           (float Anim::getAngle(int))
+  312  28 *    CpyRtoV4 v1
+  313  28 *    SUBf     v23, v9, v1
+  315  28 *    JMP      +10              (d:327)
+  317  28 * 19:
+  317  28 *    PshV4    v19
+  318  29 *    PshVPtr  v0
+  319  30 *    ADDSi    v156, 134217775
+  321  30 *    RDSPtr
+  322  30 *    CALLINTF 1248           (float Anim::getAngle(int))
+  324  28 *    CpyRtoV4 v1
+  325  28 *    CpyVtoV4 v23, v1
+  327  28 * 18:
+  327  28 *    CpyVtoV4 v22, v23
+- 298,4 -
+  329  28 *    SUSPEND
+  330  28 *    CpyGtoV4 v9, 71909472
+  332  28 *    DIVf     v23, v20, v9
+  334  28 *    PshV4    v23
+  335  29 *    CALLSYS  324           (int floor(const float))
+  337  28 *    CpyRtoV4 v9
+  338  28 *    iTOf     v9
+  339  28 *    CpyGtoV4 v1, 71909472
+  341  28 *    MULf     v23, v9, v1
+  343  28 *    SUBf     v20, v20, v23
+- 299,4 -
+  345  28 *    SUSPEND
+  346  28 *    CpyGtoV4 v23, 71909472
+  348  28 *    DIVf     v1, v22, v23
+  350  28 *    PshV4    v1
+  351  29 *    CALLSYS  324           (int floor(const float))
+  353  28 *    CpyRtoV4 v23
+  354  28 *    iTOf     v23
+  355  28 *    CpyGtoV4 v9, 71909472
+  357  28 *    MULf     v1, v23, v9
+  359  28 *    SUBf     v22, v22, v1
+- 301,4 -
+  361  28 *    SUSPEND
+  362  28 *    VarDecl  5
+  362  28 *    SUBf     v24, v22, v20
+- 302,4 -
+  364  28 *    SUSPEND
+  365  28 *    VarDecl  6
+  365  28 *    CMPIf    v24, 0.000000
+  367  28 *    JNS      +6              (d:375)
+  369  28 *    CpyGtoV4 v9, 71909472
+  371  28 *    ADDf     v8, v9, v24
+  373  28 *    JMP      +4              (d:379)
+  375  28 * 21:
+  375  28 *    CpyGtoV4 v9, 71909472
+  377  28 *    SUBf     v8, v24, v9
+  379  28 * 20:
+  379  28 *    CpyVtoV4 v25, v8
+- 303,4 -
+  381  28 *    SUSPEND
+  382  28 *    VarDecl  7
+  382  28 *    PshV4    v24
+  383  29 *    CALLSYS  334           (float abs(const float))
+  385  28 *    CpyRtoV4 v9
+  386  28 *    PshV4    v25
+  387  29 *    CALLSYS  334           (float abs(const float))
+  389  28 *    CpyRtoV4 v8
+  390  28 *    CMPf     v9, v8
+  392  28 *    JNS      +4              (d:398)
+  394  28 *    CpyVtoV4 v1, v24
+  396  28 *    JMP      +2              (d:400)
+  398  28 * 23:
+  398  28 *    CpyVtoV4 v1, v25
+  400  28 * 22:
+  400  28 *    CpyVtoV4 v26, v1
+- 305,4 -
+  402  28 *    SUSPEND
+  403  28 *    PshV4    v26
+  404  29 *    PshV4    v19
+  405  30 *    PshVPtr  v0
+  406  31 *    ADDSi    v136, 134217775
+  408  31 *    RDSPtr
+  409  31 *    RefCpyV  v21, 71972784
+  411  31 *    CALLSYS  1022           (int& array::opIndex(uint))
+  413  29 *    RDR4     v1
+  414  29 *    PshV4    v1
+  415  30 *    CALLSYS  571           (void b2dSetRevoluteJointMotorSpeed(int, float))
+  417  28 *    FREE     v21, 71972784
+- 293,37 -
+  419  28 * }
+  419  28 * 16:
+  419  28 *    SUSPEND
+  420  28 *    IncVi    v19
+- 293,18 -
+  421  28 * 14:
+  421  28 *    SUSPEND
+  422  28 *    CMPIi    v19, 10
+  424  28 *    JS       -150              (d:276)
+- 309,3 -
+  426  28 * 15:
+  426  28 *    SUSPEND
+  427  28 *    VarDecl  8
+  427  28 *    PSF      v28
+  428  29 *    CALLSYS  132           (vec2::vec2())
+  430  28 *    ObjInfo  v28, 1
+  430  28 *    PshVPtr  v0
+  431  29 *    ADDSi    v20, 134217775
+  433  29 *    RDSPtr
+  434  29 *    PSF      v28
+  435  30 *    COPY     v2, 67108877
+  437  29 *    PopPtr
+- 312,3 -
+  438  28 *    SUSPEND
+  439  28 *    PshVPtr  v0
+  440  29 *    CALL     721           (void Minion::update())
+- 315,3 -
+  442  28 *    SUSPEND
+  443  28 *    VarDecl  9
+  443  28 *    SetV4    v26, 0x3d4ccccd          (i:1028443341, f:0.05)
+- 316,3 -
+  445  28 *    SUSPEND
+  446  28 *    PshVPtr  v0
+  447  29 *    ADDSi    v20, 134217775
+  449  29 *    RDSPtr
+  450  29 *    PSF      v7
+  451  30 *    CALLSYS  133           (vec2::vec2(const vec2&in))
+  453  28 *    ObjInfo  v7, 1
+  453  28 *    VAR      v7
+  454  29 *    PSF      v28
+  455  30 *    GETREF   1
+  456  30 *    CALLSYS  140           (bool vec2::opEquals(const vec2&in) const)
+  458  28 *    CpyRtoV4 v10
+  459  28 *    ObjInfo  v7, 0
+  459  28 *    NOT      v10
+  460  28 *    CpyVtoR4 v10
+  461  28 *    JLowZ    +134              (d:597)
+- 318,4 -
+  463  28 * {
+  463  28 *    SUSPEND
+- 319,8 -
+  464  28 *    VarDecl  10
+  464  28 *    VarDecl  11
+  464  28 *    SUSPEND
+  465  28 *    VarDecl  12
+  465  28 *    SetV4    v19, 0x0          (i:0, f:0)
+  467  28 *    JMP      +77              (d:546)
+  469  28 * 28:
+  469  28 *    SUSPEND
+- 322,5 -
+  470  28 * {
+  470  28 *    SUSPEND
+  471  28 *    VAR      v10
+  472  29 *    VAR      v9
+  473  30 *    PshV4    v19
+  474  31 *    PshVPtr  v0
+  475  32 *    ADDSi    v132, 134217775
+  477  32 *    RDSPtr
+  478  32 *    RefCpyV  v21, 71972784
+  480  32 *    CALLSYS  1022           (int& array::opIndex(uint))
+  482  30 *    RDR4     v8
+  483  30 *    PshV4    v8
+  484  31 *    GETREF   1
+  485  31 *    GETREF   2
+  486  31 *    CALLSYS  552           (void b2dGetBodyPosition(int, float&out, float&out))
+  488  28 *    CpyVtoV4 v20, v10
+  490  28 *    CpyVtoV4 v22, v9
+  492  28 *    FREE     v21, 71972784
+- 323,5 -
+  494  28 *    SUSPEND
+  495  28 *    PshVPtr  v0
+  496  29 *    ADDSi    v20, 134217775
+  498  29 *    RDSPtr
+  499  29 *    ADDSi    v4, 67108877
+  501  29 *    PopRPtr
+  502  28 *    RDR4     v1
+  503  28 *    LoadVObjR v28, v4, 67108877
+  506  28 *    RDR4     v23
+  507  28 *    SUBf     v9, v1, v23
+  509  28 *    ADDf     v23, v20, v9
+  511  28 *    PshV4    v23
+  512  29 *    PshVPtr  v0
+  513  30 *    ADDSi    v20, 134217775
+  515  30 *    RDSPtr
+  516  30 *    ADDSi    v0, 67108877
+  518  30 *    PopRPtr
+  519  29 *    RDR4     v9
+  520  29 *    LoadVObjR v28, v0, 67108877
+  523  29 *    RDR4     v1
+  524  29 *    SUBf     v10, v9, v1
+  526  29 *    ADDf     v1, v22, v10
+  528  29 *    PshV4    v1
+  529  30 *    PshV4    v19
+  530  31 *    PshVPtr  v0
+  531  32 *    ADDSi    v132, 134217775
+  533  32 *    RDSPtr
+  534  32 *    RefCpyV  v21, 71972784
+  536  32 *    CALLSYS  1022           (int& array::opIndex(uint))
+  538  30 *    RDR4     v9
+  539  30 *    PshV4    v9
+  540  31 *    CALLSYS  543           (void b2dSetBodyPosition(int, float, float))
+  542  28 *    FREE     v21, 71972784
+- 319,33 -
+  544  28 * }
+  544  28 * 27:
+  544  28 *    SUSPEND
+  545  28 *    IncVi    v19
+- 319,19 -
+  546  28 * 25:
+  546  28 *    SUSPEND
+  547  28 *    CMPIi    v19, 11
+  549  28 *    JS       -82              (d:469)
+- 325,4 -
+  551  28 * 26:
+  551  28 *    SUSPEND
+  552  28 *    PshVPtr  v0
+  553  29 *    ADDSi    v168, 134217775
+  555  29 *    RDSPtr
+  556  29 *    RefCpyV  v13, 71613160
+  558  29 *    PopPtr
+  559  28 *    VAR      v13
+  560  29 *    PshVPtr  v0
+  561  30 *    ADDSi    v156, 134217775
+  563  30 *    GETOBJREF 1
+  564  30 *    REFCPY   0x444bae8
+  566  29 *    FREE     v13, 71613160
+  568  29 *    PopPtr
+- 326,4 -
+  569  28 *    SUSPEND
+  570  28 *    PshVPtr  v0
+  571  29 *    ADDSi    v20, 134217775
+  573  29 *    RDSPtr
+  574  29 *    ADDSi    v0, 67108877
+  576  29 *    PopRPtr
+  577  28 *    RDR4     v8
+  578  28 *    LoadVObjR v28, v0, 67108877
+  581  28 *    RDR4     v10
+  582  28 *    SUBf     v23, v8, v10
+  584  28 *    PshV4    v23
+  585  29 *    CALLSYS  334           (float abs(const float))
+  587  28 *    CpyRtoV4 v10
+  588  28 *    SetV4    v1, 0x40800000          (i:1082130432, f:4)
+  590  28 *    DIVf     v8, v10, v1
+  592  28 *    MULIf    v26, v8, 0.075000
+  595  28 * }
+  595  28 *    JMP      +58              (d:655)
+- 328,4 -
+  597  28 * 24:
+  597  28 * {
+  597  28 *    SUSPEND
+  598  28 *    PshVPtr  v0
+  599  29 *    ADDSi    v104, 134217775
+  601  29 *    RDSPtr
+  602  29 *    RefCpyV  v11, 71591136
+  604  29 *    PopPtr
+  605  28 *    ClrVPtr  v12
+  606  28 *    CmpPtr   v11, v12
+  608  28 *    TZ
+  609  28 *    CpyRtoV4 v8
+  610  28 *    FREE     v11, 71591136
+  612  28 *    FREE     v12, 71591136
+  614  28 *    CpyVtoR4 v8
+  615  28 *    JLowZ    +20              (d:637)
+- 329,5 -
+  617  28 *    SUSPEND
+  618  28 *    PshVPtr  v0
+  619  29 *    ADDSi    v160, 134217775
+  621  29 *    RDSPtr
+  622  29 *    RefCpyV  v13, 71613160
+  624  29 *    PopPtr
+  625  28 *    VAR      v13
+  626  29 *    PshVPtr  v0
+  627  30 *    ADDSi    v156, 134217775
+  629  30 *    GETOBJREF 1
+  630  30 *    REFCPY   0x444bae8
+  632  29 *    FREE     v13, 71613160
+  634  29 *    PopPtr
+  635  28 *    JMP      +18              (d:655)
+- 331,5 -
+  637  28 * 30:
+  637  28 *    SUSPEND
+  638  28 *    PshVPtr  v0
+  639  29 *    ADDSi    v164, 134217775
+  641  29 *    RDSPtr
+  642  29 *    RefCpyV  v13, 71613160
+  644  29 *    PopPtr
+  645  28 *    VAR      v13
+  646  29 *    PshVPtr  v0
+  647  30 *    ADDSi    v156, 134217775
+  649  30 *    GETOBJREF 1
+  650  30 *    REFCPY   0x444bae8
+  652  29 *    FREE     v13, 71613160
+  654  29 *    PopPtr
+- 335,3 -
+  655  28 * 31:
+  655  28 * }
+  655  28 * 29:
+  655  28 *    SUSPEND
+  656  28 *    PshV4    v26
+  657  29 *    PshVPtr  v0
+  658  30 *    ADDSi    v156, 134217775
+  660  30 *    RDSPtr
+  661  30 *    CALLINTF 1246           (void Anim::step(float))
+- 336,3 -
+  663  28 *    SUSPEND
+  664  28 *    ObjInfo  v28, 0
+  664  28 *    ObjInfo  v3, 0
+  664  28 * 0:
+  664  28 *    FREE     v0, 71592408
+  666  28 *    RET      1

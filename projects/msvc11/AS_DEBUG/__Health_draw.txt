@@ -1,0 +1,242 @@
+void Health::draw()
+
+Temps: 4, 6, 7, 8, 9, 11, 12, 13, 17, 18, 19, 20, 21, 22, 23, 24
+
+Variables: 
+ 002: vec2 pos
+ 000: Health this
+ 018: vec4 {noname}
+ 019: vec2 {noname}
+ 020: vec2 {noname}
+ 021: vec2 {noname}
+ 022: vec2 {noname}
+ 004: vec2 {noname}
+ 006: vec2 {noname}
+ 011: vec2 {noname}
+ 017: vec4 {noname}
+
+
+    0  24 *    PshVPtr  v0
+    1  25 *    CALLSYS  2           (void _builtin_object_::_beh_5_())
+- 64,3 -
+    3  24 *    SUSPEND
+    4  24 *    VarDecl  0
+    4  24 *    PSF      v2
+    5  25 *    CALLSYS  132           (vec2::vec2())
+    7  24 *    ObjInfo  v2, 1
+    7  24 *    PSF      v6
+    8  25 *    PshVPtr  v0
+    9  26 *    ADDSi    v20, 134217769
+   11  26 *    RDSPtr
+   12  26 *    CALLINTF 1025           (vec2 Entity::getSize())
+   14  24 *    ObjInfo  v6, 1
+   14  24 *    LoadVObjR v6, v4, 67108877
+   17  24 *    RDR4     v7
+   18  24 *    ObjInfo  v6, 0
+   18  24 *    ADDIf    v7, v7, 16.000000
+   21  24 *    PshV4    v7
+   22  25 *    PSF      v6
+   23  26 *    PshVPtr  v0
+   24  27 *    ADDSi    v20, 134217769
+   26  27 *    RDSPtr
+   27  27 *    CALLINTF 1025           (vec2 Entity::getSize())
+   29  25 *    ObjInfo  v6, 1
+   29  25 *    LoadVObjR v6, v0, 67108877
+   32  25 *    RDR4     v8
+   33  25 *    SetV4    v9, 0x40000000          (i:1073741824, f:2)
+   35  25 *    ObjInfo  v6, 0
+   35  25 *    DIVf     v8, v8, v9
+   37  25 *    PshV4    v8
+   38  26 *    PSF      v6
+   39  27 *    CALLSYS  135           (vec2::vec2(float, float))
+   41  24 *    ObjInfo  v6, 1
+   41  24 *    VAR      v6
+   42  25 *    PSF      v11
+   43  26 *    PSF      v4
+   44  27 *    PshVPtr  v0
+   45  28 *    ADDSi    v20, 134217769
+   47  28 *    RDSPtr
+   48  28 *    CALLINTF 1023           (vec2 Entity::getPos())
+   50  26 *    ObjInfo  v4, 1
+   50  26 *    PSF      v4
+   51  27 *    GETREF   2
+   52  27 *    CALLSYS  142           (vec2 vec2::opSub(const vec2&in) const)
+   54  24 *    ObjInfo  v11, 1
+   54  24 *    ObjInfo  v6, 0
+   54  24 *    PSF      v11
+   55  25 *    ObjInfo  v4, 0
+   55  25 *    PSF      v2
+   56  26 *    COPY     v2, 67108877
+   58  25 *    ObjInfo  v11, 0
+   58  25 *    PopPtr
+- 66,3 -
+   59  24 *    SUSPEND
+   60  24 *    PshC4    0x5f          (i:95, f:1.33123e-043)
+   62  25 *    CALLSYS  421           (void gfxSetDepth(const int))
+- 67,3 -
+   64  24 *    SUSPEND
+   65  24 *    PshC4    0x3          (i:3, f:4.2039e-045)
+   67  25 *    CALLSYS  434           (void gfxBegin(const DrawMode = DrawTriangles))
+- 70,3 -
+   69  24 *    SUSPEND
+   70  24 *    PSF      v18
+   71  25 *    SetV1    v7, 0xff
+   73  25 *    PshV4    v7
+   74  26 *    SetV1    v8, 0x0
+   76  26 *    PshV4    v8
+   77  27 *    SetV1    v9, 0x0
+   79  27 *    PshV4    v9
+   80  28 *    SetV1    v13, 0xff
+   82  28 *    PshV4    v13
+   83  29 *    PSF      v17
+   84  30 *    CALL     938           (vec4 rgbvec(const uint8, const uint8, const uint8, const uint8 = 255))
+   86  25 *    ObjInfo  v17, 1
+   86  25 *    PSF      v17
+   87  26 *    ALLOC    0x4600fd0, 217             (type:vec4)
+   90  24 *    ObjInfo  v17, 0
+   90  24 *    VAR      v18
+   91  25 *    GETOBJ   0
+   92  25 *    CALLSYS  418           (void gfxSetColor(const vec4))
+- 71,3 -
+   94  24 *    SUSPEND
+   95  24 *    SetV1    v8, 0x0
+   97  24 *    PshV4    v8
+   98  25 *    PSF      v19
+   99  26 *    PshC4    0x3f800000          (i:1065353216, f:1)
+  101  27 *    PSF      v11
+  102  28 *    CALLSYS  134           (vec2::vec2(float))
+  104  26 *    ObjInfo  v11, 1
+  104  26 *    PSF      v11
+  105  27 *    ALLOC    0x45f8270, 133             (type:vec2)
+  108  25 *    ObjInfo  v11, 0
+  108  25 *    VAR      v19
+  109  26 *    PSF      v20
+  110  27 *    PshC4    0x0          (i:0, f:0)
+  112  28 *    PSF      v4
+  113  29 *    CALLSYS  134           (vec2::vec2(float))
+  115  27 *    ObjInfo  v4, 1
+  115  27 *    PSF      v4
+  116  28 *    ALLOC    0x45f8270, 133             (type:vec2)
+  119  26 *    ObjInfo  v4, 0
+  119  26 *    VAR      v20
+  120  27 *    PSF      v21
+  121  28 *    PshC4    0x40800000          (i:1082130432, f:4)
+  123  29 *    PshC4    0x42480000          (i:1112014848, f:50)
+  125  30 *    PSF      v6
+  126  31 *    CALLSYS  135           (vec2::vec2(float, float))
+  128  28 *    ObjInfo  v6, 1
+  128  28 *    PSF      v6
+  129  29 *    ALLOC    0x45f8270, 133             (type:vec2)
+  132  27 *    ObjInfo  v6, 0
+  132  27 *    VAR      v21
+  133  28 *    PSF      v22
+  134  29 *    PSF      v2
+  135  30 *    ALLOC    0x45f8270, 133             (type:vec2)
+  138  28 *    VAR      v22
+  139  29 *    GETOBJ   0
+  140  29 *    GETOBJ   1
+  141  29 *    GETOBJ   2
+  142  29 *    GETOBJ   3
+  143  29 *    CALLSYS  440           (void gfxAddRect(const vec2, const vec2, const vec2, const vec2, const bool = false))
+- 74,3 -
+  145  24 *    SUSPEND
+  146  24 *    PSF      v18
+  147  25 *    SetV1    v9, 0xff
+  149  25 *    PshV4    v9
+  150  26 *    SetV1    v8, 0x0
+  152  26 *    PshV4    v8
+  153  27 *    SetV1    v7, 0xff
+  155  27 *    PshV4    v7
+  156  28 *    SetV1    v13, 0x0
+  158  28 *    PshV4    v13
+  159  29 *    PSF      v17
+  160  30 *    CALL     938           (vec4 rgbvec(const uint8, const uint8, const uint8, const uint8 = 255))
+  162  25 *    ObjInfo  v17, 1
+  162  25 *    PSF      v17
+  163  26 *    ALLOC    0x4600fd0, 217             (type:vec4)
+  166  24 *    ObjInfo  v17, 0
+  166  24 *    VAR      v18
+  167  25 *    GETOBJ   0
+  168  25 *    CALLSYS  418           (void gfxSetColor(const vec4))
+- 75,3 -
+  170  24 *    SUSPEND
+  171  24 *    SetV1    v24, 0x0
+  173  24 *    PshV4    v24
+  174  25 *    PSF      v19
+  175  26 *    PshC4    0x3f800000          (i:1065353216, f:1)
+  177  27 *    PSF      v11
+  178  28 *    CALLSYS  134           (vec2::vec2(float))
+  180  26 *    ObjInfo  v11, 1
+  180  26 *    PSF      v11
+  181  27 *    ALLOC    0x45f8270, 133             (type:vec2)
+  184  25 *    ObjInfo  v11, 0
+  184  25 *    VAR      v19
+  185  26 *    PSF      v20
+  186  27 *    PshC4    0x0          (i:0, f:0)
+  188  28 *    PSF      v4
+  189  29 *    CALLSYS  134           (vec2::vec2(float))
+  191  27 *    ObjInfo  v4, 1
+  191  27 *    PSF      v4
+  192  28 *    ALLOC    0x45f8270, 133             (type:vec2)
+  195  26 *    ObjInfo  v4, 0
+  195  26 *    VAR      v20
+  196  27 *    PSF      v22
+  197  28 *    PshC4    0x40800000          (i:1082130432, f:4)
+  199  29 *    LoadThisR v28, 134217769
+  201  29 *    RDR4     v7
+  202  29 *    iTOf     v7
+  203  29 *    LoadThisR v32, 134217769
+  205  29 *    RDR4     v13
+  206  29 *    iTOf     v13
+  207  29 *    DIVf     v8, v7, v13
+  209  29 *    MULIf    v13, v8, 50.000000
+  212  29 *    PshV4    v13
+  213  30 *    PSF      v6
+  214  31 *    CALLSYS  135           (vec2::vec2(float, float))
+  216  28 *    ObjInfo  v6, 1
+  216  28 *    PSF      v6
+  217  29 *    ALLOC    0x45f8270, 133             (type:vec2)
+  220  27 *    ObjInfo  v6, 0
+  220  27 *    VAR      v22
+  221  28 *    PSF      v21
+  222  29 *    PSF      v2
+  223  30 *    ALLOC    0x45f8270, 133             (type:vec2)
+  226  28 *    VAR      v21
+  227  29 *    GETOBJ   0
+  228  29 *    GETOBJ   1
+  229  29 *    GETOBJ   2
+  230  29 *    GETOBJ   3
+  231  29 *    CALLSYS  440           (void gfxAddRect(const vec2, const vec2, const vec2, const vec2, const bool = false))
+- 77,3 -
+  233  24 *    SUSPEND
+  234  24 *    PSF      v18
+  235  25 *    SetV1    v13, 0xff
+  237  25 *    PshV4    v13
+  238  26 *    SetV1    v24, 0xff
+  240  26 *    PshV4    v24
+  241  27 *    SetV1    v8, 0xff
+  243  27 *    PshV4    v8
+  244  28 *    SetV1    v9, 0xff
+  246  28 *    PshV4    v9
+  247  29 *    PSF      v17
+  248  30 *    CALL     938           (vec4 rgbvec(const uint8, const uint8, const uint8, const uint8 = 255))
+  250  25 *    ObjInfo  v17, 1
+  250  25 *    PSF      v17
+  251  26 *    ALLOC    0x4600fd0, 217             (type:vec4)
+  254  24 *    ObjInfo  v17, 0
+  254  24 *    VAR      v18
+  255  25 *    GETOBJ   0
+  256  25 *    CALLSYS  418           (void gfxSetColor(const vec4))
+- 78,3 -
+  258  24 *    SUSPEND
+  259  24 *    CALLSYS  435           (void gfxEnd())
+- 79,3 -
+  261  24 *    SUSPEND
+  262  24 *    PshC4    0x0          (i:0, f:0)
+  264  25 *    CALLSYS  421           (void gfxSetDepth(const int))
+- 80,3 -
+  266  24 *    SUSPEND
+  267  24 *    ObjInfo  v2, 0
+  267  24 * 0:
+  267  24 *    FREE     v0, 74299992
+  269  24 *    RET      1

@@ -1,0 +1,64 @@
+void Sprite::update()
+
+Temps: 1, 2, 3
+
+Variables: 
+ 000: Sprite this
+
+
+    0   3 *    PshVPtr  v0
+    1   4 *    CALLSYS  2           (void _builtin_object_::_beh_4_())
+- 58,3 -
+    3   3 *    SUSPEND
+    4   3 *    LoadThisR v28, 134217801
+    6   3 *    RDR4     v2
+    7   3 *    LoadThisR v24, 134217801
+    9   3 *    RDR4     v1
+   10   3 *    ADDf     v1, v1, v2
+   12   3 *    WRTV4    v1
+- 59,3 -
+   13   3 *    SUSPEND
+   14   3 *    LoadThisR v24, 134217801
+   16   3 *    RDR4     v3
+   17   3 *    LoadThisR v32, 134217801
+   19   3 *    RDR4     v2
+   20   3 *    LoadThisR v36, 134217801
+   22   3 *    RDR4     v1
+   23   3 *    MULi     v2, v2, v1
+   25   3 *    iTOf     v2
+   26   3 *    CMPf     v3, v2
+   28   3 *    JS       +8              (d:38)
+- 60,4 -
+   30   3 * {
+   30   3 *    SUSPEND
+   31   3 *    SetV4    v2, 0x0          (i:0, f:0)
+   33   3 *    LoadThisR v24, 134217801
+   35   3 *    WRTV4    v2
+   36   3 * }
+   36   3 *    JMP      +21              (d:59)
+- 61,9 -
+   38   3 * 1:
+   38   3 *    SUSPEND
+   39   3 *    LoadThisR v24, 134217801
+   41   3 *    RDR4     v1
+   42   3 *    CMPIf    v1, 0.000000
+   44   3 *    JNS      +13              (d:59)
+- 62,4 -
+   46   3 * {
+   46   3 *    SUSPEND
+   47   3 *    LoadThisR v32, 134217801
+   49   3 *    RDR4     v2
+   50   3 *    LoadThisR v36, 134217801
+   52   3 *    RDR4     v3
+   53   3 *    MULi     v1, v2, v3
+   55   3 *    uTOf     v1
+   56   3 *    LoadThisR v24, 134217801
+   58   3 *    WRTV4    v1
+- 64,3 -
+   59   3 * }
+   59   3 * 3:
+   59   3 * 2:
+   59   3 *    SUSPEND
+   60   3 * 0:
+   60   3 *    FREE     v0, 150275920
+   62   3 *    RET      1

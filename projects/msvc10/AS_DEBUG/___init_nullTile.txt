@@ -1,0 +1,36 @@
+<unrecognized token> _unnamed_function_()
+
+Temps: 1, 2, 3, 4, 5, 6, 7
+
+Variables: 
+ 006: string {noname}
+ 007: TileData {noname}
+
+
+- 32,6 -
+    0   7 *    SUSPEND
+    1   7 *    SetV1    v1, 0xff
+    3   7 *    PshV4    v1
+    4   8 *    SetV1    v2, 0xff
+    6   8 *    PshV4    v2
+    7   9 *    SetV1    v3, 0x0
+    9   9 *    PshV4    v3
+   10  10 *    SetV1    v4, 0x0
+   12  10 *    PshV4    v4
+   13  11 *    CALL     436           (uint rgb(const uint8, const uint8, const uint8, const uint8 arg3 = 255))
+   15   7 *    CpyRtoV4 v5
+   16   7 *    PshV4    v5
+   17   8 *    PSF      v6
+   18   9 *    STR      0         (l:0 s:"")
+   19  11 *    CALLSYS  32           (const string& _string_factory_(const int, const uint8&))
+   21   9 *    PshRPtr
+   22  10 *    ALLOC    0x2d4ca58, 34             (type:string)
+   25   8 *    VAR      v6
+   26   9 *    GETOBJ   0
+   27   9 *    CALL     429           (TileData@ TileData(const string, int))
+   29   7 *    STOREOBJ v7
+   30   7 *    PshVPtr  v7
+   31   8 *    PGA      104427000
+   33   9 *    REFCPY   0x637e840
+   35   8 *    FREE     v7, 104327232
+   37   7 *    RET      0

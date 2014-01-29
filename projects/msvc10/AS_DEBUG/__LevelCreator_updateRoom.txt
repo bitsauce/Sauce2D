@@ -1,0 +1,226 @@
+void LevelCreator::updateRoom(EditorRoom@)
+
+Temps: 2, 4, 5, 6, 7, 8
+
+Variables: 
+ -001: EditorRoom@ room
+ 001: int y
+ 003: int x
+ 001: int i
+ 000: LevelCreator this
+ 005: grid {noname}
+ 006: array {noname}
+
+
+    0   8 *    VarDecl  0
+    0   8 *    PshVPtr  v0
+    1   9 *    CALLSYS  2           (void _builtin_object_::_beh_4_())
+- 555,7 -
+    3   8 *    SUSPEND
+    4   8 *    VarDecl  1
+    4   8 *    SetV4    v1, 0x0          (i:0, f:0)
+    6   8 *    JMP      +51              (d:59)
+    8   8 * 4:
+    8   8 *    SUSPEND
+- 556,8 -
+    9   8 *    SUSPEND
+   10   8 *    VarDecl  2
+   10   8 *    SetV4    v3, 0x0          (i:0, f:0)
+   12   8 *    JMP      +34              (d:48)
+   14   8 * 8:
+   14   8 *    SUSPEND
+- 557,5 -
+   15   8 *    SUSPEND
+   16   8 *    VAR      v-1
+   17   9 *    LoadRObjR v-1, v20, 134217785
+   20   9 *    RDR4     v2
+   21   9 *    ADDi     v2, v2, v1
+   23   9 *    PshV4    v2
+   24  10 *    LoadRObjR v-1, v16, 134217785
+   27  10 *    RDR4     v4
+   28  10 *    ADDi     v4, v4, v3
+   30  10 *    PshV4    v4
+   31  11 *    PshVPtr  v0
+   32  12 *    ADDSi    v208, 134217814
+   34  12 *    RDSPtr
+   35  12 *    RefCpyV  v5, 152874464
+   37  12 *    CALLSYS  1360           (EditorRoom@& grid::at(uint, uint))
+   39   9 *    PshRPtr
+   40  10 *    GETOBJREF 1
+   41  10 *    REFCPY   0x912f350
+   43   9 *    PopPtr
+   44   8 *    FREE     v5, 152874464
+- 556,35 -
+   46   8 * 7:
+   46   8 *    SUSPEND
+   47   8 *    IncVi    v3
+- 556,19 -
+   48   8 * 5:
+   48   8 *    SUSPEND
+   49   8 *    LoadRObjR v-1, v24, 134217785
+   52   8 *    RDR4     v2
+   53   8 *    CMPi     v3, v2
+   55   8 *    JS       -43              (d:14)
+- 555,35 -
+   57   8 * 6:
+   57   8 * 3:
+   57   8 *    SUSPEND
+   58   8 *    IncVi    v1
+- 555,18 -
+   59   8 * 1:
+   59   8 *    SUSPEND
+   60   8 *    LoadRObjR v-1, v28, 134217785
+   63   8 *    RDR4     v2
+   64   8 *    CMPi     v1, v2
+   66   8 *    JS       -60              (d:8)
+- 560,3 -
+   68   8 * 2:
+   68   8 *    SUSPEND
+   69   8 *    LoadRObjR v-1, v28, 134217785
+   72   8 *    RDR4     v2
+   73   8 *    PshV4    v2
+   74   9 *    LoadRObjR v-1, v24, 134217785
+   77   9 *    RDR4     v4
+   78   9 *    PshV4    v4
+   79  10 *    PshVPtr  v-1
+   80  11 *    ADDSi    v44, 134217785
+   82  11 *    RDSPtr
+   83  11 *    CALLSYS  117           (void grid::resize(uint, uint))
+- 561,3 -
+   85   8 *    SUSPEND
+   86   8 *    LoadRObjR v-1, v28, 134217785
+   89   8 *    RDR4     v2
+   90   8 *    PshV4    v2
+   91   9 *    LoadRObjR v-1, v24, 134217785
+   94   9 *    RDR4     v4
+   95   9 *    PshV4    v4
+   96  10 *    PshVPtr  v-1
+   97  11 *    ADDSi    v40, 134217785
+   99  11 *    RDSPtr
+  100  11 *    CALLSYS  117           (void grid::resize(uint, uint))
+- 562,7 -
+  102   8 *    SUSPEND
+  103   8 *    VarDecl  3
+  103   8 *    SetV4    v1, 0x0          (i:0, f:0)
+  105   8 *    JMP      +130              (d:237)
+  107   8 * 12:
+  107   8 *    SUSPEND
+- 565,4 -
+  108   8 * {
+  108   8 *    SUSPEND
+  109   8 *    PshV4    v1
+  110   9 *    PshVPtr  v-1
+  111  10 *    ADDSi    v48, 134217785
+  113  10 *    RDSPtr
+  114  10 *    RefCpyV  v6, 152820312
+  116  10 *    CALLSYS  1289           (EditorObject@& array::opIndex(uint))
+  118   8 *    PshRPtr
+  119   9 *    RDSPtr
+  120   9 *    ADDSi    v20, 134217783
+  122   9 *    PopRPtr
+  123   8 *    RDR4     v4
+  124   8 *    LoadRObjR v-1, v24, 134217785
+  127   8 *    RDR4     v2
+  128   8 *    FREE     v6, 152820312
+  130   8 *    CMPi     v4, v2
+  132   8 *    JS       +4              (d:138)
+  134   8 *    SetV1    v7, 0x1
+  136   8 *    JMP      +23              (d:161)
+  138   8 * 14:
+  138   8 *    PshV4    v1
+  139   9 *    PshVPtr  v-1
+  140  10 *    ADDSi    v48, 134217785
+  142  10 *    RDSPtr
+  143  10 *    RefCpyV  v6, 152820312
+  145  10 *    CALLSYS  1289           (EditorObject@& array::opIndex(uint))
+  147   8 *    PshRPtr
+  148   9 *    RDSPtr
+  149   9 *    ADDSi    v20, 134217783
+  151   9 *    PopRPtr
+  152   8 *    RDR4     v2
+  153   8 *    FREE     v6, 152820312
+  155   8 *    CMPIi    v2, 0
+  157   8 *    TS
+  158   8 *    CpyRtoV4 v2
+  159   8 *    CpyVtoV4 v7, v2
+  161   8 * 15:
+  161   8 *    CpyVtoR4 v7
+  162   8 *    JLowZ    +4              (d:168)
+  164   8 *    SetV1    v2, 0x1
+  166   8 *    JMP      +54              (d:222)
+  168   8 * 18:
+  168   8 *    PshV4    v1
+  169   9 *    PshVPtr  v-1
+  170  10 *    ADDSi    v48, 134217785
+  172  10 *    RDSPtr
+  173  10 *    RefCpyV  v6, 152820312
+  175  10 *    CALLSYS  1289           (EditorObject@& array::opIndex(uint))
+  177   8 *    PshRPtr
+  178   9 *    RDSPtr
+  179   9 *    ADDSi    v24, 134217783
+  181   9 *    PopRPtr
+  182   8 *    RDR4     v2
+  183   8 *    LoadRObjR v-1, v28, 134217785
+  186   8 *    RDR4     v4
+  187   8 *    FREE     v6, 152820312
+  189   8 *    CMPi     v2, v4
+  191   8 *    JS       +4              (d:197)
+  193   8 *    SetV1    v8, 0x1
+  195   8 *    JMP      +23              (d:220)
+  197   8 * 16:
+  197   8 *    PshV4    v1
+  198   9 *    PshVPtr  v-1
+  199  10 *    ADDSi    v48, 134217785
+  201  10 *    RDSPtr
+  202  10 *    RefCpyV  v6, 152820312
+  204  10 *    CALLSYS  1289           (EditorObject@& array::opIndex(uint))
+  206   8 *    PshRPtr
+  207   9 *    RDSPtr
+  208   9 *    ADDSi    v24, 134217783
+  210   9 *    PopRPtr
+  211   8 *    RDR4     v4
+  212   8 *    FREE     v6, 152820312
+  214   8 *    CMPIi    v4, 0
+  216   8 *    TS
+  217   8 *    CpyRtoV4 v4
+  218   8 *    CpyVtoV4 v8, v4
+  220   8 * 17:
+  220   8 *    CpyVtoV4 v2, v8
+  222   8 * 19:
+  222   8 *    CpyVtoR4 v2
+  223   8 *    JLowZ    +10              (d:235)
+- 568,5 -
+  225   8 * {
+  225   8 *    SUSPEND
+  226   8 *    PshV4    v1
+  227   9 *    PshVPtr  v-1
+  228  10 *    ADDSi    v48, 134217785
+  230  10 *    RDSPtr
+  231  10 *    CALLSYS  83           (void array::removeAt(uint))
+- 569,5 -
+  233   8 *    SUSPEND
+  234   8 *    DecVi    v1
+- 562,48 -
+  235   8 * }
+  235   8 * 13:
+  235   8 * }
+  235   8 * 11:
+  235   8 *    SUSPEND
+  236   8 *    IncVi    v1
+- 562,18 -
+  237   8 * 9:
+  237   8 *    SUSPEND
+  238   8 *    PshVPtr  v-1
+  239   9 *    ADDSi    v48, 134217785
+  241   9 *    RDSPtr
+  242   9 *    CALLSYS  86           (uint array::size() const)
+  244   8 *    CpyRtoV4 v2
+  245   8 *    CMPi     v1, v2
+  247   8 *    JS       -142              (d:107)
+- 572,3 -
+  249   8 * 10:
+  249   8 *    SUSPEND
+  250   8 * 0:
+  250   8 *    FREE     v-1, 152236880
+  252   8 *    FREE     v0, 152243168
+  254   8 *    RET      2

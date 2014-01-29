@@ -1,0 +1,48 @@
+void LevelCreator::onMouseScroll(MouseEvent)
+
+Temps: 2, 3, 4, 5, 6
+
+Variables: 
+ -001: MouseEvent e
+ 001: int scrollAmt
+ 000: LevelCreator this
+
+
+    0   6 *    VarDecl  0
+    0   6 *    PshVPtr  v0
+    1   7 *    CALLSYS  2           (void _builtin_object_::_beh_4_())
+- 1490,3 -
+    3   6 *    SUSPEND
+    4   6 *    VarDecl  1
+    4   6 *    LoadRObjR v-1, v4, 67108905
+    7   6 *    RDR4     v2
+    8   6 *    iTOf     v2
+    9   6 *    SetV4    v3, 0x42f00000          (i:1123024896, f:120)
+   11   6 *    DIVf     v2, v2, v3
+   13   6 *    fTOi     v2
+   14   6 *    CpyVtoV4 v1, v2
+- 1491,3 -
+   16   6 *    SUSPEND
+   17   6 *    CMPIi    v1, 0
+   19   6 *    JNP      +8              (d:29)
+   21   6 *    CpyVtoV4 v3, v1
+   23   6 *    iTOf     v3
+   24   6 *    MULIf    v6, v3, 1.100000
+   27   6 *    JMP      +10              (d:39)
+   29   6 * 2:
+   29   6 *    CpyVtoV4 v4, v1
+   31   6 *    iTOf     v4
+   32   6 *    PshV4    v4
+   33   7 *    CALLSYS  555           (float abs(float))
+   35   6 *    CpyRtoV4 v5
+   36   6 *    MULIf    v6, v5, 0.900000
+   39   6 * 1:
+   39   6 *    PshV4    v6
+   40   7 *    PshVPtr  v0
+   41   8 *    CALLINTF 1326           (void LevelCreator::applyZoom(float))
+- 1492,3 -
+   43   6 *    SUSPEND
+   44   6 * 0:
+   44   6 *    FREE     v-1, 112328888
+   46   6 *    FREE     v0, 152243168
+   48   6 *    RET      2

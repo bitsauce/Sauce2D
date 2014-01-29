@@ -1,0 +1,129 @@
+PhysTile::PhysTile()
+
+Temps: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12
+
+Variables: 
+ 000: PhysTile this
+ 010: _builtin_function_ {noname}
+ 012: Tile {noname}
+
+
+- 11,7 -
+    0  12 *    SUSPEND
+    1  12 *    CALL     684           (Tile@ Tile())
+    3  12 *    STOREOBJ v12
+    4  12 *    PshVPtr  v12
+    5  13 *    PshVPtr  v0
+    6  14 *    ADDSi    v44, 134217792
+    8  14 *    REFCPY   0x46db040
+   10  13 *    PopPtr
+   11  12 *    FREE     v12, 74297408
+   13  12 *    PshVPtr  v0
+   14  13 *    CALL     584           (Entity::Entity())
+- 12,6 -
+   16  12 *    SUSPEND
+   17  12 *    SetV4    v1, 0xffffffff          (i:-1, f:-1.#QNAN)
+   19  12 *    LoadThisR v48, 134217792
+   21  12 *    WRTV4    v1
+- 13,6 -
+   22  12 *    SUSPEND
+   23  12 *    SetV4    v2, 0xffffffff          (i:-1, f:-1.#QNAN)
+   25  12 *    LoadThisR v52, 134217792
+   27  12 *    WRTV4    v2
+- 14,8 -
+   28  12 *    SUSPEND
+   29  12 *    SetV4    v1, 0x43fa0000          (i:1140457472, f:500)
+   31  12 *    LoadThisR v56, 134217792
+   33  12 *    WRTV4    v1
+- 15,8 -
+   34  12 *    SUSPEND
+   35  12 *    SetV4    v2, 0x43c80000          (i:1137180672, f:400)
+   37  12 *    LoadThisR v60, 134217792
+   39  12 *    WRTV4    v2
+- 20,3 -
+   40  12 *    SUSPEND
+   41  12 *    CALLSYS  536           (int b2dCreateBody())
+   43  12 *    CpyRtoV4 v1
+   44  12 *    LoadThisR v48, 134217792
+   46  12 *    WRTV4    v1
+- 21,3 -
+   47  12 *    SUSPEND
+   48  12 *    PshC4    0x0          (i:0, f:0)
+   50  13 *    PshC4    0x0          (i:0, f:0)
+   52  14 *    PshC4    0x0          (i:0, f:0)
+   54  15 *    LoadThisR v48, 134217792
+   56  15 *    RDR4     v4
+   57  15 *    PshV4    v4
+   58  16 *    CALLSYS  543           (void b2dSetBodyTransform(int, float, float, float))
+- 22,3 -
+   60  12 *    SUSPEND
+   61  12 *    PshC4    0x3          (i:3, f:4.2039e-045)
+   63  13 *    LoadThisR v48, 134217792
+   65  13 *    RDR4     v1
+   66  13 *    PshV4    v1
+   67  14 *    CALLSYS  538           (void b2dSetBodyType(int, BodyType))
+- 25,3 -
+   69  12 *    SUSPEND
+   70  12 *    PshC4    0x40a00000          (i:1084227584, f:5)
+   72  13 *    PshC4    0x0          (i:0, f:0)
+   74  14 *    PshC4    0x0          (i:0, f:0)
+   76  15 *    PshC4    0x0          (i:0, f:0)
+   78  16 *    PshG4    74607976
+   80  17 *    PshG4    74607976
+   82  18 *    LoadThisR v48, 134217792
+   84  18 *    RDR4     v8
+   85  18 *    PshV4    v8
+   86  19 *    CALLSYS  555           (int b2dCreateFixtureBox(int, float, float, float, float, float, float))
+   88  12 *    CpyRtoV4 v9
+   89  12 *    LoadThisR v52, 134217792
+   91  12 *    WRTV4    v9
+- 26,3 -
+   92  12 *    SUSPEND
+   93  12 *    PshC4    0x40a00000          (i:1084227584, f:5)
+   95  13 *    LoadThisR v52, 134217792
+   97  13 *    RDR4     v9
+   98  13 *    PshV4    v9
+   99  14 *    CALLSYS  559           (void b2dSetFixtureDensity(int, float))
+- 27,3 -
+  101  12 *    SUSPEND
+  102  12 *    PshC4    0x10          (i:16, f:2.24208e-044)
+  104  13 *    LoadThisR v52, 134217792
+  106  13 *    RDR4     v9
+  107  13 *    PshV4    v9
+  108  14 *    CALLSYS  561           (void b2dSetFixtureCategoryBits(int, int))
+- 28,3 -
+  110  12 *    SUSPEND
+  111  12 *    PshC4    0xd          (i:13, f:1.82169e-044)
+  113  13 *    LoadThisR v52, 134217792
+  115  13 *    RDR4     v9
+  116  13 *    PshV4    v9
+  117  14 *    CALLSYS  560           (void b2dSetFixtureMaskBits(int, int))
+- 30,3 -
+  119  12 *    SUSPEND
+  120  12 *    PshVPtr  v0
+  121  13 *    FuncPtr  74829312
+  123  14 *    CALLSYS  18           (_builtin_function_@ %delegate_factory(int&in, int&in))
+  125  12 *    STOREOBJ v10
+  126  12 *    VAR      v10
+  127  13 *    LoadThisR v48, 134217792
+  129  13 *    RDR4     v8
+  130  13 *    PshV4    v8
+  131  14 *    GETOBJ   1
+  132  14 *    CALLSYS  529           (void b2dAddBodyBeginContactCallback(int, ContactCallback@))
+- 33,3 -
+  134  12 *    SUSPEND
+  135  12 *    PshG4    74607976
+  137  13 *    PshG4    74607976
+  139  14 *    PshVPtr  v0
+  140  15 *    ADDSi    v24, 134217792
+  142  15 *    RDSPtr
+  143  15 *    CALLSYS  145           (void vec2::set(const float, const float))
+- 34,3 -
+  145  12 *    SUSPEND
+  146  12 *    PshC4    0x1          (i:1, f:1.4013e-045)
+  148  13 *    PshVPtr  v0
+  149  14 *    CALLINTF 1017           (void Entity::setRenderPass(const RenderPass))
+- 35,3 -
+  151  12 *    SUSPEND
+  152  12 * 0:
+  152  12 *    RET      1

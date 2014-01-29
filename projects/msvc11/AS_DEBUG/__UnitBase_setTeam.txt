@@ -1,0 +1,21 @@
+void UnitBase::setTeam(const Team)
+
+Temps: 
+
+Variables: 
+ -001: const Team team
+ 000: UnitBase this
+
+
+    0   0 *    VarDecl  0
+    0   0 *    PshVPtr  v0
+    1   1 *    CALLSYS  2           (void _builtin_object_::_beh_5_())
+- 103,3 -
+    3   0 *    SUSPEND
+    4   0 *    LoadThisR v48, 134217750
+    6   0 *    WRTV4    v-1
+- 104,3 -
+    7   0 *    SUSPEND
+    8   0 * 0:
+    8   0 *    FREE     v0, 74300496
+   10   0 *    RET      2

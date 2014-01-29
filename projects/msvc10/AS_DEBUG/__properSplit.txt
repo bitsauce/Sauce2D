@@ -1,0 +1,82 @@
+string[] properSplit(string, string)
+
+Temps: 2, 4, 5
+
+Variables: 
+ 000: string str
+ -001: string delim
+ 001: string[] strs
+ 003: uint i
+ 002: array {noname}
+ 005: array {noname}
+
+
+- 11,2 -
+    0   5 *    VarDecl  0
+    0   5 *    VarDecl  1
+    0   5 *    SUSPEND
+    1   5 *    VarDecl  2
+    1   5 *    VAR      v-1
+    2   6 *    PshVPtr  v0
+    3   7 *    GETOBJREF 1
+    4   7 *    CALLSYS  216           (string[]@ string::split(const string&in) const)
+    6   5 *    STOREOBJ v2
+    7   5 *    ChkNullV v2
+    8   5 *    VAR      v2
+    9   6 *    CALL     202           (string[]@ factstub())
+   11   6 *    STOREOBJ v1
+   12   6 *    PshVPtr  v1
+   13   7 *    GETOBJREF 1
+   14   7 *    CALLSYS  208           (string[]& array::opAssign(const string[]&in))
+   16   5 *    FREE     v2, 112040344
+- 12,2 -
+   18   5 *    SUSPEND
+   19   5 *    VarDecl  3
+   19   5 *    SetV4    v3, 0x0          (i:0, f:0)
+- 13,2 -
+   21   5 *    SUSPEND
+   22   5 * 1:
+   22   5 *    PshVPtr  v1
+   23   6 *    CALLSYS  86           (uint array::size() const)
+   25   5 *    CpyRtoV4 v4
+   26   5 *    CMPu     v3, v4
+   28   5 *    JNS      +22              (d:52)
+   30   5 *    SUSPEND
+- 15,3 -
+   31   5 * {
+   31   5 *    SUSPEND
+   32   5 *    PshV4    v3
+   33   6 *    PshVPtr  v1
+   34   7 *    CALLSYS  206           (string& array::opIndex(uint))
+   36   5 *    PshRPtr
+   37   6 *    CALLSYS  45           (bool string::isEmpty() const)
+   39   5 *    JLowZ    +7              (d:48)
+- 16,4 -
+   41   5 *    SUSPEND
+   42   5 *    PshV4    v3
+   43   6 *    PshVPtr  v1
+   44   7 *    CALLSYS  83           (void array::removeAt(uint))
+   46   5 *    JMP      +2              (d:50)
+- 17,8 -
+   48   5 * 3:
+   48   5 *    SUSPEND
+   49   5 *    IncVi    v3
+   50   5 * 4:
+   50   5 * }
+   50   5 *    JMP      -30              (d:22)
+- 19,2 -
+   52   5 * 2:
+   52   5 *    SUSPEND
+   53   5 *    PshVPtr  v1
+   54   6 *    CALL     202           (string[]@ factstub())
+   56   6 *    STOREOBJ v5
+   57   6 *    PshVPtr  v5
+   58   7 *    CALLSYS  80           (T[]& array::opAssign(const T[]&in))
+   60   5 * {
+   60   5 *    FREE     v1, 112040344
+   62   5 * }
+   62   5 *    LOADOBJ  v5
+   63   5 * 0:
+   63   5 *    FREE     v0, 51694408
+   65   5 *    FREE     v-1, 51694408
+   67   5 *    RET      2

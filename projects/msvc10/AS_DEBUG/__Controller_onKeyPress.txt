@@ -1,0 +1,316 @@
+void Controller::onKeyPress(KeyEvent)
+
+Temps: 1, 2, 3, 4, 5
+
+Variables: 
+ -001: KeyEvent e
+ 000: Controller this
+ 004: array {noname}
+ 005: Size2 {noname}
+
+
+    0   5 *    VarDecl  0
+    0   5 *    PshVPtr  v0
+    1   6 *    CALLSYS  2           (void _builtin_object_::_beh_4_())
+- 15,3 -
+    3   5 *    SUSPEND
+    4   5 *    LoadRObjR v-1, v4, 67108910
+    7   5 *    RDR4     v1
+    8   5 *    CMPIi    v1, 49
+   10   5 *    JNZ      +39              (d:51)
+- 17,4 -
+   12   5 * {
+   12   5 *    SUSPEND
+   13   5 *    PshVPtr  v0
+   14   6 *    ADDSi    v24, 134217779
+   16   6 *    RDSPtr
+   17   6 *    CALLSYS  86           (uint array::size() const)
+   19   5 *    CpyRtoV4 v2
+   20   5 *    CMPIu    v2, 0
+   22   5 *    JNP      +25              (d:49)
+- 18,5 -
+   24   5 *    SUSPEND
+   25   5 *    PSF      v5
+   26   6 *    PshC4    0x0          (i:0, f:0)
+   28   7 *    PshVPtr  v0
+   29   8 *    ADDSi    v24, 134217779
+   31   8 *    RDSPtr
+   32   9 *    RefCpyV  v4, 112454160
+   34   8 *    CALLSYS  449           (Size2& array::opIndex(uint))
+   36   6 *    PshRPtr
+   37   7 *    ALLOC    0x6b11728, 167             (type:Size2)
+   40   5 *    FREE     v4, 112454160
+   42   5 *    VAR      v5
+   43   6 *    PshGPtr  112592292
+   45   7 *    CHKREF
+   46   7 *    GETOBJ   1
+   47   7 *    CALLSYS  456           (void CX2DApp::resize(Size2))
+   49   5 * 2:
+   49   5 * }
+   49   5 *    JMP      +321              (d:372)
+- 19,9 -
+   51   5 * 1:
+   51   5 *    SUSPEND
+   52   5 *    LoadRObjR v-1, v4, 67108910
+   55   5 *    RDR4     v1
+   56   5 *    CMPIi    v1, 50
+   58   5 *    JNZ      +39              (d:99)
+- 21,4 -
+   60   5 * {
+   60   5 *    SUSPEND
+   61   5 *    PshVPtr  v0
+   62   6 *    ADDSi    v24, 134217779
+   64   6 *    RDSPtr
+   65   6 *    CALLSYS  86           (uint array::size() const)
+   67   5 *    CpyRtoV4 v2
+   68   5 *    CMPIu    v2, 1
+   70   5 *    JNP      +25              (d:97)
+- 22,5 -
+   72   5 *    SUSPEND
+   73   5 *    PSF      v5
+   74   6 *    PshC4    0x1          (i:1, f:1.4013e-045)
+   76   7 *    PshVPtr  v0
+   77   8 *    ADDSi    v24, 134217779
+   79   8 *    RDSPtr
+   80   9 *    RefCpyV  v4, 112454160
+   82   8 *    CALLSYS  449           (Size2& array::opIndex(uint))
+   84   6 *    PshRPtr
+   85   7 *    ALLOC    0x6b11728, 167             (type:Size2)
+   88   5 *    FREE     v4, 112454160
+   90   5 *    VAR      v5
+   91   6 *    PshGPtr  112592292
+   93   7 *    CHKREF
+   94   7 *    GETOBJ   1
+   95   7 *    CALLSYS  456           (void CX2DApp::resize(Size2))
+   97   5 * 5:
+   97   5 * }
+   97   5 *    JMP      +273              (d:372)
+- 23,9 -
+   99   5 * 4:
+   99   5 *    SUSPEND
+  100   5 *    LoadRObjR v-1, v4, 67108910
+  103   5 *    RDR4     v1
+  104   5 *    CMPIi    v1, 51
+  106   5 *    JNZ      +39              (d:147)
+- 25,4 -
+  108   5 * {
+  108   5 *    SUSPEND
+  109   5 *    PshVPtr  v0
+  110   6 *    ADDSi    v24, 134217779
+  112   6 *    RDSPtr
+  113   6 *    CALLSYS  86           (uint array::size() const)
+  115   5 *    CpyRtoV4 v3
+  116   5 *    CMPIu    v3, 2
+  118   5 *    JNP      +25              (d:145)
+- 26,5 -
+  120   5 *    SUSPEND
+  121   5 *    PSF      v5
+  122   6 *    PshC4    0x2          (i:2, f:2.8026e-045)
+  124   7 *    PshVPtr  v0
+  125   8 *    ADDSi    v24, 134217779
+  127   8 *    RDSPtr
+  128   9 *    RefCpyV  v4, 112454160
+  130   8 *    CALLSYS  449           (Size2& array::opIndex(uint))
+  132   6 *    PshRPtr
+  133   7 *    ALLOC    0x6b11728, 167             (type:Size2)
+  136   5 *    FREE     v4, 112454160
+  138   5 *    VAR      v5
+  139   6 *    PshGPtr  112592292
+  141   7 *    CHKREF
+  142   7 *    GETOBJ   1
+  143   7 *    CALLSYS  456           (void CX2DApp::resize(Size2))
+  145   5 * 8:
+  145   5 * }
+  145   5 *    JMP      +225              (d:372)
+- 27,9 -
+  147   5 * 7:
+  147   5 *    SUSPEND
+  148   5 *    LoadRObjR v-1, v4, 67108910
+  151   5 *    RDR4     v1
+  152   5 *    CMPIi    v1, 52
+  154   5 *    JNZ      +39              (d:195)
+- 29,4 -
+  156   5 * {
+  156   5 *    SUSPEND
+  157   5 *    PshVPtr  v0
+  158   6 *    ADDSi    v24, 134217779
+  160   6 *    RDSPtr
+  161   6 *    CALLSYS  86           (uint array::size() const)
+  163   5 *    CpyRtoV4 v3
+  164   5 *    CMPIu    v3, 3
+  166   5 *    JNP      +25              (d:193)
+- 30,5 -
+  168   5 *    SUSPEND
+  169   5 *    PSF      v5
+  170   6 *    PshC4    0x3          (i:3, f:4.2039e-045)
+  172   7 *    PshVPtr  v0
+  173   8 *    ADDSi    v24, 134217779
+  175   8 *    RDSPtr
+  176   9 *    RefCpyV  v4, 112454160
+  178   8 *    CALLSYS  449           (Size2& array::opIndex(uint))
+  180   6 *    PshRPtr
+  181   7 *    ALLOC    0x6b11728, 167             (type:Size2)
+  184   5 *    FREE     v4, 112454160
+  186   5 *    VAR      v5
+  187   6 *    PshGPtr  112592292
+  189   7 *    CHKREF
+  190   7 *    GETOBJ   1
+  191   7 *    CALLSYS  456           (void CX2DApp::resize(Size2))
+  193   5 * 11:
+  193   5 * }
+  193   5 *    JMP      +177              (d:372)
+- 31,9 -
+  195   5 * 10:
+  195   5 *    SUSPEND
+  196   5 *    LoadRObjR v-1, v4, 67108910
+  199   5 *    RDR4     v1
+  200   5 *    CMPIi    v1, 53
+  202   5 *    JNZ      +39              (d:243)
+- 33,4 -
+  204   5 * {
+  204   5 *    SUSPEND
+  205   5 *    PshVPtr  v0
+  206   6 *    ADDSi    v24, 134217779
+  208   6 *    RDSPtr
+  209   6 *    CALLSYS  86           (uint array::size() const)
+  211   5 *    CpyRtoV4 v3
+  212   5 *    CMPIu    v3, 4
+  214   5 *    JNP      +25              (d:241)
+- 34,5 -
+  216   5 *    SUSPEND
+  217   5 *    PSF      v5
+  218   6 *    PshC4    0x4          (i:4, f:5.60519e-045)
+  220   7 *    PshVPtr  v0
+  221   8 *    ADDSi    v24, 134217779
+  223   8 *    RDSPtr
+  224   9 *    RefCpyV  v4, 112454160
+  226   8 *    CALLSYS  449           (Size2& array::opIndex(uint))
+  228   6 *    PshRPtr
+  229   7 *    ALLOC    0x6b11728, 167             (type:Size2)
+  232   5 *    FREE     v4, 112454160
+  234   5 *    VAR      v5
+  235   6 *    PshGPtr  112592292
+  237   7 *    CHKREF
+  238   7 *    GETOBJ   1
+  239   7 *    CALLSYS  456           (void CX2DApp::resize(Size2))
+  241   5 * 14:
+  241   5 * }
+  241   5 *    JMP      +129              (d:372)
+- 35,9 -
+  243   5 * 13:
+  243   5 *    SUSPEND
+  244   5 *    LoadRObjR v-1, v4, 67108910
+  247   5 *    RDR4     v1
+  248   5 *    CMPIi    v1, 54
+  250   5 *    JNZ      +39              (d:291)
+- 37,4 -
+  252   5 * {
+  252   5 *    SUSPEND
+  253   5 *    PshVPtr  v0
+  254   6 *    ADDSi    v24, 134217779
+  256   6 *    RDSPtr
+  257   6 *    CALLSYS  86           (uint array::size() const)
+  259   5 *    CpyRtoV4 v3
+  260   5 *    CMPIu    v3, 5
+  262   5 *    JNP      +25              (d:289)
+- 38,5 -
+  264   5 *    SUSPEND
+  265   5 *    PSF      v5
+  266   6 *    PshC4    0x5          (i:5, f:7.00649e-045)
+  268   7 *    PshVPtr  v0
+  269   8 *    ADDSi    v24, 134217779
+  271   8 *    RDSPtr
+  272   9 *    RefCpyV  v4, 112454160
+  274   8 *    CALLSYS  449           (Size2& array::opIndex(uint))
+  276   6 *    PshRPtr
+  277   7 *    ALLOC    0x6b11728, 167             (type:Size2)
+  280   5 *    FREE     v4, 112454160
+  282   5 *    VAR      v5
+  283   6 *    PshGPtr  112592292
+  285   7 *    CHKREF
+  286   7 *    GETOBJ   1
+  287   7 *    CALLSYS  456           (void CX2DApp::resize(Size2))
+  289   5 * 17:
+  289   5 * }
+  289   5 *    JMP      +81              (d:372)
+- 39,9 -
+  291   5 * 16:
+  291   5 *    SUSPEND
+  292   5 *    LoadRObjR v-1, v4, 67108910
+  295   5 *    RDR4     v1
+  296   5 *    CMPIi    v1, 55
+  298   5 *    JNZ      +39              (d:339)
+- 41,4 -
+  300   5 * {
+  300   5 *    SUSPEND
+  301   5 *    PshVPtr  v0
+  302   6 *    ADDSi    v24, 134217779
+  304   6 *    RDSPtr
+  305   6 *    CALLSYS  86           (uint array::size() const)
+  307   5 *    CpyRtoV4 v3
+  308   5 *    CMPIu    v3, 6
+  310   5 *    JNP      +25              (d:337)
+- 42,5 -
+  312   5 *    SUSPEND
+  313   5 *    PSF      v5
+  314   6 *    PshC4    0x6          (i:6, f:8.40779e-045)
+  316   7 *    PshVPtr  v0
+  317   8 *    ADDSi    v24, 134217779
+  319   8 *    RDSPtr
+  320   9 *    RefCpyV  v4, 112454160
+  322   8 *    CALLSYS  449           (Size2& array::opIndex(uint))
+  324   6 *    PshRPtr
+  325   7 *    ALLOC    0x6b11728, 167             (type:Size2)
+  328   5 *    FREE     v4, 112454160
+  330   5 *    VAR      v5
+  331   6 *    PshGPtr  112592292
+  333   7 *    CHKREF
+  334   7 *    GETOBJ   1
+  335   7 *    CALLSYS  456           (void CX2DApp::resize(Size2))
+  337   5 * 20:
+  337   5 * }
+  337   5 *    JMP      +33              (d:372)
+- 43,9 -
+  339   5 * 19:
+  339   5 *    SUSPEND
+  340   5 *    LoadRObjR v-1, v4, 67108910
+  343   5 *    RDR4     v1
+  344   5 *    CMPIi    v1, 56
+  346   5 *    JNZ      +12              (d:360)
+- 45,4 -
+  348   5 * {
+  348   5 *    SUSPEND
+  349   5 *    PshC4    0x3e8          (i:1000, f:1.4013e-042)
+  351   6 *    PshC4    0x76c          (i:1900, f:2.66247e-042)
+  353   7 *    PshGPtr  112592292
+  355   8 *    CHKREF
+  356   8 *    CALLSYS  457           (void CX2DApp::resize(const uint, const uint))
+  358   5 * }
+  358   5 *    JMP      +12              (d:372)
+- 46,9 -
+  360   5 * 22:
+  360   5 *    SUSPEND
+  361   5 *    LoadRObjR v-1, v4, 67108910
+  364   5 *    RDR4     v1
+  365   5 *    CMPIi    v1, 57
+  367   5 *    JNZ      +3              (d:372)
+- 48,4 -
+  369   5 * {
+  369   5 *    SUSPEND
+  370   5 *    CALLSYS  584           (void exit())
+- 50,3 -
+  372   5 * }
+  372   5 * 24:
+  372   5 * 23:
+  372   5 * 21:
+  372   5 * 18:
+  372   5 * 15:
+  372   5 * 12:
+  372   5 * 9:
+  372   5 * 6:
+  372   5 * 3:
+  372   5 *    SUSPEND
+  373   5 * 0:
+  373   5 *    FREE     v-1, 112587880
+  375   5 *    FREE     v0, 112665696
+  377   5 *    RET      2

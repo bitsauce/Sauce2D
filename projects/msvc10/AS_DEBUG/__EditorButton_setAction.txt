@@ -1,0 +1,21 @@
+void EditorButton::setAction(EditorAction)
+
+Temps: 
+
+Variables: 
+ -001: EditorAction action
+ 000: EditorButton this
+
+
+    0   0 *    VarDecl  0
+    0   0 *    PshVPtr  v0
+    1   1 *    CALLSYS  2           (void _builtin_object_::_beh_4_())
+- 385,3 -
+    3   0 *    SUSPEND
+    4   0 *    LoadThisR v68, 134217812
+    6   0 *    WRTV4    v-1
+- 386,3 -
+    7   0 *    SUSPEND
+    8   0 * 0:
+    8   0 *    FREE     v0, 152236296
+   10   0 *    RET      2

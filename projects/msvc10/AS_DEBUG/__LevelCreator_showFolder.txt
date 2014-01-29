@@ -1,0 +1,67 @@
+void LevelCreator::showFolder(GuiContainer@)
+
+Temps: 1, 2, 3
+
+Variables: 
+ -001: GuiContainer@ folder
+ 000: LevelCreator this
+ 003: GuiContainer {noname}
+
+
+    0   3 *    VarDecl  0
+    0   3 *    PshVPtr  v0
+    1   4 *    CALLSYS  2           (void _builtin_object_::_beh_4_())
+- 421,3 -
+    3   3 *    SUSPEND
+    4   3 *    PshVPtr  v0
+    5   4 *    ADDSi    v124, 134217814
+    7   4 *    RDSPtr
+    8   4 *    CALLINTF 1111           (void SceneObject::hide())
+- 422,3 -
+   10   3 *    SUSPEND
+   11   3 *    PshVPtr  v-1
+   12   4 *    CALLINTF 1110           (void SceneObject::show())
+- 423,3 -
+   14   3 *    SUSPEND
+   15   3 *    PshVPtr  v0
+   16   4 *    ADDSi    v128, 134217814
+   18   4 *    RDSPtr
+   19   4 *    CALLSYS  86           (uint array::size() const)
+   21   3 *    CpyRtoV4 v1
+   22   3 *    CMPIu    v1, 0
+   24   3 *    JNZ      +7              (d:33)
+- 424,4 -
+   26   3 *    SUSPEND
+   27   3 *    PshVPtr  v0
+   28   4 *    ADDSi    v120, 134217814
+   30   4 *    RDSPtr
+   31   4 *    CALLINTF 1110           (void SceneObject::show())
+- 425,3 -
+   33   3 * 1:
+   33   3 *    SUSPEND
+   34   3 *    PshVPtr  v0
+   35   4 *    ADDSi    v124, 134217814
+   37   4 *    RDSPtr
+   38   4 *    RefCpyV  v3, 152207448
+   40   4 *    PopPtr
+   41   3 *    VAR      v3
+   42   4 *    PshVPtr  v0
+   43   5 *    ADDSi    v128, 134217814
+   45   5 *    RDSPtr
+   46   5 *    GETREF   1
+   47   5 *    CALLSYS  1337           (void array::insertLast(GuiContainer@const&in))
+   49   3 *    FREE     v3, 152207448
+- 426,3 -
+   51   3 *    SUSPEND
+   52   3 *    VAR      v-1
+   53   4 *    PshVPtr  v0
+   54   5 *    ADDSi    v124, 134217814
+   56   5 *    GETOBJREF 1
+   57   5 *    REFCPY   0x9128058
+   59   4 *    PopPtr
+- 427,3 -
+   60   3 *    SUSPEND
+   61   3 * 0:
+   61   3 *    FREE     v-1, 152207448
+   63   3 *    FREE     v0, 152243168
+   65   3 *    RET      2

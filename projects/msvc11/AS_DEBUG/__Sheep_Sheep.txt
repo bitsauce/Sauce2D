@@ -1,0 +1,47 @@
+Sheep::Sheep()
+
+Temps: 1, 2, 3
+
+Variables: 
+ 000: Sheep this
+
+
+    0   3 *    PshVPtr  v0
+    1   4 *    CALL     522           (Resource::Resource())
+- 14,3 -
+    3   3 *    SUSPEND
+    4   3 *    SetV4    v1, 0x1          (i:1, f:1.4013e-045)
+    6   3 *    LoadThisR v116, 134217762
+    8   3 *    WRTV4    v1
+- 15,3 -
+    9   3 *    SUSPEND
+   10   3 *    SetV4    v2, 0xfa          (i:250, f:3.50325e-043)
+   12   3 *    LoadThisR v108, 134217762
+   14   3 *    WRTV4    v2
+- 18,3 -
+   15   3 *    SUSPEND
+   16   3 *    SetV1    v2, 0x0
+   18   3 *    LoadThisR v112, 134217762
+   20   3 *    WRTV1    v2
+- 21,3 -
+   21   3 *    SUSPEND
+   22   3 *    SetV4    v2, 0x5          (i:5, f:7.00649e-045)
+   24   3 *    LoadThisR v56, 134217762
+   26   3 *    WRTV4    v2
+- 22,3 -
+   27   3 *    SUSPEND
+   28   3 *    SetV4    v2, 0x5          (i:5, f:7.00649e-045)
+   30   3 *    LoadThisR v52, 134217762
+   32   3 *    WRTV4    v2
+- 25,3 -
+   33   3 *    SUSPEND
+   34   3 *    PshC4    0x41800000          (i:1098907648, f:16)
+   36   4 *    PshC4    0x42000000          (i:1107296256, f:32)
+   38   5 *    PshVPtr  v0
+   39   6 *    ADDSi    v20, 134217762
+   41   6 *    RDSPtr
+   42   6 *    CALLSYS  144           (void Vector2::set(const float, const float))
+- 26,3 -
+   44   3 *    SUSPEND
+   45   3 * 0:
+   45   3 *    RET      1

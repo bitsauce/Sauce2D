@@ -1,0 +1,17 @@
+<unrecognized token> _unnamed_function_()
+
+Temps: 
+
+Variables: 
+
+
+- 20,9 -
+    0   0 *    SUSPEND
+    1   0 *    STR      1         (l:7 s:"No Tool")
+    2   2 *    CALLSYS  32           (const string& _string_factory_(const int, const uint8&))
+    4   0 *    PshRPtr
+    5   1 *    PGA      150743096
+    7   2 *    ALLOC    0x305cbc8, 33             (type:string)
+   10   1 *    PshGPtr  150743096
+   12   2 *    CALLSYS  36           (string& string::opAssign(const string&in))
+   14   0 *    RET      0

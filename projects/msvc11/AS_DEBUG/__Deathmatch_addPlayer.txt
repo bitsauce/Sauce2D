@@ -1,0 +1,141 @@
+void Deathmatch::addPlayer(PlayerInfo)
+
+Temps: 1, 2, 3, 10, 17, 24, 31, 32
+
+Variables: 
+ -001: PlayerInfo info
+ 000: Deathmatch this
+ 032: array {noname}
+ 010: string {noname}
+ 017: string {noname}
+ 024: string {noname}
+ 031: string {noname}
+
+
+    0  32 *    VarDecl  0
+    0  32 *    PshVPtr  v0
+    1  33 *    CALLSYS  2           (void _builtin_object_::_beh_5_())
+- 65,3 -
+    3  32 *    SUSPEND
+    4  32 *    LoadRObjR v-1, v44, 134217753
+    7  32 *    RDR4     v1
+    8  32 *    CMPIi    v1, 0
+   10  32 *    JNS      +4              (d:16)
+   12  32 *    SetV1    v2, 0x1
+   14  32 *    JMP      +17              (d:33)
+   16  32 * 2:
+   16  32 *    LoadRObjR v-1, v44, 134217753
+   19  32 *    RDR4     v3
+   20  32 *    PshVPtr  v0
+   21  33 *    ADDSi    v20, 134217760
+   23  33 *    RDSPtr
+   24  33 *    CALLSYS  88           (uint array::size() const)
+   26  32 *    CpyRtoV4 v2
+   27  32 *    CMPi     v3, v2
+   29  32 *    TNS
+   30  32 *    CpyRtoV4 v3
+   31  32 *    CpyVtoV4 v2, v3
+   33  32 * 3:
+   33  32 *    CpyVtoR4 v2
+   34  32 *    JLowZ    +81              (d:117)
+- 67,4 -
+   36  32 * {
+   36  32 *    SUSPEND
+   37  32 *    STR      28         (l:2 s:"'!")
+   38  34 *    CALLSYS  33           (const string& _string_factory_(const int, const uint8&))
+   40  32 *    PshRPtr
+   41  33 *    PSF      v31
+   42  34 *    CALLSYS  35           (string::string(const string&in))
+   44  32 *    ObjInfo  v31, 1
+   44  32 *    VAR      v31
+   45  33 *    PSF      v10
+   46  34 *    LoadRObjR v-1, v44, 134217753
+   49  34 *    RDR4     v1
+   50  34 *    PshV4    v1
+   51  35 *    PSF      v17
+   52  36 *    STR      27         (l:47 s:"' tried to")
+   53  38 *    CALLSYS  33           (const string& _string_factory_(const int, const uint8&))
+   55  36 *    PshRPtr
+   56  37 *    PSF      v24
+   57  38 *    CALLSYS  35           (string::string(const string&in))
+   59  36 *    ObjInfo  v24, 1
+   59  36 *    VAR      v24
+   60  37 *    PSF      v10
+   61  38 *    PshVPtr  v-1
+   62  39 *    ADDSi    v20, 134217753
+   64  39 *    RDSPtr
+   65  39 *    PSF      v10
+   66  40 *    CALLSYS  35           (string::string(const string&in))
+   68  38 *    ObjInfo  v10, 1
+   68  38 *    VAR      v10
+   69  39 *    PSF      v17
+   70  40 *    STR      26         (l:25 s:"Deathmatch")
+   71  42 *    CALLSYS  33           (const string& _string_factory_(const int, const uint8&))
+   73  40 *    PshRPtr
+   74  41 *    GETREF   2
+   75  41 *    CALLSYS  41           (string string::opAdd(const string&in) const)
+   77  38 *    ObjInfo  v17, 1
+   77  38 *    PSF      v10
+   78  39 *    CALLSYS  36           (string::~string())
+   80  38 *    ObjInfo  v10, 0
+   80  38 *    PSF      v17
+   81  39 *    GETREF   2
+   82  39 *    CALLSYS  41           (string string::opAdd(const string&in) const)
+   84  36 *    ObjInfo  v10, 1
+   84  36 *    PSF      v24
+   85  37 *    CALLSYS  36           (string::~string())
+   87  36 *    ObjInfo  v24, 0
+   87  36 *    PSF      v10
+   88  37 *    PSF      v17
+   89  38 *    CALLSYS  36           (string::~string())
+   91  37 *    ObjInfo  v17, 0
+   91  37 *    CALLSYS  55           (string string::opAdd(int) const)
+   93  34 *    ObjInfo  v17, 1
+   93  34 *    PSF      v17
+   94  35 *    PSF      v10
+   95  36 *    CALLSYS  36           (string::~string())
+   97  35 *    ObjInfo  v10, 0
+   97  35 *    GETREF   2
+   98  35 *    CALLSYS  41           (string string::opAdd(const string&in) const)
+  100  32 *    ObjInfo  v10, 1
+  100  32 *    PSF      v31
+  101  33 *    CALLSYS  36           (string::~string())
+  103  32 *    ObjInfo  v31, 0
+  103  32 *    PSF      v10
+  104  33 *    PSF      v17
+  105  34 *    CALLSYS  36           (string::~string())
+  107  33 *    ObjInfo  v17, 0
+  107  33 *    PopPtr
+  108  32 *    PSF      v10
+  109  33 *    CALLSYS  231           (void print(string&in))
+  111  32 *    PSF      v10
+  112  33 *    CALLSYS  36           (string::~string())
+- 68,4 -
+  114  32 *    ObjInfo  v10, 0
+  114  32 *    SUSPEND
+  115  32 * {
+  115  32 * }
+  115  32 *    JMP      +22              (d:139)
+- 72,3 -
+  117  31   }
+  117  32 * 1:
+  117  32 *    SUSPEND
+  118  32 *    VAR      v-1
+  119  33 *    LoadRObjR v-1, v44, 134217753
+  122  33 *    RDR4     v3
+  123  33 *    PshV4    v3
+  124  34 *    PshVPtr  v0
+  125  35 *    ADDSi    v20, 134217760
+  127  35 *    RDSPtr
+  128  35 *    RefCpyV  v32, 116146872
+  130  35 *    CALLSYS  945           (PlayerInfo& array::opIndex(uint))
+  132  33 *    PshRPtr
+  133  34 *    GETOBJREF 1
+  134  34 *    CALLSYS  4           (int& _builtin_object_::opAssign(int&in))
+  136  32 *    FREE     v32, 116146872
+- 73,3 -
+  138  32 *    SUSPEND
+  139  32 * 0:
+  139  32 *    FREE     v-1, 115790880
+  141  32 *    FREE     v0, 115788336
+  143  32 *    RET      2

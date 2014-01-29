@@ -1,0 +1,17 @@
+void ShowLevelEditor()
+
+Temps: 1
+
+Variables: 
+ 001: LevelEditor {noname}
+
+
+- 32,2 -
+    0   1 *    SUSPEND
+    1   1 *    CALL     720           (LevelEditor@ LevelEditor())
+    3   1 *    STOREOBJ v1
+    4   1 *    FREE     v1, 152223320
+- 33,2 -
+    6   1 *    SUSPEND
+    7   1 * 0:
+    7   1 *    RET      0

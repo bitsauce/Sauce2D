@@ -1,0 +1,174 @@
+void VertexBuffer::addVertex(const float, const float, const float, const float, const float, const float, const float, const float)
+
+Temps: 1, 2, 9, 10
+
+Variables: 
+ -001: const float x
+ -002: const float y
+ -003: const float tx
+ -004: const float ty
+ -005: const float r
+ -006: const float g
+ -007: const float b
+ -008: const float a
+ 000: VertexBuffer this
+ 010: array {noname}
+ 009: string {noname}
+
+
+    0  10 *    VarDecl  0
+    0  10 *    VarDecl  1
+    0  10 *    VarDecl  2
+    0  10 *    VarDecl  3
+    0  10 *    VarDecl  4
+    0  10 *    VarDecl  5
+    0  10 *    VarDecl  6
+    0  10 *    VarDecl  7
+    0  10 *    PshVPtr  v0
+    1  11 *    CALLSYS  2           (void _builtin_object_::_beh_5_())
+- 127,3 -
+    3  10 *    SUSPEND
+    4  10 *    LoadThisR v28, 134217757
+    6  10 *    RDR4     v2
+    7  10 *    PshVPtr  v0
+    8  11 *    ADDSi    v36, 134217757
+   10  11 *    RDSPtr
+   11  11 *    CALLSYS  88           (uint array::size() const)
+   13  10 *    CpyRtoV4 v1
+   14  10 *    CMPi     v2, v1
+   16  10 *    JS       +17              (d:35)
+- 129,4 -
+   18  10 * {
+   18  10 *    SUSPEND
+   19  10 *    STR      38         (l:9 s:"addVertex")
+   20  12 *    CALLSYS  33           (const string& _string_factory_(const int, const uint8&))
+   22  10 *    PshRPtr
+   23  11 *    PSF      v9
+   24  12 *    CALLSYS  35           (string::string(const string&in))
+   26  10 *    ObjInfo  v9, 1
+   26  10 *    PSF      v9
+   27  11 *    CALLSYS  307           (void error(const string&in))
+   29  10 *    PSF      v9
+   30  11 *    CALLSYS  36           (string::~string())
+- 130,4 -
+   32  10 *    ObjInfo  v9, 0
+   32  10 *    SUSPEND
+   33  10 * {
+   33  10 * }
+   33  10 *    JMP      +158              (d:193)
+- 132,3 -
+   35   9   }
+   35  10 * 1:
+   35  10 *    SUSPEND
+   36  10 *    LoadThisR v28, 134217757
+   38  10 *    RDR4     v1
+   39  10 *    PshV4    v1
+   40  11 *    PshVPtr  v0
+   41  12 *    ADDSi    v36, 134217757
+   43  12 *    RDSPtr
+   44  12 *    RefCpyV  v10, 73576840
+   46  12 *    CALLSYS  498           (float& array::opIndex(uint))
+   48  10 *    WRTV4    v-1
+   49  10 *    FREE     v10, 73576840
+- 133,3 -
+   51  10 *    SUSPEND
+   52  10 *    LoadThisR v28, 134217757
+   54  10 *    RDR4     v2
+   55  10 *    ADDIi    v2, v2, 1
+   58  10 *    PshV4    v2
+   59  11 *    PshVPtr  v0
+   60  12 *    ADDSi    v36, 134217757
+   62  12 *    RDSPtr
+   63  12 *    RefCpyV  v10, 73576840
+   65  12 *    CALLSYS  498           (float& array::opIndex(uint))
+   67  10 *    WRTV4    v-2
+   68  10 *    FREE     v10, 73576840
+- 134,3 -
+   70  10 *    SUSPEND
+   71  10 *    LoadThisR v28, 134217757
+   73  10 *    RDR4     v1
+   74  10 *    ADDIi    v1, v1, 2
+   77  10 *    PshV4    v1
+   78  11 *    PshVPtr  v0
+   79  12 *    ADDSi    v36, 134217757
+   81  12 *    RDSPtr
+   82  12 *    RefCpyV  v10, 73576840
+   84  12 *    CALLSYS  498           (float& array::opIndex(uint))
+   86  10 *    WRTV4    v-5
+   87  10 *    FREE     v10, 73576840
+- 135,3 -
+   89  10 *    SUSPEND
+   90  10 *    LoadThisR v28, 134217757
+   92  10 *    RDR4     v2
+   93  10 *    ADDIi    v2, v2, 3
+   96  10 *    PshV4    v2
+   97  11 *    PshVPtr  v0
+   98  12 *    ADDSi    v36, 134217757
+  100  12 *    RDSPtr
+  101  12 *    RefCpyV  v10, 73576840
+  103  12 *    CALLSYS  498           (float& array::opIndex(uint))
+  105  10 *    WRTV4    v-6
+  106  10 *    FREE     v10, 73576840
+- 136,3 -
+  108  10 *    SUSPEND
+  109  10 *    LoadThisR v28, 134217757
+  111  10 *    RDR4     v1
+  112  10 *    ADDIi    v1, v1, 4
+  115  10 *    PshV4    v1
+  116  11 *    PshVPtr  v0
+  117  12 *    ADDSi    v36, 134217757
+  119  12 *    RDSPtr
+  120  12 *    RefCpyV  v10, 73576840
+  122  12 *    CALLSYS  498           (float& array::opIndex(uint))
+  124  10 *    WRTV4    v-7
+  125  10 *    FREE     v10, 73576840
+- 137,3 -
+  127  10 *    SUSPEND
+  128  10 *    LoadThisR v28, 134217757
+  130  10 *    RDR4     v2
+  131  10 *    ADDIi    v2, v2, 5
+  134  10 *    PshV4    v2
+  135  11 *    PshVPtr  v0
+  136  12 *    ADDSi    v36, 134217757
+  138  12 *    RDSPtr
+  139  12 *    RefCpyV  v10, 73576840
+  141  12 *    CALLSYS  498           (float& array::opIndex(uint))
+  143  10 *    WRTV4    v-8
+  144  10 *    FREE     v10, 73576840
+- 138,3 -
+  146  10 *    SUSPEND
+  147  10 *    LoadThisR v28, 134217757
+  149  10 *    RDR4     v1
+  150  10 *    ADDIi    v1, v1, 6
+  153  10 *    PshV4    v1
+  154  11 *    PshVPtr  v0
+  155  12 *    ADDSi    v36, 134217757
+  157  12 *    RDSPtr
+  158  12 *    RefCpyV  v10, 73576840
+  160  12 *    CALLSYS  498           (float& array::opIndex(uint))
+  162  10 *    WRTV4    v-3
+  163  10 *    FREE     v10, 73576840
+- 139,3 -
+  165  10 *    SUSPEND
+  166  10 *    LoadThisR v28, 134217757
+  168  10 *    RDR4     v2
+  169  10 *    ADDIi    v2, v2, 7
+  172  10 *    PshV4    v2
+  173  11 *    PshVPtr  v0
+  174  12 *    ADDSi    v36, 134217757
+  176  12 *    RDSPtr
+  177  12 *    RefCpyV  v10, 73576840
+  179  12 *    CALLSYS  498           (float& array::opIndex(uint))
+  181  10 *    WRTV4    v-4
+  182  10 *    FREE     v10, 73576840
+- 140,3 -
+  184  10 *    SUSPEND
+  185  10 *    LoadThisR v28, 134217757
+  187  10 *    RDR4     v1
+  188  10 *    ADDIi    v1, v1, 8
+  191  10 *    WRTV4    v1
+- 141,3 -
+  192  10 *    SUSPEND
+  193  10 * 0:
+  193  10 *    FREE     v0, 74269448
+  195  10 *    RET      9

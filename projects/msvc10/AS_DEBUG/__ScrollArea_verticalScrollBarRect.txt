@@ -1,0 +1,72 @@
+Rect2 ScrollArea::verticalScrollBarRect()
+
+Temps: 1, 2, 3, 4, 5, 6, 10, 11
+
+Variables: 
+ 000: ScrollArea this
+ 010: Rect2 {noname}
+
+
+    0  11 *    PshVPtr  v0
+    1  12 *    CALLSYS  2           (void _builtin_object_::_beh_4_())
+- 169,3 -
+    3  11 *    SUSPEND
+    4  11 *    PshC4    0x40000000          (i:1073741824, f:2)
+    6  12 *    PshVPtr  v0
+    7  13 *    CALLINTF 1101           (float SceneObject::height() const)
+    9  12 *    CpyRtoV4 v1
+   10  12 *    SUBIf    v1, v1, 16.000000
+   13  12 *    PshV4    v1
+   14  13 *    CALLSYS  557           (float pow(float, float))
+   16  11 *    CpyRtoV4 v2
+   17  11 *    PshVPtr  v0
+   18  12 *    ADDSi    v52, 134217810
+   20  12 *    RDSPtr
+   21  12 *    ADDSi    v4, 67108877
+   23  12 *    PopRPtr
+   24  11 *    RDR4     v4
+   25  11 *    DIVf     v3, v2, v4
+   27  11 *    PshV4    v3
+   28  12 *    PshC4    0x41800000          (i:1098907648, f:16)
+   30  13 *    PshVPtr  v0
+   31  14 *    CALLINTF 1094           (float SceneObject::y() const)
+   33  13 *    CpyRtoV4 v4
+   34  13 *    ADDIf    v1, v4, 16.000000
+   37  13 *    PshVPtr  v0
+   38  14 *    CALLINTF 1101           (float SceneObject::height() const)
+   40  13 *    CpyRtoV4 v2
+   41  13 *    SUBIf    v2, v2, 8.000000
+   44  13 *    LoadThisR v64, 134217810
+   46  13 *    RDR4     v4
+   47  13 *    PshVPtr  v0
+   48  14 *    ADDSi    v52, 134217810
+   50  14 *    RDSPtr
+   51  14 *    ADDSi    v4, 67108877
+   53  14 *    PopRPtr
+   54  13 *    RDR4     v5
+   55  13 *    DIVf     v4, v4, v5
+   57  13 *    MULf     v5, v2, v4
+   59  13 *    ADDf     v4, v1, v5
+   61  13 *    PshV4    v4
+   62  14 *    PshVPtr  v0
+   63  15 *    CALLINTF 1093           (float SceneObject::x() const)
+   65  14 *    CpyRtoV4 v5
+   66  14 *    PshVPtr  v0
+   67  15 *    CALLINTF 1100           (float SceneObject::width() const)
+   69  14 *    CpyRtoV4 v1
+   70  14 *    ADDf     v2, v5, v1
+   72  14 *    SUBIf    v1, v2, 16.000000
+   75  14 *    PshV4    v1
+   76  15 *    PSF      v10
+   77  16 *    CALLSYS  157           (void Rect2::_beh_0_(const float, const float, const float, const float))
+   79  11 *    ObjInfo  v10, 1
+   79  11 *    PSF      v10
+   80  12 *    PshVPtr  v-1
+   81  13 *    CALLSYS  156           (void Rect2::_beh_0_(const Rect2&in))
+   83  11 *    ObjInfo  v10, 0
+   83  11 *    ObjInfo  v-1, 1
+   83  11 * {
+   83  11 * }
+   83  11 * 0:
+   83  11 *    FREE     v0, 152254712
+   85  11 *    RET      2

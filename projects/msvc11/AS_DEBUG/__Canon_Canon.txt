@@ -1,0 +1,27 @@
+Canon::Canon(Team)
+
+Temps: 1, 2
+
+Variables: 
+ -001: Team team
+ 000: Canon this
+
+
+- 13,3 -
+    0   2 *    VarDecl  0
+    0   2 *    SUSPEND
+    1   2 *    PshV4    v-1
+    2   3 *    PshVPtr  v0
+    3   4 *    CALL     707           (Structure::Structure(const Team))
+- 14,3 -
+    5   2 *    SUSPEND
+    6   2 *    PshC4    0x41a00000          (i:1101004800, f:20)
+    8   3 *    PshC4    0x41a00000          (i:1101004800, f:20)
+   10   4 *    PshVPtr  v0
+   11   5 *    ADDSi    v24, 134217790
+   13   5 *    RDSPtr
+   14   5 *    CALLSYS  145           (void vec2::set(const float, const float))
+- 16,3 -
+   16   2 *    SUSPEND
+   17   2 * 0:
+   17   2 *    RET      2

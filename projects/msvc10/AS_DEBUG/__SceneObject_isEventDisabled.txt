@@ -1,0 +1,26 @@
+bool SceneObject::isEventDisabled(EventType)
+
+Temps: 1
+
+Variables: 
+ -001: EventType e
+ 000: SceneObject this
+
+
+    0   1 *    VarDecl  0
+    0   1 *    PshVPtr  v0
+    1   2 *    CALLSYS  2           (void _builtin_object_::_beh_4_())
+- 1,2060 -
+    3   1 *    SUSPEND
+    4   1 *    PshV4    v-1
+    5   2 *    PshVPtr  v0
+    6   3 *    ADDSi    v16, 134217770
+    8   3 *    RDSPtr
+    9   3 *    CALLSYS  332           (bool CSceneObject::isEventDisabled(EventType))
+   11   1 *    CpyRtoV4 v1
+   12   1 * {
+   12   1 * }
+   12   1 *    CpyVtoR4 v1
+   13   1 * 0:
+   13   1 *    FREE     v0, 104704768
+   15   1 *    RET      2

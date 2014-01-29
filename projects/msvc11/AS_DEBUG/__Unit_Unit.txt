@@ -1,0 +1,125 @@
+Unit::Unit()
+
+Temps: 1, 2, 3, 4, 5
+
+Variables: 
+ 000: Unit this
+ 001: Unit {noname}
+ 002: array {noname}
+ 005: RevealCircle {noname}
+
+
+- 33,7 -
+    0   5 *    SUSPEND
+    1   5 *    PshVPtr  v0
+    2   6 *    ADDSi    v88, 134217749
+    4   6 *    ALLOC    0x4ff040, 132             (type:vec2)
+- 40,25 -
+    7   5 *    SUSPEND
+    8   5 *    CALL     672           (Action@[]@ factstub())
+   10   5 *    STOREOBJ v2
+   11   5 *    PshVPtr  v2
+   12   6 *    PshVPtr  v0
+   13   7 *    ADDSi    v100, 134217749
+   15   7 *    REFCPY   0x5d6b338
+   17   6 *    PopPtr
+   18   5 *    FREE     v2, 97956664
+   20   5 *    PshVPtr  v0
+   21   6 *    CALL     519           (Entity::Entity())
+- 13,13 -
+   23   5 *    SUSPEND
+   24   5 *    SetV4    v3, 0x0          (i:0, f:0)
+   26   5 *    LoadThisR v44, 134217749
+   28   5 *    WRTV4    v3
+- 14,6 -
+   29   5 *    SUSPEND
+   30   5 *    SetV4    v4, 0xffffffff          (i:-1, f:-1.#QNAN)
+   32   5 *    LoadThisR v48, 134217749
+   34   5 *    WRTV4    v4
+- 15,7 -
+   35   5 *    SUSPEND
+   36   5 *    SetV1    v4, 0x0
+   38   5 *    LoadThisR v52, 134217749
+   40   5 *    WRTV1    v4
+- 16,7 -
+   41   5 *    SUSPEND
+   42   5 *    SetV1    v4, 0x0
+   44   5 *    LoadThisR v53, 134217749
+   46   5 *    WRTV1    v4
+- 19,6 -
+   47   5 *    SUSPEND
+   48   5 *    SetV4    v4, 0x64          (i:100, f:1.4013e-043)
+   50   5 *    LoadThisR v56, 134217749
+   52   5 *    WRTV4    v4
+- 20,6 -
+   53   5 *    SUSPEND
+   54   5 *    SetV4    v4, 0x64          (i:100, f:1.4013e-043)
+   56   5 *    LoadThisR v60, 134217749
+   58   5 *    WRTV4    v4
+- 24,8 -
+   59   5 *    SUSPEND
+   60   5 *    SetV4    v4, 0x0          (i:0, f:0)
+   62   5 *    LoadThisR v68, 134217749
+   64   5 *    WRTV4    v4
+- 25,8 -
+   65   5 *    SUSPEND
+   66   5 *    SetV4    v4, 0x3f800000          (i:1065353216, f:1)
+   68   5 *    LoadThisR v72, 134217749
+   70   5 *    WRTV4    v4
+- 26,8 -
+   71   5 *    SUSPEND
+   72   5 *    SetV4    v4, 0x0          (i:0, f:0)
+   74   5 *    LoadThisR v76, 134217749
+   76   5 *    WRTV4    v4
+- 27,6 -
+   77   5 *    SUSPEND
+   78   5 *    SetV4    v4, 0x1          (i:1, f:1.4013e-045)
+   80   5 *    LoadThisR v80, 134217749
+   82   5 *    WRTV4    v4
+- 30,16 -
+   83   5 *    SUSPEND
+   84   5 *    PshGPtr  98133720
+   86   6 *    CHKREF
+   87   6 *    RefCpyV  v5, 97818776
+   89   6 *    PopPtr
+   90   5 *    PshVPtr  v5
+   91   6 *    PshVPtr  v0
+   92   7 *    ADDSi    v84, 134217749
+   94   7 *    REFCPY   0x5d49898
+   96   6 *    FREE     v5, 97818776
+   98   6 *    PopPtr
+- 34,7 -
+   99   5 *    SUSPEND
+  100   5 *    SetV1    v4, 0x0
+  102   5 *    LoadThisR v92, 134217749
+  104   5 *    WRTV1    v4
+- 37,8 -
+  105   5 *    SUSPEND
+  106   5 *    SetV4    v4, 0x42f00000          (i:1123024896, f:120)
+  108   5 *    LoadThisR v96, 134217749
+  110   5 *    WRTV4    v4
+- 43,6 -
+  111   5 *    SUSPEND
+  112   5 *    SetV4    v4, 0xffffffff          (i:-1, f:-1.#QNAN)
+  114   5 *    LoadThisR v104, 134217749
+  116   5 *    WRTV4    v4
+- 44,6 -
+  117   5 *    SUSPEND
+  118   5 *    SetV4    v4, 0xffffffff          (i:-1, f:-1.#QNAN)
+  120   5 *    LoadThisR v108, 134217749
+  122   5 *    WRTV4    v4
+- 49,3 -
+  123   5 *    SUSPEND
+  124   5 *    PshVPtr  v0
+  125   6 *    RefCpyV  v1, 97819360
+  127   6 *    PopPtr
+  128   5 *    VAR      v1
+  129   6 *    PshGPtr  98123112
+  131   7 *    CHKREF
+  132   7 *    GETREF   1
+  133   7 *    CALLSYS  857           (void array::insertLast(Unit@const&in))
+  135   5 *    FREE     v1, 97819360
+- 50,3 -
+  137   5 *    SUSPEND
+  138   5 * 0:
+  138   5 *    RET      1

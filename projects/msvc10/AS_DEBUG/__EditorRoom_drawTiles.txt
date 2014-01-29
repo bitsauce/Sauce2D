@@ -1,0 +1,123 @@
+void EditorRoom::drawTiles()
+
+Temps: 2, 4, 6, 7
+
+Variables: 
+ 001: uint y
+ 003: uint x
+ 005: EditorTile@ tile
+ 000: EditorRoom this
+ 006: grid {noname}
+ 007: EditorTile {noname}
+
+
+    0   7 *    PshVPtr  v0
+    1   8 *    CALLSYS  2           (void _builtin_object_::_beh_4_())
+- 474,7 -
+    3   7 *    SUSPEND
+    4   7 *    VarDecl  0
+    4   7 *    SetV4    v1, 0x0          (i:0, f:0)
+    6   7 *    JMP      +91              (d:99)
+    8   7 * 4:
+    8   7 *    SUSPEND
+- 476,8 -
+    9   7 * {
+    9   7 *    SUSPEND
+   10   7 *    VarDecl  1
+   10   7 *    SetV4    v3, 0x0          (i:0, f:0)
+   12   7 *    JMP      +71              (d:85)
+   14   7 * 8:
+   14   7 *    SUSPEND
+- 478,5 -
+   15   7 * {
+   15   7 *    SUSPEND
+   16   7 *    LoadThisR v24, 134217785
+   18   7 *    RDR4     v2
+   19   7 *    CMPi     v3, v2
+   21   7 *    JS       +4              (d:27)
+   23   7 *    SetV1    v2, 0x1
+   25   7 *    JMP      +9              (d:36)
+   27   7 * 10:
+   27   7 *    LoadThisR v28, 134217785
+   29   7 *    RDR4     v4
+   30   7 *    CMPi     v1, v4
+   32   7 *    TNS
+   33   7 *    CpyRtoV4 v4
+   34   7 *    CpyVtoV4 v2, v4
+   36   7 * 11:
+   36   7 *    CpyVtoR4 v2
+   37   7 *    JLowZ    +3              (d:42)
+- 479,6 -
+   39   7 *    SUSPEND
+   40   7 * {
+   40   7 * }
+   40   7 *    JMP      +41              (d:83)
+- 480,5 -
+   42   7 * 9:
+   42   7 *    SUSPEND
+   43   7 *    VarDecl  2
+   43   7 *    PshV4    v1
+   44   8 *    PshV4    v3
+   45   9 *    PshVPtr  v0
+   46  10 *    ADDSi    v40, 134217785
+   48  10 *    RDSPtr
+   49  10 *    RefCpyV  v6, 152807552
+   51  10 *    CALLSYS  1273           (EditorTile& grid::at(uint, uint))
+   53   7 *    PshRPtr
+   54   8 *    RefCpyV  v7, 152242000
+   56   8 *    PopPtr
+   57   7 *    PshVPtr  v7
+   58   8 *    RefCpyV  v5, 152242000
+   60   8 *    FREE     v7, 152242000
+   62   8 *    PopPtr
+   63   7 *    FREE     v6, 152807552
+- 481,5 -
+   65   7 *    SUSPEND
+   66   7 *    LoadThisR v20, 134217785
+   68   7 *    RDR4     v4
+   69   7 *    ADDi     v2, v1, v4
+   71   7 *    PshV4    v2
+   72   8 *    LoadThisR v16, 134217785
+   74   8 *    RDR4     v4
+   75   8 *    ADDi     v4, v3, v4
+   77   8 *    PshV4    v4
+   78   9 *    PshVPtr  v5
+   79  10 *    CALLINTF 1300           (void EditorTile::draw(int, int))
+   81   7 *    FREE     v5, 152242000
+- 476,44 -
+   83   7 * }
+   83   7 * 7:
+   83   7 *    SUSPEND
+   84   7 *    IncVi    v3
+- 476,20 -
+   85   7 * 5:
+   85   7 *    SUSPEND
+   86   7 *    PshVPtr  v0
+   87   8 *    ADDSi    v44, 134217785
+   89   8 *    RDSPtr
+   90   8 *    CALLSYS  123           (uint grid::width() const)
+   92   7 *    CpyRtoV4 v2
+   93   7 *    CMPu     v3, v2
+   95   7 *    JS       -83              (d:14)
+- 474,44 -
+   97   7 * 6:
+   97   7 * }
+   97   7 * 3:
+   97   7 *    SUSPEND
+   98   7 *    IncVi    v1
+- 474,19 -
+   99   7 * 1:
+   99   7 *    SUSPEND
+  100   7 *    PshVPtr  v0
+  101   8 *    ADDSi    v44, 134217785
+  103   8 *    RDSPtr
+  104   8 *    CALLSYS  124           (uint grid::height() const)
+  106   7 *    CpyRtoV4 v2
+  107   7 *    CMPu     v1, v2
+  109   7 *    JS       -103              (d:8)
+- 484,3 -
+  111   7 * 2:
+  111   7 *    SUSPEND
+  112   7 * 0:
+  112   7 *    FREE     v0, 152236880
+  114   7 *    RET      1

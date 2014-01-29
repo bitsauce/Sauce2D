@@ -1,0 +1,390 @@
+\hypertarget{class_sprite}{\section{Sprite Class Reference}
+\label{class_sprite}\index{Sprite@{Sprite}}
+}
+
+
+The \hyperlink{class_sprite}{Sprite} class provides a sprite rendering interface usefull for rendering frame based animations.  
+
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_sprite_ae08edbad269fa82f92fb079a2cfde4ac}{Sprite} (string file=\char`\"{}\char`\"{}, uint colums=1, uint rows=1, float rate=0.\-0f)
+\item 
+void \hyperlink{class_sprite_ad699a2cd7f6d40ec378b1a2681690274}{update} (const float dt)
+\item 
+void \hyperlink{class_sprite_a56c5cf8a568cff737ff95520cbe6b405}{draw} ()
+\item 
+uint \hyperlink{class_sprite_a07c962e1c17fb932958eab07e44ea2b7}{row\-Count} () const 
+\item 
+uint \hyperlink{class_sprite_a306b817179c9b200b5d6ae7277941ee8}{colum\-Count} () const 
+\item 
+uint \hyperlink{class_sprite_ac69667630245a46bae799de33a1b68a6}{frame\-Count} () const 
+\item 
+void \hyperlink{class_sprite_a9fd6928865d11cb8f1691d1ad016bfb0}{set\-Row\-Count} (const uint rows)
+\begin{DoxyCompactList}\small\item\em Sets the number of rows in the animation. \end{DoxyCompactList}\item 
+void \hyperlink{class_sprite_a8aa120b7fcf6090f9a75524d6605845f}{set\-Colum\-Count} (const uint colums)
+\begin{DoxyCompactList}\small\item\em Sets the number of columns in the animation. \end{DoxyCompactList}\item 
+void \hyperlink{class_sprite_a7d9fae90437e77abf2e661787f04b7ce}{set\-Frame\-Count} (const uint \hyperlink{class_sprite_ac69667630245a46bae799de33a1b68a6}{frame\-Count})
+\begin{DoxyCompactList}\small\item\em Sets the frame number of frames in the animation. \end{DoxyCompactList}\item 
+Rect2 \hyperlink{class_sprite_a6011e0e39946f6d17b9d2771fbd99001}{rect} () const 
+\item 
+Vector2 \hyperlink{class_sprite_aad1c4763a3dccefd7213f77554471f6d}{position} () const 
+\item 
+Vector2 \hyperlink{class_sprite_aee725f563b16e074dc415626b4655beb}{size} () const 
+\item 
+float \hyperlink{class_sprite_a534abbcdf1f46f3a10d9e49278b82034}{rotation} () const 
+\item 
+Vector2 \hyperlink{class_sprite_a7a374e768581b432685d98af1a3831ef}{pivot} () const 
+\item 
+void \hyperlink{class_sprite_afdc7f53cce33d0996aa25a11a3c328e4}{set\-Rect} (const Rect2 \&\hyperlink{class_sprite_a6011e0e39946f6d17b9d2771fbd99001}{rect})
+\begin{DoxyCompactList}\small\item\em Sets the draw rectangle of the sprite. \end{DoxyCompactList}\item 
+void \hyperlink{class_sprite_ab20ddb2b7421a3d6d788919bc42a998a}{set\-Rect} (const Vector2 \&pos, const Vector2 \&\hyperlink{class_sprite_aee725f563b16e074dc415626b4655beb}{size})
+\begin{DoxyCompactList}\small\item\em Sets the draw rectangle of the sprite. \end{DoxyCompactList}\item 
+void \hyperlink{class_sprite_a1c82bc298cce69e936f0821b1103d7fc}{set\-Position} (const Vector2 \&pos)
+\begin{DoxyCompactList}\small\item\em Sets the position of the sprite. \end{DoxyCompactList}\item 
+void \hyperlink{class_sprite_a33fe51395aa3d372a16ccda8df5c7b12}{set\-Size} (const Vector2 \&\hyperlink{class_sprite_aee725f563b16e074dc415626b4655beb}{size})
+\begin{DoxyCompactList}\small\item\em Sets the size of the sprite. \end{DoxyCompactList}\item 
+void \hyperlink{class_sprite_aad424b86963bde58e6f62074c4b2c037}{set\-Rotation} (const float \hyperlink{class_sprite_a534abbcdf1f46f3a10d9e49278b82034}{rotation})
+\begin{DoxyCompactList}\small\item\em Sets the rotation of the sprite. \end{DoxyCompactList}\item 
+void \hyperlink{class_sprite_a2718e3123c9b274c45aab67783d95e29}{set\-Pivot} (const Vector2 \&\hyperlink{class_sprite_a7a374e768581b432685d98af1a3831ef}{pivot})
+\begin{DoxyCompactList}\small\item\em Sets the pivot point of the sprite. \end{DoxyCompactList}\item 
+uint \hyperlink{class_sprite_a7ae3403d0bafe1db66324e6629cf2241}{current\-Frame} () const 
+\item 
+float \hyperlink{class_sprite_ae3dddbd019c5bc1498bacf7e3179781e}{frame\-Rate} () const 
+\item 
+void \hyperlink{class_sprite_a37528ab781412b775c583e020d9fce5a}{set\-Frame} (const uint frame)
+\begin{DoxyCompactList}\small\item\em Sets the current frame of the spirte. \end{DoxyCompactList}\item 
+void \hyperlink{class_sprite_a527959963c0e938beef3b130fcd724d8}{set\-Frame\-Rate} (const float rate)
+\begin{DoxyCompactList}\small\item\em Sets the frame rate of the sprite (given in frames per second) \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+The \hyperlink{class_sprite}{Sprite} class provides a sprite rendering interface usefull for rendering frame based animations. 
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{class_sprite_ae08edbad269fa82f92fb079a2cfde4ac}{\index{Sprite@{Sprite}!Sprite@{Sprite}}
+\index{Sprite@{Sprite}!Sprite@{Sprite}}
+\subsubsection[{Sprite}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Sprite} (
+\begin{DoxyParamCaption}
+\item[{string}]{file = {\ttfamily \char`\"{}\char`\"{}}, }
+\item[{uint}]{colums = {\ttfamily 1}, }
+\item[{uint}]{rows = {\ttfamily 1}, }
+\item[{float}]{rate = {\ttfamily 0.0f}}
+\end{DoxyParamCaption}
+)}}\label{class_sprite_ae08edbad269fa82f92fb079a2cfde4ac}
+Constructs a sprite 
+\begin{DoxyParams}{Parameters}
+{\em file} & \mbox{[}optional\mbox{]} The sprite image file \\
+\hline
+{\em colums} & \mbox{[}optional\mbox{]} Number of colums in the animation \\
+\hline
+{\em rows} & \mbox{[}optional\mbox{]} Number of rows in the animation \\
+\hline
+{\em rate} & \mbox{[}optional\mbox{]} The frame rate of the animation (given in frames per second) \\
+\hline
+\end{DoxyParams}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{class_sprite_a306b817179c9b200b5d6ae7277941ee8}{\index{Sprite@{Sprite}!colum\-Count@{colum\-Count}}
+\index{colum\-Count@{colum\-Count}!Sprite@{Sprite}}
+\subsubsection[{colum\-Count}]{\setlength{\rightskip}{0pt plus 5cm}uint colum\-Count (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}\label{class_sprite_a306b817179c9b200b5d6ae7277941ee8}
+\begin{DoxyReturn}{Returns}
+Column count of the animation 
+\end{DoxyReturn}
+\hypertarget{class_sprite_a7ae3403d0bafe1db66324e6629cf2241}{\index{Sprite@{Sprite}!current\-Frame@{current\-Frame}}
+\index{current\-Frame@{current\-Frame}!Sprite@{Sprite}}
+\subsubsection[{current\-Frame}]{\setlength{\rightskip}{0pt plus 5cm}uint current\-Frame (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}\label{class_sprite_a7ae3403d0bafe1db66324e6629cf2241}
+\begin{DoxyReturn}{Returns}
+The sprite current frame. The current frame will depend on wheter the \hyperlink{class_sprite_ad699a2cd7f6d40ec378b1a2681690274}{update()} function is called before or after this 
+\end{DoxyReturn}
+\hypertarget{class_sprite_a56c5cf8a568cff737ff95520cbe6b405}{\index{Sprite@{Sprite}!draw@{draw}}
+\index{draw@{draw}!Sprite@{Sprite}}
+\subsubsection[{draw}]{\setlength{\rightskip}{0pt plus 5cm}void draw (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{class_sprite_a56c5cf8a568cff737ff95520cbe6b405}
+Draws the sprite. Only call this within an on\-Draw() event \hypertarget{class_sprite_ac69667630245a46bae799de33a1b68a6}{\index{Sprite@{Sprite}!frame\-Count@{frame\-Count}}
+\index{frame\-Count@{frame\-Count}!Sprite@{Sprite}}
+\subsubsection[{frame\-Count}]{\setlength{\rightskip}{0pt plus 5cm}uint frame\-Count (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}\label{class_sprite_ac69667630245a46bae799de33a1b68a6}
+\begin{DoxyReturn}{Returns}
+Frame count of the animation
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See Also}
+\hyperlink{class_sprite_a7ae3403d0bafe1db66324e6629cf2241}{Sprite\-::current\-Frame()} 
+\end{DoxySeeAlso}
+\hypertarget{class_sprite_ae3dddbd019c5bc1498bacf7e3179781e}{\index{Sprite@{Sprite}!frame\-Rate@{frame\-Rate}}
+\index{frame\-Rate@{frame\-Rate}!Sprite@{Sprite}}
+\subsubsection[{frame\-Rate}]{\setlength{\rightskip}{0pt plus 5cm}float frame\-Rate (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}\label{class_sprite_ae3dddbd019c5bc1498bacf7e3179781e}
+\begin{DoxyReturn}{Returns}
+The sprite frame rate (given in frames per second) 
+\end{DoxyReturn}
+\hypertarget{class_sprite_a7a374e768581b432685d98af1a3831ef}{\index{Sprite@{Sprite}!pivot@{pivot}}
+\index{pivot@{pivot}!Sprite@{Sprite}}
+\subsubsection[{pivot}]{\setlength{\rightskip}{0pt plus 5cm}Vector2 pivot (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}\label{class_sprite_a7a374e768581b432685d98af1a3831ef}
+\begin{DoxyReturn}{Returns}
+The sprite pivot point 
+\end{DoxyReturn}
+\hypertarget{class_sprite_aad1c4763a3dccefd7213f77554471f6d}{\index{Sprite@{Sprite}!position@{position}}
+\index{position@{position}!Sprite@{Sprite}}
+\subsubsection[{position}]{\setlength{\rightskip}{0pt plus 5cm}Vector2 position (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}\label{class_sprite_aad1c4763a3dccefd7213f77554471f6d}
+\begin{DoxyReturn}{Returns}
+The sprite position 
+\end{DoxyReturn}
+\hypertarget{class_sprite_a6011e0e39946f6d17b9d2771fbd99001}{\index{Sprite@{Sprite}!rect@{rect}}
+\index{rect@{rect}!Sprite@{Sprite}}
+\subsubsection[{rect}]{\setlength{\rightskip}{0pt plus 5cm}Rect2 rect (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}\label{class_sprite_a6011e0e39946f6d17b9d2771fbd99001}
+\begin{DoxyReturn}{Returns}
+The sprite draw rectangle 
+\end{DoxyReturn}
+\hypertarget{class_sprite_a534abbcdf1f46f3a10d9e49278b82034}{\index{Sprite@{Sprite}!rotation@{rotation}}
+\index{rotation@{rotation}!Sprite@{Sprite}}
+\subsubsection[{rotation}]{\setlength{\rightskip}{0pt plus 5cm}float rotation (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}\label{class_sprite_a534abbcdf1f46f3a10d9e49278b82034}
+\begin{DoxyReturn}{Returns}
+The sprite rotation 
+\end{DoxyReturn}
+\hypertarget{class_sprite_a07c962e1c17fb932958eab07e44ea2b7}{\index{Sprite@{Sprite}!row\-Count@{row\-Count}}
+\index{row\-Count@{row\-Count}!Sprite@{Sprite}}
+\subsubsection[{row\-Count}]{\setlength{\rightskip}{0pt plus 5cm}uint row\-Count (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}\label{class_sprite_a07c962e1c17fb932958eab07e44ea2b7}
+\begin{DoxyReturn}{Returns}
+Row count of the animation 
+\end{DoxyReturn}
+\hypertarget{class_sprite_a8aa120b7fcf6090f9a75524d6605845f}{\index{Sprite@{Sprite}!set\-Colum\-Count@{set\-Colum\-Count}}
+\index{set\-Colum\-Count@{set\-Colum\-Count}!Sprite@{Sprite}}
+\subsubsection[{set\-Colum\-Count}]{\setlength{\rightskip}{0pt plus 5cm}void set\-Colum\-Count (
+\begin{DoxyParamCaption}
+\item[{const uint}]{colums}
+\end{DoxyParamCaption}
+)}}\label{class_sprite_a8aa120b7fcf6090f9a75524d6605845f}
+
+
+Sets the number of columns in the animation. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em colums} & Number of columns \\
+\hline
+\end{DoxyParams}
+\hypertarget{class_sprite_a37528ab781412b775c583e020d9fce5a}{\index{Sprite@{Sprite}!set\-Frame@{set\-Frame}}
+\index{set\-Frame@{set\-Frame}!Sprite@{Sprite}}
+\subsubsection[{set\-Frame}]{\setlength{\rightskip}{0pt plus 5cm}void set\-Frame (
+\begin{DoxyParamCaption}
+\item[{const uint}]{frame}
+\end{DoxyParamCaption}
+)}}\label{class_sprite_a37528ab781412b775c583e020d9fce5a}
+
+
+Sets the current frame of the spirte. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em frame} & The index of the frame \\
+\hline
+\end{DoxyParams}
+\hypertarget{class_sprite_a7d9fae90437e77abf2e661787f04b7ce}{\index{Sprite@{Sprite}!set\-Frame\-Count@{set\-Frame\-Count}}
+\index{set\-Frame\-Count@{set\-Frame\-Count}!Sprite@{Sprite}}
+\subsubsection[{set\-Frame\-Count}]{\setlength{\rightskip}{0pt plus 5cm}void set\-Frame\-Count (
+\begin{DoxyParamCaption}
+\item[{const uint}]{frame\-Count}
+\end{DoxyParamCaption}
+)}}\label{class_sprite_a7d9fae90437e77abf2e661787f04b7ce}
+
+
+Sets the frame number of frames in the animation. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em frame\-Count} & Number of frames \\
+\hline
+\end{DoxyParams}
+\hypertarget{class_sprite_a527959963c0e938beef3b130fcd724d8}{\index{Sprite@{Sprite}!set\-Frame\-Rate@{set\-Frame\-Rate}}
+\index{set\-Frame\-Rate@{set\-Frame\-Rate}!Sprite@{Sprite}}
+\subsubsection[{set\-Frame\-Rate}]{\setlength{\rightskip}{0pt plus 5cm}void set\-Frame\-Rate (
+\begin{DoxyParamCaption}
+\item[{const float}]{rate}
+\end{DoxyParamCaption}
+)}}\label{class_sprite_a527959963c0e938beef3b130fcd724d8}
+
+
+Sets the frame rate of the sprite (given in frames per second) 
+
+
+\begin{DoxyParams}{Parameters}
+{\em rate} & New frame rate \\
+\hline
+\end{DoxyParams}
+\hypertarget{class_sprite_a2718e3123c9b274c45aab67783d95e29}{\index{Sprite@{Sprite}!set\-Pivot@{set\-Pivot}}
+\index{set\-Pivot@{set\-Pivot}!Sprite@{Sprite}}
+\subsubsection[{set\-Pivot}]{\setlength{\rightskip}{0pt plus 5cm}void set\-Pivot (
+\begin{DoxyParamCaption}
+\item[{const Vector2 \&}]{pivot}
+\end{DoxyParamCaption}
+)}}\label{class_sprite_a2718e3123c9b274c45aab67783d95e29}
+
+
+Sets the pivot point of the sprite. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em pivot} & New pivot point \\
+\hline
+\end{DoxyParams}
+\hypertarget{class_sprite_a1c82bc298cce69e936f0821b1103d7fc}{\index{Sprite@{Sprite}!set\-Position@{set\-Position}}
+\index{set\-Position@{set\-Position}!Sprite@{Sprite}}
+\subsubsection[{set\-Position}]{\setlength{\rightskip}{0pt plus 5cm}void set\-Position (
+\begin{DoxyParamCaption}
+\item[{const Vector2 \&}]{pos}
+\end{DoxyParamCaption}
+)}}\label{class_sprite_a1c82bc298cce69e936f0821b1103d7fc}
+
+
+Sets the position of the sprite. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em pos} & New position \\
+\hline
+\end{DoxyParams}
+\hypertarget{class_sprite_afdc7f53cce33d0996aa25a11a3c328e4}{\index{Sprite@{Sprite}!set\-Rect@{set\-Rect}}
+\index{set\-Rect@{set\-Rect}!Sprite@{Sprite}}
+\subsubsection[{set\-Rect}]{\setlength{\rightskip}{0pt plus 5cm}void set\-Rect (
+\begin{DoxyParamCaption}
+\item[{const Rect2 \&}]{rect}
+\end{DoxyParamCaption}
+)}}\label{class_sprite_afdc7f53cce33d0996aa25a11a3c328e4}
+
+
+Sets the draw rectangle of the sprite. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em rect} & The draw rectangle \\
+\hline
+\end{DoxyParams}
+\hypertarget{class_sprite_ab20ddb2b7421a3d6d788919bc42a998a}{\index{Sprite@{Sprite}!set\-Rect@{set\-Rect}}
+\index{set\-Rect@{set\-Rect}!Sprite@{Sprite}}
+\subsubsection[{set\-Rect}]{\setlength{\rightskip}{0pt plus 5cm}void set\-Rect (
+\begin{DoxyParamCaption}
+\item[{const Vector2 \&}]{pos, }
+\item[{const Vector2 \&}]{size}
+\end{DoxyParamCaption}
+)}}\label{class_sprite_ab20ddb2b7421a3d6d788919bc42a998a}
+
+
+Sets the draw rectangle of the sprite. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em rect} & The draw rectangle \\
+\hline
+\end{DoxyParams}
+\hypertarget{class_sprite_aad424b86963bde58e6f62074c4b2c037}{\index{Sprite@{Sprite}!set\-Rotation@{set\-Rotation}}
+\index{set\-Rotation@{set\-Rotation}!Sprite@{Sprite}}
+\subsubsection[{set\-Rotation}]{\setlength{\rightskip}{0pt plus 5cm}void set\-Rotation (
+\begin{DoxyParamCaption}
+\item[{const float}]{rotation}
+\end{DoxyParamCaption}
+)}}\label{class_sprite_aad424b86963bde58e6f62074c4b2c037}
+
+
+Sets the rotation of the sprite. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em rotation} & New rotation \\
+\hline
+\end{DoxyParams}
+\hypertarget{class_sprite_a9fd6928865d11cb8f1691d1ad016bfb0}{\index{Sprite@{Sprite}!set\-Row\-Count@{set\-Row\-Count}}
+\index{set\-Row\-Count@{set\-Row\-Count}!Sprite@{Sprite}}
+\subsubsection[{set\-Row\-Count}]{\setlength{\rightskip}{0pt plus 5cm}void set\-Row\-Count (
+\begin{DoxyParamCaption}
+\item[{const uint}]{rows}
+\end{DoxyParamCaption}
+)}}\label{class_sprite_a9fd6928865d11cb8f1691d1ad016bfb0}
+
+
+Sets the number of rows in the animation. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em rows} & Number of rows \\
+\hline
+\end{DoxyParams}
+\hypertarget{class_sprite_a33fe51395aa3d372a16ccda8df5c7b12}{\index{Sprite@{Sprite}!set\-Size@{set\-Size}}
+\index{set\-Size@{set\-Size}!Sprite@{Sprite}}
+\subsubsection[{set\-Size}]{\setlength{\rightskip}{0pt plus 5cm}void set\-Size (
+\begin{DoxyParamCaption}
+\item[{const Vector2 \&}]{size}
+\end{DoxyParamCaption}
+)}}\label{class_sprite_a33fe51395aa3d372a16ccda8df5c7b12}
+
+
+Sets the size of the sprite. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em size} & New size \\
+\hline
+\end{DoxyParams}
+\hypertarget{class_sprite_aee725f563b16e074dc415626b4655beb}{\index{Sprite@{Sprite}!size@{size}}
+\index{size@{size}!Sprite@{Sprite}}
+\subsubsection[{size}]{\setlength{\rightskip}{0pt plus 5cm}Vector2 size (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}\label{class_sprite_aee725f563b16e074dc415626b4655beb}
+\begin{DoxyReturn}{Returns}
+The sprite size 
+\end{DoxyReturn}
+\hypertarget{class_sprite_ad699a2cd7f6d40ec378b1a2681690274}{\index{Sprite@{Sprite}!update@{update}}
+\index{update@{update}!Sprite@{Sprite}}
+\subsubsection[{update}]{\setlength{\rightskip}{0pt plus 5cm}void update (
+\begin{DoxyParamCaption}
+\item[{const float}]{dt}
+\end{DoxyParamCaption}
+)}}\label{class_sprite_ad699a2cd7f6d40ec378b1a2681690274}
+Updates the sprite 
+\begin{DoxyParams}{Parameters}
+{\em pos} & \mbox{[}optional\mbox{]} The new sprite position \\
+\hline
+{\em size} & \mbox{[}optional\mbox{]} The new sprite size \\
+\hline
+\end{DoxyParams}

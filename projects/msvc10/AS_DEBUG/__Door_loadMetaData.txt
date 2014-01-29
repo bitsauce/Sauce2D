@@ -1,0 +1,199 @@
+void Door::loadMetaData(MetaData)
+
+Temps: 1, 17, 25, 26, 27, 29
+
+Variables: 
+ -001: MetaData data
+ 009: string drawStr
+ 028: int typeInt
+ 000: Door this
+ 001: MetaData {noname}
+ 017: string {noname}
+ 025: string {noname}
+
+
+    0  29 *    VarDecl  0
+    0  29 *    PshVPtr  v0
+    1  30 *    CALLSYS  2           (void _builtin_object_::_beh_4_())
+- 34,3 -
+    3  29 *    SUSPEND
+    4  29 *    PshVPtr  v-1
+    5  30 *    PSF      v1
+    6  31 *    ALLOC    0x6ae9010, 0             (type:MetaData)
+    9  30 *    PshVPtr  v1
+   10  31 *    COPY     v1, 67108898
+   12  30 *    PopPtr
+   13  29 *    VAR      v1
+   14  30 *    PshVPtr  v0
+   15  31 *    GETOBJ   1
+   16  31 *    CALL     984           (void Obstacle::loadMetaData(MetaData))
+- 37,3 -
+   18  29 *    SUSPEND
+   19  29 *    VarDecl  1
+   19  29 *    STR      16         (l:7 s:"drawDir")
+   20  31 *    CALLSYS  32           (const string& _string_factory_(const int, const uint8&))
+   22  29 *    PshRPtr
+   23  30 *    PSF      v17
+   24  31 *    CALLSYS  34           (void string::_beh_0_(const string&in))
+   26  29 *    ObjInfo  v17, 1
+   26  29 *    VAR      v17
+   27  30 *    PSF      v25
+   28  31 *    PshVPtr  v-1
+   29  32 *    GETREF   2
+   30  32 *    CALLSYS  286           (string MetaData::readString(const string&in) const)
+   32  29 *    ObjInfo  v25, 1
+   32  29 *    PSF      v17
+   33  30 *    CALLSYS  35           (void string::_beh_1_())
+   35  29 *    ObjInfo  v17, 0
+   35  29 *    VAR      v25
+   36  30 *    PSF      v9
+   37  31 *    CALLSYS  33           (void string::_beh_0_())
+   39  30 *    ObjInfo  v9, 1
+   39  30 *    PSF      v9
+   40  31 *    GETREF   1
+   41  31 *    CALLSYS  36           (string& string::opAssign(const string&in))
+   43  29 *    PSF      v25
+   44  30 *    CALLSYS  35           (void string::_beh_1_())
+- 38,3 -
+   46  29 *    ObjInfo  v25, 0
+   46  29 *    SUSPEND
+   47  29 *    STR      204         (l:4 s:"Left")
+   48  31 *    CALLSYS  32           (const string& _string_factory_(const int, const uint8&))
+   50  29 *    PshRPtr
+   51  30 *    PSF      v17
+   52  31 *    CALLSYS  34           (void string::_beh_0_(const string&in))
+   54  29 *    ObjInfo  v17, 1
+   54  29 *    VAR      v17
+   55  30 *    PSF      v9
+   56  31 *    GETREF   1
+   57  31 *    CALLSYS  38           (bool string::opEquals(const string&in) const)
+   59  29 *    CpyRtoV4 v26
+   60  29 *    PSF      v17
+   61  30 *    CALLSYS  35           (void string::_beh_1_())
+   63  29 *    ObjInfo  v17, 0
+   63  29 *    CpyVtoR4 v26
+   64  29 *    JLowZ    +8              (d:74)
+- 38,25 -
+   66  29 *    SUSPEND
+   67  29 *    SetV4    v27, 0x4          (i:4, f:5.60519e-045)
+   69  29 *    LoadThisR v32, 134217839
+   71  29 *    WRTV4    v27
+   72  29 *    JMP      +82              (d:156)
+- 39,8 -
+   74  29 * 1:
+   74  29 *    SUSPEND
+   75  29 *    STR      205         (l:5 s:"Right")
+   76  31 *    CALLSYS  32           (const string& _string_factory_(const int, const uint8&))
+   78  29 *    PshRPtr
+   79  30 *    PSF      v25
+   80  31 *    CALLSYS  34           (void string::_beh_0_(const string&in))
+   82  29 *    ObjInfo  v25, 1
+   82  29 *    VAR      v25
+   83  30 *    PSF      v9
+   84  31 *    GETREF   1
+   85  31 *    CALLSYS  38           (bool string::opEquals(const string&in) const)
+   87  29 *    CpyRtoV4 v26
+   88  29 *    PSF      v25
+   89  30 *    CALLSYS  35           (void string::_beh_1_())
+   91  29 *    ObjInfo  v25, 0
+   91  29 *    CpyVtoR4 v26
+   92  29 *    JLowZ    +8              (d:102)
+- 39,31 -
+   94  29 *    SUSPEND
+   95  29 *    SetV4    v27, 0x8          (i:8, f:1.12104e-044)
+   97  29 *    LoadThisR v32, 134217839
+   99  29 *    WRTV4    v27
+  100  29 *    JMP      +54              (d:156)
+- 40,8 -
+  102  29 * 3:
+  102  29 *    SUSPEND
+  103  29 *    STR      206         (l:2 s:"Up")
+  104  31 *    CALLSYS  32           (const string& _string_factory_(const int, const uint8&))
+  106  29 *    PshRPtr
+  107  30 *    PSF      v17
+  108  31 *    CALLSYS  34           (void string::_beh_0_(const string&in))
+  110  29 *    ObjInfo  v17, 1
+  110  29 *    VAR      v17
+  111  30 *    PSF      v9
+  112  31 *    GETREF   1
+  113  31 *    CALLSYS  38           (bool string::opEquals(const string&in) const)
+  115  29 *    CpyRtoV4 v26
+  116  29 *    PSF      v17
+  117  30 *    CALLSYS  35           (void string::_beh_1_())
+  119  29 *    ObjInfo  v17, 0
+  119  29 *    CpyVtoR4 v26
+  120  29 *    JLowZ    +8              (d:130)
+- 40,28 -
+  122  29 *    SUSPEND
+  123  29 *    SetV4    v27, 0x1          (i:1, f:1.4013e-045)
+  125  29 *    LoadThisR v32, 134217839
+  127  29 *    WRTV4    v27
+  128  29 *    JMP      +26              (d:156)
+- 41,8 -
+  130  29 * 5:
+  130  29 *    SUSPEND
+  131  29 *    STR      207         (l:4 s:"Down")
+  132  31 *    CALLSYS  32           (const string& _string_factory_(const int, const uint8&))
+  134  29 *    PshRPtr
+  135  30 *    PSF      v25
+  136  31 *    CALLSYS  34           (void string::_beh_0_(const string&in))
+  138  29 *    ObjInfo  v25, 1
+  138  29 *    VAR      v25
+  139  30 *    PSF      v9
+  140  31 *    GETREF   1
+  141  31 *    CALLSYS  38           (bool string::opEquals(const string&in) const)
+  143  29 *    CpyRtoV4 v26
+  144  29 *    PSF      v25
+  145  30 *    CALLSYS  35           (void string::_beh_1_())
+  147  29 *    ObjInfo  v25, 0
+  147  29 *    CpyVtoR4 v26
+  148  29 *    JLowZ    +6              (d:156)
+- 41,30 -
+  150  29 *    SUSPEND
+  151  29 *    SetV4    v27, 0x2          (i:2, f:2.8026e-045)
+  153  29 *    LoadThisR v32, 134217839
+  155  29 *    WRTV4    v27
+- 44,3 -
+  156  29 * 7:
+  156  29 * 6:
+  156  29 * 4:
+  156  29 * 2:
+  156  29 *    SUSPEND
+  157  29 *    VarDecl  2
+  157  29 *    STR      208         (l:4 s:"type")
+  158  31 *    CALLSYS  32           (const string& _string_factory_(const int, const uint8&))
+  160  29 *    PshRPtr
+  161  30 *    PSF      v17
+  162  31 *    CALLSYS  34           (void string::_beh_0_(const string&in))
+  164  29 *    ObjInfo  v17, 1
+  164  29 *    VAR      v17
+  165  30 *    PshVPtr  v-1
+  166  31 *    GETREF   1
+  167  31 *    CALLSYS  287           (int MetaData::readInteger(const string&in) const)
+  169  29 *    CpyRtoV4 v26
+  170  29 *    PSF      v17
+  171  30 *    CALLSYS  35           (void string::_beh_1_())
+  173  29 *    ObjInfo  v17, 0
+  173  29 *    CpyVtoV4 v28, v26
+- 45,3 -
+  175  29 *    SUSPEND
+  176  29 *    CMPIi    v28, -1
+  178  29 *    JZ       +10              (d:190)
+- 45,21 -
+  180  29 *    SUSPEND
+  181  29 *    PshV4    v28
+  182  30 *    TYPEID   0x70          'DoorType'
+  184  31 *    PSF      v29
+  185  32 *    CALLSYS  529           (void setEnumValue(?&out, const int))
+  187  29 *    LoadThisR v28, 134217839
+  189  29 *    WRTV4    v29
+- 46,3 -
+  190  29 * 8:
+  190  29 *    SUSPEND
+  191  29 *    PSF      v9
+  192  30 *    CALLSYS  35           (void string::_beh_1_())
+  194  29 *    ObjInfo  v9, 0
+  194  29 * 0:
+  194  29 *    FREE     v-1, 112103440
+  196  29 *    FREE     v0, 152271432
+  198  29 *    RET      2

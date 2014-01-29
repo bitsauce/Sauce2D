@@ -1,0 +1,159 @@
+CTexture@ Perlin2D::toTexture()
+
+Temps: 2, 8, 11, 12
+
+Variables: 
+ 001: int width
+ 003: int height
+ 004: grid<Color> pixels
+ 005: uint y
+ 006: uint x
+ 007: float noise
+ 009: Color c
+ 010: CTexture texture
+ 000: Perlin2D this
+ 008: grid {noname}
+ 011: grid {noname}
+ 012: CTexture {noname}
+
+
+    0  12 *    PshVPtr  v0
+    1  13 *    CALLSYS  2           (void _builtin_object_::_beh_4_())
+- 18,3 -
+    3  12 *    SUSPEND
+    4  12 *    VarDecl  0
+    4  12 *    PshVPtr  v0
+    5  13 *    ADDSi    v16, 134217781
+    7  13 *    RDSPtr
+    8  13 *    CALLSYS  123           (uint grid::width() const)
+   10  12 *    CpyRtoV4 v2
+   11  12 *    CpyVtoV4 v1, v2
+- 19,3 -
+   13  12 *    SUSPEND
+   14  12 *    VarDecl  1
+   14  12 *    PshVPtr  v0
+   15  13 *    ADDSi    v16, 134217781
+   17  13 *    RDSPtr
+   18  13 *    CALLSYS  124           (uint grid::height() const)
+   20  12 *    CpyRtoV4 v2
+   21  12 *    CpyVtoV4 v3, v2
+- 21,3 -
+   23  12 *    SUSPEND
+   24  12 *    VarDecl  2
+   24  12 *    PshV4    v3
+   25  13 *    PshV4    v1
+   26  14 *    CALL     489           (grid<Color>@ factstub(uint, uint))
+   28  12 *    STOREOBJ v4
+- 22,7 -
+   29  12 *    SUSPEND
+   30  12 *    VarDecl  3
+   30  12 *    SetV4    v5, 0x0          (i:0, f:0)
+   32  12 *    JMP      +78              (d:112)
+   34  12 * 4:
+   34  12 *    SUSPEND
+- 24,8 -
+   35  12 * {
+   35  12 *    SUSPEND
+   36  12 *    VarDecl  4
+   36  12 *    SetV4    v6, 0x0          (i:0, f:0)
+   38  12 *    JMP      +65              (d:105)
+   40  12 * 8:
+   40  12 *    SUSPEND
+- 26,5 -
+   41  12 * {
+   41  12 *    SUSPEND
+   42  12 *    VarDecl  5
+   42  12 *    PshV4    v5
+   43  13 *    PshV4    v6
+   44  14 *    PshVPtr  v0
+   45  15 *    ADDSi    v16, 134217781
+   47  15 *    RDSPtr
+   48  15 *    RefCpyV  v8, 104839864
+   50  15 *    CALLSYS  654           (float& grid::at(uint, uint))
+   52  12 *    RDR4     v2
+   53  12 *    CpyVtoV4 v7, v2
+   55  12 *    FREE     v8, 104839864
+- 27,5 -
+   57  12 *    SUSPEND
+   58  12 *    VarDecl  6
+   58  12 *    PSF      v9
+   59  13 *    CALLSYS  176           (void Color::_beh_0_())
+- 28,5 -
+   61  12 *    ObjInfo  v9, 1
+   61  12 *    SUSPEND
+   62  12 *    MULIf    v2, v7, 255.000000
+   65  12 *    fTOu     v2
+   66  12 *    iTOb     v2
+   67  12 *    LoadVObjR v9, v0, 67108879
+   70  12 *    WRTV1    v2
+- 29,5 -
+   71  12 *    SUSPEND
+   72  12 *    MULIf    v2, v7, 255.000000
+   75  12 *    fTOu     v2
+   76  12 *    iTOb     v2
+   77  12 *    LoadVObjR v9, v1, 67108879
+   80  12 *    WRTV1    v2
+- 30,5 -
+   81  12 *    SUSPEND
+   82  12 *    MULIf    v2, v7, 255.000000
+   85  12 *    fTOu     v2
+   86  12 *    iTOb     v2
+   87  12 *    LoadVObjR v9, v2, 67108879
+   90  12 *    WRTV1    v2
+- 31,5 -
+   91  12 *    SUSPEND
+   92  12 *    VAR      v9
+   93  13 *    PshV4    v5
+   94  14 *    PshV4    v6
+   95  15 *    PshVPtr  v4
+   96  16 *    CALLSYS  494           (Color& grid::at(uint, uint))
+   98  13 *    PshRPtr
+   99  14 *    GETREF   1
+  100  14 *    COPY     v1, 67108879
+  102  13 *    PopPtr
+- 24,31 -
+  103  12 *    ObjInfo  v9, 0
+  103  12 * }
+  103  12 * 7:
+  103  12 *    SUSPEND
+  104  12 *    IncVi    v6
+- 24,20 -
+  105  12 * 5:
+  105  12 *    SUSPEND
+  106  12 *    CMPi     v6, v1
+  108  12 *    JS       -70              (d:40)
+- 22,31 -
+  110  12 * 6:
+  110  12 * }
+  110  12 * 3:
+  110  12 *    SUSPEND
+  111  12 *    IncVi    v5
+- 22,19 -
+  112  12 * 1:
+  112  12 *    SUSPEND
+  113  12 *    CMPi     v5, v3
+  115  12 *    JS       -83              (d:34)
+- 35,3 -
+  117  12 * 2:
+  117  12 *    SUSPEND
+  118  12 *    VarDecl  7
+  118  12 *    CALLSYS  242           (CTexture@ _beh_2_())
+  120  12 *    STOREOBJ v10
+- 36,3 -
+  121  12 *    SUSPEND
+  122  12 *    PshVPtr  v4
+  123  13 *    RefCpyV  v11, 104583000
+  125  13 *    PopPtr
+  126  12 *    VAR      v11
+  127  13 *    PshVPtr  v10
+  128  14 *    GETOBJ   1
+  129  14 *    CALLSYS  497           (void CTexture::create(const grid<Color>@))
+- 37,3 -
+  131  12 *    SUSPEND
+  132  12 * {
+  132  12 *    FREE     v4, 104583000
+  134  12 * }
+  134  12 *    LOADOBJ  v10
+  135  12 * 0:
+  135  12 *    FREE     v0, 104786232
+  137  12 *    RET      1

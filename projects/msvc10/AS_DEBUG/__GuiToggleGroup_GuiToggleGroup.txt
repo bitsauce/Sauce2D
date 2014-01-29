@@ -1,0 +1,21 @@
+GuiToggleGroup::GuiToggleGroup(UiObject@ arg0 = null)
+
+Temps: 
+
+Variables: 
+ -001: UiObject@ parent
+ 000: GuiToggleGroup this
+
+
+- 13,3 -
+    0   0 *    VarDecl  0
+    0   0 *    SUSPEND
+    1   0 *    VAR      v-1
+    2   1 *    PshVPtr  v0
+    3   2 *    GETOBJ   1
+    4   2 *    CALL     643           (UiObject::UiObject(UiObject@ arg0 = null))
+- 14,3 -
+    6   0 *    SUSPEND
+    7   0 * 0:
+    7   0 *    FREE     v-1, 150271928
+    9   0 *    RET      2

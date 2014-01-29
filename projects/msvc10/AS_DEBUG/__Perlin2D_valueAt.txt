@@ -1,0 +1,52 @@
+float Perlin2D::valueAt(int, int)
+
+Temps: 1, 2
+
+Variables: 
+ -001: int x
+ -002: int y
+ 000: Perlin2D this
+ 002: grid {noname}
+
+
+    0   2 *    VarDecl  0
+    0   2 *    VarDecl  1
+    0   2 *    PshVPtr  v0
+    1   3 *    CALLSYS  2           (void _builtin_object_::_beh_4_())
+- 11,3 -
+    3   2 *    SUSPEND
+    4   2 *    PshV4    v-2
+    5   3 *    PshV4    v-1
+    6   4 *    PshVPtr  v0
+    7   5 *    ADDSi    v16, 134217781
+    9   5 *    RDSPtr
+   10   5 *    CALLSYS  126           (bool grid::isIndex(uint, uint) const)
+   12   2 *    CpyRtoV4 v1
+   13   2 *    NOT      v1
+   14   2 *    CpyVtoR4 v1
+   15   2 *    JLowZ    +6              (d:23)
+- 12,4 -
+   17   2 *    SUSPEND
+   18   2 *    SetV4    v1, 0x0          (i:0, f:0)
+   20   2 * {
+   20   2 * }
+   20   2 *    CpyVtoR4 v1
+   21   2 *    JMP      +15              (d:38)
+- 13,3 -
+   23   2 * 1:
+   23   2 *    SUSPEND
+   24   2 *    PshV4    v-2
+   25   3 *    PshV4    v-1
+   26   4 *    PshVPtr  v0
+   27   5 *    ADDSi    v16, 134217781
+   29   5 *    RDSPtr
+   30   5 *    RefCpyV  v2, 104839864
+   32   5 *    CALLSYS  654           (float& grid::at(uint, uint))
+   34   2 *    RDR4     v1
+   35   2 * {
+   35   2 * }
+   35   2 *    FREE     v2, 104839864
+   37   2 *    CpyVtoR4 v1
+   38   2 * 0:
+   38   2 *    FREE     v0, 104786232
+   40   2 *    RET      3

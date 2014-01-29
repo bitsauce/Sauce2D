@@ -1,0 +1,154 @@
+void Canon::update()
+
+Temps: 1, 2, 7, 9, 12, 15
+
+Variables: 
+ 003: PhysTile b
+ 005: vec2 spawnPos
+ 011: vec2 vel
+ 013: float px
+ 014: float py
+ 000: Canon this
+ 012: vec2 {noname}
+ 007: vec2 {noname}
+ 009: vec2 {noname}
+
+
+    0  15 *    PshVPtr  v0
+    1  16 *    CALLSYS  2           (void _builtin_object_::_beh_5_())
+- 20,3 -
+    3  15 *    SUSPEND
+    4  15 *    PshC4    0x53          (i:83, f:1.16308e-043)
+    6  16 *    CALLSYS  371           (bool getKeyState(int))
+    8  15 *    JLowZ    +133              (d:143)
+- 23,4 -
+   10  15 * {
+   10  15 *    SUSPEND
+   11  15 *    VarDecl  0
+   11  15 *    CALL     813           (PhysTile@ PhysTile())
+   13  15 *    STOREOBJ v3
+- 24,4 -
+   14  15 *    SUSPEND
+   15  15 *    VarDecl  1
+   15  15 *    PSF      v5
+   16  16 *    CALLSYS  132           (vec2::vec2())
+   18  15 *    ObjInfo  v5, 1
+   18  15 *    PshC4    0xc1200000          (i:-1054867456, f:-10)
+   20  16 *    PshC4    0x40a00000          (i:1084227584, f:5)
+   22  17 *    PSF      v7
+   23  18 *    CALLSYS  135           (vec2::vec2(float, float))
+   25  15 *    ObjInfo  v7, 1
+   25  15 *    VAR      v7
+   26  16 *    PSF      v9
+   27  17 *    PshVPtr  v0
+   28  18 *    ADDSi    v20, 134217790
+   30  18 *    RDSPtr
+   31  18 *    GETREF   2
+   32  18 *    CALLSYS  141           (vec2 vec2::opAdd(const vec2&in) const)
+   34  15 *    ObjInfo  v9, 1
+   34  15 *    ObjInfo  v7, 0
+   34  15 *    PSF      v9
+   35  16 *    PSF      v5
+   36  17 *    COPY     v2, 67108877
+   38  16 *    ObjInfo  v9, 0
+   38  16 *    PopPtr
+- 26,4 -
+   39  15 *    SUSPEND
+   40  15 *    VarDecl  2
+   40  15 *    PSF      v11
+   41  16 *    CALLSYS  132           (vec2::vec2())
+   43  15 *    ObjInfo  v11, 1
+   43  15 *    PshC4    0x447a0000          (i:1148846080, f:1000)
+   45  16 *    PSF      v7
+   46  17 *    PSF      v9
+   47  18 *    VAR      v5
+   48  19 *    PSF      v7
+   49  20 *    PshGPtr  137299072
+   51  21 *    CHKREF
+   52  21 *    GETREF   2
+   53  21 *    CALLSYS  142           (vec2 vec2::opSub(const vec2&in) const)
+   55  18 *    ObjInfo  v7, 1
+   55  18 *    PSF      v7
+   56  19 *    CALLSYS  147           (vec2 vec2::normalized() const)
+   58  17 *    ObjInfo  v9, 1
+   58  17 *    PSF      v9
+   59  18 *    ObjInfo  v7, 0
+   59  18 *    CALLSYS  143           (vec2 vec2::opMul(const float) const)
+   61  15 *    ObjInfo  v7, 1
+   61  15 *    PSF      v7
+   62  16 *    ObjInfo  v9, 0
+   62  16 *    PSF      v11
+   63  17 *    COPY     v2, 67108877
+   65  16 *    ObjInfo  v7, 0
+   65  16 *    PopPtr
+- 27,4 -
+   66  15 *    SUSPEND
+   67  15 *    PSF      v11
+   68  16 *    CALLSYS  154           (float vec2::angle() const)
+   70  15 *    CpyRtoV4 v2
+   71  15 *    PshV4    v2
+   72  16 *    PSF      v12
+   73  17 *    PSF      v5
+   74  18 *    ALLOC    0x89a6f8, 133             (type:vec2)
+   77  16 *    VAR      v12
+   78  17 *    PshVPtr  v3
+   79  18 *    GETOBJ   1
+   80  18 *    CALLINTF 1156           (void PhysTile::setTransform(vec2, float))
+- 28,4 -
+   82  15 *    SUSPEND
+   83  15 *    SetV4    v1, 0x1          (i:1, f:1.4013e-045)
+   85  15 *    PshVPtr  v3
+   86  16 *    ADDSi    v44, 134217786
+   88  16 *    RDSPtr
+   89  16 *    ADDSi    v36, 134217756
+   91  16 *    PopRPtr
+   92  15 *    WRTV4    v1
+- 29,4 -
+   93  15 *    SUSPEND
+   94  15 *    SetV4    v2, 0x10          (i:16, f:2.24208e-044)
+   96  15 *    PshVPtr  v3
+   97  16 *    ADDSi    v44, 134217786
+   99  16 *    RDSPtr
+  100  16 *    ADDSi    v32, 134217756
+  102  16 *    PopRPtr
+  103  15 *    WRTV4    v2
+- 31,4 -
+  104  15 *    SUSPEND
+- 32,4 -
+  105  15 *    VarDecl  3
+  105  15 *    VarDecl  4
+  105  15 *    SUSPEND
+  106  15 *    VAR      v1
+  107  16 *    VAR      v2
+  108  17 *    LoadRObjR v3, v48, 134217786
+  111  17 *    RDR4     v15
+  112  17 *    PshV4    v15
+  113  18 *    GETREF   1
+  114  18 *    GETREF   2
+  115  18 *    CALLSYS  547           (void b2dGetBodyCenter(int, float&out, float&out))
+  117  15 *    CpyVtoV4 v14, v1
+  119  15 *    CpyVtoV4 v13, v2
+- 33,4 -
+  121  15 *    SUSPEND
+  122  15 *    PshV4    v14
+  123  16 *    PshV4    v13
+  124  17 *    LoadVObjR v11, v4, 67108877
+  127  17 *    RDR4     v15
+  128  17 *    PshV4    v15
+  129  18 *    LoadVObjR v11, v0, 67108877
+  132  18 *    RDR4     v2
+  133  18 *    PshV4    v2
+  134  19 *    LoadRObjR v3, v48, 134217786
+  137  19 *    RDR4     v1
+  138  19 *    PshV4    v1
+  139  20 *    CALLSYS  550           (void b2dBodyApplyImpulse(int, float, float, float, float))
+  141  15 *    ObjInfo  v11, 0
+  141  15 *    ObjInfo  v5, 0
+  141  15 *    FREE     v3, 137080336
+- 35,3 -
+  143  15 * }
+  143  15 * 1:
+  143  15 *    SUSPEND
+  144  15 * 0:
+  144  15 *    FREE     v0, 137083864
+  146  15 *    RET      1

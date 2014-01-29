@@ -1,0 +1,42 @@
+void Terrain::generate()
+
+Temps: 2, 3, 4, 5, 6
+
+Variables: 
+ 001: Perlin2D perlin
+ 000: Terrain this
+ 006: grid {noname}
+
+
+    0   6 *    PshVPtr  v0
+    1   7 *    CALLSYS  2           (void _builtin_object_::_beh_4_())
+- 16,3 -
+    3   6 *    SUSPEND
+    4   6 *    VarDecl  0
+    4   6 *    CALL     667           (Perlin2D@ Perlin2D())
+    6   6 *    STOREOBJ v1
+- 17,3 -
+    7   6 *    SUSPEND
+    8   6 *    PshC4    0x3f000000          (i:1056964608, f:0.5)
+   10   7 *    PshC4    0x8          (i:8, f:1.12104e-044)
+   12   8 *    PshC4    0x1f4          (i:500, f:7.00649e-043)
+   14   9 *    PshC4    0x1f4          (i:500, f:7.00649e-043)
+   16  10 *    PshVPtr  v1
+   17  11 *    CALLINTF 744           (void Perlin2D::generate(int, int, int, float))
+- 20,3 -
+   19   6 *    SUSPEND
+   20   6 *    PshVPtr  v1
+   21   7 *    ADDSi    v16, 134217781
+   23   7 *    RDSPtr
+   24   7 *    RefCpyV  v6, 104839864
+   26   7 *    PopPtr
+   27   6 *    VAR      v6
+   28   7 *    PshVPtr  v0
+   29   8 *    GETOBJ   1
+   30   8 *    CALLINTF 740           (void Terrain::makeTerrain(grid<float>@))
+- 21,3 -
+   32   6 *    SUSPEND
+   33   6 *    FREE     v1, 104786232
+   35   6 * 0:
+   35   6 *    FREE     v0, 104785600
+   37   6 *    RET      1

@@ -1,0 +1,18 @@
+<unrecognized token> _unnamed_function_()
+
+Temps: 1, 2, 3, 4, 5
+
+Variables: 
+
+
+- 75,5 -
+    0   5 *    SUSPEND
+    1   5 *    SetV1    v1, 0x0
+    3   5 *    PshV4    v1
+    4   6 *    PshC4    0x0          (i:0, f:0)
+    6   7 *    PshC4    0x0          (i:0, f:0)
+    8   8 *    PshC4    0x0          (i:0, f:0)
+   10   9 *    CALLSYS  449           (int gfxCreateTexture(const int, const int, const TextureFilter = NearestFilter, const bool = false))
+   12   5 *    CpyRtoV4 v5
+   13   5 *    CpyVtoG4 v5, 74578216
+   15   5 *    RET      0

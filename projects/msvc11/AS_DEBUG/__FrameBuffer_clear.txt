@@ -1,0 +1,47 @@
+void FrameBuffer::clear()
+
+Temps: 1, 8
+
+Variables: 
+ 000: FrameBuffer this
+ 008: string {noname}
+
+
+    0   8 *    PshVPtr  v0
+    1   9 *    CALLSYS  2           (void _builtin_object_::_beh_5_())
+- 180,3 -
+    3   8 *    SUSPEND
+    4   8 *    LoadThisR v21, 134217759
+    6   8 *    RDR1     v1
+    7   8 *    NOT      v1
+    8   8 *    CpyVtoR4 v1
+    9   8 *    JLowZ    +17              (d:28)
+- 182,4 -
+   11   8 * {
+   11   8 *    SUSPEND
+   12   8 *    STR      13         (l:58 s:"Error: Fra")
+   13  10 *    CALLSYS  33           (const string& _string_factory_(const int, const uint8&))
+   15   8 *    PshRPtr
+   16   9 *    PSF      v8
+   17  10 *    CALLSYS  35           (string::string(const string&in))
+   19   8 *    ObjInfo  v8, 1
+   19   8 *    PSF      v8
+   20   9 *    CALLSYS  231           (void print(string&in))
+   22   8 *    PSF      v8
+   23   9 *    CALLSYS  36           (string::~string())
+- 183,4 -
+   25   8 *    ObjInfo  v8, 0
+   25   8 *    SUSPEND
+   26   8 * {
+   26   8 * }
+   26   8 *    JMP      +4              (d:32)
+- 187,3 -
+   28   7   }
+   28   8 * 1:
+   28   8 *    SUSPEND
+   29   8 *    CALLSYS  449           (void gfxClearFrameBuffer())
+- 188,3 -
+   31   8 *    SUSPEND
+   32   8 * 0:
+   32   8 *    FREE     v0, 97799048
+   34   8 *    RET      1

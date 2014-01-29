@@ -1,0 +1,62 @@
+void Gate::hardClose()
+
+Temps: 1, 2
+
+Variables: 
+ 000: Gate this
+ 002: _builtin_function_ {noname}
+
+
+    0   2 *    PshVPtr  v0
+    1   3 *    CALLSYS  2           (void _builtin_object_::_beh_5_())
+- 98,3 -
+    3   2 *    SUSPEND
+    4   2 *    SetV1    v1, 0x0
+    6   2 *    LoadThisR v92, 134217780
+    8   2 *    WRTV1    v1
+- 99,3 -
+    9   2 *    SUSPEND
+   10   2 *    PshVPtr  v0
+   11   3 *    CALLINTF 1238           (void Gate::closeGate())
+- 102,3 -
+   13   2 *    SUSPEND
+   14   2 *    STR      55         (l:9 s:"Open Gate")
+   15   4 *    CALLSYS  33           (const string& _string_factory_(const int, const uint8&))
+   17   2 *    PshRPtr
+   18   3 *    PshVPtr  v0
+   19   4 *    ADDSi    v96, 134217780
+   21   4 *    RDSPtr
+   22   4 *    ADDSi    v20, 134217747
+   24   4 *    RDSPtr
+   25   4 *    CALLSYS  37           (string& string::opAssign(const string&in))
+- 103,3 -
+   27   2 *    SUSPEND
+   28   2 *    STR      56         (l:49 s:"Re-open yo")
+   29   4 *    CALLSYS  33           (const string& _string_factory_(const int, const uint8&))
+   31   2 *    PshRPtr
+   32   3 *    PshVPtr  v0
+   33   4 *    ADDSi    v96, 134217780
+   35   4 *    RDSPtr
+   36   4 *    ADDSi    v24, 134217747
+   38   4 *    RDSPtr
+   39   4 *    CALLSYS  37           (string& string::opAssign(const string&in))
+- 104,3 -
+   41   2 *    SUSPEND
+   42   2 *    PshVPtr  v0
+   43   3 *    FuncPtr  72125544
+   45   4 *    CALLSYS  18           (_builtin_function_@ %delegate_factory(int&in, int&in))
+   47   2 *    STOREOBJ v2
+   48   2 *    VAR      v2
+   49   3 *    PshVPtr  v0
+   50   4 *    ADDSi    v96, 134217780
+   52   4 *    RDSPtr
+   53   4 *    ADDSi    v36, 134217747
+   55   4 *    GETOBJREF 1
+   56   4 *    REFCPY   0x434071c
+   58   3 *    FREE     v2, 70518556
+   60   3 *    PopPtr
+- 105,3 -
+   61   2 *    SUSPEND
+   62   2 * 0:
+   62   2 *    FREE     v0, 71594464
+   64   2 *    RET      1

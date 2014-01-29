@@ -1,0 +1,19 @@
+void MultiplayerDialog::cancel()
+
+Temps: 
+
+Variables: 
+ 000: MultiplayerDialog this
+
+
+    0   0 *    PshVPtr  v0
+    1   1 *    CALLSYS  2           (void _builtin_object_::_beh_4_())
+- 124,3 -
+    3   0 *    SUSPEND
+    4   0 *    PshVPtr  v0
+    5   1 *    CALLINTF 1111           (void SceneObject::hide())
+- 125,3 -
+    7   0 *    SUSPEND
+    8   0 * 0:
+    8   0 *    FREE     v0, 152210304
+   10   0 *    RET      1

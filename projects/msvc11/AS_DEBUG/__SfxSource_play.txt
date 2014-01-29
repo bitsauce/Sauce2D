@@ -1,0 +1,21 @@
+void SfxSource::play()
+
+Temps: 1, 2
+
+Variables: 
+ 000: SfxSource this
+
+
+    0   2 *    PshVPtr  v0
+    1   3 *    CALLSYS  2           (void _builtin_object_::_beh_5_())
+- 77,3 -
+    3   2 *    SUSPEND
+    4   2 *    LoadThisR v20, 134217762
+    6   2 *    RDR4     v1
+    7   2 *    PshV4    v1
+    8   3 *    CALLSYS  395           (int sfxPlaySource(const int))
+- 78,3 -
+   10   2 *    SUSPEND
+   11   2 * 0:
+   11   2 *    FREE     v0, 74270112
+   13   2 *    RET      1

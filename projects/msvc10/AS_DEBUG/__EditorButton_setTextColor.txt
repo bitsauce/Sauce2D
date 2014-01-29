@@ -1,0 +1,26 @@
+void EditorButton::setTextColor(const Color)
+
+Temps: 
+
+Variables: 
+ -001: const Color color
+ 000: EditorButton this
+
+
+    0   0 *    VarDecl  0
+    0   0 *    PshVPtr  v0
+    1   1 *    CALLSYS  2           (void _builtin_object_::_beh_4_())
+- 394,3 -
+    3   0 *    SUSPEND
+    4   0 *    PshVPtr  v-1
+    5   1 *    PshVPtr  v0
+    6   2 *    ADDSi    v56, 134217812
+    8   2 *    RDSPtr
+    9   2 *    COPY     v1, 67108879
+   11   1 *    PopPtr
+- 395,3 -
+   12   0 *    SUSPEND
+   13   0 * 0:
+   13   0 *    FREE     v-1, 112018136
+   15   0 *    FREE     v0, 152236296
+   17   0 *    RET      2

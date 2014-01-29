@@ -1,0 +1,29 @@
+LevelCreator::~LevelCreator()
+
+Temps: 8
+
+Variables: 
+ 000: LevelCreator this
+ 008: string {noname}
+
+
+    0   8 *    PshVPtr  v0
+    1   9 *    CALLSYS  2           (void _builtin_object_::_beh_4_())
+- 358,3 -
+    3   8 *    SUSPEND
+    4   8 *    STR      99         (l:4 s:"I RM")
+    5  10 *    CALLSYS  32           (const string& _string_factory_(const int, const uint8&))
+    7   8 *    PshRPtr
+    8   9 *    PSF      v8
+    9  10 *    CALLSYS  34           (void string::_beh_0_(const string&in))
+   11   8 *    ObjInfo  v8, 1
+   11   8 *    PSF      v8
+   12   9 *    CALLSYS  190           (void print(string&in))
+   14   8 *    PSF      v8
+   15   9 *    CALLSYS  35           (void string::_beh_1_())
+- 359,3 -
+   17   8 *    ObjInfo  v8, 0
+   17   8 *    SUSPEND
+   18   8 * 0:
+   18   8 *    FREE     v0, 152243168
+   20   8 *    RET      1

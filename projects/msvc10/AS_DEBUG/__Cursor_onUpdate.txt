@@ -1,0 +1,49 @@
+void Cursor::onUpdate(UpdateEvent)
+
+Temps: 4, 5, 6, 7
+
+Variables: 
+ -001: UpdateEvent e
+ 002: Vector2 cursor
+ 000: Cursor this
+ 004: Vector2 {noname}
+
+
+    0   7 *    VarDecl  0
+    0   7 *    PshVPtr  v0
+    1   8 *    CALLSYS  2           (void _builtin_object_::_beh_4_())
+- 33,3 -
+    3   7 *    SUSPEND
+    4   7 *    VarDecl  1
+    4   7 *    PSF      v2
+    5   8 *    CALLSYS  130           (void Vector2::_beh_0_())
+    7   7 *    ObjInfo  v2, 1
+    7   7 *    PSF      v4
+    8   8 *    PshGPtr  112334928
+   10   9 *    CHKREF
+   11   9 *    CALLSYS  429           (Vector2 CX2DApp::cursorGamePos() const)
+   13   7 *    ObjInfo  v4, 1
+   13   7 *    PSF      v4
+   14   8 *    PSF      v2
+   15   9 *    COPY     v2, 67108877
+   17   8 *    ObjInfo  v4, 0
+   17   8 *    PopPtr
+- 34,3 -
+   18   7 *    SUSPEND
+   19   7 *    LoadVObjR v2, v4, 67108877
+   22   7 *    RDR4     v5
+   23   7 *    SUBIf    v5, v5, 8.000000
+   26   7 *    PshV4    v5
+   27   8 *    LoadVObjR v2, v0, 67108877
+   30   8 *    RDR4     v6
+   31   8 *    SUBIf    v6, v6, 8.000000
+   34   8 *    PshV4    v6
+   35   9 *    PshVPtr  v0
+   36  10 *    CALLINTF 1088           (void SceneObject::setPos(const float, const float))
+- 35,3 -
+   38   7 *    SUSPEND
+   39   7 *    ObjInfo  v2, 0
+   39   7 * 0:
+   39   7 *    FREE     v-1, 112323680
+   41   7 *    FREE     v0, 152248120
+   43   7 *    RET      2

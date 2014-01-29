@@ -1,0 +1,65 @@
+void Sky::draw()
+
+Temps: 1, 2, 3, 4, 5
+
+Variables: 
+ 000: Sky this
+
+
+    0   5 *    PshVPtr  v0
+    1   6 *    CALLSYS  2           (void _builtin_object_::_beh_4_())
+- 18,3 -
+    3   5 *    SUSPEND
+    4   5 *    PshC4    0x7          (i:7, f:9.80909e-045)
+    6   6 *    CALLSYS  337           (void gfxBeginPoly(const uint))
+- 19,3 -
+    8   5 *    SUSPEND
+    9   5 *    SetV1    v1, 0xff
+   11   5 *    PshV4    v1
+   12   6 *    SetV1    v2, 0xff
+   14   6 *    PshV4    v2
+   15   7 *    SetV1    v3, 0x0
+   17   7 *    PshV4    v3
+   18   8 *    SetV1    v4, 0x0
+   20   8 *    PshV4    v4
+   21   9 *    CALL     436           (uint rgb(const uint8, const uint8, const uint8, const uint8 arg3 = 255))
+   23   5 *    CpyRtoV4 v5
+   24   5 *    PshV4    v5
+   25   6 *    CALLSYS  346           (void gfxSetDrawColor(const uint))
+- 20,3 -
+   27   5 *    SUSPEND
+   28   5 *    PshGPtr  104384568
+   30   6 *    ADDSi    v4, 67108877
+   32   6 *    PopRPtr
+   33   5 *    RDR4     v1
+   34   5 *    PshV4    v1
+   35   6 *    PshGPtr  104384568
+   37   7 *    ADDSi    v0, 67108877
+   39   7 *    PopRPtr
+   40   6 *    RDR4     v5
+   41   6 *    PshV4    v5
+   42   7 *    PshC4    0x0          (i:0, f:0)
+   44   8 *    PshC4    0x0          (i:0, f:0)
+   46   9 *    CALL     434           (void gfxDrawQuad(const float, const float, const float, const float))
+- 21,3 -
+   48   5 *    SUSPEND
+   49   5 *    SetV1    v2, 0xff
+   51   5 *    PshV4    v2
+   52   6 *    SetV1    v3, 0xff
+   54   6 *    PshV4    v3
+   55   7 *    SetV1    v4, 0xff
+   57   7 *    PshV4    v4
+   58   8 *    SetV1    v5, 0xff
+   60   8 *    PshV4    v5
+   61   9 *    CALL     436           (uint rgb(const uint8, const uint8, const uint8, const uint8 arg3 = 255))
+   63   5 *    CpyRtoV4 v1
+   64   5 *    PshV4    v1
+   65   6 *    CALLSYS  346           (void gfxSetDrawColor(const uint))
+- 22,3 -
+   67   5 *    SUSPEND
+   68   5 *    CALLSYS  339           (void gfxEndPoly())
+- 23,3 -
+   70   5 *    SUSPEND
+   71   5 * 0:
+   71   5 *    FREE     v0, 104327864
+   73   5 *    RET      1

@@ -1,0 +1,59 @@
+void PhysTile::update()
+
+Temps: 1, 2, 5
+
+Variables: 
+ 003: float x
+ 004: float y
+ 000: PhysTile this
+
+
+    0   5 *    PshVPtr  v0
+    1   6 *    CALLSYS  2           (void _builtin_object_::_beh_5_())
+- 64,3 -
+    3   5 *    SUSPEND
+    4   5 *    LoadThisR v60, 134217792
+    6   5 *    RDR4     v1
+    7   5 *    CMPIf    v1, 0.000000
+    9   5 *    JP       +4              (d:15)
+- 65,4 -
+   11   5 *    SUSPEND
+   12   5 *    PshVPtr  v0
+   13   6 *    CALLINTF 1016           (void Entity::remove())
+- 68,3 -
+   15   5 * 1:
+   15   5 *    SUSPEND
+- 69,3 -
+   16   5 *    VarDecl  0
+   16   5 *    VarDecl  1
+   16   5 *    SUSPEND
+   17   5 *    VAR      v2
+   18   6 *    VAR      v1
+   19   7 *    LoadThisR v48, 134217792
+   21   7 *    RDR4     v5
+   22   7 *    PshV4    v5
+   23   8 *    GETREF   1
+   24   8 *    GETREF   2
+   25   8 *    CALLSYS  553           (void b2dGetBodyPosition(int, float&out, float&out))
+   27   5 *    CpyVtoV4 v4, v2
+   29   5 *    CpyVtoV4 v3, v1
+- 70,3 -
+   31   5 *    SUSPEND
+   32   5 *    PshGPtr  74607232
+   34   6 *    CALLINTF 1113           (int Terrain::getHeight())
+   36   5 *    CpyRtoV4 v5
+   37   5 *    iTOf     v5
+   38   5 *    CpyGtoV4 v1, 74607976
+   40   5 *    MULf     v2, v5, v1
+   42   5 *    CMPf     v4, v2
+   44   5 *    JNP      +4              (d:50)
+- 71,4 -
+   46   5 *    SUSPEND
+   47   5 *    PshVPtr  v0
+   48   6 *    CALLINTF 1016           (void Entity::remove())
+- 72,3 -
+   50   5 * 2:
+   50   5 *    SUSPEND
+   51   5 * 0:
+   51   5 *    FREE     v0, 74314576
+   53   5 *    RET      1

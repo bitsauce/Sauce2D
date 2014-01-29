@@ -1,0 +1,71 @@
+void gfxDrawRect(const float, const float, const float, const float, const float, const float, const float, const float)
+
+Temps: 1, 2
+
+Variables: 
+ 000: const float x
+ -001: const float y
+ -002: const float w
+ -003: const float h
+ -004: const float x0
+ -005: const float y0
+ -006: const float x1
+ -007: const float y1
+
+
+- 31,9 -
+    0   2 *    VarDecl  0
+    0   2 *    VarDecl  1
+    0   2 *    VarDecl  2
+    0   2 *    VarDecl  3
+    0   2 *    VarDecl  4
+    0   2 *    VarDecl  5
+    0   2 *    VarDecl  6
+    0   2 *    VarDecl  7
+    0   2 *    SUSPEND
+    1   2 *    PshV4    v-7
+    2   3 *    PshV4    v-4
+    3   4 *    CALLSYS  445           (void gfxSetTexCoord(const float, const float))
+- 31,33 -
+    5   2 *    SUSPEND
+    6   2 *    PshV4    v-1
+    7   3 *    PshV4    v0
+    8   4 *    CALLSYS  466           (void gfxAddVertex(const float, const float))
+- 32,9 -
+   10   2 *    SUSPEND
+   11   2 *    PshV4    v-5
+   12   3 *    PshV4    v-4
+   13   4 *    CALLSYS  445           (void gfxSetTexCoord(const float, const float))
+- 32,33 -
+   15   2 *    SUSPEND
+   16   2 *    ADDf     v1, v-1, v-3
+   18   2 *    PshV4    v1
+   19   3 *    PshV4    v0
+   20   4 *    CALLSYS  466           (void gfxAddVertex(const float, const float))
+- 33,9 -
+   22   2 *    SUSPEND
+   23   2 *    PshV4    v-5
+   24   3 *    PshV4    v-6
+   25   4 *    CALLSYS  445           (void gfxSetTexCoord(const float, const float))
+- 33,33 -
+   27   2 *    SUSPEND
+   28   2 *    ADDf     v1, v-1, v-3
+   30   2 *    PshV4    v1
+   31   3 *    ADDf     v2, v0, v-2
+   33   3 *    PshV4    v2
+   34   4 *    CALLSYS  466           (void gfxAddVertex(const float, const float))
+- 34,9 -
+   36   2 *    SUSPEND
+   37   2 *    PshV4    v-7
+   38   3 *    PshV4    v-6
+   39   4 *    CALLSYS  445           (void gfxSetTexCoord(const float, const float))
+- 34,33 -
+   41   2 *    SUSPEND
+   42   2 *    PshV4    v-1
+   43   3 *    ADDf     v1, v0, v-2
+   45   3 *    PshV4    v1
+   46   4 *    CALLSYS  466           (void gfxAddVertex(const float, const float))
+- 35,2 -
+   48   2 *    SUSPEND
+   49   2 * 0:
+   49   2 *    RET      8

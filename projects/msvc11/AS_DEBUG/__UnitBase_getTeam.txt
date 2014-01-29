@@ -1,0 +1,20 @@
+int UnitBase::getTeam()
+
+Temps: 1
+
+Variables: 
+ 000: UnitBase this
+
+
+    0   1 *    PshVPtr  v0
+    1   2 *    CALLSYS  2           (void _builtin_object_::_beh_5_())
+- 98,3 -
+    3   1 *    SUSPEND
+    4   1 *    LoadThisR v48, 134217750
+    6   1 *    RDR4     v1
+    7   1 * {
+    7   1 * }
+    7   1 *    CpyVtoR4 v1
+    8   1 * 0:
+    8   1 *    FREE     v0, 74300496
+   10   1 *    RET      1

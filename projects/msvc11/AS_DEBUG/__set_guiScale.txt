@@ -1,0 +1,20 @@
+void set_guiScale(float)
+
+Temps: 1
+
+Variables: 
+ 000: float value
+
+
+- 39,3 -
+    0   1 *    VarDecl  0
+    0   1 *    SUSPEND
+    1   1 *    SetV1    v1, 0x1
+    3   1 *    PshV4    v1
+    4   2 *    PshV4    v0
+    5   3 *    PshGPtr  69273768
+    7   4 *    CALLINTF 1077           (void UiElement::setScale(const float, const bool = false))
+- 40,3 -
+    9   1 *    SUSPEND
+   10   1 * 0:
+   10   1 *    RET      1

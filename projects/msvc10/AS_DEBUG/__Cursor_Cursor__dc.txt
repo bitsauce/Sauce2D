@@ -1,0 +1,11 @@
+Cursor::Cursor()
+
+Temps: 
+
+Variables: 
+ 000: Cursor this
+
+
+    0   0 *    PshVPtr  v0
+    1   1 *    CALL     607           (SceneObject::SceneObject())
+    3   0 *    RET      1

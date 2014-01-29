@@ -1,0 +1,99 @@
+void TileGrid::draw()
+
+Temps: 2, 3, 5, 6, 7
+
+Variables: 
+ 001: uint i
+ 004: VertexBuffer@ vbo
+ 000: TileGrid this
+ 005: array {noname}
+ 006: array {noname}
+
+
+    0   7 *    PshVPtr  v0
+    1   8 *    CALLSYS  2           (void _builtin_object_::_beh_5_())
+- 441,7 -
+    3   7 *    SUSPEND
+    4   7 *    VarDecl  0
+    4   7 *    SetV4    v1, 0x1          (i:1, f:1.4013e-045)
+    6   7 *    JMP      +77              (d:85)
+    8   7 * 4:
+    8   7 *    SUSPEND
+- 444,4 -
+    9   7 * {
+    9   7 *    SUSPEND
+   10   7 *    VarDecl  1
+   10   7 *    SUBIi    v2, v1, 1
+   13   7 *    PshV4    v2
+   14   8 *    PshVPtr  v0
+   15   9 *    ADDSi    v32, 134217765
+   17   9 *    RDSPtr
+   18   9 *    RefCpyV  v5, 74736752
+   20   9 *    CALLSYS  1146           (VertexBuffer@& array::opIndex(uint))
+   22   7 *    PshRPtr
+   23   8 *    RDSPtr
+   24   8 *    RefCpyV  v4, 74269448
+   26   8 *    PopPtr
+   27   7 *    FREE     v5, 74736752
+- 445,4 -
+   29   7 *    SUSPEND
+   30   7 *    PshVPtr  v4
+   31   8 *    CALLINTF 1030           (void VertexBuffer::bind())
+- 448,4 -
+   33   7 *    SUSPEND
+   34   7 *    PshV4    v1
+   35   8 *    PshGPtr  74667592
+   37   9 *    CHKREF
+   38   9 *    RefCpyV  v6, 74658288
+   40   9 *    CALLSYS  1007           (TileData@& array::opIndex(uint))
+   42   7 *    PshRPtr
+   43   8 *    RDSPtr
+   44   8 *    ADDSi    v24, 134217752
+   46   8 *    PopRPtr
+   47   7 *    RDR4     v3
+   48   7 *    PshV4    v3
+   49   8 *    CALLSYS  420           (void gfxSetTexture(const int))
+   51   7 *    FREE     v6, 74658288
+- 449,4 -
+   53   7 *    SUSPEND
+   54   7 *    LoadThisR v24, 134217765
+   56   7 *    RDR4     v2
+   57   7 *    LoadThisR v28, 134217765
+   59   7 *    RDR4     v3
+   60   7 *    MULi     v2, v2, v3
+   62   7 *    MULIi    v3, v2, 6
+   65   7 *    PshV4    v3
+   66   8 *    PshC4    0x0          (i:0, f:0)
+   68   9 *    PshC4    0x3          (i:3, f:4.2039e-045)
+   70  10 *    CALLSYS  509           (void gfxDrawVertexBuffer(const int, const int, const int))
+- 450,4 -
+   72   7 *    SUSPEND
+   73   7 *    PshC4    0x0          (i:0, f:0)
+   75   8 *    CALLSYS  420           (void gfxSetTexture(const int))
+- 453,4 -
+   77   7 *    SUSPEND
+   78   7 *    PshVPtr  v4
+   79   8 *    CALLINTF 1035           (void VertexBuffer::unbind())
+   81   7 *    FREE     v4, 74269448
+- 441,47 -
+   83   7 * }
+   83   7 * 3:
+   83   7 *    SUSPEND
+   84   7 *    IncVi    v1
+- 441,19 -
+   85   7 * 1:
+   85   7 *    SUSPEND
+   86   7 *    PshVPtr  v0
+   87   8 *    ADDSi    v32, 134217765
+   89   8 *    RDSPtr
+   90   8 *    CALLSYS  88           (uint array::size() const)
+   92   7 *    CpyRtoV4 v2
+   93   7 *    ADDIi    v2, v2, 1
+   96   7 *    CMPu     v1, v2
+   98   7 *    JS       -92              (d:8)
+- 455,3 -
+  100   7 * 2:
+  100   7 *    SUSPEND
+  101   7 * 0:
+  101   7 *    FREE     v0, 74296904
+  103   7 *    RET      1

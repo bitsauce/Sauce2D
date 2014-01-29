@@ -1,0 +1,54 @@
+Entity::Entity()
+
+Temps: 1, 2
+
+Variables: 
+ 000: Entity this
+ 002: Entity {noname}
+
+
+- 5,10 -
+    0   2 *    SUSPEND
+    1   2 *    PshVPtr  v0
+    2   3 *    ADDSi    v16, 134217745
+    4   3 *    ALLOC    0x632d0c8, 132             (type:Vector2)
+- 6,10 -
+    7   2 *    SUSPEND
+    8   2 *    PshVPtr  v0
+    9   3 *    ADDSi    v20, 134217745
+   11   3 *    ALLOC    0x632d0c8, 132             (type:Vector2)
+- 7,8 -
+   14   2 *    SUSPEND
+   15   2 *    SetV4    v1, 0x3f800000          (i:1065353216, f:1)
+   17   2 *    LoadThisR v24, 134217745
+   19   2 *    WRTV4    v1
+- 8,8 -
+   20   2 *    SUSPEND
+   21   2 *    SetV4    v1, 0x3f800000          (i:1065353216, f:1)
+   23   2 *    LoadThisR v28, 134217745
+   25   2 *    WRTV4    v1
+- 11,3 -
+   26   2 *    SUSPEND
+   27   2 *    SetV1    v1, 0x1
+   29   2 *    LDG      104398648
+   31   2 *    WRTV1    v1
+- 12,3 -
+   32   2 *    SUSPEND
+   33   2 *    SetV1    v1, 0x1
+   35   2 *    LDG      104399552
+   37   2 *    WRTV1    v1
+- 13,3 -
+   38   2 *    SUSPEND
+   39   2 *    PshVPtr  v0
+   40   3 *    RefCpyV  v2, 104308072
+   42   3 *    PopPtr
+   43   2 *    VAR      v2
+   44   3 *    PshGPtr  104397032
+   46   4 *    CHKREF
+   47   4 *    GETREF   1
+   48   4 *    CALLSYS  446           (void array::insertLast(Entity@const&in))
+   50   2 *    FREE     v2, 104308072
+- 14,3 -
+   52   2 *    SUSPEND
+   53   2 * 0:
+   53   2 *    RET      1

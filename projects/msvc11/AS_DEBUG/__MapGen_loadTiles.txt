@@ -1,0 +1,220 @@
+grid<int> MapGen::loadTiles(const string)
+
+Temps: 2, 3, 4, 5, 6, 11, 12, 13
+
+Variables: 
+ -001: const string map
+ 001: uint[]@ mapData
+ 007: int y
+ 008: int x
+ 009: int tile
+ 010: uint color
+ 000: MapGen this
+ 004: array {noname}
+ 006: grid {noname}
+ 013: grid {noname}
+
+
+    0  13 *    VarDecl  0
+    0  13 *    PshVPtr  v0
+    1  14 *    CALLSYS  2           (void _builtin_object_::_beh_5_())
+- 20,3 -
+    3  13 *    SUSPEND
+    4  13 *    VarDecl  1
+    4  13 *    VAR      v2
+    5  14 *    VAR      v3
+    6  15 *    VAR      v-1
+    7  16 *    GETOBJREF 0
+    8  16 *    GETREF   1
+    9  16 *    GETREF   2
+   10  16 *    CALLSYS  473           (uint[]@ gfxLoadImageData(const string&in, int&out, int&out))
+   12  13 *    STOREOBJ v4
+   13  13 *    LoadThisR v28, 134217766
+   15  13 *    WRTV4    v2
+   16  13 *    LoadThisR v24, 134217766
+   18  13 *    WRTV4    v3
+   19  13 *    PshVPtr  v4
+   20  14 *    RefCpyV  v1, 73553344
+   22  14 *    FREE     v4, 73553344
+   24  14 *    PopPtr
+- 23,3 -
+   25  13 *    SUSPEND
+   26  13 *    SetV4    v2, 0x0          (i:0, f:0)
+   28  13 *    VAR      v2
+   29  14 *    LoadThisR v28, 134217766
+   31  14 *    RDR4     v3
+   32  14 *    PshV4    v3
+   33  15 *    LoadThisR v24, 134217766
+   35  15 *    RDR4     v5
+   36  15 *    PshV4    v5
+   37  16 *    GETREF   2
+   38  16 *    CALL     663           (grid<int>@ factstub(uint, uint, const int&in))
+   40  13 *    STOREOBJ v6
+   41  13 *    VAR      v6
+   42  14 *    PshVPtr  v0
+   43  15 *    ADDSi    v20, 134217766
+   45  15 *    GETOBJREF 1
+   46  15 *    REFCPY   0x46eee78
+   48  14 *    FREE     v6, 74378872
+   50  14 *    PopPtr
+- 26,7 -
+   51  13 *    SUSPEND
+   52  13 *    VarDecl  2
+   52  13 *    SetV4    v7, 0x0          (i:0, f:0)
+   54  13 *    JMP      +150              (d:206)
+   56  13 * 4:
+   56  13 *    SUSPEND
+- 28,8 -
+   57  13 * {
+   57  13 *    SUSPEND
+   58  13 *    VarDecl  3
+   58  13 *    SetV4    v8, 0x0          (i:0, f:0)
+   60  13 *    JMP      +134              (d:196)
+   62  13 * 8:
+   62  13 *    SUSPEND
+- 30,5 -
+   63  13 * {
+   63  13 *    SUSPEND
+   64  13 *    VarDecl  4
+   64  13 *    SetV4    v9, 0x0          (i:0, f:0)
+- 31,5 -
+   66  13 *    SUSPEND
+   67  13 *    VarDecl  5
+   67  13 *    LoadThisR v28, 134217766
+   69  13 *    RDR4     v3
+   70  13 *    SUBi     v2, v3, v7
+   72  13 *    SUBIi    v3, v2, 1
+   75  13 *    LoadThisR v24, 134217766
+   77  13 *    RDR4     v11
+   78  13 *    MULi     v5, v3, v11
+   80  13 *    ADDi     v11, v8, v5
+   82  13 *    PshV4    v11
+   83  14 *    PshVPtr  v1
+   84  15 *    CALLSYS  459           (uint& array::opIndex(uint))
+   86  13 *    RDR4     v5
+   87  13 *    CpyVtoV4 v10, v5
+- 32,5 -
+   89  13 *    SUSPEND
+   90  13 *    SetV1    v11, 0xff
+   92  13 *    PshV4    v11
+   93  14 *    SetV1    v5, 0x0
+   95  14 *    PshV4    v5
+   96  15 *    SetV1    v3, 0xff
+   98  15 *    PshV4    v3
+   99  16 *    SetV1    v2, 0x0
+  101  16 *    PshV4    v2
+  102  17 *    CALL     933           (uint rgb(const uint8, const uint8, const uint8, const uint8 = 255))
+  104  13 *    CpyRtoV4 v12
+  105  13 *    CMPu     v10, v12
+  107  13 *    JNZ      +11              (d:120)
+- 32,33 -
+  109  13 *    SUSPEND
+  110  13 *    PshGPtr  74668760
+  112  14 *    ADDSi    v20, 134217752
+  114  14 *    PopRPtr
+  115  13 *    RDR4     v12
+  116  13 *    CpyVtoV4 v9, v12
+  118  13 *    JMP      +60              (d:180)
+- 33,10 -
+  120  13 * 9:
+  120  13 *    SUSPEND
+  121  13 *    SetV1    v11, 0xff
+  123  13 *    PshV4    v11
+  124  14 *    SetV1    v12, 0x64
+  126  14 *    PshV4    v12
+  127  15 *    SetV1    v2, 0x64
+  129  15 *    PshV4    v2
+  130  16 *    SetV1    v3, 0x64
+  132  16 *    PshV4    v3
+  133  17 *    CALL     933           (uint rgb(const uint8, const uint8, const uint8, const uint8 = 255))
+  135  13 *    CpyRtoV4 v5
+  136  13 *    CMPu     v10, v5
+  138  13 *    JNZ      +11              (d:151)
+- 33,42 -
+  140  13 *    SUSPEND
+  141  13 *    PshGPtr  74669344
+  143  14 *    ADDSi    v20, 134217752
+  145  14 *    PopRPtr
+  146  13 *    RDR4     v5
+  147  13 *    CpyVtoV4 v9, v5
+  149  13 *    JMP      +29              (d:180)
+- 34,10 -
+  151  13 * 11:
+  151  13 *    SUSPEND
+  152  13 *    SetV1    v11, 0xff
+  154  13 *    PshV4    v11
+  155  14 *    SetV1    v5, 0x1e
+  157  14 *    PshV4    v5
+  158  15 *    SetV1    v3, 0x32
+  160  15 *    PshV4    v3
+  161  16 *    SetV1    v2, 0x64
+  163  16 *    PshV4    v2
+  164  17 *    CALL     933           (uint rgb(const uint8, const uint8, const uint8, const uint8 = 255))
+  166  13 *    CpyRtoV4 v12
+  167  13 *    CMPu     v10, v12
+  169  13 *    JNZ      +9              (d:180)
+- 34,40 -
+  171  13 *    SUSPEND
+  172  13 *    PshGPtr  74669928
+  174  14 *    ADDSi    v20, 134217752
+  176  14 *    PopRPtr
+  177  13 *    RDR4     v12
+  178  13 *    CpyVtoV4 v9, v12
+- 35,5 -
+  180  13 * 13:
+  180  13 * 12:
+  180  13 * 10:
+  180  13 *    SUSPEND
+  181  13 *    PshV4    v7
+  182  14 *    PshV4    v8
+  183  15 *    PshVPtr  v0
+  184  16 *    ADDSi    v20, 134217766
+  186  16 *    RDSPtr
+  187  16 *    RefCpyV  v6, 74378872
+  189  16 *    CALLSYS  667           (int& grid::at(uint, uint))
+  191  13 *    WRTV4    v9
+  192  13 *    FREE     v6, 74378872
+- 28,29 -
+  194  13 * }
+  194  13 * 7:
+  194  13 *    SUSPEND
+  195  13 *    IncVi    v8
+- 28,19 -
+  196  13 * 5:
+  196  13 *    SUSPEND
+  197  13 *    LoadThisR v24, 134217766
+  199  13 *    RDR4     v3
+  200  13 *    CMPi     v8, v3
+  202  13 *    JS       -142              (d:62)
+- 26,28 -
+  204  13 * 6:
+  204  13 * }
+  204  13 * 3:
+  204  13 *    SUSPEND
+  205  13 *    IncVi    v7
+- 26,18 -
+  206  13 * 1:
+  206  13 *    SUSPEND
+  207  13 *    LoadThisR v28, 134217766
+  209  13 *    RDR4     v3
+  210  13 *    CMPi     v7, v3
+  212  13 *    JS       -158              (d:56)
+- 39,3 -
+  214  13 * 2:
+  214  13 *    SUSPEND
+  215  13 *    PshVPtr  v0
+  216  14 *    ADDSi    v20, 134217766
+  218  14 *    RDSPtr
+  219  14 *    CHKREF
+  220  14 *    CALL     661           (grid<int>@ factstub())
+  222  14 *    STOREOBJ v13
+  223  14 *    PshVPtr  v13
+  224  15 *    CALLSYS  131           (grid<T>& grid::opAssign(const grid<T>&in))
+  226  13 * {
+  226  13 *    FREE     v1, 73553344
+  228  13 * }
+  228  13 *    LOADOBJ  v13
+  229  13 * 0:
+  229  13 *    FREE     v-1, 73318240
+  231  13 *    FREE     v0, 74297912
+  233  13 *    RET      2

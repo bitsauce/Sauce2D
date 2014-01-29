@@ -1,0 +1,253 @@
+void ScrollArea::onMouseRelease(MouseEvent)
+
+Temps: 1, 13, 15, 17, 18, 19, 21, 23
+
+Variables: 
+ -001: MouseEvent e
+ 012: MouseEvent e2
+ 022: uint i
+ 000: ScrollArea this
+ 001: MouseEvent {noname}
+ 023: array {noname}
+ 015: Vector2 {noname}
+ 017: Vector2 {noname}
+ 021: Vector2 {noname}
+
+
+    0  23 *    VarDecl  0
+    0  23 *    PshVPtr  v0
+    1  24 *    CALLSYS  2           (void _builtin_object_::_beh_4_())
+- 61,3 -
+    3  23 *    SUSPEND
+    4  23 *    PshVPtr  v-1
+    5  24 *    PSF      v1
+    6  25 *    ALLOC    0x6b200b8, 0             (type:MouseEvent)
+    9  24 *    PshVPtr  v1
+   10  25 *    COPY     v11, 67108905
+   12  24 *    PopPtr
+   13  23 *    VAR      v1
+   14  24 *    PshVPtr  v0
+   15  25 *    GETOBJ   1
+   16  25 *    CALL     653           (void UiObject::onMouseRelease(MouseEvent))
+- 64,3 -
+   18  23 *    SUSPEND
+- 65,3 -
+   19  23 *    VarDecl  1
+   19  23 *    SUSPEND
+   20  23 *    LoadRObjR v-1, v40, 67108905
+   23  23 *    RDR4     v13
+   24  23 *    LoadVObjR v12, v40, 67108905
+   27  23 *    WRTV4    v13
+- 66,3 -
+   28  23 *    SUSPEND
+   29  23 *    LoadThisR v64, 134217810
+   31  23 *    RDR4     v18
+   32  23 *    SUBIf    v18, v18, 16.000000
+   35  23 *    PshV4    v18
+   36  24 *    LoadThisR v60, 134217810
+   38  24 *    RDR4     v19
+   39  24 *    PshV4    v19
+   40  25 *    PSF      v21
+   41  26 *    CALLSYS  132           (void Vector2::_beh_0_(float, float))
+   43  23 *    ObjInfo  v21, 1
+   43  23 *    VAR      v21
+   44  24 *    PSF      v15
+   45  25 *    PSF      v15
+   46  26 *    PshVPtr  v0
+   47  27 *    CALLINTF 1092           (Vector2 SceneObject::pos() const)
+   49  25 *    ObjInfo  v15, 1
+   49  25 *    VAR      v15
+   50  26 *    PSF      v17
+   51  27 *    PshVPtr  v-1
+   52  28 *    ADDSi    v24, 67108905
+   54  28 *    GETREF   2
+   55  28 *    CALLSYS  139           (Vector2 Vector2::opSub(const Vector2&in) const)
+   57  25 *    ObjInfo  v17, 1
+   57  25 *    ObjInfo  v15, 0
+   57  25 *    PSF      v17
+   58  26 *    GETREF   2
+   59  26 *    CALLSYS  138           (Vector2 Vector2::opAdd(const Vector2&in) const)
+   61  23 *    ObjInfo  v15, 1
+   61  23 *    ObjInfo  v21, 0
+   61  23 *    PSF      v15
+   62  24 *    ObjInfo  v17, 0
+   62  24 *    PSF      v12
+   63  25 *    ADDSi    v24, 67108905
+   65  25 *    COPY     v2, 67108877
+   67  24 *    ObjInfo  v15, 0
+   67  24 *    PopPtr
+- 67,3 -
+   68  23 *    SUSPEND
+   69  23 *    LoadThisR v64, 134217810
+   71  23 *    RDR4     v18
+   72  23 *    SUBIf    v18, v18, 16.000000
+   75  23 *    PshV4    v18
+   76  24 *    LoadThisR v60, 134217810
+   78  24 *    RDR4     v19
+   79  24 *    PshV4    v19
+   80  25 *    PSF      v17
+   81  26 *    CALLSYS  132           (void Vector2::_beh_0_(float, float))
+   83  23 *    ObjInfo  v17, 1
+   83  23 *    VAR      v17
+   84  24 *    PSF      v21
+   85  25 *    PSF      v21
+   86  26 *    PshVPtr  v0
+   87  27 *    CALLINTF 1092           (Vector2 SceneObject::pos() const)
+   89  25 *    ObjInfo  v21, 1
+   89  25 *    VAR      v21
+   90  26 *    PSF      v15
+   91  27 *    PshVPtr  v-1
+   92  28 *    ADDSi    v8, 67108905
+   94  28 *    GETREF   2
+   95  28 *    CALLSYS  139           (Vector2 Vector2::opSub(const Vector2&in) const)
+   97  25 *    ObjInfo  v15, 1
+   97  25 *    ObjInfo  v21, 0
+   97  25 *    PSF      v15
+   98  26 *    GETREF   2
+   99  26 *    CALLSYS  138           (Vector2 Vector2::opAdd(const Vector2&in) const)
+  101  23 *    ObjInfo  v21, 1
+  101  23 *    ObjInfo  v17, 0
+  101  23 *    PSF      v21
+  102  24 *    ObjInfo  v15, 0
+  102  24 *    PSF      v12
+  103  25 *    ADDSi    v8, 67108905
+  105  25 *    COPY     v2, 67108877
+  107  24 *    ObjInfo  v21, 0
+  107  24 *    PopPtr
+- 68,3 -
+  108  23 *    SUSPEND
+  109  23 *    LoadThisR v64, 134217810
+  111  23 *    RDR4     v19
+  112  23 *    SUBIf    v19, v19, 16.000000
+  115  23 *    PshV4    v19
+  116  24 *    LoadThisR v60, 134217810
+  118  24 *    RDR4     v18
+  119  24 *    PshV4    v18
+  120  25 *    PSF      v15
+  121  26 *    CALLSYS  132           (void Vector2::_beh_0_(float, float))
+  123  23 *    ObjInfo  v15, 1
+  123  23 *    VAR      v15
+  124  24 *    PSF      v17
+  125  25 *    PSF      v17
+  126  26 *    PshVPtr  v0
+  127  27 *    CALLINTF 1092           (Vector2 SceneObject::pos() const)
+  129  25 *    ObjInfo  v17, 1
+  129  25 *    VAR      v17
+  130  26 *    PSF      v21
+  131  27 *    PshVPtr  v-1
+  132  28 *    ADDSi    v32, 67108905
+  134  28 *    GETREF   2
+  135  28 *    CALLSYS  139           (Vector2 Vector2::opSub(const Vector2&in) const)
+  137  25 *    ObjInfo  v21, 1
+  137  25 *    ObjInfo  v17, 0
+  137  25 *    PSF      v21
+  138  26 *    GETREF   2
+  139  26 *    CALLSYS  138           (Vector2 Vector2::opAdd(const Vector2&in) const)
+  141  23 *    ObjInfo  v17, 1
+  141  23 *    ObjInfo  v15, 0
+  141  23 *    PSF      v17
+  142  24 *    ObjInfo  v21, 0
+  142  24 *    PSF      v12
+  143  25 *    ADDSi    v32, 67108905
+  145  25 *    COPY     v2, 67108877
+  147  24 *    ObjInfo  v17, 0
+  147  24 *    PopPtr
+- 69,3 -
+  148  23 *    SUSPEND
+  149  23 *    LoadThisR v64, 134217810
+  151  23 *    RDR4     v18
+  152  23 *    SUBIf    v18, v18, 16.000000
+  155  23 *    PshV4    v18
+  156  24 *    LoadThisR v60, 134217810
+  158  24 *    RDR4     v19
+  159  24 *    PshV4    v19
+  160  25 *    PSF      v21
+  161  26 *    CALLSYS  132           (void Vector2::_beh_0_(float, float))
+  163  23 *    ObjInfo  v21, 1
+  163  23 *    VAR      v21
+  164  24 *    PSF      v15
+  165  25 *    PSF      v15
+  166  26 *    PshVPtr  v0
+  167  27 *    CALLINTF 1092           (Vector2 SceneObject::pos() const)
+  169  25 *    ObjInfo  v15, 1
+  169  25 *    VAR      v15
+  170  26 *    PSF      v17
+  171  27 *    PshVPtr  v-1
+  172  28 *    ADDSi    v16, 67108905
+  174  28 *    GETREF   2
+  175  28 *    CALLSYS  139           (Vector2 Vector2::opSub(const Vector2&in) const)
+  177  25 *    ObjInfo  v17, 1
+  177  25 *    ObjInfo  v15, 0
+  177  25 *    PSF      v17
+  178  26 *    GETREF   2
+  179  26 *    CALLSYS  138           (Vector2 Vector2::opAdd(const Vector2&in) const)
+  181  23 *    ObjInfo  v15, 1
+  181  23 *    ObjInfo  v21, 0
+  181  23 *    PSF      v15
+  182  24 *    ObjInfo  v17, 0
+  182  24 *    PSF      v12
+  183  25 *    ADDSi    v16, 67108905
+  185  25 *    COPY     v2, 67108877
+  187  24 *    ObjInfo  v15, 0
+  187  24 *    PopPtr
+- 70,7 -
+  188  23 *    SUSPEND
+  189  23 *    VarDecl  2
+  189  23 *    SetV4    v22, 0x0          (i:0, f:0)
+  191  23 *    JMP      +30              (d:223)
+  193  23 * 4:
+  193  23 *    SUSPEND
+- 71,4 -
+  194  23 * {
+  194  23 *    SUSPEND
+  195  23 *    PSF      v12
+  196  24 *    PSF      v1
+  197  25 *    ALLOC    0x6b200b8, 0             (type:MouseEvent)
+  200  24 *    PshVPtr  v1
+  201  25 *    COPY     v11, 67108905
+  203  24 *    PopPtr
+  204  23 *    VAR      v1
+  205  24 *    PshV4    v22
+  206  25 *    PshVPtr  v0
+  207  26 *    ADDSi    v24, 134217810
+  209  26 *    RDSPtr
+  210  26 *    RefCpyV  v23, 152712520
+  212  26 *    CALLSYS  1170           (UiObject@& array::opIndex(uint))
+  214  24 *    PshRPtr
+  215  25 *    RDSPtr
+  216  25 *    GETOBJ   1
+  217  25 *    CALLINTF 1141           (void SceneObject::onMouseRelease(MouseEvent))
+  219  23 *    FREE     v23, 152712520
+- 70,40 -
+  221  23 * }
+  221  23 * 3:
+  221  23 *    SUSPEND
+  222  23 *    IncVi    v22
+- 70,19 -
+  223  23 * 1:
+  223  23 *    SUSPEND
+  224  23 *    PshVPtr  v0
+  225  24 *    ADDSi    v24, 134217810
+  227  24 *    RDSPtr
+  228  24 *    CALLSYS  86           (uint array::size() const)
+  230  23 *    CpyRtoV4 v18
+  231  23 *    CMPu     v22, v18
+  233  23 *    JS       -42              (d:193)
+- 75,3 -
+  235  23 * 2:
+  235  23 *    SUSPEND
+  236  23 *    SetV1    v18, 0x0
+  238  23 *    LoadThisR v58, 134217810
+  240  23 *    WRTV1    v18
+- 76,3 -
+  241  23 *    SUSPEND
+  242  23 *    SetV1    v19, 0x0
+  244  23 *    LoadThisR v59, 134217810
+  246  23 *    WRTV1    v19
+- 77,3 -
+  247  23 *    SUSPEND
+  248  23 *    ObjInfo  v12, 0
+  248  23 * 0:
+  248  23 *    FREE     v-1, 112328888
+  250  23 *    FREE     v0, 152254712
+  252  23 *    RET      2

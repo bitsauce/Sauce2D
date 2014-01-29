@@ -1,0 +1,144 @@
+void Unit::update()
+
+Temps: 3, 4, 5
+
+Variables: 
+ 001: float px
+ 002: float py
+ 006: float dx
+ 007: float vx
+ 008: float vy
+ 000: Unit this
+
+
+    0   8 *    PshVPtr  v0
+    1   9 *    CALLSYS  2           (void _builtin_object_::_beh_5_())
+- 151,3 -
+    3   8 *    SUSPEND
+- 152,3 -
+    4   8 *    VarDecl  0
+    4   8 *    VarDecl  1
+    4   8 *    SUSPEND
+    5   8 *    VAR      v3
+    6   9 *    VAR      v4
+    7  10 *    LoadThisR v104, 134217749
+    9  10 *    RDR4     v5
+   10  10 *    PshV4    v5
+   11  11 *    GETREF   1
+   12  11 *    GETREF   2
+   13  11 *    CALLSYS  491           (void b2dGetBodyCenter(int, float&out, float&out))
+   15   8 *    CpyVtoV4 v2, v3
+   17   8 *    CpyVtoV4 v1, v4
+- 153,3 -
+   19   8 *    SUSPEND
+   20   8 *    PshV4    v2
+   21   9 *    PshV4    v1
+   22  10 *    PshVPtr  v0
+   23  11 *    ADDSi    v20, 134217749
+   25  11 *    RDSPtr
+   26  11 *    CALLSYS  145           (void vec2::set(const float, const float))
+- 156,3 -
+   28   8 *    SUSPEND
+   29   8 *    VarDecl  2
+   29   8 *    PshVPtr  v0
+   30   9 *    ADDSi    v88, 134217749
+   32   9 *    RDSPtr
+   33   9 *    ADDSi    v0, 67108877
+   35   9 *    PopRPtr
+   36   8 *    RDR4     v5
+   37   8 *    PshVPtr  v0
+   38   9 *    ADDSi    v20, 134217749
+   40   9 *    RDSPtr
+   41   9 *    ADDSi    v0, 67108877
+   43   9 *    PopRPtr
+   44   8 *    RDR4     v4
+   45   8 *    SUBf     v6, v5, v4
+- 159,3 -
+   47   8 *    SUSPEND
+   48   8 *    CMPIf    v6, 0.000000
+   50   8 *    JNP      +15              (d:67)
+- 159,14 -
+   52   8 *    SUSPEND
+   53   8 *    PshV4    v2
+   54   9 *    PshV4    v1
+   55  10 *    PshC4    0x0          (i:0, f:0)
+   57  11 *    PshC4    0x46fa0000          (i:1190789120, f:32000)
+   59  12 *    LoadThisR v104, 134217749
+   61  12 *    RDR4     v5
+   62  12 *    PshV4    v5
+   63  13 *    CALLSYS  493           (void b2dBodyApplyImpulse(int, float, float, float, float))
+   65   8 *    JMP      +18              (d:85)
+- 160,8 -
+   67   8 * 1:
+   67   8 *    SUSPEND
+   68   8 *    CMPIf    v6, 0.000000
+   70   8 *    JNS      +13              (d:85)
+- 160,19 -
+   72   8 *    SUSPEND
+   73   8 *    PshV4    v2
+   74   9 *    PshV4    v1
+   75  10 *    PshC4    0x0          (i:0, f:0)
+   77  11 *    PshC4    0xc6fa0000          (i:-956694528, f:-32000)
+   79  12 *    LoadThisR v104, 134217749
+   81  12 *    RDR4     v3
+   82  12 *    PshV4    v3
+   83  13 *    CALLSYS  493           (void b2dBodyApplyImpulse(int, float, float, float, float))
+- 163,3 -
+   85   8 * 3:
+   85   8 * 2:
+   85   8 *    SUSPEND
+- 164,3 -
+   86   8 *    VarDecl  3
+   86   8 *    VarDecl  4
+   86   8 *    SUSPEND
+   87   8 *    VAR      v4
+   88   9 *    VAR      v3
+   89  10 *    LoadThisR v104, 134217749
+   91  10 *    RDR4     v5
+   92  10 *    PshV4    v5
+   93  11 *    GETREF   1
+   94  11 *    GETREF   2
+   95  11 *    CALLSYS  492           (void b2dGetBodyLinearVelocity(int, float&out, float&out))
+   97   8 *    CpyVtoV4 v8, v4
+   99   8 *    CpyVtoV4 v7, v3
+- 165,3 -
+  101   8 *    SUSPEND
+  102   8 *    LoadThisR v96, 134217749
+  104   8 *    RDR4     v5
+  105   8 *    CMPf     v7, v5
+  107   8 *    JNP      +8              (d:117)
+- 165,25 -
+  109   8 *    SUSPEND
+  110   8 *    LoadThisR v96, 134217749
+  112   8 *    RDR4     v5
+  113   8 *    CpyVtoV4 v7, v5
+  115   8 *    JMP      +16              (d:133)
+- 166,8 -
+  117   8 * 4:
+  117   8 *    SUSPEND
+  118   8 *    LoadThisR v96, 134217749
+  120   8 *    RDR4     v3
+  121   8 *    NEGf     v3
+  122   8 *    CMPf     v7, v3
+  124   8 *    JNS      +7              (d:133)
+- 166,31 -
+  126   8 *    SUSPEND
+  127   8 *    LoadThisR v96, 134217749
+  129   8 *    RDR4     v3
+  130   8 *    NEGf     v3
+  131   8 *    CpyVtoV4 v7, v3
+- 167,3 -
+  133   8 * 6:
+  133   8 * 5:
+  133   8 *    SUSPEND
+  134   8 *    PshV4    v8
+  135   9 *    PshV4    v7
+  136  10 *    LoadThisR v104, 134217749
+  138  10 *    RDR4     v5
+  139  10 *    PshV4    v5
+  140  11 *    CALLSYS  487           (void b2dSetBodyLinearVelocity(int, float, float))
+- 182,3 -
+  142   8 *    SUSPEND
+  143   8 * 0:
+  143   8 *    FREE     v0, 97819360
+  145   8 *    RET      1

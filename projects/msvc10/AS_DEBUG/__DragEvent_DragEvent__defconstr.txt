@@ -1,0 +1,14 @@
+DragEvent::DragEvent()
+
+Temps: 
+
+Variables: 
+ 000: DragEvent this
+
+
+- 355,10 -
+    0   0 *    SUSPEND
+    1   0 *    PshVPtr  v0
+    2   1 *    ADDSi    v16, 134217798
+    4   1 *    ALLOC    0x54bcee0, 130             (type:Vector2)
+    7   0 *    RET      1

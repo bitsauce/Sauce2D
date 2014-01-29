@@ -1,0 +1,26 @@
+void SceneObject::setSize(const Vector2)
+
+Temps: 
+
+Variables: 
+ -001: const Vector2 size
+ 000: SceneObject this
+
+
+    0   0 *    VarDecl  0
+    0   0 *    PshVPtr  v0
+    1   1 *    CALLSYS  2           (void _builtin_object_::_beh_4_())
+- 1,525 -
+    3   0 *    SUSPEND
+    4   0 *    VAR      v-1
+    5   1 *    PshVPtr  v0
+    6   2 *    ADDSi    v16, 134217770
+    8   2 *    RDSPtr
+    9   2 *    GETOBJREF 1
+   10   2 *    CALLSYS  307           (void CSceneObject::setSize(const Vector2&in))
+- 1,548 -
+   12   0 *    SUSPEND
+   13   0 * 0:
+   13   0 *    FREE     v-1, 104319800
+   15   0 *    FREE     v0, 104704768
+   17   0 *    RET      2

@@ -1,0 +1,26 @@
+void BossKey::pickup(Player@)
+
+Temps: 1
+
+Variables: 
+ -001: Player@ player
+ 000: BossKey this
+
+
+    0   1 *    VarDecl  0
+    0   1 *    PshVPtr  v0
+    1   2 *    CALLSYS  2           (void _builtin_object_::_beh_4_())
+- 29,3 -
+    3   1 *    SUSPEND
+    4   1 *    PshVPtr  v-1
+    5   2 *    ADDSi    v116, 134217774
+    7   2 *    RDSPtr
+    8   2 *    ADDSi    v28, 134217818
+   10   2 *    PopRPtr
+   11   1 *    INCi
+- 30,3 -
+   12   1 *    SUSPEND
+   13   1 * 0:
+   13   1 *    FREE     v-1, 152244456
+   15   1 *    FREE     v0, 152256224
+   17   1 *    RET      2

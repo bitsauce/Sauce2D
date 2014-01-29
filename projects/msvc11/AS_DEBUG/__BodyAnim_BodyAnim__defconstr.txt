@@ -1,0 +1,20 @@
+BodyAnim::BodyAnim()
+
+Temps: 1
+
+Variables: 
+ 000: BodyAnim this
+ 001: array {noname}
+
+
+- 43,18 -
+    0   1 *    SUSPEND
+    1   1 *    CALL     1048           (KeyFrame[]@ factstub())
+    3   1 *    STOREOBJ v1
+    4   1 *    PshVPtr  v1
+    5   2 *    PshVPtr  v0
+    6   3 *    ADDSi    v20, 134217778
+    8   3 *    REFCPY   0x5db9688
+   10   2 *    PopPtr
+   11   1 *    FREE     v1, 98277000
+   13   1 *    RET      1

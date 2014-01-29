@@ -1,0 +1,439 @@
+Player::Player()
+
+Temps: 1, 2, 10, 18, 19, 20, 21, 22, 23, 24, 26
+
+Variables: 
+ 000: Player this
+ 001: Player {noname}
+ 021: CSprite {noname}
+ 022: Hud {noname}
+ 024: Inventory {noname}
+ 010: string {noname}
+ 018: string {noname}
+ 023: Color {noname}
+ 026: Vector2 {noname}
+
+
+- 81,8 -
+    0  26 *    SUSPEND
+    1  26 *    PshVPtr  v0
+    2  27 *    ADDSi    v108, 134217774
+    4  27 *    ALLOC    0x6ad42d8, 176             (type:Color)
+- 85,13 -
+    7  26 *    SUSPEND
+    8  26 *    PshVPtr  v0
+    9  27 *    CALL     818           (PhysicObject::PhysicObject())
+- 88,7 -
+   11  26 *    SUSPEND
+   12  26 *    SetV1    v20, 0x0
+   14  26 *    LoadThisR v120, 134217774
+   16  26 *    WRTV1    v20
+- 89,10 -
+   17  26 *    SUSPEND
+   18  26 *    PshVPtr  v0
+   19  27 *    ADDSi    v124, 134217774
+   21  27 *    ALLOC    0x6acceb8, 130             (type:Vector2)
+   24  26 *    PshC4    0x0          (i:0, f:0)
+   26  27 *    PshC4    0x0          (i:0, f:0)
+   28  28 *    PSF      v26
+   29  29 *    CALLSYS  132           (void Vector2::_beh_0_(float, float))
+   31  26 *    ObjInfo  v26, 1
+   31  26 *    PSF      v26
+   32  27 *    PshVPtr  v0
+   33  28 *    ADDSi    v124, 134217774
+   35  28 *    RDSPtr
+   36  28 *    COPY     v2, 67108877
+   38  27 *    ObjInfo  v26, 0
+   38  27 *    PopPtr
+- 95,3 -
+   39  26 *    SUSPEND
+   40  26 *    PshVPtr  v0
+   41  27 *    RefCpyV  v1, 152244456
+   43  27 *    PopPtr
+   44  26 *    VAR      v1
+   45  27 *    PshGPtr  152628712
+   47  28 *    CHKREF
+   48  28 *    GETREF   1
+   49  28 *    CALLSYS  1056           (void array::insertLast(Player@const&in))
+   51  26 *    FREE     v1, 152244456
+- 98,3 -
+   53  26 *    SUSPEND
+   54  26 *    SetV4    v2, 0xc          (i:12, f:1.68156e-044)
+   56  26 *    LoadThisR v28, 134217774
+   58  26 *    WRTV4    v2
+- 99,3 -
+   59  26 *    SUSPEND
+   60  26 *    SetV4    v2, 0xc          (i:12, f:1.68156e-044)
+   62  26 *    LoadThisR v32, 134217774
+   64  26 *    WRTV4    v2
+- 100,3 -
+   65  26 *    SUSPEND
+   66  26 *    SetV1    v2, 0x0
+   68  26 *    LoadThisR v40, 134217774
+   70  26 *    WRTV1    v2
+- 101,3 -
+   71  26 *    SUSPEND
+   72  26 *    SetV4    v2, 0x0          (i:0, f:0)
+   74  26 *    LoadThisR v36, 134217774
+   76  26 *    WRTV4    v2
+- 104,3 -
+   77  26 *    SUSPEND
+   78  26 *    SetV4    v2, 0x41f00000          (i:1106247680, f:30)
+   80  26 *    LoadThisR v44, 134217774
+   82  26 *    WRTV4    v2
+- 105,3 -
+   83  26 *    SUSPEND
+   84  26 *    SetV4    v2, 0x41700000          (i:1097859072, f:15)
+   86  26 *    LoadThisR v48, 134217774
+   88  26 *    WRTV4    v2
+- 106,3 -
+   89  26 *    SUSPEND
+   90  26 *    SetV4    v2, 0x3f400000          (i:1061158912, f:0.75)
+   92  26 *    LoadThisR v52, 134217774
+   94  26 *    WRTV4    v2
+- 107,3 -
+   95  26 *    SUSPEND
+   96  26 *    SetV4    v2, 0xb          (i:11, f:1.54143e-044)
+   98  26 *    LoadThisR v24, 134217774
+  100  26 *    WRTV4    v2
+- 108,3 -
+  101  26 *    SUSPEND
+  102  26 *    SetV1    v2, 0x0
+  104  26 *    LoadThisR v56, 134217774
+  106  26 *    WRTV1    v2
+- 109,3 -
+  107  26 *    SUSPEND
+  108  26 *    SetV1    v2, 0x0
+  110  26 *    LoadThisR v57, 134217774
+  112  26 *    WRTV1    v2
+- 110,3 -
+  113  26 *    SUSPEND
+  114  26 *    SetV1    v2, 0x0
+  116  26 *    LoadThisR v58, 134217774
+  118  26 *    WRTV1    v2
+- 111,3 -
+  119  26 *    SUSPEND
+  120  26 *    SetV1    v2, 0x0
+  122  26 *    LoadThisR v59, 134217774
+  124  26 *    WRTV1    v2
+- 112,3 -
+  125  26 *    SUSPEND
+  126  26 *    SetV1    v2, 0x0
+  128  26 *    LoadThisR v60, 134217774
+  130  26 *    WRTV1    v2
+- 116,3 -
+  131  26 *    SUSPEND
+  132  26 *    SetV4    v2, 0x3cf5c28f          (i:1022739087, f:0.03)
+  134  26 *    LoadThisR v64, 134217774
+  136  26 *    WRTV4    v2
+- 117,3 -
+  137  26 *    SUSPEND
+  138  26 *    SetV4    v2, 0x0          (i:0, f:0)
+  140  26 *    LoadThisR v68, 134217774
+  142  26 *    WRTV4    v2
+- 120,3 -
+  143  26 *    SUSPEND
+  144  26 *    PshC4    0x3dcccccd          (i:1036831949, f:0.1)
+  146  27 *    PshC4    0x4          (i:4, f:5.60519e-045)
+  148  28 *    PshC4    0x8          (i:8, f:1.12104e-044)
+  150  29 *    STR      165         (l:23 s:"sprites/pl")
+  151  31 *    CALLSYS  32           (const string& _string_factory_(const int, const uint8&))
+  153  29 *    PshRPtr
+  154  30 *    PSF      v10
+  155  31 *    CALLSYS  34           (void string::_beh_0_(const string&in))
+  157  29 *    ObjInfo  v10, 1
+  157  29 *    VAR      v10
+  158  30 *    PSF      v18
+  159  31 *    PshGPtr  112334928
+  161  32 *    CHKREF
+  162  32 *    GETREF   2
+  163  32 *    CALLSYS  432           (string CX2DApp::workPath(const string&in))
+  165  29 *    ObjInfo  v18, 1
+  165  29 *    PSF      v10
+  166  30 *    CALLSYS  35           (void string::_beh_1_())
+  168  29 *    ObjInfo  v10, 0
+  168  29 *    PSF      v18
+  169  30 *    CALLSYS  477           (CSprite@ _beh_2_(const string&in, const uint arg1 = 1, const uint arg2 = 1, const float arg3 = 0.0f))
+  171  26 *    STOREOBJ v21
+  172  26 *    PSF      v18
+  173  27 *    CALLSYS  35           (void string::_beh_1_())
+  175  26 *    ObjInfo  v18, 0
+  175  26 *    VAR      v21
+  176  27 *    PshVPtr  v0
+  177  28 *    ADDSi    v76, 134217774
+  179  28 *    GETOBJREF 1
+  180  28 *    REFCPY   0x6ae3a90
+  182  27 *    FREE     v21, 112081552
+  184  27 *    PopPtr
+- 121,3 -
+  185  26 *    SUSPEND
+  186  26 *    PshC4    0x3d3851ec          (i:1027101164, f:0.045)
+  188  27 *    PshC4    0x1          (i:1, f:1.4013e-045)
+  190  28 *    PshC4    0x8          (i:8, f:1.12104e-044)
+  192  29 *    STR      166         (l:23 s:"sprites/pl")
+  193  31 *    CALLSYS  32           (const string& _string_factory_(const int, const uint8&))
+  195  29 *    PshRPtr
+  196  30 *    PSF      v10
+  197  31 *    CALLSYS  34           (void string::_beh_0_(const string&in))
+  199  29 *    ObjInfo  v10, 1
+  199  29 *    VAR      v10
+  200  30 *    PSF      v18
+  201  31 *    PshGPtr  112334928
+  203  32 *    CHKREF
+  204  32 *    GETREF   2
+  205  32 *    CALLSYS  432           (string CX2DApp::workPath(const string&in))
+  207  29 *    ObjInfo  v18, 1
+  207  29 *    PSF      v10
+  208  30 *    CALLSYS  35           (void string::_beh_1_())
+  210  29 *    ObjInfo  v10, 0
+  210  29 *    PSF      v18
+  211  30 *    CALLSYS  477           (CSprite@ _beh_2_(const string&in, const uint arg1 = 1, const uint arg2 = 1, const float arg3 = 0.0f))
+  213  26 *    STOREOBJ v21
+  214  26 *    PSF      v18
+  215  27 *    CALLSYS  35           (void string::_beh_1_())
+  217  26 *    ObjInfo  v18, 0
+  217  26 *    VAR      v21
+  218  27 *    PshVPtr  v0
+  219  28 *    ADDSi    v84, 134217774
+  221  28 *    GETOBJREF 1
+  222  28 *    REFCPY   0x6ae3a90
+  224  27 *    FREE     v21, 112081552
+  226  27 *    PopPtr
+- 122,3 -
+  227  26 *    SUSPEND
+  228  26 *    PshC4    0x3d3851ec          (i:1027101164, f:0.045)
+  230  27 *    PshC4    0x1          (i:1, f:1.4013e-045)
+  232  28 *    PshC4    0x8          (i:8, f:1.12104e-044)
+  234  29 *    STR      167         (l:26 s:"sprites/pl")
+  235  31 *    CALLSYS  32           (const string& _string_factory_(const int, const uint8&))
+  237  29 *    PshRPtr
+  238  30 *    PSF      v10
+  239  31 *    CALLSYS  34           (void string::_beh_0_(const string&in))
+  241  29 *    ObjInfo  v10, 1
+  241  29 *    VAR      v10
+  242  30 *    PSF      v18
+  243  31 *    PshGPtr  112334928
+  245  32 *    CHKREF
+  246  32 *    GETREF   2
+  247  32 *    CALLSYS  432           (string CX2DApp::workPath(const string&in))
+  249  29 *    ObjInfo  v18, 1
+  249  29 *    PSF      v10
+  250  30 *    CALLSYS  35           (void string::_beh_1_())
+  252  29 *    ObjInfo  v10, 0
+  252  29 *    PSF      v18
+  253  30 *    CALLSYS  477           (CSprite@ _beh_2_(const string&in, const uint arg1 = 1, const uint arg2 = 1, const float arg3 = 0.0f))
+  255  26 *    STOREOBJ v21
+  256  26 *    PSF      v18
+  257  27 *    CALLSYS  35           (void string::_beh_1_())
+  259  26 *    ObjInfo  v18, 0
+  259  26 *    VAR      v21
+  260  27 *    PshVPtr  v0
+  261  28 *    ADDSi    v96, 134217774
+  263  28 *    GETOBJREF 1
+  264  28 *    REFCPY   0x6ae3a90
+  266  27 *    FREE     v21, 112081552
+  268  27 *    PopPtr
+- 123,3 -
+  269  26 *    SUSPEND
+  270  26 *    PshC4    0x3d3851ec          (i:1027101164, f:0.045)
+  272  27 *    PshC4    0x1          (i:1, f:1.4013e-045)
+  274  28 *    PshC4    0x8          (i:8, f:1.12104e-044)
+  276  29 *    STR      168         (l:28 s:"sprites/pl")
+  277  31 *    CALLSYS  32           (const string& _string_factory_(const int, const uint8&))
+  279  29 *    PshRPtr
+  280  30 *    PSF      v10
+  281  31 *    CALLSYS  34           (void string::_beh_0_(const string&in))
+  283  29 *    ObjInfo  v10, 1
+  283  29 *    VAR      v10
+  284  30 *    PSF      v18
+  285  31 *    PshGPtr  112334928
+  287  32 *    CHKREF
+  288  32 *    GETREF   2
+  289  32 *    CALLSYS  432           (string CX2DApp::workPath(const string&in))
+  291  29 *    ObjInfo  v18, 1
+  291  29 *    PSF      v10
+  292  30 *    CALLSYS  35           (void string::_beh_1_())
+  294  29 *    ObjInfo  v10, 0
+  294  29 *    PSF      v18
+  295  30 *    CALLSYS  477           (CSprite@ _beh_2_(const string&in, const uint arg1 = 1, const uint arg2 = 1, const float arg3 = 0.0f))
+  297  26 *    STOREOBJ v21
+  298  26 *    PSF      v18
+  299  27 *    CALLSYS  35           (void string::_beh_1_())
+  301  26 *    ObjInfo  v18, 0
+  301  26 *    VAR      v21
+  302  27 *    PshVPtr  v0
+  303  28 *    ADDSi    v88, 134217774
+  305  28 *    GETOBJREF 1
+  306  28 *    REFCPY   0x6ae3a90
+  308  27 *    FREE     v21, 112081552
+  310  27 *    PopPtr
+- 124,3 -
+  311  26 *    SUSPEND
+  312  26 *    PshC4    0x3d3851ec          (i:1027101164, f:0.045)
+  314  27 *    PshC4    0x1          (i:1, f:1.4013e-045)
+  316  28 *    PshC4    0x8          (i:8, f:1.12104e-044)
+  318  29 *    STR      169         (l:24 s:"sprites/pl")
+  319  31 *    CALLSYS  32           (const string& _string_factory_(const int, const uint8&))
+  321  29 *    PshRPtr
+  322  30 *    PSF      v10
+  323  31 *    CALLSYS  34           (void string::_beh_0_(const string&in))
+  325  29 *    ObjInfo  v10, 1
+  325  29 *    VAR      v10
+  326  30 *    PSF      v18
+  327  31 *    PshGPtr  112334928
+  329  32 *    CHKREF
+  330  32 *    GETREF   2
+  331  32 *    CALLSYS  432           (string CX2DApp::workPath(const string&in))
+  333  29 *    ObjInfo  v18, 1
+  333  29 *    PSF      v10
+  334  30 *    CALLSYS  35           (void string::_beh_1_())
+  336  29 *    ObjInfo  v10, 0
+  336  29 *    PSF      v18
+  337  30 *    CALLSYS  477           (CSprite@ _beh_2_(const string&in, const uint arg1 = 1, const uint arg2 = 1, const float arg3 = 0.0f))
+  339  26 *    STOREOBJ v21
+  340  26 *    PSF      v18
+  341  27 *    CALLSYS  35           (void string::_beh_1_())
+  343  26 *    ObjInfo  v18, 0
+  343  26 *    VAR      v21
+  344  27 *    PshVPtr  v0
+  345  28 *    ADDSi    v80, 134217774
+  347  28 *    GETOBJREF 1
+  348  28 *    REFCPY   0x6ae3a90
+  350  27 *    FREE     v21, 112081552
+  352  27 *    PopPtr
+- 125,3 -
+  353  26 *    SUSPEND
+  354  26 *    PshC4    0x3d3851ec          (i:1027101164, f:0.045)
+  356  27 *    PshC4    0x1          (i:1, f:1.4013e-045)
+  358  28 *    PshC4    0x8          (i:8, f:1.12104e-044)
+  360  29 *    STR      170         (l:27 s:"sprites/pl")
+  361  31 *    CALLSYS  32           (const string& _string_factory_(const int, const uint8&))
+  363  29 *    PshRPtr
+  364  30 *    PSF      v10
+  365  31 *    CALLSYS  34           (void string::_beh_0_(const string&in))
+  367  29 *    ObjInfo  v10, 1
+  367  29 *    VAR      v10
+  368  30 *    PSF      v18
+  369  31 *    PshGPtr  112334928
+  371  32 *    CHKREF
+  372  32 *    GETREF   2
+  373  32 *    CALLSYS  432           (string CX2DApp::workPath(const string&in))
+  375  29 *    ObjInfo  v18, 1
+  375  29 *    PSF      v10
+  376  30 *    CALLSYS  35           (void string::_beh_1_())
+  378  29 *    ObjInfo  v10, 0
+  378  29 *    PSF      v18
+  379  30 *    CALLSYS  477           (CSprite@ _beh_2_(const string&in, const uint arg1 = 1, const uint arg2 = 1, const float arg3 = 0.0f))
+  381  26 *    STOREOBJ v21
+  382  26 *    PSF      v18
+  383  27 *    CALLSYS  35           (void string::_beh_1_())
+  385  26 *    ObjInfo  v18, 0
+  385  26 *    VAR      v21
+  386  27 *    PshVPtr  v0
+  387  28 *    ADDSi    v100, 134217774
+  389  28 *    GETOBJREF 1
+  390  28 *    REFCPY   0x6ae3a90
+  392  27 *    FREE     v21, 112081552
+  394  27 *    PopPtr
+- 126,3 -
+  395  26 *    SUSPEND
+  396  26 *    PshC4    0x3d3851ec          (i:1027101164, f:0.045)
+  398  27 *    PshC4    0x1          (i:1, f:1.4013e-045)
+  400  28 *    PshC4    0x8          (i:8, f:1.12104e-044)
+  402  29 *    STR      171         (l:29 s:"sprites/pl")
+  403  31 *    CALLSYS  32           (const string& _string_factory_(const int, const uint8&))
+  405  29 *    PshRPtr
+  406  30 *    PSF      v10
+  407  31 *    CALLSYS  34           (void string::_beh_0_(const string&in))
+  409  29 *    ObjInfo  v10, 1
+  409  29 *    VAR      v10
+  410  30 *    PSF      v18
+  411  31 *    PshGPtr  112334928
+  413  32 *    CHKREF
+  414  32 *    GETREF   2
+  415  32 *    CALLSYS  432           (string CX2DApp::workPath(const string&in))
+  417  29 *    ObjInfo  v18, 1
+  417  29 *    PSF      v10
+  418  30 *    CALLSYS  35           (void string::_beh_1_())
+  420  29 *    ObjInfo  v10, 0
+  420  29 *    PSF      v18
+  421  30 *    CALLSYS  477           (CSprite@ _beh_2_(const string&in, const uint arg1 = 1, const uint arg2 = 1, const float arg3 = 0.0f))
+  423  26 *    STOREOBJ v21
+  424  26 *    PSF      v18
+  425  27 *    CALLSYS  35           (void string::_beh_1_())
+  427  26 *    ObjInfo  v18, 0
+  427  26 *    VAR      v21
+  428  27 *    PshVPtr  v0
+  429  28 *    ADDSi    v92, 134217774
+  431  28 *    GETOBJREF 1
+  432  28 *    REFCPY   0x6ae3a90
+  434  27 *    FREE     v21, 112081552
+  436  27 *    PopPtr
+- 129,3 -
+  437  26 *    SUSPEND
+  438  26 *    PshVPtr  v0
+  439  27 *    RefCpyV  v1, 152244456
+  441  27 *    PopPtr
+  442  26 *    VAR      v1
+  443  27 *    GETOBJ   0
+  444  27 *    CALL     830           (Hud@ Hud(Player@))
+  446  26 *    STOREOBJ v22
+  447  26 *    VAR      v22
+  448  27 *    PshVPtr  v0
+  449  28 *    ADDSi    v104, 134217774
+  451  28 *    GETOBJREF 1
+  452  28 *    REFCPY   0x9131a08
+  454  27 *    FREE     v22, 152246792
+  456  27 *    PopPtr
+- 130,3 -
+  457  26 *    SUSPEND
+  458  26 *    PSF      v23
+  459  27 *    CALL     1084           (Color randomColor())
+  461  26 *    ObjInfo  v23, 1
+  461  26 *    PSF      v23
+  462  27 *    PshVPtr  v0
+  463  28 *    ADDSi    v108, 134217774
+  465  28 *    RDSPtr
+  466  28 *    COPY     v1, 67108879
+  468  27 *    ObjInfo  v23, 0
+  468  27 *    PopPtr
+- 131,3 -
+  469  26 *    SUSPEND
+  470  26 *    SetV1    v2, 0xff
+  472  26 *    PshVPtr  v0
+  473  27 *    ADDSi    v108, 134217774
+  475  27 *    RDSPtr
+  476  27 *    ADDSi    v3, 67108879
+  478  27 *    PopRPtr
+  479  26 *    WRTV1    v2
+- 134,3 -
+  480  26 *    SUSPEND
+  481  26 *    PshVPtr  v0
+  482  27 *    RefCpyV  v1, 152244456
+  484  27 *    PopPtr
+  485  26 *    VAR      v1
+  486  27 *    GETOBJ   0
+  487  27 *    CALL     823           (Inventory@ Inventory(Player@))
+  489  26 *    STOREOBJ v24
+  490  26 *    VAR      v24
+  491  27 *    PshVPtr  v0
+  492  28 *    ADDSi    v116, 134217774
+  494  28 *    GETOBJREF 1
+  495  28 *    REFCPY   0x9131810
+  497  27 *    FREE     v24, 152246288
+  499  27 *    PopPtr
+- 137,3 -
+  500  26 *    SUSPEND
+  501  26 *    PshC4    0x20          (i:32, f:4.48416e-044)
+  503  27 *    PshC4    0x20          (i:32, f:4.48416e-044)
+  505  28 *    PshVPtr  v0
+  506  29 *    CALLINTF 1095           (void SceneObject::setSize(const uint, const uint))
+- 138,3 -
+  508  26 *    SUSPEND
+  509  26 *    PshC4    0x3f000000          (i:1056964608, f:0.5)
+  511  27 *    PshVPtr  v0
+  512  28 *    CALLINTF 1106           (void SceneObject::setDepth(const float))
+- 139,3 -
+  514  26 *    SUSPEND
+  515  26 * 0:
+  515  26 *    RET      1

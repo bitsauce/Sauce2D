@@ -1,0 +1,85 @@
+EditorRoom::EditorRoom(int arg0 = 0, int arg1 = 0, int arg2 = 1, int arg3 = 1)
+
+Temps: 1, 2, 3, 4, 5
+
+Variables: 
+ -001: int posx
+ -002: int posy
+ -003: int width
+ -004: int height
+ 000: EditorRoom this
+ 002: array {noname}
+ 003: grid {noname}
+ 004: grid {noname}
+ 005: array {noname}
+
+
+- 408,16 -
+    0   5 *    VarDecl  0
+    0   5 *    VarDecl  1
+    0   5 *    VarDecl  2
+    0   5 *    VarDecl  3
+    0   5 *    SUSPEND
+    1   5 *    CALL     202           (string[]@ factstub())
+    3   5 *    STOREOBJ v2
+    4   5 *    PshVPtr  v2
+    5   6 *    PshVPtr  v0
+    6   7 *    ADDSi    v32, 134217785
+    8   7 *    REFCPY   0x6ad9998
+   10   6 *    PopPtr
+   11   5 *    FREE     v2, 112040344
+- 412,19 -
+   13   5 *    SUSPEND
+   14   5 *    CALL     1267           (grid<EditorTile>@ factstub())
+   16   5 *    STOREOBJ v3
+   17   5 *    PshVPtr  v3
+   18   6 *    PshVPtr  v0
+   19   7 *    ADDSi    v40, 134217785
+   21   7 *    REFCPY   0x91ba880
+   23   6 *    PopPtr
+   24   5 *    FREE     v3, 152807552
+- 413,22 -
+   26   5 *    SUSPEND
+   27   5 *    CALL     1276           (grid<EditorObject@>@ factstub())
+   29   5 *    STOREOBJ v4
+   30   5 *    PshVPtr  v4
+   31   6 *    PshVPtr  v0
+   32   7 *    ADDSi    v44, 134217785
+   34   7 *    REFCPY   0x91bc148
+   36   6 *    PopPtr
+   37   5 *    FREE     v4, 152813896
+- 414,23 -
+   39   5 *    SUSPEND
+   40   5 *    CALL     1285           (EditorObject@[]@ factstub())
+   42   5 *    STOREOBJ v5
+   43   5 *    PshVPtr  v5
+   44   6 *    PshVPtr  v0
+   45   7 *    ADDSi    v48, 134217785
+   47   7 *    REFCPY   0x91bda58
+   49   6 *    PopPtr
+   50   5 *    FREE     v5, 152820312
+- 422,3 -
+   52   5 *    SUSPEND
+   53   5 *    LoadThisR v16, 134217785
+   55   5 *    WRTV4    v-1
+- 422,21 -
+   56   5 *    SUSPEND
+   57   5 *    LoadThisR v20, 134217785
+   59   5 *    WRTV4    v-2
+- 423,3 -
+   60   5 *    SUSPEND
+   61   5 *    LoadThisR v24, 134217785
+   63   5 *    WRTV4    v-3
+- 423,23 -
+   64   5 *    SUSPEND
+   65   5 *    LoadThisR v28, 134217785
+   67   5 *    WRTV4    v-4
+- 424,3 -
+   68   5 *    SUSPEND
+   69   5 *    SetV1    v1, 0x1
+   71   5 *    LoadThisR v36, 134217785
+   73   5 *    WRTV1    v1
+- 425,3 -
+   74   5 *    SUSPEND
+   75   5 * 0:
+   75   5 *    RET      5

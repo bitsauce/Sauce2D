@@ -1,0 +1,45 @@
+void Item::pickup(Player@)
+
+Temps: 1, 2
+
+Variables: 
+ -001: Player@ player
+ 000: Item this
+ 001: Item {noname}
+
+
+    0   2 *    VarDecl  0
+    0   2 *    PshVPtr  v0
+    1   3 *    CALLSYS  2           (void _builtin_object_::_beh_4_())
+- 54,3 -
+    3   2 *    SUSPEND
+    4   2 *    PshVPtr  v0
+    5   3 *    RefCpyV  v1, 152255720
+    7   3 *    PopPtr
+    8   2 *    VAR      v1
+    9   3 *    PshVPtr  v0
+   10   4 *    ADDSi    v24, 134217791
+   12   4 *    RDSPtr
+   13   4 *    ADDSi    v24, 134217788
+   15   4 *    RDSPtr
+   16   4 *    GETREF   1
+   17   4 *    CALLSYS  1515           (int array::find(Item@const&in) const)
+   19   2 *    CpyRtoV4 v2
+   20   2 *    FREE     v1, 152255720
+   22   2 *    PshV4    v2
+   23   3 *    PshVPtr  v0
+   24   4 *    ADDSi    v24, 134217791
+   26   4 *    RDSPtr
+   27   4 *    ADDSi    v24, 134217788
+   29   4 *    RDSPtr
+   30   4 *    CALLSYS  83           (void array::removeAt(uint))
+- 56,3 -
+   32   2 *    SUSPEND
+   33   2 *    PshVPtr  v0
+   34   3 *    CALLINTF 1125           (void SceneObject::remove())
+- 57,3 -
+   36   2 *    SUSPEND
+   37   2 * 0:
+   37   2 *    FREE     v-1, 152244456
+   39   2 *    FREE     v0, 152255720
+   41   2 *    RET      2

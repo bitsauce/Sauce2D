@@ -1,0 +1,54 @@
+vec4 rgbvec(const uint8, const uint8, const uint8, const uint8 = 255)
+
+Temps: 4, 5, 6, 7, 8, 9, 13
+
+Variables: 
+ -001: const uint8 r
+ -002: const uint8 g
+ -003: const uint8 b
+ -004: const uint8 a
+ 000: const uint8 {noname param}
+ 004: vec4 {noname}
+ 013: vec4 {noname}
+
+
+- 18,2 -
+    0  13 *    VarDecl  0
+    0  13 *    VarDecl  1
+    0  13 *    VarDecl  2
+    0  13 *    VarDecl  3
+    0  13 *    SUSPEND
+    1  13 *    PshC4    0x437f0000          (i:1132396544, f:255)
+    3  14 *    PSF      v13
+    4  15 *    CpyVtoV4 v5, v-4
+    6  15 *    ubTOi    v5
+    7  15 *    uTOf     v5
+    8  15 *    PshV4    v5
+    9  16 *    CpyVtoV4 v6, v-3
+   11  16 *    ubTOi    v6
+   12  16 *    uTOf     v6
+   13  16 *    PshV4    v6
+   14  17 *    CpyVtoV4 v7, v-2
+   16  17 *    ubTOi    v7
+   17  17 *    uTOf     v7
+   18  17 *    PshV4    v7
+   19  18 *    CpyVtoV4 v8, v-1
+   21  18 *    ubTOi    v8
+   22  18 *    uTOf     v8
+   23  18 *    PshV4    v8
+   24  19 *    PSF      v4
+   25  20 *    CALLSYS  219           (vec4::vec4(float, float, float, float))
+   27  15 *    ObjInfo  v4, 1
+   27  15 *    PSF      v4
+   28  16 *    CALLSYS  228           (vec4 vec4::opDiv(const float) const)
+   30  13 *    ObjInfo  v13, 1
+   30  13 *    PSF      v13
+   31  14 *    ObjInfo  v4, 0
+   31  14 *    PshVPtr  v0
+   32  15 *    CALLSYS  217           (vec4::vec4(const vec4&in))
+   34  13 *    ObjInfo  v13, 0
+   34  13 *    ObjInfo  v0, 1
+   34  13 * {
+   34  13 * }
+   34  13 * 0:
+   34  13 *    RET      5

@@ -1,0 +1,40 @@
+void Blob::remove()
+
+Temps: 1, 2
+
+Variables: 
+ 000: Blob this
+ 001: LightSource {noname}
+
+
+    0   2 *    PshVPtr  v0
+    1   3 *    CALLSYS  2           (void _builtin_object_::_beh_4_())
+- 87,3 -
+    3   2 *    SUSPEND
+    4   2 *    PshVPtr  v0
+    5   3 *    ADDSi    v76, 134217816
+    7   3 *    RDSPtr
+    8   3 *    RefCpyV  v1, 152276536
+   10   3 *    PopPtr
+   11   2 *    VAR      v1
+   12   3 *    PshGPtr  152629424
+   14   4 *    ADDSi    v48, 134217788
+   16   4 *    RDSPtr
+   17   4 *    GETREF   1
+   18   4 *    CALLSYS  1555           (int array::find(LightSource@const&in) const)
+   20   2 *    CpyRtoV4 v2
+   21   2 *    FREE     v1, 152276536
+   23   2 *    PshV4    v2
+   24   3 *    PshGPtr  152629424
+   26   4 *    ADDSi    v48, 134217788
+   28   4 *    RDSPtr
+   29   4 *    CALLSYS  83           (void array::removeAt(uint))
+- 88,3 -
+   31   2 *    SUSPEND
+   32   2 *    PshVPtr  v0
+   33   3 *    CALL     620           (void SceneObject::remove())
+- 89,3 -
+   35   2 *    SUSPEND
+   36   2 * 0:
+   36   2 *    FREE     v0, 152260504
+   38   2 *    RET      1

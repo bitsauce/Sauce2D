@@ -1,0 +1,88 @@
+CFunctionPtr@ UiObject::findCallback(string)
+
+Temps: 2, 3, 4
+
+Variables: 
+ -001: string name
+ 001: uint i
+ 000: UiObject this
+ 003: array {noname}
+ 004: CFunctionPtr {noname}
+
+
+    0   4 *    VarDecl  0
+    0   4 *    PshVPtr  v0
+    1   5 *    CALLSYS  2           (void _builtin_object_::_beh_4_())
+- 304,7 -
+    3   4 *    SUSPEND
+    4   4 *    VarDecl  1
+    4   4 *    SetV4    v1, 0x0          (i:0, f:0)
+    6   4 *    JMP      +51              (d:59)
+    8   4 * 4:
+    8   4 *    SUSPEND
+- 306,4 -
+    9   4 * {
+    9   4 *    SUSPEND
+   10   4 *    VAR      v-1
+   11   5 *    PshV4    v1
+   12   6 *    PshVPtr  v0
+   13   7 *    ADDSi    v48, 134217780
+   15   7 *    RDSPtr
+   16   7 *    RefCpyV  v3, 150922024
+   18   7 *    CALLSYS  1317           (UiCallback@& array::opIndex(uint))
+   20   5 *    PshRPtr
+   21   6 *    RDSPtr
+   22   6 *    ADDSi    v16, 134217782
+   24   6 *    RDSPtr
+   25   6 *    GETOBJREF 1
+   26   6 *    CALLSYS  38           (bool string::opEquals(const string&in) const)
+   28   4 *    CpyRtoV4 v2
+   29   4 *    FREE     v3, 150922024
+   31   4 *    CpyVtoR4 v2
+   32   4 *    JLowZ    +23              (d:57)
+- 307,5 -
+   34   4 *    SUSPEND
+   35   4 *    PshV4    v1
+   36   5 *    PshVPtr  v0
+   37   6 *    ADDSi    v48, 134217780
+   39   6 *    RDSPtr
+   40   6 *    RefCpyV  v3, 150922024
+   42   6 *    CALLSYS  1317           (UiCallback@& array::opIndex(uint))
+   44   4 *    PshRPtr
+   45   5 *    RDSPtr
+   46   5 *    ADDSi    v20, 134217782
+   48   5 *    RDSPtr
+   49   5 *    RefCpyV  v4, 88924136
+   51   5 *    PopPtr
+   52   4 *    FREE     v3, 150922024
+   54   4 * {
+   54   4 * }
+   54   4 *    LOADOBJ  v4
+   55   4 *    JMP      +18              (d:75)
+- 304,41 -
+   57   4 * 5:
+   57   4 * }
+   57   4 * 3:
+   57   4 *    SUSPEND
+   58   4 *    IncVi    v1
+- 304,19 -
+   59   4 * 1:
+   59   4 *    SUSPEND
+   60   4 *    PshVPtr  v0
+   61   5 *    ADDSi    v48, 134217780
+   63   5 *    RDSPtr
+   64   5 *    CALLSYS  86           (uint array::size() const)
+   66   4 *    CpyRtoV4 v2
+   67   4 *    CMPu     v1, v2
+   69   4 *    JS       -63              (d:8)
+- 309,3 -
+   71   4 * 2:
+   71   4 *    SUSPEND
+   72   4 *    FREE     v4, 88924136
+   74   4 * {
+   74   4 * }
+   74   4 *    LOADOBJ  v4
+   75   4 * 0:
+   75   4 *    FREE     v-1, 50711496
+   77   4 *    FREE     v0, 150271928
+   79   4 *    RET      2

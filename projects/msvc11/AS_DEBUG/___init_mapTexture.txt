@@ -1,0 +1,21 @@
+<unrecognized token> _unnamed_function_()
+
+Temps: 1, 2
+
+Variables: 
+ 001: string {noname}
+
+
+- 4,31 -
+    0   2 *    SUSPEND
+    1   2 *    PSF      v1
+    2   3 *    STR      0         (l:48 s:"C:/Users/M")
+    3   5 *    CALLSYS  32           (const string& _string_factory_(const int, const uint8&))
+    5   3 *    PshRPtr
+    6   4 *    ALLOC    0x793d88, 34             (type:string)
+    9   2 *    VAR      v1
+   10   3 *    GETOBJ   0
+   11   3 *    CALL     475           (int gfxLoadImage(const string))
+   13   2 *    CpyRtoV4 v2
+   14   2 *    CpyVtoG4 v2, 112449368
+   16   2 *    RET      0

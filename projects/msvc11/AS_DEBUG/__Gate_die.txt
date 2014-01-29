@@ -1,0 +1,19 @@
+void Gate::die()
+
+Temps: 
+
+Variables: 
+ 000: Gate this
+
+
+    0   0 *    PshVPtr  v0
+    1   1 *    CALLSYS  2           (void _builtin_object_::_beh_5_())
+- 67,3 -
+    3   0 *    SUSPEND
+    4   0 *    PshVPtr  v0
+    5   1 *    CALLINTF 1051           (void Entity::remove())
+- 68,3 -
+    7   0 *    SUSPEND
+    8   0 * 0:
+    8   0 *    FREE     v0, 71594464
+   10   0 *    RET      1

@@ -1,0 +1,75 @@
+<unrecognized token> _unnamed_function_()
+
+Temps: 8, 16, 24, 25, 26, 27, 28
+
+Variables: 
+ 025: string {noname}
+ 026: string {noname}
+ 027: string {noname}
+ 028: TileSetData {noname}
+ 008: string {noname}
+ 016: string {noname}
+ 024: string {noname}
+
+
+- 9,13 -
+    0  28 *    SUSPEND
+    1  28 *    PSF      v25
+    2  29 *    STR      0         (l:0 s:"")
+    3  31 *    CALLSYS  32           (const string& _string_factory_(const int, const uint8&))
+    5  29 *    PshRPtr
+    6  30 *    PSF      v24
+    7  31 *    CALLSYS  34           (void string::_beh_0_(const string&in))
+    9  29 *    ObjInfo  v24, 1
+    9  29 *    PSF      v24
+   10  30 *    ALLOC    0x305cbc8, 34             (type:string)
+   13  28 *    PSF      v24
+   14  29 *    CALLSYS  35           (void string::_beh_1_())
+   16  28 *    ObjInfo  v24, 0
+   16  28 *    VAR      v25
+   17  29 *    PSF      v26
+   18  30 *    STR      21         (l:33 s:"sprites/ti")
+   19  32 *    CALLSYS  32           (const string& _string_factory_(const int, const uint8&))
+   21  30 *    PshRPtr
+   22  31 *    PSF      v8
+   23  32 *    CALLSYS  34           (void string::_beh_0_(const string&in))
+   25  30 *    ObjInfo  v8, 1
+   25  30 *    VAR      v8
+   26  31 *    PSF      v16
+   27  32 *    PshGPtr  89197432
+   29  33 *    CHKREF
+   30  33 *    GETREF   2
+   31  33 *    CALLSYS  429           (string CX2DApp::workPath(const string&in))
+   33  30 *    ObjInfo  v16, 1
+   33  30 *    PSF      v8
+   34  31 *    CALLSYS  35           (void string::_beh_1_())
+   36  30 *    ObjInfo  v8, 0
+   36  30 *    PSF      v16
+   37  31 *    ALLOC    0x305cbc8, 34             (type:string)
+   40  29 *    PSF      v16
+   41  30 *    CALLSYS  35           (void string::_beh_1_())
+   43  29 *    ObjInfo  v16, 0
+   43  29 *    VAR      v26
+   44  30 *    PSF      v27
+   45  31 *    STR      22         (l:9 s:"SandTiles")
+   46  33 *    CALLSYS  32           (const string& _string_factory_(const int, const uint8&))
+   48  31 *    PshRPtr
+   49  32 *    PSF      v8
+   50  33 *    CALLSYS  34           (void string::_beh_0_(const string&in))
+   52  31 *    ObjInfo  v8, 1
+   52  31 *    PSF      v8
+   53  32 *    ALLOC    0x305cbc8, 34             (type:string)
+   56  30 *    PSF      v8
+   57  31 *    CALLSYS  35           (void string::_beh_1_())
+   59  30 *    ObjInfo  v8, 0
+   59  30 *    VAR      v27
+   60  31 *    GETOBJ   0
+   61  31 *    GETOBJ   1
+   62  31 *    GETOBJ   2
+   63  31 *    CALL     738           (TileSetData@ TileSetData(string, string, string arg2 = ""))
+   65  28 *    STOREOBJ v28
+   66  28 *    PshVPtr  v28
+   67  29 *    PGA      150862352
+   69  30 *    REFCPY   0x8f54a10
+   71  29 *    FREE     v28, 150293008
+   73  28 *    RET      0

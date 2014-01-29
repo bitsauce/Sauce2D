@@ -1,0 +1,19 @@
+uint8 getR(const uint)
+
+Temps: 1
+
+Variables: 
+ 000: const uint c
+
+
+- 11,28 -
+    0   1 *    VarDecl  0
+    0   1 *    SUSPEND
+    1   1 *    SetV4    v1, 0xff          (i:255, f:3.57331e-043)
+    3   1 *    BAND     v1, v0, v1
+    5   1 *    iTOb     v1
+    6   1 * {
+    6   1 * }
+    6   1 *    CpyVtoR4 v1
+    7   1 * 0:
+    7   1 *    RET      1

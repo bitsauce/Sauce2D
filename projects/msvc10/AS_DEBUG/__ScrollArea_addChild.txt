@@ -1,0 +1,52 @@
+void ScrollArea::addChild(UiObject@)
+
+Temps: 1, 2
+
+Variables: 
+ -001: UiObject@ object
+ 000: ScrollArea this
+ 002: UiObject {noname}
+
+
+    0   2 *    VarDecl  0
+    0   2 *    PshVPtr  v0
+    1   3 *    CALLSYS  2           (void _builtin_object_::_beh_4_())
+- 175,3 -
+    3   2 *    SUSPEND
+    4   2 *    PshC4    0x3          (i:3, f:4.2039e-045)
+    6   3 *    PshVPtr  v-1
+    7   4 *    CALLINTF 1118           (void SceneObject::disableEvent(EventType))
+- 176,3 -
+    9   2 *    SUSPEND
+   10   2 *    PshC4    0xb          (i:11, f:1.54143e-044)
+   12   3 *    PshVPtr  v-1
+   13   4 *    CALLINTF 1118           (void SceneObject::disableEvent(EventType))
+- 177,3 -
+   15   2 *    SUSPEND
+   16   2 *    PshC4    0xc          (i:12, f:1.68156e-044)
+   18   3 *    PshVPtr  v-1
+   19   4 *    CALLINTF 1118           (void SceneObject::disableEvent(EventType))
+- 178,3 -
+   21   2 *    SUSPEND
+   22   2 *    PshC4    0xe          (i:14, f:1.96182e-044)
+   24   3 *    PshVPtr  v-1
+   25   4 *    CALLINTF 1118           (void SceneObject::disableEvent(EventType))
+- 181,3 -
+   27   2 *    SUSPEND
+   28   2 *    PshVPtr  v-1
+   29   3 *    RefCpyV  v2, 152204136
+   31   3 *    PopPtr
+   32   2 *    VAR      v2
+   33   3 *    PshVPtr  v0
+   34   4 *    GETOBJ   1
+   35   4 *    CALL     664           (void UiObject::addChild(UiObject@))
+- 184,3 -
+   37   2 *    SUSPEND
+   38   2 *    PshVPtr  v0
+   39   3 *    CALLINTF 1389           (void ScrollArea::updateScrollArea())
+- 185,3 -
+   41   2 *    SUSPEND
+   42   2 * 0:
+   42   2 *    FREE     v-1, 152204136
+   44   2 *    FREE     v0, 152254712
+   46   2 *    RET      2

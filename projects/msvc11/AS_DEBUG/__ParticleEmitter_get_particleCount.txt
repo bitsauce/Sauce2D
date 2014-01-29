@@ -1,0 +1,23 @@
+int ParticleEmitter::get_particleCount()
+
+Temps: 1
+
+Variables: 
+ 000: ParticleEmitter this
+
+
+    0   1 *    PshVPtr  v0
+    1   2 *    CALLSYS  2           (void _builtin_object_::_beh_5_())
+- 34,3 -
+    3   1 *    SUSPEND
+    4   1 *    PshVPtr  v0
+    5   2 *    ADDSi    v24, 134217793
+    7   2 *    RDSPtr
+    8   2 *    CALLSYS  88           (uint array::size() const)
+   10   1 *    CpyRtoV4 v1
+   11   1 * {
+   11   1 * }
+   11   1 *    CpyVtoR4 v1
+   12   1 * 0:
+   12   1 *    FREE     v0, 74315584
+   14   1 *    RET      1

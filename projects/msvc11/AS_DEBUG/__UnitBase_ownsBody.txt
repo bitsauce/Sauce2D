@@ -1,0 +1,25 @@
+bool UnitBase::ownsBody(int)
+
+Temps: 1
+
+Variables: 
+ -001: int bodyId
+ 000: UnitBase this
+
+
+    0   1 *    VarDecl  0
+    0   1 *    PshVPtr  v0
+    1   2 *    CALLSYS  2           (void _builtin_object_::_beh_5_())
+- 89,3 -
+    3   1 *    SUSPEND
+    4   1 *    LoadThisR v80, 134217750
+    6   1 *    RDR4     v1
+    7   1 *    CMPi     v1, v-1
+    9   1 *    TZ
+   10   1 *    CpyRtoV4 v1
+   11   1 * {
+   11   1 * }
+   11   1 *    CpyVtoR4 v1
+   12   1 * 0:
+   12   1 *    FREE     v0, 74300496
+   14   1 *    RET      2

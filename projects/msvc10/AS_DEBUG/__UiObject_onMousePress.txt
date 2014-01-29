@@ -1,0 +1,80 @@
+void UiObject::onMousePress(MouseEvent)
+
+Temps: 1, 2, 3, 7, 9
+
+Variables: 
+ -001: MouseEvent e
+ 000: UiObject this
+ 007: Rect2 {noname}
+ 009: Vector2 {noname}
+
+
+    0   9 *    VarDecl  0
+    0   9 *    PshVPtr  v0
+    1  10 *    CALLSYS  2           (void _builtin_object_::_beh_4_())
+- 186,3 -
+    3   9 *    SUSPEND
+    4   9 *    PshVPtr  v0
+    5  10 *    CALLINTF 1270           (bool UiObject::isEnabled())
+    7   9 *    CpyRtoV4 v1
+    8   9 *    NOT      v1
+    9   9 *    CpyVtoR4 v1
+   10   9 *    JLowZ    +4              (d:16)
+   12   9 *    SetV1    v1, 0x1
+   14   9 *    JMP      +7              (d:23)
+   16   9 * 2:
+   16   9 *    PshVPtr  v0
+   17  10 *    CALLINTF 1236           (bool SceneObject::isVisible() const)
+   19   9 *    CpyRtoV4 v2
+   20   9 *    NOT      v2
+   21   9 *    CpyVtoV4 v1, v2
+   23   9 * 3:
+   23   9 *    CpyVtoR4 v1
+   24   9 *    JLowZ    +3              (d:29)
+- 187,4 -
+   26   9 *    SUSPEND
+   27   9 * {
+   27   9 * }
+   27   9 *    JMP      +36              (d:65)
+- 190,3 -
+   29   9 * 1:
+   29   9 *    SUSPEND
+   30   9 *    LoadRObjR v-1, v40, 67108905
+   33   9 *    RDR4     v3
+   34   9 *    CMPIi    v3, 1
+   36   9 *    JNZ      +26              (d:64)
+- 192,4 -
+   38   9 * {
+   38   9 *    SUSPEND
+   39   9 *    PshVPtr  v-1
+   40  10 *    ADDSi    v24, 67108905
+   42  10 *    PSF      v9
+   43  11 *    CALLSYS  131           (void Vector2::_beh_0_(const Vector2&in))
+   45   9 *    ObjInfo  v9, 1
+   45   9 *    VAR      v9
+   46  10 *    PSF      v7
+   47  11 *    PshVPtr  v0
+   48  12 *    CALLINTF 1226           (Rect2 SceneObject::bounds() const)
+   50  10 *    ObjInfo  v7, 1
+   50  10 *    PSF      v7
+   51  11 *    GETREF   1
+   52  11 *    CALLSYS  159           (bool Rect2::contains(const Vector2&in) const)
+   54   9 *    CpyRtoV4 v2
+   55   9 *    ObjInfo  v9, 0
+   55   9 *    ObjInfo  v7, 0
+   55   9 *    CpyVtoR4 v2
+   56   9 *    JLowZ    +6              (d:64)
+- 193,5 -
+   58   9 *    SUSPEND
+   59   9 *    SetV1    v1, 0x1
+   61   9 *    LoadThisR v33, 134217780
+   63   9 *    WRTV1    v1
+- 195,3 -
+   64   9 * 5:
+   64   9 * }
+   64   9 * 4:
+   64   9 *    SUSPEND
+   65   9 * 0:
+   65   9 *    FREE     v-1, 89191392
+   67   9 *    FREE     v0, 150271928
+   69   9 *    RET      2

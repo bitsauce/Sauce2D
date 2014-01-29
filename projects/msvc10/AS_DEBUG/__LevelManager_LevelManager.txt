@@ -1,0 +1,123 @@
+LevelManager::LevelManager()
+
+Temps: 8, 9, 10, 11, 12, 13, 14, 15, 16
+
+Variables: 
+ 000: LevelManager this
+ 009: LevelManager {noname}
+ 010: LevelManager {noname}
+ 012: LevelForeground {noname}
+ 013: grid {noname}
+ 014: grid {noname}
+ 015: array {noname}
+ 016: array {noname}
+ 008: string {noname}
+
+
+- 45,13 -
+    0  16 *    SUSPEND
+    1  16 *    CALL     1426           (grid<uint>@ factstub())
+    3  16 *    STOREOBJ v13
+    4  16 *    PshVPtr  v13
+    5  17 *    PshVPtr  v0
+    6  18 *    ADDSi    v20, 134217815
+    8  18 *    REFCPY   0x91e8738
+   10  17 *    PopPtr
+   11  16 *    FREE     v13, 152995640
+- 48,14 -
+   13  16 *    SUSPEND
+   14  16 *    CALL     1435           (grid<Room@>@ factstub())
+   16  16 *    STOREOBJ v14
+   17  16 *    PshVPtr  v14
+   18  17 *    PshVPtr  v0
+   19  18 *    ADDSi    v24, 134217815
+   21  18 *    REFCPY   0x91e9fb8
+   23  17 *    PopPtr
+   24  16 *    FREE     v14, 153001912
+- 49,15 -
+   26  16 *    SUSPEND
+   27  16 *    CALL     1444           (Room@[]@ factstub())
+   29  16 *    STOREOBJ v15
+   30  16 *    PshVPtr  v15
+   31  17 *    PshVPtr  v0
+   32  18 *    ADDSi    v28, 134217815
+   34  18 *    REFCPY   0x91eb988
+   36  17 *    PopPtr
+   37  16 *    FREE     v15, 153008520
+- 52,21 -
+   39  16 *    SUSPEND
+   40  16 *    CALL     1457           (CMetaObject[]@ factstub())
+   42  16 *    STOREOBJ v16
+   43  16 *    PshVPtr  v16
+   44  17 *    PshVPtr  v0
+   45  18 *    ADDSi    v32, 134217815
+   47  18 *    REFCPY   0x91edb58
+   49  17 *    PopPtr
+   50  16 *    FREE     v16, 153017176
+- 55,9 -
+   52  16 *    SUSPEND
+   53  16 *    PshVPtr  v0
+   54  17 *    ADDSi    v36, 134217815
+   56  17 *    ALLOC    0x314cb48, 33             (type:string)
+   59  16 *    PshVPtr  v0
+   60  17 *    CALL     581           (SceneObject::SceneObject())
+- 61,3 -
+   62  16 *    SUSPEND
+   63  16 *    STR      209         (l:6 s:"lvlmgr")
+   64  18 *    CALLSYS  32           (const string& _string_factory_(const int, const uint8&))
+   66  16 *    PshRPtr
+   67  17 *    PSF      v8
+   68  18 *    CALLSYS  34           (void string::_beh_0_(const string&in))
+   70  16 *    ObjInfo  v8, 1
+   70  16 *    PSF      v8
+   71  17 *    CALLSYS  190           (void print(string&in))
+   73  16 *    PSF      v8
+   74  17 *    CALLSYS  35           (void string::_beh_1_())
+- 62,3 -
+   76  16 *    ObjInfo  v8, 0
+   76  16 *    SUSPEND
+   77  16 *    PshGPtr  152619128
+   79  17 *    RefCpyV  v9, 152275144
+   81  17 *    PopPtr
+   82  16 *    ClrVPtr  v10
+   83  16 *    CmpPtr   v9, v10
+   85  16 *    TNZ
+   86  16 *    CpyRtoV4 v11
+   87  16 *    FREE     v9, 152275144
+   89  16 *    FREE     v10, 152275144
+   91  16 *    CpyVtoR4 v11
+   92  16 *    JLowZ    +14              (d:108)
+- 63,4 -
+   94  16 *    SUSPEND
+   95  16 *    STR      210         (l:42 s:"ERROR: Mor")
+   96  18 *    CALLSYS  32           (const string& _string_factory_(const int, const uint8&))
+   98  16 *    PshRPtr
+   99  17 *    PSF      v8
+  100  18 *    CALLSYS  34           (void string::_beh_0_(const string&in))
+  102  16 *    ObjInfo  v8, 1
+  102  16 *    PSF      v8
+  103  17 *    CALLSYS  190           (void print(string&in))
+  105  16 *    PSF      v8
+  106  17 *    CALLSYS  35           (void string::_beh_1_())
+- 64,3 -
+  108  16 *    ObjInfo  v8, 0
+  108  16 * 1:
+  108  16 *    SUSPEND
+  109  16 *    PshVPtr  v0
+  110  17 *    RefCpyV  v9, 152275144
+  112  17 *    PopPtr
+  113  16 *    VAR      v9
+  114  17 *    PGA      152619128
+  116  18 *    GETOBJREF 1
+  117  18 *    REFCPY   0x91388c8
+  119  17 *    FREE     v9, 152275144
+  121  17 *    PopPtr
+- 65,3 -
+  122  16 *    SUSPEND
+  123  16 *    CALL     1002           (LevelForeground@ LevelForeground())
+  125  16 *    STOREOBJ v12
+  126  16 *    FREE     v12, 152274184
+- 66,3 -
+  128  16 *    SUSPEND
+  129  16 * 0:
+  129  16 *    RET      1

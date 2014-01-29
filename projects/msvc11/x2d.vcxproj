@@ -1,0 +1,268 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Android">
+      <Configuration>Debug</Configuration>
+      <Platform>Android</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Android">
+      <Configuration>Release</Configuration>
+      <Platform>Android</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\include\x2d\app.h" />
+    <ClInclude Include="..\..\include\x2d\assetloader.h" />
+    <ClInclude Include="..\..\include\x2d\debug.h" />
+    <ClInclude Include="..\..\include\x2d\engine.h" />
+    <ClInclude Include="..\..\include\x2d\gfx.h" />
+    <ClInclude Include="..\..\include\x2d\iosystem.h" />
+    <ClInclude Include="..\..\include\x2d\math.h" />
+    <ClInclude Include="..\..\include\x2d\math\array.h" />
+    <ClInclude Include="..\..\include\x2d\math\matrix.h" />
+    <ClInclude Include="..\..\include\x2d\math\profiler.h" />
+    <ClInclude Include="..\..\include\x2d\math\rect.h" />
+    <ClInclude Include="..\..\include\x2d\math\rectPacker.h" />
+    <ClInclude Include="..\..\include\x2d\math\vector.h" />
+    <ClInclude Include="..\..\include\x2d\platform.h" />
+    <ClInclude Include="..\..\include\x2d\scripts.h" />
+    <ClInclude Include="..\..\include\x2d\sfx.h" />
+    <ClInclude Include="..\..\source\scripts\scriptarray.h" />
+    <ClInclude Include="..\..\source\scripts\scriptbuilder.h" />
+    <ClInclude Include="..\..\source\scripts\scriptgrid.h" />
+    <ClInclude Include="..\..\source\scripts\scripthelper.h" />
+    <ClInclude Include="..\..\source\scripts\scriptstdstring.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\source\array.cpp" />
+    <ClCompile Include="..\..\source\assetloader.cpp" />
+    <ClCompile Include="..\..\source\engine.cpp" />
+    <ClCompile Include="..\..\source\iosystem.cpp" />
+    <ClCompile Include="..\..\source\math\math.cpp" />
+    <ClCompile Include="..\..\source\math\matrix.cpp" />
+    <ClCompile Include="..\..\source\math\rect.cpp" />
+    <ClCompile Include="..\..\source\math\rectPacker.cpp" />
+    <ClCompile Include="..\..\source\math\vector.cpp" />
+    <ClCompile Include="..\..\source\profiler.cpp" />
+    <ClCompile Include="..\..\source\scripts.cpp" />
+    <ClCompile Include="..\..\source\scripts\scriptarray.cpp" />
+    <ClCompile Include="..\..\source\scripts\scriptbuilder.cpp" />
+    <ClCompile Include="..\..\source\scripts\scriptgrid.cpp" />
+    <ClCompile Include="..\..\source\scripts\scripthelper.cpp" />
+    <ClCompile Include="..\..\source\scripts\scriptstdstring.cpp" />
+    <ClCompile Include="..\..\source\scripts\scriptstdstring_utils.cpp" />
+    <ClCompile Include="..\..\source\x2d\debug.cpp" />
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{F3F25B49-2C6B-4FF0-98FB-47695DF70B8A}</ProjectGuid>
+    <RootNamespace>sanangeles</RootNamespace>
+    <ProjectName>x2d</ProjectName>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Android'" Label="Configuration">
+    <AndroidAPILevel>android-14</AndroidAPILevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <CharacterSet>NotSet</CharacterSet>
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <PlatformToolset>v110</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Android'" Label="Configuration">
+    <CharacterSet>NotSet</CharacterSet>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <PlatformToolset>arm-linux-androideabi-4.6</PlatformToolset>
+    <AndroidArch>armv7-a</AndroidArch>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <CharacterSet>NotSet</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Android'" Label="Configuration">
+    <CharacterSet>NotSet</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <PlatformToolset>v110</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Android'" Label="Configuration">
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <PlatformToolset>v110</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <OutDir>$(SolutionDir)..\..\build\$(Platform)\$(Configuration)\</OutDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Android'">
+    <OutDir>$(SolutionDir)..\..\build\$(Platform)\$(Configuration)\</OutDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <TargetName>$(ProjectName)_d</TargetName>
+    <LinkIncremental>true</LinkIncremental>
+    <IntDir>$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Android'">
+    <TargetName>$(ProjectName)_d</TargetName>
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <OutDir>$(SolutionDir)..\..\build\$(Platform)\$(Configuration)\</OutDir>
+    <LinkIncremental>false</LinkIncremental>
+    <IntDir>$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Android'">
+    <OutDir>$(SolutionDir)..\..\build\$(Platform)\$(Configuration)\</OutDir>
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Android'">
+    <OutDir>$(SolutionDir)</OutDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Android'">
+    <ClCompile>
+      <PreprocessorDefinitions>DISABLE_IMPORTGL;_ANDROID</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(SolutionDir)source;$(SolutionDir)lib\angelscript_2.21.2\angelscript\include</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>angelscriptd.a</AdditionalDependencies>
+      <AdditionalLibraryDirectories>
+      </AdditionalLibraryDirectories>
+    </Link>
+    <AntBuild>
+      <AntBuildPath>$(ProjectDir)\AndroidApk\</AntBuildPath>
+      <AntDeploy>DeployAndRun</AntDeploy>
+      <AdbDeployAddCmdLine>
+      </AdbDeployAddCmdLine>
+    </AntBuild>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>$(SolutionDir)..\..\include;$(SolutionDir)..\..\source;$(SolutionDir)..\..\lib\angelscript\sdk\angelscript\include;$(SolutionDir)..\..\lib\lpng154;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Android'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>$(SolutionDir)..\..\include;$(SolutionDir)..\..\source;$(SolutionDir)..\..\lib\angelscript\sdk\angelscript\include;$(SolutionDir)..\..\lib\lpng154;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+      <WarningLevel>Level4</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>USING_AS;X2D_EXPORT</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <MinimalRebuild>true</MinimalRebuild>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <ExceptionHandling>Sync</ExceptionHandling>
+    </ClCompile>
+    <Link>
+      <AdditionalLibraryDirectories>$(SolutionDir)..\..\lib\angelscript\sdk\angelscript\lib;$(SolutionDir)..\..\lib\zlib-1.2.5\lib;$(SolutionDir)..\..\lib\lpng154\lib</AdditionalLibraryDirectories>
+      <AdditionalDependencies>ws2_32.lib;angelscriptd.lib;iphlpapi.lib;libpng15_d.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+      <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
+    </Link>
+    <Lib>
+      <AdditionalDependencies>glew32_d.lib;ws2_32.lib;IPHlpAPI.lib;freetype248_d.lib;OpenAL32.lib;libpng15_d.lib;angelscriptd.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)..\..\lib\glew-1.7.0\lib;$(SolutionDir)..\..\lib\openal-1.1\libs\Win32;$(SolutionDir)..\..\lib\angelscript_2.23.1\angelscript\lib;$(SolutionDir)..\..\lib\zlib-1.2.5\lib;$(SolutionDir)..\..\lib\lpng154\lib;$(SolutionDir)..\..\lib\freetype-2.4.8\lib</AdditionalLibraryDirectories>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Android'">
+    <ClCompile>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+      <WarningLevel>Level4</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>USING_AS;X2D_EXPORT;X2D_LINUX</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <MinimalRebuild>true</MinimalRebuild>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <StackProtector>false</StackProtector>
+    </ClCompile>
+    <Link>
+      <AdditionalLibraryDirectories>$(SolutionDir)..\..\lib\angelscript\sdk\angelscript\lib;$(SolutionDir)..\..\lib\zlib-1.2.5\lib;$(SolutionDir)..\..\lib\lpng154\lib</AdditionalLibraryDirectories>
+      <AdditionalDependencies>angelscriptd.a;libpng15_d.a;zlib_d.a;%(AdditionalDependencies)</AdditionalDependencies>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+      <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
+    </Link>
+    <Lib>
+      <AdditionalDependencies>glew32_d.lib;ws2_32.lib;IPHlpAPI.lib;freetype248_d.lib;OpenAL32.lib;libpng15_d.lib;angelscriptd.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)..\..\lib\glew-1.7.0\lib;$(SolutionDir)..\..\lib\openal-1.1\libs\Win32;$(SolutionDir)..\..\lib\angelscript_2.23.1\angelscript\lib;$(SolutionDir)..\..\lib\zlib-1.2.5\lib;$(SolutionDir)..\..\lib\lpng154\lib;$(SolutionDir)..\..\lib\freetype-2.4.8\lib</AdditionalLibraryDirectories>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>$(SolutionDir)..\..\include;$(SolutionDir)..\..\source;$(SolutionDir)..\..\lib\angelscript\sdk\angelscript\include;$(SolutionDir)..\..\lib\lpng154;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Android'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>$(SolutionDir)..\..\include;$(SolutionDir)..\..\source;$(SolutionDir)..\..\lib\angelscript\sdk\angelscript\include;$(SolutionDir)..\..\lib\lpng154;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level4</WarningLevel>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>USING_AS;X2D_EXPORT</PreprocessorDefinitions>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <Optimization>Full</Optimization>
+      <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <WholeProgramOptimization>true</WholeProgramOptimization>
+    </ClCompile>
+    <Link>
+      <AdditionalLibraryDirectories>$(SolutionDir)..\..\lib\angelscript\sdk\angelscript\lib;$(SolutionDir)..\..\lib\zlib-1.2.5\lib;$(SolutionDir)..\..\lib\lpng154\lib</AdditionalLibraryDirectories>
+      <AdditionalDependencies>angelscript.lib;iphlpapi.lib;libpng15.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <GenerateDebugInformation>
+      </GenerateDebugInformation>
+    </Link>
+    <PostBuildEvent>
+      <Command>
+      </Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Android'">
+    <ClCompile>
+      <WarningLevel>Level4</WarningLevel>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>USING_AS;X2D_EXPORT</PreprocessorDefinitions>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <Optimization>Full</Optimization>
+      <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <WholeProgramOptimization>true</WholeProgramOptimization>
+    </ClCompile>
+    <Link>
+      <AdditionalLibraryDirectories>$(SolutionDir)..\..\lib\angelscript\sdk\angelscript\lib;$(SolutionDir)..\..\lib\zlib-1.2.5\lib;$(SolutionDir)..\..\lib\lpng154\lib</AdditionalLibraryDirectories>
+      <AdditionalDependencies>ws2_32.lib;angelscript.lib;iphlpapi.lib;libpng15.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <GenerateDebugInformation>
+      </GenerateDebugInformation>
+    </Link>
+    <PostBuildEvent>
+      <Command>
+      </Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

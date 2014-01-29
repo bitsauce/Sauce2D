@@ -1,0 +1,29 @@
+bool UnitBase::isFriendly()
+
+Temps: 1, 2, 3
+
+Variables: 
+ 000: UnitBase this
+
+
+    0   3 *    PshVPtr  v0
+    1   4 *    CALLSYS  2           (void _builtin_object_::_beh_5_())
+- 108,3 -
+    3   3 *    SUSPEND
+    4   3 *    LoadThisR v48, 134217750
+    6   3 *    RDR4     v1
+    7   3 *    PshGPtr  74561424
+    9   4 *    ADDSi    v44, 134217751
+   11   4 *    RDSPtr
+   12   4 *    ADDSi    v44, 134217771
+   14   4 *    PopRPtr
+   15   3 *    RDR4     v2
+   16   3 *    CMPi     v1, v2
+   18   3 *    TZ
+   19   3 *    CpyRtoV4 v3
+   20   3 * {
+   20   3 * }
+   20   3 *    CpyVtoR4 v3
+   21   3 * 0:
+   21   3 *    FREE     v0, 74300496
+   23   3 *    RET      1

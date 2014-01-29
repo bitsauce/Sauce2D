@@ -1,0 +1,259 @@
+void TextButton::onDraw(DrawEvent)
+
+Temps: 2, 3, 7, 9, 11, 12, 13, 14, 15, 16, 17, 25
+
+Variables: 
+ -001: DrawEvent e
+ 001: Color color
+ 005: Vector2 guiPos
+ 000: TextButton this
+ 013: CFont {noname}
+ 014: string {noname}
+ 007: Vector2 {noname}
+ 009: Vector2 {noname}
+ 011: Vector2 {noname}
+ 025: string {noname}
+
+
+    0  25 *    VarDecl  0
+    0  25 *    PshVPtr  v0
+    1  26 *    CALLSYS  2           (void _builtin_object_::_beh_4_())
+- 84,3 -
+    3  25 *    SUSPEND
+    4  25 *    VarDecl  1
+    4  25 *    PSF      v1
+    5  26 *    CALLSYS  176           (void Color::_beh_0_())
+    7  25 *    ObjInfo  v1, 1
+    7  25 *    PshVPtr  v0
+    8  26 *    ADDSi    v56, 134217800
+   10  26 *    RDSPtr
+   11  26 *    PSF      v1
+   12  27 *    COPY     v1, 67108879
+   14  26 *    PopPtr
+- 85,3 -
+   15  25 *    SUSPEND
+   16  25 *    LoadThisR v35, 134217800
+   18  25 *    RDR1     v2
+   19  25 *    NOT      v2
+   20  25 *    CpyVtoR4 v2
+   21  25 *    JLowZ    +11              (d:34)
+- 85,16 -
+   23  25 *    SUSPEND
+   24  25 *    PshVPtr  v0
+   25  26 *    ADDSi    v60, 134217800
+   27  26 *    RDSPtr
+   28  26 *    PSF      v1
+   29  27 *    COPY     v1, 67108879
+   31  26 *    PopPtr
+   32  25 *    JMP      +46              (d:80)
+- 86,8 -
+   34  25 * 1:
+   34  25 *    SUSPEND
+   35  25 *    LoadThisR v33, 134217800
+   37  25 *    RDR1     v2
+   38  25 *    CpyVtoR4 v2
+   39  25 *    JLowZ    +4              (d:45)
+   41  25 *    SetV1    v2, 0x1
+   43  25 *    JMP      +5              (d:50)
+   45  25 * 4:
+   45  25 *    LoadThisR v36, 134217800
+   47  25 *    RDR1     v3
+   48  25 *    CpyVtoV4 v2, v3
+   50  25 * 5:
+   50  25 *    CpyVtoR4 v2
+   51  25 *    JLowZ    +11              (d:64)
+- 86,29 -
+   53  25 *    SUSPEND
+   54  25 *    PshVPtr  v0
+   55  26 *    ADDSi    v64, 134217800
+   57  26 *    RDSPtr
+   58  26 *    PSF      v1
+   59  27 *    COPY     v1, 67108879
+   61  26 *    PopPtr
+   62  25 *    JMP      +16              (d:80)
+- 87,8 -
+   64  25 * 3:
+   64  25 *    SUSPEND
+   65  25 *    LoadThisR v34, 134217800
+   67  25 *    RDR1     v3
+   68  25 *    CpyVtoR4 v3
+   69  25 *    JLowZ    +9              (d:80)
+- 87,18 -
+   71  25 *    SUSPEND
+   72  25 *    PshVPtr  v0
+   73  26 *    ADDSi    v68, 134217800
+   75  26 *    RDSPtr
+   76  26 *    PSF      v1
+   77  27 *    COPY     v1, 67108879
+   79  26 *    PopPtr
+- 90,3 -
+   80  25 * 7:
+   80  25 * 6:
+   80  25 * 2:
+   80  25 *    SUSPEND
+   81  25 *    VarDecl  2
+   81  25 *    PSF      v5
+   82  26 *    CALLSYS  130           (void Vector2::_beh_0_())
+   84  25 *    ObjInfo  v5, 1
+   84  25 *    PSF      v9
+   85  26 *    PshVPtr  v0
+   86  27 *    CALLINTF 1092           (Vector2 SceneObject::pos() const)
+   88  25 *    ObjInfo  v9, 1
+   88  25 *    VAR      v9
+   89  26 *    PSF      v11
+   90  27 *    PSF      v7
+   91  28 *    PshGPtr  112337720
+   93  29 *    CHKREF
+   94  29 *    CALLSYS  394           (Vector2 CViewport::gamePos() const)
+   96  27 *    ObjInfo  v7, 1
+   96  27 *    PSF      v7
+   97  28 *    GETREF   2
+   98  28 *    CALLSYS  138           (Vector2 Vector2::opAdd(const Vector2&in) const)
+  100  25 *    ObjInfo  v11, 1
+  100  25 *    ObjInfo  v9, 0
+  100  25 *    PSF      v11
+  101  26 *    ObjInfo  v7, 0
+  101  26 *    PSF      v5
+  102  27 *    COPY     v2, 67108877
+  104  26 *    ObjInfo  v11, 0
+  104  26 *    PopPtr
+- 91,3 -
+  105  25 *    SUSPEND
+  106  25 *    LoadThisR v84, 134217800
+  108  25 *    RDR4     v12
+  109  25 *    CMPIi    v12, 1
+  111  25 *    JNZ      +40              (d:153)
+- 92,4 -
+  113  25 *    SUSPEND
+  114  25 *    PSF      v11
+  115  26 *    PshVPtr  v0
+  116  27 *    CALLINTF 1099           (Vector2 SceneObject::size() const)
+  118  25 *    ObjInfo  v11, 1
+  118  25 *    LoadVObjR v11, v0, 67108877
+  121  25 *    RDR4     v2
+  122  25 *    PSF      v14
+  123  26 *    PshVPtr  v0
+  124  27 *    ADDSi    v52, 134217800
+  126  27 *    RDSPtr
+  127  27 *    ALLOC    0x314cb48, 34             (type:string)
+  130  25 *    VAR      v14
+  131  26 *    CALLSYS  303           (CFont@ currentFont())
+  133  26 *    STOREOBJ v13
+  134  26 *    PshVPtr  v13
+  135  27 *    GETOBJ   1
+  136  27 *    CALLSYS  300           (uint CFont::stringWidth(string) const)
+  138  25 *    CpyRtoV4 v3
+  139  25 *    FREE     v13, 112066712
+  141  25 *    uTOf     v3
+  142  25 *    ObjInfo  v11, 0
+  142  25 *    SUBf     v2, v2, v3
+  144  25 *    LoadVObjR v5, v0, 67108877
+  147  25 *    RDR4     v15
+  148  25 *    ADDf     v3, v15, v2
+  150  25 *    WRTV4    v3
+  151  25 *    JMP      +54              (d:207)
+- 93,8 -
+  153  25 * 8:
+  153  25 *    SUSPEND
+  154  25 *    LoadThisR v84, 134217800
+  156  25 *    RDR4     v12
+  157  25 *    CMPIi    v12, 2
+  159  25 *    JNZ      +46              (d:207)
+- 94,4 -
+  161  25 *    SUSPEND
+  162  25 *    PSF      v9
+  163  26 *    PshVPtr  v0
+  164  27 *    CALLINTF 1099           (Vector2 SceneObject::size() const)
+  166  25 *    ObjInfo  v9, 1
+  166  25 *    LoadVObjR v9, v0, 67108877
+  169  25 *    RDR4     v15
+  170  25 *    SetV4    v3, 0x40000000          (i:1073741824, f:2)
+  172  25 *    ObjInfo  v9, 0
+  172  25 *    DIVf     v2, v15, v3
+  174  25 *    PSF      v14
+  175  26 *    PshVPtr  v0
+  176  27 *    ADDSi    v52, 134217800
+  178  27 *    RDSPtr
+  179  27 *    ALLOC    0x314cb48, 34             (type:string)
+  182  25 *    VAR      v14
+  183  26 *    CALLSYS  303           (CFont@ currentFont())
+  185  26 *    STOREOBJ v13
+  186  26 *    PshVPtr  v13
+  187  27 *    GETOBJ   1
+  188  27 *    CALLSYS  300           (uint CFont::stringWidth(string) const)
+  190  25 *    CpyRtoV4 v15
+  191  25 *    FREE     v13, 112066712
+  193  25 *    SetV4    v3, 0x2          (i:2, f:2.8026e-045)
+  195  25 *    DIVu     v15, v15, v3
+  197  25 *    uTOf     v15
+  198  25 *    SUBf     v3, v2, v15
+  200  25 *    LoadVObjR v5, v0, 67108877
+  203  25 *    RDR4     v16
+  204  25 *    ADDf     v15, v16, v3
+  206  25 *    WRTV4    v15
+- 95,3 -
+  207  25 * 10:
+  207  25 * 9:
+  207  25 *    SUSPEND
+  208  25 *    PSF      v7
+  209  26 *    PshVPtr  v0
+  210  27 *    CALLINTF 1099           (Vector2 SceneObject::size() const)
+  212  25 *    ObjInfo  v7, 1
+  212  25 *    LoadVObjR v7, v4, 67108877
+  215  25 *    RDR4     v15
+  216  25 *    SetV4    v16, 0x40000000          (i:1073741824, f:2)
+  218  25 *    ObjInfo  v7, 0
+  218  25 *    DIVf     v2, v15, v16
+  220  25 *    PSF      v14
+  221  26 *    PshVPtr  v0
+  222  27 *    ADDSi    v52, 134217800
+  224  27 *    RDSPtr
+  225  27 *    ALLOC    0x314cb48, 34             (type:string)
+  228  25 *    VAR      v14
+  229  26 *    CALLSYS  303           (CFont@ currentFont())
+  231  26 *    STOREOBJ v13
+  232  26 *    PshVPtr  v13
+  233  27 *    GETOBJ   1
+  234  27 *    CALLSYS  301           (uint CFont::stringHeight(string) const)
+  236  25 *    CpyRtoV4 v15
+  237  25 *    FREE     v13, 112066712
+  239  25 *    SetV4    v16, 0x2          (i:2, f:2.8026e-045)
+  241  25 *    DIVu     v3, v15, v16
+  243  25 *    uTOf     v3
+  244  25 *    SUBf     v16, v2, v3
+  246  25 *    LoadVObjR v5, v4, 67108877
+  249  25 *    RDR4     v17
+  250  25 *    ADDf     v3, v17, v16
+  252  25 *    WRTV4    v3
+- 98,3 -
+  253  25 *    SUSPEND
+  254  25 *    VAR      v1
+  255  26 *    PshVPtr  v0
+  256  27 *    ADDSi    v52, 134217800
+  258  27 *    RDSPtr
+  259  27 *    PSF      v25
+  260  28 *    CALLSYS  34           (void string::_beh_0_(const string&in))
+  262  26 *    ObjInfo  v25, 1
+  262  26 *    VAR      v25
+  263  27 *    LoadVObjR v5, v4, 67108877
+  266  27 *    RDR4     v16
+  267  27 *    PshV4    v16
+  268  28 *    LoadVObjR v5, v0, 67108877
+  271  28 *    RDR4     v3
+  272  28 *    PshV4    v3
+  273  29 *    PshGPtr  112336760
+  275  30 *    CHKREF
+  276  30 *    GETREF   3
+  277  30 *    GETREF   4
+  278  30 *    CALLSYS  440           (void CGFX::drawText(const float, const float, const string&in, const Color&in arg3 = Color ( )))
+  280  25 *    PSF      v25
+  281  26 *    CALLSYS  35           (void string::_beh_1_())
+- 99,3 -
+  283  25 *    ObjInfo  v25, 0
+  283  25 *    SUSPEND
+  284  25 *    ObjInfo  v5, 0
+  284  25 *    ObjInfo  v1, 0
+  284  25 * 0:
+  284  25 *    FREE     v-1, 112324336
+  286  25 *    FREE     v0, 152253544
+  288  25 *    RET      2

@@ -1,0 +1,57 @@
+void SandgullBody::draw()
+
+Temps: 2, 3, 4, 5, 6
+
+Variables: 
+ 001: float s
+ 000: SandgullBody this
+ 006: CTexture {noname}
+
+
+    0   6 *    PshVPtr  v0
+    1   7 *    CALLSYS  2           (void _builtin_object_::_beh_4_())
+- 123,3 -
+    3   6 *    SUSPEND
+    4   6 *    VarDecl  0
+    4   6 *    LoadThisR v28, 134217787
+    6   6 *    RDR4     v2
+    7   6 *    MULIf    v1, v2, 64.000000
+- 124,3 -
+   10   6 *    SUSPEND
+   11   6 *    PshVPtr  v0
+   12   7 *    ADDSi    v16, 134217787
+   14   7 *    RDSPtr
+   15   7 *    RefCpyV  v6, 111987200
+   17   7 *    PopPtr
+   18   6 *    VAR      v6
+   19   7 *    PshV4    v1
+   20   8 *    PshV4    v1
+   21   9 *    PshVPtr  v0
+   22  10 *    ADDSi    v20, 134217787
+   24  10 *    RDSPtr
+   25  10 *    ADDSi    v4, 67108877
+   27  10 *    PopRPtr
+   28   9 *    RDR4     v4
+   29   9 *    SetV4    v2, 0x40000000          (i:1073741824, f:2)
+   31   9 *    DIVf     v3, v1, v2
+   33   9 *    ADDf     v2, v4, v3
+   35   9 *    PshV4    v2
+   36  10 *    PshVPtr  v0
+   37  11 *    ADDSi    v20, 134217787
+   39  11 *    RDSPtr
+   40  11 *    ADDSi    v0, 67108877
+   42  11 *    PopRPtr
+   43  10 *    RDR4     v5
+   44  10 *    SetV4    v3, 0x40000000          (i:1073741824, f:2)
+   46  10 *    DIVf     v4, v1, v3
+   48  10 *    ADDf     v3, v5, v4
+   50  10 *    PshV4    v3
+   51  11 *    PshGPtr  112336760
+   53  12 *    CHKREF
+   54  12 *    GETOBJ   5
+   55  12 *    CALLSYS  455           (void CGFX::drawTexture(const float, const float, const float, const float, CTexture@))
+- 125,3 -
+   57   6 *    SUSPEND
+   58   6 * 0:
+   58   6 *    FREE     v0, 152264696
+   60   6 *    RET      1

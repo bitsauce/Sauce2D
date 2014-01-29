@@ -1,0 +1,18 @@
+<unrecognized token> _unnamed_function_()
+
+Temps: 1
+
+Variables: 
+ 001: grid {noname}
+
+
+- 55,20 -
+    0   1 *    SUSPEND
+    1   1 *    CALL     1118           (grid<EditorRoom@>@ factstub())
+    3   1 *    STOREOBJ v1
+    4   1 *    PshVPtr  v1
+    5   2 *    PGA      150771088
+    7   3 *    REFCPY   0x8fc7d20
+    9   2 *    PopPtr
+   10   1 *    FREE     v1, 150764832
+   12   1 *    RET      0

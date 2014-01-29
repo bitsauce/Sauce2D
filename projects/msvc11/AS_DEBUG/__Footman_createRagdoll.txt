@@ -1,0 +1,1001 @@
+void Footman::createRagdoll()
+
+Temps: 2, 3, 4, 5, 6, 7, 8, 9, 10, 12
+
+Variables: 
+ 001: int limbId
+ 011: int jointId
+ 000: Footman this
+ 007: array {noname}
+ 012: array {noname}
+
+
+    0  12 *    PshVPtr  v0
+    1  13 *    CALLSYS  2           (void _builtin_object_::_beh_4_())
+- 196,3 -
+    3  12 *    SUSPEND
+    4  12 *    VarDecl  0
+    4  12 *    CALLSYS  407           (int b2dCreateBody())
+    6  12 *    CpyRtoV4 v2
+    7  12 *    CpyVtoV4 v1, v2
+- 197,3 -
+    9  12 *    SUSPEND
+   10  12 *    PshC4    0x2          (i:2, f:2.8026e-045)
+   12  13 *    PshV4    v1
+   13  14 *    CALLSYS  408           (void b2dSetBodyType(int, int))
+- 199,3 -
+   15  12 *    SUSPEND
+   16  12 *    SetV1    v2, 0x0
+   18  12 *    PshV4    v2
+   19  13 *    PshV4    v1
+   20  14 *    CALLSYS  409           (void b2dSetBodyAllowSleep(int, bool))
+- 200,3 -
+   22  12 *    SUSPEND
+   23  12 *    PshC4    0x3f800000          (i:1065353216, f:1)
+   25  13 *    CpyGtoV4 v2, 113795376
+   27  13 *    MULIf    v3, v2, -16.000000
+   30  13 *    PshV4    v3
+   31  14 *    CpyGtoV4 v2, 113795376
+   33  14 *    MULIf    v4, v2, 0.000000
+   36  14 *    PshV4    v4
+   37  15 *    CpyGtoV4 v2, 113795376
+   39  15 *    MULIf    v5, v2, 4.000000
+   42  15 *    PshV4    v5
+   43  16 *    PshV4    v1
+   44  17 *    CALLSYS  419           (int b2dCreateFixtureCircle(int, float, float, float, float))
+- 201,3 -
+   46  12 *    SUSPEND
+   47  12 *    PshC4    0x0          (i:0, f:0)
+   49  13 *    PshVPtr  v0
+   50  14 *    ADDSi    v108, 134217766
+   52  14 *    RDSPtr
+   53  14 *    RefCpyV  v7, 45502560
+   55  14 *    CALLSYS  349           (int& array::opIndex(uint))
+   57  12 *    WRTV4    v1
+   58  12 *    FREE     v7, 45502560
+- 204,3 -
+   60  12 *    SUSPEND
+   61  12 *    CALLSYS  407           (int b2dCreateBody())
+   63  12 *    CpyRtoV4 v2
+   64  12 *    CpyVtoV4 v1, v2
+- 205,3 -
+   66  12 *    SUSPEND
+   67  12 *    PshC4    0x2          (i:2, f:2.8026e-045)
+   69  13 *    PshV4    v1
+   70  14 *    CALLSYS  408           (void b2dSetBodyType(int, int))
+- 206,3 -
+   72  12 *    SUSPEND
+   73  12 *    SetV1    v2, 0x0
+   75  12 *    PshV4    v2
+   76  13 *    PshV4    v1
+   77  14 *    CALLSYS  409           (void b2dSetBodyAllowSleep(int, bool))
+- 207,3 -
+   79  12 *    SUSPEND
+   80  12 *    PshC4    0x3f800000          (i:1065353216, f:1)
+   82  13 *    CpyGtoV4 v3, 113795376
+   84  13 *    MULIf    v6, v3, 0.000000
+   87  13 *    PshV4    v6
+   88  14 *    CpyGtoV4 v3, 113795376
+   90  14 *    MULIf    v5, v3, -9.000000
+   93  14 *    PshV4    v5
+   94  15 *    CpyGtoV4 v3, 113795376
+   96  15 *    MULIf    v4, v3, 0.000000
+   99  15 *    PshV4    v4
+  100  16 *    CpyGtoV4 v3, 113795376
+  102  16 *    MULIf    v2, v3, 6.000000
+  105  16 *    PshV4    v2
+  106  17 *    CpyGtoV4 v3, 113795376
+  108  17 *    MULIf    v8, v3, 8.000000
+  111  17 *    PshV4    v8
+  112  18 *    PshV4    v1
+  113  19 *    CALLSYS  418           (int b2dCreateFixtureBox(int, float, float, float, float, float, float))
+- 208,3 -
+  115  12 *    SUSPEND
+  116  12 *    PshC4    0x1          (i:1, f:1.4013e-045)
+  118  13 *    PshVPtr  v0
+  119  14 *    ADDSi    v108, 134217766
+  121  14 *    RDSPtr
+  122  14 *    RefCpyV  v7, 45502560
+  124  14 *    CALLSYS  349           (int& array::opIndex(uint))
+  126  12 *    WRTV4    v1
+  127  12 *    FREE     v7, 45502560
+- 211,3 -
+  129  12 *    SUSPEND
+  130  12 *    CALLSYS  407           (int b2dCreateBody())
+  132  12 *    CpyRtoV4 v8
+  133  12 *    CpyVtoV4 v1, v8
+- 212,3 -
+  135  12 *    SUSPEND
+  136  12 *    PshC4    0x2          (i:2, f:2.8026e-045)
+  138  13 *    PshV4    v1
+  139  14 *    CALLSYS  408           (void b2dSetBodyType(int, int))
+- 213,3 -
+  141  12 *    SUSPEND
+  142  12 *    SetV1    v8, 0x0
+  144  12 *    PshV4    v8
+  145  13 *    PshV4    v1
+  146  14 *    CALLSYS  409           (void b2dSetBodyAllowSleep(int, bool))
+- 214,3 -
+  148  12 *    SUSPEND
+  149  12 *    PshC4    0x3f800000          (i:1065353216, f:1)
+  151  13 *    CpyGtoV4 v3, 113795376
+  153  13 *    MULIf    v9, v3, 0.000000
+  156  13 *    PshV4    v9
+  157  14 *    CpyGtoV4 v3, 113795376
+  159  14 *    MULIf    v2, v3, -3.000000
+  162  14 *    PshV4    v2
+  163  15 *    CpyGtoV4 v3, 113795376
+  165  15 *    MULIf    v4, v3, 0.000000
+  168  15 *    PshV4    v4
+  169  16 *    CpyGtoV4 v3, 113795376
+  171  16 *    MULIf    v5, v3, 6.000000
+  174  16 *    PshV4    v5
+  175  17 *    CpyGtoV4 v3, 113795376
+  177  17 *    MULIf    v6, v3, 8.000000
+  180  17 *    PshV4    v6
+  181  18 *    PshV4    v1
+  182  19 *    CALLSYS  418           (int b2dCreateFixtureBox(int, float, float, float, float, float, float))
+- 215,3 -
+  184  12 *    SUSPEND
+  185  12 *    PshC4    0x6          (i:6, f:8.40779e-045)
+  187  13 *    PshVPtr  v0
+  188  14 *    ADDSi    v108, 134217766
+  190  14 *    RDSPtr
+  191  14 *    RefCpyV  v7, 45502560
+  193  14 *    CALLSYS  349           (int& array::opIndex(uint))
+  195  12 *    WRTV4    v1
+  196  12 *    FREE     v7, 45502560
+- 218,3 -
+  198  12 *    SUSPEND
+  199  12 *    CALLSYS  407           (int b2dCreateBody())
+  201  12 *    CpyRtoV4 v6
+  202  12 *    CpyVtoV4 v1, v6
+- 219,3 -
+  204  12 *    SUSPEND
+  205  12 *    PshC4    0x2          (i:2, f:2.8026e-045)
+  207  13 *    PshV4    v1
+  208  14 *    CALLSYS  408           (void b2dSetBodyType(int, int))
+- 220,3 -
+  210  12 *    SUSPEND
+  211  12 *    SetV1    v6, 0x0
+  213  12 *    PshV4    v6
+  214  13 *    PshV4    v1
+  215  14 *    CALLSYS  409           (void b2dSetBodyAllowSleep(int, bool))
+- 221,3 -
+  217  12 *    SUSPEND
+  218  12 *    PshC4    0x3f800000          (i:1065353216, f:1)
+  220  13 *    CpyGtoV4 v3, 113795376
+  222  13 *    MULIf    v8, v3, 0.000000
+  225  13 *    PshV4    v8
+  226  14 *    CpyGtoV4 v3, 113795376
+  228  14 *    MULIf    v5, v3, -8.000000
+  231  14 *    PshV4    v5
+  232  15 *    CpyGtoV4 v3, 113795376
+  234  15 *    MULIf    v4, v3, -4.000000
+  237  15 *    PshV4    v4
+  238  16 *    CpyGtoV4 v3, 113795376
+  240  16 *    MULIf    v2, v3, 6.000000
+  243  16 *    PshV4    v2
+  244  17 *    CpyGtoV4 v3, 113795376
+  246  17 *    MULIf    v9, v3, 3.000000
+  249  17 *    PshV4    v9
+  250  18 *    PshV4    v1
+  251  19 *    CALLSYS  418           (int b2dCreateFixtureBox(int, float, float, float, float, float, float))
+- 222,3 -
+  253  12 *    SUSPEND
+  254  12 *    PshC4    0x2          (i:2, f:2.8026e-045)
+  256  13 *    PshVPtr  v0
+  257  14 *    ADDSi    v108, 134217766
+  259  14 *    RDSPtr
+  260  14 *    RefCpyV  v7, 45502560
+  262  14 *    CALLSYS  349           (int& array::opIndex(uint))
+  264  12 *    WRTV4    v1
+  265  12 *    FREE     v7, 45502560
+- 225,3 -
+  267  12 *    SUSPEND
+  268  12 *    CALLSYS  407           (int b2dCreateBody())
+  270  12 *    CpyRtoV4 v9
+  271  12 *    CpyVtoV4 v1, v9
+- 226,3 -
+  273  12 *    SUSPEND
+  274  12 *    PshC4    0x2          (i:2, f:2.8026e-045)
+  276  13 *    PshV4    v1
+  277  14 *    CALLSYS  408           (void b2dSetBodyType(int, int))
+- 227,3 -
+  279  12 *    SUSPEND
+  280  12 *    SetV1    v9, 0x0
+  282  12 *    PshV4    v9
+  283  13 *    PshV4    v1
+  284  14 *    CALLSYS  409           (void b2dSetBodyAllowSleep(int, bool))
+- 228,3 -
+  286  12 *    SUSPEND
+  287  12 *    PshC4    0x3f800000          (i:1065353216, f:1)
+  289  13 *    CpyGtoV4 v3, 113795376
+  291  13 *    MULIf    v6, v3, 0.000000
+  294  13 *    PshV4    v6
+  295  14 *    CpyGtoV4 v3, 113795376
+  297  14 *    MULIf    v2, v3, -2.000000
+  300  14 *    PshV4    v2
+  301  15 *    CpyGtoV4 v3, 113795376
+  303  15 *    MULIf    v4, v3, -4.000000
+  306  15 *    PshV4    v4
+  307  16 *    CpyGtoV4 v3, 113795376
+  309  16 *    MULIf    v5, v3, 6.000000
+  312  16 *    PshV4    v5
+  313  17 *    CpyGtoV4 v3, 113795376
+  315  17 *    MULIf    v8, v3, 3.000000
+  318  17 *    PshV4    v8
+  319  18 *    PshV4    v1
+  320  19 *    CALLSYS  418           (int b2dCreateFixtureBox(int, float, float, float, float, float, float))
+- 229,3 -
+  322  12 *    SUSPEND
+  323  12 *    PshC4    0x3          (i:3, f:4.2039e-045)
+  325  13 *    PshVPtr  v0
+  326  14 *    ADDSi    v108, 134217766
+  328  14 *    RDSPtr
+  329  14 *    RefCpyV  v7, 45502560
+  331  14 *    CALLSYS  349           (int& array::opIndex(uint))
+  333  12 *    WRTV4    v1
+  334  12 *    FREE     v7, 45502560
+- 232,3 -
+  336  12 *    SUSPEND
+  337  12 *    CALLSYS  407           (int b2dCreateBody())
+  339  12 *    CpyRtoV4 v8
+  340  12 *    CpyVtoV4 v1, v8
+- 233,3 -
+  342  12 *    SUSPEND
+  343  12 *    PshC4    0x2          (i:2, f:2.8026e-045)
+  345  13 *    PshV4    v1
+  346  14 *    CALLSYS  408           (void b2dSetBodyType(int, int))
+- 234,3 -
+  348  12 *    SUSPEND
+  349  12 *    SetV1    v8, 0x0
+  351  12 *    PshV4    v8
+  352  13 *    PshV4    v1
+  353  14 *    CALLSYS  409           (void b2dSetBodyAllowSleep(int, bool))
+- 235,3 -
+  355  12 *    SUSPEND
+  356  12 *    PshC4    0x3f800000          (i:1065353216, f:1)
+  358  13 *    CpyGtoV4 v3, 113795376
+  360  13 *    MULIf    v9, v3, 0.000000
+  363  13 *    PshV4    v9
+  364  14 *    CpyGtoV4 v3, 113795376
+  366  14 *    MULIf    v5, v3, -8.000000
+  369  14 *    PshV4    v5
+  370  15 *    CpyGtoV4 v3, 113795376
+  372  15 *    MULIf    v4, v3, 4.000000
+  375  15 *    PshV4    v4
+  376  16 *    CpyGtoV4 v3, 113795376
+  378  16 *    MULIf    v2, v3, 6.000000
+  381  16 *    PshV4    v2
+  382  17 *    CpyGtoV4 v3, 113795376
+  384  17 *    MULIf    v6, v3, 3.000000
+  387  17 *    PshV4    v6
+  388  18 *    PshV4    v1
+  389  19 *    CALLSYS  418           (int b2dCreateFixtureBox(int, float, float, float, float, float, float))
+- 236,3 -
+  391  12 *    SUSPEND
+  392  12 *    PshC4    0x4          (i:4, f:5.60519e-045)
+  394  13 *    PshVPtr  v0
+  395  14 *    ADDSi    v108, 134217766
+  397  14 *    RDSPtr
+  398  14 *    RefCpyV  v7, 45502560
+  400  14 *    CALLSYS  349           (int& array::opIndex(uint))
+  402  12 *    WRTV4    v1
+  403  12 *    FREE     v7, 45502560
+- 239,3 -
+  405  12 *    SUSPEND
+  406  12 *    CALLSYS  407           (int b2dCreateBody())
+  408  12 *    CpyRtoV4 v6
+  409  12 *    CpyVtoV4 v1, v6
+- 240,3 -
+  411  12 *    SUSPEND
+  412  12 *    PshC4    0x2          (i:2, f:2.8026e-045)
+  414  13 *    PshV4    v1
+  415  14 *    CALLSYS  408           (void b2dSetBodyType(int, int))
+- 241,3 -
+  417  12 *    SUSPEND
+  418  12 *    SetV1    v6, 0x0
+  420  12 *    PshV4    v6
+  421  13 *    PshV4    v1
+  422  14 *    CALLSYS  409           (void b2dSetBodyAllowSleep(int, bool))
+- 242,3 -
+  424  12 *    SUSPEND
+  425  12 *    PshC4    0x3f800000          (i:1065353216, f:1)
+  427  13 *    CpyGtoV4 v3, 113795376
+  429  13 *    MULIf    v8, v3, 0.000000
+  432  13 *    PshV4    v8
+  433  14 *    CpyGtoV4 v3, 113795376
+  435  14 *    MULIf    v2, v3, -2.000000
+  438  14 *    PshV4    v2
+  439  15 *    CpyGtoV4 v3, 113795376
+  441  15 *    MULIf    v4, v3, 4.000000
+  444  15 *    PshV4    v4
+  445  16 *    CpyGtoV4 v3, 113795376
+  447  16 *    MULIf    v5, v3, 6.000000
+  450  16 *    PshV4    v5
+  451  17 *    CpyGtoV4 v3, 113795376
+  453  17 *    MULIf    v9, v3, 3.000000
+  456  17 *    PshV4    v9
+  457  18 *    PshV4    v1
+  458  19 *    CALLSYS  418           (int b2dCreateFixtureBox(int, float, float, float, float, float, float))
+- 243,3 -
+  460  12 *    SUSPEND
+  461  12 *    PshC4    0x5          (i:5, f:7.00649e-045)
+  463  13 *    PshVPtr  v0
+  464  14 *    ADDSi    v108, 134217766
+  466  14 *    RDSPtr
+  467  14 *    RefCpyV  v7, 45502560
+  469  14 *    CALLSYS  349           (int& array::opIndex(uint))
+  471  12 *    WRTV4    v1
+  472  12 *    FREE     v7, 45502560
+- 246,3 -
+  474  12 *    SUSPEND
+  475  12 *    CALLSYS  407           (int b2dCreateBody())
+  477  12 *    CpyRtoV4 v9
+  478  12 *    CpyVtoV4 v1, v9
+- 247,3 -
+  480  12 *    SUSPEND
+  481  12 *    PshC4    0x2          (i:2, f:2.8026e-045)
+  483  13 *    PshV4    v1
+  484  14 *    CALLSYS  408           (void b2dSetBodyType(int, int))
+- 248,3 -
+  486  12 *    SUSPEND
+  487  12 *    SetV1    v9, 0x0
+  489  12 *    PshV4    v9
+  490  13 *    PshV4    v1
+  491  14 *    CALLSYS  409           (void b2dSetBodyAllowSleep(int, bool))
+- 249,3 -
+  493  12 *    SUSPEND
+  494  12 *    PshC4    0x3f800000          (i:1065353216, f:1)
+  496  13 *    CpyGtoV4 v3, 113795376
+  498  13 *    MULIf    v6, v3, 0.000000
+  501  13 *    PshV4    v6
+  502  14 *    CpyGtoV4 v3, 113795376
+  504  14 *    MULIf    v5, v3, 3.000000
+  507  14 *    PshV4    v5
+  508  15 *    CpyGtoV4 v3, 113795376
+  510  15 *    MULIf    v4, v3, -2.000000
+  513  15 *    PshV4    v4
+  514  16 *    CpyGtoV4 v3, 113795376
+  516  16 *    MULIf    v2, v3, 6.000000
+  519  16 *    PshV4    v2
+  520  17 *    CpyGtoV4 v3, 113795376
+  522  17 *    MULIf    v8, v3, 3.000000
+  525  17 *    PshV4    v8
+  526  18 *    PshV4    v1
+  527  19 *    CALLSYS  418           (int b2dCreateFixtureBox(int, float, float, float, float, float, float))
+- 250,3 -
+  529  12 *    SUSPEND
+  530  12 *    PshC4    0x7          (i:7, f:9.80909e-045)
+  532  13 *    PshVPtr  v0
+  533  14 *    ADDSi    v108, 134217766
+  535  14 *    RDSPtr
+  536  14 *    RefCpyV  v7, 45502560
+  538  14 *    CALLSYS  349           (int& array::opIndex(uint))
+  540  12 *    WRTV4    v1
+  541  12 *    FREE     v7, 45502560
+- 253,3 -
+  543  12 *    SUSPEND
+  544  12 *    CALLSYS  407           (int b2dCreateBody())
+  546  12 *    CpyRtoV4 v8
+  547  12 *    CpyVtoV4 v1, v8
+- 254,3 -
+  549  12 *    SUSPEND
+  550  12 *    PshC4    0x2          (i:2, f:2.8026e-045)
+  552  13 *    PshV4    v1
+  553  14 *    CALLSYS  408           (void b2dSetBodyType(int, int))
+- 255,3 -
+  555  12 *    SUSPEND
+  556  12 *    SetV1    v8, 0x0
+  558  12 *    PshV4    v8
+  559  13 *    PshV4    v1
+  560  14 *    CALLSYS  409           (void b2dSetBodyAllowSleep(int, bool))
+- 256,3 -
+  562  12 *    SUSPEND
+  563  12 *    PshC4    0x3f800000          (i:1065353216, f:1)
+  565  13 *    CpyGtoV4 v3, 113795376
+  567  13 *    MULIf    v9, v3, 0.000000
+  570  13 *    PshV4    v9
+  571  14 *    CpyGtoV4 v3, 113795376
+  573  14 *    MULIf    v2, v3, 9.000000
+  576  14 *    PshV4    v2
+  577  15 *    CpyGtoV4 v3, 113795376
+  579  15 *    MULIf    v4, v3, -2.000000
+  582  15 *    PshV4    v4
+  583  16 *    CpyGtoV4 v3, 113795376
+  585  16 *    MULIf    v5, v3, 6.000000
+  588  16 *    PshV4    v5
+  589  17 *    CpyGtoV4 v3, 113795376
+  591  17 *    MULIf    v6, v3, 3.000000
+  594  17 *    PshV4    v6
+  595  18 *    PshV4    v1
+  596  19 *    CALLSYS  418           (int b2dCreateFixtureBox(int, float, float, float, float, float, float))
+- 257,3 -
+  598  12 *    SUSPEND
+  599  12 *    PshC4    0x8          (i:8, f:1.12104e-044)
+  601  13 *    PshVPtr  v0
+  602  14 *    ADDSi    v108, 134217766
+  604  14 *    RDSPtr
+  605  14 *    RefCpyV  v7, 45502560
+  607  14 *    CALLSYS  349           (int& array::opIndex(uint))
+  609  12 *    WRTV4    v1
+  610  12 *    FREE     v7, 45502560
+- 260,3 -
+  612  12 *    SUSPEND
+  613  12 *    CALLSYS  407           (int b2dCreateBody())
+  615  12 *    CpyRtoV4 v6
+  616  12 *    CpyVtoV4 v1, v6
+- 261,3 -
+  618  12 *    SUSPEND
+  619  12 *    PshC4    0x2          (i:2, f:2.8026e-045)
+  621  13 *    PshV4    v1
+  622  14 *    CALLSYS  408           (void b2dSetBodyType(int, int))
+- 262,3 -
+  624  12 *    SUSPEND
+  625  12 *    SetV1    v6, 0x0
+  627  12 *    PshV4    v6
+  628  13 *    PshV4    v1
+  629  14 *    CALLSYS  409           (void b2dSetBodyAllowSleep(int, bool))
+- 263,3 -
+  631  12 *    SUSPEND
+  632  12 *    PshC4    0x3f800000          (i:1065353216, f:1)
+  634  13 *    CpyGtoV4 v3, 113795376
+  636  13 *    MULIf    v8, v3, 0.000000
+  639  13 *    PshV4    v8
+  640  14 *    CpyGtoV4 v3, 113795376
+  642  14 *    MULIf    v5, v3, 3.000000
+  645  14 *    PshV4    v5
+  646  15 *    CpyGtoV4 v3, 113795376
+  648  15 *    MULIf    v4, v3, 2.000000
+  651  15 *    PshV4    v4
+  652  16 *    CpyGtoV4 v3, 113795376
+  654  16 *    MULIf    v2, v3, 6.000000
+  657  16 *    PshV4    v2
+  658  17 *    CpyGtoV4 v3, 113795376
+  660  17 *    MULIf    v9, v3, 3.000000
+  663  17 *    PshV4    v9
+  664  18 *    PshV4    v1
+  665  19 *    CALLSYS  418           (int b2dCreateFixtureBox(int, float, float, float, float, float, float))
+- 264,3 -
+  667  12 *    SUSPEND
+  668  12 *    PshC4    0x9          (i:9, f:1.26117e-044)
+  670  13 *    PshVPtr  v0
+  671  14 *    ADDSi    v108, 134217766
+  673  14 *    RDSPtr
+  674  14 *    RefCpyV  v7, 45502560
+  676  14 *    CALLSYS  349           (int& array::opIndex(uint))
+  678  12 *    WRTV4    v1
+  679  12 *    FREE     v7, 45502560
+- 267,3 -
+  681  12 *    SUSPEND
+  682  12 *    CALLSYS  407           (int b2dCreateBody())
+  684  12 *    CpyRtoV4 v9
+  685  12 *    CpyVtoV4 v1, v9
+- 268,3 -
+  687  12 *    SUSPEND
+  688  12 *    PshC4    0x2          (i:2, f:2.8026e-045)
+  690  13 *    PshV4    v1
+  691  14 *    CALLSYS  408           (void b2dSetBodyType(int, int))
+- 269,3 -
+  693  12 *    SUSPEND
+  694  12 *    SetV1    v9, 0x0
+  696  12 *    PshV4    v9
+  697  13 *    PshV4    v1
+  698  14 *    CALLSYS  409           (void b2dSetBodyAllowSleep(int, bool))
+- 270,3 -
+  700  12 *    SUSPEND
+  701  12 *    PshC4    0x3f800000          (i:1065353216, f:1)
+  703  13 *    CpyGtoV4 v3, 113795376
+  705  13 *    MULIf    v6, v3, 0.000000
+  708  13 *    PshV4    v6
+  709  14 *    CpyGtoV4 v3, 113795376
+  711  14 *    MULIf    v2, v3, 9.000000
+  714  14 *    PshV4    v2
+  715  15 *    CpyGtoV4 v3, 113795376
+  717  15 *    MULIf    v4, v3, 2.000000
+  720  15 *    PshV4    v4
+  721  16 *    CpyGtoV4 v3, 113795376
+  723  16 *    MULIf    v5, v3, 6.000000
+  726  16 *    PshV4    v5
+  727  17 *    CpyGtoV4 v3, 113795376
+  729  17 *    MULIf    v8, v3, 3.000000
+  732  17 *    PshV4    v8
+  733  18 *    PshV4    v1
+  734  19 *    CALLSYS  418           (int b2dCreateFixtureBox(int, float, float, float, float, float, float))
+- 271,3 -
+  736  12 *    SUSPEND
+  737  12 *    PshC4    0xa          (i:10, f:1.4013e-044)
+  739  13 *    PshVPtr  v0
+  740  14 *    ADDSi    v108, 134217766
+  742  14 *    RDSPtr
+  743  14 *    RefCpyV  v7, 45502560
+  745  14 *    CALLSYS  349           (int& array::opIndex(uint))
+  747  12 *    WRTV4    v1
+  748  12 *    FREE     v7, 45502560
+- 274,3 -
+  750  12 *    SUSPEND
+  751  12 *    VarDecl  1
+  751  12 *    CpyGtoV4 v8, 113795376
+  753  12 *    MULIf    v9, v8, -12.000000
+  756  12 *    PshV4    v9
+  757  13 *    CpyGtoV4 v8, 113795376
+  759  13 *    MULIf    v5, v8, 0.000000
+  762  13 *    PshV4    v5
+  763  14 *    PshC4    0x1          (i:1, f:1.4013e-045)
+  765  15 *    PshVPtr  v0
+  766  16 *    ADDSi    v108, 134217766
+  768  16 *    RDSPtr
+  769  16 *    RefCpyV  v7, 45502560
+  771  16 *    CALLSYS  349           (int& array::opIndex(uint))
+  773  14 *    RDR4     v8
+  774  14 *    PshV4    v8
+  775  15 *    PshC4    0x0          (i:0, f:0)
+  777  16 *    PshVPtr  v0
+  778  17 *    ADDSi    v108, 134217766
+  780  17 *    RDSPtr
+  781  17 *    RefCpyV  v12, 45502560
+  783  17 *    CALLSYS  349           (int& array::opIndex(uint))
+  785  15 *    RDR4     v4
+  786  15 *    PshV4    v4
+  787  16 *    CALLSYS  428           (int b2dCreateRevoluteJoint(int, int, float, float))
+  789  12 *    CpyRtoV4 v2
+  790  12 *    FREE     v7, 45502560
+  792  12 *    FREE     v12, 45502560
+  794  12 *    CpyVtoV4 v11, v2
+- 275,3 -
+  796  12 *    SUSPEND
+  797  12 *    CpyGtoV4 v6, 113807664
+  799  12 *    MULIf    v3, v6, 40.000000
+  802  12 *    SetV4    v10, 0x43340000          (i:1127481344, f:180)
+  804  12 *    DIVf     v6, v3, v10
+  806  12 *    PshV4    v6
+  807  13 *    CpyGtoV4 v10, 113807664
+  809  13 *    MULIf    v2, v10, 40.000000
+  812  13 *    NEGf     v2
+  813  13 *    SetV4    v9, 0x43340000          (i:1127481344, f:180)
+  815  13 *    DIVf     v10, v2, v9
+  817  13 *    PshV4    v10
+  818  14 *    PshV4    v11
+  819  15 *    CALLSYS  429           (void b2dSetRevoluteJoinLimits(int, float, float))
+- 276,3 -
+  821  12 *    SUSPEND
+  822  12 *    PshV4    v11
+  823  13 *    CALLSYS  430           (void b2dEnableRevoluteJointLimits(int))
+- 278,3 -
+  825  12 *    SUSPEND
+  826  12 *    CpyGtoV4 v9, 113795376
+  828  12 *    MULIf    v6, v9, -3.000000
+  831  12 *    PshV4    v6
+  832  13 *    CpyGtoV4 v9, 113795376
+  834  13 *    MULIf    v2, v9, 0.000000
+  837  13 *    PshV4    v2
+  838  14 *    PshC4    0x6          (i:6, f:8.40779e-045)
+  840  15 *    PshVPtr  v0
+  841  16 *    ADDSi    v108, 134217766
+  843  16 *    RDSPtr
+  844  16 *    RefCpyV  v12, 45502560
+  846  16 *    CALLSYS  349           (int& array::opIndex(uint))
+  848  14 *    RDR4     v9
+  849  14 *    PshV4    v9
+  850  15 *    PshC4    0x1          (i:1, f:1.4013e-045)
+  852  16 *    PshVPtr  v0
+  853  17 *    ADDSi    v108, 134217766
+  855  17 *    RDSPtr
+  856  17 *    RefCpyV  v7, 45502560
+  858  17 *    CALLSYS  349           (int& array::opIndex(uint))
+  860  15 *    RDR4     v4
+  861  15 *    PshV4    v4
+  862  16 *    CALLSYS  428           (int b2dCreateRevoluteJoint(int, int, float, float))
+  864  12 *    CpyRtoV4 v5
+  865  12 *    FREE     v12, 45502560
+  867  12 *    FREE     v7, 45502560
+  869  12 *    CpyVtoV4 v11, v5
+- 279,3 -
+  871  12 *    SUSPEND
+  872  12 *    CpyGtoV4 v3, 113807664
+  874  12 *    MULIf    v8, v3, 15.000000
+  877  12 *    SetV4    v10, 0x43340000          (i:1127481344, f:180)
+  879  12 *    DIVf     v3, v8, v10
+  881  12 *    PshV4    v3
+  882  13 *    CpyGtoV4 v10, 113807664
+  884  13 *    MULIf    v5, v10, 15.000000
+  887  13 *    NEGf     v5
+  888  13 *    SetV4    v6, 0x43340000          (i:1127481344, f:180)
+  890  13 *    DIVf     v10, v5, v6
+  892  13 *    PshV4    v10
+  893  14 *    PshV4    v11
+  894  15 *    CALLSYS  429           (void b2dSetRevoluteJoinLimits(int, float, float))
+- 280,3 -
+  896  12 *    SUSPEND
+  897  12 *    PshV4    v11
+  898  13 *    CALLSYS  430           (void b2dEnableRevoluteJointLimits(int))
+- 282,3 -
+  900  12 *    SUSPEND
+  901  12 *    CpyGtoV4 v6, 113795376
+  903  12 *    MULIf    v3, v6, -10.000000
+  906  12 *    PshV4    v3
+  907  13 *    CpyGtoV4 v6, 113795376
+  909  13 *    MULIf    v5, v6, -4.000000
+  912  13 *    PshV4    v5
+  913  14 *    PshC4    0x2          (i:2, f:2.8026e-045)
+  915  15 *    PshVPtr  v0
+  916  16 *    ADDSi    v108, 134217766
+  918  16 *    RDSPtr
+  919  16 *    RefCpyV  v7, 45502560
+  921  16 *    CALLSYS  349           (int& array::opIndex(uint))
+  923  14 *    RDR4     v6
+  924  14 *    PshV4    v6
+  925  15 *    PshC4    0x1          (i:1, f:1.4013e-045)
+  927  16 *    PshVPtr  v0
+  928  17 *    ADDSi    v108, 134217766
+  930  17 *    RDSPtr
+  931  17 *    RefCpyV  v12, 45502560
+  933  17 *    CALLSYS  349           (int& array::opIndex(uint))
+  935  15 *    RDR4     v4
+  936  15 *    PshV4    v4
+  937  16 *    CALLSYS  428           (int b2dCreateRevoluteJoint(int, int, float, float))
+  939  12 *    CpyRtoV4 v2
+  940  12 *    FREE     v7, 45502560
+  942  12 *    FREE     v12, 45502560
+  944  12 *    CpyVtoV4 v11, v2
+- 283,3 -
+  946  12 *    SUSPEND
+  947  12 *    CpyGtoV4 v8, 113807664
+  949  12 *    MULIf    v9, v8, 130.000000
+  952  12 *    SetV4    v10, 0x43340000          (i:1127481344, f:180)
+  954  12 *    DIVf     v8, v9, v10
+  956  12 *    PshV4    v8
+  957  13 *    CpyGtoV4 v10, 113807664
+  959  13 *    MULIf    v2, v10, 85.000000
+  962  13 *    NEGf     v2
+  963  13 *    SetV4    v3, 0x43340000          (i:1127481344, f:180)
+  965  13 *    DIVf     v10, v2, v3
+  967  13 *    PshV4    v10
+  968  14 *    PshV4    v11
+  969  15 *    CALLSYS  429           (void b2dSetRevoluteJoinLimits(int, float, float))
+- 284,3 -
+  971  12 *    SUSPEND
+  972  12 *    PshV4    v11
+  973  13 *    CALLSYS  430           (void b2dEnableRevoluteJointLimits(int))
+- 286,3 -
+  975  12 *    SUSPEND
+  976  12 *    CpyGtoV4 v3, 113795376
+  978  12 *    MULIf    v8, v3, -5.000000
+  981  12 *    PshV4    v8
+  982  13 *    CpyGtoV4 v3, 113795376
+  984  13 *    MULIf    v2, v3, -4.000000
+  987  13 *    PshV4    v2
+  988  14 *    PshC4    0x3          (i:3, f:4.2039e-045)
+  990  15 *    PshVPtr  v0
+  991  16 *    ADDSi    v108, 134217766
+  993  16 *    RDSPtr
+  994  16 *    RefCpyV  v12, 45502560
+  996  16 *    CALLSYS  349           (int& array::opIndex(uint))
+  998  14 *    RDR4     v3
+  999  14 *    PshV4    v3
+ 1000  15 *    PshC4    0x2          (i:2, f:2.8026e-045)
+ 1002  16 *    PshVPtr  v0
+ 1003  17 *    ADDSi    v108, 134217766
+ 1005  17 *    RDSPtr
+ 1006  17 *    RefCpyV  v7, 45502560
+ 1008  17 *    CALLSYS  349           (int& array::opIndex(uint))
+ 1010  15 *    RDR4     v4
+ 1011  15 *    PshV4    v4
+ 1012  16 *    CALLSYS  428           (int b2dCreateRevoluteJoint(int, int, float, float))
+ 1014  12 *    CpyRtoV4 v5
+ 1015  12 *    FREE     v12, 45502560
+ 1017  12 *    FREE     v7, 45502560
+ 1019  12 *    CpyVtoV4 v11, v5
+- 287,3 -
+ 1021  12 *    SUSPEND
+ 1022  12 *    CpyGtoV4 v9, 113807664
+ 1024  12 *    MULIf    v6, v9, 130.000000
+ 1027  12 *    SetV4    v10, 0x43340000          (i:1127481344, f:180)
+ 1029  12 *    DIVf     v9, v6, v10
+ 1031  12 *    PshV4    v9
+ 1032  13 *    CpyGtoV4 v10, 113807664
+ 1034  13 *    MULIf    v5, v10, 10.000000
+ 1037  13 *    NEGf     v5
+ 1038  13 *    SetV4    v8, 0x43340000          (i:1127481344, f:180)
+ 1040  13 *    DIVf     v10, v5, v8
+ 1042  13 *    PshV4    v10
+ 1043  14 *    PshV4    v11
+ 1044  15 *    CALLSYS  429           (void b2dSetRevoluteJoinLimits(int, float, float))
+- 288,3 -
+ 1046  12 *    SUSPEND
+ 1047  12 *    PshV4    v11
+ 1048  13 *    CALLSYS  430           (void b2dEnableRevoluteJointLimits(int))
+- 290,3 -
+ 1050  12 *    SUSPEND
+ 1051  12 *    CpyGtoV4 v8, 113795376
+ 1053  12 *    MULIf    v9, v8, -10.000000
+ 1056  12 *    PshV4    v9
+ 1057  13 *    CpyGtoV4 v8, 113795376
+ 1059  13 *    MULIf    v5, v8, 4.000000
+ 1062  13 *    PshV4    v5
+ 1063  14 *    PshC4    0x4          (i:4, f:5.60519e-045)
+ 1065  15 *    PshVPtr  v0
+ 1066  16 *    ADDSi    v108, 134217766
+ 1068  16 *    RDSPtr
+ 1069  16 *    RefCpyV  v7, 45502560
+ 1071  16 *    CALLSYS  349           (int& array::opIndex(uint))
+ 1073  14 *    RDR4     v8
+ 1074  14 *    PshV4    v8
+ 1075  15 *    PshC4    0x1          (i:1, f:1.4013e-045)
+ 1077  16 *    PshVPtr  v0
+ 1078  17 *    ADDSi    v108, 134217766
+ 1080  17 *    RDSPtr
+ 1081  17 *    RefCpyV  v12, 45502560
+ 1083  17 *    CALLSYS  349           (int& array::opIndex(uint))
+ 1085  15 *    RDR4     v4
+ 1086  15 *    PshV4    v4
+ 1087  16 *    CALLSYS  428           (int b2dCreateRevoluteJoint(int, int, float, float))
+ 1089  12 *    CpyRtoV4 v2
+ 1090  12 *    FREE     v7, 45502560
+ 1092  12 *    FREE     v12, 45502560
+ 1094  12 *    CpyVtoV4 v11, v2
+- 291,3 -
+ 1096  12 *    SUSPEND
+ 1097  12 *    CpyGtoV4 v6, 113807664
+ 1099  12 *    MULIf    v3, v6, 85.000000
+ 1102  12 *    SetV4    v10, 0x43340000          (i:1127481344, f:180)
+ 1104  12 *    DIVf     v6, v3, v10
+ 1106  12 *    PshV4    v6
+ 1107  13 *    CpyGtoV4 v10, 113807664
+ 1109  13 *    MULIf    v2, v10, 130.000000
+ 1112  13 *    NEGf     v2
+ 1113  13 *    SetV4    v9, 0x43340000          (i:1127481344, f:180)
+ 1115  13 *    DIVf     v10, v2, v9
+ 1117  13 *    PshV4    v10
+ 1118  14 *    PshV4    v11
+ 1119  15 *    CALLSYS  429           (void b2dSetRevoluteJoinLimits(int, float, float))
+- 292,3 -
+ 1121  12 *    SUSPEND
+ 1122  12 *    PshV4    v11
+ 1123  13 *    CALLSYS  430           (void b2dEnableRevoluteJointLimits(int))
+- 294,3 -
+ 1125  12 *    SUSPEND
+ 1126  12 *    CpyGtoV4 v9, 113795376
+ 1128  12 *    MULIf    v6, v9, -5.000000
+ 1131  12 *    PshV4    v6
+ 1132  13 *    CpyGtoV4 v9, 113795376
+ 1134  13 *    MULIf    v2, v9, 4.000000
+ 1137  13 *    PshV4    v2
+ 1138  14 *    PshC4    0x5          (i:5, f:7.00649e-045)
+ 1140  15 *    PshVPtr  v0
+ 1141  16 *    ADDSi    v108, 134217766
+ 1143  16 *    RDSPtr
+ 1144  16 *    RefCpyV  v12, 45502560
+ 1146  16 *    CALLSYS  349           (int& array::opIndex(uint))
+ 1148  14 *    RDR4     v9
+ 1149  14 *    PshV4    v9
+ 1150  15 *    PshC4    0x4          (i:4, f:5.60519e-045)
+ 1152  16 *    PshVPtr  v0
+ 1153  17 *    ADDSi    v108, 134217766
+ 1155  17 *    RDSPtr
+ 1156  17 *    RefCpyV  v7, 45502560
+ 1158  17 *    CALLSYS  349           (int& array::opIndex(uint))
+ 1160  15 *    RDR4     v4
+ 1161  15 *    PshV4    v4
+ 1162  16 *    CALLSYS  428           (int b2dCreateRevoluteJoint(int, int, float, float))
+ 1164  12 *    CpyRtoV4 v5
+ 1165  12 *    FREE     v12, 45502560
+ 1167  12 *    FREE     v7, 45502560
+ 1169  12 *    CpyVtoV4 v11, v5
+- 295,3 -
+ 1171  12 *    SUSPEND
+ 1172  12 *    CpyGtoV4 v3, 113807664
+ 1174  12 *    MULIf    v8, v3, 15.000000
+ 1177  12 *    SetV4    v10, 0x43340000          (i:1127481344, f:180)
+ 1179  12 *    DIVf     v3, v8, v10
+ 1181  12 *    PshV4    v3
+ 1182  13 *    CpyGtoV4 v10, 113807664
+ 1184  13 *    MULIf    v5, v10, 130.000000
+ 1187  13 *    NEGf     v5
+ 1188  13 *    SetV4    v6, 0x43340000          (i:1127481344, f:180)
+ 1190  13 *    DIVf     v10, v5, v6
+ 1192  13 *    PshV4    v10
+ 1193  14 *    PshV4    v11
+ 1194  15 *    CALLSYS  429           (void b2dSetRevoluteJoinLimits(int, float, float))
+- 296,3 -
+ 1196  12 *    SUSPEND
+ 1197  12 *    PshV4    v11
+ 1198  13 *    CALLSYS  430           (void b2dEnableRevoluteJointLimits(int))
+- 298,3 -
+ 1200  12 *    SUSPEND
+ 1201  12 *    CpyGtoV4 v6, 113795376
+ 1203  12 *    MULIf    v3, v6, 0.000000
+ 1206  12 *    PshV4    v3
+ 1207  13 *    CpyGtoV4 v6, 113795376
+ 1209  13 *    MULIf    v5, v6, -2.000000
+ 1212  13 *    PshV4    v5
+ 1213  14 *    PshC4    0x7          (i:7, f:9.80909e-045)
+ 1215  15 *    PshVPtr  v0
+ 1216  16 *    ADDSi    v108, 134217766
+ 1218  16 *    RDSPtr
+ 1219  16 *    RefCpyV  v7, 45502560
+ 1221  16 *    CALLSYS  349           (int& array::opIndex(uint))
+ 1223  14 *    RDR4     v6
+ 1224  14 *    PshV4    v6
+ 1225  15 *    PshC4    0x6          (i:6, f:8.40779e-045)
+ 1227  16 *    PshVPtr  v0
+ 1228  17 *    ADDSi    v108, 134217766
+ 1230  17 *    RDSPtr
+ 1231  17 *    RefCpyV  v12, 45502560
+ 1233  17 *    CALLSYS  349           (int& array::opIndex(uint))
+ 1235  15 *    RDR4     v4
+ 1236  15 *    PshV4    v4
+ 1237  16 *    CALLSYS  428           (int b2dCreateRevoluteJoint(int, int, float, float))
+ 1239  12 *    CpyRtoV4 v2
+ 1240  12 *    FREE     v7, 45502560
+ 1242  12 *    FREE     v12, 45502560
+ 1244  12 *    CpyVtoV4 v11, v2
+- 299,3 -
+ 1246  12 *    SUSPEND
+ 1247  12 *    CpyGtoV4 v8, 113807664
+ 1249  12 *    MULIf    v9, v8, 45.000000
+ 1252  12 *    SetV4    v10, 0x43340000          (i:1127481344, f:180)
+ 1254  12 *    DIVf     v8, v9, v10
+ 1256  12 *    PshV4    v8
+ 1257  13 *    CpyGtoV4 v10, 113807664
+ 1259  13 *    MULIf    v2, v10, 25.000000
+ 1262  13 *    NEGf     v2
+ 1263  13 *    SetV4    v3, 0x43340000          (i:1127481344, f:180)
+ 1265  13 *    DIVf     v10, v2, v3
+ 1267  13 *    PshV4    v10
+ 1268  14 *    PshV4    v11
+ 1269  15 *    CALLSYS  429           (void b2dSetRevoluteJoinLimits(int, float, float))
+- 300,3 -
+ 1271  12 *    SUSPEND
+ 1272  12 *    PshV4    v11
+ 1273  13 *    CALLSYS  430           (void b2dEnableRevoluteJointLimits(int))
+- 302,3 -
+ 1275  12 *    SUSPEND
+ 1276  12 *    CpyGtoV4 v3, 113795376
+ 1278  12 *    MULIf    v8, v3, 6.000000
+ 1281  12 *    PshV4    v8
+ 1282  13 *    CpyGtoV4 v3, 113795376
+ 1284  13 *    MULIf    v2, v3, -2.000000
+ 1287  13 *    PshV4    v2
+ 1288  14 *    PshC4    0x8          (i:8, f:1.12104e-044)
+ 1290  15 *    PshVPtr  v0
+ 1291  16 *    ADDSi    v108, 134217766
+ 1293  16 *    RDSPtr
+ 1294  16 *    RefCpyV  v12, 45502560
+ 1296  16 *    CALLSYS  349           (int& array::opIndex(uint))
+ 1298  14 *    RDR4     v3
+ 1299  14 *    PshV4    v3
+ 1300  15 *    PshC4    0x7          (i:7, f:9.80909e-045)
+ 1302  16 *    PshVPtr  v0
+ 1303  17 *    ADDSi    v108, 134217766
+ 1305  17 *    RDSPtr
+ 1306  17 *    RefCpyV  v7, 45502560
+ 1308  17 *    CALLSYS  349           (int& array::opIndex(uint))
+ 1310  15 *    RDR4     v4
+ 1311  15 *    PshV4    v4
+ 1312  16 *    CALLSYS  428           (int b2dCreateRevoluteJoint(int, int, float, float))
+ 1314  12 *    CpyRtoV4 v5
+ 1315  12 *    FREE     v12, 45502560
+ 1317  12 *    FREE     v7, 45502560
+ 1319  12 *    CpyVtoV4 v11, v5
+- 303,3 -
+ 1321  12 *    SUSPEND
+ 1322  12 *    CpyGtoV4 v9, 113807664
+ 1324  12 *    MULIf    v6, v9, 45.000000
+ 1327  12 *    SetV4    v10, 0x43340000          (i:1127481344, f:180)
+ 1329  12 *    DIVf     v9, v6, v10
+ 1331  12 *    PshV4    v9
+ 1332  13 *    CpyGtoV4 v10, 113807664
+ 1334  13 *    MULIf    v5, v10, 25.000000
+ 1337  13 *    NEGf     v5
+ 1338  13 *    SetV4    v8, 0x43340000          (i:1127481344, f:180)
+ 1340  13 *    DIVf     v10, v5, v8
+ 1342  13 *    PshV4    v10
+ 1343  14 *    PshV4    v11
+ 1344  15 *    CALLSYS  429           (void b2dSetRevoluteJoinLimits(int, float, float))
+- 304,3 -
+ 1346  12 *    SUSPEND
+ 1347  12 *    PshV4    v11
+ 1348  13 *    CALLSYS  430           (void b2dEnableRevoluteJointLimits(int))
+- 306,3 -
+ 1350  12 *    SUSPEND
+ 1351  12 *    CpyGtoV4 v8, 113795376
+ 1353  12 *    MULIf    v9, v8, 0.000000
+ 1356  12 *    PshV4    v9
+ 1357  13 *    CpyGtoV4 v8, 113795376
+ 1359  13 *    MULIf    v5, v8, 2.000000
+ 1362  13 *    PshV4    v5
+ 1363  14 *    PshC4    0x9          (i:9, f:1.26117e-044)
+ 1365  15 *    PshVPtr  v0
+ 1366  16 *    ADDSi    v108, 134217766
+ 1368  16 *    RDSPtr
+ 1369  16 *    RefCpyV  v7, 45502560
+ 1371  16 *    CALLSYS  349           (int& array::opIndex(uint))
+ 1373  14 *    RDR4     v8
+ 1374  14 *    PshV4    v8
+ 1375  15 *    PshC4    0x6          (i:6, f:8.40779e-045)
+ 1377  16 *    PshVPtr  v0
+ 1378  17 *    ADDSi    v108, 134217766
+ 1380  17 *    RDSPtr
+ 1381  17 *    RefCpyV  v12, 45502560
+ 1383  17 *    CALLSYS  349           (int& array::opIndex(uint))
+ 1385  15 *    RDR4     v4
+ 1386  15 *    PshV4    v4
+ 1387  16 *    CALLSYS  428           (int b2dCreateRevoluteJoint(int, int, float, float))
+ 1389  12 *    CpyRtoV4 v2
+ 1390  12 *    FREE     v7, 45502560
+ 1392  12 *    FREE     v12, 45502560
+ 1394  12 *    CpyVtoV4 v11, v2
+- 307,3 -
+ 1396  12 *    SUSPEND
+ 1397  12 *    CpyGtoV4 v6, 113807664
+ 1399  12 *    MULIf    v3, v6, 25.000000
+ 1402  12 *    SetV4    v10, 0x43340000          (i:1127481344, f:180)
+ 1404  12 *    DIVf     v6, v3, v10
+ 1406  12 *    PshV4    v6
+ 1407  13 *    CpyGtoV4 v10, 113807664
+ 1409  13 *    MULIf    v2, v10, 45.000000
+ 1412  13 *    NEGf     v2
+ 1413  13 *    SetV4    v9, 0x43340000          (i:1127481344, f:180)
+ 1415  13 *    DIVf     v10, v2, v9
+ 1417  13 *    PshV4    v10
+ 1418  14 *    PshV4    v11
+ 1419  15 *    CALLSYS  429           (void b2dSetRevoluteJoinLimits(int, float, float))
+- 308,3 -
+ 1421  12 *    SUSPEND
+ 1422  12 *    PshV4    v11
+ 1423  13 *    CALLSYS  430           (void b2dEnableRevoluteJointLimits(int))
+- 310,3 -
+ 1425  12 *    SUSPEND
+ 1426  12 *    CpyGtoV4 v9, 113795376
+ 1428  12 *    MULIf    v6, v9, 6.000000
+ 1431  12 *    PshV4    v6
+ 1432  13 *    CpyGtoV4 v9, 113795376
+ 1434  13 *    MULIf    v2, v9, 2.000000
+ 1437  13 *    PshV4    v2
+ 1438  14 *    PshC4    0xa          (i:10, f:1.4013e-044)
+ 1440  15 *    PshVPtr  v0
+ 1441  16 *    ADDSi    v108, 134217766
+ 1443  16 *    RDSPtr
+ 1444  16 *    RefCpyV  v12, 45502560
+ 1446  16 *    CALLSYS  349           (int& array::opIndex(uint))
+ 1448  14 *    RDR4     v9
+ 1449  14 *    PshV4    v9
+ 1450  15 *    PshC4    0x9          (i:9, f:1.26117e-044)
+ 1452  16 *    PshVPtr  v0
+ 1453  17 *    ADDSi    v108, 134217766
+ 1455  17 *    RDSPtr
+ 1456  17 *    RefCpyV  v7, 45502560
+ 1458  17 *    CALLSYS  349           (int& array::opIndex(uint))
+ 1460  15 *    RDR4     v4
+ 1461  15 *    PshV4    v4
+ 1462  16 *    CALLSYS  428           (int b2dCreateRevoluteJoint(int, int, float, float))
+ 1464  12 *    CpyRtoV4 v5
+ 1465  12 *    FREE     v12, 45502560
+ 1467  12 *    FREE     v7, 45502560
+ 1469  12 *    CpyVtoV4 v11, v5
+- 311,3 -
+ 1471  12 *    SUSPEND
+ 1472  12 *    CpyGtoV4 v3, 113807664
+ 1474  12 *    MULIf    v8, v3, 25.000000
+ 1477  12 *    SetV4    v10, 0x43340000          (i:1127481344, f:180)
+ 1479  12 *    DIVf     v3, v8, v10
+ 1481  12 *    PshV4    v3
+ 1482  13 *    CpyGtoV4 v10, 113807664
+ 1484  13 *    MULIf    v5, v10, 45.000000
+ 1487  13 *    NEGf     v5
+ 1488  13 *    SetV4    v6, 0x43340000          (i:1127481344, f:180)
+ 1490  13 *    DIVf     v10, v5, v6
+ 1492  13 *    PshV4    v10
+ 1493  14 *    PshV4    v11
+ 1494  15 *    CALLSYS  429           (void b2dSetRevoluteJoinLimits(int, float, float))
+- 312,3 -
+ 1496  12 *    SUSPEND
+ 1497  12 *    PshV4    v11
+ 1498  13 *    CALLSYS  430           (void b2dEnableRevoluteJointLimits(int))
+- 313,3 -
+ 1500  12 *    SUSPEND
+ 1501  12 * 0:
+ 1501  12 *    FREE     v0, 113504288
+ 1503  12 *    RET      1

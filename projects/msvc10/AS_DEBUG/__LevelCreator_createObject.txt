@@ -1,0 +1,107 @@
+void LevelCreator::createObject(GameData@)
+
+Temps: 1, 2, 10, 18, 26, 27, 28, 29, 30
+
+Variables: 
+ -001: GameData@ gameData
+ 000: LevelCreator this
+ 028: GameData {noname}
+ 029: ObjectData {noname}
+ 030: EditorObject {noname}
+ 010: string {noname}
+ 018: string {noname}
+ 026: string {noname}
+
+
+    0  30 *    VarDecl  0
+    0  30 *    PshVPtr  v0
+    1  31 *    CALLSYS  2           (void _builtin_object_::_beh_4_())
+- 444,3 -
+    3  30 *    SUSPEND
+    4  30 *    LoadRObjR v-1, v24, 134217775
+    7  30 *    RDR4     v1
+    8  30 *    CMPIi    v1, 0
+   10  30 *    JZ       +50              (d:62)
+- 445,4 -
+   12  30 * {
+   12  30 *    SUSPEND
+   13  30 *    STR      101         (l:32 s:"' is not o")
+   14  32 *    CALLSYS  32           (const string& _string_factory_(const int, const uint8&))
+   16  30 *    PshRPtr
+   17  31 *    PSF      v26
+   18  32 *    CALLSYS  34           (void string::_beh_0_(const string&in))
+   20  30 *    ObjInfo  v26, 1
+   20  30 *    VAR      v26
+   21  31 *    PSF      v10
+   22  32 *    PshVPtr  v-1
+   23  33 *    ADDSi    v16, 134217775
+   25  33 *    RDSPtr
+   26  33 *    PSF      v10
+   27  34 *    CALLSYS  34           (void string::_beh_0_(const string&in))
+   29  32 *    ObjInfo  v10, 1
+   29  32 *    VAR      v10
+   30  33 *    PSF      v18
+   31  34 *    STR      100         (l:10 s:"GameData '")
+   32  36 *    CALLSYS  32           (const string& _string_factory_(const int, const uint8&))
+   34  34 *    PshRPtr
+   35  35 *    GETREF   2
+   36  35 *    CALLSYS  40           (string string::opAdd(const string&in) const)
+   38  32 *    ObjInfo  v18, 1
+   38  32 *    PSF      v10
+   39  33 *    CALLSYS  35           (void string::_beh_1_())
+   41  32 *    ObjInfo  v10, 0
+   41  32 *    PSF      v18
+   42  33 *    GETREF   2
+   43  33 *    CALLSYS  40           (string string::opAdd(const string&in) const)
+   45  30 *    ObjInfo  v10, 1
+   45  30 *    PSF      v26
+   46  31 *    CALLSYS  35           (void string::_beh_1_())
+   48  30 *    ObjInfo  v26, 0
+   48  30 *    PSF      v10
+   49  31 *    PSF      v18
+   50  32 *    CALLSYS  35           (void string::_beh_1_())
+   52  31 *    ObjInfo  v18, 0
+   52  31 *    PopPtr
+   53  30 *    PSF      v10
+   54  31 *    CALLSYS  190           (void print(string&in))
+   56  30 *    PSF      v10
+   57  31 *    CALLSYS  35           (void string::_beh_1_())
+- 446,4 -
+   59  30 *    ObjInfo  v10, 0
+   59  30 *    SUSPEND
+   60  30 * {
+   60  30 * }
+   60  30 *    JMP      +33              (d:95)
+- 448,3 -
+   62  29   }
+   62  30 * 1:
+   62  30 *    SUSPEND
+   63  30 *    PshC4    0x1          (i:1, f:1.4013e-045)
+   65  31 *    PshVPtr  v0
+   66  32 *    CALLINTF 1307           (void LevelCreator::setAction(EditorAction))
+- 449,3 -
+   68  30 *    SUSPEND
+   69  30 *    PshVPtr  v-1
+   70  31 *    RefCpyV  v28, 152221040
+   72  31 *    PopPtr
+   73  30 *    PSF      v28
+   74  31 *    Cast     0x4800004c          (i:1207959628, f:131073)
+   76  30 *    STOREOBJ v29
+   77  30 *    FREE     v28, 152221040
+   79  30 *    VAR      v29
+   80  31 *    GETOBJ   0
+   81  31 *    CALL     764           (EditorObject@ EditorObject(ObjectData@))
+   83  30 *    STOREOBJ v30
+   84  30 *    VAR      v30
+   85  31 *    PshVPtr  v0
+   86  32 *    ADDSi    v192, 134217814
+   88  32 *    GETOBJREF 1
+   89  32 *    REFCPY   0x9130948
+   91  31 *    FREE     v30, 152242504
+   93  31 *    PopPtr
+- 450,3 -
+   94  30 *    SUSPEND
+   95  30 * 0:
+   95  30 *    FREE     v-1, 152221040
+   97  30 *    FREE     v0, 152243168
+   99  30 *    RET      2

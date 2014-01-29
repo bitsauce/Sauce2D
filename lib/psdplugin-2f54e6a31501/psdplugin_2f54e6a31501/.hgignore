@@ -1,0 +1,9 @@
+syntax: glob
+*.suo
+*.user
+*.vsp
+
+syntax: regexp
+(?i)bin/
+(?i)obj/
+_ReSharper

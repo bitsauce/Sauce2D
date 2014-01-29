@@ -1,0 +1,182 @@
+void Debug::draw()
+
+Temps: 1, 2, 4, 11, 14, 21, 28, 35, 42
+
+Variables: 
+ 012: int hour
+ 013: int min
+ 000: Debug this
+ 011: string {noname}
+ 021: string {noname}
+ 028: string {noname}
+ 035: string {noname}
+ 042: string {noname}
+
+
+    0  42 *    PshVPtr  v0
+    1  43 *    CALLSYS  2           (void _builtin_object_::_beh_4_())
+- 19,3 -
+    3  42 *    SUSPEND
+    4  42 *    PshC4    0x5a          (i:90, f:1.26117e-043)
+    6  43 *    CALLSYS  266           (bool getKeyState(int))
+    8  42 *    CpyRtoV4 v2
+    9  42 *    NOT      v2
+   10  42 *    CpyVtoR4 v2
+   11  42 *    JLowZ    +3              (d:16)
+- 20,4 -
+   13  42 *    SUSPEND
+   14  42 * {
+   14  42 * }
+   14  42 *    JMP      +175              (d:191)
+- 25,3 -
+   16  42 * 1:
+   16  42 *    SUSPEND
+   17  42 *    CpyGtoV4 v1, 3930272
+   19  42 *    iTOf     v1
+   20  42 *    SetV4    v2, 0x447a0000          (i:1148846080, f:1000)
+   22  42 *    DIVf     v1, v1, v2
+   24  42 *    fTOd     v4, v1
+   26  42 *    PshV8    v4
+   27  44 *    PSF      v11
+   28  45 *    STR      61         (l:5 s:"Fps: ")
+   29  47 *    CALLSYS  32           (const string& _string_factory_(const int, const uint8&))
+   31  45 *    PshRPtr
+   32  46 *    CALLSYS  50           (string string::opAdd(double) const)
+   34  42 *    ObjInfo  v11, 1
+   34  42 *    VAR      v11
+   35  43 *    PshC4    0x40a00000          (i:1084227584, f:5)
+   37  44 *    PshC4    0x40a00000          (i:1084227584, f:5)
+   39  45 *    GETREF   2
+   40  45 *    CALLSYS  321           (void gfxDrawText(const float, const float, const string&in))
+   42  42 *    PSF      v11
+   43  43 *    CALLSYS  35           (void string::_beh_1_())
+- 28,3 -
+   45  42 *    ObjInfo  v11, 0
+   45  42 *    SUSPEND
+   46  42 *    VarDecl  0
+   46  42 *    PshGPtr  113535616
+   48  43 *    CALLINTF 902           (float Sky::getTime())
+   50  42 *    CpyRtoV4 v2
+   51  42 *    SetV4    v1, 0x42700000          (i:1114636288, f:60)
+   53  42 *    DIVf     v2, v2, v1
+   55  42 *    PshV4    v2
+   56  43 *    CALLSYS  236           (int floor(const float))
+   58  42 *    CpyRtoV4 v1
+   59  42 *    CpyVtoV4 v12, v1
+- 29,3 -
+   61  42 *    SUSPEND
+   62  42 *    VarDecl  1
+   62  42 *    PshGPtr  113535616
+   64  43 *    CALLINTF 902           (float Sky::getTime())
+   66  42 *    CpyRtoV4 v2
+   67  42 *    CpyVtoV4 v1, v12
+   69  42 *    iTOf     v1
+   70  42 *    MULIf    v1, v1, 60.000000
+   73  42 *    SUBf     v14, v2, v1
+   75  42 *    PshV4    v14
+   76  43 *    CALLSYS  236           (int floor(const float))
+   78  42 *    CpyRtoV4 v1
+   79  42 *    CpyVtoV4 v13, v1
+- 30,3 -
+   81  42 *    SUSPEND
+   82  42 *    STR      64         (l:1 s:")")
+   83  44 *    CALLSYS  32           (const string& _string_factory_(const int, const uint8&))
+   85  42 *    PshRPtr
+   86  43 *    PSF      v42
+   87  44 *    CALLSYS  34           (void string::_beh_0_(const string&in))
+   89  42 *    ObjInfo  v42, 1
+   89  42 *    VAR      v42
+   90  43 *    PSF      v28
+   91  44 *    PshGPtr  113535616
+   93  45 *    CALLINTF 902           (float Sky::getTime())
+   95  44 *    CpyRtoV4 v1
+   96  44 *    fTOi     v1
+   97  44 *    PshV4    v1
+   98  45 *    PSF      v21
+   99  46 *    STR      63         (l:2 s:" (")
+  100  48 *    CALLSYS  32           (const string& _string_factory_(const int, const uint8&))
+  102  46 *    PshRPtr
+  103  47 *    PSF      v35
+  104  48 *    CALLSYS  34           (void string::_beh_0_(const string&in))
+  106  46 *    ObjInfo  v35, 1
+  106  46 *    VAR      v35
+  107  47 *    PSF      v28
+  108  48 *    PshV4    v13
+  109  49 *    PSF      v21
+  110  50 *    STR      32         (l:1 s:":")
+  111  52 *    CALLSYS  32           (const string& _string_factory_(const int, const uint8&))
+  113  50 *    PshRPtr
+  114  51 *    PSF      v21
+  115  52 *    CALLSYS  34           (void string::_beh_0_(const string&in))
+  117  50 *    ObjInfo  v21, 1
+  117  50 *    VAR      v21
+  118  51 *    PSF      v28
+  119  52 *    PshV4    v12
+  120  53 *    PSF      v11
+  121  54 *    STR      62         (l:6 s:"Time: ")
+  122  56 *    CALLSYS  32           (const string& _string_factory_(const int, const uint8&))
+  124  54 *    PshRPtr
+  125  55 *    CALLSYS  54           (string string::opAdd(int) const)
+  127  52 *    ObjInfo  v11, 1
+  127  52 *    PSF      v11
+  128  53 *    GETREF   2
+  129  53 *    CALLSYS  40           (string string::opAdd(const string&in) const)
+  131  50 *    ObjInfo  v28, 1
+  131  50 *    PSF      v21
+  132  51 *    CALLSYS  35           (void string::_beh_1_())
+  134  50 *    ObjInfo  v21, 0
+  134  50 *    PSF      v28
+  135  51 *    PSF      v11
+  136  52 *    CALLSYS  35           (void string::_beh_1_())
+  138  51 *    ObjInfo  v11, 0
+  138  51 *    CALLSYS  54           (string string::opAdd(int) const)
+  140  48 *    ObjInfo  v21, 1
+  140  48 *    PSF      v21
+  141  49 *    PSF      v28
+  142  50 *    CALLSYS  35           (void string::_beh_1_())
+  144  49 *    ObjInfo  v28, 0
+  144  49 *    GETREF   2
+  145  49 *    CALLSYS  40           (string string::opAdd(const string&in) const)
+  147  46 *    ObjInfo  v28, 1
+  147  46 *    PSF      v35
+  148  47 *    CALLSYS  35           (void string::_beh_1_())
+  150  46 *    ObjInfo  v35, 0
+  150  46 *    PSF      v28
+  151  47 *    PSF      v21
+  152  48 *    CALLSYS  35           (void string::_beh_1_())
+  154  47 *    ObjInfo  v21, 0
+  154  47 *    CALLSYS  54           (string string::opAdd(int) const)
+  156  44 *    ObjInfo  v21, 1
+  156  44 *    PSF      v21
+  157  45 *    PSF      v28
+  158  46 *    CALLSYS  35           (void string::_beh_1_())
+  160  45 *    ObjInfo  v28, 0
+  160  45 *    GETREF   2
+  161  45 *    CALLSYS  40           (string string::opAdd(const string&in) const)
+  163  42 *    ObjInfo  v28, 1
+  163  42 *    PSF      v42
+  164  43 *    CALLSYS  35           (void string::_beh_1_())
+  166  42 *    ObjInfo  v42, 0
+  166  42 *    PSF      v28
+  167  43 *    PSF      v21
+  168  44 *    CALLSYS  35           (void string::_beh_1_())
+  170  43 *    ObjInfo  v21, 0
+  170  43 *    PopPtr
+  171  42 *    VAR      v28
+  172  43 *    PshGPtr  113703240
+  174  44 *    ADDSi    v4, 67108877
+  176  44 *    PopRPtr
+  177  43 *    RDR4     v2
+  178  43 *    SUBIf    v1, v2, 18.000000
+  181  43 *    PshV4    v1
+  182  44 *    PshC4    0x40a00000          (i:1084227584, f:5)
+  184  45 *    GETREF   2
+  185  45 *    CALLSYS  321           (void gfxDrawText(const float, const float, const string&in))
+  187  42 *    PSF      v28
+  188  43 *    CALLSYS  35           (void string::_beh_1_())
+- 31,3 -
+  190  42 *    ObjInfo  v28, 0
+  190  42 *    SUSPEND
+  191  42 * 0:
+  191  42 *    FREE     v0, 113516928
+  193  42 *    RET      1

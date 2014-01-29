@@ -1,0 +1,26 @@
+void RectPacker::addRect(rec2)
+
+Temps: 
+
+Variables: 
+ -001: rec2 rect
+ 000: RectPacker this
+
+
+    0   0 *    VarDecl  0
+    0   0 *    PshVPtr  v0
+    1   1 *    CALLSYS  2           (void _builtin_object_::_beh_5_())
+- 22,3 -
+    3   0 *    SUSPEND
+    4   0 *    VAR      v-1
+    5   1 *    PshVPtr  v0
+    6   2 *    ADDSi    v20, 134217748
+    8   2 *    RDSPtr
+    9   2 *    GETOBJREF 1
+   10   2 *    CALLSYS  593           (void array::insertLast(const rec2&in))
+- 23,3 -
+   12   0 *    SUSPEND
+   13   0 * 0:
+   13   0 *    FREE     v-1, 89321608
+   15   0 *    FREE     v0, 89322112
+   17   0 *    RET      2

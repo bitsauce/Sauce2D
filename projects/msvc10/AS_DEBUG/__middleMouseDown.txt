@@ -1,0 +1,25 @@
+void middleMouseDown()
+
+Temps: 8
+
+Variables: 
+ 008: string {noname}
+
+
+- 49,26 -
+    0   8 *    SUSPEND
+    1   8 *    STR      6         (l:7 s:"mdlDown")
+    2  10 *    CALLSYS  32           (const string& _string_factory_(const int, const uint8&))
+    4   8 *    PshRPtr
+    5   9 *    PSF      v8
+    6  10 *    CALLSYS  34           (void string::_beh_0_(const string&in))
+    8   8 *    ObjInfo  v8, 1
+    8   8 *    PSF      v8
+    9   9 *    CALLSYS  192           (void print(string&in))
+   11   8 *    PSF      v8
+   12   9 *    CALLSYS  35           (void string::_beh_1_())
+- 49,45 -
+   14   8 *    ObjInfo  v8, 0
+   14   8 *    SUSPEND
+   15   8 * 0:
+   15   8 *    RET      0

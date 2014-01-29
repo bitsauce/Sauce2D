@@ -1,0 +1,134 @@
+void Sky::drawBackground()
+
+Temps: 2, 3, 4, 5, 6, 7, 10, 11, 12, 13, 14, 15
+
+Variables: 
+ 001: float hp
+ 008: int w
+ 009: int h
+ 000: Sky this
+
+
+    0  15 *    PshVPtr  v0
+    1  16 *    CALLSYS  2           (void _builtin_object_::_beh_5_())
+- 205,3 -
+    3  15 *    SUSPEND
+    4  15 *    VarDecl  0
+    4  15 *    PshC4    0x40400000          (i:1077936128, f:3)
+    6  16 *    SetV4    v5, 0x3f800000          (i:1065353216, f:1)
+    8  16 *    PshGPtr  74560472
+   10  17 *    ADDSi    v4, 67108877
+   12  17 *    PopRPtr
+   13  16 *    RDR4     v4
+   14  16 *    PshGPtr  74607232
+   16  17 *    CALLINTF 1113           (int Terrain::getHeight())
+   18  16 *    CpyRtoV4 v2
+   19  16 *    iTOf     v2
+   20  16 *    CpyGtoV4 v3, 74607976
+   22  16 *    MULf     v2, v2, v3
+   24  16 *    DIVf     v3, v4, v2
+   26  16 *    SUBf     v2, v5, v3
+   28  16 *    PshV4    v2
+   29  17 *    CALLSYS  336           (float pow(const float, const float))
+   31  15 *    CpyRtoV4 v3
+   32  15 *    CpyVtoV4 v1, v3
+- 208,3 -
+   34  15 *    SUSPEND
+   35  15 *    LoadThisR v56, 134217788
+   37  15 *    RDR4     v5
+   38  15 *    PshV4    v5
+   39  16 *    CALLSYS  420           (void gfxSetTexture(const int))
+- 209,3 -
+   41  15 *    SUSPEND
+   42  15 *    PshC4    0x3          (i:3, f:4.2039e-045)
+   44  16 *    CALLSYS  434           (void gfxBegin(const DrawMode = DrawTriangles))
+- 210,3 -
+   46  15 *    SUSPEND
+   47  15 *    VarDecl  1
+   47  15 *    PshGPtr  74560968
+   49  16 *    ADDSi    v4, 67108877
+   51  16 *    PopRPtr
+   52  15 *    RDR4     v3
+   53  15 *    MULIf    v5, v3, 2.000000
+   56  15 *    fTOi     v5
+   57  15 *    CpyVtoV4 v8, v5
+- 211,3 -
+   59  15 *    SUSPEND
+   60  15 *    VarDecl  2
+   60  15 *    PshGPtr  74560968
+   62  16 *    ADDSi    v4, 67108877
+   64  16 *    PopRPtr
+   65  15 *    RDR4     v4
+   66  15 *    fTOi     v4
+   67  15 *    CpyVtoV4 v9, v4
+- 212,3 -
+   69  15 *    SUSPEND
+   70  15 *    SetV1    v6, 0x0
+   72  15 *    PshV4    v6
+   73  16 *    PshC4    0x3f800000          (i:1065353216, f:1)
+   75  17 *    PshC4    0x3f800000          (i:1065353216, f:1)
+   77  18 *    PshC4    0x0          (i:0, f:0)
+   79  19 *    PshC4    0x0          (i:0, f:0)
+   81  20 *    CpyVtoV4 v14, v9
+   83  20 *    iTOf     v14
+   84  20 *    PshV4    v14
+   85  21 *    CpyVtoV4 v15, v8
+   87  21 *    iTOf     v15
+   88  21 *    PshV4    v15
+   89  22 *    CpyVtoV4 v5, v9
+   91  22 *    iTOf     v5
+   92  22 *    MULf     v4, v1, v5
+   94  22 *    PshV4    v4
+   95  23 *    PshGPtr  74560472
+   97  24 *    ADDSi    v0, 67108877
+   99  24 *    PopRPtr
+  100  23 *    RDR4     v5
+  101  23 *    NEGf     v5
+  102  23 *    MULIf    v2, v5, 0.500000
+  105  23 *    fTOi     v2
+  106  23 *    MODi     v3, v2, v8
+  108  23 *    iTOf     v3
+  109  23 *    PshV4    v3
+  110  24 *    CALLSYS  441           (void gfxAddRect(const float, const float, const float, const float, const float, const float, const float, const float, const bool = false))
+- 213,3 -
+  112  15 *    SUSPEND
+  113  15 *    SetV1    v5, 0x0
+  115  15 *    PshV4    v5
+  116  16 *    PshC4    0x3f800000          (i:1065353216, f:1)
+  118  17 *    PshC4    0x3f800000          (i:1065353216, f:1)
+  120  18 *    PshC4    0x0          (i:0, f:0)
+  122  19 *    PshC4    0x0          (i:0, f:0)
+  124  20 *    CpyVtoV4 v11, v9
+  126  20 *    iTOf     v11
+  127  20 *    PshV4    v11
+  128  21 *    CpyVtoV4 v10, v8
+  130  21 *    iTOf     v10
+  131  21 *    PshV4    v10
+  132  22 *    CpyVtoV4 v2, v9
+  134  22 *    iTOf     v2
+  135  22 *    MULf     v3, v1, v2
+  137  22 *    PshV4    v3
+  138  23 *    PshGPtr  74560472
+  140  24 *    ADDSi    v0, 67108877
+  142  24 *    PopRPtr
+  143  23 *    RDR4     v2
+  144  23 *    NEGf     v2
+  145  23 *    MULIf    v15, v2, 0.500000
+  148  23 *    fTOi     v15
+  149  23 *    MODi     v4, v15, v8
+  151  23 *    ADDi     v15, v4, v8
+  153  23 *    iTOf     v15
+  154  23 *    PshV4    v15
+  155  24 *    CALLSYS  441           (void gfxAddRect(const float, const float, const float, const float, const float, const float, const float, const float, const bool = false))
+- 214,3 -
+  157  15 *    SUSPEND
+  158  15 *    CALLSYS  435           (void gfxEnd())
+- 215,3 -
+  160  15 *    SUSPEND
+  161  15 *    PshC4    0x0          (i:0, f:0)
+  163  16 *    CALLSYS  420           (void gfxSetTexture(const int))
+- 216,3 -
+  165  15 *    SUSPEND
+  166  15 * 0:
+  166  15 *    FREE     v0, 74312560
+  168  15 *    RET      1

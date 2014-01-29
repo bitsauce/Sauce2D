@@ -1,0 +1,12 @@
+<unrecognized token> _unnamed_function_()
+
+Temps: 1
+
+Variables: 
+
+
+- 81,25 -
+    0   1 *    SUSPEND
+    1   1 *    SetV4    v1, 0x303          (i:771, f:1.0804e-042)
+    3   1 *    WRTV4    v1
+    4   1 *    RET      0

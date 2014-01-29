@@ -1,0 +1,1001 @@
+void LevelCreator::onMousePress(MouseEvent)
+
+Temps: 1, 2, 4, 5, 7, 8, 9, 12, 15, 16, 17, 18, 19
+
+Variables: 
+ -001: MouseEvent e
+ 003: int posx
+ 006: int posy
+ 010: int dx
+ 011: int dy
+ 013: int y
+ 014: int x
+ 010: int y
+ 013: int x
+ 013: int gridx
+ 011: int gridy
+ 010: uint i
+ 010: uint i
+ 000: LevelCreator this
+ 008: EditorRoom {noname}
+ 009: EditorRoom {noname}
+ 015: grid {noname}
+ 016: array {noname}
+ 017: array {noname}
+ 018: grid {noname}
+ 019: EditorObject {noname}
+
+
+    0  19 *    VarDecl  0
+    0  19 *    PshVPtr  v0
+    1  20 *    CALLSYS  2           (void _builtin_object_::_beh_4_())
+- 1223,3 -
+    3  19 *    SUSPEND
+    4  19 *    LoadThisR v52, 134217814
+    6  19 *    RDR1     v1
+    7  19 *    NOT      v1
+    8  19 *    CpyVtoR4 v1
+    9  19 *    JLowZ    +3              (d:14)
+- 1224,4 -
+   11  19 *    SUSPEND
+   12  19 * {
+   12  19 * }
+   12  19 *    JMP      +1131              (d:1145)
+- 1226,3 -
+   14  19 * 1:
+   14  19 *    SUSPEND
+   15  19 *    LoadRObjR v-1, v40, 67108905
+   18  19 *    RDR4     v2
+   19  19 *    CMPIi    v2, 1
+   21  19 *    JNZ      +1121              (d:1144)
+- 1229,4 -
+   23  19 * {
+   23  19 *    SUSPEND
+   24  19 *    VarDecl  1
+   24  19 *    PshVPtr  v-1
+   25  20 *    ADDSi    v8, 67108905
+   27  20 *    ADDSi    v0, 67108877
+   29  20 *    PopRPtr
+   30  19 *    RDR4     v1
+   31  19 *    LoadThisR v56, 134217814
+   33  19 *    RDR4     v4
+   34  19 *    MULIf    v5, v4, 64.000000
+   37  19 *    DIVf     v4, v1, v5
+   39  19 *    PshV4    v4
+   40  20 *    CALLSYS  534           (int floor(const float))
+   42  19 *    CpyRtoV4 v5
+   43  19 *    CpyVtoV4 v3, v5
+- 1230,4 -
+   45  19 *    SUSPEND
+   46  19 *    VarDecl  2
+   46  19 *    PshVPtr  v-1
+   47  20 *    ADDSi    v8, 67108905
+   49  20 *    ADDSi    v4, 67108877
+   51  20 *    PopRPtr
+   52  19 *    RDR4     v1
+   53  19 *    SUBIf    v4, v1, 256.000000
+   56  19 *    LoadThisR v56, 134217814
+   58  19 *    RDR4     v5
+   59  19 *    MULIf    v1, v5, 64.000000
+   62  19 *    DIVf     v5, v4, v1
+   64  19 *    PshV4    v5
+   65  20 *    CALLSYS  534           (int floor(const float))
+   67  19 *    CpyRtoV4 v1
+   68  19 *    CpyVtoV4 v6, v1
+- 1231,4 -
+   70  19 *    SUSPEND
+   71  19 *    LoadThisR v76, 134217814
+   73  19 *    RDR4     v7
+   74  19 *    CMPIi    v7, 7
+   76  19 *    JP       +1066              (d:1144)
+   78  19 *    CMPIi    v7, 2
+   80  19 *    JS       +1062              (d:1144)
+   82  19 *    SUBIi    v4, v7, 2
+   85  19 *    JMPP     v4
+   86  19 *    JMP      +10              (d:98)
+   88  19 *    JMP      +1054              (d:1144)
+   90  19 *    JMP      +1052              (d:1144)
+   92  19 *    JMP      +77              (d:171)
+   94  19 *    JMP      +628              (d:724)
+   96  19 *    JMP      +349              (d:447)
+- 1236,6 -
+   98  19 * 4:
+   98  19 * {
+   98  19 *    SUSPEND
+   99  19 *    PshC4    0x1          (i:1, f:1.4013e-045)
+  101  20 *    PshC4    0x1          (i:1, f:1.4013e-045)
+  103  21 *    PshV4    v6
+  104  22 *    PshV4    v3
+  105  23 *    CALL     751           (EditorRoom@ EditorRoom(int arg0 = 0, int arg1 = 0, int arg2 = 1, int arg3 = 1))
+  107  19 *    STOREOBJ v8
+  108  19 *    VAR      v8
+  109  20 *    PshVPtr  v0
+  110  21 *    ADDSi    v116, 134217814
+  112  21 *    GETOBJREF 1
+  113  21 *    REFCPY   0x912f350
+  115  20 *    FREE     v8, 152236880
+  117  20 *    PopPtr
+- 1237,6 -
+  118  19 *    SUSPEND
+  119  19 *    SetV1    v4, 0x0
+  121  19 *    PshVPtr  v0
+  122  20 *    ADDSi    v116, 134217814
+  124  20 *    RDSPtr
+  125  20 *    ADDSi    v36, 134217785
+  127  20 *    PopRPtr
+  128  19 *    WRTV1    v4
+- 1238,6 -
+  129  19 *    SUSPEND
+  130  19 *    PshVPtr  v0
+  131  20 *    ADDSi    v116, 134217814
+  133  20 *    RDSPtr
+  134  20 *    RefCpyV  v8, 152236880
+  136  20 *    PopPtr
+  137  19 *    VAR      v8
+  138  20 *    PshVPtr  v0
+  139  21 *    ADDSi    v204, 134217814
+  141  21 *    RDSPtr
+  142  21 *    GETREF   1
+  143  21 *    CALLSYS  1350           (void array::insertLast(EditorRoom@const&in))
+  145  19 *    FREE     v8, 152236880
+- 1239,6 -
+  147  19 *    SUSPEND
+  148  19 *    CpyVtoV4 v4, v6
+  150  19 *    iTOf     v4
+  151  19 *    PshV4    v4
+  152  20 *    CpyVtoV4 v1, v3
+  154  20 *    iTOf     v1
+  155  20 *    PshV4    v1
+  156  21 *    PshVPtr  v0
+  157  22 *    ADDSi    v88, 134217814
+  159  22 *    RDSPtr
+  160  22 *    ADDSi    v0, 67108878
+  162  22 *    CALLSYS  142           (void Vector2::set(const float, const float))
+- 1240,6 -
+  164  19 *    SUSPEND
+  165  19 *    PshVPtr  v0
+  166  20 *    CALLINTF 1318           (void LevelCreator::levelToRoomResize())
+- 1242,5 -
+  168  19 * }
+  168  19 *    SUSPEND
+  169  19 * {
+  169  19 * }
+  169  19 *    JMP      +973              (d:1144)
+- 1247,6 -
+  171  19 * 5:
+  171  19 * {
+  171  19 *    SUSPEND
+  172  19 *    PshVPtr  v0
+  173  20 *    ADDSi    v112, 134217814
+  175  20 *    RDSPtr
+  176  20 *    RefCpyV  v8, 152236880
+  178  20 *    PopPtr
+  179  19 *    ClrVPtr  v9
+  180  19 *    CmpPtr   v8, v9
+  182  19 *    TNZ
+  183  19 *    CpyRtoV4 v1
+  184  19 *    FREE     v8, 152236880
+  186  19 *    FREE     v9, 152236880
+  188  19 *    CpyVtoR4 v1
+  189  19 *    JLowZ    +253              (d:444)
+- 1249,7 -
+  191  19 * {
+  191  19 *    SUSPEND
+  192  19 *    VarDecl  3
+  192  19 *    PshVPtr  v0
+  193  20 *    ADDSi    v112, 134217814
+  195  20 *    RDSPtr
+  196  20 *    ADDSi    v16, 134217785
+  198  20 *    PopRPtr
+  199  19 *    RDR4     v4
+  200  19 *    SUBi     v10, v3, v4
+- 1250,7 -
+  202  19 *    SUSPEND
+  203  19 *    VarDecl  4
+  203  19 *    PshVPtr  v0
+  204  20 *    ADDSi    v112, 134217814
+  206  20 *    RDSPtr
+  207  20 *    ADDSi    v20, 134217785
+  209  20 *    PopRPtr
+  210  19 *    RDR4     v4
+  211  19 *    SUBi     v11, v6, v4
+- 1251,7 -
+  213  19 *    SUSPEND
+  214  19 *    SetV4    v4, 0x0          (i:0, f:0)
+  216  19 *    LoadThisR v92, 134217814
+  218  19 *    WRTV4    v4
+- 1252,7 -
+  219  19 *    SUSPEND
+  220  19 *    PshC4    0x0          (i:0, f:0)
+  222  20 *    PshC4    0x0          (i:0, f:0)
+  224  21 *    PshVPtr  v0
+  225  22 *    ADDSi    v104, 134217814
+  227  22 *    RDSPtr
+  228  22 *    CALLSYS  142           (void Vector2::set(const float, const float))
+- 1253,7 -
+  230  19 *    SUSPEND
+  231  19 *    CMPIi    v11, 0
+  233  19 *    JNZ      +11              (d:246)
+- 1254,8 -
+  235  19 *    SUSPEND
+  236  19 *    SetV4    v4, 0x4          (i:4, f:5.60519e-045)
+  238  19 *    LoadThisR v92, 134217814
+  240  19 *    RDR4     v5
+  241  19 *    BOR      v1, v5, v4
+  243  19 *    WRTV4    v1
+  244  19 *    JMP      +25              (d:271)
+- 1255,12 -
+  246  19 * 10:
+  246  19 *    SUSPEND
+  247  19 *    PshVPtr  v0
+  248  20 *    ADDSi    v112, 134217814
+  250  20 *    RDSPtr
+  251  20 *    ADDSi    v28, 134217785
+  253  20 *    PopRPtr
+  254  19 *    RDR4     v4
+  255  19 *    SUBIi    v5, v4, 1
+  258  19 *    CMPi     v11, v5
+  260  19 *    JNZ      +9              (d:271)
+- 1256,8 -
+  262  19 *    SUSPEND
+  263  19 *    SetV4    v1, 0x1          (i:1, f:1.4013e-045)
+  265  19 *    LoadThisR v92, 134217814
+  267  19 *    RDR4     v5
+  268  19 *    BOR      v4, v5, v1
+  270  19 *    WRTV4    v4
+- 1257,7 -
+  271  19 * 12:
+  271  19 * 11:
+  271  19 *    SUSPEND
+  272  19 *    CMPIi    v10, 0
+  274  19 *    JNZ      +11              (d:287)
+- 1258,8 -
+  276  19 *    SUSPEND
+  277  19 *    SetV4    v4, 0x8          (i:8, f:1.12104e-044)
+  279  19 *    LoadThisR v92, 134217814
+  281  19 *    RDR4     v1
+  282  19 *    BOR      v5, v1, v4
+  284  19 *    WRTV4    v5
+  285  19 *    JMP      +25              (d:312)
+- 1259,12 -
+  287  19 * 13:
+  287  19 *    SUSPEND
+  288  19 *    PshVPtr  v0
+  289  20 *    ADDSi    v112, 134217814
+  291  20 *    RDSPtr
+  292  20 *    ADDSi    v24, 134217785
+  294  20 *    PopRPtr
+  295  19 *    RDR4     v4
+  296  19 *    SUBIi    v1, v4, 1
+  299  19 *    CMPi     v10, v1
+  301  19 *    JNZ      +9              (d:312)
+- 1260,8 -
+  303  19 *    SUSPEND
+  304  19 *    SetV4    v5, 0x2          (i:2, f:2.8026e-045)
+  306  19 *    LoadThisR v92, 134217814
+  308  19 *    RDR4     v1
+  309  19 *    BOR      v4, v1, v5
+  311  19 *    WRTV4    v4
+- 1261,7 -
+  312  19 * 15:
+  312  19 * 14:
+  312  19 *    SUSPEND
+  313  19 *    PshVPtr  v0
+  314  20 *    ADDSi    v112, 134217814
+  316  20 *    RDSPtr
+  317  20 *    ADDSi    v28, 134217785
+  319  20 *    PopRPtr
+  320  19 *    RDR4     v5
+  321  19 *    iTOf     v5
+  322  19 *    PshV4    v5
+  323  20 *    PshVPtr  v0
+  324  21 *    ADDSi    v112, 134217814
+  326  21 *    RDSPtr
+  327  21 *    ADDSi    v24, 134217785
+  329  21 *    PopRPtr
+  330  20 *    RDR4     v4
+  331  20 *    iTOf     v4
+  332  20 *    PshV4    v4
+  333  21 *    PshVPtr  v0
+  334  22 *    ADDSi    v112, 134217814
+  336  22 *    RDSPtr
+  337  22 *    ADDSi    v20, 134217785
+  339  22 *    PopRPtr
+  340  21 *    RDR4     v1
+  341  21 *    iTOf     v1
+  342  21 *    PshV4    v1
+  343  22 *    PshVPtr  v0
+  344  23 *    ADDSi    v112, 134217814
+  346  23 *    RDSPtr
+  347  23 *    ADDSi    v16, 134217785
+  349  23 *    PopRPtr
+  350  22 *    RDR4     v12
+  351  22 *    iTOf     v12
+  352  22 *    PshV4    v12
+  353  23 *    PshVPtr  v0
+  354  24 *    ADDSi    v96, 134217814
+  356  24 *    RDSPtr
+  357  24 *    CALLSYS  162           (void Rect2::set(const float, const float, const float, const float))
+- 1265,11 -
+  359  19 *    SUSPEND
+  360  19 *    VarDecl  5
+  360  19 *    SetV4    v13, 0x0          (i:0, f:0)
+  362  19 *    JMP      +67              (d:431)
+  364  19 * 19:
+  364  19 *    SUSPEND
+- 1266,12 -
+  365  19 *    SUSPEND
+  366  19 *    VarDecl  6
+  366  19 *    SetV4    v14, 0x0          (i:0, f:0)
+  368  19 *    JMP      +46              (d:416)
+  370  19 * 23:
+  370  19 *    SUSPEND
+- 1267,9 -
+  371  19 *    SUSPEND
+  372  19 *    FREE     v9, 152236880
+  374  19 *    VAR      v9
+  375  20 *    PshVPtr  v0
+  376  21 *    ADDSi    v112, 134217814
+  378  21 *    RDSPtr
+  379  21 *    ADDSi    v20, 134217785
+  381  21 *    PopRPtr
+  382  20 *    RDR4     v5
+  383  20 *    ADDi     v12, v5, v13
+  385  20 *    PshV4    v12
+  386  21 *    PshVPtr  v0
+  387  22 *    ADDSi    v112, 134217814
+  389  22 *    RDSPtr
+  390  22 *    ADDSi    v16, 134217785
+  392  22 *    PopRPtr
+  393  21 *    RDR4     v5
+  394  21 *    ADDi     v1, v5, v14
+  396  21 *    PshV4    v1
+  397  22 *    PshVPtr  v0
+  398  23 *    ADDSi    v208, 134217814
+  400  23 *    RDSPtr
+  401  23 *    RefCpyV  v15, 152874464
+  403  23 *    CALLSYS  1360           (EditorRoom@& grid::at(uint, uint))
+  405  20 *    PshRPtr
+  406  21 *    GETOBJREF 1
+  407  21 *    REFCPY   0x912f350
+  409  20 *    FREE     v9, 152236880
+  411  20 *    PopPtr
+  412  19 *    FREE     v15, 152874464
+- 1266,47 -
+  414  19 * 22:
+  414  19 *    SUSPEND
+  415  19 *    IncVi    v14
+- 1266,23 -
+  416  19 * 20:
+  416  19 *    SUSPEND
+  417  19 *    PshVPtr  v0
+  418  20 *    ADDSi    v112, 134217814
+  420  20 *    RDSPtr
+  421  20 *    ADDSi    v24, 134217785
+  423  20 *    PopRPtr
+  424  19 *    RDR4     v12
+  425  19 *    CMPi     v14, v12
+  427  19 *    JS       -59              (d:370)
+- 1265,47 -
+  429  19 * 21:
+  429  19 * 18:
+  429  19 *    SUSPEND
+  430  19 *    IncVi    v13
+- 1265,22 -
+  431  19 * 16:
+  431  19 *    SUSPEND
+  432  19 *    PshVPtr  v0
+  433  20 *    ADDSi    v112, 134217814
+  435  20 *    RDSPtr
+  436  20 *    ADDSi    v28, 134217785
+  438  20 *    PopRPtr
+  439  19 *    RDR4     v12
+  440  19 *    CMPi     v13, v12
+  442  19 *    JS       -80              (d:364)
+- 1270,5 -
+  444  19 * 17:
+  444  19 * }
+  444  19 * 9:
+  444  19 * }
+  444  19 *    SUSPEND
+  445  19 * {
+  445  19 * }
+  445  19 *    JMP      +697              (d:1144)
+- 1274,6 -
+  447  19 * 6:
+  447  19 * {
+  447  19 *    SUSPEND
+  448  19 *    PshV4    v6
+  449  20 *    PshV4    v3
+  450  21 *    PshVPtr  v0
+  451  22 *    ADDSi    v208, 134217814
+  453  22 *    RDSPtr
+  454  22 *    CALLSYS  126           (bool grid::isIndex(uint, uint) const)
+  456  19 *    JLowNZ   +4              (d:462)
+  458  19 *    SetV4    v4, 0x0          (i:0, f:0)
+  460  19 *    JMP      +28              (d:490)
+  462  19 * 25:
+  462  19 *    PshV4    v6
+  463  20 *    PshV4    v3
+  464  21 *    PshVPtr  v0
+  465  22 *    ADDSi    v208, 134217814
+  467  22 *    RDSPtr
+  468  22 *    RefCpyV  v15, 152874464
+  470  22 *    CALLSYS  1360           (EditorRoom@& grid::at(uint, uint))
+  472  19 *    PshRPtr
+  473  20 *    RDSPtr
+  474  20 *    RefCpyV  v8, 152236880
+  476  20 *    PopPtr
+  477  19 *    ClrVPtr  v9
+  478  19 *    CmpPtr   v8, v9
+  480  19 *    TNZ
+  481  19 *    CpyRtoV4 v5
+  482  19 *    FREE     v8, 152236880
+  484  19 *    FREE     v9, 152236880
+  486  19 *    FREE     v15, 152874464
+  488  19 *    CpyVtoV4 v4, v5
+  490  19 * 26:
+  490  19 *    CpyVtoR4 v4
+  491  19 *    JLowZ    +215              (d:708)
+- 1277,7 -
+  493  19 * {
+  493  19 *    SUSPEND
+  494  19 *    PshV4    v6
+  495  20 *    PshV4    v3
+  496  21 *    PshVPtr  v0
+  497  22 *    ADDSi    v208, 134217814
+  499  22 *    RDSPtr
+  500  22 *    RefCpyV  v15, 152874464
+  502  22 *    CALLSYS  1360           (EditorRoom@& grid::at(uint, uint))
+  504  19 *    PshRPtr
+  505  20 *    RDSPtr
+  506  20 *    RefCpyV  v8, 152236880
+  508  20 *    PopPtr
+  509  19 *    FREE     v15, 152874464
+  511  19 *    VAR      v8
+  512  20 *    PshVPtr  v0
+  513  21 *    ADDSi    v108, 134217814
+  515  21 *    GETOBJREF 1
+  516  21 *    REFCPY   0x912f350
+  518  20 *    FREE     v8, 152236880
+  520  20 *    PopPtr
+- 1278,7 -
+  521  19 *    SUSPEND
+  522  19 *    PshC4    0x0          (i:0, f:0)
+  524  20 *    PshC4    0x0          (i:0, f:0)
+  526  21 *    PshVPtr  v0
+  527  22 *    ADDSi    v184, 134217814
+  529  22 *    RDSPtr
+  530  22 *    CALLSYS  142           (void Vector2::set(const float, const float))
+- 1279,7 -
+  532  19 *    SUSPEND
+  533  19 *    CpyVtoV4 v5, v6
+  535  19 *    iTOf     v5
+  536  19 *    PshV4    v5
+  537  20 *    CpyVtoV4 v12, v3
+  539  20 *    iTOf     v12
+  540  20 *    PshV4    v12
+  541  21 *    PshVPtr  v0
+  542  22 *    ADDSi    v100, 134217814
+  544  22 *    RDSPtr
+  545  22 *    CALLSYS  142           (void Vector2::set(const float, const float))
+- 1280,7 -
+  547  19 *    SUSPEND
+  548  19 *    PshVPtr  v0
+  549  20 *    ADDSi    v108, 134217814
+  551  20 *    RDSPtr
+  552  20 *    ADDSi    v16, 134217785
+  554  20 *    PopRPtr
+  555  19 *    RDR4     v1
+  556  19 *    iTOf     v1
+  557  19 *    PshV4    v1
+  558  20 *    PshVPtr  v0
+  559  21 *    ADDSi    v88, 134217814
+  561  21 *    RDSPtr
+  562  21 *    CALLSYS  163           (void Rect2::set_x(const float))
+- 1281,7 -
+  564  19 *    SUSPEND
+  565  19 *    PshVPtr  v0
+  566  20 *    ADDSi    v108, 134217814
+  568  20 *    RDSPtr
+  569  20 *    ADDSi    v20, 134217785
+  571  20 *    PopRPtr
+  572  19 *    RDR4     v12
+  573  19 *    iTOf     v12
+  574  19 *    PshV4    v12
+  575  20 *    PshVPtr  v0
+  576  21 *    ADDSi    v88, 134217814
+  578  21 *    RDSPtr
+  579  21 *    CALLSYS  165           (void Rect2::set_y(const float))
+- 1282,7 -
+  581  19 *    SUSPEND
+  582  19 *    PshVPtr  v0
+  583  20 *    ADDSi    v108, 134217814
+  585  20 *    RDSPtr
+  586  20 *    ADDSi    v24, 134217785
+  588  20 *    PopRPtr
+  589  19 *    RDR4     v1
+  590  19 *    SUBIi    v5, v1, 1
+  593  19 *    iTOf     v5
+  594  19 *    PshV4    v5
+  595  20 *    PshVPtr  v0
+  596  21 *    ADDSi    v88, 134217814
+  598  21 *    RDSPtr
+  599  21 *    CALLSYS  168           (void Rect2::set_width(const float))
+- 1283,7 -
+  601  19 *    SUSPEND
+  602  19 *    PshVPtr  v0
+  603  20 *    ADDSi    v108, 134217814
+  605  20 *    RDSPtr
+  606  20 *    ADDSi    v28, 134217785
+  608  20 *    PopRPtr
+  609  19 *    RDR4     v12
+  610  19 *    SUBIi    v1, v12, 1
+  613  19 *    iTOf     v1
+  614  19 *    PshV4    v1
+  615  20 *    PshVPtr  v0
+  616  21 *    ADDSi    v88, 134217814
+  618  21 *    RDSPtr
+  619  21 *    CALLSYS  170           (void Rect2::set_height(const float))
+- 1286,11 -
+  621  19 *    SUSPEND
+  622  19 *    VarDecl  7
+  622  19 *    SetV4    v10, 0x0          (i:0, f:0)
+  624  19 *    JMP      +67              (d:693)
+  626  19 * 30:
+  626  19 *    SUSPEND
+- 1287,12 -
+  627  19 *    SUSPEND
+  628  19 *    VarDecl  8
+  628  19 *    SetV4    v13, 0x0          (i:0, f:0)
+  630  19 *    JMP      +46              (d:678)
+  632  19 * 34:
+  632  19 *    SUSPEND
+- 1288,9 -
+  633  19 *    SUSPEND
+  634  19 *    FREE     v9, 152236880
+  636  19 *    VAR      v9
+  637  20 *    PshVPtr  v0
+  638  21 *    ADDSi    v108, 134217814
+  640  21 *    RDSPtr
+  641  21 *    ADDSi    v20, 134217785
+  643  21 *    PopRPtr
+  644  20 *    RDR4     v1
+  645  20 *    ADDi     v4, v1, v10
+  647  20 *    PshV4    v4
+  648  21 *    PshVPtr  v0
+  649  22 *    ADDSi    v108, 134217814
+  651  22 *    RDSPtr
+  652  22 *    ADDSi    v16, 134217785
+  654  22 *    PopRPtr
+  655  21 *    RDR4     v1
+  656  21 *    ADDi     v12, v1, v13
+  658  21 *    PshV4    v12
+  659  22 *    PshVPtr  v0
+  660  23 *    ADDSi    v208, 134217814
+  662  23 *    RDSPtr
+  663  23 *    RefCpyV  v15, 152874464
+  665  23 *    CALLSYS  1360           (EditorRoom@& grid::at(uint, uint))
+  667  20 *    PshRPtr
+  668  21 *    GETOBJREF 1
+  669  21 *    REFCPY   0x912f350
+  671  20 *    FREE     v9, 152236880
+  673  20 *    PopPtr
+  674  19 *    FREE     v15, 152874464
+- 1287,45 -
+  676  19 * 33:
+  676  19 *    SUSPEND
+  677  19 *    IncVi    v13
+- 1287,23 -
+  678  19 * 31:
+  678  19 *    SUSPEND
+  679  19 *    PshVPtr  v0
+  680  20 *    ADDSi    v108, 134217814
+  682  20 *    RDSPtr
+  683  20 *    ADDSi    v24, 134217785
+  685  20 *    PopRPtr
+  686  19 *    RDR4     v4
+  687  19 *    CMPi     v13, v4
+  689  19 *    JS       -59              (d:632)
+- 1286,45 -
+  691  19 * 32:
+  691  19 * 29:
+  691  19 *    SUSPEND
+  692  19 *    IncVi    v10
+- 1286,22 -
+  693  19 * 27:
+  693  19 *    SUSPEND
+  694  19 *    PshVPtr  v0
+  695  20 *    ADDSi    v108, 134217814
+  697  20 *    RDSPtr
+  698  20 *    ADDSi    v28, 134217785
+  700  20 *    PopRPtr
+  701  19 *    RDR4     v12
+  702  19 *    CMPi     v10, v12
+  704  19 *    JS       -80              (d:626)
+  706  19 * 28:
+  706  19 * }
+  706  19 *    JMP      +13              (d:721)
+- 1291,7 -
+  708  19 * 24:
+  708  19 * {
+  708  19 *    SUSPEND
+  709  19 *    FREE     v8, 152236880
+  711  19 *    VAR      v8
+  712  20 *    PshVPtr  v0
+  713  21 *    ADDSi    v188, 134217814
+  715  21 *    GETOBJREF 1
+  716  21 *    REFCPY   0x912f350
+  718  20 *    FREE     v8, 152236880
+  720  20 *    PopPtr
+- 1294,5 -
+  721  19 * }
+  721  19 * 35:
+  721  19 * }
+  721  19 *    SUSPEND
+  722  19 * {
+  722  19 * }
+  722  19 *    JMP      +420              (d:1144)
+- 1298,6 -
+  724  19 * 7:
+  724  19 * {
+  724  19 *    SUSPEND
+  725  19 *    PshV4    v6
+  726  20 *    PshV4    v3
+  727  21 *    PshVPtr  v0
+  728  22 *    ADDSi    v208, 134217814
+  730  22 *    RDSPtr
+  731  22 *    CALLSYS  126           (bool grid::isIndex(uint, uint) const)
+  733  19 *    JLowNZ   +4              (d:739)
+  735  19 *    SetV4    v4, 0x0          (i:0, f:0)
+  737  19 *    JMP      +28              (d:767)
+  739  19 * 37:
+  739  19 *    PshV4    v6
+  740  20 *    PshV4    v3
+  741  21 *    PshVPtr  v0
+  742  22 *    ADDSi    v208, 134217814
+  744  22 *    RDSPtr
+  745  22 *    RefCpyV  v15, 152874464
+  747  22 *    CALLSYS  1360           (EditorRoom@& grid::at(uint, uint))
+  749  19 *    PshRPtr
+  750  20 *    RDSPtr
+  751  20 *    RefCpyV  v8, 152236880
+  753  20 *    PopPtr
+  754  19 *    ClrVPtr  v9
+  755  19 *    CmpPtr   v8, v9
+  757  19 *    TNZ
+  758  19 *    CpyRtoV4 v1
+  759  19 *    FREE     v8, 152236880
+  761  19 *    FREE     v9, 152236880
+  763  19 *    FREE     v15, 152874464
+  765  19 *    CpyVtoV4 v4, v1
+  767  19 * 38:
+  767  19 *    CpyVtoR4 v4
+  768  19 *    JLowZ    +373              (d:1143)
+- 1300,7 -
+  770  19 * {
+  770  19 *    SUSPEND
+  771  19 *    PshVPtr  v0
+  772  20 *    ADDSi    v188, 134217814
+  774  20 *    RDSPtr
+  775  20 *    RefCpyV  v8, 152236880
+  777  20 *    PopPtr
+  778  19 *    PshV4    v6
+  779  20 *    PshV4    v3
+  780  21 *    PshVPtr  v0
+  781  22 *    ADDSi    v208, 134217814
+  783  22 *    RDSPtr
+  784  22 *    RefCpyV  v15, 152874464
+  786  22 *    CALLSYS  1360           (EditorRoom@& grid::at(uint, uint))
+  788  19 *    PshRPtr
+  789  20 *    RDSPtr
+  790  20 *    RefCpyV  v9, 152236880
+  792  20 *    PopPtr
+  793  19 *    CmpPtr   v8, v9
+  795  19 *    TNZ
+  796  19 *    CpyRtoV4 v12
+  797  19 *    FREE     v8, 152236880
+  799  19 *    FREE     v9, 152236880
+  801  19 *    FREE     v15, 152874464
+  803  19 *    CpyVtoR4 v12
+  804  19 *    JLowZ    +7              (d:813)
+- 1301,8 -
+  806  19 *    SUSPEND
+  807  19 *    PshVPtr  v0
+  808  20 *    ADDSi    v200, 134217814
+  810  20 *    RDSPtr
+  811  20 *    CALLSYS  89           (void array::clear())
+- 1302,7 -
+  813  19 * 39:
+  813  19 *    SUSPEND
+  814  19 *    PshV4    v6
+  815  20 *    PshV4    v3
+  816  21 *    PshVPtr  v0
+  817  22 *    ADDSi    v208, 134217814
+  819  22 *    RDSPtr
+  820  22 *    RefCpyV  v15, 152874464
+  822  22 *    CALLSYS  1360           (EditorRoom@& grid::at(uint, uint))
+  824  19 *    PshRPtr
+  825  20 *    RDSPtr
+  826  20 *    RefCpyV  v8, 152236880
+  828  20 *    PopPtr
+  829  19 *    FREE     v15, 152874464
+  831  19 *    VAR      v8
+  832  20 *    PshVPtr  v0
+  833  21 *    ADDSi    v188, 134217814
+  835  21 *    GETOBJREF 1
+  836  21 *    REFCPY   0x912f350
+  838  20 *    FREE     v8, 152236880
+  840  20 *    PopPtr
+- 1303,7 -
+  841  19 *    SUSPEND
+  842  19 *    VarDecl  9
+  842  19 *    PshVPtr  v0
+  843  20 *    ADDSi    v188, 134217814
+  845  20 *    RDSPtr
+  846  20 *    ADDSi    v16, 134217785
+  848  20 *    PopRPtr
+  849  19 *    RDR4     v4
+  850  19 *    SUBi     v13, v3, v4
+- 1304,7 -
+  852  19 *    SUSPEND
+  853  19 *    VarDecl  10
+  853  19 *    PshVPtr  v0
+  854  20 *    ADDSi    v188, 134217814
+  856  20 *    RDSPtr
+  857  20 *    ADDSi    v20, 134217785
+  859  20 *    PopRPtr
+  860  19 *    RDR4     v5
+  861  19 *    SUBi     v11, v6, v5
+- 1305,7 -
+  863  19 *    SUSPEND
+  864  19 *    PshVPtr  v0
+  865  20 *    ADDSi    v200, 134217814
+  867  20 *    RDSPtr
+  868  20 *    CALLSYS  86           (uint array::size() const)
+  870  19 *    CpyRtoV4 v5
+  871  19 *    CMPIu    v5, 0
+  873  19 *    JNP      +209              (d:1084)
+- 1307,12 -
+  875  19 * {
+  875  19 *    SUSPEND
+  876  19 *    VarDecl  11
+  876  19 *    SetV4    v10, 0x0          (i:0, f:0)
+  878  19 *    JMP      +64              (d:944)
+  880  19 * 44:
+  880  19 *    SUSPEND
+- 1309,9 -
+  881  19 * {
+  881  19 *    SUSPEND
+  882  19 *    PshV4    v10
+  883  20 *    PshVPtr  v0
+  884  21 *    ADDSi    v200, 134217814
+  886  21 *    RDSPtr
+  887  21 *    RefCpyV  v16, 152820312
+  889  21 *    CALLSYS  1289           (EditorObject@& array::opIndex(uint))
+  891  19 *    PshRPtr
+  892  20 *    RDSPtr
+  893  20 *    ADDSi    v20, 134217783
+  895  20 *    PopRPtr
+  896  19 *    RDR4     v12
+  897  19 *    FREE     v16, 152820312
+  899  19 *    CMPi     v12, v13
+  901  19 *    JZ       +4              (d:907)
+  903  19 *    SetV4    v4, 0x0          (i:0, f:0)
+  905  19 *    JMP      +23              (d:930)
+  907  19 * 46:
+  907  19 *    PshV4    v10
+  908  20 *    PshVPtr  v0
+  909  21 *    ADDSi    v200, 134217814
+  911  21 *    RDSPtr
+  912  21 *    RefCpyV  v16, 152820312
+  914  21 *    CALLSYS  1289           (EditorObject@& array::opIndex(uint))
+  916  19 *    PshRPtr
+  917  20 *    RDSPtr
+  918  20 *    ADDSi    v24, 134217783
+  920  20 *    PopRPtr
+  921  19 *    RDR4     v12
+  922  19 *    FREE     v16, 152820312
+  924  19 *    CMPi     v12, v11
+  926  19 *    TZ
+  927  19 *    CpyRtoV4 v1
+  928  19 *    CpyVtoV4 v4, v1
+  930  19 * 47:
+  930  19 *    CpyVtoR4 v4
+  931  19 *    JLowZ    +9              (d:942)
+- 1312,10 -
+  933  19 * {
+  933  19 *    SUSPEND
+  934  19 *    SetV1    v5, 0x1
+  936  19 *    LoadThisR v176, 134217814
+  938  19 *    WRTV1    v5
+- 1313,10 -
+  939  19 *    SUSPEND
+  940  19 * {
+  940  19 * }
+  940  19 *    JMP      +14              (d:956)
+- 1307,50 -
+  942  18   }
+  942  19 * 45:
+  942  19 * }
+  942  19 * 43:
+  942  19 *    SUSPEND
+  943  19 *    IncVi    v10
+- 1307,24 -
+  944  19 * 41:
+  944  19 *    SUSPEND
+  945  19 *    PshVPtr  v0
+  946  20 *    ADDSi    v200, 134217814
+  948  20 *    RDSPtr
+  949  20 *    CALLSYS  86           (uint array::size() const)
+  951  19 *    CpyRtoV4 v5
+  952  19 *    CMPu     v10, v5
+  954  19 *    JS       -76              (d:880)
+- 1317,8 -
+  956  19 * 42:
+  956  19 *    SUSPEND
+  957  19 *    LoadThisR v176, 134217814
+  959  19 *    RDR1     v4
+  960  19 *    CpyVtoR4 v4
+  961  19 *    JLowZ    +121              (d:1084)
+- 1320,13 -
+  963  19 * {
+  963  19 *    SUSPEND
+  964  19 *    VarDecl  12
+  964  19 *    SetV4    v10, 0x0          (i:0, f:0)
+  966  19 *    JMP      +63              (d:1031)
+  968  19 * 52:
+  968  19 *    SUSPEND
+- 1321,10 -
+  969  19 *    SUSPEND
+  970  19 *    FREE     v19, 152242504
+  972  19 *    VAR      v19
+  973  20 *    PshV4    v10
+  974  21 *    PshVPtr  v0
+  975  22 *    ADDSi    v200, 134217814
+  977  22 *    RDSPtr
+  978  22 *    RefCpyV  v16, 152820312
+  980  22 *    CALLSYS  1289           (EditorObject@& array::opIndex(uint))
+  982  20 *    PshRPtr
+  983  21 *    RDSPtr
+  984  21 *    ADDSi    v24, 134217783
+  986  21 *    PopRPtr
+  987  20 *    RDR4     v5
+  988  20 *    PshV4    v5
+  989  21 *    PshV4    v10
+  990  22 *    PshVPtr  v0
+  991  23 *    ADDSi    v200, 134217814
+  993  23 *    RDSPtr
+  994  23 *    RefCpyV  v17, 152820312
+  996  23 *    CALLSYS  1289           (EditorObject@& array::opIndex(uint))
+  998  21 *    PshRPtr
+  999  22 *    RDSPtr
+ 1000  22 *    ADDSi    v20, 134217783
+ 1002  22 *    PopRPtr
+ 1003  21 *    RDR4     v1
+ 1004  21 *    PshV4    v1
+ 1005  22 *    PshVPtr  v0
+ 1006  23 *    ADDSi    v188, 134217814
+ 1008  23 *    RDSPtr
+ 1009  23 *    ADDSi    v44, 134217785
+ 1011  23 *    RDSPtr
+ 1012  23 *    RefCpyV  v18, 152813896
+ 1014  23 *    CALLSYS  1282           (EditorObject@& grid::at(uint, uint))
+ 1016  20 *    PshRPtr
+ 1017  21 *    GETOBJREF 1
+ 1018  21 *    REFCPY   0x9130948
+ 1020  20 *    FREE     v19, 152242504
+ 1022  20 *    PopPtr
+ 1023  19 *    FREE     v18, 152813896
+ 1025  19 *    FREE     v16, 152820312
+ 1027  19 *    FREE     v17, 152820312
+- 1320,51 -
+ 1029  19 * 51:
+ 1029  19 *    SUSPEND
+ 1030  19 *    IncVi    v10
+- 1320,25 -
+ 1031  19 * 49:
+ 1031  19 *    SUSPEND
+ 1032  19 *    PshVPtr  v0
+ 1033  20 *    ADDSi    v200, 134217814
+ 1035  20 *    RDSPtr
+ 1036  20 *    CALLSYS  86           (uint array::size() const)
+ 1038  19 *    CpyRtoV4 v5
+ 1039  19 *    CMPu     v10, v5
+ 1041  19 *    JS       -75              (d:968)
+- 1322,9 -
+ 1043  19 * 50:
+ 1043  19 *    SUSPEND
+ 1044  19 *    CpyVtoV4 v12, v6
+ 1046  19 *    iTOf     v12
+ 1047  19 *    PshV4    v12
+ 1048  20 *    CpyVtoV4 v4, v3
+ 1050  20 *    iTOf     v4
+ 1051  20 *    PshV4    v4
+ 1052  21 *    PshVPtr  v0
+ 1053  22 *    ADDSi    v180, 134217814
+ 1055  22 *    RDSPtr
+ 1056  22 *    ADDSi    v0, 67108878
+ 1058  22 *    CALLSYS  142           (void Vector2::set(const float, const float))
+- 1323,9 -
+ 1060  19 *    SUSPEND
+ 1061  19 *    PshC4    0x0          (i:0, f:0)
+ 1063  20 *    PshC4    0x0          (i:0, f:0)
+ 1065  21 *    PshVPtr  v0
+ 1066  22 *    ADDSi    v180, 134217814
+ 1068  22 *    RDSPtr
+ 1069  22 *    ADDSi    v8, 67108878
+ 1071  22 *    CALLSYS  142           (void Vector2::set(const float, const float))
+- 1324,9 -
+ 1073  19 *    SUSPEND
+ 1074  19 *    PshC4    0x0          (i:0, f:0)
+ 1076  20 *    PshC4    0x0          (i:0, f:0)
+ 1078  21 *    PshVPtr  v0
+ 1079  22 *    ADDSi    v184, 134217814
+ 1081  22 *    RDSPtr
+ 1082  22 *    CALLSYS  142           (void Vector2::set(const float, const float))
+- 1329,7 -
+ 1084  19 * }
+ 1084  19 * 48:
+ 1084  19 * }
+ 1084  19 * 40:
+ 1084  19 *    SUSPEND
+ 1085  19 *    LoadThisR v176, 134217814
+ 1087  19 *    RDR1     v5
+ 1088  19 *    NOT      v5
+ 1089  19 *    CpyVtoR4 v5
+ 1090  19 *    JLowZ    +51              (d:1143)
+- 1331,8 -
+ 1092  19 * {
+ 1092  19 *    SUSPEND
+ 1093  19 *    PshVPtr  v-1
+ 1094  20 *    ADDSi    v8, 67108905
+ 1096  20 *    ADDSi    v4, 67108877
+ 1098  20 *    PopRPtr
+ 1099  19 *    RDR4     v4
+ 1100  19 *    SUBIf    v12, v4, 256.000000
+ 1103  19 *    LoadThisR v56, 134217814
+ 1105  19 *    RDR4     v1
+ 1106  19 *    DIVf     v5, v12, v1
+ 1108  19 *    PshV4    v5
+ 1109  20 *    PshVPtr  v-1
+ 1110  21 *    ADDSi    v8, 67108905
+ 1112  21 *    ADDSi    v0, 67108877
+ 1114  21 *    PopRPtr
+ 1115  20 *    RDR4     v1
+ 1116  20 *    LoadThisR v56, 134217814
+ 1118  20 *    RDR4     v12
+ 1119  20 *    DIVf     v4, v1, v12
+ 1121  20 *    PshV4    v4
+ 1122  21 *    PshVPtr  v0
+ 1123  22 *    ADDSi    v180, 134217814
+ 1125  22 *    RDSPtr
+ 1126  22 *    ADDSi    v0, 67108878
+ 1128  22 *    CALLSYS  142           (void Vector2::set(const float, const float))
+- 1332,8 -
+ 1130  19 *    SUSPEND
+ 1131  19 *    PshC4    0x0          (i:0, f:0)
+ 1133  20 *    PshC4    0x0          (i:0, f:0)
+ 1135  21 *    PshVPtr  v0
+ 1136  22 *    ADDSi    v180, 134217814
+ 1138  22 *    RDSPtr
+ 1139  22 *    ADDSi    v8, 67108878
+ 1141  22 *    CALLSYS  142           (void Vector2::set(const float, const float))
+- 1336,5 -
+ 1143  19 * }
+ 1143  19 * 53:
+ 1143  19 * }
+ 1143  19 * 36:
+ 1143  19 * }
+ 1143  19 *    SUSPEND
+- 1339,3 -
+ 1144  19 * {
+ 1144  19 * }
+ 1144  19 * 3:
+ 1144  19 * }
+ 1144  19 * 2:
+ 1144  19 *    SUSPEND
+ 1145  19 * 0:
+ 1145  19 *    FREE     v-1, 112328888
+ 1147  19 *    FREE     v0, 152243168
+ 1149  19 *    RET      2

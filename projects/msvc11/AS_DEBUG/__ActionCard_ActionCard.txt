@@ -1,0 +1,50 @@
+ActionCard::ActionCard(ActionSlot@)
+
+Temps: 1, 2, 9
+
+Variables: 
+ -001: ActionSlot@ slot
+ 000: ActionCard this
+ 001: UiElement {noname}
+ 009: string {noname}
+
+
+- 7,3 -
+    0   9 *    VarDecl  0
+    0   9 *    SUSPEND
+    1   9 *    PshGPtr  74596608
+    3  10 *    RefCpyV  v1, 74282504
+    5  10 *    PopPtr
+    6   9 *    VAR      v1
+    7  10 *    PshVPtr  v0
+    8  11 *    GETOBJ   1
+    9  11 *    CALL     633           (UiElement::UiElement(UiElement@))
+- 3,6 -
+   11   9 *    SUSPEND
+   12   9 *    SetV4    v2, 0xffffffff          (i:-1, f:-1.#QNAN)
+   14   9 *    LoadThisR v48, 134217784
+   16   9 *    WRTV4    v2
+- 8,3 -
+   17   9 *    SUSPEND
+   18   9 *    LoadRObjR v-1, v56, 134217758
+   21   9 *    RDR4     v2
+   22   9 *    LoadThisR v48, 134217784
+   24   9 *    WRTV4    v2
+- 9,3 -
+   25   9 *    SUSPEND
+   26   9 *    STR      73         (l:10 s:"CreateCard")
+   27  11 *    CALLSYS  33           (const string& _string_factory_(const int, const uint8&))
+   29   9 *    PshRPtr
+   30  10 *    PSF      v9
+   31  11 *    CALLSYS  35           (string::string(const string&in))
+   33   9 *    ObjInfo  v9, 1
+   33   9 *    PSF      v9
+   34  10 *    CALLSYS  304           (void print(const string&in))
+   36   9 *    PSF      v9
+   37  10 *    CALLSYS  36           (string::~string())
+- 10,3 -
+   39   9 *    ObjInfo  v9, 0
+   39   9 *    SUSPEND
+   40   9 * 0:
+   40   9 *    FREE     v-1, 74309136
+   42   9 *    RET      2

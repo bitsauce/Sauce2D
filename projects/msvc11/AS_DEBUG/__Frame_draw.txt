@@ -1,0 +1,429 @@
+void Frame::draw()
+
+Temps: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12
+
+Variables: 
+ 000: Frame this
+
+
+    0  12 *    PshVPtr  v0
+    1  13 *    CALLSYS  2           (void _builtin_object_::_beh_5_())
+- 27,3 -
+    3  12 *    SUSPEND
+    4  12 *    LoadThisR v48, 134217781
+    6  12 *    RDR4     v1
+    7  12 *    PshV4    v1
+    8  13 *    CALLSYS  420           (void gfxSetTexture(const int))
+- 28,3 -
+   10  12 *    SUSPEND
+   11  12 *    PshC4    0x3          (i:3, f:4.2039e-045)
+   13  13 *    CALLSYS  434           (void gfxBegin(const DrawMode = DrawTriangles))
+- 29,3 -
+   15  12 *    SUSPEND
+   16  12 *    LoadThisR v52, 134217781
+   18  12 *    RDR4     v1
+   19  12 *    CMPIi    v1, 0
+   21  12 *    JP       +48              (d:71)
+- 32,4 -
+   23  12 * {
+   23  12 *    SUSPEND
+   24  12 *    SetV1    v3, 0x0
+   26  12 *    PshV4    v3
+   27  13 *    PshC4    0x3f800000          (i:1065353216, f:1)
+   29  14 *    PshC4    0x3f800000          (i:1065353216, f:1)
+   31  15 *    PshC4    0x0          (i:0, f:0)
+   33  16 *    PshC4    0x0          (i:0, f:0)
+   35  17 *    PshVPtr  v0
+   36  18 *    ADDSi    v36, 134217781
+   38  18 *    RDSPtr
+   39  18 *    CALLSYS  254           (float rect2::get_height() const)
+   41  17 *    CpyRtoV4 v7
+   42  17 *    PshV4    v7
+   43  18 *    PshVPtr  v0
+   44  19 *    ADDSi    v36, 134217781
+   46  19 *    RDSPtr
+   47  19 *    CALLSYS  252           (float rect2::get_width() const)
+   49  18 *    CpyRtoV4 v8
+   50  18 *    PshV4    v8
+   51  19 *    PshVPtr  v0
+   52  20 *    ADDSi    v36, 134217781
+   54  20 *    RDSPtr
+   55  20 *    CALLSYS  251           (float rect2::get_y() const)
+   57  19 *    CpyRtoV4 v9
+   58  19 *    PshV4    v9
+   59  20 *    PshVPtr  v0
+   60  21 *    ADDSi    v36, 134217781
+   62  21 *    RDSPtr
+   63  21 *    CALLSYS  249           (float rect2::get_x() const)
+   65  20 *    CpyRtoV4 v10
+   66  20 *    PshV4    v10
+   67  21 *    CALLSYS  441           (void gfxAddRect(const float, const float, const float, const float, const float, const float, const float, const float, const bool = false))
+   69  12 * }
+   69  12 *    JMP      +504              (d:575)
+- 35,4 -
+   71  12 * 1:
+   71  12 * {
+   71  12 *    SUSPEND
+   72  12 *    SetV1    v3, 0x0
+   74  12 *    PshV4    v3
+   75  13 *    PshC4    0x3f800000          (i:1065353216, f:1)
+   77  14 *    PshC4    0x3e800000          (i:1048576000, f:0.25)
+   79  15 *    PshC4    0x3f400000          (i:1061158912, f:0.75)
+   81  16 *    PshC4    0x0          (i:0, f:0)
+   83  17 *    LoadThisR v52, 134217781
+   85  17 *    RDR4     v6
+   86  17 *    iTOf     v6
+   87  17 *    PshV4    v6
+   88  18 *    LoadThisR v52, 134217781
+   90  18 *    RDR4     v5
+   91  18 *    iTOf     v5
+   92  18 *    PshV4    v5
+   93  19 *    PshVPtr  v0
+   94  20 *    ADDSi    v36, 134217781
+   96  20 *    RDSPtr
+   97  20 *    CALLSYS  260           (float rect2::get_top() const)
+   99  19 *    CpyRtoV4 v4
+  100  19 *    PshV4    v4
+  101  20 *    PshVPtr  v0
+  102  21 *    ADDSi    v36, 134217781
+  104  21 *    RDSPtr
+  105  21 *    CALLSYS  259           (float rect2::get_left() const)
+  107  20 *    CpyRtoV4 v1
+  108  20 *    PshV4    v1
+  109  21 *    CALLSYS  441           (void gfxAddRect(const float, const float, const float, const float, const float, const float, const float, const float, const bool = false))
+- 36,4 -
+  111  12 *    SUSPEND
+  112  12 *    SetV1    v5, 0x0
+  114  12 *    PshV4    v5
+  115  13 *    PshC4    0x3f800000          (i:1065353216, f:1)
+  117  14 *    PshC4    0x3f400000          (i:1061158912, f:0.75)
+  119  15 *    PshC4    0x3f400000          (i:1061158912, f:0.75)
+  121  16 *    PshC4    0x3e800000          (i:1048576000, f:0.25)
+  123  17 *    LoadThisR v52, 134217781
+  125  17 *    RDR4     v11
+  126  17 *    iTOf     v11
+  127  17 *    PshV4    v11
+  128  18 *    PshVPtr  v0
+  129  19 *    ADDSi    v36, 134217781
+  131  19 *    RDSPtr
+  132  19 *    CALLSYS  252           (float rect2::get_width() const)
+  134  18 *    CpyRtoV4 v1
+  135  18 *    LoadThisR v52, 134217781
+  137  18 *    RDR4     v3
+  138  18 *    MULIi    v4, v3, 2
+  141  18 *    iTOf     v4
+  142  18 *    SUBf     v3, v1, v4
+  144  18 *    PshV4    v3
+  145  19 *    PshVPtr  v0
+  146  20 *    ADDSi    v36, 134217781
+  148  20 *    RDSPtr
+  149  20 *    CALLSYS  260           (float rect2::get_top() const)
+  151  19 *    CpyRtoV4 v12
+  152  19 *    PshV4    v12
+  153  20 *    PshVPtr  v0
+  154  21 *    ADDSi    v36, 134217781
+  156  21 *    RDSPtr
+  157  21 *    CALLSYS  259           (float rect2::get_left() const)
+  159  20 *    CpyRtoV4 v4
+  160  20 *    LoadThisR v52, 134217781
+  162  20 *    RDR4     v1
+  163  20 *    iTOf     v1
+  164  20 *    ADDf     v10, v4, v1
+  166  20 *    PshV4    v10
+  167  21 *    CALLSYS  441           (void gfxAddRect(const float, const float, const float, const float, const float, const float, const float, const float, const bool = false))
+- 37,4 -
+  169  12 *    SUSPEND
+  170  12 *    SetV1    v4, 0x0
+  172  12 *    PshV4    v4
+  173  13 *    PshC4    0x3f800000          (i:1065353216, f:1)
+  175  14 *    PshC4    0x3f800000          (i:1065353216, f:1)
+  177  15 *    PshC4    0x3f400000          (i:1061158912, f:0.75)
+  179  16 *    PshC4    0x3f400000          (i:1061158912, f:0.75)
+  181  17 *    LoadThisR v52, 134217781
+  183  17 *    RDR4     v7
+  184  17 *    iTOf     v7
+  185  17 *    PshV4    v7
+  186  18 *    LoadThisR v52, 134217781
+  188  18 *    RDR4     v6
+  189  18 *    iTOf     v6
+  190  18 *    PshV4    v6
+  191  19 *    PshVPtr  v0
+  192  20 *    ADDSi    v36, 134217781
+  194  20 *    RDSPtr
+  195  20 *    CALLSYS  260           (float rect2::get_top() const)
+  197  19 *    CpyRtoV4 v9
+  198  19 *    PshV4    v9
+  199  20 *    PshVPtr  v0
+  200  21 *    ADDSi    v36, 134217781
+  202  21 *    RDSPtr
+  203  21 *    CALLSYS  257           (float rect2::get_right() const)
+  205  20 *    CpyRtoV4 v1
+  206  20 *    LoadThisR v52, 134217781
+  208  20 *    RDR4     v10
+  209  20 *    iTOf     v10
+  210  20 *    SUBf     v12, v1, v10
+  212  20 *    PshV4    v12
+  213  21 *    CALLSYS  441           (void gfxAddRect(const float, const float, const float, const float, const float, const float, const float, const float, const bool = false))
+- 38,4 -
+  215  12 *    SUSPEND
+  216  12 *    SetV1    v6, 0x0
+  218  12 *    PshV4    v6
+  219  13 *    PshC4    0x3f400000          (i:1061158912, f:0.75)
+  221  14 *    PshC4    0x3f800000          (i:1065353216, f:1)
+  223  15 *    PshC4    0x3e800000          (i:1048576000, f:0.25)
+  225  16 *    PshC4    0x3f400000          (i:1061158912, f:0.75)
+  227  17 *    PshVPtr  v0
+  228  18 *    ADDSi    v36, 134217781
+  230  18 *    RDSPtr
+  231  18 *    CALLSYS  254           (float rect2::get_height() const)
+  233  17 *    CpyRtoV4 v12
+  234  17 *    LoadThisR v52, 134217781
+  236  17 *    RDR4     v10
+  237  17 *    MULIi    v9, v10, 2
+  240  17 *    iTOf     v9
+  241  17 *    SUBf     v10, v12, v9
+  243  17 *    PshV4    v10
+  244  18 *    LoadThisR v52, 134217781
+  246  18 *    RDR4     v5
+  247  18 *    iTOf     v5
+  248  18 *    PshV4    v5
+  249  19 *    PshVPtr  v0
+  250  20 *    ADDSi    v36, 134217781
+  252  20 *    RDSPtr
+  253  20 *    CALLSYS  260           (float rect2::get_top() const)
+  255  19 *    CpyRtoV4 v9
+  256  19 *    LoadThisR v52, 134217781
+  258  19 *    RDR4     v12
+  259  19 *    iTOf     v12
+  260  19 *    ADDf     v1, v9, v12
+  262  19 *    PshV4    v1
+  263  20 *    PshVPtr  v0
+  264  21 *    ADDSi    v36, 134217781
+  266  21 *    RDSPtr
+  267  21 *    CALLSYS  257           (float rect2::get_right() const)
+  269  20 *    CpyRtoV4 v12
+  270  20 *    LoadThisR v52, 134217781
+  272  20 *    RDR4     v9
+  273  20 *    iTOf     v9
+  274  20 *    SUBf     v7, v12, v9
+  276  20 *    PshV4    v7
+  277  21 *    CALLSYS  441           (void gfxAddRect(const float, const float, const float, const float, const float, const float, const float, const float, const bool = false))
+- 39,4 -
+  279  12 *    SUSPEND
+  280  12 *    SetV1    v12, 0x0
+  282  12 *    PshV4    v12
+  283  13 *    PshC4    0x3e800000          (i:1048576000, f:0.25)
+  285  14 *    PshC4    0x3f800000          (i:1065353216, f:1)
+  287  15 *    PshC4    0x0          (i:0, f:0)
+  289  16 *    PshC4    0x3f400000          (i:1061158912, f:0.75)
+  291  17 *    LoadThisR v52, 134217781
+  293  17 *    RDR4     v8
+  294  17 *    iTOf     v8
+  295  17 *    PshV4    v8
+  296  18 *    LoadThisR v52, 134217781
+  298  18 *    RDR4     v4
+  299  18 *    iTOf     v4
+  300  18 *    PshV4    v4
+  301  19 *    PshVPtr  v0
+  302  20 *    ADDSi    v36, 134217781
+  304  20 *    RDSPtr
+  305  20 *    CALLSYS  258           (float rect2::get_bottom() const)
+  307  19 *    CpyRtoV4 v9
+  308  19 *    LoadThisR v52, 134217781
+  310  19 *    RDR4     v7
+  311  19 *    iTOf     v7
+  312  19 *    SUBf     v1, v9, v7
+  314  19 *    PshV4    v1
+  315  20 *    PshVPtr  v0
+  316  21 *    ADDSi    v36, 134217781
+  318  21 *    RDSPtr
+  319  21 *    CALLSYS  257           (float rect2::get_right() const)
+  321  20 *    CpyRtoV4 v7
+  322  20 *    LoadThisR v52, 134217781
+  324  20 *    RDR4     v9
+  325  20 *    iTOf     v9
+  326  20 *    SUBf     v5, v7, v9
+  328  20 *    PshV4    v5
+  329  21 *    CALLSYS  441           (void gfxAddRect(const float, const float, const float, const float, const float, const float, const float, const float, const bool = false))
+- 40,4 -
+  331  12 *    SUSPEND
+  332  12 *    SetV1    v4, 0x0
+  334  12 *    PshV4    v4
+  335  13 *    PshC4    0x3e800000          (i:1048576000, f:0.25)
+  337  14 *    PshC4    0x3f400000          (i:1061158912, f:0.75)
+  339  15 *    PshC4    0x0          (i:0, f:0)
+  341  16 *    PshC4    0x3e800000          (i:1048576000, f:0.25)
+  343  17 *    LoadThisR v52, 134217781
+  345  17 *    RDR4     v6
+  346  17 *    iTOf     v6
+  347  17 *    PshV4    v6
+  348  18 *    PshVPtr  v0
+  349  19 *    ADDSi    v36, 134217781
+  351  19 *    RDSPtr
+  352  19 *    CALLSYS  252           (float rect2::get_width() const)
+  354  18 *    CpyRtoV4 v5
+  355  18 *    LoadThisR v52, 134217781
+  357  18 *    RDR4     v9
+  358  18 *    MULIi    v1, v9, 2
+  361  18 *    iTOf     v1
+  362  18 *    SUBf     v9, v5, v1
+  364  18 *    PshV4    v9
+  365  19 *    PshVPtr  v0
+  366  20 *    ADDSi    v36, 134217781
+  368  20 *    RDSPtr
+  369  20 *    CALLSYS  258           (float rect2::get_bottom() const)
+  371  19 *    CpyRtoV4 v1
+  372  19 *    LoadThisR v52, 134217781
+  374  19 *    RDR4     v5
+  375  19 *    iTOf     v5
+  376  19 *    SUBf     v7, v1, v5
+  378  19 *    PshV4    v7
+  379  20 *    PshVPtr  v0
+  380  21 *    ADDSi    v36, 134217781
+  382  21 *    RDSPtr
+  383  21 *    CALLSYS  259           (float rect2::get_left() const)
+  385  20 *    CpyRtoV4 v5
+  386  20 *    LoadThisR v52, 134217781
+  388  20 *    RDR4     v1
+  389  20 *    iTOf     v1
+  390  20 *    ADDf     v8, v5, v1
+  392  20 *    PshV4    v8
+  393  21 *    CALLSYS  441           (void gfxAddRect(const float, const float, const float, const float, const float, const float, const float, const float, const bool = false))
+- 41,4 -
+  395  12 *    SUSPEND
+  396  12 *    SetV1    v5, 0x0
+  398  12 *    PshV4    v5
+  399  13 *    PshC4    0x3e800000          (i:1048576000, f:0.25)
+  401  14 *    PshC4    0x3e800000          (i:1048576000, f:0.25)
+  403  15 *    PshC4    0x0          (i:0, f:0)
+  405  16 *    PshC4    0x0          (i:0, f:0)
+  407  17 *    LoadThisR v52, 134217781
+  409  17 *    RDR4     v3
+  410  17 *    iTOf     v3
+  411  17 *    PshV4    v3
+  412  18 *    LoadThisR v52, 134217781
+  414  18 *    RDR4     v11
+  415  18 *    iTOf     v11
+  416  18 *    PshV4    v11
+  417  19 *    PshVPtr  v0
+  418  20 *    ADDSi    v36, 134217781
+  420  20 *    RDSPtr
+  421  20 *    CALLSYS  258           (float rect2::get_bottom() const)
+  423  19 *    CpyRtoV4 v1
+  424  19 *    LoadThisR v52, 134217781
+  426  19 *    RDR4     v8
+  427  19 *    iTOf     v8
+  428  19 *    SUBf     v7, v1, v8
+  430  19 *    PshV4    v7
+  431  20 *    PshVPtr  v0
+  432  21 *    ADDSi    v36, 134217781
+  434  21 *    RDSPtr
+  435  21 *    CALLSYS  259           (float rect2::get_left() const)
+  437  20 *    CpyRtoV4 v8
+  438  20 *    PshV4    v8
+  439  21 *    CALLSYS  441           (void gfxAddRect(const float, const float, const float, const float, const float, const float, const float, const float, const bool = false))
+- 42,4 -
+  441  12 *    SUSPEND
+  442  12 *    SetV1    v11, 0x0
+  444  12 *    PshV4    v11
+  445  13 *    PshC4    0x3f400000          (i:1061158912, f:0.75)
+  447  14 *    PshC4    0x3e800000          (i:1048576000, f:0.25)
+  449  15 *    PshC4    0x3e800000          (i:1048576000, f:0.25)
+  451  16 *    PshC4    0x0          (i:0, f:0)
+  453  17 *    PshVPtr  v0
+  454  18 *    ADDSi    v36, 134217781
+  456  18 *    RDSPtr
+  457  18 *    CALLSYS  254           (float rect2::get_height() const)
+  459  17 *    CpyRtoV4 v8
+  460  17 *    LoadThisR v52, 134217781
+  462  17 *    RDR4     v12
+  463  17 *    MULIi    v7, v12, 2
+  466  17 *    iTOf     v7
+  467  17 *    SUBf     v12, v8, v7
+  469  17 *    PshV4    v12
+  470  18 *    LoadThisR v52, 134217781
+  472  18 *    RDR4     v9
+  473  18 *    iTOf     v9
+  474  18 *    PshV4    v9
+  475  19 *    PshVPtr  v0
+  476  20 *    ADDSi    v36, 134217781
+  478  20 *    RDSPtr
+  479  20 *    CALLSYS  260           (float rect2::get_top() const)
+  481  19 *    CpyRtoV4 v7
+  482  19 *    LoadThisR v52, 134217781
+  484  19 *    RDR4     v8
+  485  19 *    iTOf     v8
+  486  19 *    ADDf     v1, v7, v8
+  488  19 *    PshV4    v1
+  489  20 *    PshVPtr  v0
+  490  21 *    ADDSi    v36, 134217781
+  492  21 *    RDSPtr
+  493  21 *    CALLSYS  259           (float rect2::get_left() const)
+  495  20 *    CpyRtoV4 v8
+  496  20 *    PshV4    v8
+  497  21 *    CALLSYS  441           (void gfxAddRect(const float, const float, const float, const float, const float, const float, const float, const float, const bool = false))
+- 43,4 -
+  499  12 *    SUSPEND
+  500  12 *    SetV1    v12, 0x0
+  502  12 *    PshV4    v12
+  503  13 *    PshC4    0x3f400000          (i:1061158912, f:0.75)
+  505  14 *    PshC4    0x3f400000          (i:1061158912, f:0.75)
+  507  15 *    PshC4    0x3e800000          (i:1048576000, f:0.25)
+  509  16 *    PshC4    0x3e800000          (i:1048576000, f:0.25)
+  511  17 *    PshVPtr  v0
+  512  18 *    ADDSi    v36, 134217781
+  514  18 *    RDSPtr
+  515  18 *    CALLSYS  254           (float rect2::get_height() const)
+  517  17 *    CpyRtoV4 v8
+  518  17 *    LoadThisR v52, 134217781
+  520  17 *    RDR4     v4
+  521  17 *    MULIi    v1, v4, 2
+  524  17 *    iTOf     v1
+  525  17 *    SUBf     v4, v8, v1
+  527  17 *    PshV4    v4
+  528  18 *    PshVPtr  v0
+  529  19 *    ADDSi    v36, 134217781
+  531  19 *    RDSPtr
+  532  19 *    CALLSYS  252           (float rect2::get_width() const)
+  534  18 *    CpyRtoV4 v8
+  535  18 *    LoadThisR v52, 134217781
+  537  18 *    RDR4     v1
+  538  18 *    MULIi    v7, v1, 2
+  541  18 *    iTOf     v7
+  542  18 *    SUBf     v1, v8, v7
+  544  18 *    PshV4    v1
+  545  19 *    PshVPtr  v0
+  546  20 *    ADDSi    v36, 134217781
+  548  20 *    RDSPtr
+  549  20 *    CALLSYS  260           (float rect2::get_top() const)
+  551  19 *    CpyRtoV4 v7
+  552  19 *    LoadThisR v52, 134217781
+  554  19 *    RDR4     v8
+  555  19 *    iTOf     v8
+  556  19 *    ADDf     v9, v7, v8
+  558  19 *    PshV4    v9
+  559  20 *    PshVPtr  v0
+  560  21 *    ADDSi    v36, 134217781
+  562  21 *    RDSPtr
+  563  21 *    CALLSYS  259           (float rect2::get_left() const)
+  565  20 *    CpyRtoV4 v8
+  566  20 *    LoadThisR v52, 134217781
+  568  20 *    RDR4     v7
+  569  20 *    iTOf     v7
+  570  20 *    ADDf     v6, v8, v7
+  572  20 *    PshV4    v6
+  573  21 *    CALLSYS  441           (void gfxAddRect(const float, const float, const float, const float, const float, const float, const float, const float, const bool = false))
+- 45,3 -
+  575  12 * }
+  575  12 * 2:
+  575  12 *    SUSPEND
+  576  12 *    CALLSYS  435           (void gfxEnd())
+- 47,3 -
+  578  12 *    SUSPEND
+  579  12 *    PshVPtr  v0
+  580  13 *    CALL     642           (void UiElement::draw())
+- 48,3 -
+  582  12 *    SUSPEND
+  583  12 * 0:
+  583  12 *    FREE     v0, 74307120
+  585  12 *    RET      1

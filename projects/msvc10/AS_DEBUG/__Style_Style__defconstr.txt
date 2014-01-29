@@ -1,0 +1,25 @@
+Style::Style()
+
+Temps: 1
+
+Variables: 
+ 000: Style this
+ 001: array {noname}
+
+
+- 337,9 -
+    0   1 *    SUSPEND
+    1   1 *    PshVPtr  v0
+    2   2 *    ADDSi    v16, 134217781
+    4   2 *    ALLOC    0x305cbc8, 33             (type:string)
+- 338,23 -
+    7   1 *    SUSPEND
+    8   1 *    CALL     1326           (StyleProperty[]@ factstub())
+   10   1 *    STOREOBJ v1
+   11   1 *    PshVPtr  v1
+   12   2 *    PshVPtr  v0
+   13   3 *    ADDSi    v20, 134217781
+   15   3 *    REFCPY   0x8ff05d0
+   17   2 *    PopPtr
+   18   1 *    FREE     v1, 150930896
+   20   1 *    RET      1

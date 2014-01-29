@@ -1,0 +1,21 @@
+Projectile::Projectile()
+
+Temps: 1
+
+Variables: 
+ 000: Projectile this
+
+
+- 24,7 -
+    0   1 *    SUSPEND
+    1   1 *    PshVPtr  v0
+    2   2 *    CALL     818           (PhysicObject::PhysicObject())
+- 29,3 -
+    4   1 *    SUSPEND
+    5   1 *    SetV4    v1, 0x0          (i:0, f:0)
+    7   1 *    LoadThisR v28, 134217827
+    9   1 *    WRTV4    v1
+- 30,3 -
+   10   1 *    SUSPEND
+   11   1 * 0:
+   11   1 *    RET      1

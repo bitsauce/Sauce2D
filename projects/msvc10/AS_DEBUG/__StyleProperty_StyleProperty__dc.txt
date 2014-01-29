@@ -1,0 +1,9 @@
+StyleProperty::StyleProperty()
+
+Temps: 
+
+Variables: 
+ 000: StyleProperty this
+
+
+    0   0 *    RET      1

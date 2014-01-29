@@ -1,0 +1,31 @@
+void gfxDrawLine(const float, const float, const float, const float, const float = 1.0f)
+
+Temps: 
+
+Variables: 
+ 000: const float x0
+ -001: const float y0
+ -002: const float x1
+ -003: const float y1
+ -004: const float w
+
+
+- 40,2 -
+    0   0 *    VarDecl  0
+    0   0 *    VarDecl  1
+    0   0 *    VarDecl  2
+    0   0 *    VarDecl  3
+    0   0 *    VarDecl  4
+    0   0 *    SUSPEND
+    1   0 *    PshV4    v-1
+    2   1 *    PshV4    v0
+    3   2 *    CALLSYS  444           (void gfxAddVertex(const float, const float))
+- 41,2 -
+    5   0 *    SUSPEND
+    6   0 *    PshV4    v-3
+    7   1 *    PshV4    v-2
+    8   2 *    CALLSYS  444           (void gfxAddVertex(const float, const float))
+- 42,2 -
+   10   0 *    SUSPEND
+   11   0 * 0:
+   11   0 *    RET      5

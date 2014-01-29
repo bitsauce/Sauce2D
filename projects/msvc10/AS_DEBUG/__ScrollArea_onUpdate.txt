@@ -1,0 +1,128 @@
+void ScrollArea::onUpdate(UpdateEvent)
+
+Temps: 1, 2, 3, 4, 8, 10, 12, 13
+
+Variables: 
+ -001: UpdateEvent e
+ 011: uint i
+ 000: ScrollArea this
+ 012: array {noname}
+ 013: UpdateEvent {noname}
+ 008: Rect2 {noname}
+ 010: Vector2 {noname}
+
+
+    0  13 *    VarDecl  0
+    0  13 *    PshVPtr  v0
+    1  14 *    CALLSYS  2           (void _builtin_object_::_beh_4_())
+- 32,3 -
+    3  13 *    SUSPEND
+    4  13 *    PSF      v10
+    5  14 *    PshGPtr  112334928
+    7  15 *    CHKREF
+    8  15 *    CALLSYS  430           (Vector2 CX2DApp::cursorViewPos() const)
+   10  13 *    ObjInfo  v10, 1
+   10  13 *    VAR      v10
+   11  14 *    PshVPtr  v0
+   12  15 *    CALLINTF 1101           (float SceneObject::height() const)
+   14  14 *    CpyRtoV4 v1
+   15  14 *    SUBIf    v1, v1, 16.000000
+   18  14 *    PshV4    v1
+   19  15 *    PshVPtr  v0
+   20  16 *    CALLINTF 1100           (float SceneObject::width() const)
+   22  15 *    CpyRtoV4 v2
+   23  15 *    SUBIf    v2, v2, 16.000000
+   26  15 *    PshV4    v2
+   27  16 *    PshVPtr  v0
+   28  17 *    CALLINTF 1094           (float SceneObject::y() const)
+   30  16 *    CpyRtoV4 v3
+   31  16 *    ADDIf    v3, v3, 16.000000
+   34  16 *    PshV4    v3
+   35  17 *    PshVPtr  v0
+   36  18 *    CALLINTF 1093           (float SceneObject::x() const)
+   38  17 *    CpyRtoV4 v4
+   39  17 *    PshV4    v4
+   40  18 *    PSF      v8
+   41  19 *    CALLSYS  157           (void Rect2::_beh_0_(const float, const float, const float, const float))
+   43  14 *    ObjInfo  v8, 1
+   43  14 *    PSF      v8
+   44  15 *    GETREF   1
+   45  15 *    CALLSYS  159           (bool Rect2::contains(const Vector2&in) const)
+   47  13 *    CpyRtoV4 v1
+   48  13 *    ObjInfo  v10, 0
+   48  13 *    ObjInfo  v8, 0
+   48  13 *    CpyVtoR4 v1
+   49  13 *    JLowNZ   +4              (d:55)
+   51  13 *    SetV4    v2, 0x0          (i:0, f:0)
+   53  13 *    JMP      +6              (d:61)
+   55  13 * 2:
+   55  13 *    LoadThisR v58, 134217810
+   57  13 *    RDR1     v4
+   58  13 *    NOT      v4
+   59  13 *    CpyVtoV4 v2, v4
+   61  13 * 3:
+   61  13 *    CpyVtoR4 v2
+   62  13 *    JLowNZ   +4              (d:68)
+   64  13 *    SetV4    v4, 0x0          (i:0, f:0)
+   66  13 *    JMP      +6              (d:74)
+   68  13 * 4:
+   68  13 *    LoadThisR v59, 134217810
+   70  13 *    RDR1     v1
+   71  13 *    NOT      v1
+   72  13 *    CpyVtoV4 v4, v1
+   74  13 * 5:
+   74  13 *    CpyVtoR4 v4
+   75  13 *    JLowZ    +47              (d:124)
+- 34,8 -
+   77  13 * {
+   77  13 *    SUSPEND
+   78  13 *    VarDecl  1
+   78  13 *    SetV4    v11, 0x0          (i:0, f:0)
+   80  13 *    JMP      +30              (d:112)
+   82  13 * 9:
+   82  13 *    SUSPEND
+- 35,5 -
+   83  13 * {
+   83  13 *    SUSPEND
+   84  13 *    PshVPtr  v-1
+   85  14 *    PSF      v13
+   86  15 *    ALLOC    0x6b1ec60, 0             (type:UpdateEvent)
+   89  14 *    PshVPtr  v13
+   90  15 *    COPY     v2, 67108901
+   92  14 *    PopPtr
+   93  13 *    VAR      v13
+   94  14 *    PshV4    v11
+   95  15 *    PshVPtr  v0
+   96  16 *    ADDSi    v24, 134217810
+   98  16 *    RDSPtr
+   99  16 *    RefCpyV  v12, 152712520
+  101  16 *    CALLSYS  1170           (UiObject@& array::opIndex(uint))
+  103  14 *    PshRPtr
+  104  15 *    RDSPtr
+  105  15 *    GETOBJ   1
+  106  15 *    CALLINTF 1129           (void SceneObject::onUpdate(UpdateEvent))
+  108  13 *    FREE     v12, 152712520
+- 34,41 -
+  110  13 * }
+  110  13 * 8:
+  110  13 *    SUSPEND
+  111  13 *    IncVi    v11
+- 34,20 -
+  112  13 * 6:
+  112  13 *    SUSPEND
+  113  13 *    PshVPtr  v0
+  114  14 *    ADDSi    v24, 134217810
+  116  14 *    RDSPtr
+  117  14 *    CALLSYS  86           (uint array::size() const)
+  119  13 *    CpyRtoV4 v4
+  120  13 *    CMPu     v11, v4
+  122  13 *    JS       -42              (d:82)
+- 38,3 -
+  124  13 * 7:
+  124  13 * }
+  124  13 * 1:
+  124  13 *    SUSPEND
+  125  13 * 0:
+  125  13 *    FREE     v-1, 112323680
+  127  13 *    FREE     v0, 152254712
+  129  13 *    RET      2

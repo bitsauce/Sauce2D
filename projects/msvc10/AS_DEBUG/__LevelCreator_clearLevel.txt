@@ -1,0 +1,44 @@
+void LevelCreator::clearLevel()
+
+Temps: 1
+
+Variables: 
+ 000: LevelCreator this
+ 001: EditorObject {noname}
+
+
+    0   1 *    PshVPtr  v0
+    1   2 *    CALLSYS  2           (void _builtin_object_::_beh_4_())
+- 663,3 -
+    3   1 *    SUSPEND
+    4   1 *    PshVPtr  v0
+    5   2 *    ADDSi    v204, 134217814
+    7   2 *    RDSPtr
+    8   2 *    CALLSYS  89           (void array::clear())
+- 664,3 -
+   10   1 *    SUSPEND
+   11   1 *    PshVPtr  v0
+   12   2 *    ADDSi    v208, 134217814
+   14   2 *    RDSPtr
+   15   2 *    CALLSYS  125           (void grid::clear())
+- 665,3 -
+   17   1 *    SUSPEND
+   18   1 *    PshVPtr  v0
+   19   2 *    ADDSi    v200, 134217814
+   21   2 *    RDSPtr
+   22   2 *    CALLSYS  89           (void array::clear())
+- 666,3 -
+   24   1 *    SUSPEND
+   25   1 *    FREE     v1, 152242504
+   27   1 *    VAR      v1
+   28   2 *    PshVPtr  v0
+   29   3 *    ADDSi    v196, 134217814
+   31   3 *    GETOBJREF 1
+   32   3 *    REFCPY   0x9130948
+   34   2 *    FREE     v1, 152242504
+   36   2 *    PopPtr
+- 667,3 -
+   37   1 *    SUSPEND
+   38   1 * 0:
+   38   1 *    FREE     v0, 152243168
+   40   1 *    RET      1

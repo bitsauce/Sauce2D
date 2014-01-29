@@ -1,0 +1,31 @@
+void Camera::moveTo(Vector2)
+
+Temps: 1
+
+Variables: 
+ -001: Vector2 target
+ 000: Camera this
+
+
+    0   1 *    VarDecl  0
+    0   1 *    PshVPtr  v0
+    1   2 *    CALLSYS  2           (void _builtin_object_::_beh_4_())
+- 105,3 -
+    3   1 *    SUSPEND
+    4   1 *    PshVPtr  v-1
+    5   2 *    PshVPtr  v0
+    6   3 *    ADDSi    v28, 134217807
+    8   3 *    RDSPtr
+    9   3 *    COPY     v2, 67108877
+   11   2 *    PopPtr
+- 106,3 -
+   12   1 *    SUSPEND
+   13   1 *    SetV1    v1, 0x0
+   15   1 *    LoadThisR v24, 134217807
+   17   1 *    WRTV1    v1
+- 107,3 -
+   18   1 *    SUSPEND
+   19   1 * 0:
+   19   1 *    FREE     v-1, 111988408
+   21   1 *    FREE     v0, 152243752
+   23   1 *    RET      2

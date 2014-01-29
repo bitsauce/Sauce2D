@@ -1,0 +1,84 @@
+int gfxLoadImage(const string, const bool = false)
+
+Temps: 4, 5, 6, 8, 9
+
+Variables: 
+ 000: const string filePath
+ -001: const bool mipmap
+ 001: int w
+ 002: int h
+ 003: uint[] data
+ 007: int id
+ 006: array {noname}
+
+
+- 76,2 -
+    0   9 *    VarDecl  0
+    0   9 *    VarDecl  1
+    0   9 *    SUSPEND
+- 77,2 -
+    1   9 *    VarDecl  2
+    1   9 *    VarDecl  3
+    1   9 *    SUSPEND
+    2   9 *    VarDecl  4
+    2   9 *    VAR      v4
+    3  10 *    VAR      v5
+    4  11 *    VAR      v0
+    5  12 *    GETOBJREF 0
+    6  12 *    GETREF   1
+    7  12 *    GETREF   2
+    8  12 *    CALLSYS  481           (uint[]@ gfxLoadImageData(const string&in, int&out, int&out))
+   10   9 *    STOREOBJ v6
+   11   9 *    CpyVtoV4 v2, v4
+   13   9 *    CpyVtoV4 v1, v5
+   15   9 *    ChkNullV v6
+   16   9 *    VAR      v6
+   17  10 *    CALL     464           (uint[]@ factstub())
+   19  10 *    STOREOBJ v3
+   20  10 *    PshVPtr  v3
+   21  11 *    GETOBJREF 1
+   22  11 *    CALLSYS  470           (uint[]& array::opAssign(const uint[]&in))
+   24   9 *    FREE     v6, 66976464
+- 80,2 -
+   26   9 *    SUSPEND
+   27   9 *    VarDecl  5
+   27   9 *    CALLSYS  457           (int gfxCreateTexture())
+   29   9 *    CpyRtoV4 v4
+   30   9 *    CpyVtoV4 v7, v4
+- 81,2 -
+   32   9 *    SUSPEND
+   33   9 *    PshV4    v-1
+   34  10 *    VAR      v3
+   35  11 *    PshV4    v2
+   36  12 *    PshV4    v1
+   37  13 *    PshV4    v7
+   38  14 *    GETOBJREF 3
+   39  14 *    CALLSYS  477           (void gfxSetTextureData(const int, const int, const int, const uint[]&in, const bool = false))
+- 82,2 -
+   41   9 *    SUSPEND
+   42   9 *    CpyVtoR4 v-1
+   43   9 *    JLowZ    +4              (d:49)
+   45   9 *    SetV4    v8, 0x2702          (i:9986, f:1.39934e-041)
+   47   9 *    JMP      +2              (d:51)
+   49   9 * 2:
+   49   9 *    SetV4    v8, 0x2600          (i:9728, f:1.36318e-041)
+   51   9 * 1:
+   51   9 *    PshV4    v8
+   52  10 *    PshC4    0x2801          (i:10241, f:1.43507e-041)
+   54  11 *    PshV4    v7
+   55  12 *    CALLSYS  460           (void gfxSetTextureParam(const int, const int, const int))
+- 83,2 -
+   57   9 *    SUSPEND
+   58   9 *    PshC4    0x2600          (i:9728, f:1.36318e-041)
+   60  10 *    PshC4    0x2800          (i:10240, f:1.43493e-041)
+   62  11 *    PshV4    v7
+   63  12 *    CALLSYS  460           (void gfxSetTextureParam(const int, const int, const int))
+- 86,2 -
+   65   9 *    SUSPEND
+   66   9 * {
+   66   9 *    FREE     v3, 66976464
+   68   9 * }
+   68   9 *    CpyVtoR4 v7
+   69   9 * 0:
+   69   9 *    FREE     v0, 4695112
+   71   9 *    RET      2

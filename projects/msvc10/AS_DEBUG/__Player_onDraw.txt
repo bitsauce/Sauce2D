@@ -1,0 +1,203 @@
+void Player::onDraw(DrawEvent)
+
+Temps: 1, 2, 3, 4, 5, 6, 7, 11, 13
+
+Variables: 
+ -001: DrawEvent e
+ 009: Vector2 pos
+ 000: Player this
+ 001: CSprite {noname}
+ 002: CSprite {noname}
+ 007: Color {noname}
+ 011: Vector2 {noname}
+ 013: Vector2 {noname}
+
+
+    0  13 *    VarDecl  0
+    0  13 *    PshVPtr  v0
+    1  14 *    CALLSYS  2           (void _builtin_object_::_beh_4_())
+- 394,3 -
+    3  13 *    SUSPEND
+    4  13 *    PshVPtr  v0
+    5  14 *    ADDSi    v72, 134217774
+    7  14 *    RDSPtr
+    8  14 *    RefCpyV  v1, 112081552
+   10  14 *    PopPtr
+   11  13 *    ClrVPtr  v2
+   12  13 *    CmpPtr   v1, v2
+   14  13 *    TNZ
+   15  13 *    CpyRtoV4 v3
+   16  13 *    FREE     v1, 112081552
+   18  13 *    FREE     v2, 112081552
+   20  13 *    CpyVtoR4 v3
+   21  13 *    JLowZ    +181              (d:204)
+- 397,4 -
+   23  13 * {
+   23  13 *    SUSPEND
+   24  13 *    LoadThisR v40, 134217774
+   26  13 *    RDR1     v6
+   27  13 *    CpyVtoR4 v6
+   28  13 *    JLowNZ   +4              (d:34)
+   30  13 *    SetV4    v5, 0x0          (i:0, f:0)
+   32  13 *    JMP      +13              (d:47)
+   34  13 * 3:
+   34  13 *    LoadThisR v36, 134217774
+   36  13 *    RDR4     v3
+   37  13 *    SetV4    v4, 0x8          (i:8, f:1.12104e-044)
+   39  13 *    MODi     v3, v3, v4
+   41  13 *    CMPIi    v3, 2
+   43  13 *    TP
+   44  13 *    CpyRtoV4 v4
+   45  13 *    CpyVtoV4 v5, v4
+   47  13 * 4:
+   47  13 *    NOT      v5
+   48  13 *    CpyVtoR4 v5
+   49  13 *    JLowZ    +153              (d:204)
+- 399,5 -
+   51  13 * {
+   51  13 *    SUSPEND
+   52  13 *    PshVPtr  v0
+   53  14 *    ADDSi    v108, 134217774
+   55  14 *    RDSPtr
+   56  14 *    PSF      v7
+   57  15 *    CALLSYS  177           (void Color::_beh_0_(const Color&in))
+   59  13 *    ObjInfo  v7, 1
+   59  13 *    VAR      v7
+   60  14 *    PshGPtr  112336760
+   62  15 *    CHKREF
+   63  15 *    GETREF   1
+   64  15 *    CALLSYS  472           (void CGFX::setBlendColor(const Color&in))
+- 400,5 -
+   66  13 *    ObjInfo  v7, 0
+   66  13 *    SUSPEND
+   67  13 *    PshVPtr  v0
+   68  14 *    ADDSi    v72, 134217774
+   70  14 *    RDSPtr
+   71  14 *    CALLSYS  479           (void CSprite::draw())
+- 403,5 -
+   73  13 *    SUSPEND
+   74  13 *    SetV1    v6, 0x7f
+   76  13 *    PshV4    v6
+   77  14 *    PshVPtr  v0
+   78  15 *    ADDSi    v108, 134217774
+   80  15 *    RDSPtr
+   81  15 *    ADDSi    v2, 67108879
+   83  15 *    PopRPtr
+   84  14 *    RDR1     v5
+   85  14 *    PshV4    v5
+   86  15 *    PshVPtr  v0
+   87  16 *    ADDSi    v108, 134217774
+   89  16 *    RDSPtr
+   90  16 *    ADDSi    v1, 67108879
+   92  16 *    PopRPtr
+   93  15 *    RDR1     v4
+   94  15 *    PshV4    v4
+   95  16 *    PshVPtr  v0
+   96  17 *    ADDSi    v108, 134217774
+   98  17 *    RDSPtr
+   99  17 *    ADDSi    v0, 67108879
+  101  17 *    PopRPtr
+  102  16 *    RDR1     v3
+  103  16 *    PshV4    v3
+  104  17 *    PSF      v7
+  105  18 *    CALLSYS  178           (void Color::_beh_0_(uint8, uint8, uint8, uint8 arg3 = 255))
+  107  13 *    ObjInfo  v7, 1
+  107  13 *    VAR      v7
+  108  14 *    PshGPtr  112336760
+  110  15 *    CHKREF
+  111  15 *    GETREF   1
+  112  15 *    CALLSYS  472           (void CGFX::setBlendColor(const Color&in))
+- 404,5 -
+  114  13 *    ObjInfo  v7, 0
+  114  13 *    SUSPEND
+  115  13 *    PshC4    0x43340000          (i:1127481344, f:180)
+  117  14 *    PshVPtr  v0
+  118  15 *    ADDSi    v72, 134217774
+  120  15 *    RDSPtr
+  121  15 *    CALLSYS  495           (void CSprite::setRotation(const float))
+- 405,5 -
+  123  13 *    SUSPEND
+  124  13 *    VarDecl  1
+  124  13 *    PSF      v9
+  125  14 *    CALLSYS  130           (void Vector2::_beh_0_())
+  127  13 *    ObjInfo  v9, 1
+  127  13 *    PSF      v11
+  128  14 *    PshVPtr  v0
+  129  15 *    ADDSi    v72, 134217774
+  131  15 *    RDSPtr
+  132  15 *    CALLSYS  487           (Vector2 CSprite::position() const)
+  134  13 *    ObjInfo  v11, 1
+  134  13 *    PSF      v11
+  135  14 *    PSF      v9
+  136  15 *    COPY     v2, 67108877
+  138  14 *    ObjInfo  v11, 0
+  138  14 *    PopPtr
+- 406,5 -
+  139  13 *    SUSPEND
+  140  13 *    PshC4    0x0          (i:0, f:0)
+  142  14 *    PshC4    0x42780000          (i:1115160576, f:62)
+  144  15 *    PSF      v11
+  145  16 *    CALLSYS  132           (void Vector2::_beh_0_(float, float))
+  147  13 *    ObjInfo  v11, 1
+  147  13 *    VAR      v11
+  148  14 *    PSF      v13
+  149  15 *    PSF      v9
+  150  16 *    GETREF   2
+  151  16 *    CALLSYS  138           (Vector2 Vector2::opAdd(const Vector2&in) const)
+  153  13 *    ObjInfo  v13, 1
+  153  13 *    ObjInfo  v11, 0
+  153  13 *    VAR      v13
+  154  14 *    PshVPtr  v0
+  155  15 *    ADDSi    v72, 134217774
+  157  15 *    RDSPtr
+  158  15 *    GETREF   1
+  159  15 *    CALLSYS  493           (void CSprite::setPosition(const Vector2&in))
+- 407,5 -
+  161  13 *    ObjInfo  v13, 0
+  161  13 *    SUSPEND
+  162  13 *    PshVPtr  v0
+  163  14 *    ADDSi    v72, 134217774
+  165  14 *    RDSPtr
+  166  14 *    CALLSYS  479           (void CSprite::draw())
+- 408,5 -
+  168  13 *    SUSPEND
+  169  13 *    PshC4    0x0          (i:0, f:0)
+  171  14 *    PshVPtr  v0
+  172  15 *    ADDSi    v72, 134217774
+  174  15 *    RDSPtr
+  175  15 *    CALLSYS  495           (void CSprite::setRotation(const float))
+- 409,5 -
+  177  13 *    SUSPEND
+  178  13 *    VAR      v9
+  179  14 *    PshVPtr  v0
+  180  15 *    ADDSi    v72, 134217774
+  182  15 *    RDSPtr
+  183  15 *    GETREF   1
+  184  15 *    CALLSYS  493           (void CSprite::setPosition(const Vector2&in))
+- 411,5 -
+  186  13 *    SUSPEND
+  187  13 *    PSF      v7
+  188  14 *    CALLSYS  176           (void Color::_beh_0_())
+  190  13 *    ObjInfo  v7, 1
+  190  13 *    PshGPtr  112028688
+  192  14 *    CHKREF
+  193  14 *    PSF      v7
+  194  15 *    COPY     v1, 67108879
+  196  14 *    PopPtr
+  197  13 *    VAR      v7
+  198  14 *    PshGPtr  112336760
+  200  15 *    CHKREF
+  201  15 *    GETREF   1
+  202  15 *    CALLSYS  472           (void CGFX::setBlendColor(const Color&in))
+- 414,3 -
+  204  13 *    ObjInfo  v7, 0
+  204  13 *    ObjInfo  v9, 0
+  204  13 * }
+  204  13 * 2:
+  204  13 * }
+  204  13 * 1:
+  204  13 *    SUSPEND
+  205  13 * 0:
+  205  13 *    FREE     v-1, 112324336
+  207  13 *    FREE     v0, 152244456
+  209  13 *    RET      2

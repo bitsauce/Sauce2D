@@ -1,0 +1,29 @@
+void ActionSlot::unhovered()
+
+Temps: 4, 5
+
+Variables: 
+ 000: ActionSlot this
+ 004: vec4 {noname}
+
+
+    0   5 *    PshVPtr  v0
+    1   6 *    CALLSYS  2           (void _builtin_object_::_beh_5_())
+- 67,3 -
+    3   5 *    SUSPEND
+    4   5 *    PshC4    0x3f800000          (i:1065353216, f:1)
+    6   6 *    PSF      v4
+    7   7 *    CALLSYS  218           (vec4::vec4(float))
+    9   5 *    ObjInfo  v4, 1
+    9   5 *    PSF      v4
+   10   6 *    PshVPtr  v0
+   11   7 *    ADDSi    v60, 134217758
+   13   7 *    RDSPtr
+   14   7 *    COPY     v4, 67108880
+   16   6 *    ObjInfo  v4, 0
+   16   6 *    PopPtr
+- 68,3 -
+   17   5 *    SUSPEND
+   18   5 * 0:
+   18   5 *    FREE     v0, 74309136
+   20   5 *    RET      1

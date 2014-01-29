@@ -1,0 +1,192 @@
+Shadow::Shadow()
+
+Temps: 1, 2, 3, 4, 5, 6, 7, 8, 15, 22
+
+Variables: 
+ 000: Shadow this
+ 008: FrameBuffer {noname}
+ 015: string {noname}
+ 022: string {noname}
+
+
+- 20,14 -
+    0  22 *    SUSPEND
+    1  22 *    CALL     598           (FrameBuffer@ FrameBuffer())
+    3  22 *    STOREOBJ v8
+    4  22 *    PshVPtr  v8
+    5  23 *    PshVPtr  v0
+    6  24 *    ADDSi    v80, 134217789
+    8  24 *    REFCPY   0x46d4188
+   10  23 *    PopPtr
+   11  22 *    FREE     v8, 74269064
+- 21,14 -
+   13  22 *    SUSPEND
+   14  22 *    CALL     598           (FrameBuffer@ FrameBuffer())
+   16  22 *    STOREOBJ v8
+   17  22 *    PshVPtr  v8
+   18  23 *    PshVPtr  v0
+   19  24 *    ADDSi    v84, 134217789
+   21  24 *    REFCPY   0x46d4188
+   23  23 *    PopPtr
+   24  22 *    FREE     v8, 74269064
+   26  22 *    PshVPtr  v0
+   27  23 *    CALL     584           (Entity::Entity())
+- 6,6 -
+   29  22 *    SUSPEND
+   30  22 *    STR      89         (l:30 s:":/shaders/")
+   31  24 *    CALLSYS  33           (const string& _string_factory_(const int, const uint8&))
+   33  22 *    PshRPtr
+   34  23 *    PSF      v15
+   35  24 *    CALLSYS  35           (string::string(const string&in))
+   37  22 *    ObjInfo  v15, 1
+   37  22 *    VAR      v15
+   38  23 *    STR      90         (l:30 s:":/shaders/")
+   39  25 *    CALLSYS  33           (const string& _string_factory_(const int, const uint8&))
+   41  23 *    PshRPtr
+   42  24 *    PSF      v22
+   43  25 *    CALLSYS  35           (string::string(const string&in))
+   45  23 *    ObjInfo  v22, 1
+   45  23 *    PSF      v22
+   46  24 *    GETREF   1
+   47  24 *    CALLSYS  475           (int gfxLoadShader(const string&in, const string&in))
+   49  22 *    CpyRtoV4 v1
+   50  22 *    PSF      v15
+   51  23 *    CALLSYS  36           (string::~string())
+   53  22 *    ObjInfo  v15, 0
+   53  22 *    PSF      v22
+   54  23 *    CALLSYS  36           (string::~string())
+   56  22 *    ObjInfo  v22, 0
+   56  22 *    LoadThisR v48, 134217789
+   58  22 *    WRTV4    v1
+- 9,6 -
+   59  22 *    SUSPEND
+   60  22 *    SetV4    v7, 0x4          (i:4, f:5.60519e-045)
+   62  22 *    LoadThisR v52, 134217789
+   64  22 *    WRTV4    v7
+- 15,6 -
+   65  22 *    SUSPEND
+   66  22 *    SetV4    v1, 0xa          (i:10, f:1.4013e-044)
+   68  22 *    LoadThisR v68, 134217789
+   70  22 *    WRTV4    v1
+- 16,6 -
+   71  22 *    SUSPEND
+   72  22 *    SetV4    v7, 0x1          (i:1, f:1.4013e-045)
+   74  22 *    LoadThisR v72, 134217789
+   76  22 *    WRTV4    v7
+- 17,8 -
+   77  22 *    SUSPEND
+   78  22 *    SetV4    v1, 0x40a00000          (i:1084227584, f:5)
+   80  22 *    LoadThisR v76, 134217789
+   82  22 *    WRTV4    v1
+- 26,3 -
+   83  22 *    SUSPEND
+   84  22 *    SetV4    v1, 0x5a          (i:90, f:1.26117e-043)
+   86  22 *    LoadThisR v32, 134217789
+   88  22 *    WRTV4    v1
+- 27,3 -
+   89  22 *    SUSPEND
+   90  22 *    PshC4    0x3          (i:3, f:4.2039e-045)
+   92  23 *    PshVPtr  v0
+   93  24 *    CALLINTF 1017           (void Entity::setRenderPass(const RenderPass))
+- 29,3 -
+   95  22 *    SUSPEND
+   96  22 *    PshGPtr  74560968
+   98  23 *    ADDSi    v0, 67108877
+  100  23 *    PopRPtr
+  101  22 *    RDR4     v1
+  102  22 *    LoadThisR v52, 134217789
+  104  22 *    RDR4     v3
+  105  22 *    iTOf     v3
+  106  22 *    DIVf     v1, v1, v3
+  108  22 *    fTOi     v1
+  109  22 *    LoadThisR v60, 134217789
+  111  22 *    WRTV4    v1
+- 30,3 -
+  112  22 *    SUSPEND
+  113  22 *    PshGPtr  74560968
+  115  23 *    ADDSi    v4, 67108877
+  117  23 *    PopRPtr
+  118  22 *    RDR4     v3
+  119  22 *    LoadThisR v52, 134217789
+  121  22 *    RDR4     v1
+  122  22 *    iTOf     v1
+  123  22 *    DIVf     v3, v3, v1
+  125  22 *    fTOi     v3
+  126  22 *    LoadThisR v64, 134217789
+  128  22 *    WRTV4    v3
+- 32,3 -
+  129  22 *    SUSPEND
+  130  22 *    SetV1    v5, 0x0
+  132  22 *    PshV4    v5
+  133  23 *    PshC4    0x0          (i:0, f:0)
+  135  24 *    LoadThisR v64, 134217789
+  137  24 *    RDR4     v3
+  138  24 *    iTOf     v3
+  139  24 *    PshVPtr  v0
+  140  25 *    CALLINTF 1217           (float Shadow::getSamplePadding())
+  142  24 *    CpyRtoV4 v1
+  143  24 *    ADDf     v3, v3, v1
+  145  24 *    fTOi     v3
+  146  24 *    PshV4    v3
+  147  25 *    LoadThisR v60, 134217789
+  149  25 *    RDR4     v4
+  150  25 *    iTOf     v4
+  151  25 *    PshVPtr  v0
+  152  26 *    CALLINTF 1217           (float Shadow::getSamplePadding())
+  154  25 *    CpyRtoV4 v1
+  155  25 *    ADDf     v4, v4, v1
+  157  25 *    fTOi     v4
+  158  25 *    PshV4    v4
+  159  26 *    CALLSYS  449           (int gfxCreateTexture(const int, const int, const TextureFilter = NearestFilter, const bool = false))
+  161  22 *    CpyRtoV4 v1
+  162  22 *    LoadThisR v56, 134217789
+  164  22 *    WRTV4    v1
+- 33,3 -
+  165  22 *    SUSPEND
+  166  22 *    LoadThisR v56, 134217789
+  168  22 *    RDR4     v5
+  169  22 *    PshV4    v5
+  170  23 *    PshVPtr  v0
+  171  24 *    ADDSi    v80, 134217789
+  173  24 *    RDSPtr
+  174  24 *    CALLINTF 1029           (void FrameBuffer::attachTexture(const int))
+- 35,3 -
+  176  22 *    SUSPEND
+  177  22 *    SetV1    v7, 0x0
+  179  22 *    PshV4    v7
+  180  23 *    PshC4    0x0          (i:0, f:0)
+  182  24 *    LoadThisR v64, 134217789
+  184  24 *    RDR4     v5
+  185  24 *    iTOf     v5
+  186  24 *    PshVPtr  v0
+  187  25 *    CALLINTF 1217           (float Shadow::getSamplePadding())
+  189  24 *    CpyRtoV4 v1
+  190  24 *    ADDf     v4, v5, v1
+  192  24 *    fTOi     v4
+  193  24 *    PshV4    v4
+  194  25 *    LoadThisR v60, 134217789
+  196  25 *    RDR4     v5
+  197  25 *    iTOf     v5
+  198  25 *    PshVPtr  v0
+  199  26 *    CALLINTF 1217           (float Shadow::getSamplePadding())
+  201  25 *    CpyRtoV4 v1
+  202  25 *    ADDf     v3, v5, v1
+  204  25 *    fTOi     v3
+  205  25 *    PshV4    v3
+  206  26 *    CALLSYS  449           (int gfxCreateTexture(const int, const int, const TextureFilter = NearestFilter, const bool = false))
+  208  22 *    CpyRtoV4 v1
+  209  22 *    LoadThisR v44, 134217789
+  211  22 *    WRTV4    v1
+- 36,3 -
+  212  22 *    SUSPEND
+  213  22 *    LoadThisR v44, 134217789
+  215  22 *    RDR4     v5
+  216  22 *    PshV4    v5
+  217  23 *    PshVPtr  v0
+  218  24 *    ADDSi    v84, 134217789
+  220  24 *    RDSPtr
+  221  24 *    CALLINTF 1029           (void FrameBuffer::attachTexture(const int))
+- 37,3 -
+  223  22 *    SUSPEND
+  224  22 * 0:
+  224  22 *    RET      1

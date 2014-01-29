@@ -1,0 +1,147 @@
+void LevelCreator::propChanged()
+
+Temps: 1, 2, 3, 11, 12, 13
+
+Variables: 
+ 000: LevelCreator this
+ 001: EditorObject {noname}
+ 002: EditorObject {noname}
+ 012: string {noname}
+ 013: string {noname}
+ 011: string {noname}
+
+
+    0  13 *    PshVPtr  v0
+    1  14 *    CALLSYS  2           (void _builtin_object_::_beh_4_())
+- 531,3 -
+    3  13 *    SUSPEND
+    4  13 *    PshVPtr  v0
+    5  14 *    ADDSi    v192, 134217805
+    7  14 *    RDSPtr
+    8  15 *    RefCpyV  v1, 147681784
+   10  14 *    PopPtr
+   11  13 *    ClrVPtr  v2
+   12  13 *    CmpPtr   v1, v2
+   14  13 *    TZ
+   15  13 *    CpyRtoV4 v3
+   16  13 *    FREE     v1, 147681784
+   18  13 *    FREE     v2, 147681784
+   20  13 *    CpyVtoR4 v3
+   21  13 *    JLowZ    +3              (d:26)
+- 532,4 -
+   23  13 *    SUSPEND
+   24  13 * {
+   24  13 * }
+   24  13 *    JMP      +129              (d:155)
+- 534,3 -
+   26  13 * 1:
+   26  13 *    SUSPEND
+   27  13 *    STR      5         (l:5 s:"Entry")
+   28  15 *    PSF      v11
+   29  16 *    CALLSYS  31           (string _string_factory_(const int, const uint8&))
+   31  13 *    ObjInfo  v11, 1
+   31  13 *    VAR      v11
+   32  14 *    PshVPtr  v0
+   33  15 *    ADDSi    v192, 134217805
+   35  15 *    RDSPtr
+   36  15 *    ADDSi    v16, 134217788
+   38  15 *    RDSPtr
+   39  15 *    ADDSi    v16, 134217797
+   41  15 *    RDSPtr
+   42  15 *    GETREF   1
+   43  15 *    CALLSYS  37           (bool string::opEquals(const string&in) const)
+   45  13 *    CpyRtoV4 v3
+   46  13 *    PSF      v11
+   47  14 *    CALLSYS  34           (void string::_beh_1_())
+   49  13 *    ObjInfo  v11, 0
+   49  13 *    CpyVtoR4 v3
+   50  13 *    JLowZ    +102              (d:154)
+- 536,4 -
+   52  13 * {
+   52  13 *    SUSPEND
+   53  13 *    PSF      v12
+   54  14 *    PshVPtr  v0
+   55  15 *    ADDSi    v152, 134217805
+   57  15 *    RDSPtr
+   58  15 *    ADDSi    v52, 134217807
+   60  15 *    RDSPtr
+   61  15 *    ALLOC    0x2b7c1f0, 33             (type:string)
+   64  13 *    VAR      v12
+   65  14 *    PSF      v13
+   66  15 *    STR      78         (l:9 s:"entryName")
+   67  17 *    PSF      v11
+   68  18 *    CALLSYS  31           (string _string_factory_(const int, const uint8&))
+   70  15 *    ObjInfo  v11, 1
+   70  15 *    PSF      v11
+   71  16 *    ALLOC    0x2b7c1f0, 33             (type:string)
+   74  14 *    PSF      v11
+   75  15 *    CALLSYS  34           (void string::_beh_1_())
+   77  14 *    ObjInfo  v11, 0
+   77  14 *    VAR      v13
+   78  15 *    PshVPtr  v0
+   79  16 *    ADDSi    v192, 134217805
+   81  16 *    RDSPtr
+   82  16 *    GETOBJ   1
+   83  16 *    GETOBJ   2
+   84  16 *    CALLINTF 1277           (void EditorObject::setProperty(string, string))
+- 537,4 -
+   86  13 *    SUSPEND
+   87  13 *    PSF      v12
+   88  14 *    PshVPtr  v0
+   89  15 *    ADDSi    v156, 134217805
+   91  15 *    RDSPtr
+   92  15 *    ADDSi    v52, 134217807
+   94  15 *    RDSPtr
+   95  15 *    ALLOC    0x2b7c1f0, 33             (type:string)
+   98  13 *    VAR      v12
+   99  14 *    PSF      v13
+  100  15 *    STR      79         (l:8 s:"destName")
+  101  17 *    PSF      v11
+  102  18 *    CALLSYS  31           (string _string_factory_(const int, const uint8&))
+  104  15 *    ObjInfo  v11, 1
+  104  15 *    PSF      v11
+  105  16 *    ALLOC    0x2b7c1f0, 33             (type:string)
+  108  14 *    PSF      v11
+  109  15 *    CALLSYS  34           (void string::_beh_1_())
+  111  14 *    ObjInfo  v11, 0
+  111  14 *    VAR      v13
+  112  15 *    PshVPtr  v0
+  113  16 *    ADDSi    v192, 134217805
+  115  16 *    RDSPtr
+  116  16 *    GETOBJ   1
+  117  16 *    GETOBJ   2
+  118  16 *    CALLINTF 1277           (void EditorObject::setProperty(string, string))
+- 538,4 -
+  120  13 *    SUSPEND
+  121  13 *    PSF      v12
+  122  14 *    PshVPtr  v0
+  123  15 *    ADDSi    v160, 134217805
+  125  15 *    RDSPtr
+  126  15 *    ADDSi    v52, 134217807
+  128  15 *    RDSPtr
+  129  15 *    ALLOC    0x2b7c1f0, 33             (type:string)
+  132  13 *    VAR      v12
+  133  14 *    PSF      v13
+  134  15 *    STR      80         (l:9 s:"destLevel")
+  135  17 *    PSF      v11
+  136  18 *    CALLSYS  31           (string _string_factory_(const int, const uint8&))
+  138  15 *    ObjInfo  v11, 1
+  138  15 *    PSF      v11
+  139  16 *    ALLOC    0x2b7c1f0, 33             (type:string)
+  142  14 *    PSF      v11
+  143  15 *    CALLSYS  34           (void string::_beh_1_())
+  145  14 *    ObjInfo  v11, 0
+  145  14 *    VAR      v13
+  146  15 *    PshVPtr  v0
+  147  16 *    ADDSi    v192, 134217805
+  149  16 *    RDSPtr
+  150  16 *    GETOBJ   1
+  151  16 *    GETOBJ   2
+  152  16 *    CALLINTF 1277           (void EditorObject::setProperty(string, string))
+- 540,3 -
+  154  13 * }
+  154  13 * 2:
+  154  13 *    SUSPEND
+  155  13 * 0:
+  155  13 *    FREE     v0, 147682496
+  157  13 *    RET      1

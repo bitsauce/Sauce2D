@@ -1,0 +1,18 @@
+<unrecognized token> _unnamed_function_()
+
+Temps: 1
+
+Variables: 
+ 001: array {noname}
+
+
+- 8,45 -
+    0   1 *    SUSPEND
+    1   1 *    CALL     491           (A@[]@ factstub())
+    3   1 *    STOREOBJ v1
+    4   1 *    PshVPtr  v1
+    5   2 *    PGA      111027512
+    7   3 *    REFCPY   0x69e00a0
+    9   2 *    PopPtr
+   10   1 *    FREE     v1, 111018144
+   12   1 *    RET      0

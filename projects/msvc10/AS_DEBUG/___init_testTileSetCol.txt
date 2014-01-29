@@ -1,0 +1,219 @@
+<unrecognized token> _unnamed_function_()
+
+Temps: 1, 2, 3, 4
+
+Variables: 
+ 001: array {noname}
+ 002: array {noname}
+ 004: array {noname}
+
+
+- 12,45 -
+    0   4 *    SUSPEND
+    1   4 *    PshC4    0x6          (i:6, f:8.40779e-045)
+    3   5 *    CALL     706           (uint[][]@ factstub(uint))
+    5   4 *    STOREOBJ v1
+    6   4 *    PshVPtr  v1
+    7   5 *    PGA      154225352
+    9   6 *    REFCPY   0x92dd120
+   11   5 *    PopPtr
+   12   4 *    FREE     v1, 153997600
+   14   4 *    PshC4    0x4          (i:4, f:5.60519e-045)
+   16   5 *    CALL     693           (uint[]@ factstub(uint))
+   18   4 *    STOREOBJ v2
+   19   4 *    SetV4    v3, 0x0          (i:0, f:0)
+   21   4 *    PshC4    0x0          (i:0, f:0)
+   23   5 *    PshVPtr  v2
+   24   6 *    CALLSYS  694           (uint& array::opIndex(uint))
+   26   4 *    WRTV4    v3
+   27   4 *    SetV4    v3, 0x0          (i:0, f:0)
+   29   4 *    PshC4    0x1          (i:1, f:1.4013e-045)
+   31   5 *    PshVPtr  v2
+   32   6 *    CALLSYS  694           (uint& array::opIndex(uint))
+   34   4 *    WRTV4    v3
+   35   4 *    SetV4    v3, 0x0          (i:0, f:0)
+   37   4 *    PshC4    0x2          (i:2, f:2.8026e-045)
+   39   5 *    PshVPtr  v2
+   40   6 *    CALLSYS  694           (uint& array::opIndex(uint))
+   42   4 *    WRTV4    v3
+   43   4 *    SetV4    v3, 0x0          (i:0, f:0)
+   45   4 *    PshC4    0x3          (i:3, f:4.2039e-045)
+   47   5 *    PshVPtr  v2
+   48   6 *    CALLSYS  694           (uint& array::opIndex(uint))
+   50   4 *    WRTV4    v3
+   51   4 *    VAR      v2
+   52   5 *    PshC4    0x0          (i:0, f:0)
+   54   6 *    PshGPtr  154225352
+   56   7 *    CALLSYS  707           (uint[]& array::opIndex(uint))
+   58   5 *    PshRPtr
+   59   6 *    GETOBJREF 1
+   60   6 *    RefCpyV  v4, 153989024
+   62   6 *    CALLSYS  696           (uint[]& array::opAssign(const uint[]&in))
+   64   4 *    FREE     v4, 153989024
+   66   4 *    FREE     v2, 153989024
+   68   4 *    PshC4    0x4          (i:4, f:5.60519e-045)
+   70   5 *    CALL     693           (uint[]@ factstub(uint))
+   72   4 *    STOREOBJ v4
+   73   4 *    SetV4    v3, 0x1          (i:1, f:1.4013e-045)
+   75   4 *    PshC4    0x0          (i:0, f:0)
+   77   5 *    PshVPtr  v4
+   78   6 *    CALLSYS  694           (uint& array::opIndex(uint))
+   80   4 *    WRTV4    v3
+   81   4 *    SetV4    v3, 0xa          (i:10, f:1.4013e-044)
+   83   4 *    PshC4    0x1          (i:1, f:1.4013e-045)
+   85   5 *    PshVPtr  v4
+   86   6 *    CALLSYS  694           (uint& array::opIndex(uint))
+   88   4 *    WRTV4    v3
+   89   4 *    SetV4    v3, 0x1          (i:1, f:1.4013e-045)
+   91   4 *    PshC4    0x2          (i:2, f:2.8026e-045)
+   93   5 *    PshVPtr  v4
+   94   6 *    CALLSYS  694           (uint& array::opIndex(uint))
+   96   4 *    WRTV4    v3
+   97   4 *    SetV4    v3, 0x1          (i:1, f:1.4013e-045)
+   99   4 *    PshC4    0x3          (i:3, f:4.2039e-045)
+  101   5 *    PshVPtr  v4
+  102   6 *    CALLSYS  694           (uint& array::opIndex(uint))
+  104   4 *    WRTV4    v3
+  105   4 *    VAR      v4
+  106   5 *    PshC4    0x1          (i:1, f:1.4013e-045)
+  108   6 *    PshGPtr  154225352
+  110   7 *    CALLSYS  707           (uint[]& array::opIndex(uint))
+  112   5 *    PshRPtr
+  113   6 *    GETOBJREF 1
+  114   6 *    RefCpyV  v2, 153989024
+  116   6 *    CALLSYS  696           (uint[]& array::opAssign(const uint[]&in))
+  118   4 *    FREE     v2, 153989024
+  120   4 *    FREE     v4, 153989024
+  122   4 *    PshC4    0x4          (i:4, f:5.60519e-045)
+  124   5 *    CALL     693           (uint[]@ factstub(uint))
+  126   4 *    STOREOBJ v2
+  127   4 *    SetV4    v3, 0x2          (i:2, f:2.8026e-045)
+  129   4 *    PshC4    0x0          (i:0, f:0)
+  131   5 *    PshVPtr  v2
+  132   6 *    CALLSYS  694           (uint& array::opIndex(uint))
+  134   4 *    WRTV4    v3
+  135   4 *    SetV4    v3, 0x2          (i:2, f:2.8026e-045)
+  137   4 *    PshC4    0x1          (i:1, f:1.4013e-045)
+  139   5 *    PshVPtr  v2
+  140   6 *    CALLSYS  694           (uint& array::opIndex(uint))
+  142   4 *    WRTV4    v3
+  143   4 *    SetV4    v3, 0x2          (i:2, f:2.8026e-045)
+  145   4 *    PshC4    0x2          (i:2, f:2.8026e-045)
+  147   5 *    PshVPtr  v2
+  148   6 *    CALLSYS  694           (uint& array::opIndex(uint))
+  150   4 *    WRTV4    v3
+  151   4 *    SetV4    v3, 0x2          (i:2, f:2.8026e-045)
+  153   4 *    PshC4    0x3          (i:3, f:4.2039e-045)
+  155   5 *    PshVPtr  v2
+  156   6 *    CALLSYS  694           (uint& array::opIndex(uint))
+  158   4 *    WRTV4    v3
+  159   4 *    VAR      v2
+  160   5 *    PshC4    0x2          (i:2, f:2.8026e-045)
+  162   6 *    PshGPtr  154225352
+  164   7 *    CALLSYS  707           (uint[]& array::opIndex(uint))
+  166   5 *    PshRPtr
+  167   6 *    GETOBJREF 1
+  168   6 *    RefCpyV  v4, 153989024
+  170   6 *    CALLSYS  696           (uint[]& array::opAssign(const uint[]&in))
+  172   4 *    FREE     v4, 153989024
+  174   4 *    FREE     v2, 153989024
+  176   4 *    PshC4    0x4          (i:4, f:5.60519e-045)
+  178   5 *    CALL     693           (uint[]@ factstub(uint))
+  180   4 *    STOREOBJ v4
+  181   4 *    SetV4    v3, 0x3          (i:3, f:4.2039e-045)
+  183   4 *    PshC4    0x0          (i:0, f:0)
+  185   5 *    PshVPtr  v4
+  186   6 *    CALLSYS  694           (uint& array::opIndex(uint))
+  188   4 *    WRTV4    v3
+  189   4 *    SetV4    v3, 0x3          (i:3, f:4.2039e-045)
+  191   4 *    PshC4    0x1          (i:1, f:1.4013e-045)
+  193   5 *    PshVPtr  v4
+  194   6 *    CALLSYS  694           (uint& array::opIndex(uint))
+  196   4 *    WRTV4    v3
+  197   4 *    SetV4    v3, 0x3          (i:3, f:4.2039e-045)
+  199   4 *    PshC4    0x2          (i:2, f:2.8026e-045)
+  201   5 *    PshVPtr  v4
+  202   6 *    CALLSYS  694           (uint& array::opIndex(uint))
+  204   4 *    WRTV4    v3
+  205   4 *    SetV4    v3, 0x3          (i:3, f:4.2039e-045)
+  207   4 *    PshC4    0x3          (i:3, f:4.2039e-045)
+  209   5 *    PshVPtr  v4
+  210   6 *    CALLSYS  694           (uint& array::opIndex(uint))
+  212   4 *    WRTV4    v3
+  213   4 *    VAR      v4
+  214   5 *    PshC4    0x3          (i:3, f:4.2039e-045)
+  216   6 *    PshGPtr  154225352
+  218   7 *    CALLSYS  707           (uint[]& array::opIndex(uint))
+  220   5 *    PshRPtr
+  221   6 *    GETOBJREF 1
+  222   6 *    RefCpyV  v2, 153989024
+  224   6 *    CALLSYS  696           (uint[]& array::opAssign(const uint[]&in))
+  226   4 *    FREE     v2, 153989024
+  228   4 *    FREE     v4, 153989024
+  230   4 *    PshC4    0x4          (i:4, f:5.60519e-045)
+  232   5 *    CALL     693           (uint[]@ factstub(uint))
+  234   4 *    STOREOBJ v2
+  235   4 *    SetV4    v3, 0x1          (i:1, f:1.4013e-045)
+  237   4 *    PshC4    0x0          (i:0, f:0)
+  239   5 *    PshVPtr  v2
+  240   6 *    CALLSYS  694           (uint& array::opIndex(uint))
+  242   4 *    WRTV4    v3
+  243   4 *    SetV4    v3, 0x1          (i:1, f:1.4013e-045)
+  245   4 *    PshC4    0x1          (i:1, f:1.4013e-045)
+  247   5 *    PshVPtr  v2
+  248   6 *    CALLSYS  694           (uint& array::opIndex(uint))
+  250   4 *    WRTV4    v3
+  251   4 *    SetV4    v3, 0x1          (i:1, f:1.4013e-045)
+  253   4 *    PshC4    0x2          (i:2, f:2.8026e-045)
+  255   5 *    PshVPtr  v2
+  256   6 *    CALLSYS  694           (uint& array::opIndex(uint))
+  258   4 *    WRTV4    v3
+  259   4 *    SetV4    v3, 0x1          (i:1, f:1.4013e-045)
+  261   4 *    PshC4    0x3          (i:3, f:4.2039e-045)
+  263   5 *    PshVPtr  v2
+  264   6 *    CALLSYS  694           (uint& array::opIndex(uint))
+  266   4 *    WRTV4    v3
+  267   4 *    VAR      v2
+  268   5 *    PshC4    0x4          (i:4, f:5.60519e-045)
+  270   6 *    PshGPtr  154225352
+  272   7 *    CALLSYS  707           (uint[]& array::opIndex(uint))
+  274   5 *    PshRPtr
+  275   6 *    GETOBJREF 1
+  276   6 *    RefCpyV  v4, 153989024
+  278   6 *    CALLSYS  696           (uint[]& array::opAssign(const uint[]&in))
+  280   4 *    FREE     v4, 153989024
+  282   4 *    FREE     v2, 153989024
+  284   4 *    PshC4    0x4          (i:4, f:5.60519e-045)
+  286   5 *    CALL     693           (uint[]@ factstub(uint))
+  288   4 *    STOREOBJ v4
+  289   4 *    SetV4    v3, 0x1          (i:1, f:1.4013e-045)
+  291   4 *    PshC4    0x0          (i:0, f:0)
+  293   5 *    PshVPtr  v4
+  294   6 *    CALLSYS  694           (uint& array::opIndex(uint))
+  296   4 *    WRTV4    v3
+  297   4 *    SetV4    v3, 0x1          (i:1, f:1.4013e-045)
+  299   4 *    PshC4    0x1          (i:1, f:1.4013e-045)
+  301   5 *    PshVPtr  v4
+  302   6 *    CALLSYS  694           (uint& array::opIndex(uint))
+  304   4 *    WRTV4    v3
+  305   4 *    SetV4    v3, 0x1          (i:1, f:1.4013e-045)
+  307   4 *    PshC4    0x2          (i:2, f:2.8026e-045)
+  309   5 *    PshVPtr  v4
+  310   6 *    CALLSYS  694           (uint& array::opIndex(uint))
+  312   4 *    WRTV4    v3
+  313   4 *    SetV4    v3, 0x1          (i:1, f:1.4013e-045)
+  315   4 *    PshC4    0x3          (i:3, f:4.2039e-045)
+  317   5 *    PshVPtr  v4
+  318   6 *    CALLSYS  694           (uint& array::opIndex(uint))
+  320   4 *    WRTV4    v3
+  321   4 *    VAR      v4
+  322   5 *    PshC4    0x5          (i:5, f:7.00649e-045)
+  324   6 *    PshGPtr  154225352
+  326   7 *    CALLSYS  707           (uint[]& array::opIndex(uint))
+  328   5 *    PshRPtr
+  329   6 *    GETOBJREF 1
+  330   6 *    RefCpyV  v2, 153989024
+  332   6 *    CALLSYS  696           (uint[]& array::opAssign(const uint[]&in))
+  334   4 *    FREE     v2, 153989024
+  336   4 *    FREE     v4, 153989024
+  338   4 *    RET      0

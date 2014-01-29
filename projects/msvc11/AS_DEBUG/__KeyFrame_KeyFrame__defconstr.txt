@@ -1,0 +1,30 @@
+KeyFrame::KeyFrame()
+
+Temps: 1
+
+Variables: 
+ 000: KeyFrame this
+
+
+- 12,7 -
+    0   1 *    SUSPEND
+    1   1 *    SetV1    v1, 0x0
+    3   1 *    LoadThisR v20, 134217757
+    5   1 *    WRTV1    v1
+- 13,8 -
+    6   1 *    SUSPEND
+    7   1 *    SetV4    v1, 0x0          (i:0, f:0)
+    9   1 *    LoadThisR v24, 134217757
+   11   1 *    WRTV4    v1
+- 14,8 -
+   12   1 *    SUSPEND
+   13   1 *    SetV4    v1, 0x3f800000          (i:1065353216, f:1)
+   15   1 *    LoadThisR v28, 134217757
+   17   1 *    WRTV4    v1
+- 15,10 -
+   18   1 *    SUSPEND
+   19   1 *    PshNull
+   20   2 *    PshVPtr  v0
+   21   3 *    ADDSi    v32, 134217757
+   23   3 *    REFCPY   0x5d4f4d8
+   25   1 *    RET      1

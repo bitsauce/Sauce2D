@@ -1,0 +1,363 @@
+\hypertarget{class_application}{\section{Application Class Reference}
+\label{class_application}\index{Application@{Application}}
+}
+
+
+The \hyperlink{class_application}{Application} class is responsible for performing all O\-S specific commands.  
+
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{class_application_a058309652fa5b8a6bbacb6d19d765404}{app\-Enable\-Fullscreen} ()
+\item 
+void \hyperlink{class_application_a8f06182cfb4e7abec9608c2692bc93ad}{app\-Disable\-Fullscreen} ()
+\item 
+void \hyperlink{class_application_ab5b54c0a8e547ee0ab2bce9fbdb792a5}{app\-Enable\-Resize} ()
+\item 
+void \hyperlink{class_application_a242fc13b0ed9a143e4416d00d7de3199}{app\-Disable\-Resize} ()
+\item 
+array$<$ vec2 $>$ \hyperlink{class_application_a5b02c95e118a79ff29e4f9cc95e492c8}{app\-Get\-Resolution\-List} ()
+\item 
+void \hyperlink{class_application_ade77d59e07c39e8d053dec4e1fa6cf0a}{app\-Move} (const int x, const int y)
+\item 
+void \hyperlink{class_application_aa315981fa7c63165e6cad738de05acb3}{app\-Get\-Pos} (int \&x, int \&y, bool borders=true)
+\item 
+void \hyperlink{class_application_a3eae706a0f0ce5e5ccfc2d93a2c9483a}{app\-Resize} (const int w, const int h)
+\item 
+void \hyperlink{class_application_a361001d71f1cd930712aae29b30303ea}{app\-Get\-Size} (int \&w, int \&h)
+\item 
+void \hyperlink{class_application_abd1ddbf3839ed8f8a820f7bb21474106}{app\-Minimize} ()
+\item 
+void \hyperlink{class_application_a196583d4fcabd6b99cc7d717f11f2e06}{app\-Maximize} ()
+\item 
+void \hyperlink{class_application_aa69f401b598507a626d6ae31032c5b07}{app\-Restore} ()
+\item 
+void \hyperlink{class_application_a55bb1d96e5cff13b86ccd8a42edf7cdc}{app\-Set\-Cursor\-Pos} (const int x, const int y)
+\item 
+void \hyperlink{class_application_ae8413053cc785729c125b53279d14576}{app\-Get\-Cursor\-Pos} (int \&x, int \&y)
+\item 
+void \hyperlink{class_application_aec8bf350bbbb3407ed11ebb6b93b7344}{app\-Set\-Cursor\-Limits} (const int x, const int y, const int w, const int h)
+\item 
+void \hyperlink{class_application_ad0ea87041394ca4c46cd4dbb1011ad84}{app\-Show\-Cursor} ()
+\item 
+void \hyperlink{class_application_ae4db1227dcce1acae1faf72f92e73467}{app\-Hide\-Cursor} ()
+\item 
+string \hyperlink{class_application_ac37e92d1ad361e95f9e029949f9aaccd}{app\-Get\-Work\-Dir} ()
+\item 
+string \hyperlink{class_application_a5847e38189cc6473ef63162c439d7785}{app\-Get\-Work\-Path} (const string \&path)
+\item 
+uint64 \hyperlink{class_application_a8ed7c9b0cb21e8480e8aef57b142cbed}{app\-Get\-Program\-Time} ()
+\item 
+uint64 \hyperlink{class_application_a2ae34cff29efc98e9e66b53a345a85f2}{app\-Get\-Tick\-Count} ()
+\item 
+void \hyperlink{class_application_a1aace92c00cdf019658db7d2e6b69565}{app\-Restart\-Hr\-Timer} ()
+\item 
+float \hyperlink{class_application_a2502735d4b414fe1d3fa193772e7608a}{app\-Get\-Hr\-Time} ()
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+The \hyperlink{class_application}{Application} class is responsible for performing all O\-S specific commands. 
+
+\subsection{Member Function Documentation}
+\hypertarget{class_application_a8f06182cfb4e7abec9608c2692bc93ad}{\index{Application@{Application}!app\-Disable\-Fullscreen@{app\-Disable\-Fullscreen}}
+\index{app\-Disable\-Fullscreen@{app\-Disable\-Fullscreen}!Application@{Application}}
+\subsubsection[{app\-Disable\-Fullscreen}]{\setlength{\rightskip}{0pt plus 5cm}void app\-Disable\-Fullscreen (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{class_application_a8f06182cfb4e7abec9608c2692bc93ad}
+Make a fullscreen application go windowed \begin{DoxyNote}{Note}
+Only for Windows, Mac and Linux 
+\end{DoxyNote}
+\hypertarget{class_application_a242fc13b0ed9a143e4416d00d7de3199}{\index{Application@{Application}!app\-Disable\-Resize@{app\-Disable\-Resize}}
+\index{app\-Disable\-Resize@{app\-Disable\-Resize}!Application@{Application}}
+\subsubsection[{app\-Disable\-Resize}]{\setlength{\rightskip}{0pt plus 5cm}void app\-Disable\-Resize (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{class_application_a242fc13b0ed9a143e4416d00d7de3199}
+Disables manual resizing of the window \begin{DoxyNote}{Note}
+Only for Windows, Mac and Linux 
+
+Window resizing is enabled by default 
+\end{DoxyNote}
+\hypertarget{class_application_a058309652fa5b8a6bbacb6d19d765404}{\index{Application@{Application}!app\-Enable\-Fullscreen@{app\-Enable\-Fullscreen}}
+\index{app\-Enable\-Fullscreen@{app\-Enable\-Fullscreen}!Application@{Application}}
+\subsubsection[{app\-Enable\-Fullscreen}]{\setlength{\rightskip}{0pt plus 5cm}void app\-Enable\-Fullscreen (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{class_application_a058309652fa5b8a6bbacb6d19d765404}
+Make a windowed application go fullscreen \begin{DoxyWarning}{Warning}
+This function will fail if the current window resolution is not suported as a fullscreen resolution on the graphics card. Use \hyperlink{class_application_a5b02c95e118a79ff29e4f9cc95e492c8}{app\-Get\-Resolution\-List()} to get a list of supported fullscreen resolutions 
+\end{DoxyWarning}
+\begin{DoxyNote}{Note}
+Only for Windows, Mac and Linux 
+\end{DoxyNote}
+\hypertarget{class_application_ab5b54c0a8e547ee0ab2bce9fbdb792a5}{\index{Application@{Application}!app\-Enable\-Resize@{app\-Enable\-Resize}}
+\index{app\-Enable\-Resize@{app\-Enable\-Resize}!Application@{Application}}
+\subsubsection[{app\-Enable\-Resize}]{\setlength{\rightskip}{0pt plus 5cm}void app\-Enable\-Resize (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{class_application_ab5b54c0a8e547ee0ab2bce9fbdb792a5}
+Enables manual resizing of the window \begin{DoxyNote}{Note}
+Only for Windows, Mac and Linux 
+
+Window resizing is enabled by default 
+\end{DoxyNote}
+\hypertarget{class_application_ae8413053cc785729c125b53279d14576}{\index{Application@{Application}!app\-Get\-Cursor\-Pos@{app\-Get\-Cursor\-Pos}}
+\index{app\-Get\-Cursor\-Pos@{app\-Get\-Cursor\-Pos}!Application@{Application}}
+\subsubsection[{app\-Get\-Cursor\-Pos}]{\setlength{\rightskip}{0pt plus 5cm}void app\-Get\-Cursor\-Pos (
+\begin{DoxyParamCaption}
+\item[{int \&}]{x, }
+\item[{int \&}]{y}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{class_application_ae8413053cc785729c125b53279d14576}
+Returns the desktop relative cursor position \begin{DoxyNote}{Note}
+Only for Windows, Mac and Linux 
+\end{DoxyNote}
+
+\begin{DoxyParams}{Parameters}
+{\em x} & Out x-\/coordinate \\
+\hline
+{\em y} & Out y-\/coordinate \\
+\hline
+\end{DoxyParams}
+\hypertarget{class_application_a2502735d4b414fe1d3fa193772e7608a}{\index{Application@{Application}!app\-Get\-Hr\-Time@{app\-Get\-Hr\-Time}}
+\index{app\-Get\-Hr\-Time@{app\-Get\-Hr\-Time}!Application@{Application}}
+\subsubsection[{app\-Get\-Hr\-Time}]{\setlength{\rightskip}{0pt plus 5cm}float app\-Get\-Hr\-Time (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{class_application_a2502735d4b414fe1d3fa193772e7608a}
+Returns the high-\/resoultion time \hypertarget{class_application_aa315981fa7c63165e6cad738de05acb3}{\index{Application@{Application}!app\-Get\-Pos@{app\-Get\-Pos}}
+\index{app\-Get\-Pos@{app\-Get\-Pos}!Application@{Application}}
+\subsubsection[{app\-Get\-Pos}]{\setlength{\rightskip}{0pt plus 5cm}void app\-Get\-Pos (
+\begin{DoxyParamCaption}
+\item[{int \&}]{x, }
+\item[{int \&}]{y, }
+\item[{bool}]{borders = {\ttfamily true}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{class_application_aa315981fa7c63165e6cad738de05acb3}
+Returns the position of the application window in desktop coordinates \begin{DoxyNote}{Note}
+Only for Windows, Mac and Linux 
+\end{DoxyNote}
+
+\begin{DoxyParams}{Parameters}
+{\em x} & Out x-\/coordinate \\
+\hline
+{\em y} & Out y-\/coordinate \\
+\hline
+{\em borders} & Include window borders. This has some issues. \\
+\hline
+\end{DoxyParams}
+\hypertarget{class_application_a8ed7c9b0cb21e8480e8aef57b142cbed}{\index{Application@{Application}!app\-Get\-Program\-Time@{app\-Get\-Program\-Time}}
+\index{app\-Get\-Program\-Time@{app\-Get\-Program\-Time}!Application@{Application}}
+\subsubsection[{app\-Get\-Program\-Time}]{\setlength{\rightskip}{0pt plus 5cm}uint64 app\-Get\-Program\-Time (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{class_application_a8ed7c9b0cb21e8480e8aef57b142cbed}
+Returns the program run-\/time in ticks \hypertarget{class_application_a5b02c95e118a79ff29e4f9cc95e492c8}{\index{Application@{Application}!app\-Get\-Resolution\-List@{app\-Get\-Resolution\-List}}
+\index{app\-Get\-Resolution\-List@{app\-Get\-Resolution\-List}!Application@{Application}}
+\subsubsection[{app\-Get\-Resolution\-List}]{\setlength{\rightskip}{0pt plus 5cm}array$<$vec2$>$ app\-Get\-Resolution\-List (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{class_application_a5b02c95e118a79ff29e4f9cc95e492c8}
+Returns a list of the supported desktop resolutions for this graphics card \begin{DoxyNote}{Note}
+Only for Windows, Mac and Linux 
+\end{DoxyNote}
+\hypertarget{class_application_a361001d71f1cd930712aae29b30303ea}{\index{Application@{Application}!app\-Get\-Size@{app\-Get\-Size}}
+\index{app\-Get\-Size@{app\-Get\-Size}!Application@{Application}}
+\subsubsection[{app\-Get\-Size}]{\setlength{\rightskip}{0pt plus 5cm}void app\-Get\-Size (
+\begin{DoxyParamCaption}
+\item[{int \&}]{w, }
+\item[{int \&}]{h}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{class_application_a361001d71f1cd930712aae29b30303ea}
+Returns the current application window size (excluding borders) \begin{DoxyNote}{Note}
+Only for Windows, Mac and Linux 
+\end{DoxyNote}
+
+\begin{DoxyParams}{Parameters}
+{\em w} & Out width in pixels \\
+\hline
+{\em h} & Out height in pixels \\
+\hline
+\end{DoxyParams}
+\hypertarget{class_application_a2ae34cff29efc98e9e66b53a345a85f2}{\index{Application@{Application}!app\-Get\-Tick\-Count@{app\-Get\-Tick\-Count}}
+\index{app\-Get\-Tick\-Count@{app\-Get\-Tick\-Count}!Application@{Application}}
+\subsubsection[{app\-Get\-Tick\-Count}]{\setlength{\rightskip}{0pt plus 5cm}uint64 app\-Get\-Tick\-Count (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{class_application_a2ae34cff29efc98e9e66b53a345a85f2}
+Returns the system run-\/time in ticks \begin{DoxyNote}{Note}
+On windows this will overflow after 48 days 
+\end{DoxyNote}
+\hypertarget{class_application_ac37e92d1ad361e95f9e029949f9aaccd}{\index{Application@{Application}!app\-Get\-Work\-Dir@{app\-Get\-Work\-Dir}}
+\index{app\-Get\-Work\-Dir@{app\-Get\-Work\-Dir}!Application@{Application}}
+\subsubsection[{app\-Get\-Work\-Dir}]{\setlength{\rightskip}{0pt plus 5cm}string app\-Get\-Work\-Dir (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{class_application_ac37e92d1ad361e95f9e029949f9aaccd}
+Returns the working directory (where the executable is located) \begin{DoxyNote}{Note}
+Only for Windows, Mac and Linux 
+\end{DoxyNote}
+\hypertarget{class_application_a5847e38189cc6473ef63162c439d7785}{\index{Application@{Application}!app\-Get\-Work\-Path@{app\-Get\-Work\-Path}}
+\index{app\-Get\-Work\-Path@{app\-Get\-Work\-Path}!Application@{Application}}
+\subsubsection[{app\-Get\-Work\-Path}]{\setlength{\rightskip}{0pt plus 5cm}string app\-Get\-Work\-Path (
+\begin{DoxyParamCaption}
+\item[{const string \&}]{path}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{class_application_a5847e38189cc6473ef63162c439d7785}
+Returns a working directory relative path. The same as \hyperlink{class_application_ac37e92d1ad361e95f9e029949f9aaccd}{app\-Get\-Work\-Dir()} + path \begin{DoxyNote}{Note}
+Only for Windows, Mac and Linux 
+\end{DoxyNote}
+
+\begin{DoxyParams}{Parameters}
+{\em path} & A working directory relative path \\
+\hline
+\end{DoxyParams}
+\hypertarget{class_application_ae4db1227dcce1acae1faf72f92e73467}{\index{Application@{Application}!app\-Hide\-Cursor@{app\-Hide\-Cursor}}
+\index{app\-Hide\-Cursor@{app\-Hide\-Cursor}!Application@{Application}}
+\subsubsection[{app\-Hide\-Cursor}]{\setlength{\rightskip}{0pt plus 5cm}void app\-Hide\-Cursor (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{class_application_ae4db1227dcce1acae1faf72f92e73467}
+Hides the system cursor, if visible \begin{DoxyNote}{Note}
+Only for Windows, Mac and Linux 
+\end{DoxyNote}
+\hypertarget{class_application_a196583d4fcabd6b99cc7d717f11f2e06}{\index{Application@{Application}!app\-Maximize@{app\-Maximize}}
+\index{app\-Maximize@{app\-Maximize}!Application@{Application}}
+\subsubsection[{app\-Maximize}]{\setlength{\rightskip}{0pt plus 5cm}void app\-Maximize (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{class_application_a196583d4fcabd6b99cc7d717f11f2e06}
+Maximizes the application window \begin{DoxyNote}{Note}
+Only for Windows, Mac and Linux 
+\end{DoxyNote}
+\hypertarget{class_application_abd1ddbf3839ed8f8a820f7bb21474106}{\index{Application@{Application}!app\-Minimize@{app\-Minimize}}
+\index{app\-Minimize@{app\-Minimize}!Application@{Application}}
+\subsubsection[{app\-Minimize}]{\setlength{\rightskip}{0pt plus 5cm}void app\-Minimize (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{class_application_abd1ddbf3839ed8f8a820f7bb21474106}
+Minimizes the application window \begin{DoxyNote}{Note}
+Only for Windows, Mac and Linux 
+\end{DoxyNote}
+\hypertarget{class_application_ade77d59e07c39e8d053dec4e1fa6cf0a}{\index{Application@{Application}!app\-Move@{app\-Move}}
+\index{app\-Move@{app\-Move}!Application@{Application}}
+\subsubsection[{app\-Move}]{\setlength{\rightskip}{0pt plus 5cm}void app\-Move (
+\begin{DoxyParamCaption}
+\item[{const int}]{x, }
+\item[{const int}]{y}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{class_application_ade77d59e07c39e8d053dec4e1fa6cf0a}
+Moves the application window to a desktop relative position \begin{DoxyNote}{Note}
+Only for Windows, Mac and Linux 
+\end{DoxyNote}
+
+\begin{DoxyParams}{Parameters}
+{\em x} & The desktop relative x-\/coordinate \\
+\hline
+{\em y} & The desktop relative y-\/coordinate \\
+\hline
+\end{DoxyParams}
+\hypertarget{class_application_a3eae706a0f0ce5e5ccfc2d93a2c9483a}{\index{Application@{Application}!app\-Resize@{app\-Resize}}
+\index{app\-Resize@{app\-Resize}!Application@{Application}}
+\subsubsection[{app\-Resize}]{\setlength{\rightskip}{0pt plus 5cm}void app\-Resize (
+\begin{DoxyParamCaption}
+\item[{const int}]{w, }
+\item[{const int}]{h}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{class_application_a3eae706a0f0ce5e5ccfc2d93a2c9483a}
+Resizes the application window \begin{DoxyNote}{Note}
+Only for Windows, Mac and Linux 
+\end{DoxyNote}
+
+\begin{DoxyParams}{Parameters}
+{\em w} & Width of the new window in pixels (excluding borders) \\
+\hline
+{\em h} & Height of the new window in pixels (excluding borders) \\
+\hline
+\end{DoxyParams}
+\hypertarget{class_application_a1aace92c00cdf019658db7d2e6b69565}{\index{Application@{Application}!app\-Restart\-Hr\-Timer@{app\-Restart\-Hr\-Timer}}
+\index{app\-Restart\-Hr\-Timer@{app\-Restart\-Hr\-Timer}!Application@{Application}}
+\subsubsection[{app\-Restart\-Hr\-Timer}]{\setlength{\rightskip}{0pt plus 5cm}void app\-Restart\-Hr\-Timer (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{class_application_a1aace92c00cdf019658db7d2e6b69565}
+Restart high-\/resoulution timer \hypertarget{class_application_aa69f401b598507a626d6ae31032c5b07}{\index{Application@{Application}!app\-Restore@{app\-Restore}}
+\index{app\-Restore@{app\-Restore}!Application@{Application}}
+\subsubsection[{app\-Restore}]{\setlength{\rightskip}{0pt plus 5cm}void app\-Restore (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{class_application_aa69f401b598507a626d6ae31032c5b07}
+Restores the application window from the taskbar \begin{DoxyNote}{Note}
+Only for Windows, Mac and Linux 
+\end{DoxyNote}
+\hypertarget{class_application_aec8bf350bbbb3407ed11ebb6b93b7344}{\index{Application@{Application}!app\-Set\-Cursor\-Limits@{app\-Set\-Cursor\-Limits}}
+\index{app\-Set\-Cursor\-Limits@{app\-Set\-Cursor\-Limits}!Application@{Application}}
+\subsubsection[{app\-Set\-Cursor\-Limits}]{\setlength{\rightskip}{0pt plus 5cm}void app\-Set\-Cursor\-Limits (
+\begin{DoxyParamCaption}
+\item[{const int}]{x, }
+\item[{const int}]{y, }
+\item[{const int}]{w, }
+\item[{const int}]{h}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{class_application_aec8bf350bbbb3407ed11ebb6b93b7344}
+Limits the cursor movement to the specified desktop relative rectangle \begin{DoxyNote}{Note}
+Only for Windows, Mac and Linux 
+\end{DoxyNote}
+
+\begin{DoxyParams}{Parameters}
+{\em x} & The x-\/coordinate of the rectangle \\
+\hline
+{\em y} & The y-\/coordinate of the rectangle \\
+\hline
+{\em w} & The width of the rectangle \\
+\hline
+{\em h} & The height of the rectangle \\
+\hline
+\end{DoxyParams}
+\hypertarget{class_application_a55bb1d96e5cff13b86ccd8a42edf7cdc}{\index{Application@{Application}!app\-Set\-Cursor\-Pos@{app\-Set\-Cursor\-Pos}}
+\index{app\-Set\-Cursor\-Pos@{app\-Set\-Cursor\-Pos}!Application@{Application}}
+\subsubsection[{app\-Set\-Cursor\-Pos}]{\setlength{\rightskip}{0pt plus 5cm}void app\-Set\-Cursor\-Pos (
+\begin{DoxyParamCaption}
+\item[{const int}]{x, }
+\item[{const int}]{y}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{class_application_a55bb1d96e5cff13b86ccd8a42edf7cdc}
+\begin{DoxyVerb}Moves the cursor to a desktop relative position
+\end{DoxyVerb}
+ \begin{DoxyNote}{Note}
+Only for Windows, Mac and Linux 
+\end{DoxyNote}
+
+\begin{DoxyParams}{Parameters}
+{\em x} & The desktop relative x-\/coordinate \\
+\hline
+{\em y} & The desktop relative y-\/coordinate \\
+\hline
+\end{DoxyParams}
+\hypertarget{class_application_ad0ea87041394ca4c46cd4dbb1011ad84}{\index{Application@{Application}!app\-Show\-Cursor@{app\-Show\-Cursor}}
+\index{app\-Show\-Cursor@{app\-Show\-Cursor}!Application@{Application}}
+\subsubsection[{app\-Show\-Cursor}]{\setlength{\rightskip}{0pt plus 5cm}void app\-Show\-Cursor (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{class_application_ad0ea87041394ca4c46cd4dbb1011ad84}
+Shows the system cursor, if hidden \begin{DoxyNote}{Note}
+Only for Windows, Mac and Linux 
+\end{DoxyNote}

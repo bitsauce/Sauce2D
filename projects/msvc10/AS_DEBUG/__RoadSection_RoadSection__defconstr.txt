@@ -1,0 +1,20 @@
+RoadSection::RoadSection()
+
+Temps: 1
+
+Variables: 
+ 000: RoadSection this
+ 001: array {noname}
+
+
+- 25,15 -
+    0   1 *    SUSPEND
+    1   1 *    CALL     726           (Road@[]@ factstub())
+    3   1 *    STOREOBJ v1
+    4   1 *    PshVPtr  v1
+    5   2 *    PshVPtr  v0
+    6   3 *    ADDSi    v16, 134217780
+    8   3 *    REFCPY   0x6406e78
+   10   2 *    PopPtr
+   11   1 *    FREE     v1, 104885880
+   13   1 *    RET      1

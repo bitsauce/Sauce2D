@@ -1,0 +1,84 @@
+int loadcrap()
+
+Temps: 10, 17, 18, 19, 20, 22, 23, 24
+
+Variables: 
+ 001: uint w
+ 002: uint h
+ 003: uint[] data
+ 021: int texture
+ 020: array {noname}
+ 010: string {noname}
+ 017: string {noname}
+
+
+- 89,2 -
+    0  24 *    SUSPEND
+- 90,2 -
+    1  24 *    VarDecl  0
+    1  24 *    VarDecl  1
+    1  24 *    SUSPEND
+    2  24 *    VarDecl  2
+    2  24 *    VAR      v18
+    3  25 *    VAR      v19
+    4  26 *    STR      3         (l:26 s:"sprites/re")
+    5  28 *    CALLSYS  33           (const string& _string_factory_(const int, const uint8&))
+    7  26 *    PshRPtr
+    8  27 *    PSF      v10
+    9  28 *    CALLSYS  35           (string::string(const string&in))
+   11  26 *    ObjInfo  v10, 1
+   11  26 *    VAR      v10
+   12  27 *    PSF      v17
+   13  28 *    GETREF   1
+   14  28 *    CALLSYS  412           (string appGetWorkPath(const string&in))
+   16  26 *    ObjInfo  v17, 1
+   16  26 *    PSF      v10
+   17  27 *    CALLSYS  36           (string::~string())
+   19  26 *    ObjInfo  v10, 0
+   19  26 *    PSF      v17
+   20  27 *    GETREF   1
+   21  27 *    GETREF   2
+   22  27 *    CALLSYS  499           (uint[]@ gfxLoadImageData(const string&in, int&out, int&out))
+   24  24 *    STOREOBJ v20
+   25  24 *    PSF      v17
+   26  25 *    CALLSYS  36           (string::~string())
+   28  24 *    ObjInfo  v17, 0
+   28  24 *    CpyVtoV4 v2, v18
+   30  24 *    CpyVtoV4 v1, v19
+   32  24 *    ChkNullV v20
+   33  24 *    VAR      v20
+   34  25 *    CALL     481           (uint[]@ factstub())
+   36  25 *    STOREOBJ v3
+   37  25 *    PshVPtr  v3
+   38  26 *    GETOBJREF 1
+   39  26 *    CALLSYS  487           (uint[]& array::opAssign(const uint[]&in))
+   41  24 *    FREE     v20, 68823024
+- 91,2 -
+   43  24 *    SUSPEND
+   44  24 *    VarDecl  3
+   44  24 *    SetV1    v18, 0x0
+   46  24 *    PshV4    v18
+   47  25 *    PshC4    0x2600          (i:9728, f:1.36318e-041)
+   49  26 *    PshC4    0x0          (i:0, f:0)
+   51  27 *    PshC4    0x0          (i:0, f:0)
+   53  28 *    CALLSYS  475           (int gfxCreateTexture(const int, const int, const TextureFilter = NearestFilter, const bool = false))
+   55  24 *    CpyRtoV4 v24
+   56  24 *    CpyVtoV4 v21, v24
+- 92,2 -
+   58  24 *    SUSPEND
+   59  24 *    SetV1    v18, 0x0
+   61  24 *    PshV4    v18
+   62  25 *    VAR      v3
+   63  26 *    PshV4    v2
+   64  27 *    PshV4    v1
+   65  28 *    PshV4    v21
+   66  29 *    GETOBJREF 3
+   67  29 *    CALLSYS  494           (void gfxSetTextureData(const int, const int, const int, const uint[]&in, const bool = false))
+- 93,3 -
+   69  24 *    SUSPEND
+   70  24 * {
+   70  24 *    FREE     v3, 68823024
+   72  24 * }
+   72  24 *    CpyVtoR4 v21
+   73  24 * 0:
+   73  24 *    RET      0

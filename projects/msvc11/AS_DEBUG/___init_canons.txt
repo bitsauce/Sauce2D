@@ -1,0 +1,39 @@
+<unrecognized token> _unnamed_function_()
+
+Temps: 1, 2, 3
+
+Variables: 
+ 001:  {noname}
+ 003: array {noname}
+
+
+- 16,13 -
+    0   3 *    SUSPEND
+    1   3 *    AllocMem v1, 8
+    3   3 *    SetListSize v1, 0, 4
+    6   3 *    SetV1    v2, 0x0
+    8   3 *    PshListElmnt v1, 4
+   10   4 *    PopRPtr
+   11   3 *    WRTV1    v2
+   12   3 *    SetV1    v2, 0x0
+   14   3 *    PshListElmnt v1, 5
+   16   4 *    PopRPtr
+   17   3 *    WRTV1    v2
+   18   3 *    SetV1    v2, 0x0
+   20   3 *    PshListElmnt v1, 6
+   22   4 *    PopRPtr
+   23   3 *    WRTV1    v2
+   24   3 *    SetV1    v2, 0x0
+   26   3 *    PshListElmnt v1, 7
+   28   4 *    PopRPtr
+   29   3 *    WRTV1    v2
+   30   3 *    PshVPtr  v1
+   31   4 *    CALL     902           (bool[]@ factstub(int&in) { repeat bool })
+   33   3 *    STOREOBJ v3
+   34   3 *    PshVPtr  v3
+   35   4 *    PGA      117186256
+   37   5 *    REFCPY   0x6fbfb30
+   39   4 *    PopPtr
+   40   3 *    FREE     v3, 117177136
+   42   3 *    FREE     v1, 117464072
+   44   3 *    RET      0

@@ -1,0 +1,12 @@
+<unrecognized token> _unnamed_function_()
+
+Temps: 
+
+Variables: 
+
+
+- 12,8 -
+    0   0 *    SUSPEND
+    1   0 *    PGA      150821096
+    3   1 *    ALLOC    0x54c0bb0, 155             (type:Rect2)
+    6   0 *    RET      0

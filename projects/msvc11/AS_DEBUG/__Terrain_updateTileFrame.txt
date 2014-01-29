@@ -1,0 +1,273 @@
+void Terrain::updateTileFrame(const int, const int)
+
+Temps: 1, 2, 3, 5, 7, 10
+
+Variables: 
+ -001: const int x
+ -002: const int y
+ 004: Tile@ tile
+ 006: VertexBuffer@ vbo
+ 008: int frame
+ 009: float[] vboData
+ 000: Terrain this
+ 001: grid {noname}
+ 005: Tile {noname}
+ 007: array {noname}
+
+
+    0  10 *    VarDecl  0
+    0  10 *    VarDecl  1
+    0  10 *    PshVPtr  v0
+    1  11 *    CALLSYS  2           (void _builtin_object_::_beh_5_())
+- 275,3 -
+    3  10 *    SUSPEND
+    4  10 *    PshV4    v-2
+    5  11 *    PshV4    v-1
+    6  12 *    PshVPtr  v0
+    7  13 *    ADDSi    v48, 134217763
+    9  13 *    RDSPtr
+   10  13 *    RefCpyV  v1, 98193464
+   12  13 *    CALLSYS  985           (Tile& grid::at(uint, uint))
+   14  10 *    PshRPtr
+   15  11 *    ADDSi    v36, 134217745
+   17  11 *    PopRPtr
+   18  10 *    RDR4     v2
+   19  10 *    FREE     v1, 98193464
+   21  10 *    CMPIi    v2, 0
+   23  10 *    JNZ      +3              (d:28)
+- 276,4 -
+   25  10 *    SUSPEND
+   26  10 * {
+   26  10 * }
+   26  10 *    JMP      +307              (d:335)
+- 279,3 -
+   28  10 * 1:
+   28  10 *    SUSPEND
+   29  10 *    VarDecl  2
+   29  10 *    PshV4    v-2
+   30  11 *    PshV4    v-1
+   31  12 *    PshVPtr  v0
+   32  13 *    ADDSi    v48, 134217763
+   34  13 *    RDSPtr
+   35  13 *    RefCpyV  v1, 98193464
+   37  13 *    CALLSYS  985           (Tile& grid::at(uint, uint))
+   39  10 *    PshRPtr
+   40  11 *    RefCpyV  v5, 97817264
+   42  11 *    PopPtr
+   43  10 *    PshVPtr  v5
+   44  11 *    RefCpyV  v4, 97817264
+   46  11 *    FREE     v5, 97817264
+   48  11 *    PopPtr
+   49  10 *    FREE     v1, 98193464
+- 282,3 -
+   51  10 *    SUSPEND
+   52  10 *    VarDecl  3
+   52  10 *    LoadRObjR v4, v36, 134217745
+   55  10 *    RDR4     v2
+   56  10 *    SUBIi    v2, v2, 1
+   59  10 *    PshV4    v2
+   60  11 *    PshVPtr  v0
+   61  12 *    ADDSi    v72, 134217763
+   63  12 *    RDSPtr
+   64  12 *    RefCpyV  v7, 98201800
+   66  12 *    CALLSYS  995           (VertexBuffer@& array::opIndex(uint))
+   68  10 *    PshRPtr
+   69  11 *    RDSPtr
+   70  11 *    RefCpyV  v6, 97797736
+   72  11 *    PopPtr
+   73  10 *    FREE     v7, 98201800
+- 285,3 -
+   75  10 *    SUSPEND
+   76  10 *    VarDecl  4
+   76  10 *    PshV4    v-2
+   77  11 *    PshV4    v-1
+   78  12 *    PshVPtr  v0
+   79  13 *    CALLINTF 971           (int Terrain::tileState(const int, const int))
+   81  10 *    CpyRtoV4 v3
+   82  10 *    PshV4    v3
+   83  11 *    PshVPtr  v0
+   84  12 *    CALLINTF 972           (uint Terrain::tileFrame(const int))
+   86  10 *    CpyRtoV4 v2
+   87  10 *    CpyVtoV4 v8, v2
+- 286,3 -
+   89  10 *    SUSPEND
+   90  10 *    LoadRObjR v4, v32, 134217745
+   93  10 *    WRTV4    v8
+- 289,3 -
+   94  10 *    SUSPEND
+   95  10 *    VarDecl  5
+   95  10 *    PshC4    0x10          (i:16, f:2.24208e-044)
+   97  11 *    CALL     460           (float[]@ factstub(uint))
+   99  10 *    STOREOBJ v9
+- 290,3 -
+  100  10 *    SUSPEND
+  101  10 *    CpyVtoV4 v3, v-1
+  103  10 *    iTOf     v3
+  104  10 *    CpyGtoV4 v2, 98098368
+  106  10 *    MULf     v3, v3, v2
+  108  10 *    PshC4    0x0          (i:0, f:0)
+  110  11 *    PshVPtr  v9
+  111  12 *    CALLSYS  463           (float& array::opIndex(uint))
+  113  10 *    WRTV4    v3
+- 290,33 -
+  114  10 *    SUSPEND
+  115  10 *    CpyVtoV4 v3, v-2
+  117  10 *    iTOf     v3
+  118  10 *    CpyGtoV4 v2, 98098368
+  120  10 *    MULf     v3, v3, v2
+  122  10 *    PshC4    0x1          (i:1, f:1.4013e-045)
+  124  11 *    PshVPtr  v9
+  125  12 *    CALLSYS  463           (float& array::opIndex(uint))
+  127  10 *    WRTV4    v3
+- 291,3 -
+  128  10 *    SUSPEND
+  129  10 *    CpyVtoV4 v3, v-1
+  131  10 *    iTOf     v3
+  132  10 *    CpyGtoV4 v2, 98098368
+  134  10 *    MULf     v3, v3, v2
+  136  10 *    PshC4    0x4          (i:4, f:5.60519e-045)
+  138  11 *    PshVPtr  v9
+  139  12 *    CALLSYS  463           (float& array::opIndex(uint))
+  141  10 *    WRTV4    v3
+- 291,33 -
+  142  10 *    SUSPEND
+  143  10 *    ADDIi    v3, v-2, 1
+  146  10 *    iTOf     v3
+  147  10 *    CpyGtoV4 v10, 98098368
+  149  10 *    MULf     v2, v3, v10
+  151  10 *    PshC4    0x5          (i:5, f:7.00649e-045)
+  153  11 *    PshVPtr  v9
+  154  12 *    CALLSYS  463           (float& array::opIndex(uint))
+  156  10 *    WRTV4    v2
+- 292,3 -
+  157  10 *    SUSPEND
+  158  10 *    ADDIi    v2, v-1, 1
+  161  10 *    iTOf     v2
+  162  10 *    CpyGtoV4 v10, 98098368
+  164  10 *    MULf     v3, v2, v10
+  166  10 *    PshC4    0x8          (i:8, f:1.12104e-044)
+  168  11 *    PshVPtr  v9
+  169  12 *    CALLSYS  463           (float& array::opIndex(uint))
+  171  10 *    WRTV4    v3
+- 292,33 -
+  172  10 *    SUSPEND
+  173  10 *    ADDIi    v3, v-2, 1
+  176  10 *    iTOf     v3
+  177  10 *    CpyGtoV4 v10, 98098368
+  179  10 *    MULf     v2, v3, v10
+  181  10 *    PshC4    0x9          (i:9, f:1.26117e-044)
+  183  11 *    PshVPtr  v9
+  184  12 *    CALLSYS  463           (float& array::opIndex(uint))
+  186  10 *    WRTV4    v2
+- 293,3 -
+  187  10 *    SUSPEND
+  188  10 *    ADDIi    v2, v-1, 1
+  191  10 *    iTOf     v2
+  192  10 *    CpyGtoV4 v10, 98098368
+  194  10 *    MULf     v3, v2, v10
+  196  10 *    PshC4    0xc          (i:12, f:1.68156e-044)
+  198  11 *    PshVPtr  v9
+  199  12 *    CALLSYS  463           (float& array::opIndex(uint))
+  201  10 *    WRTV4    v3
+- 293,33 -
+  202  10 *    SUSPEND
+  203  10 *    CpyVtoV4 v3, v-2
+  205  10 *    iTOf     v3
+  206  10 *    CpyGtoV4 v2, 98098368
+  208  10 *    MULf     v10, v3, v2
+  210  10 *    PshC4    0xd          (i:13, f:1.82169e-044)
+  212  11 *    PshVPtr  v9
+  213  12 *    CALLSYS  463           (float& array::opIndex(uint))
+  215  10 *    WRTV4    v10
+- 294,3 -
+  216  10 *    SUSPEND
+  217  10 *    CpyVtoV4 v10, v8
+  219  10 *    iTOf     v10
+  220  10 *    CpyGtoV4 v3, 98099160
+  222  10 *    DIVf     v2, v10, v3
+  224  10 *    PshC4    0x2          (i:2, f:2.8026e-045)
+  226  11 *    PshVPtr  v9
+  227  12 *    CALLSYS  463           (float& array::opIndex(uint))
+  229  10 *    WRTV4    v2
+- 294,39 -
+  230  10 *    SUSPEND
+  231  10 *    SetV4    v2, 0x3f800000          (i:1065353216, f:1)
+  233  10 *    PshC4    0x3          (i:3, f:4.2039e-045)
+  235  11 *    PshVPtr  v9
+  236  12 *    CALLSYS  463           (float& array::opIndex(uint))
+  238  10 *    WRTV4    v2
+- 295,3 -
+  239  10 *    SUSPEND
+  240  10 *    CpyVtoV4 v2, v8
+  242  10 *    iTOf     v2
+  243  10 *    CpyGtoV4 v10, 98099160
+  245  10 *    DIVf     v3, v2, v10
+  247  10 *    PshC4    0x6          (i:6, f:8.40779e-045)
+  249  11 *    PshVPtr  v9
+  250  12 *    CALLSYS  463           (float& array::opIndex(uint))
+  252  10 *    WRTV4    v3
+- 295,39 -
+  253  10 *    SUSPEND
+  254  10 *    SetV4    v3, 0x0          (i:0, f:0)
+  256  10 *    PshC4    0x7          (i:7, f:9.80909e-045)
+  258  11 *    PshVPtr  v9
+  259  12 *    CALLSYS  463           (float& array::opIndex(uint))
+  261  10 *    WRTV4    v3
+- 296,3 -
+  262  10 *    SUSPEND
+  263  10 *    ADDIi    v3, v8, 1
+  266  10 *    iTOf     v3
+  267  10 *    CpyGtoV4 v10, 98099160
+  269  10 *    DIVf     v2, v3, v10
+  271  10 *    PshC4    0xa          (i:10, f:1.4013e-044)
+  273  11 *    PshVPtr  v9
+  274  12 *    CALLSYS  463           (float& array::opIndex(uint))
+  276  10 *    WRTV4    v2
+- 296,39 -
+  277  10 *    SUSPEND
+  278  10 *    SetV4    v2, 0x0          (i:0, f:0)
+  280  10 *    PshC4    0xb          (i:11, f:1.54143e-044)
+  282  11 *    PshVPtr  v9
+  283  12 *    CALLSYS  463           (float& array::opIndex(uint))
+  285  10 *    WRTV4    v2
+- 297,3 -
+  286  10 *    SUSPEND
+  287  10 *    ADDIi    v2, v8, 1
+  290  10 *    iTOf     v2
+  291  10 *    CpyGtoV4 v10, 98099160
+  293  10 *    DIVf     v3, v2, v10
+  295  10 *    PshC4    0xe          (i:14, f:1.96182e-044)
+  297  11 *    PshVPtr  v9
+  298  12 *    CALLSYS  463           (float& array::opIndex(uint))
+  300  10 *    WRTV4    v3
+- 297,39 -
+  301  10 *    SUSPEND
+  302  10 *    SetV4    v3, 0x3f800000          (i:1065353216, f:1)
+  304  10 *    PshC4    0xf          (i:15, f:2.10195e-044)
+  306  11 *    PshVPtr  v9
+  307  12 *    CALLSYS  463           (float& array::opIndex(uint))
+  309  10 *    WRTV4    v3
+- 300,3 -
+  310  10 *    SUSPEND
+  311  10 *    PshVPtr  v6
+  312  11 *    CALLINTF 904           (void VertexBuffer::bind())
+- 301,3 -
+  314  10 *    SUSPEND
+  315  10 *    VAR      v9
+  316  11 *    LoadRObjR v4, v24, 134217745
+  319  11 *    RDR4     v2
+  320  11 *    PshV4    v2
+  321  12 *    GETOBJREF 1
+  322  12 *    CALLSYS  473           (void gfxSetVertexBufferSubData(const int, const float[]&in))
+- 302,3 -
+  324  10 *    SUSPEND
+  325  10 *    PshVPtr  v6
+  326  11 *    CALLINTF 905           (void VertexBuffer::unbind())
+- 303,3 -
+  328  10 *    SUSPEND
+  329  10 *    FREE     v9, 50149608
+  331  10 *    FREE     v6, 97797736
+  333  10 *    FREE     v4, 97817264
+  335  10 * 0:
+  335  10 *    FREE     v0, 97816632
+  337  10 *    RET      3

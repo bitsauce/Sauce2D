@@ -1,0 +1,41 @@
+int countDigits(int)
+
+Temps: 2, 4
+
+Variables: 
+ 000: int num
+ 001: int count
+ 003: float fnum
+
+
+- 8,2 -
+    0   4 *    VarDecl  0
+    0   4 *    SUSPEND
+    1   4 *    VarDecl  1
+    1   4 *    SetV4    v1, 0x1          (i:1, f:1.4013e-045)
+- 9,2 -
+    3   4 *    SUSPEND
+    4   4 *    VarDecl  2
+    4   4 *    CpyVtoV4 v2, v0
+    6   4 *    iTOf     v2
+    7   4 *    CpyVtoV4 v3, v2
+- 10,2 -
+    9   4 *    SUSPEND
+   10   4 * 1:
+   10   4 *    SetV4    v2, 0x41200000          (i:1092616192, f:10)
+   12   4 *    DIVf     v3, v3, v2
+   14   4 *    CMPIf    v3, 1.000000
+   16   4 *    JS       +5              (d:23)
+   18   4 *    SUSPEND
+- 10,27 -
+   19   4 *    SUSPEND
+   20   4 *    IncVi    v1
+   21   4 *    JMP      -13              (d:10)
+- 11,2 -
+   23   4 * 2:
+   23   4 *    SUSPEND
+   24   4 * {
+   24   4 * }
+   24   4 *    CpyVtoR4 v1
+   25   4 * 0:
+   25   4 *    RET      1

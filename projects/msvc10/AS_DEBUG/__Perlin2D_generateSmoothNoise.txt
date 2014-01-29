@@ -1,0 +1,204 @@
+grid<float> Perlin2D::generateSmoothNoise(grid<float>@, int)
+
+Temps: 2, 6, 17, 19
+
+Variables: 
+ -001: grid<float>@ baseNoise
+ -002: int octave
+ 001: int width
+ 003: int height
+ 004: int samplePeriod
+ 005: float sampleFrequency
+ 007: grid<float> smoothNoise
+ 008: int i
+ 009: int sample_i0
+ 010: int sample_i1
+ 011: float horizontal_blend
+ 012: int j
+ 013: int sample_j0
+ 014: int sample_j1
+ 015: float vertical_blend
+ 016: float top
+ 018: float bottom
+ 000: Perlin2D this
+ 019: grid {noname}
+
+
+    0  19 *    VarDecl  0
+    0  19 *    VarDecl  1
+    0  19 *    PshVPtr  v0
+    1  20 *    CALLSYS  2           (void _builtin_object_::_beh_4_())
+- 100,3 -
+    3  19 *    SUSPEND
+    4  19 *    VarDecl  2
+    4  19 *    PshVPtr  v-1
+    5  20 *    CALLSYS  123           (uint grid::width() const)
+    7  19 *    CpyRtoV4 v2
+    8  19 *    CpyVtoV4 v1, v2
+- 101,3 -
+   10  19 *    SUSPEND
+   11  19 *    VarDecl  3
+   11  19 *    PshVPtr  v-1
+   12  20 *    CALLSYS  124           (uint grid::height() const)
+   14  19 *    CpyRtoV4 v2
+   15  19 *    CpyVtoV4 v3, v2
+- 103,5 -
+   17  19 *    SUSPEND
+   18  19 *    VarDecl  4
+   18  19 *    SetV4    v2, 0x1          (i:1, f:1.4013e-045)
+   20  19 *    BSLL     v4, v2, v-2
+- 104,5 -
+   22  19 *    SUSPEND
+   23  19 *    VarDecl  5
+   23  19 *    SetV4    v6, 0x3f800000          (i:1065353216, f:1)
+   25  19 *    CpyVtoV4 v2, v4
+   27  19 *    iTOf     v2
+   28  19 *    DIVf     v5, v6, v2
+- 106,5 -
+   30  19 *    SUSPEND
+   31  19 *    VarDecl  6
+   31  19 *    SetV4    v2, 0x0          (i:0, f:0)
+   33  19 *    VAR      v2
+   34  20 *    PshV4    v3
+   35  21 *    PshV4    v1
+   36  22 *    GETREF   2
+   37  22 *    CALL     650           (grid<float>@ factstub(uint, uint, const float&in))
+   39  19 *    STOREOBJ v7
+- 107,9 -
+   40  19 *    SUSPEND
+   41  19 *    VarDecl  7
+   41  19 *    SetV4    v8, 0x0          (i:0, f:0)
+   43  19 *    JMP      +106              (d:151)
+   45  19 * 4:
+   45  19 *    SUSPEND
+- 110,4 -
+   46  19 * {
+   46  19 *    SUSPEND
+   47  19 *    VarDecl  8
+   47  19 *    DIVi     v2, v8, v4
+   49  19 *    MULi     v9, v2, v4
+- 111,4 -
+   51  19 *    SUSPEND
+   52  19 *    VarDecl  9
+   52  19 *    ADDi     v2, v9, v4
+   54  19 *    MODi     v10, v2, v1
+- 112,4 -
+   56  19 *    SUSPEND
+   57  19 *    VarDecl  10
+   57  19 *    SUBi     v2, v8, v9
+   59  19 *    iTOf     v2
+   60  19 *    MULf     v11, v2, v5
+- 114,8 -
+   62  19 *    SUSPEND
+   63  19 *    VarDecl  11
+   63  19 *    SetV4    v12, 0x0          (i:0, f:0)
+   65  19 *    JMP      +77              (d:144)
+   67  19 * 8:
+   67  19 *    SUSPEND
+- 117,5 -
+   68  19 * {
+   68  19 *    SUSPEND
+   69  19 *    VarDecl  12
+   69  19 *    DIVi     v6, v12, v4
+   71  19 *    MULi     v13, v6, v4
+- 118,5 -
+   73  19 *    SUSPEND
+   74  19 *    VarDecl  13
+   74  19 *    ADDi     v6, v13, v4
+   76  19 *    MODi     v14, v6, v3
+- 119,5 -
+   78  19 *    SUSPEND
+   79  19 *    VarDecl  14
+   79  19 *    SUBi     v6, v12, v13
+   81  19 *    iTOf     v6
+   82  19 *    MULf     v15, v6, v5
+- 122,5 -
+   84  19 *    SUSPEND
+   85  19 *    VarDecl  15
+   85  19 *    PshV4    v11
+   86  20 *    PshV4    v13
+   87  21 *    PshV4    v10
+   88  22 *    PshVPtr  v-1
+   89  23 *    CALLSYS  654           (float& grid::at(uint, uint))
+   91  20 *    RDR4     v6
+   92  20 *    PshV4    v6
+   93  21 *    PshV4    v13
+   94  22 *    PshV4    v9
+   95  23 *    PshVPtr  v-1
+   96  24 *    CALLSYS  654           (float& grid::at(uint, uint))
+   98  21 *    RDR4     v2
+   99  21 *    PshV4    v2
+  100  22 *    PshVPtr  v0
+  101  23 *    CALLINTF 745           (float Perlin2D::interpolate(float, float, float))
+  103  19 *    CpyRtoV4 v17
+  104  19 *    CpyVtoV4 v16, v17
+- 126,5 -
+  106  19 *    SUSPEND
+  107  19 *    VarDecl  16
+  107  19 *    PshV4    v11
+  108  20 *    PshV4    v14
+  109  21 *    PshV4    v10
+  110  22 *    PshVPtr  v-1
+  111  23 *    CALLSYS  654           (float& grid::at(uint, uint))
+  113  20 *    RDR4     v6
+  114  20 *    PshV4    v6
+  115  21 *    PshV4    v14
+  116  22 *    PshV4    v9
+  117  23 *    PshVPtr  v-1
+  118  24 *    CALLSYS  654           (float& grid::at(uint, uint))
+  120  21 *    RDR4     v17
+  121  21 *    PshV4    v17
+  122  22 *    PshVPtr  v0
+  123  23 *    CALLINTF 745           (float Perlin2D::interpolate(float, float, float))
+  125  19 *    CpyRtoV4 v2
+  126  19 *    CpyVtoV4 v18, v2
+- 130,5 -
+  128  19 *    SUSPEND
+  129  19 *    PshV4    v15
+  130  20 *    PshV4    v18
+  131  21 *    PshV4    v16
+  132  22 *    PshVPtr  v0
+  133  23 *    CALLINTF 745           (float Perlin2D::interpolate(float, float, float))
+  135  19 *    CpyRtoV4 v6
+  136  19 *    PshV4    v12
+  137  20 *    PshV4    v8
+  138  21 *    PshVPtr  v7
+  139  22 *    CALLSYS  654           (float& grid::at(uint, uint))
+  141  19 *    WRTV4    v6
+- 114,31 -
+  142  19 * }
+  142  19 * 7:
+  142  19 *    SUSPEND
+  143  19 *    IncVi    v12
+- 114,19 -
+  144  19 * 5:
+  144  19 *    SUSPEND
+  145  19 *    CMPi     v12, v3
+  147  19 *    JS       -82              (d:67)
+- 107,31 -
+  149  19 * 6:
+  149  19 * }
+  149  19 * 3:
+  149  19 *    SUSPEND
+  150  19 *    IncVi    v8
+- 107,20 -
+  151  19 * 1:
+  151  19 *    SUSPEND
+  152  19 *    CMPi     v8, v1
+  154  19 *    JS       -111              (d:45)
+- 134,5 -
+  156  19 * 2:
+  156  19 *    SUSPEND
+  157  19 *    PshVPtr  v7
+  158  20 *    CALL     648           (grid<float>@ factstub())
+  160  20 *    STOREOBJ v19
+  161  20 *    PshVPtr  v19
+  162  21 *    CALLSYS  129           (grid<T>& grid::opAssign(const grid<T>&in))
+  164  19 * {
+  164  19 *    FREE     v7, 104839864
+  166  19 * }
+  166  19 *    LOADOBJ  v19
+  167  19 * 0:
+  167  19 *    FREE     v-1, 104839864
+  169  19 *    FREE     v0, 104786232
+  171  19 *    RET      3

@@ -1,0 +1,18 @@
+<unrecognized token> _unnamed_function_()
+
+Temps: 1
+
+Variables: 
+ 001: array {noname}
+
+
+- 9,16 -
+    0   1 *    SUSPEND
+    1   1 *    CALL     896           (Entity@[]@ factstub())
+    3   1 *    STOREOBJ v1
+    4   1 *    PshVPtr  v1
+    5   2 *    PGA      74558528
+    7   3 *    REFCPY   0x47185c8
+    9   2 *    PopPtr
+   10   1 *    FREE     v1, 74548680
+   12   1 *    RET      0

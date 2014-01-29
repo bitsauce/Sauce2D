@@ -1,0 +1,32 @@
+Town::Town(int)
+
+Temps: 1, 2
+
+Variables: 
+ -001: int owner
+ 000: Town this
+
+
+- 13,3 -
+    0   2 *    VarDecl  0
+    0   2 *    SUSPEND
+    1   2 *    PshV4    v-1
+    2   3 *    PshVPtr  v0
+    3   4 *    CALL     652           (Building::Building(int))
+- 14,3 -
+    5   2 *    SUSPEND
+    6   2 *    PshC4    0x8          (i:8, f:1.12104e-044)
+    8   3 *    PshVPtr  v0
+    9   4 *    CALLINTF 1013           (void Unit::setRevealRadius(int))
+- 15,3 -
+   11   2 *    SUSPEND
+   12   2 *    PshC4    0x42800000          (i:1115684864, f:64)
+   14   3 *    PshC4    0x42800000          (i:1115684864, f:64)
+   16   4 *    PshVPtr  v0
+   17   5 *    ADDSi    v24, 134217773
+   19   5 *    RDSPtr
+   20   5 *    CALLSYS  145           (void vec2::set(const float, const float))
+- 16,3 -
+   22   2 *    SUSPEND
+   23   2 * 0:
+   23   2 *    RET      2

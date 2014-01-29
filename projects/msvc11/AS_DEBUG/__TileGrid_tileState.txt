@@ -1,0 +1,91 @@
+int TileGrid::tileState(const int, const int)
+
+Temps: 2, 3
+
+Variables: 
+ -001: const int x
+ -002: const int y
+ 001: int state
+ 000: TileGrid this
+
+
+    0   3 *    VarDecl  0
+    0   3 *    VarDecl  1
+    0   3 *    PshVPtr  v0
+    1   4 *    CALLSYS  2           (void _builtin_object_::_beh_5_())
+- 304,3 -
+    3   3 *    SUSPEND
+    4   3 *    VarDecl  2
+    4   3 *    SetV4    v1, 0x0          (i:0, f:0)
+- 305,3 -
+    6   3 *    SUSPEND
+    7   3 *    SUBIi    v2, v-2, 1
+   10   3 *    PshV4    v2
+   11   4 *    PshV4    v-1
+   12   5 *    PshVPtr  v0
+   13   6 *    CALLINTF 1119           (bool TileGrid::isTileAt(const int, const int))
+   15   3 *    CpyRtoV4 v3
+   16   3 *    NOT      v3
+   17   3 *    CpyVtoR4 v3
+   18   3 *    JLowZ    +5              (d:25)
+- 305,25 -
+   20   3 *    SUSPEND
+   21   3 *    SetV4    v2, 0x1          (i:1, f:1.4013e-045)
+   23   3 *    BOR      v1, v1, v2
+- 306,3 -
+   25   3 * 1:
+   25   3 *    SUSPEND
+   26   3 *    ADDIi    v3, v-2, 1
+   29   3 *    PshV4    v3
+   30   4 *    PshV4    v-1
+   31   5 *    PshVPtr  v0
+   32   6 *    CALLINTF 1119           (bool TileGrid::isTileAt(const int, const int))
+   34   3 *    CpyRtoV4 v2
+   35   3 *    NOT      v2
+   36   3 *    CpyVtoR4 v2
+   37   3 *    JLowZ    +5              (d:44)
+- 306,25 -
+   39   3 *    SUSPEND
+   40   3 *    SetV4    v3, 0x4          (i:4, f:5.60519e-045)
+   42   3 *    BOR      v1, v1, v3
+- 307,3 -
+   44   3 * 2:
+   44   3 *    SUSPEND
+   45   3 *    PshV4    v-2
+   46   4 *    ADDIi    v2, v-1, 1
+   49   4 *    PshV4    v2
+   50   5 *    PshVPtr  v0
+   51   6 *    CALLINTF 1119           (bool TileGrid::isTileAt(const int, const int))
+   53   3 *    CpyRtoV4 v3
+   54   3 *    NOT      v3
+   55   3 *    CpyVtoR4 v3
+   56   3 *    JLowZ    +5              (d:63)
+- 307,25 -
+   58   3 *    SUSPEND
+   59   3 *    SetV4    v2, 0x2          (i:2, f:2.8026e-045)
+   61   3 *    BOR      v1, v1, v2
+- 308,3 -
+   63   3 * 3:
+   63   3 *    SUSPEND
+   64   3 *    PshV4    v-2
+   65   4 *    SUBIi    v3, v-1, 1
+   68   4 *    PshV4    v3
+   69   5 *    PshVPtr  v0
+   70   6 *    CALLINTF 1119           (bool TileGrid::isTileAt(const int, const int))
+   72   3 *    CpyRtoV4 v2
+   73   3 *    NOT      v2
+   74   3 *    CpyVtoR4 v2
+   75   3 *    JLowZ    +5              (d:82)
+- 308,25 -
+   77   3 *    SUSPEND
+   78   3 *    SetV4    v3, 0x8          (i:8, f:1.12104e-044)
+   80   3 *    BOR      v1, v1, v3
+- 309,3 -
+   82   3 * 4:
+   82   3 *    SUSPEND
+   83   3 * {
+   83   3 * }
+   83   3 *    CpyVtoR4 v1
+   84   3 * 0:
+   84   3 *    FREE     v0, 74296904
+   86   3 *    RET      3

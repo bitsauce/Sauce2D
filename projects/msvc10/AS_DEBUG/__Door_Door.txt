@@ -1,0 +1,35 @@
+Door::Door()
+
+Temps: 1, 2, 3, 4
+
+Variables: 
+ 000: Door this
+
+
+    0   4 *    PshVPtr  v0
+    1   5 *    CALL     982           (Obstacle::Obstacle())
+- 22,11 -
+    3   4 *    SUSPEND
+    4   4 *    SetV4    v3, 0x0          (i:0, f:0)
+    6   4 *    LoadThisR v28, 134217839
+    8   4 *    WRTV4    v3
+- 23,12 -
+    9   4 *    SUSPEND
+   10   4 *    SetV4    v4, 0x2          (i:2, f:2.8026e-045)
+   12   4 *    LoadThisR v32, 134217839
+   14   4 *    WRTV4    v4
+- 24,7 -
+   15   4 *    SUSPEND
+   16   4 *    SetV1    v1, 0x0
+   18   4 *    LoadThisR v36, 134217839
+   20   4 *    WRTV1    v1
+- 29,3 -
+   21   4 *    SUSPEND
+   22   4 *    PshC4    0x40          (i:64, f:8.96831e-044)
+   24   5 *    PshC4    0x40          (i:64, f:8.96831e-044)
+   26   6 *    PshVPtr  v0
+   27   7 *    CALLINTF 1095           (void SceneObject::setSize(const uint, const uint))
+- 30,3 -
+   29   4 *    SUSPEND
+   30   4 * 0:
+   30   4 *    RET      1

@@ -1,0 +1,55 @@
+void UiObject::show()
+
+Temps: 2, 3
+
+Variables: 
+ 001: uint i
+ 000: UiObject this
+ 003: array {noname}
+
+
+    0   3 *    PshVPtr  v0
+    1   4 *    CALLSYS  2           (void _builtin_object_::_beh_4_())
+- 109,7 -
+    3   3 *    SUSPEND
+    4   3 *    VarDecl  0
+    4   3 *    SetV4    v1, 0x0          (i:0, f:0)
+    6   3 *    JMP      +19              (d:27)
+    8   3 * 4:
+    8   3 *    SUSPEND
+- 110,4 -
+    9   3 *    SUSPEND
+   10   3 *    PshV4    v1
+   11   4 *    PshVPtr  v0
+   12   5 *    ADDSi    v24, 134217780
+   14   5 *    RDSPtr
+   15   5 *    RefCpyV  v3, 150902720
+   17   5 *    CALLSYS  1291           (UiObject@& array::opIndex(uint))
+   19   3 *    PshRPtr
+   20   4 *    RDSPtr
+   21   4 *    CALLINTF 1231           (void SceneObject::show())
+   23   3 *    FREE     v3, 150902720
+- 109,40 -
+   25   3 * 3:
+   25   3 *    SUSPEND
+   26   3 *    IncVi    v1
+- 109,19 -
+   27   3 * 1:
+   27   3 *    SUSPEND
+   28   3 *    PshVPtr  v0
+   29   4 *    ADDSi    v24, 134217780
+   31   4 *    RDSPtr
+   32   4 *    CALLSYS  86           (uint array::size() const)
+   34   3 *    CpyRtoV4 v2
+   35   3 *    CMPu     v1, v2
+   37   3 *    JS       -31              (d:8)
+- 111,3 -
+   39   3 * 2:
+   39   3 *    SUSPEND
+   40   3 *    PshVPtr  v0
+   41   4 *    CALL     609           (void SceneObject::show())
+- 112,3 -
+   43   3 *    SUSPEND
+   44   3 * 0:
+   44   3 *    FREE     v0, 150271928
+   46   3 *    RET      1

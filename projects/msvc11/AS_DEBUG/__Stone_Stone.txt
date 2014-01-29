@@ -1,0 +1,37 @@
+Stone::Stone()
+
+Temps: 1, 2, 3
+
+Variables: 
+ 000: Stone this
+
+
+    0   3 *    PshVPtr  v0
+    1   4 *    CALL     522           (Resource::Resource())
+- 14,3 -
+    3   3 *    SUSPEND
+    4   3 *    SetV4    v1, 0x3dcccccd          (i:1036831949, f:0.1)
+    6   3 *    LoadThisR v28, 134217765
+    8   3 *    WRTV4    v1
+- 17,3 -
+    9   3 *    SUSPEND
+   10   3 *    SetV4    v1, 0xc8          (i:200, f:2.8026e-043)
+   12   3 *    LoadThisR v108, 134217765
+   14   3 *    WRTV4    v1
+- 18,3 -
+   15   3 *    SUSPEND
+   16   3 *    SetV4    v2, 0x3          (i:3, f:4.2039e-045)
+   18   3 *    LoadThisR v116, 134217765
+   20   3 *    WRTV4    v2
+- 21,3 -
+   21   3 *    SUSPEND
+   22   3 *    PshC4    0x42000000          (i:1107296256, f:32)
+   24   4 *    PshC4    0x42000000          (i:1107296256, f:32)
+   26   5 *    PshVPtr  v0
+   27   6 *    ADDSi    v20, 134217765
+   29   6 *    RDSPtr
+   30   6 *    CALLSYS  144           (void Vector2::set(const float, const float))
+- 22,3 -
+   32   3 *    SUSPEND
+   33   3 * 0:
+   33   3 *    RET      1

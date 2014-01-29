@@ -1,0 +1,29 @@
+Vector2 SceneObject::pos() const
+
+Temps: 2
+
+Variables: 
+ 000: SceneObject this
+ 002: Vector2 {noname}
+
+
+    0   2 *    PshVPtr  v0
+    1   3 *    CALLSYS  2           (void _builtin_object_::_beh_4_())
+- 1,304 -
+    3   2 *    SUSPEND
+    4   2 *    PSF      v2
+    5   3 *    PshVPtr  v0
+    6   4 *    ADDSi    v16, 134217770
+    8   4 *    RDSPtr
+    9   4 *    CALLSYS  297           (Vector2 CSceneObject::pos() const)
+   11   2 *    ObjInfo  v2, 1
+   11   2 *    PSF      v2
+   12   3 *    PshVPtr  v-1
+   13   4 *    CALLSYS  131           (void Vector2::_beh_0_(const Vector2&in))
+   15   2 *    ObjInfo  v2, 0
+   15   2 *    ObjInfo  v-1, 1
+   15   2 * {
+   15   2 * }
+   15   2 * 0:
+   15   2 *    FREE     v0, 104704768
+   17   2 *    RET      2

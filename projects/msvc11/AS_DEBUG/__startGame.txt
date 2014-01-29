@@ -1,0 +1,198 @@
+void startGame()
+
+Temps: 1, 2, 3, 4, 5, 6, 7, 8, 10, 12, 13, 14
+
+Variables: 
+ 009: PlayerInfo p1
+ 011: PlayerInfo p2
+ 001: Input {noname}
+ 002: _builtin_function_ {noname}
+ 005: Terrain {noname}
+ 006: Camera {noname}
+ 007: Sky {noname}
+ 008: Hud {noname}
+ 012: PlayerInfo {noname}
+ 013: Player {noname}
+ 014: AiPlayer {noname}
+
+
+- 43,2 -
+    0  14 *    SUSPEND
+    1  14 *    CALL     632           (Input@ Input())
+    3  14 *    STOREOBJ v1
+    4  14 *    VAR      v1
+    5  15 *    PGA      74612136
+    7  16 *    GETOBJREF 1
+    8  16 *    REFCPY   0x46d4de0
+   10  15 *    FREE     v1, 74272224
+   12  15 *    PopPtr
+- 44,2 -
+   13  14 *    SUSPEND
+   14  14 *    FuncPtr  73480888
+   16  15 *    RefCpyV  v2, 73289060
+   18  15 *    PopPtr
+   19  14 *    VAR      v2
+   20  15 *    PshC4    0x1d          (i:29, f:4.06377e-044)
+   22  16 *    PshGPtr  74612136
+   24  17 *    GETOBJ   2
+   25  17 *    CALLINTF 1048           (int Input::addCommand(VirtualKey, CommandEvent@))
+- 45,2 -
+   27  14 *    SUSPEND
+   28  14 *    FuncPtr  74657688
+   30  15 *    RefCpyV  v2, 73289060
+   32  15 *    PopPtr
+   33  14 *    VAR      v2
+   34  15 *    PshC4    0xf          (i:15, f:2.10195e-044)
+   36  16 *    PshGPtr  74612136
+   38  17 *    GETOBJ   2
+   39  17 *    CALLINTF 1048           (int Input::addCommand(VirtualKey, CommandEvent@))
+- 46,2 -
+   41  14 *    SUSPEND
+   42  14 *    FuncPtr  74599656
+   44  15 *    RefCpyV  v2, 73289060
+   46  15 *    PopPtr
+   47  14 *    VAR      v2
+   48  15 *    PshC4    0x24          (i:36, f:5.04467e-044)
+   50  16 *    PshGPtr  74612136
+   52  17 *    GETOBJ   2
+   53  17 *    CALLINTF 1048           (int Input::addCommand(VirtualKey, CommandEvent@))
+- 48,2 -
+   55  14 *    SUSPEND
+   56  14 *    FuncPtr  74600376
+   58  15 *    RefCpyV  v2, 73289060
+   60  15 *    PopPtr
+   61  14 *    VAR      v2
+   62  15 *    PshC4    0x7          (i:7, f:9.80909e-045)
+   64  16 *    PshGPtr  74612136
+   66  17 *    GETOBJ   2
+   67  17 *    CALLINTF 1048           (int Input::addCommand(VirtualKey, CommandEvent@))
+- 50,2 -
+   69  14 *    SUSPEND
+   70  14 *    FuncPtr  73483776
+   72  15 *    RefCpyV  v2, 73289060
+   74  15 *    PopPtr
+   75  14 *    VAR      v2
+   76  15 *    PshC4    0x8          (i:8, f:1.12104e-044)
+   78  16 *    PshGPtr  74612136
+   80  17 *    GETOBJ   2
+   81  17 *    CALLINTF 1048           (int Input::addCommand(VirtualKey, CommandEvent@))
+- 51,2 -
+   83  14 *    SUSPEND
+   84  14 *    FuncPtr  73484264
+   86  15 *    RefCpyV  v2, 73289060
+   88  15 *    PopPtr
+   89  14 *    VAR      v2
+   90  15 *    PshC4    0x9          (i:9, f:1.26117e-044)
+   92  16 *    PshGPtr  74612136
+   94  17 *    GETOBJ   2
+   95  17 *    CALLINTF 1048           (int Input::addCommand(VirtualKey, CommandEvent@))
+- 52,2 -
+   97  14 *    SUSPEND
+   98  14 *    FuncPtr  73485816
+  100  15 *    RefCpyV  v2, 73289060
+  102  15 *    PopPtr
+  103  14 *    VAR      v2
+  104  15 *    PshC4    0xa          (i:10, f:1.4013e-044)
+  106  16 *    PshGPtr  74612136
+  108  17 *    GETOBJ   2
+  109  17 *    CALLINTF 1048           (int Input::addCommand(VirtualKey, CommandEvent@))
+- 55,2 -
+  111  14 *    SUSPEND
+  112  14 *    CALL     648           (Terrain@ Terrain())
+  114  14 *    STOREOBJ v5
+  115  14 *    FREE     v5, 74296272
+- 56,2 -
+  117  14 *    SUSPEND
+  118  14 *    CALL     865           (Camera@ Camera())
+  120  14 *    STOREOBJ v6
+  121  14 *    FREE     v6, 74317176
+- 57,2 -
+  123  14 *    SUSPEND
+  124  14 *    CALL     822           (Sky@ Sky())
+  126  14 *    STOREOBJ v7
+  127  14 *    FREE     v7, 74312560
+- 58,2 -
+  129  14 *    SUSPEND
+  130  14 *    CALL     740           (Hud@ Hud())
+  132  14 *    STOREOBJ v8
+  133  14 *    FREE     v8, 74303864
+- 61,2 -
+  135  14 *    SUSPEND
+  136  14 *    VarDecl  0
+  136  14 *    CALL     863           (PlayerInfo@ PlayerInfo())
+  138  14 *    STOREOBJ v9
+- 62,2 -
+  139  14 *    SUSPEND
+  140  14 *    SetV4    v10, 0x0          (i:0, f:0)
+  142  14 *    LoadRObjR v9, v44, 134217771
+  145  14 *    WRTV4    v10
+- 63,2 -
+  146  14 *    SUSPEND
+  147  14 *    SetV1    v4, 0x1
+  149  14 *    LoadRObjR v9, v40, 134217771
+  152  14 *    WRTV1    v4
+- 64,2 -
+  153  14 *    SUSPEND
+  154  14 *    STR      111         (l:8 s:"Macobyte")
+  155  16 *    CALLSYS  33           (const string& _string_factory_(const int, const uint8&))
+  157  14 *    PshRPtr
+  158  15 *    PshVPtr  v9
+  159  16 *    ADDSi    v20, 134217771
+  161  16 *    RDSPtr
+  162  16 *    CALLSYS  37           (string& string::opAssign(const string&in))
+- 66,2 -
+  164  14 *    SUSPEND
+  165  14 *    VarDecl  1
+  165  14 *    CALL     863           (PlayerInfo@ PlayerInfo())
+  167  14 *    STOREOBJ v11
+- 67,2 -
+  168  14 *    SUSPEND
+  169  14 *    SetV4    v10, 0x1          (i:1, f:1.4013e-045)
+  171  14 *    LoadRObjR v11, v44, 134217771
+  174  14 *    WRTV4    v10
+- 68,2 -
+  175  14 *    SUSPEND
+  176  14 *    SetV1    v4, 0x1
+  178  14 *    LoadRObjR v11, v24, 134217771
+  181  14 *    WRTV1    v4
+- 69,2 -
+  182  14 *    SUSPEND
+  183  14 *    STR      112         (l:9 s:"Ai Player")
+  184  16 *    CALLSYS  33           (const string& _string_factory_(const int, const uint8&))
+  186  14 *    PshRPtr
+  187  15 *    PshVPtr  v11
+  188  16 *    ADDSi    v20, 134217771
+  190  16 *    RDSPtr
+  191  16 *    CALLSYS  37           (string& string::opAssign(const string&in))
+- 72,2 -
+  193  14 *    SUSPEND
+  194  14 *    PshVPtr  v9
+  195  15 *    CALL     863           (PlayerInfo@ PlayerInfo())
+  197  15 *    STOREOBJ v12
+  198  15 *    CHKREF
+  199  15 *    PshVPtr  v12
+  200  16 *    CALLSYS  4           (int& _builtin_object_::opAssign(int&in))
+  202  14 *    VAR      v12
+  203  15 *    GETOBJ   0
+  204  15 *    CALL     858           (Player@ Player(PlayerInfo))
+  206  14 *    STOREOBJ v13
+  207  14 *    FREE     v13, 74316168
+- 73,2 -
+  209  14 *    SUSPEND
+  210  14 *    PshVPtr  v11
+  211  15 *    CALL     863           (PlayerInfo@ PlayerInfo())
+  213  15 *    STOREOBJ v12
+  214  15 *    CHKREF
+  215  15 *    PshVPtr  v12
+  216  16 *    CALLSYS  4           (int& _builtin_object_::opAssign(int&in))
+  218  14 *    VAR      v12
+  219  15 *    GETOBJ   0
+  220  15 *    CALL     802           (AiPlayer@ AiPlayer(PlayerInfo))
+  222  14 *    STOREOBJ v14
+  223  14 *    FREE     v14, 74310144
+- 74,2 -
+  225  14 *    SUSPEND
+  226  14 *    FREE     v11, 74316672
+  228  14 *    FREE     v9, 74316672
+  230  14 * 0:
+  230  14 *    RET      0

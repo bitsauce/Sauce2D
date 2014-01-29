@@ -1,0 +1,35 @@
+void FrameBuffer::attachTexture(const int)
+
+Temps: 1
+
+Variables: 
+ -001: const int textureId
+ 000: FrameBuffer this
+
+
+    0   1 *    VarDecl  0
+    0   1 *    PshVPtr  v0
+    1   2 *    CALLSYS  2           (void _builtin_object_::_beh_5_())
+- 80,3 -
+    3   1 *    SUSPEND
+    4   1 *    LoadThisR v28, 134217761
+    6   1 *    RDR4     v1
+    7   1 *    PshV4    v1
+    8   2 *    CALLSYS  486           (void gfxBindFrameBuffer(const int))
+- 81,3 -
+   10   1 *    SUSPEND
+   11   1 *    PshV4    v-1
+   12   2 *    CALLSYS  487           (void gfxAttachTextureToFrameBuffer(const int))
+- 82,3 -
+   14   1 *    SUSPEND
+   15   1 *    PshC4    0x0          (i:0, f:0)
+   17   2 *    CALLSYS  486           (void gfxBindFrameBuffer(const int))
+- 85,3 -
+   19   1 *    SUSPEND
+   20   1 *    LoadThisR v24, 134217761
+   22   1 *    WRTV4    v-1
+- 86,3 -
+   23   1 *    SUSPEND
+   24   1 * 0:
+   24   1 *    FREE     v0, 74269064
+   26   1 *    RET      2

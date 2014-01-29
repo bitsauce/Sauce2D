@@ -1,0 +1,25 @@
+void UiElement::setAlignment(const Alignment)
+
+Temps: 
+
+Variables: 
+ -001: const Alignment align
+ 000: UiElement this
+
+
+    0   0 *    VarDecl  0
+    0   0 *    PshVPtr  v0
+    1   1 *    CALLSYS  2           (void _builtin_object_::_beh_5_())
+- 63,3 -
+    3   0 *    SUSPEND
+    4   0 *    LoadThisR v28, 134217755
+    6   0 *    WRTV4    v-1
+- 64,3 -
+    7   0 *    SUSPEND
+    8   0 *    PshVPtr  v0
+    9   1 *    CALLINTF 1089           (void UiElement::updateRect())
+- 65,3 -
+   11   0 *    SUSPEND
+   12   0 * 0:
+   12   0 *    FREE     v0, 74282504
+   14   0 *    RET      2

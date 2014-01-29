@@ -1,0 +1,42 @@
+Color randomColor()
+
+Temps: 1, 2, 3, 4, 5, 6, 7
+
+Variables: 
+ 006: Color {noname}
+
+
+- 11,2 -
+    0   7 *    SUSPEND
+    1   7 *    SetV1    v7, 0xff
+    3   7 *    PshV4    v7
+    4   8 *    PshC4    0xff          (i:255, f:3.57331e-043)
+    6   9 *    PshC4    0x0          (i:0, f:0)
+    8  10 *    CALLSYS  560           (int getRandom(int, int))
+   10   8 *    CpyRtoV4 v3
+   11   8 *    iTOb     v3
+   12   8 *    PshV4    v3
+   13   9 *    PshC4    0xff          (i:255, f:3.57331e-043)
+   15  10 *    PshC4    0x0          (i:0, f:0)
+   17  11 *    CALLSYS  560           (int getRandom(int, int))
+   19   9 *    CpyRtoV4 v4
+   20   9 *    iTOb     v4
+   21   9 *    PshV4    v4
+   22  10 *    PshC4    0xff          (i:255, f:3.57331e-043)
+   24  11 *    PshC4    0x0          (i:0, f:0)
+   26  12 *    CALLSYS  560           (int getRandom(int, int))
+   28  10 *    CpyRtoV4 v5
+   29  10 *    iTOb     v5
+   30  10 *    PshV4    v5
+   31  11 *    PSF      v6
+   32  12 *    CALLSYS  178           (void Color::_beh_0_(uint8, uint8, uint8, uint8 arg3 = 255))
+   34   7 *    ObjInfo  v6, 1
+   34   7 *    PSF      v6
+   35   8 *    PshVPtr  v0
+   36   9 *    CALLSYS  177           (void Color::_beh_0_(const Color&in))
+   38   7 *    ObjInfo  v6, 0
+   38   7 *    ObjInfo  v0, 1
+   38   7 * {
+   38   7 * }
+   38   7 * 0:
+   38   7 *    RET      1

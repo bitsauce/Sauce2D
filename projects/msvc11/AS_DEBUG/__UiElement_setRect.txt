@@ -1,0 +1,38 @@
+void UiElement::setRect(const rect2)
+
+Temps: 
+
+Variables: 
+ -001: const rect2 rect
+ 000: UiElement this
+
+
+    0   0 *    VarDecl  0
+    0   0 *    PshVPtr  v0
+    1   1 *    CALLSYS  2           (void _builtin_object_::_beh_5_())
+- 75,3 -
+    3   0 *    SUSPEND
+    4   0 *    PshVPtr  v-1
+    5   1 *    PshVPtr  v0
+    6   2 *    ADDSi    v40, 134217755
+    8   2 *    RDSPtr
+    9   2 *    COPY     v4, 67108881
+   11   1 *    PopPtr
+- 76,3 -
+   12   0 *    SUSPEND
+   13   0 *    PshVPtr  v-1
+   14   1 *    PshVPtr  v0
+   15   2 *    ADDSi    v36, 134217755
+   17   2 *    RDSPtr
+   18   2 *    COPY     v4, 67108881
+   20   1 *    PopPtr
+- 77,3 -
+   21   0 *    SUSPEND
+   22   0 *    PshVPtr  v0
+   23   1 *    CALLINTF 1089           (void UiElement::updateRect())
+- 78,3 -
+   25   0 *    SUSPEND
+   26   0 * 0:
+   26   0 *    FREE     v-1, 73419936
+   28   0 *    FREE     v0, 74282504
+   30   0 *    RET      2

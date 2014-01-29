@@ -1,0 +1,270 @@
+void LineEdit::onKeyPress(KeyEvent)
+
+Temps: 1, 2, 10, 11, 12, 14
+
+Variables: 
+ -001: KeyEvent e
+ 013: uint orgLen
+ 000: LineEdit this
+ 011: string {noname}
+ 012: _builtin_function_ {noname}
+ 010: string {noname}
+
+
+    0  14 *    VarDecl  0
+    0  14 *    PshVPtr  v0
+    1  15 *    CALLSYS  2           (void _builtin_object_::_beh_4_())
+- 69,3 -
+    3  14 *    SUSPEND
+    4  14 *    LoadThisR v36, 134217803
+    6  14 *    RDR1     v1
+    7  14 *    NOT      v1
+    8  14 *    CpyVtoR4 v1
+    9  14 *    JLowZ    +3              (d:14)
+- 69,16 -
+   11  14 *    SUSPEND
+   12  14 * {
+   12  14 * }
+   12  14 *    JMP      +253              (d:267)
+- 72,3 -
+   14  14 * 1:
+   14  14 *    SUSPEND
+   15  14 *    LoadRObjR v-1, v8, 67108906
+   18  14 *    RDR1     v1
+   19  14 *    ubTOi    v1
+   20  14 *    CMPIu    v1, 0
+   22  14 *    JZ       +44              (d:68)
+- 75,4 -
+   24  14 * {
+   24  14 *    SUSPEND
+   25  14 *    PSF      v11
+   26  15 *    LoadRObjR v-1, v8, 67108906
+   29  15 *    RDR1     v2
+   30  15 *    PshV4    v2
+   31  16 *    PSF      v10
+   32  17 *    CALLSYS  525           (string utoc(uint8))
+   34  15 *    ObjInfo  v10, 1
+   34  15 *    PSF      v10
+   35  16 *    ALLOC    0x314cb48, 34             (type:string)
+   38  14 *    PSF      v10
+   39  15 *    CALLSYS  35           (void string::_beh_1_())
+   41  14 *    ObjInfo  v10, 0
+   41  14 *    VAR      v11
+   42  15 *    LoadThisR v60, 134217803
+   44  15 *    RDR4     v1
+   45  15 *    PshV4    v1
+   46  16 *    PshVPtr  v0
+   47  17 *    GETOBJ   2
+   48  17 *    CALLINTF 1379           (void LineEdit::insertAt(const int, const string))
+- 76,4 -
+   50  14 *    SUSPEND
+   51  14 *    LoadThisR v60, 134217803
+   53  14 *    INCi
+- 77,4 -
+   54  14 *    SUSPEND
+   55  14 *    PshVPtr  v0
+   56  15 *    ADDSi    v68, 134217803
+   58  15 *    RDSPtr
+   59  15 *    RefCpyV  v12, 51661368
+   61  15 *    PopPtr
+   62  14 *    CallPtr  v12
+   63  14 *    FREE     v12, 51661368
+- 78,4 -
+   65  14 *    SUSPEND
+   66  14 * {
+   66  14 * }
+   66  14 *    JMP      +199              (d:267)
+- 82,3 -
+   68  13   }
+   68  14 * 2:
+   68  14 *    SUSPEND
+   69  14 *    VarDecl  1
+   69  14 *    PshVPtr  v0
+   70  15 *    ADDSi    v52, 134217803
+   72  15 *    RDSPtr
+   73  15 *    CALLSYS  41           (uint string::length() const)
+   75  14 *    CpyRtoV4 v1
+   76  14 *    CpyVtoV4 v13, v1
+- 83,3 -
+   78  14 *    SUSPEND
+   79  14 *    LoadRObjR v-1, v4, 67108906
+   82  14 *    RDR4     v14
+   83  14 *    CMPIi    v14, 46
+   85  14 *    JP       +155              (d:242)
+   87  14 *    CMPIi    v14, 8
+   89  14 *    JZ       +34              (d:125)
+   91  14 *    CMPIi    v14, 32
+   93  14 *    JS       +147              (d:242)
+   95  14 *    CMPIi    v14, 39
+   97  14 *    JP       +20              (d:119)
+   99  14 *    SUBIi    v2, v14, 32
+  102  14 *    JMPP     v2
+  103  14 *    JMP      +112              (d:217)
+  105  14 *    JMP      +135              (d:242)
+  107  14 *    JMP      +133              (d:242)
+  109  14 *    JMP      +131              (d:242)
+  111  14 *    JMP      +129              (d:242)
+  113  14 *    JMP      +65              (d:180)
+  115  14 *    JMP      +125              (d:242)
+  117  14 *    JMP      +76              (d:195)
+  119  14 * 10:
+  119  14 *    CMPIi    v14, 46
+  121  14 *    JZ       +25              (d:148)
+  123  14 *    JMP      +117              (d:242)
+- 89,5 -
+  125  14 * 4:
+  125  14 * {
+  125  14 *    SUSPEND
+  126  14 *    LoadThisR v60, 134217803
+  128  14 *    RDR4     v2
+  129  14 *    CMPIu    v2, 0
+  131  14 *    JZ       +12              (d:145)
+- 92,6 -
+  133  14 * {
+  133  14 *    SUSPEND
+  134  14 *    LoadThisR v60, 134217803
+  136  14 *    RDR4     v1
+  137  14 *    PshV4    v1
+  138  15 *    PshVPtr  v0
+  139  16 *    CALLINTF 1380           (void LineEdit::removeAt(const int))
+- 93,6 -
+  141  14 *    SUSPEND
+  142  14 *    LoadThisR v60, 134217803
+  144  14 *    DECi
+- 96,4 -
+  145  14 * }
+  145  14 * 11:
+  145  14 * }
+  145  14 *    SUSPEND
+  146  14 * {
+  146  14 * }
+  146  14 *    JMP      +95              (d:243)
+- 102,5 -
+  148  14 * 5:
+  148  14 * {
+  148  14 *    SUSPEND
+  149  14 *    LoadThisR v60, 134217803
+  151  14 *    RDR4     v1
+  152  14 *    ADDIi    v1, v1, 1
+  155  14 *    PshVPtr  v0
+  156  15 *    ADDSi    v52, 134217803
+  158  15 *    RDSPtr
+  159  15 *    CALLSYS  41           (uint string::length() const)
+  161  14 *    CpyRtoV4 v2
+  162  14 *    CMPu     v1, v2
+  164  14 *    JP       +11              (d:177)
+- 103,6 -
+  166  14 *    SUSPEND
+  167  14 *    LoadThisR v60, 134217803
+  169  14 *    RDR4     v2
+  170  14 *    ADDIi    v2, v2, 1
+  173  14 *    PshV4    v2
+  174  15 *    PshVPtr  v0
+  175  16 *    CALLINTF 1380           (void LineEdit::removeAt(const int))
+- 105,4 -
+  177  14 * 12:
+  177  14 * }
+  177  14 *    SUSPEND
+  178  14 * {
+  178  14 * }
+  178  14 *    JMP      +63              (d:243)
+- 110,5 -
+  180  14 * 6:
+  180  14 * {
+  180  14 *    SUSPEND
+  181  14 *    LoadThisR v60, 134217803
+  183  14 *    RDR4     v1
+  184  14 *    CMPIu    v1, 0
+  186  14 *    JNP      +4              (d:192)
+- 111,6 -
+  188  14 *    SUSPEND
+  189  14 *    LoadThisR v60, 134217803
+  191  14 *    DECi
+- 113,4 -
+  192  14 * 13:
+  192  14 * }
+  192  14 *    SUSPEND
+  193  14 * {
+  193  14 * }
+  193  14 *    JMP      +48              (d:243)
+- 118,5 -
+  195  14 * 7:
+  195  14 * {
+  195  14 *    SUSPEND
+  196  14 *    LoadThisR v60, 134217803
+  198  14 *    RDR4     v2
+  199  14 *    PshVPtr  v0
+  200  15 *    ADDSi    v52, 134217803
+  202  15 *    RDSPtr
+  203  15 *    CALLSYS  41           (uint string::length() const)
+  205  14 *    CpyRtoV4 v1
+  206  14 *    CMPu     v2, v1
+  208  14 *    JNS      +4              (d:214)
+- 119,6 -
+  210  14 *    SUSPEND
+  211  14 *    LoadThisR v60, 134217803
+  213  14 *    INCi
+- 121,4 -
+  214  14 * 14:
+  214  14 * }
+  214  14 *    SUSPEND
+  215  14 * {
+  215  14 * }
+  215  14 *    JMP      +26              (d:243)
+- 126,5 -
+  217  14 * 8:
+  217  14 * {
+  217  14 *    SUSPEND
+  218  14 *    PSF      v11
+  219  15 *    STR      186         (l:1 s:" ")
+  220  17 *    CALLSYS  32           (const string& _string_factory_(const int, const uint8&))
+  222  15 *    PshRPtr
+  223  16 *    ALLOC    0x314cb48, 34             (type:string)
+  226  14 *    VAR      v11
+  227  15 *    LoadThisR v60, 134217803
+  229  15 *    RDR4     v1
+  230  15 *    PshV4    v1
+  231  16 *    PshVPtr  v0
+  232  17 *    GETOBJ   2
+  233  17 *    CALLINTF 1379           (void LineEdit::insertAt(const int, const string))
+- 127,5 -
+  235  14 *    SUSPEND
+  236  14 *    LoadThisR v60, 134217803
+  238  14 *    INCi
+- 129,4 -
+  239  14 * }
+  239  14 *    SUSPEND
+  240  14 * {
+  240  14 * }
+  240  14 *    JMP      +1              (d:243)
+- 132,5 -
+  242  14 * 9:
+  242  14 *    SUSPEND
+- 136,3 -
+  243  14 * {
+  243  14 * }
+  243  14 * 3:
+  243  14 *    SUSPEND
+  244  14 *    PshVPtr  v0
+  245  15 *    ADDSi    v52, 134217803
+  247  15 *    RDSPtr
+  248  15 *    CALLSYS  41           (uint string::length() const)
+  250  14 *    CpyRtoV4 v1
+  251  14 *    CMPu     v13, v1
+  253  14 *    JZ       +11              (d:266)
+- 137,4 -
+  255  14 *    SUSPEND
+  256  14 *    PshVPtr  v0
+  257  15 *    ADDSi    v68, 134217803
+  259  15 *    RDSPtr
+  260  15 *    RefCpyV  v12, 51661368
+  262  15 *    PopPtr
+  263  14 *    CallPtr  v12
+  264  14 *    FREE     v12, 51661368
+- 138,3 -
+  266  14 * 15:
+  266  14 *    SUSPEND
+  267  14 * 0:
+  267  14 *    FREE     v-1, 112330072
+  269  14 *    FREE     v0, 152252224
+  271  14 *    RET      2

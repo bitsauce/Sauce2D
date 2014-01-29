@@ -1,0 +1,23 @@
+void Economy::addGold(float)
+
+Temps: 1
+
+Variables: 
+ -001: float amount
+ 000: Economy this
+
+
+    0   1 *    VarDecl  0
+    0   1 *    PshVPtr  v0
+    1   2 *    CALLSYS  2           (void _builtin_object_::_beh_5_())
+- 47,3 -
+    3   1 *    SUSPEND
+    4   1 *    LoadThisR v44, 134217799
+    6   1 *    RDR4     v1
+    7   1 *    ADDf     v1, v1, v-1
+    9   1 *    WRTV4    v1
+- 48,3 -
+   10   1 *    SUSPEND
+   11   1 * 0:
+   11   1 *    FREE     v0, 71621704
+   13   1 *    RET      2

@@ -1,0 +1,15 @@
+﻿  adler32.c
+  compress.c
+  crc32.c
+  deflate.c
+  infback.c
+  inffast.c
+  inflate.c
+  inftrees.c
+  trees.c
+  uncompr.c
+  zutil.c
+     Creating library D:\x2D Game Engine\projects\msvc11\..\..\lib\zlib-1.2.5\lib\zlib.lib and object D:\x2D Game Engine\projects\msvc11\..\..\lib\zlib-1.2.5\lib\zlib.exp
+  Generating code
+  Finished generating code
+  zlib.vcxproj -> D:\x2D Game Engine\projects\msvc11\..\..\lib\zlib-1.2.5\lib\zlib.dll

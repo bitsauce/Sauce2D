@@ -1,0 +1,159 @@
+void StartSingleplayer()
+
+Temps: 16, 24, 32, 40, 48, 49, 50, 51, 52
+
+Variables: 
+ 008: string file
+ 050: LevelManager {noname}
+ 051: string {noname}
+ 016: string {noname}
+ 024: string {noname}
+ 032: string {noname}
+ 040: string {noname}
+ 048: string {noname}
+
+
+- 12,2 -
+    0  52 *    SUSPEND
+    1  52 *    VarDecl  0
+    1  52 *    PSF      v16
+    2  53 *    PshGPtr  112334928
+    4  54 *    CHKREF
+    5  54 *    CALLSYS  431           (string CX2DApp::workDirectory())
+    7  52 *    ObjInfo  v16, 1
+    7  52 *    VAR      v16
+    8  53 *    STR      142         (l:10 s:"Open Level")
+    9  55 *    CALLSYS  32           (const string& _string_factory_(const int, const uint8&))
+   11  53 *    PshRPtr
+   12  54 *    PSF      v24
+   13  55 *    CALLSYS  34           (void string::_beh_0_(const string&in))
+   15  53 *    ObjInfo  v24, 1
+   15  53 *    VAR      v24
+   16  54 *    STR      105         (l:18 s:"Level File")
+   17  56 *    CALLSYS  32           (const string& _string_factory_(const int, const uint8&))
+   19  54 *    PshRPtr
+   20  55 *    PSF      v32
+   21  56 *    CALLSYS  34           (void string::_beh_0_(const string&in))
+   23  54 *    ObjInfo  v32, 1
+   23  54 *    VAR      v32
+   24  55 *    STR      106         (l:5 s:"*.ini")
+   25  57 *    CALLSYS  32           (const string& _string_factory_(const int, const uint8&))
+   27  55 *    PshRPtr
+   28  56 *    PSF      v40
+   29  57 *    CALLSYS  34           (void string::_beh_0_(const string&in))
+   31  55 *    ObjInfo  v40, 1
+   31  55 *    VAR      v40
+   32  56 *    PSF      v48
+   33  57 *    GETREF   1
+   34  57 *    GETREF   2
+   35  57 *    GETREF   3
+   36  57 *    GETREF   4
+   37  57 *    CALLSYS  195           (string showOpenDialog(const string&in, const string&in, const string&in, const string&in))
+   39  52 *    ObjInfo  v48, 1
+   39  52 *    PSF      v16
+   40  53 *    CALLSYS  35           (void string::_beh_1_())
+   42  52 *    ObjInfo  v16, 0
+   42  52 *    PSF      v24
+   43  53 *    CALLSYS  35           (void string::_beh_1_())
+   45  52 *    ObjInfo  v24, 0
+   45  52 *    PSF      v32
+   46  53 *    CALLSYS  35           (void string::_beh_1_())
+   48  52 *    ObjInfo  v32, 0
+   48  52 *    PSF      v40
+   49  53 *    CALLSYS  35           (void string::_beh_1_())
+   51  52 *    ObjInfo  v40, 0
+   51  52 *    VAR      v48
+   52  53 *    PSF      v8
+   53  54 *    CALLSYS  33           (void string::_beh_0_())
+   55  53 *    ObjInfo  v8, 1
+   55  53 *    PSF      v8
+   56  54 *    GETREF   1
+   57  54 *    CALLSYS  36           (string& string::opAssign(const string&in))
+   59  52 *    PSF      v48
+   60  53 *    CALLSYS  35           (void string::_beh_1_())
+- 13,2 -
+   62  52 *    ObjInfo  v48, 0
+   62  52 *    SUSPEND
+   63  52 *    PSF      v8
+   64  53 *    CALLSYS  45           (bool string::isEmpty() const)
+   66  52 *    JLowZ    +6              (d:74)
+- 14,3 -
+   68  52 *    SUSPEND
+   69  52 * {
+   69  52 *    PSF      v8
+   70  53 *    CALLSYS  35           (void string::_beh_1_())
+   72  52 *    ObjInfo  v8, 0
+   72  52 * }
+   72  52 *    JMP      +82              (d:156)
+- 17,2 -
+   74  52 * 1:
+   74  52 *    SUSPEND
+   75  52 *    CALL     1005           (LevelManager@ LevelManager())
+   77  52 *    STOREOBJ v50
+   78  52 *    FREE     v50, 152275144
+- 18,2 -
+   80  52 *    SUSPEND
+   81  52 *    PSF      v51
+   82  53 *    PSF      v8
+   83  54 *    ALLOC    0x314cb48, 34             (type:string)
+   86  52 *    VAR      v51
+   87  53 *    PshGPtr  152619128
+   89  54 *    GETOBJ   1
+   90  54 *    CALLINTF 1415           (void LevelManager::loadLevelFile(string))
+- 19,2 -
+   92  52 *    SUSPEND
+   93  52 *    TYPEID   0x48000057          'LevelManager@'
+   95  53 *    PshGPtr  152619128
+   97  54 *    RefCpyV  v50, 152275144
+   99  54 *    PopPtr
+  100  53 *    VAR      v50
+  101  54 *    PshGPtr  112337016
+  103  55 *    CHKREF
+  104  55 *    GETREF   1
+  105  55 *    CALLSYS  314           (void CClient::addClientObject(?&in))
+  107  52 *    FREE     v50, 152275144
+- 20,2 -
+  109  52 *    SUSPEND
+  110  52 *    STR      152         (l:13 s:"Level load")
+  111  54 *    CALLSYS  32           (const string& _string_factory_(const int, const uint8&))
+  113  52 *    PshRPtr
+  114  53 *    PSF      v16
+  115  54 *    CALLSYS  34           (void string::_beh_0_(const string&in))
+  117  52 *    ObjInfo  v16, 1
+  117  52 *    PSF      v16
+  118  53 *    CALLSYS  190           (void print(string&in))
+  120  52 *    PSF      v16
+  121  53 *    CALLSYS  35           (void string::_beh_1_())
+- 23,2 -
+  123  52 *    ObjInfo  v16, 0
+  123  52 *    SUSPEND
+  124  52 *    SetV2    v49, 0x0
+  126  52 *    PshV4    v49
+  127  53 *    SetV2    v52, 0x1400
+  129  53 *    PshV4    v52
+  130  54 *    PshGPtr  112337272
+  132  55 *    CHKREF
+  133  55 *    CALLSYS  375           (void CServer::host(const uint16, const uint16 arg1 = 0))
+- 24,2 -
+  135  52 *    SUSPEND
+  136  52 *    STR      218         (l:39 s:"Singleplay")
+  137  54 *    CALLSYS  32           (const string& _string_factory_(const int, const uint8&))
+  139  52 *    PshRPtr
+  140  53 *    PSF      v24
+  141  54 *    CALLSYS  34           (void string::_beh_0_(const string&in))
+  143  52 *    ObjInfo  v24, 1
+  143  52 *    PSF      v24
+  144  53 *    CALLSYS  190           (void print(string&in))
+  146  52 *    PSF      v24
+  147  53 *    CALLSYS  35           (void string::_beh_1_())
+- 27,2 -
+  149  52 *    ObjInfo  v24, 0
+  149  52 *    SUSPEND
+  150  52 *    CALL     1045           (void LoadGame())
+- 28,2 -
+  152  52 *    SUSPEND
+  153  52 *    PSF      v8
+  154  53 *    CALLSYS  35           (void string::_beh_1_())
+  156  52 *    ObjInfo  v8, 0
+  156  52 * 0:
+  156  52 *    RET      0

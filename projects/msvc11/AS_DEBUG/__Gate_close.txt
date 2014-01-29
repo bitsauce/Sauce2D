@@ -1,0 +1,27 @@
+void Gate::close()
+
+Temps: 1, 2
+
+Variables: 
+ 000: Gate this
+
+
+    0   2 *    PshVPtr  v0
+    1   3 *    CALLSYS  2           (void _builtin_object_::_beh_5_())
+- 46,3 -
+    3   2 *    SUSPEND
+    4   2 *    SetV1    v1, 0x0
+    6   2 *    LoadThisR v93, 134217767
+    8   2 *    WRTV1    v1
+- 47,3 -
+    9   2 *    SUSPEND
+   10   2 *    PshC4    0x8          (i:8, f:1.12104e-044)
+   12   3 *    LoadThisR v84, 134217767
+   14   3 *    RDR4     v2
+   15   3 *    PshV4    v2
+   16   4 *    CALLSYS  516           (void b2dSetFixtureCategoryBits(int, int))
+- 48,3 -
+   18   2 *    SUSPEND
+   19   2 * 0:
+   19   2 *    FREE     v0, 95523480
+   21   2 *    RET      1

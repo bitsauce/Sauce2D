@@ -1,0 +1,36 @@
+void Unit::remove()
+
+Temps: 1, 2
+
+Variables: 
+ 000: Unit this
+ 001: Unit {noname}
+
+
+    0   2 *    PshVPtr  v0
+    1   3 *    CALLSYS  2           (void _builtin_object_::_beh_5_())
+- 55,3 -
+    3   2 *    SUSPEND
+    4   2 *    PshVPtr  v0
+    5   3 *    RefCpyV  v1, 97819360
+    7   3 *    PopPtr
+    8   2 *    VAR      v1
+    9   3 *    PshGPtr  98123112
+   11   4 *    CHKREF
+   12   4 *    GETREF   1
+   13   4 *    CALLSYS  858           (int array::find(Unit@const&in) const)
+   15   2 *    CpyRtoV4 v2
+   16   2 *    FREE     v1, 97819360
+   18   2 *    PshV4    v2
+   19   3 *    PshGPtr  98123112
+   21   4 *    CHKREF
+   22   4 *    CALLSYS  85           (void array::removeAt(uint))
+- 56,3 -
+   24   2 *    SUSPEND
+   25   2 *    PshVPtr  v0
+   26   3 *    CALL     521           (void Entity::remove())
+- 57,3 -
+   28   2 *    SUSPEND
+   29   2 * 0:
+   29   2 *    FREE     v0, 97819360
+   31   2 *    RET      1

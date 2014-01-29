@@ -1,0 +1,222 @@
+<unrecognized token> _unnamed_function_()
+
+Temps: 1, 2, 3, 10, 11, 12
+
+Variables: 
+ 001:  {noname}
+ 012: array {noname}
+ 010: string {noname}
+
+
+- 131,2 -
+    0  12 *    SUSPEND
+    1  12 *    AllocMem v1, 48
+    3  12 *    SetListSize v1, 0, 11
+    6  12 *    SetV1    v2, 0x0
+    8  12 *    PshV4    v2
+    9  13 *    PshC4    0x0          (i:0, f:0)
+   11  14 *    STR      18         (l:32 s:":/sprites/")
+   12  16 *    CALLSYS  33           (const string& _string_factory_(const int, const uint8&))
+   14  14 *    PshRPtr
+   15  15 *    PSF      v10
+   16  16 *    CALLSYS  35           (string::string(const string&in))
+   18  14 *    ObjInfo  v10, 1
+   18  14 *    PSF      v10
+   19  15 *    CALLSYS  472           (int gfxLoadImage(const string&in, const TextureFilter = NearestFilter, const bool = false))
+   21  12 *    CpyRtoV4 v11
+   22  12 *    PSF      v10
+   23  13 *    CALLSYS  36           (string::~string())
+   25  12 *    ObjInfo  v10, 0
+   25  12 *    PshListElmnt v1, 4
+   27  13 *    PopRPtr
+   28  12 *    WRTV4    v11
+   29  12 *    SetV1    v2, 0x0
+   31  12 *    PshV4    v2
+   32  13 *    PshC4    0x0          (i:0, f:0)
+   34  14 *    STR      19         (l:39 s:":/sprites/")
+   35  16 *    CALLSYS  33           (const string& _string_factory_(const int, const uint8&))
+   37  14 *    PshRPtr
+   38  15 *    PSF      v10
+   39  16 *    CALLSYS  35           (string::string(const string&in))
+   41  14 *    ObjInfo  v10, 1
+   41  14 *    PSF      v10
+   42  15 *    CALLSYS  472           (int gfxLoadImage(const string&in, const TextureFilter = NearestFilter, const bool = false))
+   44  12 *    CpyRtoV4 v11
+   45  12 *    PSF      v10
+   46  13 *    CALLSYS  36           (string::~string())
+   48  12 *    ObjInfo  v10, 0
+   48  12 *    PshListElmnt v1, 8
+   50  13 *    PopRPtr
+   51  12 *    WRTV4    v11
+   52  12 *    SetV1    v2, 0x0
+   54  12 *    PshV4    v2
+   55  13 *    PshC4    0x0          (i:0, f:0)
+   57  14 *    STR      20         (l:39 s:":/sprites/")
+   58  16 *    CALLSYS  33           (const string& _string_factory_(const int, const uint8&))
+   60  14 *    PshRPtr
+   61  15 *    PSF      v10
+   62  16 *    CALLSYS  35           (string::string(const string&in))
+   64  14 *    ObjInfo  v10, 1
+   64  14 *    PSF      v10
+   65  15 *    CALLSYS  472           (int gfxLoadImage(const string&in, const TextureFilter = NearestFilter, const bool = false))
+   67  12 *    CpyRtoV4 v11
+   68  12 *    PSF      v10
+   69  13 *    CALLSYS  36           (string::~string())
+   71  12 *    ObjInfo  v10, 0
+   71  12 *    PshListElmnt v1, 12
+   73  13 *    PopRPtr
+   74  12 *    WRTV4    v11
+   75  12 *    SetV1    v2, 0x0
+   77  12 *    PshV4    v2
+   78  13 *    PshC4    0x0          (i:0, f:0)
+   80  14 *    STR      21         (l:42 s:":/sprites/")
+   81  16 *    CALLSYS  33           (const string& _string_factory_(const int, const uint8&))
+   83  14 *    PshRPtr
+   84  15 *    PSF      v10
+   85  16 *    CALLSYS  35           (string::string(const string&in))
+   87  14 *    ObjInfo  v10, 1
+   87  14 *    PSF      v10
+   88  15 *    CALLSYS  472           (int gfxLoadImage(const string&in, const TextureFilter = NearestFilter, const bool = false))
+   90  12 *    CpyRtoV4 v11
+   91  12 *    PSF      v10
+   92  13 *    CALLSYS  36           (string::~string())
+   94  12 *    ObjInfo  v10, 0
+   94  12 *    PshListElmnt v1, 16
+   96  13 *    PopRPtr
+   97  12 *    WRTV4    v11
+   98  12 *    SetV1    v2, 0x0
+  100  12 *    PshV4    v2
+  101  13 *    PshC4    0x0          (i:0, f:0)
+  103  14 *    STR      22         (l:42 s:":/sprites/")
+  104  16 *    CALLSYS  33           (const string& _string_factory_(const int, const uint8&))
+  106  14 *    PshRPtr
+  107  15 *    PSF      v10
+  108  16 *    CALLSYS  35           (string::string(const string&in))
+  110  14 *    ObjInfo  v10, 1
+  110  14 *    PSF      v10
+  111  15 *    CALLSYS  472           (int gfxLoadImage(const string&in, const TextureFilter = NearestFilter, const bool = false))
+  113  12 *    CpyRtoV4 v11
+  114  12 *    PSF      v10
+  115  13 *    CALLSYS  36           (string::~string())
+  117  12 *    ObjInfo  v10, 0
+  117  12 *    PshListElmnt v1, 20
+  119  13 *    PopRPtr
+  120  12 *    WRTV4    v11
+  121  12 *    SetV1    v2, 0x0
+  123  12 *    PshV4    v2
+  124  13 *    PshC4    0x0          (i:0, f:0)
+  126  14 *    STR      23         (l:43 s:":/sprites/")
+  127  16 *    CALLSYS  33           (const string& _string_factory_(const int, const uint8&))
+  129  14 *    PshRPtr
+  130  15 *    PSF      v10
+  131  16 *    CALLSYS  35           (string::string(const string&in))
+  133  14 *    ObjInfo  v10, 1
+  133  14 *    PSF      v10
+  134  15 *    CALLSYS  472           (int gfxLoadImage(const string&in, const TextureFilter = NearestFilter, const bool = false))
+  136  12 *    CpyRtoV4 v11
+  137  12 *    PSF      v10
+  138  13 *    CALLSYS  36           (string::~string())
+  140  12 *    ObjInfo  v10, 0
+  140  12 *    PshListElmnt v1, 24
+  142  13 *    PopRPtr
+  143  12 *    WRTV4    v11
+  144  12 *    SetV1    v2, 0x0
+  146  12 *    PshV4    v2
+  147  13 *    PshC4    0x0          (i:0, f:0)
+  149  14 *    STR      24         (l:43 s:":/sprites/")
+  150  16 *    CALLSYS  33           (const string& _string_factory_(const int, const uint8&))
+  152  14 *    PshRPtr
+  153  15 *    PSF      v10
+  154  16 *    CALLSYS  35           (string::string(const string&in))
+  156  14 *    ObjInfo  v10, 1
+  156  14 *    PSF      v10
+  157  15 *    CALLSYS  472           (int gfxLoadImage(const string&in, const TextureFilter = NearestFilter, const bool = false))
+  159  12 *    CpyRtoV4 v11
+  160  12 *    PSF      v10
+  161  13 *    CALLSYS  36           (string::~string())
+  163  12 *    ObjInfo  v10, 0
+  163  12 *    PshListElmnt v1, 28
+  165  13 *    PopRPtr
+  166  12 *    WRTV4    v11
+  167  12 *    SetV1    v2, 0x0
+  169  12 *    PshV4    v2
+  170  13 *    PshC4    0x0          (i:0, f:0)
+  172  14 *    STR      25         (l:42 s:":/sprites/")
+  173  16 *    CALLSYS  33           (const string& _string_factory_(const int, const uint8&))
+  175  14 *    PshRPtr
+  176  15 *    PSF      v10
+  177  16 *    CALLSYS  35           (string::string(const string&in))
+  179  14 *    ObjInfo  v10, 1
+  179  14 *    PSF      v10
+  180  15 *    CALLSYS  472           (int gfxLoadImage(const string&in, const TextureFilter = NearestFilter, const bool = false))
+  182  12 *    CpyRtoV4 v11
+  183  12 *    PSF      v10
+  184  13 *    CALLSYS  36           (string::~string())
+  186  12 *    ObjInfo  v10, 0
+  186  12 *    PshListElmnt v1, 32
+  188  13 *    PopRPtr
+  189  12 *    WRTV4    v11
+  190  12 *    SetV1    v2, 0x0
+  192  12 *    PshV4    v2
+  193  13 *    PshC4    0x0          (i:0, f:0)
+  195  14 *    STR      26         (l:42 s:":/sprites/")
+  196  16 *    CALLSYS  33           (const string& _string_factory_(const int, const uint8&))
+  198  14 *    PshRPtr
+  199  15 *    PSF      v10
+  200  16 *    CALLSYS  35           (string::string(const string&in))
+  202  14 *    ObjInfo  v10, 1
+  202  14 *    PSF      v10
+  203  15 *    CALLSYS  472           (int gfxLoadImage(const string&in, const TextureFilter = NearestFilter, const bool = false))
+  205  12 *    CpyRtoV4 v11
+  206  12 *    PSF      v10
+  207  13 *    CALLSYS  36           (string::~string())
+  209  12 *    ObjInfo  v10, 0
+  209  12 *    PshListElmnt v1, 36
+  211  13 *    PopRPtr
+  212  12 *    WRTV4    v11
+  213  12 *    SetV1    v2, 0x0
+  215  12 *    PshV4    v2
+  216  13 *    PshC4    0x0          (i:0, f:0)
+  218  14 *    STR      27         (l:43 s:":/sprites/")
+  219  16 *    CALLSYS  33           (const string& _string_factory_(const int, const uint8&))
+  221  14 *    PshRPtr
+  222  15 *    PSF      v10
+  223  16 *    CALLSYS  35           (string::string(const string&in))
+  225  14 *    ObjInfo  v10, 1
+  225  14 *    PSF      v10
+  226  15 *    CALLSYS  472           (int gfxLoadImage(const string&in, const TextureFilter = NearestFilter, const bool = false))
+  228  12 *    CpyRtoV4 v11
+  229  12 *    PSF      v10
+  230  13 *    CALLSYS  36           (string::~string())
+  232  12 *    ObjInfo  v10, 0
+  232  12 *    PshListElmnt v1, 40
+  234  13 *    PopRPtr
+  235  12 *    WRTV4    v11
+  236  12 *    SetV1    v2, 0x0
+  238  12 *    PshV4    v2
+  239  13 *    PshC4    0x0          (i:0, f:0)
+  241  14 *    STR      28         (l:43 s:":/sprites/")
+  242  16 *    CALLSYS  33           (const string& _string_factory_(const int, const uint8&))
+  244  14 *    PshRPtr
+  245  15 *    PSF      v10
+  246  16 *    CALLSYS  35           (string::string(const string&in))
+  248  14 *    ObjInfo  v10, 1
+  248  14 *    PSF      v10
+  249  15 *    CALLSYS  472           (int gfxLoadImage(const string&in, const TextureFilter = NearestFilter, const bool = false))
+  251  12 *    CpyRtoV4 v11
+  252  12 *    PSF      v10
+  253  13 *    CALLSYS  36           (string::~string())
+  255  12 *    ObjInfo  v10, 0
+  255  12 *    PshListElmnt v1, 44
+  257  13 *    PopRPtr
+  258  12 *    WRTV4    v11
+  259  12 *    PshVPtr  v1
+  260  13 *    CALL     988           (int[]@ factstub(int&in) { repeat int })
+  262  12 *    STOREOBJ v12
+  263  12 *    PshVPtr  v12
+  264  13 *    PGA      74650776
+  266  14 *    REFCPY   0x472f098
+  268  13 *    PopPtr
+  269  12 *    FREE     v12, 74641560
+  271  12 *    FREE     v1, 136712136
+  273  12 *    RET      0

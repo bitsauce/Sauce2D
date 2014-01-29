@@ -1,0 +1,99 @@
+void GuiToggleGroup::setToggledObject(UiObject@)
+
+Temps: 2, 3, 4
+
+Variables: 
+ -001: UiObject@ obj
+ 001: uint i
+ 000: GuiToggleGroup this
+ 003: array {noname}
+ 004: UiObject {noname}
+
+
+    0   4 *    VarDecl  0
+    0   4 *    PshVPtr  v0
+    1   5 *    CALLSYS  2           (void _builtin_object_::_beh_4_())
+- 19,7 -
+    3   4 *    SUSPEND
+    4   4 *    VarDecl  1
+    4   4 *    SetV4    v1, 0x0          (i:0, f:0)
+    6   4 *    JMP      +67              (d:75)
+    8   4 * 4:
+    8   4 *    SUSPEND
+- 21,4 -
+    9   4 * {
+    9   4 *    SUSPEND
+   10   4 *    PshV4    v1
+   11   5 *    PshVPtr  v0
+   12   6 *    ADDSi    v24, 134217797
+   14   6 *    RDSPtr
+   15   6 *    RefCpyV  v3, 150902720
+   17   6 *    CALLSYS  1291           (UiObject@& array::opIndex(uint))
+   19   4 *    PshRPtr
+   20   5 *    RDSPtr
+   21   5 *    RefCpyV  v4, 150271928
+   23   5 *    PopPtr
+   24   4 *    CmpPtr   v4, v-1
+   26   4 *    TZ
+   27   4 *    CpyRtoV4 v2
+   28   4 *    FREE     v4, 150271928
+   30   4 *    FREE     v3, 150902720
+   32   4 *    CpyVtoR4 v2
+   33   4 *    JLowZ    +18              (d:53)
+- 23,5 -
+   35   4 * {
+   35   4 *    SUSPEND
+   36   4 *    SetV1    v2, 0x1
+   38   4 *    LoadRObjR v-1, v36, 134217780
+   41   4 *    WRTV1    v2
+- 24,5 -
+   42   4 *    SUSPEND
+   43   4 *    VAR      v-1
+   44   5 *    PshVPtr  v0
+   45   6 *    ADDSi    v52, 134217797
+   47   6 *    GETOBJREF 1
+   48   6 *    REFCPY   0x8f4f7b8
+   50   5 *    PopPtr
+   51   4 * }
+   51   4 *    JMP      +20              (d:73)
+- 26,5 -
+   53   4 * 5:
+   53   4 * {
+   53   4 *    SUSPEND
+   54   4 *    SetV1    v2, 0x0
+   56   4 *    PshV4    v1
+   57   5 *    PshVPtr  v0
+   58   6 *    ADDSi    v24, 134217797
+   60   6 *    RDSPtr
+   61   6 *    RefCpyV  v3, 150902720
+   63   6 *    CALLSYS  1291           (UiObject@& array::opIndex(uint))
+   65   4 *    PshRPtr
+   66   5 *    RDSPtr
+   67   5 *    ADDSi    v36, 134217780
+   69   5 *    PopRPtr
+   70   4 *    WRTV1    v2
+   71   4 *    FREE     v3, 150902720
+- 19,40 -
+   73   4 * }
+   73   4 * 6:
+   73   4 * }
+   73   4 * 3:
+   73   4 *    SUSPEND
+   74   4 *    IncVi    v1
+- 19,19 -
+   75   4 * 1:
+   75   4 *    SUSPEND
+   76   4 *    PshVPtr  v0
+   77   5 *    ADDSi    v24, 134217797
+   79   5 *    RDSPtr
+   80   5 *    CALLSYS  86           (uint array::size() const)
+   82   4 *    CpyRtoV4 v2
+   83   4 *    CMPu     v1, v2
+   85   4 *    JS       -79              (d:8)
+- 29,3 -
+   87   4 * 2:
+   87   4 *    SUSPEND
+   88   4 * 0:
+   88   4 *    FREE     v-1, 150271928
+   90   4 *    FREE     v0, 150276928
+   92   4 *    RET      2

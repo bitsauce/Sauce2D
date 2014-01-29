@@ -1,0 +1,93 @@
+void Bullet::onUnpack(UnpackEvent)
+
+Temps: 3, 4, 5, 6
+
+Variables: 
+ -001: UnpackEvent e
+ 001: int x
+ 002: int y
+ 000: Bullet this
+
+
+    0   6 *    VarDecl  0
+    0   6 *    PshVPtr  v0
+    1   7 *    CALLSYS  2           (void _builtin_object_::_beh_4_())
+- 206,3 -
+    3   6 *    SUSPEND
+- 207,3 -
+    4   6 *    VarDecl  1
+    4   6 *    VarDecl  2
+    4   6 *    SUSPEND
+    5   6 *    VAR      v3
+    6   7 *    PshVPtr  v-1
+    7   8 *    GETREF   1
+    8   8 *    CALLSYS  555           (void UnpackEvent::readInteger(uint&out))
+   10   6 *    CpyVtoV4 v1, v3
+- 208,3 -
+   12   6 *    SUSPEND
+   13   6 *    VAR      v3
+   14   7 *    PshVPtr  v-1
+   15   8 *    GETREF   1
+   16   8 *    CALLSYS  555           (void UnpackEvent::readInteger(uint&out))
+   18   6 *    CpyVtoV4 v2, v3
+- 211,3 -
+   20   6 *    SUSPEND
+   21   6 *    PshVPtr  v0
+   22   7 *    ADDSi    v24, 134217778
+   24   7 *    RDSPtr
+   25   7 *    ADDSi    v4, 67108877
+   27   7 *    PopRPtr
+   28   6 *    RDR4     v5
+   29   6 *    LoadRObjR v-1, v12, 67108906
+   32   6 *    RDR4     v3
+   33   6 *    iTOf     v3
+   34   6 *    SetV4    v4, 0x447a0000          (i:1148846080, f:1000)
+   36   6 *    DIVf     v3, v3, v4
+   38   6 *    MULf     v4, v5, v3
+   40   6 *    CpyVtoV4 v6, v2
+   42   6 *    iTOf     v6
+   43   6 *    ADDf     v3, v6, v4
+   45   6 *    fTOi     v3
+   46   6 *    CpyVtoV4 v2, v3
+- 214,3 -
+   48   6 *    SUSPEND
+   49   6 *    PshVPtr  v0
+   50   7 *    CALLINTF 682           (bool SceneObject::isClientObject() const)
+   52   6 *    CpyRtoV4 v4
+   53   6 *    NOT      v4
+   54   6 *    CpyVtoR4 v4
+   55   6 *    JLowNZ   +4              (d:61)
+   57   6 *    SetV4    v6, 0x0          (i:0, f:0)
+   59   6 *    JMP      +6              (d:67)
+   61   6 * 2:
+   61   6 *    LoadThisR v20, 134217778
+   63   6 *    RDR1     v3
+   64   6 *    NOT      v3
+   65   6 *    CpyVtoV4 v6, v3
+   67   6 * 3:
+   67   6 *    CpyVtoR4 v6
+   68   6 *    JLowZ    +18              (d:88)
+- 217,4 -
+   70   6 * {
+   70   6 *    SUSPEND
+   71   6 *    CpyVtoV4 v4, v2
+   73   6 *    iTOf     v4
+   74   6 *    PshV4    v4
+   75   7 *    CpyVtoV4 v6, v1
+   77   7 *    iTOf     v6
+   78   7 *    PshV4    v6
+   79   8 *    PshVPtr  v0
+   80   9 *    CALLINTF 654           (void SceneObject::setPos(const float, const float))
+- 218,4 -
+   82   6 *    SUSPEND
+   83   6 *    SetV1    v3, 0x1
+   85   6 *    LoadThisR v20, 134217778
+   87   6 *    WRTV1    v3
+- 220,3 -
+   88   6 * }
+   88   6 * 1:
+   88   6 *    SUSPEND
+   89   6 * 0:
+   89   6 *    FREE     v-1, 113424096
+   91   6 *    FREE     v0, 113546992
+   93   6 *    RET      2

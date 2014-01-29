@@ -1,0 +1,61 @@
+void LevelCreator::onMouseMove(MouseEvent)
+
+Temps: 1, 2, 3
+
+Variables: 
+ -001: MouseEvent e
+ 000: LevelCreator this
+ 003: MouseEvent {noname}
+
+
+    0   3 *    VarDecl  0
+    0   3 *    PshVPtr  v0
+    1   4 *    CALLSYS  2           (void _builtin_object_::_beh_4_())
+- 1481,3 -
+    3   3 *    SUSPEND
+    4   3 *    PshVPtr  v-1
+    5   4 *    ADDSi    v24, 67108905
+    7   4 *    ADDSi    v4, 67108877
+    9   4 *    PopRPtr
+   10   3 *    RDR4     v1
+   11   3 *    CMPIf    v1, 256.000000
+   13   3 *    JP       +8              (d:23)
+- 1482,4 -
+   15   3 *    SUSPEND
+   16   3 *    SetV1    v2, 0x0
+   18   3 *    LoadThisR v52, 134217814
+   20   3 *    WRTV1    v2
+   21   3 *    JMP      +15              (d:38)
+- 1483,8 -
+   23   3 * 1:
+   23   3 *    SUSPEND
+   24   3 *    PshVPtr  v0
+   25   4 *    ADDSi    v72, 134217814
+   27   4 *    RDSPtr
+   28   4 *    CALLINTF 1114           (bool SceneObject::isHidden() const)
+   30   3 *    JLowZ    +6              (d:38)
+- 1484,4 -
+   32   3 *    SUSPEND
+   33   3 *    SetV1    v2, 0x1
+   35   3 *    LoadThisR v52, 134217814
+   37   3 *    WRTV1    v2
+- 1485,3 -
+   38   3 * 3:
+   38   3 * 2:
+   38   3 *    SUSPEND
+   39   3 *    PshVPtr  v-1
+   40   4 *    PSF      v3
+   41   5 *    ALLOC    0x6b200b8, 0             (type:MouseEvent)
+   44   4 *    PshVPtr  v3
+   45   5 *    COPY     v11, 67108905
+   47   4 *    PopPtr
+   48   3 *    VAR      v3
+   49   4 *    PshVPtr  v0
+   50   5 *    GETOBJ   1
+   51   5 *    CALL     654           (void UiObject::onMouseMove(MouseEvent))
+- 1486,3 -
+   53   3 *    SUSPEND
+   54   3 * 0:
+   54   3 *    FREE     v-1, 112328888
+   56   3 *    FREE     v0, 152243168
+   58   3 *    RET      2

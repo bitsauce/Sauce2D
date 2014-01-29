@@ -1,0 +1,72 @@
+void UiObject::setParent(UiObject@)
+
+Temps: 1, 2, 3
+
+Variables: 
+ -001: UiObject@ parent
+ 000: UiObject this
+ 001: UiObject {noname}
+ 002: UiObject {noname}
+
+
+    0   3 *    VarDecl  0
+    0   3 *    PshVPtr  v0
+    1   4 *    CALLSYS  2           (void _builtin_object_::_beh_4_())
+- 273,37 -
+    3   3 *    SUSPEND
+    4   3 *    PshVPtr  v0
+    5   4 *    ADDSi    v20, 134217780
+    7   4 *    RDSPtr
+    8   4 *    RefCpyV  v1, 150271928
+   10   4 *    PopPtr
+   11   3 *    ClrVPtr  v2
+   12   3 *    CmpPtr   v1, v2
+   14   3 *    TNZ
+   15   3 *    CpyRtoV4 v3
+   16   3 *    FREE     v1, 150271928
+   18   3 *    FREE     v2, 150271928
+   20   3 *    CpyVtoR4 v3
+   21   3 *    JLowZ    +10              (d:33)
+- 273,62 -
+   23   3 *    SUSPEND
+   24   3 *    PshVPtr  v0
+   25   4 *    RefCpyV  v1, 150271928
+   27   4 *    PopPtr
+   28   3 *    VAR      v1
+   29   4 *    PshVPtr  v-1
+   30   5 *    GETOBJ   1
+   31   5 *    CALLINTF 1282           (void UiObject::removeChild(UiObject@))
+- 273,89 -
+   33   3 * 1:
+   33   3 *    SUSPEND
+   34   3 *    ClrVPtr  v2
+   35   3 *    CmpPtr   v-1, v2
+   37   3 *    TNZ
+   38   3 *    CpyRtoV4 v3
+   39   3 *    FREE     v2, 150271928
+   41   3 *    CpyVtoR4 v3
+   42   3 *    JLowZ    +10              (d:54)
+- 273,109 -
+   44   3 *    SUSPEND
+   45   3 *    PshVPtr  v0
+   46   4 *    RefCpyV  v1, 150271928
+   48   4 *    PopPtr
+   49   3 *    VAR      v1
+   50   4 *    PshVPtr  v-1
+   51   5 *    GETOBJ   1
+   52   5 *    CALLINTF 1281           (void UiObject::addChild(UiObject@))
+- 273,133 -
+   54   3 * 2:
+   54   3 *    SUSPEND
+   55   3 *    VAR      v-1
+   56   4 *    PshVPtr  v0
+   57   5 *    ADDSi    v20, 134217780
+   59   5 *    GETOBJREF 1
+   60   5 *    REFCPY   0x8f4f7b8
+   62   4 *    PopPtr
+- 273,158 -
+   63   3 *    SUSPEND
+   64   3 * 0:
+   64   3 *    FREE     v-1, 150271928
+   66   3 *    FREE     v0, 150271928
+   68   3 *    RET      2

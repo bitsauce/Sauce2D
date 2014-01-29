@@ -1,0 +1,55 @@
+void PropertyEdit::propChanged()
+
+Temps: 1, 2, 3, 4, 5
+
+Variables: 
+ 000: PropertyEdit this
+ 001: EditorObject {noname}
+ 002: EditorObject {noname}
+ 004: string {noname}
+ 005: string {noname}
+
+
+    0   5 *    PshVPtr  v0
+    1   6 *    CALLSYS  2           (void _builtin_object_::_beh_4_())
+- 258,3 -
+    3   5 *    SUSPEND
+    4   5 *    PshVPtr  v0
+    5   6 *    ADDSi    v76, 134217811
+    7   6 *    RDSPtr
+    8   6 *    RefCpyV  v1, 152242504
+   10   6 *    PopPtr
+   11   5 *    ClrVPtr  v2
+   12   5 *    CmpPtr   v1, v2
+   14   5 *    TNZ
+   15   5 *    CpyRtoV4 v3
+   16   5 *    FREE     v1, 152242504
+   18   5 *    FREE     v2, 152242504
+   20   5 *    CpyVtoR4 v3
+   21   5 *    JLowZ    +27              (d:50)
+- 259,4 -
+   23   5 *    SUSPEND
+   24   5 *    PSF      v4
+   25   6 *    PshVPtr  v0
+   26   7 *    ADDSi    v52, 134217811
+   28   7 *    RDSPtr
+   29   7 *    ALLOC    0x314cb48, 34             (type:string)
+   32   5 *    VAR      v4
+   33   6 *    PSF      v5
+   34   7 *    PshVPtr  v0
+   35   8 *    ADDSi    v72, 134217811
+   37   8 *    RDSPtr
+   38   8 *    ALLOC    0x314cb48, 34             (type:string)
+   41   6 *    VAR      v5
+   42   7 *    PshVPtr  v0
+   43   8 *    ADDSi    v76, 134217811
+   45   8 *    RDSPtr
+   46   8 *    GETOBJ   1
+   47   8 *    GETOBJ   2
+   48   8 *    CALLINTF 1302           (void EditorObject::setProperty(string, string))
+- 260,3 -
+   50   5 * 1:
+   50   5 *    SUSPEND
+   51   5 * 0:
+   51   5 *    FREE     v0, 152235632
+   53   5 *    RET      1

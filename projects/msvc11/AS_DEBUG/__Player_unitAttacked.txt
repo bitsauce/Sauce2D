@@ -1,0 +1,81 @@
+void Player::unitAttacked(UnitBase@, UnitBase@)
+
+Temps: 1, 2, 9, 16, 23
+
+Variables: 
+ -001: UnitBase@ unit
+ -002: UnitBase@ attacker
+ 000: Player this
+ 002: array {noname}
+ 009: string {noname}
+ 016: string {noname}
+ 023: string {noname}
+
+
+    0  23 *    VarDecl  0
+    0  23 *    VarDecl  1
+    0  23 *    PshVPtr  v0
+    1  24 *    CALLSYS  2           (void _builtin_object_::_beh_5_())
+- 44,3 -
+    3  23 *    SUSPEND
+    4  23 *    STR      98         (l:1 s:"'")
+    5  25 *    CALLSYS  33           (const string& _string_factory_(const int, const uint8&))
+    7  23 *    PshRPtr
+    8  24 *    PSF      v23
+    9  25 *    CALLSYS  35           (string::string(const string&in))
+   11  23 *    ObjInfo  v23, 1
+   11  23 *    VAR      v23
+   12  24 *    PSF      v9
+   13  25 *    PshVPtr  v-2
+   14  26 *    CALLINTF 1172           (int UnitBase::getTeam())
+   16  25 *    CpyRtoV4 v1
+   17  25 *    PshV4    v1
+   18  26 *    PshGPtr  74631784
+   20  27 *    CHKREF
+   21  27 *    RefCpyV  v2, 74622560
+   23  27 *    CALLSYS  972           (Player@& array::opIndex(uint))
+   25  25 *    PshRPtr
+   26  26 *    RDSPtr
+   27  26 *    ADDSi    v44, 134217751
+   29  26 *    RDSPtr
+   30  26 *    ADDSi    v20, 134217771
+   32  26 *    RDSPtr
+   33  26 *    PSF      v9
+   34  27 *    CALLSYS  35           (string::string(const string&in))
+   36  25 *    FREE     v2, 74622560
+   38  25 *    ObjInfo  v9, 1
+   38  25 *    VAR      v9
+   39  26 *    PSF      v16
+   40  27 *    STR      97         (l:27 s:"You are be")
+   41  29 *    CALLSYS  33           (const string& _string_factory_(const int, const uint8&))
+   43  27 *    PshRPtr
+   44  28 *    GETREF   2
+   45  28 *    CALLSYS  41           (string string::opAdd(const string&in) const)
+   47  25 *    ObjInfo  v16, 1
+   47  25 *    PSF      v9
+   48  26 *    CALLSYS  36           (string::~string())
+   50  25 *    ObjInfo  v9, 0
+   50  25 *    PSF      v16
+   51  26 *    GETREF   2
+   52  26 *    CALLSYS  41           (string string::opAdd(const string&in) const)
+   54  23 *    ObjInfo  v9, 1
+   54  23 *    PSF      v23
+   55  24 *    CALLSYS  36           (string::~string())
+   57  23 *    ObjInfo  v23, 0
+   57  23 *    PSF      v9
+   58  24 *    PSF      v16
+   59  25 *    CALLSYS  36           (string::~string())
+   61  24 *    ObjInfo  v16, 0
+   61  24 *    PopPtr
+   62  23 *    PSF      v9
+   63  24 *    CALLSYS  304           (void print(const string&in))
+   65  23 *    PSF      v9
+   66  24 *    CALLSYS  36           (string::~string())
+- 45,3 -
+   68  23 *    ObjInfo  v9, 0
+   68  23 *    SUSPEND
+   69  23 * 0:
+   69  23 *    FREE     v-1, 74300496
+   71  23 *    FREE     v-2, 74300496
+   73  23 *    FREE     v0, 74316168
+   75  23 *    RET      3

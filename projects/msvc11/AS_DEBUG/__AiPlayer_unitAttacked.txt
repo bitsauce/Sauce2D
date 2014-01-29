@@ -1,0 +1,21 @@
+void AiPlayer::unitAttacked(UnitBase@, UnitBase@)
+
+Temps: 
+
+Variables: 
+ -001: UnitBase@ unit
+ -002: UnitBase@ attacker
+ 000: AiPlayer this
+
+
+    0   0 *    VarDecl  0
+    0   0 *    VarDecl  1
+    0   0 *    PshVPtr  v0
+    1   1 *    CALLSYS  2           (void _builtin_object_::_beh_5_())
+- 25,3 -
+    3   0 *    SUSPEND
+    4   0 * 0:
+    4   0 *    FREE     v-1, 74300496
+    6   0 *    FREE     v-2, 74300496
+    8   0 *    FREE     v0, 74310144
+   10   0 *    RET      3

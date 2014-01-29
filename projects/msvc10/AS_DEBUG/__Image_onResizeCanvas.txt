@@ -1,0 +1,29 @@
+void Image::onResizeCanvas(CanvasEvent)
+
+Temps: 1
+
+Variables: 
+ -001: CanvasEvent e
+ 000: Image this
+ 001: Vector2 {noname}
+
+
+    0   1 *    VarDecl  0
+    0   1 *    PshVPtr  v0
+    1   2 *    CALLSYS  2           (void _builtin_object_::_beh_4_())
+- 22,3 -
+    3   1 *    SUSPEND
+    4   1 *    PSF      v1
+    5   2 *    PshVPtr  v-1
+    6   3 *    ADDSi    v4, 67108908
+    8   3 *    ALLOC    0x6acceb8, 131             (type:Vector2)
+   11   1 *    VAR      v1
+   12   2 *    PshVPtr  v0
+   13   3 *    GETOBJ   1
+   14   3 *    CALLINTF 1096           (void SceneObject::setSize(const Vector2))
+- 23,3 -
+   16   1 *    SUSPEND
+   17   1 * 0:
+   17   1 *    FREE     v-1, 112331536
+   19   1 *    FREE     v0, 152251224
+   21   1 *    RET      2

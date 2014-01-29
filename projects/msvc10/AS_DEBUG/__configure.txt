@@ -1,0 +1,18 @@
+void configure()
+
+Temps: 1, 2
+
+Variables: 
+
+
+- 26,2 -
+    0   2 *    SUSPEND
+    1   2 *    PshC4    0x23c          (i:572, f:8.01543e-043)
+    3   3 *    PshC4    0x3c0          (i:960, f:1.34525e-042)
+    5   4 *    PshGPtr  112334928
+    7   5 *    CHKREF
+    8   5 *    CALLSYS  427           (void CX2DApp::resize(const uint, const uint))
+- 28,2 -
+   10   2 *    SUSPEND
+   11   2 * 0:
+   11   2 *    RET      0

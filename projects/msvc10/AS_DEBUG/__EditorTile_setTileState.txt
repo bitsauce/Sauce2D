@@ -1,0 +1,519 @@
+void EditorTile::setTileState(int)
+
+Temps: 2, 3, 4, 6
+
+Variables: 
+ -001: int tileState
+ 001: int tx
+ 005: int ty
+ 000: EditorTile this
+
+
+    0   6 *    VarDecl  0
+    0   6 *    PshVPtr  v0
+    1   7 *    CALLSYS  2           (void _builtin_object_::_beh_4_())
+- 539,3 -
+    3   6 *    SUSPEND
+    4   6 *    VarDecl  1
+    4   6 *    LoadThisR v20, 134217782
+    6   6 *    RDR4     v2
+    7   6 *    MULIi    v2, v2, 4
+   10   6 *    ADDIi    v1, v2, 1
+- 539,27 -
+   13   6 *    SUSPEND
+   14   6 *    VarDecl  2
+   14   6 *    PshVPtr  v0
+   15   7 *    ADDSi    v16, 134217782
+   17   7 *    RDSPtr
+   18   7 *    ADDSi    v36, 134217805
+   20   7 *    PopRPtr
+   21   6 *    RDR4     v4
+   22   6 *    SUBIi    v5, v4, 2
+- 540,3 -
+   25   6 *    SUSPEND
+   26   6 *    LoadThisR v32, 134217782
+   28   6 *    WRTV4    v-1
+- 541,3 -
+   29   6 *    SUSPEND
+   30   6 *    SetV4    v3, 0x4          (i:4, f:5.60519e-045)
+   32   6 *    BAND     v2, v-1, v3
+   34   6 *    CMPIu    v2, 0
+   36   6 *    JNZ      +4              (d:42)
+   38   6 *    SetV4    v6, 0x0          (i:0, f:0)
+   40   6 *    JMP      +10              (d:52)
+   42   6 * 2:
+   42   6 *    SetV4    v4, 0x1          (i:1, f:1.4013e-045)
+   44   6 *    BAND     v2, v-1, v4
+   46   6 *    CMPIu    v2, 0
+   48   6 *    TNZ
+   49   6 *    CpyRtoV4 v4
+   50   6 *    CpyVtoV4 v6, v4
+   52   6 * 3:
+   52   6 *    CpyVtoR4 v6
+   53   6 *    JLowNZ   +4              (d:59)
+   55   6 *    SetV4    v2, 0x0          (i:0, f:0)
+   57   6 *    JMP      +10              (d:69)
+   59   6 * 4:
+   59   6 *    SetV4    v3, 0x10          (i:16, f:2.24208e-044)
+   61   6 *    BAND     v4, v-1, v3
+   63   6 *    CMPIu    v4, 0
+   65   6 *    TNZ
+   66   6 *    CpyRtoV4 v3
+   67   6 *    CpyVtoV4 v2, v3
+   69   6 * 5:
+   69   6 *    CpyVtoR4 v2
+   70   6 *    JLowZ    +129              (d:201)
+- 542,4 -
+   72   6 *    SUSPEND
+   73   6 *    SetV4    v6, 0x40          (i:64, f:8.96831e-044)
+   75   6 *    BAND     v2, v-1, v6
+   77   6 *    CMPIu    v2, 0
+   79   6 *    JNZ      +13              (d:94)
+- 542,37 -
+   81   6 * {
+   81   6 *    SUSPEND
+   82   6 *    LoadThisR v24, 134217782
+   84   6 *    WRTV4    v1
+- 542,49 -
+   85   6 *    SUSPEND
+   86   6 *    ADDIi    v6, v5, 1
+   89   6 *    LoadThisR v28, 134217782
+   91   6 *    WRTV4    v6
+   92   6 * }
+   92   6 *    JMP      +105              (d:199)
+- 543,9 -
+   94   6 * 6:
+   94   6 *    SUSPEND
+   95   6 *    SetV4    v4, 0x20          (i:32, f:4.48416e-044)
+   97   6 *    BAND     v6, v-1, v4
+   99   6 *    CMPIu    v6, 0
+  101   6 *    JNZ      +16              (d:119)
+- 543,46 -
+  103   6 * {
+  103   6 *    SUSPEND
+  104   6 *    ADDIi    v4, v1, 1
+  107   6 *    LoadThisR v24, 134217782
+  109   6 *    WRTV4    v4
+- 543,60 -
+  110   6 *    SUSPEND
+  111   6 *    SUBIi    v4, v5, 2
+  114   6 *    LoadThisR v28, 134217782
+  116   6 *    WRTV4    v4
+  117   6 * }
+  117   6 *    JMP      +80              (d:199)
+- 544,9 -
+  119   6 * 8:
+  119   6 *    SUSPEND
+  120   6 *    SetV4    v3, 0x8          (i:8, f:1.12104e-044)
+  122   6 *    BAND     v4, v-1, v3
+  124   6 *    CMPIu    v4, 0
+  126   6 *    JNZ      +16              (d:144)
+- 544,46 -
+  128   6 * {
+  128   6 *    SUSPEND
+  129   6 *    SUBIi    v3, v1, 1
+  132   6 *    LoadThisR v24, 134217782
+  134   6 *    WRTV4    v3
+- 544,60 -
+  135   6 *    SUSPEND
+  136   6 *    SUBIi    v3, v5, 2
+  139   6 *    LoadThisR v28, 134217782
+  141   6 *    WRTV4    v3
+  142   6 * }
+  142   6 *    JMP      +55              (d:199)
+- 545,9 -
+  144   6 * 10:
+  144   6 *    SUSPEND
+  145   6 *    SetV4    v2, 0x80          (i:128, f:1.79366e-043)
+  147   6 *    BAND     v3, v-1, v2
+  149   6 *    CMPIu    v3, 0
+  151   6 *    JNZ      +16              (d:169)
+- 545,46 -
+  153   6 * {
+  153   6 *    SUSPEND
+  154   6 *    ADDIi    v2, v1, 2
+  157   6 *    LoadThisR v24, 134217782
+  159   6 *    WRTV4    v2
+- 545,60 -
+  160   6 *    SUSPEND
+  161   6 *    SUBIi    v2, v5, 2
+  164   6 *    LoadThisR v28, 134217782
+  166   6 *    WRTV4    v2
+  167   6 * }
+  167   6 *    JMP      +30              (d:199)
+- 546,9 -
+  169   6 * 12:
+  169   6 *    SUSPEND
+  170   6 *    SetV4    v6, 0x2          (i:2, f:2.8026e-045)
+  172   6 *    BAND     v2, v-1, v6
+  174   6 *    CMPIu    v2, 0
+  176   6 *    JNZ      +13              (d:191)
+- 546,46 -
+  178   6 * {
+  178   6 *    SUSPEND
+  179   6 *    LoadThisR v24, 134217782
+  181   6 *    WRTV4    v1
+- 546,58 -
+  182   6 *    SUSPEND
+  183   6 *    SUBIi    v6, v5, 2
+  186   6 *    LoadThisR v28, 134217782
+  188   6 *    WRTV4    v6
+  189   6 * }
+  189   6 *    JMP      +8              (d:199)
+- 547,11 -
+  191   6 * 14:
+  191   6 * {
+  191   6 *    SUSPEND
+  192   6 *    LoadThisR v24, 134217782
+  194   6 *    WRTV4    v1
+- 547,23 -
+  195   6 *    SUSPEND
+  196   6 *    LoadThisR v28, 134217782
+  198   6 *    WRTV4    v5
+  199   6 * }
+  199   6 * 15:
+  199   6 * 13:
+  199   6 * 11:
+  199   6 * 9:
+  199   6 * 7:
+  199   6 *    JMP      +407              (d:608)
+- 548,8 -
+  201   6 * 1:
+  201   6 *    SUSPEND
+  202   6 *    SetV4    v4, 0x4          (i:4, f:5.60519e-045)
+  204   6 *    BAND     v6, v-1, v4
+  206   6 *    CMPIu    v6, 0
+  208   6 *    JNZ      +4              (d:214)
+  210   6 *    SetV4    v2, 0x0          (i:0, f:0)
+  212   6 *    JMP      +10              (d:224)
+  214   6 * 18:
+  214   6 *    SetV4    v3, 0x1          (i:1, f:1.4013e-045)
+  216   6 *    BAND     v6, v-1, v3
+  218   6 *    CMPIu    v6, 0
+  220   6 *    TNZ
+  221   6 *    CpyRtoV4 v3
+  222   6 *    CpyVtoV4 v2, v3
+  224   6 * 19:
+  224   6 *    CpyVtoR4 v2
+  225   6 *    JLowNZ   +4              (d:231)
+  227   6 *    SetV4    v6, 0x0          (i:0, f:0)
+  229   6 *    JMP      +10              (d:241)
+  231   6 * 20:
+  231   6 *    SetV4    v4, 0x2          (i:2, f:2.8026e-045)
+  233   6 *    BAND     v3, v-1, v4
+  235   6 *    CMPIu    v3, 0
+  237   6 *    TNZ
+  238   6 *    CpyRtoV4 v4
+  239   6 *    CpyVtoV4 v6, v4
+  241   6 * 21:
+  241   6 *    CpyVtoR4 v6
+  242   6 *    JLowZ    +38              (d:282)
+- 549,4 -
+  244   6 *    SUSPEND
+  245   6 *    SetV4    v2, 0x40          (i:64, f:8.96831e-044)
+  247   6 *    BAND     v6, v-1, v2
+  249   6 *    CMPIu    v6, 0
+  251   6 *    JNZ      +16              (d:269)
+- 549,37 -
+  253   6 * {
+  253   6 *    SUSPEND
+  254   6 *    SUBIi    v2, v1, 1
+  257   6 *    LoadThisR v24, 134217782
+  259   6 *    WRTV4    v2
+- 549,51 -
+  260   6 *    SUSPEND
+  261   6 *    ADDIi    v2, v5, 1
+  264   6 *    LoadThisR v28, 134217782
+  266   6 *    WRTV4    v2
+  267   6 * }
+  267   6 *    JMP      +11              (d:280)
+- 550,11 -
+  269   6 * 22:
+  269   6 * {
+  269   6 *    SUSPEND
+  270   6 *    SUBIi    v2, v1, 1
+  273   6 *    LoadThisR v24, 134217782
+  275   6 *    WRTV4    v2
+- 550,25 -
+  276   6 *    SUSPEND
+  277   6 *    LoadThisR v28, 134217782
+  279   6 *    WRTV4    v5
+  280   6 * }
+  280   6 * 23:
+  280   6 *    JMP      +326              (d:608)
+- 551,8 -
+  282   6 * 17:
+  282   6 *    SUSPEND
+  283   6 *    SetV4    v3, 0x4          (i:4, f:5.60519e-045)
+  285   6 *    BAND     v2, v-1, v3
+  287   6 *    CMPIu    v2, 0
+  289   6 *    JNZ      +4              (d:295)
+  291   6 *    SetV4    v6, 0x0          (i:0, f:0)
+  293   6 *    JMP      +10              (d:305)
+  295   6 * 26:
+  295   6 *    SetV4    v4, 0x10          (i:16, f:2.24208e-044)
+  297   6 *    BAND     v2, v-1, v4
+  299   6 *    CMPIu    v2, 0
+  301   6 *    TNZ
+  302   6 *    CpyRtoV4 v4
+  303   6 *    CpyVtoV4 v6, v4
+  305   6 * 27:
+  305   6 *    CpyVtoR4 v6
+  306   6 *    JLowNZ   +4              (d:312)
+  308   6 *    SetV4    v2, 0x0          (i:0, f:0)
+  310   6 *    JMP      +10              (d:322)
+  312   6 * 28:
+  312   6 *    SetV4    v3, 0x8          (i:8, f:1.12104e-044)
+  314   6 *    BAND     v4, v-1, v3
+  316   6 *    CMPIu    v4, 0
+  318   6 *    TNZ
+  319   6 *    CpyRtoV4 v3
+  320   6 *    CpyVtoV4 v2, v3
+  322   6 * 29:
+  322   6 *    CpyVtoR4 v2
+  323   6 *    JLowZ    +38              (d:363)
+- 552,4 -
+  325   6 *    SUSPEND
+  326   6 *    SetV4    v6, 0x40          (i:64, f:8.96831e-044)
+  328   6 *    BAND     v2, v-1, v6
+  330   6 *    CMPIu    v2, 0
+  332   6 *    JNZ      +16              (d:350)
+- 552,37 -
+  334   6 * {
+  334   6 *    SUSPEND
+  335   6 *    ADDIi    v6, v1, 1
+  338   6 *    LoadThisR v24, 134217782
+  340   6 *    WRTV4    v6
+- 552,51 -
+  341   6 *    SUSPEND
+  342   6 *    ADDIi    v6, v5, 1
+  345   6 *    LoadThisR v28, 134217782
+  347   6 *    WRTV4    v6
+  348   6 * }
+  348   6 *    JMP      +11              (d:361)
+- 553,11 -
+  350   6 * 30:
+  350   6 * {
+  350   6 *    SUSPEND
+  351   6 *    ADDIi    v6, v1, 1
+  354   6 *    LoadThisR v24, 134217782
+  356   6 *    WRTV4    v6
+- 553,25 -
+  357   6 *    SUSPEND
+  358   6 *    LoadThisR v28, 134217782
+  360   6 *    WRTV4    v5
+  361   6 * }
+  361   6 * 31:
+  361   6 *    JMP      +245              (d:608)
+- 554,8 -
+  363   6 * 25:
+  363   6 *    SUSPEND
+  364   6 *    SetV4    v4, 0x40          (i:64, f:8.96831e-044)
+  366   6 *    BAND     v6, v-1, v4
+  368   6 *    CMPIu    v6, 0
+  370   6 *    JNZ      +4              (d:376)
+  372   6 *    SetV4    v2, 0x0          (i:0, f:0)
+  374   6 *    JMP      +10              (d:386)
+  376   6 * 34:
+  376   6 *    SetV4    v3, 0x1          (i:1, f:1.4013e-045)
+  378   6 *    BAND     v6, v-1, v3
+  380   6 *    CMPIu    v6, 0
+  382   6 *    TNZ
+  383   6 *    CpyRtoV4 v3
+  384   6 *    CpyVtoV4 v2, v3
+  386   6 * 35:
+  386   6 *    CpyVtoR4 v2
+  387   6 *    JLowNZ   +4              (d:393)
+  389   6 *    SetV4    v6, 0x0          (i:0, f:0)
+  391   6 *    JMP      +10              (d:403)
+  393   6 * 36:
+  393   6 *    SetV4    v4, 0x10          (i:16, f:2.24208e-044)
+  395   6 *    BAND     v3, v-1, v4
+  397   6 *    CMPIu    v3, 0
+  399   6 *    TNZ
+  400   6 *    CpyRtoV4 v4
+  401   6 *    CpyVtoV4 v6, v4
+  403   6 * 37:
+  403   6 *    CpyVtoR4 v6
+  404   6 *    JLowZ    +32              (d:438)
+- 555,4 -
+  406   6 *    SUSPEND
+  407   6 *    SetV4    v2, 0x4          (i:4, f:5.60519e-045)
+  409   6 *    BAND     v6, v-1, v2
+  411   6 *    CMPIu    v6, 0
+  413   6 *    JNZ      +13              (d:428)
+- 555,37 -
+  415   6 * {
+  415   6 *    SUSPEND
+  416   6 *    LoadThisR v24, 134217782
+  418   6 *    WRTV4    v1
+- 555,49 -
+  419   6 *    SUSPEND
+  420   6 *    SUBIi    v2, v5, 1
+  423   6 *    LoadThisR v28, 134217782
+  425   6 *    WRTV4    v2
+  426   6 * }
+  426   6 *    JMP      +8              (d:436)
+- 556,11 -
+  428   6 * 38:
+  428   6 * {
+  428   6 *    SUSPEND
+  429   6 *    LoadThisR v24, 134217782
+  431   6 *    WRTV4    v1
+- 556,23 -
+  432   6 *    SUSPEND
+  433   6 *    LoadThisR v28, 134217782
+  435   6 *    WRTV4    v5
+  436   6 * }
+  436   6 * 39:
+  436   6 *    JMP      +170              (d:608)
+- 557,8 -
+  438   6 * 33:
+  438   6 *    SUSPEND
+  439   6 *    SetV4    v3, 0x40          (i:64, f:8.96831e-044)
+  441   6 *    BAND     v2, v-1, v3
+  443   6 *    CMPIu    v2, 0
+  445   6 *    JNZ      +4              (d:451)
+  447   6 *    SetV4    v6, 0x0          (i:0, f:0)
+  449   6 *    JMP      +10              (d:461)
+  451   6 * 42:
+  451   6 *    SetV4    v4, 0x1          (i:1, f:1.4013e-045)
+  453   6 *    BAND     v2, v-1, v4
+  455   6 *    CMPIu    v2, 0
+  457   6 *    TNZ
+  458   6 *    CpyRtoV4 v4
+  459   6 *    CpyVtoV4 v6, v4
+  461   6 * 43:
+  461   6 *    CpyVtoR4 v6
+  462   6 *    JLowNZ   +4              (d:468)
+  464   6 *    SetV4    v2, 0x0          (i:0, f:0)
+  466   6 *    JMP      +10              (d:478)
+  468   6 * 44:
+  468   6 *    SetV4    v3, 0x80          (i:128, f:1.79366e-043)
+  470   6 *    BAND     v4, v-1, v3
+  472   6 *    CMPIu    v4, 0
+  474   6 *    TNZ
+  475   6 *    CpyRtoV4 v3
+  476   6 *    CpyVtoV4 v2, v3
+  478   6 * 45:
+  478   6 *    CpyVtoR4 v2
+  479   6 *    JLowZ    +38              (d:519)
+- 558,4 -
+  481   6 *    SUSPEND
+  482   6 *    SetV4    v6, 0x4          (i:4, f:5.60519e-045)
+  484   6 *    BAND     v2, v-1, v6
+  486   6 *    CMPIu    v2, 0
+  488   6 *    JNZ      +16              (d:506)
+- 558,37 -
+  490   6 * {
+  490   6 *    SUSPEND
+  491   6 *    SUBIi    v6, v1, 1
+  494   6 *    LoadThisR v24, 134217782
+  496   6 *    WRTV4    v6
+- 558,51 -
+  497   6 *    SUSPEND
+  498   6 *    SUBIi    v6, v5, 1
+  501   6 *    LoadThisR v28, 134217782
+  503   6 *    WRTV4    v6
+  504   6 * }
+  504   6 *    JMP      +11              (d:517)
+- 559,11 -
+  506   6 * 46:
+  506   6 * {
+  506   6 *    SUSPEND
+  507   6 *    SUBIi    v6, v1, 1
+  510   6 *    LoadThisR v24, 134217782
+  512   6 *    WRTV4    v6
+- 559,25 -
+  513   6 *    SUSPEND
+  514   6 *    LoadThisR v28, 134217782
+  516   6 *    WRTV4    v5
+  517   6 * }
+  517   6 * 47:
+  517   6 *    JMP      +89              (d:608)
+- 560,8 -
+  519   6 * 41:
+  519   6 *    SUSPEND
+  520   6 *    SetV4    v4, 0x40          (i:64, f:8.96831e-044)
+  522   6 *    BAND     v6, v-1, v4
+  524   6 *    CMPIu    v6, 0
+  526   6 *    JNZ      +4              (d:532)
+  528   6 *    SetV4    v2, 0x0          (i:0, f:0)
+  530   6 *    JMP      +10              (d:542)
+  532   6 * 50:
+  532   6 *    SetV4    v3, 0x10          (i:16, f:2.24208e-044)
+  534   6 *    BAND     v6, v-1, v3
+  536   6 *    CMPIu    v6, 0
+  538   6 *    TNZ
+  539   6 *    CpyRtoV4 v3
+  540   6 *    CpyVtoV4 v2, v3
+  542   6 * 51:
+  542   6 *    CpyVtoR4 v2
+  543   6 *    JLowNZ   +4              (d:549)
+  545   6 *    SetV4    v6, 0x0          (i:0, f:0)
+  547   6 *    JMP      +10              (d:559)
+  549   6 * 52:
+  549   6 *    SetV4    v4, 0x20          (i:32, f:4.48416e-044)
+  551   6 *    BAND     v3, v-1, v4
+  553   6 *    CMPIu    v3, 0
+  555   6 *    TNZ
+  556   6 *    CpyRtoV4 v4
+  557   6 *    CpyVtoV4 v6, v4
+  559   6 * 53:
+  559   6 *    CpyVtoR4 v6
+  560   6 *    JLowZ    +38              (d:600)
+- 561,4 -
+  562   6 *    SUSPEND
+  563   6 *    SetV4    v2, 0x4          (i:4, f:5.60519e-045)
+  565   6 *    BAND     v6, v-1, v2
+  567   6 *    CMPIu    v6, 0
+  569   6 *    JNZ      +16              (d:587)
+- 561,37 -
+  571   6 * {
+  571   6 *    SUSPEND
+  572   6 *    ADDIi    v2, v1, 1
+  575   6 *    LoadThisR v24, 134217782
+  577   6 *    WRTV4    v2
+- 561,51 -
+  578   6 *    SUSPEND
+  579   6 *    SUBIi    v2, v5, 1
+  582   6 *    LoadThisR v28, 134217782
+  584   6 *    WRTV4    v2
+  585   6 * }
+  585   6 *    JMP      +11              (d:598)
+- 562,11 -
+  587   6 * 54:
+  587   6 * {
+  587   6 *    SUSPEND
+  588   6 *    ADDIi    v2, v1, 1
+  591   6 *    LoadThisR v24, 134217782
+  593   6 *    WRTV4    v2
+- 562,25 -
+  594   6 *    SUSPEND
+  595   6 *    LoadThisR v28, 134217782
+  597   6 *    WRTV4    v5
+  598   6 * }
+  598   6 * 55:
+  598   6 *    JMP      +8              (d:608)
+- 563,10 -
+  600   6 * 49:
+  600   6 * {
+  600   6 *    SUSPEND
+  601   6 *    LoadThisR v24, 134217782
+  603   6 *    WRTV4    v1
+- 563,22 -
+  604   6 *    SUSPEND
+  605   6 *    LoadThisR v28, 134217782
+  607   6 *    WRTV4    v5
+- 564,3 -
+  608   6 * }
+  608   6 * 56:
+  608   6 * 48:
+  608   6 * 40:
+  608   6 * 32:
+  608   6 * 24:
+  608   6 * 16:
+  608   6 *    SUSPEND
+  609   6 * 0:
+  609   6 *    FREE     v0, 152242000
+  611   6 *    RET      2

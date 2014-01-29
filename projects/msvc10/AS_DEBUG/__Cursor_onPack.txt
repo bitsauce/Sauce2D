@@ -1,0 +1,36 @@
+void Cursor::onPack(PackEvent)
+
+Temps: 1
+
+Variables: 
+ -001: PackEvent e
+ 000: Cursor this
+
+
+    0   1 *    VarDecl  0
+    0   1 *    PshVPtr  v0
+    1   2 *    CALLSYS  2           (void _builtin_object_::_beh_4_())
+- 259,3 -
+    3   1 *    SUSPEND
+    4   1 *    PshVPtr  v0
+    5   2 *    CALLINTF 659           (float SceneObject::x() const)
+    7   1 *    CpyRtoV4 v1
+    8   1 *    fTOu     v1
+    9   1 *    PshV4    v1
+   10   2 *    PshVPtr  v-1
+   11   3 *    CALLSYS  554           (void PackEvent::writeInteger(uint))
+- 260,3 -
+   13   1 *    SUSPEND
+   14   1 *    PshVPtr  v0
+   15   2 *    CALLINTF 660           (float SceneObject::y() const)
+   17   1 *    CpyRtoV4 v1
+   18   1 *    fTOu     v1
+   19   1 *    PshV4    v1
+   20   2 *    PshVPtr  v-1
+   21   3 *    CALLSYS  554           (void PackEvent::writeInteger(uint))
+- 261,3 -
+   23   1 *    SUSPEND
+   24   1 * 0:
+   24   1 *    FREE     v-1, 113422688
+   26   1 *    FREE     v0, 113547656
+   28   1 *    RET      2

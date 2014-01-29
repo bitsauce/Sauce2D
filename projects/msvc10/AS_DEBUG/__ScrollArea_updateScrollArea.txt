@@ -1,0 +1,175 @@
+void ScrollArea::updateScrollArea()
+
+Temps: 2, 3, 6, 7, 8
+
+Variables: 
+ 001: float newx
+ 004: float newy
+ 005: uint i
+ 000: ScrollArea this
+ 006: array {noname}
+
+
+    0   8 *    PshVPtr  v0
+    1   9 *    CALLSYS  2           (void _builtin_object_::_beh_4_())
+- 190,3 -
+    3   8 *    SUSPEND
+    4   8 *    VarDecl  0
+    4   8 *    PshVPtr  v0
+    5   9 *    CALLINTF 1100           (float SceneObject::width() const)
+    7   8 *    CpyRtoV4 v2
+    8   8 *    SUBIf    v1, v2, 16.000000
+- 191,3 -
+   11   8 *    SUSPEND
+   12   8 *    VarDecl  1
+   12   8 *    PshVPtr  v0
+   13   9 *    CALLINTF 1101           (float SceneObject::height() const)
+   15   8 *    CpyRtoV4 v3
+   16   8 *    SUBIf    v4, v3, 16.000000
+- 192,7 -
+   19   8 *    SUSPEND
+   20   8 *    VarDecl  2
+   20   8 *    SetV4    v5, 0x0          (i:0, f:0)
+   22   8 *    JMP      +163              (d:187)
+   24   8 * 4:
+   24   8 *    SUSPEND
+- 193,4 -
+   25   8 * {
+   25   8 *    SUSPEND
+   26   8 *    PshV4    v5
+   27   9 *    PshVPtr  v0
+   28  10 *    ADDSi    v24, 134217810
+   30  10 *    RDSPtr
+   31  10 *    RefCpyV  v6, 152712520
+   33  10 *    CALLSYS  1170           (UiObject@& array::opIndex(uint))
+   35   8 *    PshRPtr
+   36   9 *    RDSPtr
+   37   9 *    CALLINTF 1093           (float SceneObject::x() const)
+   39   8 *    CpyRtoV4 v2
+   40   8 *    FREE     v6, 152712520
+   42   8 *    PshV4    v5
+   43   9 *    PshVPtr  v0
+   44  10 *    ADDSi    v24, 134217810
+   46  10 *    RDSPtr
+   47  10 *    RefCpyV  v6, 152712520
+   49  10 *    CALLSYS  1170           (UiObject@& array::opIndex(uint))
+   51   8 *    PshRPtr
+   52   9 *    RDSPtr
+   53   9 *    CALLINTF 1100           (float SceneObject::width() const)
+   55   8 *    CpyRtoV4 v3
+   56   8 *    FREE     v6, 152712520
+   58   8 *    ADDf     v2, v2, v3
+   60   8 *    ADDIf    v3, v2, 16.000000
+   63   8 *    CMPf     v3, v1
+   65   8 *    JNP      +38              (d:105)
+- 193,54 -
+   67   8 *    SUSPEND
+   68   8 *    PshV4    v5
+   69   9 *    PshVPtr  v0
+   70  10 *    ADDSi    v24, 134217810
+   72  10 *    RDSPtr
+   73  10 *    RefCpyV  v6, 152712520
+   75  10 *    CALLSYS  1170           (UiObject@& array::opIndex(uint))
+   77   8 *    PshRPtr
+   78   9 *    RDSPtr
+   79   9 *    CALLINTF 1093           (float SceneObject::x() const)
+   81   8 *    CpyRtoV4 v7
+   82   8 *    FREE     v6, 152712520
+   84   8 *    PshV4    v5
+   85   9 *    PshVPtr  v0
+   86  10 *    ADDSi    v24, 134217810
+   88  10 *    RDSPtr
+   89  10 *    RefCpyV  v6, 152712520
+   91  10 *    CALLSYS  1170           (UiObject@& array::opIndex(uint))
+   93   8 *    PshRPtr
+   94   9 *    RDSPtr
+   95   9 *    CALLINTF 1100           (float SceneObject::width() const)
+   97   8 *    CpyRtoV4 v2
+   98   8 *    FREE     v6, 152712520
+  100   8 *    ADDf     v3, v7, v2
+  102   8 *    ADDIf    v1, v3, 16.000000
+- 194,4 -
+  105   8 * 5:
+  105   8 *    SUSPEND
+  106   8 *    PshV4    v5
+  107   9 *    PshVPtr  v0
+  108  10 *    ADDSi    v24, 134217810
+  110  10 *    RDSPtr
+  111  10 *    RefCpyV  v6, 152712520
+  113  10 *    CALLSYS  1170           (UiObject@& array::opIndex(uint))
+  115   8 *    PshRPtr
+  116   9 *    RDSPtr
+  117   9 *    CALLINTF 1094           (float SceneObject::y() const)
+  119   8 *    CpyRtoV4 v8
+  120   8 *    FREE     v6, 152712520
+  122   8 *    PshV4    v5
+  123   9 *    PshVPtr  v0
+  124  10 *    ADDSi    v24, 134217810
+  126  10 *    RDSPtr
+  127  10 *    RefCpyV  v6, 152712520
+  129  10 *    CALLSYS  1170           (UiObject@& array::opIndex(uint))
+  131   8 *    PshRPtr
+  132   9 *    RDSPtr
+  133   9 *    CALLINTF 1101           (float SceneObject::height() const)
+  135   8 *    CpyRtoV4 v3
+  136   8 *    FREE     v6, 152712520
+  138   8 *    ADDf     v7, v8, v3
+  140   8 *    ADDIf    v3, v7, 16.000000
+  143   8 *    CMPf     v3, v4
+  145   8 *    JNP      +38              (d:185)
+- 194,55 -
+  147   8 *    SUSPEND
+  148   8 *    PshV4    v5
+  149   9 *    PshVPtr  v0
+  150  10 *    ADDSi    v24, 134217810
+  152  10 *    RDSPtr
+  153  10 *    RefCpyV  v6, 152712520
+  155  10 *    CALLSYS  1170           (UiObject@& array::opIndex(uint))
+  157   8 *    PshRPtr
+  158   9 *    RDSPtr
+  159   9 *    CALLINTF 1094           (float SceneObject::y() const)
+  161   8 *    CpyRtoV4 v3
+  162   8 *    FREE     v6, 152712520
+  164   8 *    PshV4    v5
+  165   9 *    PshVPtr  v0
+  166  10 *    ADDSi    v24, 134217810
+  168  10 *    RDSPtr
+  169  10 *    RefCpyV  v6, 152712520
+  171  10 *    CALLSYS  1170           (UiObject@& array::opIndex(uint))
+  173   8 *    PshRPtr
+  174   9 *    RDSPtr
+  175   9 *    CALLINTF 1101           (float SceneObject::height() const)
+  177   8 *    CpyRtoV4 v7
+  178   8 *    FREE     v6, 152712520
+  180   8 *    ADDf     v2, v3, v7
+  182   8 *    ADDIf    v4, v2, 16.000000
+- 192,40 -
+  185   8 * 6:
+  185   8 * }
+  185   8 * 3:
+  185   8 *    SUSPEND
+  186   8 *    IncVi    v5
+- 192,19 -
+  187   8 * 1:
+  187   8 *    SUSPEND
+  188   8 *    PshVPtr  v0
+  189   9 *    ADDSi    v24, 134217810
+  191   9 *    RDSPtr
+  192   9 *    CALLSYS  86           (uint array::size() const)
+  194   8 *    CpyRtoV4 v3
+  195   8 *    CMPu     v5, v3
+  197   8 *    JS       -175              (d:24)
+- 196,3 -
+  199   8 * 2:
+  199   8 *    SUSPEND
+  200   8 *    PshV4    v4
+  201   9 *    PshV4    v1
+  202  10 *    PshVPtr  v0
+  203  11 *    ADDSi    v52, 134217810
+  205  11 *    RDSPtr
+  206  11 *    CALLSYS  142           (void Vector2::set(const float, const float))
+- 197,3 -
+  208   8 *    SUSPEND
+  209   8 * 0:
+  209   8 *    FREE     v0, 152254712
+  211   8 *    RET      1

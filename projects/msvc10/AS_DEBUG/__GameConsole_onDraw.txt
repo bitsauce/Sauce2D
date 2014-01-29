@@ -1,0 +1,143 @@
+void GameConsole::onDraw(DrawEvent)
+
+Temps: 1, 3, 11, 12, 14, 15, 16, 17, 18
+
+Variables: 
+ -001: DrawEvent e
+ 002: int fontHeight
+ 013: uint i
+ 000: GameConsole this
+ 003: CFont {noname}
+ 012: string {noname}
+ 018: array {noname}
+ 011: string {noname}
+ 014: Color {noname}
+
+
+    0  18 *    VarDecl  0
+    0  18 *    PshVPtr  v0
+    1  19 *    CALLSYS  2           (void _builtin_object_::_beh_4_())
+- 52,3 -
+    3  18 *    SUSPEND
+    4  18 *    PshVPtr  v0
+    5  19 *    CALLINTF 1115           (bool SceneObject::isVisible() const)
+    7  18 *    CpyRtoV4 v1
+    8  18 *    NOT      v1
+    9  18 *    CpyVtoR4 v1
+   10  18 *    JLowZ    +3              (d:15)
+- 53,4 -
+   12  18 *    SUSPEND
+   13  18 * {
+   13  18 * }
+   13  18 *    JMP      +129              (d:144)
+- 56,3 -
+   15  18 * 1:
+   15  18 *    SUSPEND
+   16  18 *    VarDecl  1
+   16  18 *    PSF      v12
+   17  19 *    STR      182         (l:1 s:"9")
+   18  21 *    CALLSYS  32           (const string& _string_factory_(const int, const uint8&))
+   20  19 *    PshRPtr
+   21  20 *    PSF      v11
+   22  21 *    CALLSYS  34           (void string::_beh_0_(const string&in))
+   24  19 *    ObjInfo  v11, 1
+   24  19 *    PSF      v11
+   25  20 *    ALLOC    0x314cb48, 34             (type:string)
+   28  18 *    PSF      v11
+   29  19 *    CALLSYS  35           (void string::_beh_1_())
+   31  18 *    ObjInfo  v11, 0
+   31  18 *    VAR      v12
+   32  19 *    CALLSYS  303           (CFont@ currentFont())
+   34  19 *    STOREOBJ v3
+   35  19 *    PshVPtr  v3
+   36  20 *    GETOBJ   1
+   37  20 *    CALLSYS  301           (uint CFont::stringHeight(string) const)
+   39  18 *    CpyRtoV4 v1
+   40  18 *    FREE     v3, 112066712
+   42  18 *    CpyVtoV4 v2, v1
+- 57,7 -
+   44  18 *    SUSPEND
+   45  18 *    VarDecl  2
+   45  18 *    SetV4    v13, 0x0          (i:0, f:0)
+   47  18 *    JMP      +82              (d:131)
+   49  18 * 5:
+   49  18 *    SUSPEND
+- 58,4 -
+   50  18 *    SUSPEND
+   51  18 *    SetV1    v1, 0xff
+   53  18 *    PshV4    v1
+   54  19 *    SetV1    v15, 0xff
+   56  19 *    PshV4    v15
+   57  20 *    SetV1    v16, 0xff
+   59  20 *    PshV4    v16
+   60  21 *    SetV1    v17, 0xff
+   62  21 *    PshV4    v17
+   63  22 *    PSF      v14
+   64  23 *    CALLSYS  178           (void Color::_beh_0_(uint8, uint8, uint8, uint8 arg3 = 255))
+   66  18 *    ObjInfo  v14, 1
+   66  18 *    VAR      v14
+   67  19 *    PshV4    v13
+   68  20 *    PshVPtr  v0
+   69  21 *    ADDSi    v24, 134217821
+   71  21 *    RDSPtr
+   72  21 *    RefCpyV  v18, 112040344
+   74  21 *    CALLSYS  206           (string& array::opIndex(uint))
+   76  19 *    PshRPtr
+   77  20 *    PSF      v11
+   78  21 *    CALLSYS  34           (void string::_beh_0_(const string&in))
+   80  19 *    FREE     v18, 112040344
+   82  19 *    ObjInfo  v11, 1
+   82  19 *    VAR      v11
+   83  20 *    PshGPtr  112337720
+   85  21 *    CHKREF
+   86  21 *    CALLSYS  396           (float CViewport::gameY() const)
+   88  20 *    CpyRtoV4 v1
+   89  20 *    PshGPtr  112337720
+   91  21 *    CHKREF
+   92  21 *    CALLSYS  391           (uint CViewport::height() const)
+   94  20 *    CpyRtoV4 v17
+   95  20 *    uTOf     v17
+   96  20 *    ADDf     v16, v1, v17
+   98  20 *    SUBIi    v1, v13, 1
+  101  20 *    MULi     v17, v1, v2
+  103  20 *    iTOf     v17
+  104  20 *    SUBf     v1, v16, v17
+  106  20 *    LoadThisR v28, 134217821
+  108  20 *    RDR4     v15
+  109  20 *    ADDf     v17, v1, v15
+  111  20 *    PshV4    v17
+  112  21 *    PshGPtr  112337720
+  114  22 *    CHKREF
+  115  22 *    CALLSYS  395           (float CViewport::gameX() const)
+  117  21 *    CpyRtoV4 v15
+  118  21 *    PshV4    v15
+  119  22 *    PshGPtr  112336760
+  121  23 *    CHKREF
+  122  23 *    GETREF   3
+  123  23 *    GETREF   4
+  124  23 *    CALLSYS  440           (void CGFX::drawText(const float, const float, const string&in, const Color&in arg3 = Color ( )))
+  126  18 *    ObjInfo  v14, 0
+  126  18 *    PSF      v11
+  127  19 *    CALLSYS  35           (void string::_beh_1_())
+- 57,35 -
+  129  18 *    ObjInfo  v11, 0
+  129  18 * 4:
+  129  18 *    SUSPEND
+  130  18 *    IncVi    v13
+- 57,19 -
+  131  18 * 2:
+  131  18 *    SUSPEND
+  132  18 *    PshVPtr  v0
+  133  19 *    ADDSi    v24, 134217821
+  135  19 *    RDSPtr
+  136  19 *    CALLSYS  86           (uint array::size() const)
+  138  18 *    CpyRtoV4 v1
+  139  18 *    CMPu     v13, v1
+  141  18 *    JS       -94              (d:49)
+- 59,3 -
+  143  18 * 3:
+  143  18 *    SUSPEND
+  144  18 * 0:
+  144  18 *    FREE     v-1, 112324336
+  146  18 *    FREE     v0, 152247296
+  148  18 *    RET      2

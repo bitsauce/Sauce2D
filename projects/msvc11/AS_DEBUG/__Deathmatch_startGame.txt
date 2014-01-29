@@ -1,0 +1,165 @@
+void Deathmatch::startGame()
+
+Temps: 1, 2, 3, 4, 5, 6, 10, 11, 12, 13, 14
+
+Variables: 
+ 007: uint i
+ 008: Player@ player
+ 009: PlayerInfo info
+ 000: Deathmatch this
+ 001: Terrain {noname}
+ 002: Fog {noname}
+ 003: Camera {noname}
+ 004: Sky {noname}
+ 005: Hud {noname}
+ 010: array {noname}
+ 011: PlayerInfo {noname}
+ 012: PlayerInfo {noname}
+ 013: AiPlayer {noname}
+ 014: Player {noname}
+
+
+    0  14 *    PshVPtr  v0
+    1  15 *    CALLSYS  2           (void _builtin_object_::_beh_5_())
+- 34,3 -
+    3  14 *    SUSPEND
+    4  14 *    CALL     571           (Terrain@ Terrain())
+    6  14 *    STOREOBJ v1
+    7  14 *    FREE     v1, 115804032
+- 37,3 -
+    9  14 *    SUSPEND
+   10  14 *    CALL     623           (Fog@ Fog())
+   12  14 *    STOREOBJ v2
+   13  14 *    FREE     v2, 115805672
+- 40,3 -
+   15  14 *    SUSPEND
+   16  14 *    CALL     755           (Camera@ Camera())
+   18  14 *    STOREOBJ v3
+   19  14 *    FREE     v3, 115831696
+- 43,3 -
+   21  14 *    SUSPEND
+   22  14 *    CALL     718           (Sky@ Sky())
+   24  14 *    STOREOBJ v4
+   25  14 *    FREE     v4, 115828152
+- 46,3 -
+   27  14 *    SUSPEND
+   28  14 *    CALL     666           (Hud@ Hud())
+   30  14 *    STOREOBJ v5
+   31  14 *    FREE     v5, 115809848
+- 49,3 -
+   33  14 *    SUSPEND
+   34  14 *    PshVPtr  v0
+   35  15 *    ADDSi    v20, 134217760
+   37  15 *    RDSPtr
+   38  15 *    CALLSYS  88           (uint array::size() const)
+   40  14 *    CpyRtoV4 v6
+   41  14 *    PshV4    v6
+   42  15 *    PshGPtr  116096816
+   44  16 *    CHKREF
+   45  16 *    CALLSYS  91           (void array::resize(uint))
+- 50,7 -
+   47  14 *    SUSPEND
+   48  14 *    VarDecl  0
+   48  14 *    SetV4    v7, 0x0          (i:0, f:0)
+   50  14 *    JMP      +96              (d:148)
+   52  14 * 4:
+   52  14 *    SUSPEND
+- 53,4 -
+   53  14 * {
+   53  14 *    SUSPEND
+- 54,4 -
+   54  14 *    VarDecl  1
+   54  14 *    SUSPEND
+   55  14 *    VarDecl  2
+   55  14 *    CALL     569           (PlayerInfo@ PlayerInfo())
+   57  14 *    STOREOBJ v9
+   58  14 *    PshV4    v7
+   59  15 *    PshVPtr  v0
+   60  16 *    ADDSi    v20, 134217760
+   62  16 *    RDSPtr
+   63  16 *    RefCpyV  v10, 116146872
+   65  16 *    CALLSYS  945           (PlayerInfo& array::opIndex(uint))
+   67  14 *    PshRPtr
+   68  15 *    RefCpyV  v11, 115790880
+   70  15 *    PopPtr
+   71  14 *    PshVPtr  v11
+   72  15 *    CHKREF
+   73  15 *    PshVPtr  v9
+   74  16 *    CALLSYS  4           (int& _builtin_object_::opAssign(int&in))
+   76  14 *    PshRPtr
+   77  15 *    FREE     v11, 115790880
+   79  15 *    PopPtr
+   80  14 *    FREE     v10, 116146872
+- 55,4 -
+   82  14 *    SUSPEND
+   83  14 *    LoadRObjR v9, v24, 134217753
+   86  14 *    RDR1     v6
+   87  14 *    CpyVtoR4 v6
+   88  14 *    JLowZ    +22              (d:112)
+- 55,16 -
+   90  14 *    SUSPEND
+   91  14 *    PshVPtr  v9
+   92  15 *    CALL     569           (PlayerInfo@ PlayerInfo())
+   94  15 *    STOREOBJ v12
+   95  15 *    CHKREF
+   96  15 *    PshVPtr  v12
+   97  16 *    CALLSYS  4           (int& _builtin_object_::opAssign(int&in))
+   99  14 *    VAR      v12
+  100  15 *    GETOBJ   0
+  101  15 *    CALL     696           (AiPlayer@ AiPlayer(PlayerInfo))
+  103  14 *    STOREOBJ v13
+  104  14 *    PshVPtr  v13
+  105  15 *    RefCpyV  v8, 115830992
+  107  15 *    FREE     v13, 115811888
+  109  15 *    PopPtr
+  110  14 *    JMP      +20              (d:132)
+- 56,9 -
+  112  14 * 5:
+  112  14 *    SUSPEND
+  113  14 *    PshVPtr  v9
+  114  15 *    CALL     569           (PlayerInfo@ PlayerInfo())
+  116  15 *    STOREOBJ v12
+  117  15 *    CHKREF
+  118  15 *    PshVPtr  v12
+  119  16 *    CALLSYS  4           (int& _builtin_object_::opAssign(int&in))
+  121  14 *    VAR      v12
+  122  15 *    GETOBJ   0
+  123  15 *    CALL     748           (Player@ Player(PlayerInfo))
+  125  14 *    STOREOBJ v14
+  126  14 *    PshVPtr  v14
+  127  15 *    RefCpyV  v8, 115830992
+  129  15 *    FREE     v14, 115830992
+  131  15 *    PopPtr
+- 57,4 -
+  132  14 * 6:
+  132  14 *    SUSPEND
+  133  14 *    PshVPtr  v8
+  134  15 *    RefCpyV  v14, 115830992
+  136  15 *    PopPtr
+  137  14 *    VAR      v14
+  138  15 *    PshVPtr  v0
+  139  16 *    GETOBJ   1
+  140  16 *    CALLINTF 937           (void Deathmatch::loadOutPlayer(Player@))
+  142  14 *    FREE     v9, 115790880
+  144  14 *    FREE     v8, 115830992
+- 50,39 -
+  146  14 * }
+  146  14 * 3:
+  146  14 *    SUSPEND
+  147  14 *    IncVi    v7
+- 50,19 -
+  148  14 * 1:
+  148  14 *    SUSPEND
+  149  14 *    PshVPtr  v0
+  150  15 *    ADDSi    v20, 134217760
+  152  15 *    RDSPtr
+  153  15 *    CALLSYS  88           (uint array::size() const)
+  155  14 *    CpyRtoV4 v6
+  156  14 *    CMPu     v7, v6
+  158  14 *    JS       -108              (d:52)
+- 59,3 -
+  160  14 * 2:
+  160  14 *    SUSPEND
+  161  14 * 0:
+  161  14 *    FREE     v0, 115788336
+  163  14 *    RET      1

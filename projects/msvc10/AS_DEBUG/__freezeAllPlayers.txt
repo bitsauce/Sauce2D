@@ -1,0 +1,11 @@
+void freezeAllPlayers()
+
+Temps: 
+
+Variables: 
+
+
+- 24,2 -
+    0   0 *    SUSPEND
+    1   0 * 0:
+    1   0 *    RET      0

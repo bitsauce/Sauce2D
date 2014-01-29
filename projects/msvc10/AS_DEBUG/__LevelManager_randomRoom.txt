@@ -1,0 +1,58 @@
+Room@ LevelManager::randomRoom()
+
+Temps: 1, 2, 3, 4, 5
+
+Variables: 
+ 000: LevelManager this
+ 003: Room {noname}
+ 005: array {noname}
+
+
+    0   5 *    PshVPtr  v0
+    1   6 *    CALLSYS  2           (void _builtin_object_::_beh_4_())
+- 212,3 -
+    3   5 *    SUSPEND
+    4   5 *    PshVPtr  v0
+    5   6 *    ADDSi    v28, 134217815
+    7   6 *    RDSPtr
+    8   6 *    CALLSYS  86           (uint array::size() const)
+   10   5 *    CpyRtoV4 v1
+   11   5 *    CMPIu    v1, 0
+   13   5 *    JNZ      +6              (d:21)
+- 213,4 -
+   15   5 *    SUSPEND
+   16   5 *    FREE     v3, 152276032
+   18   5 * {
+   18   5 * }
+   18   5 *    LOADOBJ  v3
+   19   5 *    JMP      +34              (d:55)
+- 214,3 -
+   21   5 * 1:
+   21   5 *    SUSPEND
+   22   5 *    PshVPtr  v0
+   23   6 *    ADDSi    v28, 134217815
+   25   6 *    RDSPtr
+   26   6 *    CALLSYS  86           (uint array::size() const)
+   28   5 *    CpyRtoV4 v2
+   29   5 *    SUBIi    v2, v2, 1
+   32   5 *    PshV4    v2
+   33   6 *    PshC4    0x0          (i:0, f:0)
+   35   7 *    CALLSYS  561           (int randomInt(int, int))
+   37   5 *    CpyRtoV4 v4
+   38   5 *    PshV4    v4
+   39   6 *    PshVPtr  v0
+   40   7 *    ADDSi    v28, 134217815
+   42   7 *    RDSPtr
+   43   7 *    RefCpyV  v5, 153008520
+   45   7 *    CALLSYS  1448           (Room@& array::opIndex(uint))
+   47   5 *    PshRPtr
+   48   6 *    RDSPtr
+   49   6 *    RefCpyV  v3, 152276032
+   51   6 *    PopPtr
+   52   5 *    FREE     v5, 153008520
+   54   5 * {
+   54   5 * }
+   54   5 *    LOADOBJ  v3
+   55   5 * 0:
+   55   5 *    FREE     v0, 152275144
+   57   5 *    RET      1

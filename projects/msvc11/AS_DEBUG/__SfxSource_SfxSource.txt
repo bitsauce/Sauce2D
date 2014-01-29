@@ -1,0 +1,85 @@
+SfxSource::SfxSource(const int)
+
+Temps: 1, 2, 3, 4, 5
+
+Variables: 
+ -001: const int soundId
+ 000: SfxSource this
+ 002: vec2 {noname}
+
+
+- 17,15 -
+    0   5 *    VarDecl  0
+    0   5 *    SUSPEND
+    1   5 *    PshVPtr  v0
+    2   6 *    ADDSi    v28, 134217762
+    4   6 *    ALLOC    0x45f8270, 132             (type:vec2)
+- 15,14 -
+    7   5 *    SUSPEND
+    8   5 *    SetV4    v4, 0xffffffff          (i:-1, f:-1.#QNAN)
+   10   5 *    LoadThisR v20, 134217762
+   12   5 *    WRTV4    v4
+- 16,14 -
+   13   5 *    SUSPEND
+   14   5 *    SetV4    v5, 0xffffffff          (i:-1, f:-1.#QNAN)
+   16   5 *    LoadThisR v24, 134217762
+   18   5 *    WRTV4    v5
+- 22,3 -
+   19   5 *    SUSPEND
+   20   5 *    CALLSYS  393           (int sfxCreateSource())
+   22   5 *    CpyRtoV4 v1
+   23   5 *    LoadThisR v20, 134217762
+   25   5 *    WRTV4    v1
+- 25,3 -
+   26   5 *    SUSPEND
+   27   5 *    PSF      v2
+   28   6 *    PshVPtr  v0
+   29   7 *    ADDSi    v28, 134217762
+   31   7 *    RDSPtr
+   32   7 *    ALLOC    0x45f8270, 133             (type:vec2)
+   35   5 *    VAR      v2
+   36   6 *    PshVPtr  v0
+   37   7 *    GETOBJ   1
+   38   7 *    CALLINTF 1037           (void SfxSource::setPosition(vec2))
+- 28,3 -
+   40   5 *    SUSPEND
+   41   5 *    PshV4    v-1
+   42   6 *    LoadThisR v20, 134217762
+   44   6 *    RDR4     v1
+   45   6 *    PshV4    v1
+   46   7 *    CALLSYS  397           (void sfxSetSourceBuffer(const int, const int))
+- 29,3 -
+   48   5 *    SUSPEND
+   49   5 *    PshC4    0x3f800000          (i:1065353216, f:1)
+   51   6 *    LoadThisR v20, 134217762
+   53   6 *    RDR4     v3
+   54   6 *    PshV4    v3
+   55   7 *    CALLSYS  401           (void sfxSetSourceGain(const int, const float))
+- 30,3 -
+   57   5 *    SUSPEND
+   58   5 *    PshC4    0x3f800000          (i:1065353216, f:1)
+   60   6 *    LoadThisR v20, 134217762
+   62   6 *    RDR4     v3
+   63   6 *    PshV4    v3
+   64   7 *    CALLSYS  402           (void sfxSetSourcePitch(const int, const float))
+- 31,3 -
+   66   5 *    SUSPEND
+   67   5 *    PshC4    0x0          (i:0, f:0)
+   69   6 *    PshC4    0x0          (i:0, f:0)
+   71   7 *    PshC4    0x0          (i:0, f:0)
+   73   8 *    LoadThisR v20, 134217762
+   75   8 *    RDR4     v5
+   76   8 *    PshV4    v5
+   77   9 *    CALLSYS  399           (void sfxSetSourceVelocity(const int, const float, const float, const float))
+- 32,3 -
+   79   5 *    SUSPEND
+   80   5 *    SetV1    v1, 0x0
+   82   5 *    PshV4    v1
+   83   6 *    LoadThisR v20, 134217762
+   85   6 *    RDR4     v5
+   86   6 *    PshV4    v5
+   87   7 *    CALLSYS  400           (void sfxSetSourceLooping(const int, const bool))
+- 33,3 -
+   89   5 *    SUSPEND
+   90   5 * 0:
+   90   5 *    RET      2

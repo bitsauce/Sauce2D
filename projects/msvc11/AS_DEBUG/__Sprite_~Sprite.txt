@@ -1,0 +1,15 @@
+Sprite::~Sprite()
+
+Temps: 
+
+Variables: 
+ 000: Sprite this
+
+
+    0   0 *    PshVPtr  v0
+    1   1 *    CALLSYS  2           (void _builtin_object_::_beh_5_())
+- 53,3 -
+    3   0 *    SUSPEND
+    4   0 * 0:
+    4   0 *    FREE     v0, 74310968
+    6   0 *    RET      1

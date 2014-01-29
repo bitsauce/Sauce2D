@@ -1,0 +1,35 @@
+void GameConsole::onKeyPress(KeyEvent)
+
+Temps: 1, 2
+
+Variables: 
+ -001: KeyEvent e
+ 000: GameConsole this
+
+
+    0   2 *    VarDecl  0
+    0   2 *    PshVPtr  v0
+    1   3 *    CALLSYS  2           (void _builtin_object_::_beh_4_())
+- 64,3 -
+    3   2 *    SUSPEND
+    4   2 *    LoadRObjR v-1, v8, 67108906
+    7   2 *    RDR1     v1
+    8   2 *    ubTOi    v1
+    9   2 *    CMPIu    v1, 124
+   11   2 *    JNZ      +10              (d:23)
+- 65,4 -
+   13   2 *    SUSPEND
+   14   2 *    PshVPtr  v0
+   15   3 *    CALLINTF 1115           (bool SceneObject::isVisible() const)
+   17   2 *    CpyRtoV4 v2
+   18   2 *    NOT      v2
+   19   2 *    PshV4    v2
+   20   3 *    PshVPtr  v0
+   21   4 *    CALLINTF 1113           (void SceneObject::setVisible(const bool))
+- 66,3 -
+   23   2 * 1:
+   23   2 *    SUSPEND
+   24   2 * 0:
+   24   2 *    FREE     v-1, 112330072
+   26   2 *    FREE     v0, 152247296
+   28   2 *    RET      2

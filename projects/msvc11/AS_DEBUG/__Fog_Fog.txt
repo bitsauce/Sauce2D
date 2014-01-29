@@ -1,0 +1,99 @@
+Fog::Fog()
+
+Temps: 1, 2, 3, 10, 11
+
+Variables: 
+ 000: Fog this
+ 001: Fog {noname}
+ 002: Fog {noname}
+ 011: grid {noname}
+ 010: string {noname}
+
+
+- 16,12 -
+    0  11 *    SUSPEND
+    1  11 *    CALL     661           (grid<int>@ factstub())
+    3  11 *    STOREOBJ v11
+    4  11 *    PshVPtr  v11
+    5  12 *    PshVPtr  v0
+    6  13 *    ADDSi    v44, 134217767
+    8  13 *    REFCPY   0x46eee78
+   10  12 *    PopPtr
+   11  11 *    FREE     v11, 74378872
+- 22,12 -
+   13  11 *    SUSPEND
+   14  11 *    CALL     661           (grid<int>@ factstub())
+   16  11 *    STOREOBJ v11
+   17  11 *    PshVPtr  v11
+   18  12 *    PshVPtr  v0
+   19  13 *    ADDSi    v52, 134217767
+   21  13 *    REFCPY   0x46eee78
+   23  12 *    PopPtr
+   24  11 *    FREE     v11, 74378872
+- 23,12 -
+   26  11 *    SUSPEND
+   27  11 *    CALL     661           (grid<int>@ factstub())
+   29  11 *    STOREOBJ v11
+   30  11 *    PshVPtr  v11
+   31  12 *    PshVPtr  v0
+   32  13 *    ADDSi    v56, 134217767
+   34  13 *    REFCPY   0x46eee78
+   36  12 *    PopPtr
+   37  11 *    FREE     v11, 74378872
+- 26,6 -
+   39  11 *    SUSPEND
+   40  11 *    PshVPtr  v0
+   41  12 *    CALL     584           (Entity::Entity())
+- 31,3 -
+   43  11 *    SUSPEND
+   44  11 *    PshGPtr  74605096
+   46  12 *    RefCpyV  v1, 74298416
+   48  12 *    PopPtr
+   49  11 *    ClrVPtr  v2
+   50  11 *    CmpPtr   v1, v2
+   52  11 *    TNZ
+   53  11 *    CpyRtoV4 v3
+   54  11 *    FREE     v1, 74298416
+   56  11 *    FREE     v2, 74298416
+   58  11 *    CpyVtoR4 v3
+   59  11 *    JLowZ    +21              (d:82)
+- 33,4 -
+   61  11 * {
+   61  11 *    SUSPEND
+   62  11 *    STR      44         (l:29 s:"Error: the")
+   63  13 *    CALLSYS  33           (const string& _string_factory_(const int, const uint8&))
+   65  11 *    PshRPtr
+   66  12 *    PSF      v10
+   67  13 *    CALLSYS  35           (string::string(const string&in))
+   69  11 *    ObjInfo  v10, 1
+   69  11 *    PSF      v10
+   70  12 *    CALLSYS  304           (void print(const string&in))
+   72  11 *    PSF      v10
+   73  12 *    CALLSYS  36           (string::~string())
+- 34,4 -
+   75  11 *    ObjInfo  v10, 0
+   75  11 *    SUSPEND
+   76  11 *    PshVPtr  v0
+   77  12 *    CALLINTF 1016           (void Entity::remove())
+- 35,4 -
+   79  11 *    SUSPEND
+   80  11 * {
+   80  11 * }
+   80  11 *    JMP      +15              (d:97)
+- 37,3 -
+   82  10   }
+   82  11 * 1:
+   82  11 *    SUSPEND
+   83  11 *    PshVPtr  v0
+   84  12 *    RefCpyV  v1, 74298416
+   86  12 *    PopPtr
+   87  11 *    VAR      v1
+   88  12 *    PGA      74605096
+   90  13 *    GETOBJREF 1
+   91  13 *    REFCPY   0x46db430
+   93  12 *    FREE     v1, 74298416
+   95  12 *    PopPtr
+- 84,3 -
+   96  11 *    SUSPEND
+   97  11 * 0:
+   97  11 *    RET      1

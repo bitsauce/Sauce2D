@@ -1,0 +1,213 @@
+void Player::update()
+
+Temps: 1, 2, 4, 5, 6, 8, 9, 11, 12, 13, 19
+
+Variables: 
+ 003: Tile@ tile
+ 007: PhysTile b
+ 017: rect2 rect
+ 000: Player this
+ 006: Tile {noname}
+ 013: vec2 {noname}
+ 011: vec2 {noname}
+ 019: vec2 {noname}
+
+
+    0  19 *    PshVPtr  v0
+    1  20 *    CALLSYS  2           (void _builtin_object_::_beh_5_())
+- 69,3 -
+    3  19 *    SUSPEND
+    4  19 *    PshC4    0x1          (i:1, f:1.4013e-045)
+    6  20 *    CALLSYS  353           (bool getKeyState(const VirtualKey))
+    8  19 *    JLowZ    +177              (d:187)
+- 71,4 -
+   10  19 * {
+   10  19 *    SUSPEND
+   11  19 *    VarDecl  0
+   11  19 *    PshGPtr  74562528
+   13  20 *    ADDSi    v4, 67108877
+   15  20 *    PopRPtr
+   16  19 *    RDR4     v2
+   17  19 *    CpyGtoV4 v4, 74607976
+   19  19 *    DIVf     v2, v2, v4
+   21  19 *    fTOi     v2
+   22  19 *    PshV4    v2
+   23  20 *    PshGPtr  74562528
+   25  21 *    ADDSi    v0, 67108877
+   27  21 *    PopRPtr
+   28  20 *    RDR4     v4
+   29  20 *    CpyGtoV4 v5, 74607976
+   31  20 *    DIVf     v4, v4, v5
+   33  20 *    fTOi     v4
+   34  20 *    PshV4    v4
+   35  21 *    PshGPtr  74607232
+   37  22 *    ADDSi    v48, 134217764
+   39  22 *    RDSPtr
+   40  22 *    CALLINTF 1120           (Tile@ TileGrid::getTileAt(const int, const int))
+   42  19 *    FREE     v3, 74297408
+   44  19 *    STOREOBJ v3
+- 72,4 -
+   45  19 *    SUSPEND
+   46  19 *    LoadRObjR v3, v36, 134217756
+   49  19 *    RDR4     v5
+   50  19 *    CMPIi    v5, 0
+   52  19 *    JZ       +131              (d:185)
+- 74,5 -
+   54  19 * {
+   54  19 *    SUSPEND
+   55  19 *    VarDecl  1
+   55  19 *    CALL     843           (PhysTile@ PhysTile())
+   57  19 *    STOREOBJ v7
+- 75,5 -
+   58  19 *    SUSPEND
+   59  19 *    PshC4    0x0          (i:0, f:0)
+   61  20 *    PSF      v13
+   62  21 *    CpyGtoV4 v2, 74607976
+   64  21 *    SetV4    v4, 0x40000000          (i:1073741824, f:2)
+   66  21 *    DIVf     v5, v2, v4
+   68  21 *    PshGPtr  74562528
+   70  22 *    ADDSi    v4, 67108877
+   72  22 *    PopRPtr
+   73  21 *    RDR4     v4
+   74  21 *    CpyGtoV4 v2, 74607976
+   76  21 *    DIVf     v4, v4, v2
+   78  21 *    PshV4    v4
+   79  22 *    CALLSYS  324           (int floor(const float))
+   81  21 *    CpyRtoV4 v2
+   82  21 *    iTOf     v2
+   83  21 *    CpyGtoV4 v8, 74607976
+   85  21 *    MULf     v4, v2, v8
+   87  21 *    ADDf     v8, v5, v4
+   89  21 *    PshV4    v8
+   90  22 *    CpyGtoV4 v4, 74607976
+   92  22 *    SetV4    v5, 0x40000000          (i:1073741824, f:2)
+   94  22 *    DIVf     v2, v4, v5
+   96  22 *    PshGPtr  74562528
+   98  23 *    ADDSi    v0, 67108877
+  100  23 *    PopRPtr
+  101  22 *    RDR4     v5
+  102  22 *    CpyGtoV4 v4, 74607976
+  104  22 *    DIVf     v5, v5, v4
+  106  22 *    PshV4    v5
+  107  23 *    CALLSYS  324           (int floor(const float))
+  109  22 *    CpyRtoV4 v4
+  110  22 *    iTOf     v4
+  111  22 *    CpyGtoV4 v9, 74607976
+  113  22 *    MULf     v5, v4, v9
+  115  22 *    ADDf     v9, v2, v5
+  117  22 *    PshV4    v9
+  118  23 *    PSF      v11
+  119  24 *    CALLSYS  135           (vec2::vec2(float, float))
+  121  21 *    ObjInfo  v11, 1
+  121  21 *    PSF      v11
+  122  22 *    ALLOC    0x45f8270, 133             (type:vec2)
+  125  20 *    ObjInfo  v11, 0
+  125  20 *    VAR      v13
+  126  21 *    PshVPtr  v7
+  127  22 *    GETOBJ   1
+  128  22 *    CALLINTF 1220           (void PhysTile::setTransform(vec2, float))
+- 76,5 -
+  130  19 *    SUSPEND
+  131  19 *    LoadRObjR v3, v36, 134217756
+  134  19 *    RDR4     v5
+  135  19 *    PshVPtr  v7
+  136  20 *    ADDSi    v44, 134217792
+  138  20 *    RDSPtr
+  139  20 *    ADDSi    v36, 134217756
+  141  20 *    PopRPtr
+  142  19 *    WRTV4    v5
+- 77,5 -
+  143  19 *    SUSPEND
+  144  19 *    SetV4    v12, 0x10          (i:16, f:2.24208e-044)
+  146  19 *    PshVPtr  v7
+  147  20 *    ADDSi    v44, 134217792
+  149  20 *    RDSPtr
+  150  20 *    ADDSi    v32, 134217756
+  152  20 *    PopRPtr
+  153  19 *    WRTV4    v12
+- 78,5 -
+  154  19 *    SUSPEND
+  155  19 *    PshGPtr  74562528
+  157  20 *    ADDSi    v4, 67108877
+  159  20 *    PopRPtr
+  160  19 *    RDR4     v5
+  161  19 *    CpyGtoV4 v12, 74607976
+  163  19 *    DIVf     v4, v5, v12
+  165  19 *    fTOi     v4
+  166  19 *    PshV4    v4
+  167  20 *    PshGPtr  74562528
+  169  21 *    ADDSi    v0, 67108877
+  171  21 *    PopRPtr
+  172  20 *    RDR4     v12
+  173  20 *    CpyGtoV4 v5, 74607976
+  175  20 *    DIVf     v2, v12, v5
+  177  20 *    fTOi     v2
+  178  20 *    PshV4    v2
+  179  21 *    PshGPtr  74607232
+  181  22 *    CALLINTF 1111           (void Terrain::removeGround(const int, const int))
+  183  19 *    FREE     v7, 74314576
+  185  19 * }
+  185  19 * 2:
+  185  19 *    FREE     v3, 74297408
+- 83,3 -
+  187  19 * }
+  187  19 * 1:
+  187  19 *    SUSPEND
+  188  19 *    PshC4    0x0          (i:0, f:0)
+  190  20 *    CALLSYS  353           (bool getKeyState(const VirtualKey))
+  192  19 *    JLowZ    +42              (d:236)
+- 86,4 -
+  194  19 * {
+  194  19 *    SUSPEND
+  195  19 *    VarDecl  2
+  195  19 *    PshVPtr  v0
+  196  20 *    ADDSi    v24, 134217751
+  198  20 *    RDSPtr
+  199  20 *    PSF      v11
+  200  21 *    CALLSYS  133           (vec2::vec2(const vec2&in))
+  202  19 *    ObjInfo  v11, 1
+  202  19 *    VAR      v11
+  203  20 *    PshVPtr  v0
+  204  21 *    ADDSi    v20, 134217751
+  206  21 *    RDSPtr
+  207  21 *    PSF      v19
+  208  22 *    CALLSYS  133           (vec2::vec2(const vec2&in))
+  210  20 *    ObjInfo  v19, 1
+  210  20 *    PSF      v19
+  211  21 *    GETREF   1
+  212  21 *    PSF      v17
+  213  22 *    CALLSYS  243           (rect2::rect2(const vec2&in, const vec2&in))
+- 87,4 -
+  215  19 *    ObjInfo  v11, 0
+  215  19 *    ObjInfo  v19, 0
+  215  19 *    ObjInfo  v17, 1
+  215  19 *    SUSPEND
+  216  19 *    PSF      v11
+  217  20 *    CALLSYS  132           (vec2::vec2())
+  219  19 *    ObjInfo  v11, 1
+  219  19 *    PshGPtr  74562528
+  221  20 *    CHKREF
+  222  20 *    PSF      v11
+  223  21 *    COPY     v2, 67108877
+  225  20 *    PopPtr
+  226  19 *    VAR      v11
+  227  20 *    PSF      v17
+  228  21 *    GETREF   1
+  229  21 *    CALLSYS  244           (bool rect2::contains(const vec2&in) const)
+  231  19 *    CpyRtoV4 v5
+  232  19 *    ObjInfo  v11, 0
+  232  19 *    CpyVtoR4 v5
+  233  19 *    JLowZ    +1              (d:236)
+- 88,4 -
+  235  19 *    SUSPEND
+- 102,3 -
+  236  19 * {
+  236  19 * }
+  236  19 * 4:
+  236  19 *    ObjInfo  v17, 0
+  236  19 * }
+  236  19 * 3:
+  236  19 *    SUSPEND
+  237  19 * 0:
+  237  19 *    FREE     v0, 74316168
+  239  19 *    RET      1

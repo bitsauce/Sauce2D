@@ -1,0 +1,60 @@
+SandgullBody::SandgullBody()
+
+Temps: 8, 16, 17, 18
+
+Variables: 
+ 000: SandgullBody this
+ 017: CTexture {noname}
+ 008: string {noname}
+ 016: string {noname}
+
+
+- 116,10 -
+    0  18 *    SUSPEND
+    1  18 *    PshVPtr  v0
+    2  19 *    ADDSi    v20, 134217787
+    4  19 *    ALLOC    0x6acceb8, 130             (type:Vector2)
+- 117,10 -
+    7  18 *    SUSPEND
+    8  18 *    PshVPtr  v0
+    9  19 *    ADDSi    v24, 134217787
+   11  19 *    ALLOC    0x6acceb8, 130             (type:Vector2)
+- 115,12 -
+   14  18 *    SUSPEND
+   15  18 *    STR      7         (l:25 s:"sprites/mo")
+   16  20 *    CALLSYS  32           (const string& _string_factory_(const int, const uint8&))
+   18  18 *    PshRPtr
+   19  19 *    PSF      v8
+   20  20 *    CALLSYS  34           (void string::_beh_0_(const string&in))
+   22  18 *    ObjInfo  v8, 1
+   22  18 *    VAR      v8
+   23  19 *    PSF      v16
+   24  20 *    PshGPtr  112334928
+   26  21 *    CHKREF
+   27  21 *    GETREF   2
+   28  21 *    CALLSYS  432           (string CX2DApp::workPath(const string&in))
+   30  18 *    ObjInfo  v16, 1
+   30  18 *    PSF      v8
+   31  19 *    CALLSYS  35           (void string::_beh_1_())
+   33  18 *    ObjInfo  v8, 0
+   33  18 *    VAR      v16
+   34  19 *    PshGPtr  112336760
+   36  20 *    CHKREF
+   37  20 *    GETREF   1
+   38  20 *    CALLSYS  467           (CTexture@ CGFX::loadTexture(const string&in))
+   40  18 *    STOREOBJ v17
+   41  18 *    PSF      v16
+   42  19 *    CALLSYS  35           (void string::_beh_1_())
+   44  18 *    ObjInfo  v16, 0
+   44  18 *    PshVPtr  v17
+   45  19 *    PshVPtr  v0
+   46  20 *    ADDSi    v16, 134217787
+   48  20 *    REFCPY   0x6acca00
+   50  19 *    FREE     v17, 111987200
+   52  19 *    PopPtr
+- 118,8 -
+   53  18 *    SUSPEND
+   54  18 *    SetV4    v18, 0x3f800000          (i:1065353216, f:1)
+   56  18 *    LoadThisR v28, 134217787
+   58  18 *    WRTV4    v18
+   59  18 *    RET      1

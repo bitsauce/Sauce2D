@@ -1,0 +1,20 @@
+bool UiObject::isEnabled()
+
+Temps: 1
+
+Variables: 
+ 000: UiObject this
+
+
+    0   1 *    PshVPtr  v0
+    1   2 *    CALLSYS  2           (void _builtin_object_::_beh_4_())
+- 141,21 -
+    3   1 *    SUSPEND
+    4   1 *    LoadThisR v35, 134217780
+    6   1 *    RDR1     v1
+    7   1 * {
+    7   1 * }
+    7   1 *    CpyVtoR4 v1
+    8   1 * 0:
+    8   1 *    FREE     v0, 150271928
+   10   1 *    RET      1

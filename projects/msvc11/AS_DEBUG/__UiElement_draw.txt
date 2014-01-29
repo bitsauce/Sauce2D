@@ -1,0 +1,94 @@
+void UiElement::draw()
+
+Temps: 1, 2, 3, 4, 6
+
+Variables: 
+ 005: uint i
+ 000: UiElement this
+ 006: array {noname}
+
+
+    0   6 *    PshVPtr  v0
+    1   7 *    CALLSYS  2           (void _builtin_object_::_beh_5_())
+- 143,3 -
+    3   6 *    SUSPEND
+    4   6 *    LoadThisR v44, 134217755
+    6   6 *    RDR1     v1
+    7   6 *    NOT      v1
+    8   6 *    CpyVtoR4 v1
+    9   6 *    JLowZ    +3              (d:14)
+- 143,16 -
+   11   6 *    SUSPEND
+   12   6 * {
+   12   6 * }
+   12   6 *    JMP      +75              (d:89)
+- 144,3 -
+   14   6 * 1:
+   14   6 *    SUSPEND
+   15   6 *    PshVPtr  v0
+   16   7 *    ADDSi    v36, 134217755
+   18   7 *    RDSPtr
+   19   7 *    CALLSYS  254           (float rect2::get_height() const)
+   21   6 *    CpyRtoV4 v1
+   22   6 *    PshV4    v1
+   23   7 *    PshVPtr  v0
+   24   8 *    ADDSi    v36, 134217755
+   26   8 *    RDSPtr
+   27   8 *    CALLSYS  252           (float rect2::get_width() const)
+   29   7 *    CpyRtoV4 v2
+   30   7 *    PshV4    v2
+   31   8 *    PshVPtr  v0
+   32   9 *    ADDSi    v36, 134217755
+   34   9 *    RDSPtr
+   35   9 *    CALLSYS  251           (float rect2::get_y() const)
+   37   8 *    CpyRtoV4 v3
+   38   8 *    PshV4    v3
+   39   9 *    PshVPtr  v0
+   40  10 *    ADDSi    v36, 134217755
+   42  10 *    RDSPtr
+   43  10 *    CALLSYS  249           (float rect2::get_x() const)
+   45   9 *    CpyRtoV4 v4
+   46   9 *    PshV4    v4
+   47  10 *    CALLSYS  442           (void gfxBeginClip(const float, const float, const float, const float))
+- 145,7 -
+   49   6 *    SUSPEND
+   50   6 *    VarDecl  0
+   50   6 *    SetV4    v5, 0x0          (i:0, f:0)
+   52   6 *    JMP      +19              (d:73)
+   54   6 * 5:
+   54   6 *    SUSPEND
+- 146,4 -
+   55   6 *    SUSPEND
+   56   6 *    PshV4    v5
+   57   7 *    PshVPtr  v0
+   58   8 *    ADDSi    v24, 134217755
+   60   8 *    RDSPtr
+   61   8 *    RefCpyV  v6, 74709888
+   63   8 *    CALLSYS  1100           (UiElement@& array::opIndex(uint))
+   65   6 *    PshRPtr
+   66   7 *    RDSPtr
+   67   7 *    CALLINTF 1090           (void UiElement::draw())
+   69   6 *    FREE     v6, 74709888
+- 145,40 -
+   71   6 * 4:
+   71   6 *    SUSPEND
+   72   6 *    IncVi    v5
+- 145,19 -
+   73   6 * 2:
+   73   6 *    SUSPEND
+   74   6 *    PshVPtr  v0
+   75   7 *    ADDSi    v24, 134217755
+   77   7 *    RDSPtr
+   78   7 *    CALLSYS  88           (uint array::size() const)
+   80   6 *    CpyRtoV4 v4
+   81   6 *    CMPu     v5, v4
+   83   6 *    JS       -31              (d:54)
+- 147,3 -
+   85   6 * 3:
+   85   6 *    SUSPEND
+   86   6 *    CALLSYS  443           (void gfxEndClip())
+- 148,3 -
+   88   6 *    SUSPEND
+   89   6 * 0:
+   89   6 *    FREE     v0, 74282504
+   91   6 *    RET      1

@@ -1,0 +1,189 @@
+void TileSelector::onUpdate(UpdateEvent)
+
+Temps: 1, 2, 3, 7, 9, 11, 12, 14, 18, 19, 20
+
+Variables: 
+ -001: UpdateEvent e
+ 005: Vector2 cursorPos
+ 000: TileSelector this
+ 001: TileSetData {noname}
+ 002: TileSetData {noname}
+ 007: Vector2 {noname}
+ 009: Vector2 {noname}
+ 011: Vector2 {noname}
+ 014: Vector2 {noname}
+ 018: Rect2 {noname}
+
+
+    0  20 *    VarDecl  0
+    0  20 *    PshVPtr  v0
+    1  21 *    CALLSYS  2           (void _builtin_object_::_beh_4_())
+- 215,3 -
+    3  20 *    SUSPEND
+    4  20 *    PshVPtr  v0
+    5  21 *    ADDSi    v52, 134217809
+    7  21 *    RDSPtr
+    8  21 *    RefCpyV  v1, 152222624
+   10  21 *    PopPtr
+   11  20 *    ClrVPtr  v2
+   12  20 *    CmpPtr   v1, v2
+   14  20 *    TZ
+   15  20 *    CpyRtoV4 v3
+   16  20 *    FREE     v1, 152222624
+   18  20 *    FREE     v2, 152222624
+   20  20 *    CpyVtoR4 v3
+   21  20 *    JLowZ    +3              (d:26)
+- 215,28 -
+   23  20 *    SUSPEND
+   24  20 * {
+   24  20 * }
+   24  20 *    JMP      +165              (d:191)
+- 216,3 -
+   26  20 * 1:
+   26  20 *    SUSPEND
+   27  20 *    VarDecl  1
+   27  20 *    PSF      v5
+   28  21 *    CALLSYS  130           (void Vector2::_beh_0_())
+   30  20 *    ObjInfo  v5, 1
+   30  20 *    PshVPtr  v0
+   31  21 *    ADDSi    v64, 134217809
+   33  21 *    RDSPtr
+   34  21 *    ADDSi    v64, 134217810
+   36  21 *    PopRPtr
+   37  20 *    RDR4     v3
+   38  20 *    SUBIf    v3, v3, 16.000000
+   41  20 *    PshV4    v3
+   42  21 *    PshVPtr  v0
+   43  22 *    ADDSi    v64, 134217809
+   45  22 *    RDSPtr
+   46  22 *    ADDSi    v60, 134217810
+   48  22 *    PopRPtr
+   49  21 *    RDR4     v12
+   50  21 *    PshV4    v12
+   51  22 *    PSF      v14
+   52  23 *    CALLSYS  132           (void Vector2::_beh_0_(float, float))
+   54  20 *    ObjInfo  v14, 1
+   54  20 *    VAR      v14
+   55  21 *    PSF      v9
+   56  22 *    PSF      v9
+   57  23 *    PshVPtr  v0
+   58  24 *    ADDSi    v64, 134217809
+   60  24 *    RDSPtr
+   61  24 *    CALLINTF 1092           (Vector2 SceneObject::pos() const)
+   63  22 *    ObjInfo  v9, 1
+   63  22 *    VAR      v9
+   64  23 *    PSF      v11
+   65  24 *    PSF      v7
+   66  25 *    PshGPtr  112334928
+   68  26 *    CHKREF
+   69  26 *    CALLSYS  430           (Vector2 CX2DApp::cursorViewPos() const)
+   71  24 *    ObjInfo  v7, 1
+   71  24 *    PSF      v7
+   72  25 *    GETREF   2
+   73  25 *    CALLSYS  139           (Vector2 Vector2::opSub(const Vector2&in) const)
+   75  22 *    ObjInfo  v11, 1
+   75  22 *    ObjInfo  v9, 0
+   75  22 *    PSF      v11
+   76  23 *    ObjInfo  v7, 0
+   76  23 *    GETREF   2
+   77  23 *    CALLSYS  138           (Vector2 Vector2::opAdd(const Vector2&in) const)
+   79  20 *    ObjInfo  v9, 1
+   79  20 *    ObjInfo  v14, 0
+   79  20 *    PSF      v9
+   80  21 *    ObjInfo  v11, 0
+   80  21 *    PSF      v5
+   81  22 *    COPY     v2, 67108877
+   83  21 *    ObjInfo  v9, 0
+   83  21 *    PopPtr
+- 217,3 -
+   84  20 *    SUSPEND
+   85  20 *    PshC4    0x1          (i:1, f:1.4013e-045)
+   87  21 *    CALLSYS  571           (bool getKeyState(int))
+   89  20 *    JLowNZ   +4              (d:95)
+   91  20 *    SetV4    v12, 0x0          (i:0, f:0)
+   93  20 *    JMP      +12              (d:107)
+   95  20 * 3:
+   95  20 *    VAR      v5
+   96  21 *    PSF      v18
+   97  22 *    PshVPtr  v0
+   98  23 *    CALLINTF 1105           (Rect2 SceneObject::bounds() const)
+  100  21 *    ObjInfo  v18, 1
+  100  21 *    PSF      v18
+  101  22 *    GETREF   1
+  102  22 *    CALLSYS  159           (bool Rect2::contains(const Vector2&in) const)
+  104  20 *    CpyRtoV4 v3
+  105  20 *    ObjInfo  v18, 0
+  105  20 *    CpyVtoV4 v12, v3
+  107  20 * 4:
+  107  20 *    CpyVtoR4 v12
+  108  20 *    JLowZ    +80              (d:190)
+- 220,4 -
+  110  20 * {
+  110  20 *    SUSPEND
+  111  20 *    LoadVObjR v5, v0, 67108877
+  114  20 *    RDR4     v12
+  115  20 *    PshVPtr  v0
+  116  21 *    CALLINTF 1093           (float SceneObject::x() const)
+  118  20 *    CpyRtoV4 v3
+  119  20 *    SUBf     v12, v12, v3
+  121  20 *    SetV4    v19, 0x42800000          (i:1115684864, f:64)
+  123  20 *    DIVf     v3, v12, v19
+  125  20 *    PshV4    v3
+  126  21 *    CALLSYS  534           (int floor(const float))
+  128  20 *    CpyRtoV4 v19
+  129  20 *    LoadThisR v60, 134217809
+  131  20 *    WRTV4    v19
+- 221,4 -
+  132  20 *    SUSPEND
+  133  20 *    LoadThisR v60, 134217809
+  135  20 *    RDR4     v12
+  136  20 *    CMPIi    v12, 0
+  138  20 *    JNS      +8              (d:148)
+- 221,22 -
+  140  20 *    SUSPEND
+  141  20 *    SetV4    v19, 0x0          (i:0, f:0)
+  143  20 *    LoadThisR v60, 134217809
+  145  20 *    WRTV4    v19
+  146  20 *    JMP      +34              (d:182)
+- 222,9 -
+  148  20 * 5:
+  148  20 *    SUSPEND
+  149  20 *    LoadThisR v60, 134217809
+  151  20 *    RDR4     v20
+  152  20 *    PshVPtr  v0
+  153  21 *    ADDSi    v52, 134217809
+  155  21 *    RDSPtr
+  156  21 *    ADDSi    v32, 134217805
+  158  21 *    PopRPtr
+  159  20 *    RDR4     v3
+  160  20 *    SUBIi    v12, v3, 1
+  163  20 *    CMPi     v20, v12
+  165  20 *    JNP      +15              (d:182)
+- 222,54 -
+  167  20 *    SUSPEND
+  168  20 *    PshVPtr  v0
+  169  21 *    ADDSi    v52, 134217809
+  171  21 *    RDSPtr
+  172  21 *    ADDSi    v32, 134217805
+  174  21 *    PopRPtr
+  175  20 *    RDR4     v12
+  176  20 *    SUBIi    v20, v12, 1
+  179  20 *    LoadThisR v60, 134217809
+  181  20 *    WRTV4    v20
+- 223,4 -
+  182  20 * 7:
+  182  20 * 6:
+  182  20 *    SUSPEND
+  183  20 *    LoadThisR v60, 134217809
+  185  20 *    RDR4     v19
+  186  20 *    SUBIi    v12, v19, 1
+  189  20 *    WRTV4    v12
+- 225,3 -
+  190  20 * }
+  190  20 * 2:
+  190  20 *    SUSPEND
+  191  20 *    ObjInfo  v5, 0
+  191  20 * 0:
+  191  20 *    FREE     v-1, 112323680
+  193  20 *    FREE     v0, 152234968
+  195  20 *    RET      2

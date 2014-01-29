@@ -1,0 +1,296 @@
+void Perlin2D::generate(int, int, int, float)
+
+Temps: 3, 5, 6, 7, 9, 10, 11
+
+Variables: 
+ -001: int width
+ -002: int height
+ -003: int octaves
+ -004: float persistance
+ 001: grid<float> baseNoise
+ 002: uint x
+ 004: uint y
+ 008: grid<float>[] smoothNoise
+ 004: int i
+ 002: float amplitude
+ 004: float totalAmplitude
+ 012: int octave
+ 013: int i
+ 014: int j
+ 014: int i
+ 013: int j
+ 000: Perlin2D this
+ 009: grid {noname}
+ 010: grid {noname}
+ 011: grid {noname}
+
+
+    0  14 *    VarDecl  0
+    0  14 *    VarDecl  1
+    0  14 *    VarDecl  2
+    0  14 *    VarDecl  3
+    0  14 *    PshVPtr  v0
+    1  15 *    CALLSYS  2           (void _builtin_object_::_beh_4_())
+- 46,3 -
+    3  14 *    SUSPEND
+    4  14 *    VarDecl  4
+    4  14 *    PshV4    v-2
+    5  15 *    PshV4    v-1
+    6  16 *    CALL     649           (grid<float>@ factstub(uint, uint))
+    8  14 *    STOREOBJ v1
+- 47,7 -
+    9  14 *    SUSPEND
+   10  14 *    VarDecl  5
+   10  14 *    SetV4    v2, 0x0          (i:0, f:0)
+   12  14 *    JMP      +39              (d:53)
+   14  14 * 4:
+   14  14 *    SUSPEND
+- 48,8 -
+   15  14 *    SUSPEND
+   16  14 *    VarDecl  6
+   16  14 *    SetV4    v4, 0x0          (i:0, f:0)
+   18  14 *    JMP      +22              (d:42)
+   20  14 * 8:
+   20  14 *    SUSPEND
+- 49,5 -
+   21  14 *    SUSPEND
+   22  14 *    PshC4    0x64          (i:100, f:1.4013e-043)
+   24  15 *    PshC4    0x0          (i:0, f:0)
+   26  16 *    CALLSYS  554           (int randomInt(int, int))
+   28  14 *    CpyRtoV4 v6
+   29  14 *    iTOf     v6
+   30  14 *    SetV4    v7, 0x42c80000          (i:1120403456, f:100)
+   32  14 *    DIVf     v3, v6, v7
+   34  14 *    PshV4    v4
+   35  15 *    PshV4    v2
+   36  16 *    PshVPtr  v1
+   37  17 *    CALLSYS  654           (float& grid::at(uint, uint))
+   39  14 *    WRTV4    v3
+- 48,44 -
+   40  14 * 7:
+   40  14 *    SUSPEND
+   41  14 *    IncVi    v4
+- 48,20 -
+   42  14 * 5:
+   42  14 *    SUSPEND
+   43  14 *    PshVPtr  v1
+   44  15 *    CALLSYS  124           (uint grid::height() const)
+   46  14 *    CpyRtoV4 v3
+   47  14 *    CMPu     v4, v3
+   49  14 *    JS       -31              (d:20)
+- 47,42 -
+   51  14 * 6:
+   51  14 * 3:
+   51  14 *    SUSPEND
+   52  14 *    IncVi    v2
+- 47,19 -
+   53  14 * 1:
+   53  14 *    SUSPEND
+   54  14 *    PshVPtr  v1
+   55  15 *    CALLSYS  123           (uint grid::width() const)
+   57  14 *    CpyRtoV4 v3
+   58  14 *    CMPu     v2, v3
+   60  14 *    JS       -48              (d:14)
+- 52,3 -
+   62  14 * 2:
+   62  14 *    SUSPEND
+   63  14 *    VarDecl  7
+   63  14 *    PshV4    v-3
+   64  15 *    CALL     748           (grid<float>[]@ factstub(uint))
+   66  14 *    STOREOBJ v8
+- 55,7 -
+   67  14 *    SUSPEND
+   68  14 *    VarDecl  8
+   68  14 *    SetV4    v4, 0x0          (i:0, f:0)
+   70  14 *    JMP      +30              (d:102)
+   72  14 * 12:
+   72  14 *    SUSPEND
+- 56,6 -
+   73  14 *    SUSPEND
+   74  14 *    PshV4    v4
+   75  15 *    PshVPtr  v1
+   76  16 *    RefCpyV  v9, 104839864
+   78  16 *    PopPtr
+   79  15 *    VAR      v9
+   80  16 *    PshVPtr  v0
+   81  17 *    GETOBJ   1
+   82  17 *    CALLINTF 746           (grid<float> Perlin2D::generateSmoothNoise(grid<float>@, int))
+   84  14 *    STOREOBJ v10
+   85  14 *    VAR      v10
+   86  15 *    PshV4    v4
+   87  16 *    PshVPtr  v8
+   88  17 *    CALLSYS  751           (grid<float>& array::opIndex(uint))
+   90  15 *    PshRPtr
+   91  16 *    GETOBJREF 1
+   92  16 *    RefCpyV  v11, 104839864
+   94  16 *    CALLSYS  656           (grid<float>& grid::opAssign(const grid<float>&in))
+   96  14 *    FREE     v11, 104839864
+   98  14 *    FREE     v10, 104839864
+- 55,31 -
+  100  14 * 11:
+  100  14 *    SUSPEND
+  101  14 *    IncVi    v4
+- 55,18 -
+  102  14 * 9:
+  102  14 *    SUSPEND
+  103  14 *    CMPi     v4, v-3
+  105  14 *    JS       -35              (d:72)
+- 59,3 -
+  107  14 * 10:
+  107  14 *    SUSPEND
+  108  14 *    VarDecl  9
+  108  14 *    SetV4    v2, 0x3f800000          (i:1065353216, f:1)
+- 60,3 -
+  110  14 *    SUSPEND
+  111  14 *    VarDecl  10
+  111  14 *    SetV4    v4, 0x0          (i:0, f:0)
+- 63,3 -
+  113  14 *    SUSPEND
+  114  14 *    SetV4    v6, 0x0          (i:0, f:0)
+  116  14 *    VAR      v6
+  117  15 *    PshV4    v-2
+  118  16 *    PshV4    v-1
+  119  17 *    PshVPtr  v0
+  120  18 *    ADDSi    v16, 134217781
+  122  18 *    RDSPtr
+  123  18 *    GETREF   3
+  124  18 *    CALLSYS  651           (void grid::resize(uint, uint, const float&in))
+- 64,7 -
+  126  14 *    SUSPEND
+  127  14 *    VarDecl  11
+  127  14 *    SUBIi    v12, v-3, 1
+  130  14 *    JMP      +68              (d:200)
+  132  14 * 16:
+  132  14 *    SUSPEND
+- 66,4 -
+  133  14 * {
+  133  14 *    SUSPEND
+  134  14 *    MULf     v2, v2, v-4
+- 67,4 -
+  136  14 *    SUSPEND
+  137  14 *    ADDf     v4, v4, v2
+- 69,8 -
+  139  14 *    SUSPEND
+  140  14 *    VarDecl  12
+  140  14 *    SetV4    v13, 0x0          (i:0, f:0)
+  142  14 *    JMP      +49              (d:193)
+  144  14 * 20:
+  144  14 *    SUSPEND
+- 71,9 -
+  145  14 * {
+  145  14 *    SUSPEND
+  146  14 *    VarDecl  13
+  146  14 *    SetV4    v14, 0x0          (i:0, f:0)
+  148  14 *    JMP      +36              (d:186)
+  150  14 * 24:
+  150  14 *    SUSPEND
+- 72,6 -
+  151  14 *    SUSPEND
+  152  14 *    PshV4    v14
+  153  15 *    PshV4    v13
+  154  16 *    PshV4    v12
+  155  17 *    PshVPtr  v8
+  156  18 *    CALLSYS  751           (grid<float>& array::opIndex(uint))
+  158  16 *    PshRPtr
+  159  17 *    RefCpyV  v11, 104839864
+  161  17 *    CALLSYS  654           (float& grid::at(uint, uint))
+  163  14 *    RDR4     v5
+  164  14 *    FREE     v11, 104839864
+  166  14 *    MULf     v6, v5, v2
+  168  14 *    PshV4    v14
+  169  15 *    PshV4    v13
+  170  16 *    PshVPtr  v0
+  171  17 *    ADDSi    v16, 134217781
+  173  17 *    RDSPtr
+  174  17 *    RefCpyV  v10, 104839864
+  176  17 *    CALLSYS  654           (float& grid::at(uint, uint))
+  178  14 *    RDR4     v3
+  179  14 *    FREE     v10, 104839864
+  181  14 *    ADDf     v5, v3, v6
+  183  14 *    WRTV4    v5
+- 71,32 -
+  184  14 * 23:
+  184  14 *    SUSPEND
+  185  14 *    IncVi    v14
+- 71,20 -
+  186  14 * 21:
+  186  14 *    SUSPEND
+  187  14 *    CMPi     v14, v-2
+  189  14 *    JS       -41              (d:150)
+- 69,30 -
+  191  14 * 22:
+  191  14 * }
+  191  14 * 19:
+  191  14 *    SUSPEND
+  192  14 *    IncVi    v13
+- 69,19 -
+  193  14 * 17:
+  193  14 *    SUSPEND
+  194  14 *    CMPi     v13, v-1
+  196  14 *    JS       -54              (d:144)
+- 64,46 -
+  198  14 * 18:
+  198  14 * }
+  198  14 * 15:
+  198  14 *    SUSPEND
+  199  14 *    DecVi    v12
+- 64,33 -
+  200  14 * 13:
+  200  14 *    SUSPEND
+  201  14 *    CMPIi    v12, 0
+  203  14 *    JNS      -73              (d:132)
+- 77,7 -
+  205  14 * 14:
+  205  14 *    SUSPEND
+  206  14 *    VarDecl  14
+  206  14 *    SetV4    v14, 0x0          (i:0, f:0)
+  208  14 *    JMP      +33              (d:243)
+  210  14 * 28:
+  210  14 *    SUSPEND
+- 78,8 -
+  211  14 *    SUSPEND
+  212  14 *    VarDecl  15
+  212  14 *    SetV4    v13, 0x0          (i:0, f:0)
+  214  14 *    JMP      +20              (d:236)
+  216  14 * 32:
+  216  14 *    SUSPEND
+- 79,5 -
+  217  14 *    SUSPEND
+  218  14 *    PshV4    v13
+  219  15 *    PshV4    v14
+  220  16 *    PshVPtr  v0
+  221  17 *    ADDSi    v16, 134217781
+  223  17 *    RDSPtr
+  224  17 *    RefCpyV  v10, 104839864
+  226  17 *    CALLSYS  654           (float& grid::at(uint, uint))
+  228  14 *    RDR4     v7
+  229  14 *    FREE     v10, 104839864
+  231  14 *    DIVf     v5, v7, v4
+  233  14 *    WRTV4    v5
+- 78,31 -
+  234  14 * 31:
+  234  14 *    SUSPEND
+  235  14 *    IncVi    v13
+- 78,19 -
+  236  14 * 29:
+  236  14 *    SUSPEND
+  237  14 *    CMPi     v13, v-2
+  239  14 *    JS       -25              (d:216)
+- 77,29 -
+  241  14 * 30:
+  241  14 * 27:
+  241  14 *    SUSPEND
+  242  14 *    IncVi    v14
+- 77,18 -
+  243  14 * 25:
+  243  14 *    SUSPEND
+  244  14 *    CMPi     v14, v-1
+  246  14 *    JS       -38              (d:210)
+- 91,3 -
+  248  14 * 26:
+  248  14 *    SUSPEND
+  249  14 *    FREE     v8, 105012296
+  251  14 *    FREE     v1, 104839864
+  253  14 * 0:
+  253  14 *    FREE     v0, 104786232
+  255  14 *    RET      5

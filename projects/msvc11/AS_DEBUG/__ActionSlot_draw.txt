@@ -1,0 +1,79 @@
+void ActionSlot::draw()
+
+Temps: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11
+
+Variables: 
+ 000: ActionSlot this
+ 002: vec4 {noname}
+
+
+    0  11 *    PshVPtr  v0
+    1  12 *    CALLSYS  2           (void _builtin_object_::_beh_5_())
+- 46,3 -
+    3  11 *    SUSPEND
+    4  11 *    PshC4    0x64          (i:100, f:1.4013e-043)
+    6  12 *    CALLSYS  421           (void gfxSetDepth(const int))
+- 47,3 -
+    8  11 *    SUSPEND
+    9  11 *    PSF      v2
+   10  12 *    PshVPtr  v0
+   11  13 *    ADDSi    v60, 134217758
+   13  13 *    RDSPtr
+   14  13 *    ALLOC    0x4600fd0, 217             (type:vec4)
+   17  11 *    VAR      v2
+   18  12 *    GETOBJ   0
+   19  12 *    CALLSYS  418           (void gfxSetColor(const vec4))
+- 48,3 -
+   21  11 *    SUSPEND
+   22  11 *    LoadThisR v56, 134217758
+   24  11 *    RDR4     v1
+   25  11 *    PshV4    v1
+   26  12 *    CALLSYS  420           (void gfxSetTexture(const int))
+- 49,3 -
+   28  11 *    SUSPEND
+   29  11 *    PshC4    0x3          (i:3, f:4.2039e-045)
+   31  12 *    CALLSYS  434           (void gfxBegin(const DrawMode = DrawTriangles))
+- 50,3 -
+   33  11 *    SUSPEND
+   34  11 *    SetV1    v1, 0x0
+   36  11 *    PshV4    v1
+   37  12 *    PshC4    0x3f800000          (i:1065353216, f:1)
+   39  13 *    PshC4    0x3f800000          (i:1065353216, f:1)
+   41  14 *    PshC4    0x0          (i:0, f:0)
+   43  15 *    PshC4    0x0          (i:0, f:0)
+   45  16 *    PshVPtr  v0
+   46  17 *    ADDSi    v36, 134217758
+   48  17 *    RDSPtr
+   49  17 *    CALLSYS  254           (float rect2::get_height() const)
+   51  16 *    CpyRtoV4 v8
+   52  16 *    PshV4    v8
+   53  17 *    PshVPtr  v0
+   54  18 *    ADDSi    v36, 134217758
+   56  18 *    RDSPtr
+   57  18 *    CALLSYS  252           (float rect2::get_width() const)
+   59  17 *    CpyRtoV4 v9
+   60  17 *    PshV4    v9
+   61  18 *    PshVPtr  v0
+   62  19 *    ADDSi    v36, 134217758
+   64  19 *    RDSPtr
+   65  19 *    CALLSYS  251           (float rect2::get_y() const)
+   67  18 *    CpyRtoV4 v10
+   68  18 *    PshV4    v10
+   69  19 *    PshVPtr  v0
+   70  20 *    ADDSi    v36, 134217758
+   72  20 *    RDSPtr
+   73  20 *    CALLSYS  249           (float rect2::get_x() const)
+   75  19 *    CpyRtoV4 v11
+   76  19 *    PshV4    v11
+   77  20 *    CALLSYS  441           (void gfxAddRect(const float, const float, const float, const float, const float, const float, const float, const float, const bool = false))
+- 51,3 -
+   79  11 *    SUSPEND
+   80  11 *    CALLSYS  435           (void gfxEnd())
+- 52,3 -
+   82  11 *    SUSPEND
+   83  11 *    CALLSYS  430           (void gfxReset())
+- 53,3 -
+   85  11 *    SUSPEND
+   86  11 * 0:
+   86  11 *    FREE     v0, 74309136
+   88  11 *    RET      1

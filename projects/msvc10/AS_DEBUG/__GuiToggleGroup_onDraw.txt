@@ -1,0 +1,105 @@
+void GuiToggleGroup::onDraw(DrawEvent)
+
+Temps: 1, 2, 3, 4, 5, 9, 10, 11
+
+Variables: 
+ -001: DrawEvent e
+ 000: GuiToggleGroup this
+ 010: UiObject {noname}
+ 011: UiObject {noname}
+ 002: Color {noname}
+ 009: Rect2 {noname}
+
+
+    0  11 *    VarDecl  0
+    0  11 *    PshVPtr  v0
+    1  12 *    CALLSYS  2           (void _builtin_object_::_beh_4_())
+- 57,3 -
+    3  11 *    SUSPEND
+    4  11 *    LDG      150728152
+    6  11 *    RDR1     v1
+    7  11 *    NOT      v1
+    8  11 *    CpyVtoR4 v1
+    9  11 *    JLowZ    +3              (d:14)
+- 58,4 -
+   11  11 *    SUSPEND
+   12  11 * {
+   12  11 * }
+   12  11 *    JMP      +82              (d:96)
+- 59,3 -
+   14  11 * 1:
+   14  11 *    SUSPEND
+   15  11 *    SetV1    v1, 0x50
+   17  11 *    PshV4    v1
+   18  12 *    SetV1    v3, 0x0
+   20  12 *    PshV4    v3
+   21  13 *    SetV1    v4, 0x0
+   23  13 *    PshV4    v4
+   24  14 *    SetV1    v5, 0x0
+   26  14 *    PshV4    v5
+   27  15 *    PSF      v2
+   28  16 *    CALLSYS  178           (void Color::_beh_0_(uint8, uint8, uint8, uint8 arg3 = 255))
+   30  11 *    ObjInfo  v2, 1
+   30  11 *    VAR      v2
+   31  12 *    PSF      v9
+   32  13 *    PshVPtr  v0
+   33  14 *    CALLINTF 1226           (Rect2 SceneObject::bounds() const)
+   35  12 *    ObjInfo  v9, 1
+   35  12 *    VAR      v9
+   36  13 *    PshGPtr  89185096
+   38  14 *    CHKREF
+   39  14 *    GETREF   1
+   40  14 *    GETREF   2
+   41  14 *    CALLSYS  444           (void CGFX::drawRect(const Rect2&in, const Color&in arg1 = Color ( )))
+- 60,3 -
+   43  11 *    ObjInfo  v2, 0
+   43  11 *    ObjInfo  v9, 0
+   43  11 *    SUSPEND
+   44  11 *    PshVPtr  v0
+   45  12 *    ADDSi    v52, 134217797
+   47  12 *    RDSPtr
+   48  12 *    RefCpyV  v10, 150271928
+   50  12 *    PopPtr
+   51  11 *    ClrVPtr  v11
+   52  11 *    CmpPtr   v10, v11
+   54  11 *    TNZ
+   55  11 *    CpyRtoV4 v1
+   56  11 *    FREE     v10, 150271928
+   58  11 *    FREE     v11, 150271928
+   60  11 *    CpyVtoR4 v1
+   61  11 *    JLowZ    +32              (d:95)
+- 61,4 -
+   63  11 *    SUSPEND
+   64  11 *    SetV1    v3, 0xc8
+   66  11 *    PshV4    v3
+   67  12 *    SetV1    v4, 0xbe
+   69  12 *    PshV4    v4
+   70  13 *    SetV1    v5, 0xbe
+   72  13 *    PshV4    v5
+   73  14 *    SetV1    v1, 0xbe
+   75  14 *    PshV4    v1
+   76  15 *    PSF      v2
+   77  16 *    CALLSYS  178           (void Color::_beh_0_(uint8, uint8, uint8, uint8 arg3 = 255))
+   79  11 *    ObjInfo  v2, 1
+   79  11 *    VAR      v2
+   80  12 *    PSF      v9
+   81  13 *    PshVPtr  v0
+   82  14 *    ADDSi    v52, 134217797
+   84  14 *    RDSPtr
+   85  14 *    CALLINTF 1226           (Rect2 SceneObject::bounds() const)
+   87  12 *    ObjInfo  v9, 1
+   87  12 *    VAR      v9
+   88  13 *    PshGPtr  89185096
+   90  14 *    CHKREF
+   91  14 *    GETREF   1
+   92  14 *    GETREF   2
+   93  14 *    CALLSYS  444           (void CGFX::drawRect(const Rect2&in, const Color&in arg1 = Color ( )))
+- 62,3 -
+   95  11 *    ObjInfo  v2, 0
+   95  11 *    ObjInfo  v9, 0
+   95  11 * 2:
+   95  11 *    SUSPEND
+   96  11 * 0:
+   96  11 *    FREE     v-1, 89186840
+   98  11 *    FREE     v0, 150276928
+  100  11 *    RET      2

@@ -1,0 +1,682 @@
+void Terrain::updateTiles()
+
+Temps: 2, 5, 6, 7, 9, 10, 13, 14, 15
+
+Variables: 
+ 001: int y
+ 003: int x
+ 004: Tile@ tile0
+ 008: int tf
+ 008: int y
+ 003: int x
+ 004: Tile@ tile0
+ 011: Tile@[] tileIds
+ 012: Tile@ tile1
+ 012: Tile@ tile1
+ 012: Tile@ tile1
+ 012: Tile@ tile1
+ 000: Terrain this
+ 005: grid {noname}
+ 006: Tile {noname}
+ 009: array {noname}
+ 010: array {noname}
+ 014: Tile {noname}
+ 015: array {noname}
+
+
+    0  15 *    PshVPtr  v0
+    1  16 *    CALLSYS  2           (void _builtin_object_::_beh_4_())
+- 46,3 -
+    3  15 *    SUSPEND
+    4  15 *    PshVPtr  v0
+    5  16 *    ADDSi    v36, 134217749
+    7  16 *    RDSPtr
+    8  16 *    CALLINTF 487           (void FrameBuffer::bind())
+- 47,7 -
+   10  15 *    SUSPEND
+   11  15 *    VarDecl  0
+   11  15 *    SetV4    v1, 0x0          (i:0, f:0)
+   13  15 *    JMP      +123              (d:138)
+   15  15 * 4:
+   15  15 *    SUSPEND
+- 49,8 -
+   16  15 * {
+   16  15 *    SUSPEND
+   17  15 *    VarDecl  1
+   17  15 *    SetV4    v3, 0x0          (i:0, f:0)
+   19  15 *    JMP      +103              (d:124)
+   21  15 * 8:
+   21  15 *    SUSPEND
+- 52,5 -
+   22  15 * {
+   22  15 *    SUSPEND
+   23  15 *    VarDecl  2
+   23  15 *    PshV4    v1
+   24  16 *    PshV4    v3
+   25  17 *    PshVPtr  v0
+   26  18 *    ADDSi    v32, 134217749
+   28  18 *    RDSPtr
+   29  18 *    RefCpyV  v5, 104350960
+   31  18 *    CALLSYS  398           (Tile& grid::at(uint, uint))
+   33  15 *    PshRPtr
+   34  16 *    RefCpyV  v6, 104324816
+   36  16 *    PopPtr
+   37  15 *    PshVPtr  v6
+   38  16 *    RefCpyV  v4, 104324816
+   40  16 *    FREE     v6, 104324816
+   42  16 *    PopPtr
+   43  15 *    FREE     v5, 104350960
+- 53,5 -
+   45  15 *    SUSPEND
+   46  15 *    LoadRObjR v4, v24, 134217744
+   49  15 *    RDR4     v2
+   50  15 *    PshGPtr  104427000
+   52  16 *    ADDSi    v16, 134217747
+   54  16 *    PopRPtr
+   55  15 *    RDR4     v7
+   56  15 *    CMPi     v2, v7
+   58  15 *    JNZ      +5              (d:65)
+- 54,6 -
+   60  15 *    SUSPEND
+   61  15 * {
+   61  15 *    FREE     v4, 104324816
+   63  15 * }
+   63  15 *    JMP      +57              (d:122)
+- 57,5 -
+   65  15 * 9:
+   65  15 *    SUSPEND
+   66  15 *    VarDecl  3
+   66  15 *    PshV4    v1
+   67  16 *    PshV4    v3
+   68  17 *    PshVPtr  v0
+   69  18 *    CALLINTF 504           (int Terrain::tileState(const int, const int))
+   71  15 *    CpyRtoV4 v7
+   72  15 *    PshV4    v7
+   73  16 *    PshVPtr  v0
+   74  17 *    CALLINTF 505           (uint Terrain::tileFrame(const int))
+   76  15 *    CpyRtoV4 v2
+   77  15 *    CpyVtoV4 v8, v2
+- 58,5 -
+   79  15 *    SUSPEND
+   80  15 *    LoadRObjR v4, v16, 134217744
+   83  15 *    WRTV4    v8
+- 59,5 -
+   84  15 *    SUSPEND
+   85  15 *    LoadRObjR v4, v16, 134217744
+   88  15 *    RDR4     v2
+   89  15 *    PshV4    v2
+   90  16 *    LoadRObjR v4, v24, 134217744
+   93  16 *    RDR4     v7
+   94  16 *    PshV4    v7
+   95  17 *    PshGPtr  104426416
+   97  18 *    CHKREF
+   98  18 *    RefCpyV  v9, 104315384
+  100  18 *    CALLSYS  475           (TileData@& array::opIndex(uint))
+  102  16 *    PshRPtr
+  103  17 *    RDSPtr
+  104  17 *    ADDSi    v24, 134217747
+  106  17 *    RDSPtr
+  107  17 *    RefCpyV  v10, 104362464
+  109  17 *    CALLSYS  412           (int& array::opIndex(uint))
+  111  15 *    RDR4     v7
+  112  15 *    LoadRObjR v4, v20, 134217744
+  115  15 *    WRTV4    v7
+  116  15 *    FREE     v9, 104315384
+  118  15 *    FREE     v10, 104362464
+  120  15 *    FREE     v4, 104324816
+- 49,46 -
+  122  15 * }
+  122  15 * 7:
+  122  15 *    SUSPEND
+  123  15 *    IncVi    v3
+- 49,19 -
+  124  15 * 5:
+  124  15 *    SUSPEND
+  125  15 *    PshVPtr  v0
+  126  16 *    ADDSi    v32, 134217749
+  128  16 *    RDSPtr
+  129  16 *    CALLSYS  125           (uint grid::width() const)
+  131  15 *    CpyRtoV4 v2
+  132  15 *    CMPi     v3, v2
+  134  15 *    JS       -115              (d:21)
+- 47,46 -
+  136  15 * 6:
+  136  15 * }
+  136  15 * 3:
+  136  15 *    SUSPEND
+  137  15 *    IncVi    v1
+- 47,18 -
+  138  15 * 1:
+  138  15 *    SUSPEND
+  139  15 *    PshVPtr  v0
+  140  16 *    ADDSi    v32, 134217749
+  142  16 *    RDSPtr
+  143  16 *    CALLSYS  126           (uint grid::height() const)
+  145  15 *    CpyRtoV4 v2
+  146  15 *    CMPi     v1, v2
+  148  15 *    JS       -135              (d:15)
+- 63,7 -
+  150  15 * 2:
+  150  15 *    SUSPEND
+  151  15 *    VarDecl  4
+  151  15 *    SetV4    v8, 0x0          (i:0, f:0)
+  153  15 *    JMP      +652              (d:807)
+  155  15 * 13:
+  155  15 *    SUSPEND
+- 65,8 -
+  156  15 * {
+  156  15 *    SUSPEND
+  157  15 *    VarDecl  5
+  157  15 *    SetV4    v3, 0x0          (i:0, f:0)
+  159  15 *    JMP      +632              (d:793)
+  161  15 * 17:
+  161  15 *    SUSPEND
+- 68,5 -
+  162  15 * {
+  162  15 *    SUSPEND
+  163  15 *    VarDecl  6
+  163  15 *    PshV4    v8
+  164  16 *    PshV4    v3
+  165  17 *    PshVPtr  v0
+  166  18 *    ADDSi    v32, 134217749
+  168  18 *    RDSPtr
+  169  18 *    RefCpyV  v5, 104350960
+  171  18 *    CALLSYS  398           (Tile& grid::at(uint, uint))
+  173  15 *    PshRPtr
+  174  16 *    RefCpyV  v6, 104324816
+  176  16 *    PopPtr
+  177  15 *    PshVPtr  v6
+  178  16 *    RefCpyV  v4, 104324816
+  180  16 *    FREE     v6, 104324816
+  182  16 *    PopPtr
+  183  15 *    FREE     v5, 104350960
+- 69,5 -
+  185  15 *    SUSPEND
+  186  15 *    LoadRObjR v4, v24, 134217744
+  189  15 *    RDR4     v2
+  190  15 *    PshGPtr  104427000
+  192  16 *    ADDSi    v16, 134217747
+  194  16 *    PopRPtr
+  195  15 *    RDR4     v7
+  196  15 *    CMPi     v2, v7
+  198  15 *    JNZ      +5              (d:205)
+- 70,6 -
+  200  15 *    SUSPEND
+  201  15 * {
+  201  15 *    FREE     v4, 104324816
+  203  15 * }
+  203  15 *    JMP      +586              (d:791)
+- 73,5 -
+  205  15 * 18:
+  205  15 *    SUSPEND
+  206  15 *    VarDecl  7
+  206  15 *    FREE     v6, 104324816
+  208  15 *    VAR      v6
+  209  16 *    PshC4    0x4          (i:4, f:5.60519e-045)
+  211  17 *    GETREF   1
+  212  17 *    CALL     376           (Tile@[]@ factstub(uint, Tile@const&in))
+  214  15 *    STOREOBJ v11
+  215  15 *    FREE     v6, 104324816
+- 76,5 -
+  217  15 *    SUSPEND
+  218  15 *    SUBIi    v2, v8, 1
+  221  15 *    PshV4    v2
+  222  16 *    PshV4    v3
+  223  17 *    PshVPtr  v0
+  224  18 *    ADDSi    v32, 134217749
+  226  18 *    RDSPtr
+  227  18 *    CALLSYS  128           (bool grid::isIndex(uint, uint) const)
+  229  15 *    JLowZ    +97              (d:328)
+- 77,6 -
+  231  15 * {
+  231  15 *    SUSPEND
+  232  15 *    VarDecl  8
+  232  15 *    SUBIi    v7, v8, 1
+  235  15 *    PshV4    v7
+  236  16 *    PshV4    v3
+  237  17 *    PshVPtr  v0
+  238  18 *    ADDSi    v32, 134217749
+  240  18 *    RDSPtr
+  241  18 *    RefCpyV  v5, 104350960
+  243  18 *    CALLSYS  398           (Tile& grid::at(uint, uint))
+  245  15 *    PshRPtr
+  246  16 *    RefCpyV  v6, 104324816
+  248  16 *    PopPtr
+  249  15 *    PshVPtr  v6
+  250  16 *    RefCpyV  v12, 104324816
+  252  16 *    FREE     v6, 104324816
+  254  16 *    PopPtr
+  255  15 *    FREE     v5, 104350960
+- 78,6 -
+  257  15 *    SUSPEND
+  258  15 *    LoadRObjR v12, v24, 134217744
+  261  15 *    RDR4     v2
+  262  15 *    PshGPtr  104427000
+  264  16 *    ADDSi    v16, 134217747
+  266  16 *    PopRPtr
+  267  15 *    RDR4     v7
+  268  15 *    CMPi     v2, v7
+  270  15 *    JNZ      +4              (d:276)
+  272  15 *    SetV4    v13, 0x0          (i:0, f:0)
+  274  15 *    JMP      +14              (d:290)
+  276  15 * 21:
+  276  15 *    LoadRObjR v4, v24, 134217744
+  279  15 *    RDR4     v7
+  280  15 *    LoadRObjR v12, v24, 134217744
+  283  15 *    RDR4     v13
+  284  15 *    CMPi     v7, v13
+  286  15 *    TNZ
+  287  15 *    CpyRtoV4 v7
+  288  15 *    CpyVtoV4 v13, v7
+  290  15 * 22:
+  290  15 *    CpyVtoR4 v13
+  291  15 *    JLowZ    +33              (d:326)
+- 79,7 -
+  293  15 *    SUSPEND
+  294  15 *    SUBIi    v13, v8, 1
+  297  15 *    PshV4    v13
+  298  16 *    PshV4    v3
+  299  17 *    PshVPtr  v0
+  300  18 *    ADDSi    v32, 134217749
+  302  18 *    RDSPtr
+  303  18 *    RefCpyV  v5, 104350960
+  305  18 *    CALLSYS  398           (Tile& grid::at(uint, uint))
+  307  15 *    PshRPtr
+  308  16 *    RefCpyV  v6, 104324816
+  310  16 *    PopPtr
+  311  15 *    FREE     v5, 104350960
+  313  15 *    VAR      v6
+  314  16 *    PshC4    0x0          (i:0, f:0)
+  316  17 *    PshVPtr  v11
+  317  18 *    CALLSYS  378           (Tile@& array::opIndex(uint))
+  319  16 *    PshRPtr
+  320  17 *    GETOBJREF 1
+  321  17 *    REFCPY   0x637ded0
+  323  16 *    FREE     v6, 104324816
+  325  16 *    PopPtr
+  326  15 * 20:
+  326  15 *    FREE     v12, 104324816
+- 83,5 -
+  328  15 * }
+  328  15 * 19:
+  328  15 *    SUSPEND
+  329  15 *    PshV4    v8
+  330  16 *    ADDIi    v13, v3, 1
+  333  16 *    PshV4    v13
+  334  17 *    PshVPtr  v0
+  335  18 *    ADDSi    v32, 134217749
+  337  18 *    RDSPtr
+  338  18 *    CALLSYS  128           (bool grid::isIndex(uint, uint) const)
+  340  15 *    JLowZ    +97              (d:439)
+- 84,6 -
+  342  15 * {
+  342  15 *    SUSPEND
+  343  15 *    VarDecl  9
+  343  15 *    PshV4    v8
+  344  16 *    ADDIi    v13, v3, 1
+  347  16 *    PshV4    v13
+  348  17 *    PshVPtr  v0
+  349  18 *    ADDSi    v32, 134217749
+  351  18 *    RDSPtr
+  352  18 *    RefCpyV  v5, 104350960
+  354  18 *    CALLSYS  398           (Tile& grid::at(uint, uint))
+  356  15 *    PshRPtr
+  357  16 *    RefCpyV  v6, 104324816
+  359  16 *    PopPtr
+  360  15 *    PshVPtr  v6
+  361  16 *    RefCpyV  v12, 104324816
+  363  16 *    FREE     v6, 104324816
+  365  16 *    PopPtr
+  366  15 *    FREE     v5, 104350960
+- 85,6 -
+  368  15 *    SUSPEND
+  369  15 *    LoadRObjR v12, v24, 134217744
+  372  15 *    RDR4     v2
+  373  15 *    PshGPtr  104427000
+  375  16 *    ADDSi    v16, 134217747
+  377  16 *    PopRPtr
+  378  15 *    RDR4     v13
+  379  15 *    CMPi     v2, v13
+  381  15 *    JNZ      +4              (d:387)
+  383  15 *    SetV4    v2, 0x0          (i:0, f:0)
+  385  15 *    JMP      +14              (d:401)
+  387  15 * 25:
+  387  15 *    LoadRObjR v4, v24, 134217744
+  390  15 *    RDR4     v13
+  391  15 *    LoadRObjR v12, v24, 134217744
+  394  15 *    RDR4     v2
+  395  15 *    CMPi     v13, v2
+  397  15 *    TNZ
+  398  15 *    CpyRtoV4 v13
+  399  15 *    CpyVtoV4 v2, v13
+  401  15 * 26:
+  401  15 *    CpyVtoR4 v2
+  402  15 *    JLowZ    +33              (d:437)
+- 86,7 -
+  404  15 *    SUSPEND
+  405  15 *    PshV4    v8
+  406  16 *    ADDIi    v2, v3, 1
+  409  16 *    PshV4    v2
+  410  17 *    PshVPtr  v0
+  411  18 *    ADDSi    v32, 134217749
+  413  18 *    RDSPtr
+  414  18 *    RefCpyV  v5, 104350960
+  416  18 *    CALLSYS  398           (Tile& grid::at(uint, uint))
+  418  15 *    PshRPtr
+  419  16 *    RefCpyV  v6, 104324816
+  421  16 *    PopPtr
+  422  15 *    FREE     v5, 104350960
+  424  15 *    VAR      v6
+  425  16 *    PshC4    0x1          (i:1, f:1.4013e-045)
+  427  17 *    PshVPtr  v11
+  428  18 *    CALLSYS  378           (Tile@& array::opIndex(uint))
+  430  16 *    PshRPtr
+  431  17 *    GETOBJREF 1
+  432  17 *    REFCPY   0x637ded0
+  434  16 *    FREE     v6, 104324816
+  436  16 *    PopPtr
+  437  15 * 24:
+  437  15 *    FREE     v12, 104324816
+- 90,5 -
+  439  15 * }
+  439  15 * 23:
+  439  15 *    SUSPEND
+  440  15 *    ADDIi    v2, v8, 1
+  443  15 *    PshV4    v2
+  444  16 *    PshV4    v3
+  445  17 *    PshVPtr  v0
+  446  18 *    ADDSi    v32, 134217749
+  448  18 *    RDSPtr
+  449  18 *    CALLSYS  128           (bool grid::isIndex(uint, uint) const)
+  451  15 *    JLowZ    +97              (d:550)
+- 91,6 -
+  453  15 * {
+  453  15 *    SUSPEND
+  454  15 *    VarDecl  10
+  454  15 *    ADDIi    v2, v8, 1
+  457  15 *    PshV4    v2
+  458  16 *    PshV4    v3
+  459  17 *    PshVPtr  v0
+  460  18 *    ADDSi    v32, 134217749
+  462  18 *    RDSPtr
+  463  18 *    RefCpyV  v5, 104350960
+  465  18 *    CALLSYS  398           (Tile& grid::at(uint, uint))
+  467  15 *    PshRPtr
+  468  16 *    RefCpyV  v6, 104324816
+  470  16 *    PopPtr
+  471  15 *    PshVPtr  v6
+  472  16 *    RefCpyV  v12, 104324816
+  474  16 *    FREE     v6, 104324816
+  476  16 *    PopPtr
+  477  15 *    FREE     v5, 104350960
+- 92,6 -
+  479  15 *    SUSPEND
+  480  15 *    LoadRObjR v12, v24, 134217744
+  483  15 *    RDR4     v7
+  484  15 *    PshGPtr  104427000
+  486  16 *    ADDSi    v16, 134217747
+  488  16 *    PopRPtr
+  489  15 *    RDR4     v2
+  490  15 *    CMPi     v7, v2
+  492  15 *    JNZ      +4              (d:498)
+  494  15 *    SetV4    v7, 0x0          (i:0, f:0)
+  496  15 *    JMP      +14              (d:512)
+  498  15 * 29:
+  498  15 *    LoadRObjR v4, v24, 134217744
+  501  15 *    RDR4     v2
+  502  15 *    LoadRObjR v12, v24, 134217744
+  505  15 *    RDR4     v7
+  506  15 *    CMPi     v2, v7
+  508  15 *    TNZ
+  509  15 *    CpyRtoV4 v2
+  510  15 *    CpyVtoV4 v7, v2
+  512  15 * 30:
+  512  15 *    CpyVtoR4 v7
+  513  15 *    JLowZ    +33              (d:548)
+- 93,7 -
+  515  15 *    SUSPEND
+  516  15 *    ADDIi    v7, v8, 1
+  519  15 *    PshV4    v7
+  520  16 *    PshV4    v3
+  521  17 *    PshVPtr  v0
+  522  18 *    ADDSi    v32, 134217749
+  524  18 *    RDSPtr
+  525  18 *    RefCpyV  v5, 104350960
+  527  18 *    CALLSYS  398           (Tile& grid::at(uint, uint))
+  529  15 *    PshRPtr
+  530  16 *    RefCpyV  v6, 104324816
+  532  16 *    PopPtr
+  533  15 *    FREE     v5, 104350960
+  535  15 *    VAR      v6
+  536  16 *    PshC4    0x2          (i:2, f:2.8026e-045)
+  538  17 *    PshVPtr  v11
+  539  18 *    CALLSYS  378           (Tile@& array::opIndex(uint))
+  541  16 *    PshRPtr
+  542  17 *    GETOBJREF 1
+  543  17 *    REFCPY   0x637ded0
+  545  16 *    FREE     v6, 104324816
+  547  16 *    PopPtr
+  548  15 * 28:
+  548  15 *    FREE     v12, 104324816
+- 97,5 -
+  550  15 * }
+  550  15 * 27:
+  550  15 *    SUSPEND
+  551  15 *    PshV4    v8
+  552  16 *    SUBIi    v7, v3, 1
+  555  16 *    PshV4    v7
+  556  17 *    PshVPtr  v0
+  557  18 *    ADDSi    v32, 134217749
+  559  18 *    RDSPtr
+  560  18 *    CALLSYS  128           (bool grid::isIndex(uint, uint) const)
+  562  15 *    JLowZ    +97              (d:661)
+- 98,6 -
+  564  15 * {
+  564  15 *    SUSPEND
+  565  15 *    VarDecl  11
+  565  15 *    PshV4    v8
+  566  16 *    SUBIi    v7, v3, 1
+  569  16 *    PshV4    v7
+  570  17 *    PshVPtr  v0
+  571  18 *    ADDSi    v32, 134217749
+  573  18 *    RDSPtr
+  574  18 *    RefCpyV  v5, 104350960
+  576  18 *    CALLSYS  398           (Tile& grid::at(uint, uint))
+  578  15 *    PshRPtr
+  579  16 *    RefCpyV  v6, 104324816
+  581  16 *    PopPtr
+  582  15 *    PshVPtr  v6
+  583  16 *    RefCpyV  v12, 104324816
+  585  16 *    FREE     v6, 104324816
+  587  16 *    PopPtr
+  588  15 *    FREE     v5, 104350960
+- 99,6 -
+  590  15 *    SUSPEND
+  591  15 *    LoadRObjR v12, v24, 134217744
+  594  15 *    RDR4     v13
+  595  15 *    PshGPtr  104427000
+  597  16 *    ADDSi    v16, 134217747
+  599  16 *    PopRPtr
+  600  15 *    RDR4     v7
+  601  15 *    CMPi     v13, v7
+  603  15 *    JNZ      +4              (d:609)
+  605  15 *    SetV4    v13, 0x0          (i:0, f:0)
+  607  15 *    JMP      +14              (d:623)
+  609  15 * 33:
+  609  15 *    LoadRObjR v4, v24, 134217744
+  612  15 *    RDR4     v7
+  613  15 *    LoadRObjR v12, v24, 134217744
+  616  15 *    RDR4     v13
+  617  15 *    CMPi     v7, v13
+  619  15 *    TNZ
+  620  15 *    CpyRtoV4 v7
+  621  15 *    CpyVtoV4 v13, v7
+  623  15 * 34:
+  623  15 *    CpyVtoR4 v13
+  624  15 *    JLowZ    +33              (d:659)
+- 100,7 -
+  626  15 *    SUSPEND
+  627  15 *    PshV4    v8
+  628  16 *    SUBIi    v13, v3, 1
+  631  16 *    PshV4    v13
+  632  17 *    PshVPtr  v0
+  633  18 *    ADDSi    v32, 134217749
+  635  18 *    RDSPtr
+  636  18 *    RefCpyV  v5, 104350960
+  638  18 *    CALLSYS  398           (Tile& grid::at(uint, uint))
+  640  15 *    PshRPtr
+  641  16 *    RefCpyV  v6, 104324816
+  643  16 *    PopPtr
+  644  15 *    FREE     v5, 104350960
+  646  15 *    VAR      v6
+  647  16 *    PshC4    0x3          (i:3, f:4.2039e-045)
+  649  17 *    PshVPtr  v11
+  650  18 *    CALLSYS  378           (Tile@& array::opIndex(uint))
+  652  16 *    PshRPtr
+  653  17 *    GETOBJREF 1
+  654  17 *    REFCPY   0x637ded0
+  656  16 *    FREE     v6, 104324816
+  658  16 *    PopPtr
+  659  15 * 32:
+  659  15 *    FREE     v12, 104324816
+- 104,5 -
+  661  15 * }
+  661  15 * 31:
+  661  15 *    SUSPEND
+  662  15 *    PshC4    0x0          (i:0, f:0)
+  664  16 *    PshVPtr  v11
+  665  17 *    CALLSYS  378           (Tile@& array::opIndex(uint))
+  667  15 *    PshRPtr
+  668  16 *    RDSPtr
+  669  16 *    RefCpyV  v6, 104324816
+  671  16 *    PopPtr
+  672  15 *    ClrVPtr  v14
+  673  15 *    CmpPtr   v6, v14
+  675  15 *    TNZ
+  676  15 *    CpyRtoV4 v13
+  677  15 *    FREE     v6, 104324816
+  679  15 *    FREE     v14, 104324816
+  681  15 *    CpyVtoR4 v13
+  682  15 *    JLowZ    +4              (d:688)
+  684  15 *    SetV1    v7, 0x1
+  686  15 *    JMP      +21              (d:709)
+  688  15 * 36:
+  688  15 *    PshC4    0x1          (i:1, f:1.4013e-045)
+  690  16 *    PshVPtr  v11
+  691  17 *    CALLSYS  378           (Tile@& array::opIndex(uint))
+  693  15 *    PshRPtr
+  694  16 *    RDSPtr
+  695  16 *    RefCpyV  v14, 104324816
+  697  16 *    PopPtr
+  698  15 *    ClrVPtr  v6
+  699  15 *    CmpPtr   v14, v6
+  701  15 *    TNZ
+  702  15 *    CpyRtoV4 v2
+  703  15 *    FREE     v14, 104324816
+  705  15 *    FREE     v6, 104324816
+  707  15 *    CpyVtoV4 v7, v2
+  709  15 * 37:
+  709  15 *    CpyVtoR4 v7
+  710  15 *    JLowZ    +4              (d:716)
+  712  15 *    SetV1    v13, 0x1
+  714  15 *    JMP      +21              (d:737)
+  716  15 * 38:
+  716  15 *    PshC4    0x2          (i:2, f:2.8026e-045)
+  718  16 *    PshVPtr  v11
+  719  17 *    CALLSYS  378           (Tile@& array::opIndex(uint))
+  721  15 *    PshRPtr
+  722  16 *    RDSPtr
+  723  16 *    RefCpyV  v14, 104324816
+  725  16 *    PopPtr
+  726  15 *    ClrVPtr  v6
+  727  15 *    CmpPtr   v14, v6
+  729  15 *    TNZ
+  730  15 *    CpyRtoV4 v2
+  731  15 *    FREE     v14, 104324816
+  733  15 *    FREE     v6, 104324816
+  735  15 *    CpyVtoV4 v13, v2
+  737  15 * 39:
+  737  15 *    CpyVtoR4 v13
+  738  15 *    JLowZ    +4              (d:744)
+  740  15 *    SetV1    v7, 0x1
+  742  15 *    JMP      +21              (d:765)
+  744  15 * 40:
+  744  15 *    PshC4    0x3          (i:3, f:4.2039e-045)
+  746  16 *    PshVPtr  v11
+  747  17 *    CALLSYS  378           (Tile@& array::opIndex(uint))
+  749  15 *    PshRPtr
+  750  16 *    RDSPtr
+  751  16 *    RefCpyV  v14, 104324816
+  753  16 *    PopPtr
+  754  15 *    ClrVPtr  v6
+  755  15 *    CmpPtr   v14, v6
+  757  15 *    TNZ
+  758  15 *    CpyRtoV4 v2
+  759  15 *    FREE     v14, 104324816
+  761  15 *    FREE     v6, 104324816
+  763  15 *    CpyVtoV4 v7, v2
+  765  15 * 41:
+  765  15 *    CpyVtoR4 v7
+  766  15 *    JLowZ    +19              (d:787)
+- 105,6 -
+  768  15 *    SUSPEND
+  769  15 *    PshVPtr  v11
+  770  16 *    CALL     374           (Tile@[]@ factstub())
+  772  16 *    STOREOBJ v15
+  773  16 *    PshVPtr  v15
+  774  17 *    CALLSYS  80           (T[]& array::opAssign(const T[]&in))
+  776  15 *    VAR      v15
+  777  16 *    PshVPtr  v4
+  778  17 *    RefCpyV  v14, 104324816
+  780  17 *    PopPtr
+  781  16 *    VAR      v14
+  782  17 *    PshVPtr  v0
+  783  18 *    GETOBJ   1
+  784  18 *    GETOBJ   2
+  785  18 *    CALLINTF 506           (void Terrain::blendTiles(Tile@, Tile@[]))
+  787  15 * 35:
+  787  15 *    FREE     v11, 104338976
+  789  15 *    FREE     v4, 104324816
+- 65,46 -
+  791  15 * }
+  791  15 * 16:
+  791  15 *    SUSPEND
+  792  15 *    IncVi    v3
+- 65,19 -
+  793  15 * 14:
+  793  15 *    SUSPEND
+  794  15 *    PshVPtr  v0
+  795  16 *    ADDSi    v32, 134217749
+  797  16 *    RDSPtr
+  798  16 *    CALLSYS  125           (uint grid::width() const)
+  800  15 *    CpyRtoV4 v2
+  801  15 *    CMPi     v3, v2
+  803  15 *    JS       -644              (d:161)
+- 63,46 -
+  805  15 * 15:
+  805  15 * }
+  805  15 * 12:
+  805  15 *    SUSPEND
+  806  15 *    IncVi    v8
+- 63,18 -
+  807  15 * 10:
+  807  15 *    SUSPEND
+  808  15 *    PshVPtr  v0
+  809  16 *    ADDSi    v32, 134217749
+  811  16 *    RDSPtr
+  812  16 *    CALLSYS  126           (uint grid::height() const)
+  814  15 *    CpyRtoV4 v7
+  815  15 *    CMPi     v8, v7
+  817  15 *    JS       -664              (d:155)
+- 108,3 -
+  819  15 * 11:
+  819  15 *    SUSPEND
+  820  15 *    PshVPtr  v0
+  821  16 *    ADDSi    v36, 134217749
+  823  16 *    RDSPtr
+  824  16 *    CALLINTF 488           (void FrameBuffer::unbind())
+- 109,3 -
+  826  15 *    SUSPEND
+  827  15 * 0:
+  827  15 *    FREE     v0, 104324232
+  829  15 *    RET      1

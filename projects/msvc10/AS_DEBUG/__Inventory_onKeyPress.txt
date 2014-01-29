@@ -1,0 +1,40 @@
+void Inventory::onKeyPress(KeyEvent)
+
+Temps: 1, 2
+
+Variables: 
+ -001: KeyEvent e
+ 000: Inventory this
+
+
+    0   2 *    VarDecl  0
+    0   2 *    PshVPtr  v0
+    1   3 *    CALLSYS  2           (void _builtin_object_::_beh_4_())
+- 66,3 -
+    3   2 *    SUSPEND
+    4   2 *    LoadRObjR v-1, v4, 67108906
+    7   2 *    RDR4     v1
+    8   2 *    CMPIi    v1, 73
+   10   2 *    JNZ      +15              (d:27)
+- 67,4 -
+   12   2 * {
+   12   2 *    SUSPEND
+   13   2 *    LoadThisR v24, 134217818
+   15   2 *    RDR1     v2
+   16   2 *    NOT      v2
+   17   2 *    LoadThisR v24, 134217818
+   19   2 *    WRTV1    v2
+- 68,4 -
+   20   2 *    SUSPEND
+   21   2 *    LoadThisR v24, 134217818
+   23   2 *    RDR1     v2
+   24   2 *    LDG      152636480
+   26   2 *    WRTV1    v2
+- 70,3 -
+   27   2 * }
+   27   2 * 1:
+   27   2 *    SUSPEND
+   28   2 * 0:
+   28   2 *    FREE     v-1, 112330072
+   30   2 *    FREE     v0, 152246288
+   32   2 *    RET      2

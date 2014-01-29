@@ -1,0 +1,39 @@
+void Ship::onRemove(RemoveEvent)
+
+Temps: 1, 2
+
+Variables: 
+ -001: RemoveEvent e
+ 000: Ship this
+ 001: Ship {noname}
+
+
+    0   2 *    VarDecl  0
+    0   2 *    PshVPtr  v0
+    1   3 *    CALLSYS  2           (void _builtin_object_::_beh_4_())
+- 56,3 -
+    3   2 *    SUSPEND
+    4   2 *    PshVPtr  v0
+    5   3 *    RefCpyV  v1, 113546488
+    7   3 *    PopPtr
+    8   2 *    VAR      v1
+    9   3 *    PshGPtr  113617944
+   11   4 *    CHKREF
+   12   4 *    GETREF   1
+   13   4 *    CALLSYS  651           (int array::find(Ship@const&in) const)
+   15   2 *    CpyRtoV4 v2
+   16   2 *    FREE     v1, 113546488
+   18   2 *    PshV4    v2
+   19   3 *    PshGPtr  113617944
+   21   4 *    CHKREF
+   22   4 *    CALLSYS  83           (void array::removeAt(uint))
+- 57,3 -
+   24   2 *    SUSPEND
+   25   2 *    PshVPtr  v0
+   26   3 *    CALL     595           (void SceneObject::remove())
+- 58,3 -
+   28   2 *    SUSPEND
+   29   2 * 0:
+   29   2 *    FREE     v-1, 113420928
+   31   2 *    FREE     v0, 113546488
+   33   2 *    RET      2

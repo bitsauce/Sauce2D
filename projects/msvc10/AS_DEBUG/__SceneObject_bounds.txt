@@ -1,0 +1,29 @@
+Rect2 SceneObject::bounds() const
+
+Temps: 4
+
+Variables: 
+ 000: SceneObject this
+ 004: Rect2 {noname}
+
+
+    0   4 *    PshVPtr  v0
+    1   5 *    CALLSYS  2           (void _builtin_object_::_beh_4_())
+- 1,1120 -
+    3   4 *    SUSPEND
+    4   4 *    PSF      v4
+    5   5 *    PshVPtr  v0
+    6   6 *    ADDSi    v16, 134217770
+    8   6 *    RDSPtr
+    9   6 *    CALLSYS  314           (Rect2 CSceneObject::bounds() const)
+   11   4 *    ObjInfo  v4, 1
+   11   4 *    PSF      v4
+   12   5 *    PshVPtr  v-1
+   13   6 *    CALLSYS  156           (void Rect2::_beh_0_(const Rect2&in))
+   15   4 *    ObjInfo  v4, 0
+   15   4 *    ObjInfo  v-1, 1
+   15   4 * {
+   15   4 * }
+   15   4 * 0:
+   15   4 *    FREE     v0, 104704768
+   17   4 *    RET      2

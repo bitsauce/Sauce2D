@@ -1,0 +1,170 @@
+void Room::removePlayer(Player@)
+
+Temps: 1, 2, 4, 5, 6
+
+Variables: 
+ -001: Player@ player
+ 003: uint i
+ 003: uint i
+ 003: uint i
+ 000: Room this
+ 004: array {noname}
+ 005: array {noname}
+ 006: array {noname}
+
+
+    0   6 *    VarDecl  0
+    0   6 *    PshVPtr  v0
+    1   7 *    CALLSYS  2           (void _builtin_object_::_beh_4_())
+- 147,3 -
+    3   6 *    SUSPEND
+    4   6 *    VAR      v-1
+    5   7 *    PshVPtr  v0
+    6   8 *    ADDSi    v28, 134217788
+    8   8 *    RDSPtr
+    9   8 *    GETREF   1
+   10   8 *    CALLSYS  1057           (int array::find(Player@const&in) const)
+   12   6 *    CpyRtoV4 v1
+   13   6 *    PshV4    v1
+   14   7 *    PshVPtr  v0
+   15   8 *    ADDSi    v28, 134217788
+   17   8 *    RDSPtr
+   18   8 *    CALLSYS  83           (void array::removeAt(uint))
+- 150,3 -
+   20   6 *    SUSPEND
+   21   6 *    PshVPtr  v0
+   22   7 *    ADDSi    v28, 134217788
+   24   7 *    RDSPtr
+   25   7 *    CALLSYS  86           (uint array::size() const)
+   27   6 *    CpyRtoV4 v1
+   28   6 *    CMPIu    v1, 0
+   30   6 *    JNZ      +129              (d:161)
+- 155,8 -
+   32   6 * {
+   32   6 *    SUSPEND
+   33   6 *    VarDecl  1
+   33   6 *    SetV4    v3, 0x0          (i:0, f:0)
+   35   6 *    JMP      +19              (d:56)
+   37   6 * 5:
+   37   6 *    SUSPEND
+- 156,5 -
+   38   6 *    SUSPEND
+   39   6 *    PshV4    v3
+   40   7 *    PshVPtr  v0
+   41   8 *    ADDSi    v16, 134217788
+   43   8 *    RDSPtr
+   44   8 *    RefCpyV  v4, 153032240
+   46   8 *    CALLSYS  1483           (Mob@& array::opIndex(uint))
+   48   6 *    PshRPtr
+   49   7 *    RDSPtr
+   50   7 *    CALLINTF 1125           (void SceneObject::remove())
+   52   6 *    FREE     v4, 153032240
+- 155,37 -
+   54   6 * 4:
+   54   6 *    SUSPEND
+   55   6 *    IncVi    v3
+- 155,20 -
+   56   6 * 2:
+   56   6 *    SUSPEND
+   57   6 *    PshVPtr  v0
+   58   7 *    ADDSi    v16, 134217788
+   60   7 *    RDSPtr
+   61   7 *    CALLSYS  86           (uint array::size() const)
+   63   6 *    CpyRtoV4 v1
+   64   6 *    CMPu     v3, v1
+   66   6 *    JS       -31              (d:37)
+- 157,4 -
+   68   6 * 3:
+   68   6 *    SUSPEND
+   69   6 *    PshVPtr  v0
+   70   7 *    ADDSi    v16, 134217788
+   72   7 *    RDSPtr
+   73   7 *    CALLSYS  89           (void array::clear())
+- 160,8 -
+   75   6 *    SUSPEND
+   76   6 *    VarDecl  2
+   76   6 *    SetV4    v3, 0x0          (i:0, f:0)
+   78   6 *    JMP      +19              (d:99)
+   80   6 * 9:
+   80   6 *    SUSPEND
+- 161,5 -
+   81   6 *    SUSPEND
+   82   6 *    PshV4    v3
+   83   7 *    PshVPtr  v0
+   84   8 *    ADDSi    v24, 134217788
+   86   8 *    RDSPtr
+   87   8 *    RefCpyV  v5, 153049960
+   89   8 *    CALLSYS  1509           (Item@& array::opIndex(uint))
+   91   6 *    PshRPtr
+   92   7 *    RDSPtr
+   93   7 *    CALLINTF 1125           (void SceneObject::remove())
+   95   6 *    FREE     v5, 153049960
+- 160,38 -
+   97   6 * 8:
+   97   6 *    SUSPEND
+   98   6 *    IncVi    v3
+- 160,20 -
+   99   6 * 6:
+   99   6 *    SUSPEND
+  100   6 *    PshVPtr  v0
+  101   7 *    ADDSi    v24, 134217788
+  103   7 *    RDSPtr
+  104   7 *    CALLSYS  86           (uint array::size() const)
+  106   6 *    CpyRtoV4 v1
+  107   6 *    CMPu     v3, v1
+  109   6 *    JS       -31              (d:80)
+- 162,4 -
+  111   6 * 7:
+  111   6 *    SUSPEND
+  112   6 *    PshVPtr  v0
+  113   7 *    ADDSi    v24, 134217788
+  115   7 *    RDSPtr
+  116   7 *    CALLSYS  89           (void array::clear())
+- 165,8 -
+  118   6 *    SUSPEND
+  119   6 *    VarDecl  3
+  119   6 *    SetV4    v3, 0x0          (i:0, f:0)
+  121   6 *    JMP      +19              (d:142)
+  123   6 * 13:
+  123   6 *    SUSPEND
+- 166,5 -
+  124   6 *    SUSPEND
+  125   6 *    PshV4    v3
+  126   7 *    PshVPtr  v0
+  127   8 *    ADDSi    v20, 134217788
+  129   8 *    RDSPtr
+  130   8 *    RefCpyV  v6, 153041088
+  132   8 *    CALLSYS  1496           (Obstacle@& array::opIndex(uint))
+  134   6 *    PshRPtr
+  135   7 *    RDSPtr
+  136   7 *    CALLINTF 1125           (void SceneObject::remove())
+  138   6 *    FREE     v6, 153041088
+- 165,42 -
+  140   6 * 12:
+  140   6 *    SUSPEND
+  141   6 *    IncVi    v3
+- 165,20 -
+  142   6 * 10:
+  142   6 *    SUSPEND
+  143   6 *    PshVPtr  v0
+  144   7 *    ADDSi    v20, 134217788
+  146   7 *    RDSPtr
+  147   7 *    CALLSYS  86           (uint array::size() const)
+  149   6 *    CpyRtoV4 v1
+  150   6 *    CMPu     v3, v1
+  152   6 *    JS       -31              (d:123)
+- 167,4 -
+  154   6 * 11:
+  154   6 *    SUSPEND
+  155   6 *    PshVPtr  v0
+  156   7 *    ADDSi    v20, 134217788
+  158   7 *    RDSPtr
+  159   7 *    CALLSYS  89           (void array::clear())
+- 169,3 -
+  161   6 * }
+  161   6 * 1:
+  161   6 *    SUSPEND
+  162   6 * 0:
+  162   6 *    FREE     v-1, 152244456
+  164   6 *    FREE     v0, 152276032
+  166   6 *    RET      2

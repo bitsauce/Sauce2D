@@ -1,0 +1,18 @@
+Mob::Mob()
+
+Temps: 1
+
+Variables: 
+ 000: Mob this
+
+
+- 13,8 -
+    0   1 *    SUSPEND
+    1   1 *    PshVPtr  v0
+    2   2 *    CALL     818           (PhysicObject::PhysicObject())
+- 12,6 -
+    4   1 *    SUSPEND
+    5   1 *    SetV4    v1, 0x64          (i:100, f:1.4013e-043)
+    7   1 *    LoadThisR v28, 134217789
+    9   1 *    WRTV4    v1
+   10   1 *    RET      1

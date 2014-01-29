@@ -1,0 +1,62 @@
+void Seacow::onUpdate(UpdateEvent)
+
+Temps: 1, 3, 5, 6
+
+Variables: 
+ -001: UpdateEvent e
+ 000: Seacow this
+ 001: UpdateEvent {noname}
+ 003: Vector2 {noname}
+ 005: Vector2 {noname}
+
+
+    0   6 *    VarDecl  0
+    0   6 *    PshVPtr  v0
+    1   7 *    CALLSYS  2           (void _builtin_object_::_beh_4_())
+- 24,3 -
+    3   6 *    SUSPEND
+    4   6 *    PshVPtr  v-1
+    5   7 *    PSF      v1
+    6   8 *    ALLOC    0x6b1ec60, 0             (type:UpdateEvent)
+    9   7 *    PshVPtr  v1
+   10   8 *    COPY     v2, 67108901
+   12   7 *    PopPtr
+   13   6 *    VAR      v1
+   14   7 *    PshVPtr  v0
+   15   8 *    GETOBJ   1
+   16   8 *    CALL     968           (void Familiar::onUpdate(UpdateEvent))
+- 25,3 -
+   18   6 *    SUSPEND
+   19   6 *    PSF      v3
+   20   7 *    PshVPtr  v0
+   21   8 *    CALLINTF 1099           (Vector2 SceneObject::size() const)
+   23   6 *    ObjInfo  v3, 1
+   23   6 *    VAR      v3
+   24   7 *    PSF      v5
+   25   8 *    PshVPtr  v0
+   26   9 *    CALLINTF 1092           (Vector2 SceneObject::pos() const)
+   28   7 *    ObjInfo  v5, 1
+   28   7 *    VAR      v5
+   29   8 *    PshVPtr  v0
+   30   9 *    ADDSi    v28, 134217836
+   32   9 *    RDSPtr
+   33   9 *    GETREF   1
+   34   9 *    GETREF   2
+   35   9 *    CALLSYS  492           (void CSprite::setRect(const Vector2&in, const Vector2&in))
+- 26,3 -
+   37   6 *    ObjInfo  v3, 0
+   37   6 *    ObjInfo  v5, 0
+   37   6 *    SUSPEND
+   38   6 *    LoadRObjR v-1, v4, 67108901
+   41   6 *    RDR4     v6
+   42   6 *    PshV4    v6
+   43   7 *    PshVPtr  v0
+   44   8 *    ADDSi    v28, 134217836
+   46   8 *    RDSPtr
+   47   8 *    CALLSYS  478           (void CSprite::update(const float))
+- 27,3 -
+   49   6 *    SUSPEND
+   50   6 * 0:
+   50   6 *    FREE     v-1, 112323680
+   52   6 *    FREE     v0, 152266448
+   54   6 *    RET      2

@@ -1,0 +1,37 @@
+void Anim::setAngles(int, float[])
+
+Temps: 1, 2
+
+Variables: 
+ -001: int joint
+ -002: float[] angles
+ 000: Anim this
+ 001: array {noname}
+ 002: array {noname}
+
+
+    0   2 *    VarDecl  0
+    0   2 *    VarDecl  1
+    0   2 *    PshVPtr  v0
+    1   3 *    CALLSYS  2           (void _builtin_object_::_beh_5_())
+- 78,3 -
+    3   2 *    SUSPEND
+    4   2 *    VAR      v-2
+    5   3 *    PshV4    v-1
+    6   4 *    PshVPtr  v0
+    7   5 *    ADDSi    v28, 134217788
+    9   5 *    RDSPtr
+   10   5 *    RefCpyV  v1, 72150536
+   12   5 *    CALLSYS  1256           (float[]& array::opIndex(uint))
+   14   3 *    PshRPtr
+   15   4 *    GETOBJREF 1
+   16   4 *    RefCpyV  v2, 70803856
+   18   4 *    CALLSYS  499           (float[]& array::opAssign(const float[]&in))
+   20   2 *    FREE     v1, 72150536
+   22   2 *    FREE     v2, 70803856
+- 79,3 -
+   24   2 *    SUSPEND
+   25   2 * 0:
+   25   2 *    FREE     v-2, 70803856
+   27   2 *    FREE     v0, 71613160
+   29   2 *    RET      3

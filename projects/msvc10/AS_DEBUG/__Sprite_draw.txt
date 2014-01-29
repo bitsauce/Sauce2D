@@ -1,0 +1,196 @@
+void Sprite::draw()
+
+Temps: 1, 2, 3, 5, 10, 11, 14
+
+Variables: 
+ 004: int f0
+ 006: int f1
+ 007: float a
+ 008: int x0
+ 009: int y0
+ 012: int x1
+ 013: int y1
+ 013: int f
+ 006: int x
+ 007: int y
+ 000: Sprite this
+ 001: CTexture {noname}
+ 002: CTexture {noname}
+
+
+    0  14 *    PshVPtr  v0
+    1  15 *    CALLSYS  2           (void _builtin_object_::_beh_4_())
+- 91,3 -
+    3  14 *    SUSPEND
+    4  14 *    PshVPtr  v0
+    5  15 *    ADDSi    v16, 134217801
+    7  15 *    RDSPtr
+    8  15 *    RefCpyV  v1, 88946072
+   10  15 *    PopPtr
+   11  14 *    ClrVPtr  v2
+   12  14 *    CmpPtr   v1, v2
+   14  14 *    TZ
+   15  14 *    CpyRtoV4 v3
+   16  14 *    FREE     v1, 88946072
+   18  14 *    FREE     v2, 88946072
+   20  14 *    CpyVtoR4 v3
+   21  14 *    JLowZ    +3              (d:26)
+- 92,4 -
+   23  14 *    SUSPEND
+   24  14 * {
+   24  14 * }
+   24  14 *    JMP      +172              (d:198)
+- 95,3 -
+   26  14 * 1:
+   26  14 *    SUSPEND
+   27  14 *    LoadThisR v20, 134217801
+   29  14 *    RDR1     v3
+   30  14 *    CpyVtoR4 v3
+   31  14 *    JLowZ    +118              (d:151)
+- 98,4 -
+   33  14 * {
+   33  14 *    SUSPEND
+   34  14 *    VarDecl  0
+   34  14 *    LoadThisR v24, 134217801
+   36  14 *    RDR4     v3
+   37  14 *    PshV4    v3
+   38  15 *    CALLSYS  531           (int floor(const float))
+   40  14 *    CpyRtoV4 v5
+   41  14 *    CpyVtoV4 v4, v5
+- 99,4 -
+   43  14 *    SUSPEND
+   44  14 *    VarDecl  1
+   44  14 *    LoadThisR v24, 134217801
+   46  14 *    RDR4     v3
+   47  14 *    PshV4    v3
+   48  15 *    CALLSYS  530           (int ceil(const float))
+   50  14 *    CpyRtoV4 v5
+   51  14 *    CpyVtoV4 v6, v5
+- 100,4 -
+   53  14 *    SUSPEND
+   54  14 *    LoadThisR v32, 134217801
+   56  14 *    RDR4     v3
+   57  14 *    LoadThisR v36, 134217801
+   59  14 *    RDR4     v5
+   60  14 *    MULi     v3, v3, v5
+   62  14 *    CMPi     v6, v3
+   64  14 *    JNZ      +3              (d:69)
+- 100,32 -
+   66  14 *    SUSPEND
+   67  14 *    SetV4    v6, 0x0          (i:0, f:0)
+- 101,4 -
+   69  14 * 3:
+   69  14 *    SUSPEND
+   70  14 *    VarDecl  2
+   70  14 *    LoadThisR v24, 134217801
+   72  14 *    RDR4     v5
+   73  14 *    CpyVtoV4 v3, v4
+   75  14 *    iTOf     v3
+   76  14 *    SUBf     v7, v5, v3
+- 104,4 -
+   78  14 *    SUSPEND
+   79  14 *    VarDecl  3
+   79  14 *    LoadThisR v32, 134217801
+   81  14 *    RDR4     v3
+   82  14 *    MODi     v8, v4, v3
+- 105,4 -
+   84  14 *    SUSPEND
+   85  14 *    VarDecl  4
+   85  14 *    LoadThisR v36, 134217801
+   87  14 *    RDR4     v10
+   88  14 *    CpyVtoV4 v3, v4
+   90  14 *    iTOf     v3
+   91  14 *    LoadThisR v32, 134217801
+   93  14 *    RDR4     v5
+   94  14 *    uTOf     v5
+   95  14 *    DIVf     v3, v3, v5
+   97  14 *    PshV4    v3
+   98  15 *    CALLSYS  531           (int floor(const float))
+  100  14 *    CpyRtoV4 v5
+  101  14 *    SUBi     v3, v10, v5
+  103  14 *    SUBIi    v9, v3, 1
+- 107,4 -
+  106  14 *    SUSPEND
+  107  14 *    VarDecl  5
+  107  14 *    LoadThisR v32, 134217801
+  109  14 *    RDR4     v11
+  110  14 *    MODi     v12, v6, v11
+- 108,4 -
+  112  14 *    SUSPEND
+  113  14 *    VarDecl  6
+  113  14 *    LoadThisR v36, 134217801
+  115  14 *    RDR4     v10
+  116  14 *    CpyVtoV4 v11, v6
+  118  14 *    iTOf     v11
+  119  14 *    LoadThisR v32, 134217801
+  121  14 *    RDR4     v5
+  122  14 *    uTOf     v5
+  123  14 *    DIVf     v3, v11, v5
+  125  14 *    PshV4    v3
+  126  15 *    CALLSYS  531           (int floor(const float))
+  128  14 *    CpyRtoV4 v5
+  129  14 *    SUBi     v11, v10, v5
+  131  14 *    SUBIi    v13, v11, 1
+- 111,4 -
+  134  14 *    SUSPEND
+  135  14 *    PshC4    0x3f800000          (i:1065353216, f:1)
+  137  15 *    PshV4    v9
+  138  16 *    PshV4    v8
+  139  17 *    PshVPtr  v0
+  140  18 *    CALLINTF 1365           (void Sprite::drawFrame(int, int, float))
+- 112,4 -
+  142  14 *    SUSPEND
+  143  14 *    PshV4    v7
+  144  15 *    PshV4    v13
+  145  16 *    PshV4    v12
+  146  17 *    PshVPtr  v0
+  147  18 *    CALLINTF 1365           (void Sprite::drawFrame(int, int, float))
+  149  14 * }
+  149  14 *    JMP      +46              (d:197)
+- 115,4 -
+  151  14 * 2:
+  151  14 * {
+  151  14 *    SUSPEND
+  152  14 *    VarDecl  7
+  152  14 *    LoadThisR v24, 134217801
+  154  14 *    RDR4     v5
+  155  14 *    PshV4    v5
+  156  15 *    CALLSYS  531           (int floor(const float))
+  158  14 *    CpyRtoV4 v3
+  159  14 *    CpyVtoV4 v13, v3
+- 118,4 -
+  161  14 *    SUSPEND
+  162  14 *    VarDecl  8
+  162  14 *    LoadThisR v32, 134217801
+  164  14 *    RDR4     v3
+  165  14 *    MODi     v6, v13, v3
+- 119,4 -
+  167  14 *    SUSPEND
+  168  14 *    VarDecl  9
+  168  14 *    LoadThisR v36, 134217801
+  170  14 *    RDR4     v11
+  171  14 *    CpyVtoV4 v3, v13
+  173  14 *    iTOf     v3
+  174  14 *    LoadThisR v32, 134217801
+  176  14 *    RDR4     v5
+  177  14 *    uTOf     v5
+  178  14 *    DIVf     v10, v3, v5
+  180  14 *    PshV4    v10
+  181  15 *    CALLSYS  531           (int floor(const float))
+  183  14 *    CpyRtoV4 v5
+  184  14 *    SUBi     v3, v11, v5
+  186  14 *    SUBIi    v7, v3, 1
+- 122,4 -
+  189  14 *    SUSPEND
+  190  14 *    PshC4    0x3f800000          (i:1065353216, f:1)
+  192  15 *    PshV4    v7
+  193  16 *    PshV4    v6
+  194  17 *    PshVPtr  v0
+  195  18 *    CALLINTF 1365           (void Sprite::drawFrame(int, int, float))
+- 124,3 -
+  197  14 * }
+  197  14 * 4:
+  197  14 *    SUSPEND
+  198  14 * 0:
+  198  14 *    FREE     v0, 150275920
+  200  14 *    RET      1

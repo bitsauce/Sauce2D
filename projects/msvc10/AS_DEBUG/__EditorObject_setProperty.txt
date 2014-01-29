@@ -1,0 +1,182 @@
+void EditorObject::setProperty(string, string)
+
+Temps: 2, 4, 12, 13, 21
+
+Variables: 
+ -001: string key
+ -002: string value
+ 001: uint i
+ 003: string[] prop
+ 000: EditorObject this
+ 004: array {noname}
+ 013: array {noname}
+ 012: string {noname}
+ 021: string {noname}
+
+
+    0  21 *    VarDecl  0
+    0  21 *    VarDecl  1
+    0  21 *    PshVPtr  v0
+    1  22 *    CALLSYS  2           (void _builtin_object_::_beh_4_())
+- 620,7 -
+    3  21 *    SUSPEND
+    4  21 *    VarDecl  2
+    4  21 *    SetV4    v1, 0x0          (i:0, f:0)
+    6  21 *    JMP      +109              (d:117)
+    8  21 * 4:
+    8  21 *    SUSPEND
+- 622,4 -
+    9  21 * {
+    9  21 *    SUSPEND
+   10  21 *    VarDecl  3
+   10  21 *    STR      31         (l:1 s:"=")
+   11  23 *    CALLSYS  32           (const string& _string_factory_(const int, const uint8&))
+   13  21 *    PshRPtr
+   14  22 *    PSF      v12
+   15  23 *    CALLSYS  34           (void string::_beh_0_(const string&in))
+   17  21 *    ObjInfo  v12, 1
+   17  21 *    VAR      v12
+   18  22 *    PshV4    v1
+   19  23 *    PshVPtr  v0
+   20  24 *    ADDSi    v36, 134217783
+   22  24 *    RDSPtr
+   23  24 *    RefCpyV  v4, 112040344
+   25  24 *    CALLSYS  206           (string& array::opIndex(uint))
+   27  22 *    PshRPtr
+   28  23 *    GETREF   1
+   29  23 *    CALLSYS  216           (string[]@ string::split(const string&in) const)
+   31  21 *    STOREOBJ v13
+   32  21 *    PSF      v12
+   33  22 *    CALLSYS  35           (void string::_beh_1_())
+   35  21 *    ObjInfo  v12, 0
+   35  21 *    FREE     v4, 112040344
+   37  21 *    ChkNullV v13
+   38  21 *    VAR      v13
+   39  22 *    CALL     202           (string[]@ factstub())
+   41  22 *    STOREOBJ v3
+   42  22 *    PshVPtr  v3
+   43  23 *    GETOBJREF 1
+   44  23 *    CALLSYS  208           (string[]& array::opAssign(const string[]&in))
+   46  21 *    FREE     v13, 112040344
+- 623,4 -
+   48  21 *    SUSPEND
+   49  21 *    VAR      v-1
+   50  22 *    PshC4    0x0          (i:0, f:0)
+   52  23 *    PshVPtr  v3
+   53  24 *    CALLSYS  206           (string& array::opIndex(uint))
+   55  22 *    PshRPtr
+   56  23 *    GETOBJREF 1
+   57  23 *    CALLSYS  38           (bool string::opEquals(const string&in) const)
+   59  21 *    JLowZ    +52              (d:113)
+- 625,5 -
+   61  21 * {
+   61  21 *    SUSPEND
+   62  21 *    VAR      v-2
+   63  22 *    PSF      v12
+   64  23 *    STR      31         (l:1 s:"=")
+   65  25 *    CALLSYS  32           (const string& _string_factory_(const int, const uint8&))
+   67  23 *    PshRPtr
+   68  24 *    PSF      v12
+   69  25 *    CALLSYS  34           (void string::_beh_0_(const string&in))
+   71  23 *    ObjInfo  v12, 1
+   71  23 *    VAR      v12
+   72  24 *    PSF      v21
+   73  25 *    PshVPtr  v-1
+   74  26 *    GETREF   2
+   75  26 *    CALLSYS  40           (string string::opAdd(const string&in) const)
+   77  23 *    ObjInfo  v21, 1
+   77  23 *    PSF      v12
+   78  24 *    CALLSYS  35           (void string::_beh_1_())
+   80  23 *    ObjInfo  v12, 0
+   80  23 *    PSF      v21
+   81  24 *    GETOBJREF 2
+   82  24 *    CALLSYS  40           (string string::opAdd(const string&in) const)
+   84  21 *    ObjInfo  v12, 1
+   84  21 *    PSF      v12
+   85  22 *    PSF      v21
+   86  23 *    CALLSYS  35           (void string::_beh_1_())
+   88  22 *    ObjInfo  v21, 0
+   88  22 *    PopPtr
+   89  21 *    VAR      v12
+   90  22 *    PshV4    v1
+   91  23 *    PshVPtr  v0
+   92  24 *    ADDSi    v36, 134217783
+   94  24 *    RDSPtr
+   95  24 *    RefCpyV  v4, 112040344
+   97  24 *    CALLSYS  206           (string& array::opIndex(uint))
+   99  22 *    PshRPtr
+  100  23 *    GETREF   1
+  101  23 *    CALLSYS  36           (string& string::opAssign(const string&in))
+  103  21 *    FREE     v4, 112040344
+  105  21 *    PSF      v12
+  106  22 *    CALLSYS  35           (void string::_beh_1_())
+- 626,5 -
+  108  21 *    ObjInfo  v12, 0
+  108  21 *    SUSPEND
+  109  21 * {
+  109  21 *    FREE     v3, 112040344
+  111  21 * }
+  111  21 *    JMP      +56              (d:169)
+  113  20   }
+  113  21 * 5:
+  113  21 *    FREE     v3, 112040344
+- 620,37 -
+  115  21 * }
+  115  21 * 3:
+  115  21 *    SUSPEND
+  116  21 *    IncVi    v1
+- 620,19 -
+  117  21 * 1:
+  117  21 *    SUSPEND
+  118  21 *    PshVPtr  v0
+  119  22 *    ADDSi    v36, 134217783
+  121  22 *    RDSPtr
+  122  22 *    CALLSYS  86           (uint array::size() const)
+  124  21 *    CpyRtoV4 v2
+  125  21 *    CMPu     v1, v2
+  127  21 *    JS       -121              (d:8)
+- 629,3 -
+  129  21 * 2:
+  129  21 *    SUSPEND
+  130  21 *    VAR      v-2
+  131  22 *    PSF      v21
+  132  23 *    STR      31         (l:1 s:"=")
+  133  25 *    CALLSYS  32           (const string& _string_factory_(const int, const uint8&))
+  135  23 *    PshRPtr
+  136  24 *    PSF      v21
+  137  25 *    CALLSYS  34           (void string::_beh_0_(const string&in))
+  139  23 *    ObjInfo  v21, 1
+  139  23 *    VAR      v21
+  140  24 *    PSF      v12
+  141  25 *    PshVPtr  v-1
+  142  26 *    GETREF   2
+  143  26 *    CALLSYS  40           (string string::opAdd(const string&in) const)
+  145  23 *    ObjInfo  v12, 1
+  145  23 *    PSF      v21
+  146  24 *    CALLSYS  35           (void string::_beh_1_())
+  148  23 *    ObjInfo  v21, 0
+  148  23 *    PSF      v12
+  149  24 *    GETOBJREF 2
+  150  24 *    CALLSYS  40           (string string::opAdd(const string&in) const)
+  152  21 *    ObjInfo  v21, 1
+  152  21 *    PSF      v21
+  153  22 *    PSF      v12
+  154  23 *    CALLSYS  35           (void string::_beh_1_())
+  156  22 *    ObjInfo  v12, 0
+  156  22 *    PopPtr
+  157  21 *    VAR      v21
+  158  22 *    PshVPtr  v0
+  159  23 *    ADDSi    v36, 134217783
+  161  23 *    RDSPtr
+  162  23 *    GETREF   1
+  163  23 *    CALLSYS  211           (void array::insertLast(const string&in))
+  165  21 *    PSF      v21
+  166  22 *    CALLSYS  35           (void string::_beh_1_())
+- 630,3 -
+  168  21 *    ObjInfo  v21, 0
+  168  21 *    SUSPEND
+  169  21 * 0:
+  169  21 *    FREE     v-1, 51694408
+  171  21 *    FREE     v-2, 51694408
+  173  21 *    FREE     v0, 152242504
+  175  21 *    RET      3

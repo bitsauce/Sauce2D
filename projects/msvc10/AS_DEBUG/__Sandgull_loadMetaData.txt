@@ -1,0 +1,109 @@
+void Sandgull::loadMetaData(MetaData)
+
+Temps: 1, 5, 7, 8
+
+Variables: 
+ -001: MetaData data
+ 003: Vector2 pos
+ 006: uint i
+ 000: Sandgull this
+ 001: MetaData {noname}
+ 008: array {noname}
+ 005: Vector2 {noname}
+
+
+    0   8 *    VarDecl  0
+    0   8 *    PshVPtr  v0
+    1   9 *    CALLSYS  2           (void _builtin_object_::_beh_4_())
+- 31,3 -
+    3   8 *    SUSPEND
+    4   8 *    PshVPtr  v-1
+    5   9 *    PSF      v1
+    6  10 *    ALLOC    0x6ae9010, 0             (type:MetaData)
+    9   9 *    PshVPtr  v1
+   10  10 *    COPY     v1, 67108898
+   12   9 *    PopPtr
+   13   8 *    VAR      v1
+   14   9 *    PshVPtr  v0
+   15  10 *    GETOBJ   1
+   16  10 *    CALL     925           (void Mob::loadMetaData(MetaData))
+- 33,3 -
+   18   8 *    SUSPEND
+   19   8 *    VarDecl  1
+   19   8 *    PSF      v3
+   20   9 *    CALLSYS  130           (void Vector2::_beh_0_())
+   22   8 *    ObjInfo  v3, 1
+   22   8 *    PSF      v5
+   23   9 *    PshVPtr  v0
+   24  10 *    CALLINTF 1092           (Vector2 SceneObject::pos() const)
+   26   8 *    ObjInfo  v5, 1
+   26   8 *    PSF      v5
+   27   9 *    PSF      v3
+   28  10 *    COPY     v2, 67108877
+   30   9 *    ObjInfo  v5, 0
+   30   9 *    PopPtr
+- 34,7 -
+   31   8 *    SUSPEND
+   32   8 *    VarDecl  2
+   32   8 *    SetV4    v6, 0x0          (i:0, f:0)
+   34   8 *    JMP      +51              (d:87)
+   36   8 * 4:
+   36   8 *    SUSPEND
+- 36,4 -
+   37   8 * {
+   37   8 *    SUSPEND
+   38   8 *    LoadVObjR v3, v0, 67108877
+   41   8 *    RDR4     v7
+   42   8 *    PshV4    v6
+   43   9 *    PshVPtr  v0
+   44  10 *    ADDSi    v36, 134217833
+   46  10 *    RDSPtr
+   47  10 *    RefCpyV  v8, 152960832
+   49  10 *    CALLSYS  1400           (SandgullBody& array::opIndex(uint))
+   51   8 *    PshRPtr
+   52   9 *    ADDSi    v20, 134217787
+   54   9 *    RDSPtr
+   55   9 *    ADDSi    v0, 67108877
+   57   9 *    PopRPtr
+   58   8 *    WRTV4    v7
+   59   8 *    FREE     v8, 152960832
+- 37,4 -
+   61   8 *    SUSPEND
+   62   8 *    LoadVObjR v3, v4, 67108877
+   65   8 *    RDR4     v7
+   66   8 *    PshV4    v6
+   67   9 *    PshVPtr  v0
+   68  10 *    ADDSi    v36, 134217833
+   70  10 *    RDSPtr
+   71  10 *    RefCpyV  v8, 152960832
+   73  10 *    CALLSYS  1400           (SandgullBody& array::opIndex(uint))
+   75   8 *    PshRPtr
+   76   9 *    ADDSi    v20, 134217787
+   78   9 *    RDSPtr
+   79   9 *    ADDSi    v4, 67108877
+   81   9 *    PopRPtr
+   82   8 *    WRTV4    v7
+   83   8 *    FREE     v8, 152960832
+- 34,38 -
+   85   8 * }
+   85   8 * 3:
+   85   8 *    SUSPEND
+   86   8 *    IncVi    v6
+- 34,19 -
+   87   8 * 1:
+   87   8 *    SUSPEND
+   88   8 *    PshVPtr  v0
+   89   9 *    ADDSi    v36, 134217833
+   91   9 *    RDSPtr
+   92   9 *    CALLSYS  86           (uint array::size() const)
+   94   8 *    CpyRtoV4 v7
+   95   8 *    CMPu     v6, v7
+   97   8 *    JS       -63              (d:36)
+- 39,3 -
+   99   8 * 2:
+   99   8 *    SUSPEND
+  100   8 *    ObjInfo  v3, 0
+  100   8 * 0:
+  100   8 *    FREE     v-1, 112103440
+  102   8 *    FREE     v0, 152264112
+  104   8 *    RET      2

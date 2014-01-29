@@ -1,0 +1,71 @@
+void LevelCreator::promptSave(string)
+
+Temps: 2, 3, 4
+
+Variables: 
+ -001: string nextFunc
+ 001: CFunctionPtr next
+ 000: LevelCreator this
+ 002: LevelCreator {noname}
+ 004: CFunctionPtr {noname}
+
+
+    0   4 *    VarDecl  0
+    0   4 *    PshVPtr  v0
+    1   5 *    CALLSYS  2           (void _builtin_object_::_beh_4_())
+- 633,3 -
+    3   4 *    SUSPEND
+    4   4 *    VarDecl  1
+    4   4 *    TYPEID   0x48000056          'LevelCreator@'
+    6   5 *    PshVPtr  v0
+    7   6 *    RefCpyV  v2, 152243168
+    9   6 *    PopPtr
+   10   5 *    VAR      v2
+   11   6 *    VAR      v-1
+   12   7 *    GETOBJREF 0
+   13   7 *    GETREF   1
+   14   7 *    CALLSYS  264           (CFunctionPtr@ _beh_2_(const string&in, ?&in))
+   16   4 *    STOREOBJ v1
+   17   4 *    FREE     v2, 152243168
+- 634,3 -
+   19   4 *    SUSPEND
+   20   4 *    LoadThisR v53, 134217814
+   22   4 *    RDR1     v3
+   23   4 *    NOT      v3
+   24   4 *    CpyVtoR4 v3
+   25   4 *    JLowZ    +22              (d:49)
+- 637,4 -
+   27   4 * {
+   27   4 *    SUSPEND
+   28   4 *    PshVPtr  v0
+   29   5 *    ADDSi    v72, 134217814
+   31   5 *    RDSPtr
+   32   5 *    CALLINTF 1110           (void SceneObject::show())
+- 638,4 -
+   34   4 *    SUSPEND
+   35   4 *    PshVPtr  v1
+   36   5 *    RefCpyV  v4, 112061752
+   38   5 *    PopPtr
+   39   4 *    VAR      v4
+   40   5 *    PshVPtr  v0
+   41   6 *    ADDSi    v72, 134217814
+   43   6 *    RDSPtr
+   44   6 *    GETOBJ   1
+   45   6 *    CALLINTF 1564           (void SaveLevelDialog::setNextFunc(CFunctionPtr@))
+   47   4 * }
+   47   4 *    JMP      +4              (d:53)
+- 641,4 -
+   49   4 * 1:
+   49   4 * {
+   49   4 *    SUSPEND
+   50   4 *    PshVPtr  v1
+   51   5 *    CALLSYS  265           (void CFunctionPtr::call())
+- 643,3 -
+   53   4 * }
+   53   4 * 2:
+   53   4 *    SUSPEND
+   54   4 *    FREE     v1, 112061752
+   56   4 * 0:
+   56   4 *    FREE     v-1, 51694408
+   58   4 *    FREE     v0, 152243168
+   60   4 *    RET      2

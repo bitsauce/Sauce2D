@@ -1,0 +1,69 @@
+void ActionCard::draw()
+
+Temps: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10
+
+Variables: 
+ 000: ActionCard this
+
+
+    0  10 *    PshVPtr  v0
+    1  11 *    CALLSYS  2           (void _builtin_object_::_beh_5_())
+- 19,3 -
+    3  10 *    SUSPEND
+    4  10 *    PshC4    0x64          (i:100, f:1.4013e-043)
+    6  11 *    CALLSYS  421           (void gfxSetDepth(const int))
+- 20,3 -
+    8  10 *    SUSPEND
+    9  10 *    LoadThisR v48, 134217784
+   11  10 *    RDR4     v1
+   12  10 *    PshV4    v1
+   13  11 *    CALLSYS  420           (void gfxSetTexture(const int))
+- 21,3 -
+   15  10 *    SUSPEND
+   16  10 *    PshC4    0x3          (i:3, f:4.2039e-045)
+   18  11 *    CALLSYS  434           (void gfxBegin(const DrawMode = DrawTriangles))
+- 22,3 -
+   20  10 *    SUSPEND
+   21  10 *    SetV1    v1, 0x0
+   23  10 *    PshV4    v1
+   24  11 *    PshC4    0x3f800000          (i:1065353216, f:1)
+   26  12 *    PshC4    0x3f800000          (i:1065353216, f:1)
+   28  13 *    PshC4    0x0          (i:0, f:0)
+   30  14 *    PshC4    0x0          (i:0, f:0)
+   32  15 *    PshVPtr  v0
+   33  16 *    ADDSi    v36, 134217784
+   35  16 *    RDSPtr
+   36  16 *    CALLSYS  254           (float rect2::get_height() const)
+   38  15 *    CpyRtoV4 v7
+   39  15 *    PshV4    v7
+   40  16 *    PshVPtr  v0
+   41  17 *    ADDSi    v36, 134217784
+   43  17 *    RDSPtr
+   44  17 *    CALLSYS  252           (float rect2::get_width() const)
+   46  16 *    CpyRtoV4 v8
+   47  16 *    PshV4    v8
+   48  17 *    PshVPtr  v0
+   49  18 *    ADDSi    v36, 134217784
+   51  18 *    RDSPtr
+   52  18 *    CALLSYS  251           (float rect2::get_y() const)
+   54  17 *    CpyRtoV4 v9
+   55  17 *    PshV4    v9
+   56  18 *    PshVPtr  v0
+   57  19 *    ADDSi    v36, 134217784
+   59  19 *    RDSPtr
+   60  19 *    CALLSYS  249           (float rect2::get_x() const)
+   62  18 *    CpyRtoV4 v10
+   63  18 *    PshV4    v10
+   64  19 *    CALLSYS  441           (void gfxAddRect(const float, const float, const float, const float, const float, const float, const float, const float, const bool = false))
+- 23,3 -
+   66  10 *    SUSPEND
+   67  10 *    CALLSYS  435           (void gfxEnd())
+- 24,3 -
+   69  10 *    SUSPEND
+   70  10 *    PshC4    0x0          (i:0, f:0)
+   72  11 *    CALLSYS  420           (void gfxSetTexture(const int))
+- 25,3 -
+   74  10 *    SUSPEND
+   75  10 * 0:
+   75  10 *    FREE     v0, 74308632
+   77  10 *    RET      1

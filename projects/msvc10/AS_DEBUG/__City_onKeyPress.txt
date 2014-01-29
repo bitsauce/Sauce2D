@@ -1,0 +1,18 @@
+void City::onKeyPress(KeyEvent)
+
+Temps: 
+
+Variables: 
+ -001: KeyEvent e
+ 000: City this
+
+
+    0   0 *    VarDecl  0
+    0   0 *    PshVPtr  v0
+    1   1 *    CALLSYS  2           (void _builtin_object_::_beh_4_())
+- 7,3 -
+    3   0 *    SUSPEND
+    4   0 * 0:
+    4   0 *    FREE     v-1, 104655624
+    6   0 *    FREE     v0, 104776208
+    8   0 *    RET      2

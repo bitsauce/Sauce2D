@@ -1,0 +1,184 @@
+void Room::incPlayer()
+
+Temps: 1, 2, 4, 6, 7, 8
+
+Variables: 
+ 003: uint i
+ 003: uint i
+ 005: Item@ item
+ 003: uint i
+ 000: Room this
+ 004: array {noname}
+ 006: Item {noname}
+ 007: Item {noname}
+ 008: CMetaObject {noname}
+
+
+    0   8 *    PshVPtr  v0
+    1   9 *    CALLSYS  2           (void _builtin_object_::_beh_4_())
+- 81,3 -
+    3   8 *    SUSPEND
+    4   8 *    PshVPtr  v0
+    5   9 *    ADDSi    v36, 134217791
+    7   9 *    RDSPtr
+    8   9 *    CALLSYS  86           (uint array::size() const)
+   10   8 *    CpyRtoV4 v1
+   11   8 *    CMPIu    v1, 0
+   13   8 *    JNZ      +175              (d:190)
+- 84,4 -
+   15   8 * {
+   15   8 *    SUSPEND
+   16   9 *    LoadThisR v16, 134217791
+   18   8 *    RDR1     v2
+   19   8 *    NOT      v2
+   20   8 *    CpyVtoR4 v2
+   21   8 *    JLowZ    +39              (d:62)
+- 86,5 -
+   23   8 * {
+   23   8 *    SUSPEND
+   24   8 *    VarDecl  0
+   24   8 *    SetV4    v3, 0x0          (i:0, f:0)
+   26   8 *    JMP      +20              (d:48)
+   28   8 * 6:
+   28   8 *    SUSPEND
+- 87,6 -
+   29   8 *    SUSPEND
+   30   8 *    PshV4    v3
+   31   9 *    PshVPtr  v0
+   32  10 *    ADDSi    v44, 134217791
+   34  10 *    RDSPtr
+   35  10 *    ADDSi    v40, 134217828
+   37  10 *    RDSPtr
+   38  11 *    RefCpyV  v4, 148360032
+   40  10 *    CALLSYS  1427           (CMetaObject& array::opIndex(uint))
+   42   8 *    PshRPtr
+   43   9 *    CALLSYS  320           (void CMetaObject::create())
+   45   8 *    FREE     v4, 148360032
+   47   8 * 5:
+   47   8 *    IncVi    v3
+   48   8 * 3:
+   48   8 *    PshVPtr  v0
+   49   9 *    ADDSi    v44, 134217791
+   51   9 *    RDSPtr
+   52   9 *    ADDSi    v40, 134217828
+   54   9 *    RDSPtr
+   55   9 *    CALLSYS  86           (uint array::size() const)
+   57   8 *    CpyRtoV4 v2
+   58   8 *    CMPu     v3, v2
+   60   8 *    JS       -34              (d:28)
+- 91,4 -
+   62   8 * 4:
+   62   8 * }
+   62   8 * 2:
+   62   8 *    SUSPEND
+   63   8 *    VarDecl  1
+   63   8 *    SetV4    v3, 0x0          (i:0, f:0)
+   65   8 *    JMP      +70              (d:137)
+   67   8 * 10:
+   67   8 *    SUSPEND
+- 93,5 -
+   68   8 * {
+   68   8 *    SUSPEND
+- 94,5 -
+   69   8 *    VarDecl  2
+   69   8 *    SUSPEND
+   70   8 *    TYPEID   0x48000042          'Item@'
+   72   9 *    VAR      v6
+   73  10 *    PshV4    v3
+   74  11 *    PshVPtr  v0
+   75  12 *    ADDSi    v44, 134217791
+   77  12 *    RDSPtr
+   78  12 *    ADDSi    v36, 134217828
+   80  12 *    RDSPtr
+   81  13 *    RefCpyV  v4, 148360032
+   83  12 *    CALLSYS  1427           (CMetaObject& array::opIndex(uint))
+   85  10 *    PshRPtr
+   86  11 *    GETREF   1
+   87  11 *    CALLSYS  319           (void CMetaObject::create(?&out))
+   89   8 *    FREE     v4, 148360032
+   91   8 *    PshVPtr  v6
+   92  10 *    RefCpyV  v7, 147695440
+   94   9 *    PopPtr
+   95   8 *    FREE     v6, 147695440
+   97   8 *    VAR      v7
+   98   9 *    PSF      v5
+   99  10 *    GETOBJREF 1
+  100  10 *    REFCPY   0x8cda750
+  102   9 *    FREE     v7, 147695440
+  104   9 *    PopPtr
+- 95,5 -
+  105   8 *    SUSPEND
+  106   8 *    PshV4    v3
+  107   9 *    PshVPtr  v0
+  108  10 *    ADDSi    v44, 134217791
+  110  10 *    RDSPtr
+  111  10 *    ADDSi    v36, 134217828
+  113  10 *    RDSPtr
+  114  11 *    RefCpyV  v4, 148360032
+  116  10 *    CALLSYS  1427           (CMetaObject& array::opIndex(uint))
+  118   8 *    PshRPtr
+  119  10 *    RefCpyV  v8, 84686024
+  121   9 *    PopPtr
+  122   8 *    VAR      v8
+  123   9 *    FREE     v4, 148360032
+  125   9 *    PshVPtr  v5
+  126  10 *    ADDSi    v20, 134217794
+  128  10 *    GETOBJREF 1
+  129  10 *    REFCPY   0x50c34c8
+  131   9 *    FREE     v8, 84686024
+  133   9 *    PopPtr
+  134   8 *    FREE     v5, 147695440
+  136   8 * }
+  136   8 * 9:
+  136   8 *    IncVi    v3
+  137   8 * 7:
+  137   8 *    PshVPtr  v0
+  138   9 *    ADDSi    v44, 134217791
+  140   9 *    RDSPtr
+  141   9 *    ADDSi    v36, 134217828
+  143   9 *    RDSPtr
+  144   9 *    CALLSYS  86           (uint array::size() const)
+  146   8 *    CpyRtoV4 v2
+  147   8 *    CMPu     v3, v2
+  149   8 *    JS       -84              (d:67)
+- 99,4 -
+  151   8 * 8:
+  151   8 *    SUSPEND
+  152   8 *    VarDecl  3
+  152   8 *    SetV4    v3, 0x0          (i:0, f:0)
+  154   8 *    JMP      +20              (d:176)
+  156   8 * 14:
+  156   8 *    SUSPEND
+- 100,5 -
+  157   8 *    SUSPEND
+  158   8 *    PshV4    v3
+  159   9 *    PshVPtr  v0
+  160  10 *    ADDSi    v44, 134217791
+  162  10 *    RDSPtr
+  163  10 *    ADDSi    v32, 134217828
+  165  10 *    RDSPtr
+  166  11 *    RefCpyV  v4, 148360032
+  168  10 *    CALLSYS  1427           (CMetaObject& array::opIndex(uint))
+  170   8 *    PshRPtr
+  171   9 *    CALLSYS  320           (void CMetaObject::create())
+  173   8 *    FREE     v4, 148360032
+  175   8 * 13:
+  175   8 *    IncVi    v3
+  176   8 * 11:
+  176   8 *    PshVPtr  v0
+  177   9 *    ADDSi    v44, 134217791
+  179   9 *    RDSPtr
+  180   9 *    ADDSi    v32, 134217828
+  182   9 *    RDSPtr
+  183   9 *    CALLSYS  86           (uint array::size() const)
+  185   8 *    CpyRtoV4 v1
+  186   8 *    CMPu     v3, v1
+  188   8 *    JS       -34              (d:156)
+- 102,3 -
+  190   8 * 12:
+  190   8 * }
+  190   8 * 1:
+  190   8 *    SUSPEND
+  191   8 * 0:
+  191   8 *    FREE     v0, 147705696
+  193   8 *    RET      1

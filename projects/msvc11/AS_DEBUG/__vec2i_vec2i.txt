@@ -1,0 +1,21 @@
+vec2i::vec2i(int)
+
+Temps: 1
+
+Variables: 
+ -001: int xy
+ 000: vec2i this
+
+
+- 18,3 -
+    0   1 *    VarDecl  0
+    0   1 *    SUSPEND
+    1   1 *    LoadThisR v24, 134217746
+    3   1 *    WRTV4    v-1
+    4   1 *    RDR4     v1
+    5   1 *    LoadThisR v20, 134217746
+    7   1 *    WRTV4    v1
+- 19,3 -
+    8   1 *    SUSPEND
+    9   1 * 0:
+    9   1 *    RET      2

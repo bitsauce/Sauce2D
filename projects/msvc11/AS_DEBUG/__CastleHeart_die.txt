@@ -1,0 +1,72 @@
+void CastleHeart::die()
+
+Temps: 1, 2, 3, 10, 11
+
+Variables: 
+ 000: CastleHeart this
+ 011: string {noname}
+ 010: string {noname}
+
+
+    0  11 *    PshVPtr  v0
+    1  12 *    CALLSYS  2           (void _builtin_object_::_beh_5_())
+- 44,3 -
+    3  11 *    SUSPEND
+    4  11 *    LoadThisR v48, 134217752
+    6  11 *    RDR4     v1
+    7  11 *    PshGPtr  75045296
+    9  12 *    ADDSi    v44, 134217751
+   11  12 *    RDSPtr
+   12  12 *    ADDSi    v48, 134217771
+   14  12 *    PopRPtr
+   15  11 *    RDR4     v2
+   16  11 *    CMPi     v1, v2
+   18  11 *    JZ       +24              (d:44)
+- 45,4 -
+   20  11 *    SUSPEND
+   21  11 *    PSF      v11
+   22  12 *    STR      52         (l:8 s:"You Won!")
+   23  14 *    CALLSYS  33           (const string& _string_factory_(const int, const uint8&))
+   25  12 *    PshRPtr
+   26  13 *    PSF      v10
+   27  14 *    CALLSYS  35           (string::string(const string&in))
+   29  12 *    ObjInfo  v10, 1
+   29  12 *    PSF      v10
+   30  13 *    ALLOC    0x4659bd0, 35             (type:string)
+   33  11 *    PSF      v10
+   34  12 *    CALLSYS  36           (string::~string())
+   36  11 *    ObjInfo  v10, 0
+   36  11 *    VAR      v11
+   37  12 *    PshGPtr  75039776
+   39  13 *    GETOBJ   1
+   40  13 *    CALLINTF 1182           (void Hud::setBottomText(string))
+   42  11 *    JMP      +22              (d:66)
+- 47,4 -
+   44  11 * 1:
+   44  11 *    SUSPEND
+   45  11 *    PSF      v11
+   46  12 *    STR      53         (l:9 s:"You Lost!")
+   47  14 *    CALLSYS  33           (const string& _string_factory_(const int, const uint8&))
+   49  12 *    PshRPtr
+   50  13 *    PSF      v10
+   51  14 *    CALLSYS  35           (string::string(const string&in))
+   53  12 *    ObjInfo  v10, 1
+   53  12 *    PSF      v10
+   54  13 *    ALLOC    0x4659bd0, 35             (type:string)
+   57  11 *    PSF      v10
+   58  12 *    CALLSYS  36           (string::~string())
+   60  11 *    ObjInfo  v10, 0
+   60  11 *    VAR      v11
+   61  12 *    PshGPtr  75039776
+   63  13 *    GETOBJ   1
+   64  13 *    CALLINTF 1182           (void Hud::setBottomText(string))
+- 48,3 -
+   66  11 * 2:
+   66  11 *    SUSPEND
+   67  11 *    PshVPtr  v0
+   68  12 *    CALLINTF 1020           (void Entity::remove())
+- 49,3 -
+   70  11 *    SUSPEND
+   71  11 * 0:
+   71  11 *    FREE     v0, 74743592
+   73  11 *    RET      1

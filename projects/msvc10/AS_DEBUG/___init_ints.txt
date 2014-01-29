@@ -1,0 +1,18 @@
+<unrecognized token> _unnamed_function_()
+
+Temps: 1, 2
+
+Variables: 
+ 002: array {noname}
+
+
+- 1,17 -
+    0   2 *    SUSPEND
+    1   2 *    PshC4    0x64          (i:100, f:1.4013e-043)
+    3   3 *    CALL     350           (int[]@ factstub(uint))
+    5   2 *    STOREOBJ v2
+    6   2 *    PshVPtr  v2
+    7   3 *    PGA      107988664
+    9   4 *    REFCPY   0x66fa438
+   11   3 *    FREE     v2, 107979832
+   13   2 *    RET      0

@@ -1,0 +1,91 @@
+void EditorObject::draw(int, int)
+
+Temps: 1, 2, 3, 4, 5, 6, 7, 8, 9
+
+Variables: 
+ -001: int x
+ -002: int y
+ 000: EditorObject this
+ 001: _builtin_function_ {noname}
+ 002: _builtin_function_ {noname}
+ 004: EditorObject {noname}
+ 009: CTexture {noname}
+
+
+    0   9 *    VarDecl  0
+    0   9 *    VarDecl  1
+    0   9 *    PshVPtr  v0
+    1  10 *    CALLSYS  2           (void _builtin_object_::_beh_4_())
+- 611,3 -
+    3   9 *    SUSPEND
+    4   9 *    PshVPtr  v0
+    5  10 *    ADDSi    v16, 134217783
+    7  10 *    RDSPtr
+    8  10 *    ADDSi    v44, 134217804
+   10  10 *    RDSPtr
+   11  10 *    RefCpyV  v1, 51661368
+   13  10 *    PopPtr
+   14   9 *    ClrVPtr  v2
+   15   9 *    CmpPtr   v1, v2
+   17   9 *    TNZ
+   18   9 *    CpyRtoV4 v3
+   19   9 *    FREE     v1, 51661368
+   21   9 *    FREE     v2, 51661368
+   23   9 *    CpyVtoR4 v3
+   24   9 *    JLowZ    +22              (d:48)
+- 611,40 -
+   26   9 *    SUSPEND
+   27   9 *    PshVPtr  v0
+   28  10 *    RefCpyV  v4, 152242504
+   30  10 *    PopPtr
+   31   9 *    VAR      v4
+   32  10 *    PshVPtr  v0
+   33  11 *    ADDSi    v16, 134217783
+   35  11 *    RDSPtr
+   36  11 *    ADDSi    v44, 134217804
+   38  11 *    RDSPtr
+   39  11 *    RefCpyV  v1, 51661368
+   41  11 *    PopPtr
+   42  10 *    GETOBJ   0
+   43  10 *    CallPtr  v1
+   44   9 *    FREE     v1, 51661368
+   46   9 *    JMP      +48              (d:96)
+- 612,8 -
+   48   9 * 1:
+   48   9 *    SUSPEND
+   49   9 *    PshVPtr  v0
+   50  10 *    ADDSi    v16, 134217783
+   52  10 *    RDSPtr
+   53  10 *    ADDSi    v20, 134217804
+   55  10 *    RDSPtr
+   56  10 *    RefCpyV  v9, 111987200
+   58  10 *    PopPtr
+   59   9 *    VAR      v9
+   60  10 *    LoadThisR v32, 134217783
+   62  10 *    RDR4     v3
+   63  10 *    iTOf     v3
+   64  10 *    MULIf    v5, v3, 64.000000
+   67  10 *    PshV4    v5
+   68  11 *    LoadThisR v28, 134217783
+   70  11 *    RDR4     v3
+   71  11 *    iTOf     v3
+   72  11 *    MULIf    v6, v3, 64.000000
+   75  11 *    PshV4    v6
+   76  12 *    CpyVtoV4 v3, v-2
+   78  12 *    iTOf     v3
+   79  12 *    MULIf    v7, v3, 64.000000
+   82  12 *    PshV4    v7
+   83  13 *    CpyVtoV4 v3, v-1
+   85  13 *    iTOf     v3
+   86  13 *    MULIf    v8, v3, 64.000000
+   89  13 *    PshV4    v8
+   90  14 *    PshGPtr  112336760
+   92  15 *    CHKREF
+   93  15 *    GETOBJ   5
+   94  15 *    CALLSYS  455           (void CGFX::drawTexture(const float, const float, const float, const float, CTexture@))
+- 613,3 -
+   96   9 * 2:
+   96   9 *    SUSPEND
+   97   9 * 0:
+   97   9 *    FREE     v0, 152242504
+   99   9 *    RET      3

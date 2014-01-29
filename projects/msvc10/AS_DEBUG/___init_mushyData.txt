@@ -1,0 +1,76 @@
+<unrecognized token> _unnamed_function_()
+
+Temps: 8, 16, 17, 18, 19, 20, 21, 22, 23, 24
+
+Variables: 
+ 018: _builtin_function_ {noname}
+ 019: array {noname}
+ 022: string {noname}
+ 023: string {noname}
+ 024: ObjectData {noname}
+ 008: string {noname}
+ 016: string {noname}
+
+
+- 14,12 -
+    0  24 *    SUSPEND
+    1  24 *    SetV1    v17, 0x0
+    3  24 *    PshV4    v17
+    4  25 *    FREE     v18, 50678352
+    6  25 *    VAR      v18
+    7  26 *    PshGPtr  150851824
+    9  27 *    CHKREF
+   10  27 *    CALL     199           (string[]@ factstub())
+   12  27 *    STOREOBJ v19
+   13  27 *    PshVPtr  v19
+   14  28 *    CALLSYS  80           (T[]& array::opAssign(const T[]&in))
+   16  26 *    VAR      v19
+   17  27 *    PshC4    0x40          (i:64, f:8.96831e-044)
+   19  28 *    PshC4    0x40          (i:64, f:8.96831e-044)
+   21  29 *    PSF      v22
+   22  30 *    STR      6         (l:29 s:"editor/obj")
+   23  32 *    CALLSYS  32           (const string& _string_factory_(const int, const uint8&))
+   25  30 *    PshRPtr
+   26  31 *    PSF      v8
+   27  32 *    CALLSYS  34           (void string::_beh_0_(const string&in))
+   29  30 *    ObjInfo  v8, 1
+   29  30 *    VAR      v8
+   30  31 *    PSF      v16
+   31  32 *    PshGPtr  89197432
+   33  33 *    CHKREF
+   34  33 *    GETREF   2
+   35  33 *    CALLSYS  429           (string CX2DApp::workPath(const string&in))
+   37  30 *    ObjInfo  v16, 1
+   37  30 *    PSF      v8
+   38  31 *    CALLSYS  35           (void string::_beh_1_())
+   40  30 *    ObjInfo  v8, 0
+   40  30 *    PSF      v16
+   41  31 *    ALLOC    0x305cbc8, 34             (type:string)
+   44  29 *    PSF      v16
+   45  30 *    CALLSYS  35           (void string::_beh_1_())
+   47  29 *    ObjInfo  v16, 0
+   47  29 *    VAR      v22
+   48  30 *    PSF      v23
+   49  31 *    STR      7         (l:18 s:"Objects/Mo")
+   50  33 *    CALLSYS  32           (const string& _string_factory_(const int, const uint8&))
+   52  31 *    PshRPtr
+   53  32 *    PSF      v8
+   54  33 *    CALLSYS  34           (void string::_beh_0_(const string&in))
+   56  31 *    ObjInfo  v8, 1
+   56  31 *    PSF      v8
+   57  32 *    ALLOC    0x305cbc8, 34             (type:string)
+   60  30 *    PSF      v8
+   61  31 *    CALLSYS  35           (void string::_beh_1_())
+   63  30 *    ObjInfo  v8, 0
+   63  30 *    VAR      v23
+   64  31 *    GETOBJ   0
+   65  31 *    GETOBJ   1
+   66  31 *    GETOBJ   4
+   67  31 *    GETOBJ   5
+   68  31 *    CALL     736           (ObjectData@ ObjectData(string, string, uint, uint, string[], EditorDrawCallback@, bool))
+   70  24 *    STOREOBJ v24
+   71  24 *    PshVPtr  v24
+   72  25 *    PGA      150854376
+   74  26 *    REFCPY   0x8f54818
+   76  25 *    FREE     v24, 150292504
+   78  24 *    RET      0

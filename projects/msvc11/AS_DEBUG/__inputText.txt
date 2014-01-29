@@ -1,0 +1,100 @@
+void inputText(string)
+
+Temps: 1, 8, 9, 11, 12
+
+Variables: 
+ 000: string str
+ 010: Rocket r
+ 001: string {noname}
+ 012: vec2 {noname}
+ 008: string {noname}
+
+
+- 79,2 -
+    0  12 *    VarDecl  0
+    0  12 *    SUSPEND
+    1  12 *    PSF      v1
+    2  13 *    PshVPtr  v0
+    3  14 *    ALLOC    0x45ebf60, 35             (type:string)
+    6  12 *    VAR      v1
+    7  13 *    PshGPtr  74612136
+    9  14 *    GETOBJ   1
+   10  14 *    CALLINTF 1047           (void Input::postKeyboardEvent(string))
+- 81,2 -
+   12  12 *    SUSPEND
+   13  12 *    STR      108         (l:1 s:"1")
+   14  14 *    CALLSYS  33           (const string& _string_factory_(const int, const uint8&))
+   16  12 *    PshRPtr
+   17  13 *    PSF      v8
+   18  14 *    CALLSYS  35           (string::string(const string&in))
+   20  12 *    ObjInfo  v8, 1
+   20  12 *    VAR      v8
+   21  13 *    PshVPtr  v0
+   22  14 *    GETREF   1
+   23  14 *    CALLSYS  39           (bool string::opEquals(const string&in) const)
+   25  12 *    CpyRtoV4 v9
+   26  12 *    PSF      v8
+   27  13 *    CALLSYS  36           (string::~string())
+   29  12 *    ObjInfo  v8, 0
+   29  12 *    CpyVtoR4 v9
+   30  12 *    JLowZ    +25              (d:57)
+- 82,3 -
+   32  12 * {
+   32  12 *    SUSPEND
+   33  12 *    VarDecl  1
+   33  12 *    PshC4    0x1          (i:1, f:1.4013e-045)
+   35  13 *    CALL     885           (Rocket@ Rocket(Team))
+   37  12 *    STOREOBJ v10
+- 83,3 -
+   38  12 *    SUSPEND
+   39  12 *    PshC4    0x0          (i:0, f:0)
+   41  13 *    PSF      v12
+   42  14 *    PshGPtr  74562528
+   44  15 *    CHKREF
+   45  15 *    ALLOC    0x45f8270, 133             (type:vec2)
+   48  13 *    VAR      v12
+   49  14 *    PshVPtr  v10
+   50  15 *    GETOBJ   1
+   51  15 *    CALLINTF 1170           (void UnitBase::setTransform(vec2, float = 0.0f))
+   53  12 *    FREE     v10, 74319192
+   55  12 * }
+   55  12 *    JMP      +34              (d:91)
+- 84,8 -
+   57  12 * 1:
+   57  12 *    SUSPEND
+   58  12 *    STR      109         (l:1 s:"h")
+   59  14 *    CALLSYS  33           (const string& _string_factory_(const int, const uint8&))
+   61  12 *    PshRPtr
+   62  13 *    PSF      v8
+   63  14 *    CALLSYS  35           (string::string(const string&in))
+   65  12 *    ObjInfo  v8, 1
+   65  12 *    VAR      v8
+   66  13 *    PshVPtr  v0
+   67  14 *    GETREF   1
+   68  14 *    CALLSYS  39           (bool string::opEquals(const string&in) const)
+   70  12 *    CpyRtoV4 v9
+   71  12 *    PSF      v8
+   72  13 *    CALLSYS  36           (string::~string())
+   74  12 *    ObjInfo  v8, 0
+   74  12 *    CpyVtoR4 v9
+   75  12 *    JLowZ    +14              (d:91)
+- 85,3 -
+   77  12 * {
+   77  12 *    SUSPEND
+   78  12 *    PshGPtr  74596608
+   80  13 *    ADDSi    v44, 134217755
+   82  13 *    PopRPtr
+   83  12 *    RDR1     v9
+   84  12 *    NOT      v9
+   85  12 *    PshGPtr  74596608
+   87  13 *    ADDSi    v44, 134217755
+   89  13 *    PopRPtr
+   90  12 *    WRTV1    v9
+- 87,2 -
+   91  12 * }
+   91  12 * 3:
+   91  12 * 2:
+   91  12 *    SUSPEND
+   92  12 * 0:
+   92  12 *    FREE     v0, 73318240
+   94  12 *    RET      1

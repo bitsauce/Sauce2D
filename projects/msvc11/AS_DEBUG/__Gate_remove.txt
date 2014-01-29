@@ -1,0 +1,31 @@
+void Gate::remove()
+
+Temps: 1
+
+Variables: 
+ 000: Gate this
+
+
+    0   1 *    PshVPtr  v0
+    1   2 *    CALLSYS  2           (void _builtin_object_::_beh_5_())
+- 72,3 -
+    3   1 *    SUSPEND
+    4   1 *    LoadThisR v100, 134217780
+    6   1 *    RDR4     v1
+    7   1 *    PshV4    v1
+    8   2 *    CALLSYS  567           (void b2dRemoveRevoluteJoint(int))
+- 73,3 -
+   10   1 *    SUSPEND
+   11   1 *    LoadThisR v104, 134217780
+   13   1 *    RDR4     v1
+   14   1 *    PshV4    v1
+   15   2 *    CALLSYS  536           (void b2dRemoveBody(int))
+- 74,3 -
+   17   1 *    SUSPEND
+   18   1 *    PshVPtr  v0
+   19   2 *    CALL     707           (void UnitBase::remove())
+- 75,3 -
+   21   1 *    SUSPEND
+   22   1 * 0:
+   22   1 *    FREE     v0, 71594464
+   24   1 *    RET      1

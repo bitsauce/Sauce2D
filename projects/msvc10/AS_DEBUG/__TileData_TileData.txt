@@ -1,0 +1,178 @@
+TileData::TileData(const string, int)
+
+Temps: 1, 2, 3, 7, 8, 9, 10, 11, 12, 13, 14
+
+Variables: 
+ -001: const string imagePath
+ -002: int c
+ 004: FrameBuffer fbo
+ 005: int i
+ 006: int image
+ 000: TileData this
+ 012: array {noname}
+ 013: TileData {noname}
+ 014: array {noname}
+
+
+- 14,13 -
+    0  14 *    VarDecl  0
+    0  14 *    VarDecl  1
+    0  14 *    SUSPEND
+    1  14 *    CALL     408           (int[]@ factstub())
+    3  14 *    STOREOBJ v14
+    4  14 *    PshVPtr  v14
+    5  15 *    PshVPtr  v0
+    6  16 *    ADDSi    v24, 134217747
+    8  16 *    REFCPY   0x63871e0
+   10  15 *    PopPtr
+   11  14 *    FREE     v14, 104362464
+- 20,3 -
+   13  14 *    SUSPEND
+   14  14 *    PshVPtr  v-1
+   15  15 *    CALLSYS  45           (bool string::isEmpty() const)
+   17  14 *    CpyRtoV4 v1
+   18  14 *    NOT      v1
+   19  14 *    CpyVtoR4 v1
+   20  14 *    JLowZ    +9              (d:31)
+   22  14 *    VAR      v-1
+   23  15 *    GETOBJREF 0
+   24  15 *    CALLSYS  351           (int gfxLoadImage(const string&in))
+   26  14 *    CpyRtoV4 v2
+   27  14 *    CpyVtoV4 v3, v2
+   29  14 *    JMP      +2              (d:33)
+   31  14 * 2:
+   31  14 *    SetV4    v3, 0xffffffff          (i:-1, f:-1.#QNAN)
+   33  14 * 1:
+   33  14 *    LoadThisR v20, 134217747
+   35  14 *    WRTV4    v3
+- 21,3 -
+   36  14 *    SUSPEND
+   37  14 *    LoadThisR v28, 134217747
+   39  14 *    WRTV4    v-2
+- 24,3 -
+   40  14 *    SUSPEND
+   41  14 *    PshC4    0x10          (i:16, f:2.24208e-044)
+   43  15 *    PshVPtr  v0
+   44  16 *    ADDSi    v24, 134217747
+   46  16 *    RDSPtr
+   47  16 *    CALLSYS  89           (void array::resize(uint))
+- 25,3 -
+   49  14 *    SUSPEND
+   50  14 *    VarDecl  2
+   50  14 *    CALL     365           (FrameBuffer@ FrameBuffer())
+   52  14 *    STOREOBJ v4
+- 26,3 -
+   53  14 *    SUSPEND
+   54  14 *    PshVPtr  v4
+   55  15 *    CALLINTF 487           (void FrameBuffer::bind())
+- 27,7 -
+   57  14 *    SUSPEND
+   58  14 *    VarDecl  3
+   58  14 *    SetV4    v5, 0x0          (i:0, f:0)
+   60  14 *    JMP      +87              (d:149)
+   62  14 * 6:
+   62  14 *    SUSPEND
+- 29,4 -
+   63  14 * {
+   63  14 *    SUSPEND
+   64  14 *    VarDecl  4
+   64  14 *    CpyGtoV4 v3, 104385776
+   66  14 *    fTOu     v3
+   67  14 *    PshV4    v3
+   68  15 *    CpyGtoV4 v2, 104385776
+   70  15 *    fTOu     v2
+   71  15 *    PshV4    v2
+   72  16 *    CALLSYS  350           (int gfxCreateImage(const uint, const uint))
+   74  14 *    CpyRtoV4 v1
+   75  14 *    CpyVtoV4 v6, v1
+- 30,4 -
+   77  14 *    SUSPEND
+   78  14 *    PshV4    v6
+   79  15 *    PshVPtr  v4
+   80  16 *    CALLINTF 489           (void FrameBuffer::attachImage(const int))
+- 31,4 -
+   82  14 *    SUSPEND
+   83  14 *    LoadThisR v20, 134217747
+   85  14 *    RDR4     v3
+   86  14 *    PshV4    v3
+   87  15 *    CALLSYS  344           (void gfxSetDrawImage(const uint))
+- 32,4 -
+   89  14 *    SUSPEND
+   90  14 *    PshC4    0x7          (i:7, f:9.80909e-045)
+   92  15 *    CALLSYS  337           (void gfxBeginPoly(const uint))
+- 33,4 -
+   94  14 *    SUSPEND
+   95  14 *    PshC4    0x3f800000          (i:1065353216, f:1)
+   97  15 *    ADDIi    v1, v5, 1
+  100  15 *    iTOf     v1
+  101  15 *    CpyGtoV4 v2, 104385776
+  103  15 *    DIVf     v3, v1, v2
+  105  15 *    PshV4    v3
+  106  16 *    PshC4    0x0          (i:0, f:0)
+  108  17 *    CpyVtoV4 v1, v5
+  110  17 *    iTOf     v1
+  111  17 *    CpyGtoV4 v2, 104385776
+  113  17 *    DIVf     v1, v1, v2
+  115  17 *    PshV4    v1
+  116  18 *    PshG4    104385776
+  118  19 *    PshG4    104385776
+  120  20 *    PshC4    0x0          (i:0, f:0)
+  122  21 *    PshC4    0x0          (i:0, f:0)
+  124  22 *    CALL     435           (void gfxDrawImageQuad(const float, const float, const float, const float, const float, const float, const float, const float))
+- 34,4 -
+  126  14 *    SUSPEND
+  127  14 *    CALLSYS  339           (void gfxEndPoly())
+- 35,4 -
+  129  14 *    SUSPEND
+  130  14 *    PshC4    0x0          (i:0, f:0)
+  132  15 *    CALLSYS  344           (void gfxSetDrawImage(const uint))
+- 36,4 -
+  134  14 *    SUSPEND
+  135  14 *    PshV4    v5
+  136  15 *    PshVPtr  v0
+  137  16 *    ADDSi    v24, 134217747
+  139  16 *    RDSPtr
+  140  16 *    RefCpyV  v12, 104362464
+  142  16 *    CALLSYS  412           (int& array::opIndex(uint))
+  144  14 *    WRTV4    v6
+  145  14 *    FREE     v12, 104362464
+- 27,26 -
+  147  14 * }
+  147  14 * 5:
+  147  14 *    SUSPEND
+  148  14 *    IncVi    v5
+- 27,18 -
+  149  14 * 3:
+  149  14 *    SUSPEND
+  150  14 *    CMPIi    v5, 16
+  152  14 *    JS       -92              (d:62)
+- 38,3 -
+  154  14 * 4:
+  154  14 *    SUSPEND
+  155  14 *    PshVPtr  v4
+  156  15 *    CALLINTF 488           (void FrameBuffer::unbind())
+- 42,3 -
+  158  14 *    SUSPEND
+  159  14 *    PshGPtr  104426416
+  161  15 *    CHKREF
+  162  15 *    CALLSYS  87           (uint array::size() const)
+  164  14 *    CpyRtoV4 v11
+  165  14 *    LoadThisR v16, 134217747
+  167  14 *    WRTV4    v11
+- 43,3 -
+  168  14 *    SUSPEND
+  169  14 *    PshVPtr  v0
+  170  15 *    RefCpyV  v13, 104327232
+  172  15 *    PopPtr
+  173  14 *    VAR      v13
+  174  15 *    PshGPtr  104426416
+  176  16 *    CHKREF
+  177  16 *    GETREF   1
+  178  16 *    CALLSYS  480           (void array::insertLast(TileData@const&in))
+  180  14 *    FREE     v13, 104327232
+- 44,3 -
+  182  14 *    SUSPEND
+  183  14 *    FREE     v4, 104321512
+  185  14 * 0:
+  185  14 *    FREE     v-1, 47499864
+  187  14 *    RET      3

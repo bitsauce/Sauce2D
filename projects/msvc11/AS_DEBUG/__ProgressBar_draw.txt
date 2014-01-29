@@ -1,0 +1,155 @@
+void ProgressBar::draw()
+
+Temps: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12
+
+Variables: 
+ 000: ProgressBar this
+
+
+    0  12 *    PshVPtr  v0
+    1  13 *    CALLSYS  2           (void _builtin_object_::_beh_5_())
+- 19,3 -
+    3  12 *    SUSPEND
+    4  12 *    PshC4    0x64          (i:100, f:1.4013e-043)
+    6  13 *    CALLSYS  421           (void gfxSetDepth(const int))
+- 20,3 -
+    8  12 *    SUSPEND
+    9  12 *    LoadThisR v56, 134217782
+   11  12 *    RDR4     v1
+   12  12 *    PshV4    v1
+   13  13 *    CALLSYS  420           (void gfxSetTexture(const int))
+- 21,3 -
+   15  12 *    SUSPEND
+   16  12 *    PshC4    0x3          (i:3, f:4.2039e-045)
+   18  13 *    CALLSYS  434           (void gfxBegin(const DrawMode = DrawTriangles))
+- 22,3 -
+   20  12 *    SUSPEND
+   21  12 *    SetV1    v8, 0x0
+   23  12 *    PshV4    v8
+   24  13 *    LoadThisR v48, 134217782
+   26  13 *    RDR4     v1
+   27  13 *    PshVPtr  v0
+   28  14 *    ADDSi    v60, 134217782
+   30  14 *    RDSPtr
+   31  14 *    ADDSi    v4, 67108878
+   33  14 *    PopRPtr
+   34  13 *    RDR4     v3
+   35  13 *    iTOf     v3
+   36  13 *    DIVf     v1, v1, v3
+   38  13 *    PshVPtr  v0
+   39  14 *    ADDSi    v60, 134217782
+   41  14 *    RDSPtr
+   42  14 *    ADDSi    v4, 67108878
+   44  14 *    PopRPtr
+   45  13 *    RDR4     v4
+   46  13 *    iTOf     v4
+   47  13 *    MULf     v3, v1, v4
+   49  13 *    PshV4    v3
+   50  14 *    PshC4    0x3f800000          (i:1065353216, f:1)
+   52  15 *    PshC4    0x0          (i:0, f:0)
+   54  16 *    PshC4    0x0          (i:0, f:0)
+   56  17 *    PshVPtr  v0
+   57  18 *    ADDSi    v60, 134217782
+   59  18 *    RDSPtr
+   60  18 *    ADDSi    v4, 67108878
+   62  18 *    PopRPtr
+   63  17 *    RDR4     v4
+   64  17 *    iTOf     v4
+   65  17 *    LoadThisR v48, 134217782
+   67  17 *    RDR4     v1
+   68  17 *    MULf     v4, v4, v1
+   70  17 *    PshV4    v4
+   71  18 *    PshVPtr  v0
+   72  19 *    ADDSi    v36, 134217782
+   74  19 *    RDSPtr
+   75  19 *    CALLSYS  252           (float rect2::get_width() const)
+   77  18 *    CpyRtoV4 v12
+   78  18 *    PshV4    v12
+   79  19 *    PshVPtr  v0
+   80  20 *    ADDSi    v36, 134217782
+   82  20 *    RDSPtr
+   83  20 *    CALLSYS  251           (float rect2::get_y() const)
+   85  19 *    CpyRtoV4 v5
+   86  19 *    PshVPtr  v0
+   87  20 *    ADDSi    v60, 134217782
+   89  20 *    RDSPtr
+   90  20 *    ADDSi    v4, 67108878
+   92  20 *    PopRPtr
+   93  19 *    RDR4     v6
+   94  19 *    iTOf     v6
+   95  19 *    SetV4    v7, 0x3f800000          (i:1065353216, f:1)
+   97  19 *    LoadThisR v48, 134217782
+   99  19 *    RDR4     v1
+  100  19 *    SUBf     v7, v7, v1
+  102  19 *    MULf     v1, v6, v7
+  104  19 *    ADDf     v6, v5, v1
+  106  19 *    PshV4    v6
+  107  20 *    PshVPtr  v0
+  108  21 *    ADDSi    v36, 134217782
+  110  21 *    RDSPtr
+  111  21 *    CALLSYS  249           (float rect2::get_x() const)
+  113  20 *    CpyRtoV4 v1
+  114  20 *    PshV4    v1
+  115  21 *    CALLSYS  441           (void gfxAddRect(const float, const float, const float, const float, const float, const float, const float, const float, const bool = false))
+- 23,3 -
+  117  12 *    SUSPEND
+  118  12 *    CALLSYS  435           (void gfxEnd())
+- 25,3 -
+  120  12 *    SUSPEND
+  121  12 *    PshC4    0x65          (i:101, f:1.41531e-043)
+  123  13 *    CALLSYS  421           (void gfxSetDepth(const int))
+- 26,3 -
+  125  12 *    SUSPEND
+  126  12 *    LoadThisR v52, 134217782
+  128  12 *    RDR4     v1
+  129  12 *    PshV4    v1
+  130  13 *    CALLSYS  420           (void gfxSetTexture(const int))
+- 27,3 -
+  132  12 *    SUSPEND
+  133  12 *    PshC4    0x3          (i:3, f:4.2039e-045)
+  135  13 *    CALLSYS  434           (void gfxBegin(const DrawMode = DrawTriangles))
+- 28,3 -
+  137  12 *    SUSPEND
+  138  12 *    SetV1    v1, 0x0
+  140  12 *    PshV4    v1
+  141  13 *    PshC4    0x3f800000          (i:1065353216, f:1)
+  143  14 *    PshC4    0x3f800000          (i:1065353216, f:1)
+  145  15 *    PshC4    0x0          (i:0, f:0)
+  147  16 *    PshC4    0x0          (i:0, f:0)
+  149  17 *    PshVPtr  v0
+  150  18 *    ADDSi    v36, 134217782
+  152  18 *    RDSPtr
+  153  18 *    CALLSYS  254           (float rect2::get_height() const)
+  155  17 *    CpyRtoV4 v11
+  156  17 *    PshV4    v11
+  157  18 *    PshVPtr  v0
+  158  19 *    ADDSi    v36, 134217782
+  160  19 *    RDSPtr
+  161  19 *    CALLSYS  252           (float rect2::get_width() const)
+  163  18 *    CpyRtoV4 v10
+  164  18 *    PshV4    v10
+  165  19 *    PshVPtr  v0
+  166  20 *    ADDSi    v36, 134217782
+  168  20 *    RDSPtr
+  169  20 *    CALLSYS  251           (float rect2::get_y() const)
+  171  19 *    CpyRtoV4 v9
+  172  19 *    PshV4    v9
+  173  20 *    PshVPtr  v0
+  174  21 *    ADDSi    v36, 134217782
+  176  21 *    RDSPtr
+  177  21 *    CALLSYS  249           (float rect2::get_x() const)
+  179  20 *    CpyRtoV4 v3
+  180  20 *    PshV4    v3
+  181  21 *    CALLSYS  441           (void gfxAddRect(const float, const float, const float, const float, const float, const float, const float, const float, const bool = false))
+- 29,3 -
+  183  12 *    SUSPEND
+  184  12 *    CALLSYS  435           (void gfxEnd())
+- 31,3 -
+  186  12 *    SUSPEND
+  187  12 *    PshC4    0x0          (i:0, f:0)
+  189  13 *    CALLSYS  420           (void gfxSetTexture(const int))
+- 32,3 -
+  191  12 *    SUSPEND
+  192  12 * 0:
+  192  12 *    FREE     v0, 74307624
+  194  12 *    RET      1

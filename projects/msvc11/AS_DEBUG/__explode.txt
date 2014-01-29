@@ -1,0 +1,227 @@
+void explode()
+
+Temps: 7, 9, 10, 15, 17, 19, 20, 22, 23, 24
+
+Variables: 
+ 008: int tx
+ 011: int ty
+ 012: int r
+ 013: int y
+ 014: int x
+ 016: Tile@ tile
+ 018: PhysTile b
+ 017: Tile {noname}
+ 024: vec2 {noname}
+ 007: string {noname}
+ 022: vec2 {noname}
+
+
+- 7,2 -
+    0  24 *    SUSPEND
+    1  24 *    STR      110         (l:6 s:"xplode")
+    2  26 *    CALLSYS  33           (const string& _string_factory_(const int, const uint8&))
+    4  24 *    PshRPtr
+    5  25 *    PSF      v7
+    6  26 *    CALLSYS  35           (string::string(const string&in))
+    8  24 *    ObjInfo  v7, 1
+    8  24 *    PSF      v7
+    9  25 *    CALLSYS  304           (void print(const string&in))
+   11  24 *    PSF      v7
+   12  25 *    CALLSYS  36           (string::~string())
+- 8,2 -
+   14  24 *    ObjInfo  v7, 0
+   14  24 *    SUSPEND
+   15  24 *    VarDecl  0
+   15  24 *    PshGPtr  74562528
+   17  25 *    ADDSi    v0, 67108877
+   19  25 *    PopRPtr
+   20  24 *    RDR4     v9
+   21  24 *    CpyGtoV4 v10, 74607976
+   23  24 *    DIVf     v9, v9, v10
+   25  24 *    fTOi     v9
+   26  24 *    CpyVtoV4 v8, v9
+- 9,2 -
+   28  24 *    SUSPEND
+   29  24 *    VarDecl  1
+   29  24 *    PshGPtr  74562528
+   31  25 *    ADDSi    v4, 67108877
+   33  25 *    PopRPtr
+   34  24 *    RDR4     v10
+   35  24 *    CpyGtoV4 v9, 74607976
+   37  24 *    DIVf     v10, v10, v9
+   39  24 *    fTOi     v10
+   40  24 *    CpyVtoV4 v11, v10
+- 11,2 -
+   42  24 *    SUSPEND
+   43  24 *    VarDecl  2
+   43  24 *    SetV4    v12, 0x5          (i:5, f:7.00649e-045)
+- 12,6 -
+   45  24 *    SUSPEND
+   46  24 *    VarDecl  3
+   46  24 *    CpyVtoV4 v10, v12
+   48  24 *    NEGi     v10
+   49  24 *    CpyVtoV4 v13, v10
+   51  24 *    JMP      +177              (d:230)
+   53  24 * 4:
+   53  24 *    SUSPEND
+- 14,7 -
+   54  24 * {
+   54  24 *    SUSPEND
+   55  24 *    VarDecl  4
+   55  24 *    CpyVtoV4 v9, v12
+   57  24 *    NEGi     v9
+   58  24 *    CpyVtoV4 v14, v9
+   60  24 *    JMP      +161              (d:223)
+   62  24 * 8:
+   62  24 *    SUSPEND
+- 16,4 -
+   63  24 * {
+   63  24 *    SUSPEND
+   64  24 *    ADDi     v10, v11, v13
+   66  24 *    PshV4    v10
+   67  25 *    ADDi     v9, v8, v14
+   69  25 *    PshV4    v9
+   70  26 *    PshGPtr  74607232
+   72  27 *    ADDSi    v48, 134217764
+   74  27 *    RDSPtr
+   75  27 *    CALLINTF 1119           (bool TileGrid::isTileAt(const int, const int))
+   77  24 *    CpyRtoV4 v15
+   78  24 *    NOT      v15
+   79  24 *    CpyVtoR4 v15
+   80  24 *    JLowZ    +4              (d:86)
+   82  24 *    SetV1    v10, 0x1
+   84  24 *    JMP      +20              (d:106)
+   86  24 * 10:
+   86  24 *    MULi     v10, v14, v14
+   88  24 *    MULi     v9, v13, v13
+   90  24 *    ADDi     v10, v10, v9
+   92  24 *    iTOf     v10
+   93  24 *    PshV4    v10
+   94  25 *    CALLSYS  335           (float sqrt(const float))
+   96  24 *    CpyRtoV4 v9
+   97  24 *    CpyVtoV4 v10, v12
+   99  24 *    iTOf     v10
+  100  24 *    CMPf     v9, v10
+  102  24 *    TNS
+  103  24 *    CpyRtoV4 v9
+  104  24 *    CpyVtoV4 v10, v9
+  106  24 * 11:
+  106  24 *    CpyVtoR4 v10
+  107  24 *    JLowZ    +3              (d:112)
+- 17,5 -
+  109  24 *    SUSPEND
+  110  24 * {
+  110  24 * }
+  110  24 *    JMP      +109              (d:221)
+- 19,4 -
+  112  24 * 9:
+  112  24 *    SUSPEND
+  113  24 *    VarDecl  5
+  113  24 *    ADDi     v15, v11, v13
+  115  24 *    PshV4    v15
+  116  25 *    ADDi     v10, v8, v14
+  118  25 *    PshV4    v10
+  119  26 *    PshGPtr  74607232
+  121  27 *    ADDSi    v48, 134217764
+  123  27 *    RDSPtr
+  124  27 *    CALLINTF 1120           (Tile@ TileGrid::getTileAt(const int, const int))
+  126  24 *    FREE     v16, 74297408
+  128  24 *    STOREOBJ v16
+- 20,4 -
+  129  24 *    SUSPEND
+  130  24 *    ClrVPtr  v17
+  131  24 *    CmpPtr   v16, v17
+  133  24 *    TNZ
+  134  24 *    CpyRtoV4 v9
+  135  24 *    FREE     v17, 74297408
+  137  24 *    CpyVtoR4 v9
+  138  24 *    JLowZ    +79              (d:219)
+- 22,5 -
+  140  24 * {
+  140  24 *    SUSPEND
+  141  24 *    VarDecl  6
+  141  24 *    CALL     843           (PhysTile@ PhysTile())
+  143  24 *    STOREOBJ v18
+- 23,5 -
+  144  24 *    SUSPEND
+  145  24 *    PshC4    0x0          (i:0, f:0)
+  147  25 *    PSF      v24
+  148  26 *    ADDi     v10, v11, v13
+  150  26 *    iTOf     v10
+  151  26 *    CpyGtoV4 v9, 74607976
+  153  26 *    MULf     v15, v10, v9
+  155  26 *    ADDIf    v9, v15, 8.000000
+  158  26 *    PshV4    v9
+  159  27 *    ADDi     v15, v8, v14
+  161  27 *    iTOf     v15
+  162  27 *    CpyGtoV4 v19, 74607976
+  164  27 *    MULf     v10, v15, v19
+  166  27 *    ADDIf    v19, v10, 8.000000
+  169  27 *    PshV4    v19
+  170  28 *    PSF      v22
+  171  29 *    CALLSYS  135           (vec2::vec2(float, float))
+  173  26 *    ObjInfo  v22, 1
+  173  26 *    PSF      v22
+  174  27 *    ALLOC    0x45f8270, 133             (type:vec2)
+  177  25 *    ObjInfo  v22, 0
+  177  25 *    VAR      v24
+  178  26 *    PshVPtr  v18
+  179  27 *    GETOBJ   1
+  180  27 *    CALLINTF 1220           (void PhysTile::setTransform(vec2, float))
+- 24,5 -
+  182  24 *    SUSPEND
+  183  24 *    LoadRObjR v16, v36, 134217756
+  186  24 *    RDR4     v10
+  187  24 *    PshVPtr  v18
+  188  25 *    ADDSi    v44, 134217792
+  190  25 *    RDSPtr
+  191  25 *    ADDSi    v36, 134217756
+  193  25 *    PopRPtr
+  194  24 *    WRTV4    v10
+- 25,5 -
+  195  24 *    SUSPEND
+  196  24 *    SetV4    v23, 0x10          (i:16, f:2.24208e-044)
+  198  24 *    PshVPtr  v18
+  199  25 *    ADDSi    v44, 134217792
+  201  25 *    RDSPtr
+  202  25 *    ADDSi    v32, 134217756
+  204  25 *    PopRPtr
+  205  24 *    WRTV4    v23
+- 26,5 -
+  206  24 *    SUSPEND
+  207  24 *    ADDi     v10, v11, v13
+  209  24 *    PshV4    v10
+  210  25 *    ADDi     v23, v8, v14
+  212  25 *    PshV4    v23
+  213  26 *    PshGPtr  74607232
+  215  27 *    CALLINTF 1111           (void Terrain::removeGround(const int, const int))
+  217  24 *    FREE     v18, 74314576
+  219  24 * }
+  219  24 * 12:
+  219  24 *    FREE     v16, 74297408
+- 14,27 -
+  221  24 * }
+  221  24 * 7:
+  221  24 *    SUSPEND
+  222  24 *    IncVi    v14
+- 14,19 -
+  223  24 * 5:
+  223  24 *    SUSPEND
+  224  24 *    CMPi     v14, v12
+  226  24 *    JNP      -166              (d:62)
+- 12,26 -
+  228  24 * 6:
+  228  24 * }
+  228  24 * 3:
+  228  24 *    SUSPEND
+  229  24 *    IncVi    v13
+- 12,18 -
+  230  24 * 1:
+  230  24 *    SUSPEND
+  231  24 *    CMPi     v13, v12
+  233  24 *    JNP      -182              (d:53)
+- 30,2 -
+  235  24 * 2:
+  235  24 *    SUSPEND
+  236  24 * 0:
+  236  24 *    RET      0

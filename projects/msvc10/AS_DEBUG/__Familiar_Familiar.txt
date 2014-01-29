@@ -1,0 +1,57 @@
+Familiar::Familiar(Player@)
+
+Temps: 2, 3, 4, 5
+
+Variables: 
+ -001: Player@ owner
+ 000: Familiar this
+ 003: Vector2 {noname}
+ 002: Vector2 {noname}
+
+
+- 41,10 -
+    0   5 *    VarDecl  0
+    0   5 *    SUSPEND
+    1   5 *    PshVPtr  v0
+    2   6 *    ADDSi    v24, 134217835
+    4   6 *    ALLOC    0x6acceb8, 130             (type:Vector2)
+    7   5 *    PshVPtr  v0
+    8   6 *    CALL     581           (SceneObject::SceneObject())
+- 13,3 -
+   10   5 *    SUSPEND
+   11   5 *    VAR      v-1
+   12   6 *    PshVPtr  v0
+   13   7 *    ADDSi    v20, 134217835
+   15   7 *    GETOBJREF 1
+   16   7 *    REFCPY   0x91310e8
+   18   6 *    PopPtr
+- 14,3 -
+   19   5 *    SUSPEND
+   20   5 *    PSF      v3
+   21   6 *    PSF      v2
+   22   7 *    PshVPtr  v-1
+   23   8 *    CALLINTF 1092           (Vector2 SceneObject::pos() const)
+   25   6 *    ObjInfo  v2, 1
+   25   6 *    PSF      v2
+   26   7 *    ALLOC    0x6acceb8, 131             (type:Vector2)
+   29   5 *    ObjInfo  v2, 0
+   29   5 *    VAR      v3
+   30   6 *    PshVPtr  v0
+   31   7 *    GETOBJ   1
+   32   7 *    CALLINTF 1089           (void SceneObject::setPos(const Vector2))
+- 15,3 -
+   34   5 *    SUSPEND
+   35   5 *    PshC4    0x20          (i:32, f:4.48416e-044)
+   37   6 *    PshC4    0x20          (i:32, f:4.48416e-044)
+   39   7 *    PshVPtr  v0
+   40   8 *    CALLINTF 1095           (void SceneObject::setSize(const uint, const uint))
+- 16,3 -
+   42   5 *    SUSPEND
+   43   5 *    PshC4    0x3f19999a          (i:1058642330, f:0.6)
+   45   6 *    PshVPtr  v0
+   46   7 *    CALLINTF 1106           (void SceneObject::setDepth(const float))
+- 17,3 -
+   48   5 *    SUSPEND
+   49   5 * 0:
+   49   5 *    FREE     v-1, 152244456
+   51   5 *    RET      2

@@ -1,0 +1,44 @@
+void Gate::setTransform(vec2, float)
+
+Temps: 1, 2, 3, 4
+
+Variables: 
+ -001: vec2 pos
+ -002: float ang
+ 000: Gate this
+ 004: vec2 {noname}
+
+
+    0   4 *    VarDecl  0
+    0   4 *    VarDecl  1
+    0   4 *    PshVPtr  v0
+    1   5 *    CALLSYS  2           (void _builtin_object_::_beh_5_())
+- 79,3 -
+    3   4 *    SUSPEND
+    4   4 *    PshV4    v-2
+    5   5 *    LoadRObjR v-1, v4, 67108877
+    8   5 *    RDR4     v1
+    9   5 *    PshV4    v1
+   10   6 *    LoadRObjR v-1, v0, 67108877
+   13   6 *    RDR4     v2
+   14   6 *    PshV4    v2
+   15   7 *    LoadThisR v104, 134217780
+   17   7 *    RDR4     v3
+   18   7 *    PshV4    v3
+   19   8 *    CALLSYS  542           (void b2dSetBodyTransform(int, float, float, float))
+- 80,3 -
+   21   4 *    SUSPEND
+   22   4 *    PshV4    v-2
+   23   5 *    PSF      v4
+   24   6 *    PshVPtr  v-1
+   25   7 *    ALLOC    0x4353a20, 133             (type:vec2)
+   28   5 *    VAR      v4
+   29   6 *    PshVPtr  v0
+   30   7 *    GETOBJ   1
+   31   7 *    CALL     710           (void UnitBase::setTransform(vec2, float = 0.0f))
+- 81,3 -
+   33   4 *    SUSPEND
+   34   4 * 0:
+   34   4 *    FREE     v-1, 70597152
+   36   4 *    FREE     v0, 71594464
+   38   4 *    RET      3

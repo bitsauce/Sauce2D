@@ -1,0 +1,14 @@
+<unrecognized token> _unnamed_function_()
+
+Temps: 1, 2
+
+Variables: 
+
+
+- 9,11 -
+    0   2 *    SUSPEND
+    1   2 *    CpyGtoV4 v1, 104569008
+    3   2 *    SUBIf    v1, v1, 3.000000
+    6   2 *    fTOi     v1
+    7   2 *    CpyVtoG4 v1, 104603320
+    9   2 *    RET      0

@@ -1,0 +1,50 @@
+FrameBuffer::FrameBuffer()
+
+Temps: 1, 2
+
+Variables: 
+ 000: FrameBuffer this
+ 002: array {noname}
+
+
+- 4,15 -
+    0   2 *    SUSPEND
+    1   2 *    SetV1    v1, 0x0
+    3   2 *    LoadThisR v16, 134217744
+    5   2 *    WRTV1    v1
+- 5,15 -
+    6   2 *    SUSPEND
+    7   2 *    SetV1    v1, 0x0
+    9   2 *    LoadThisR v17, 134217744
+   11   2 *    WRTV1    v1
+- 6,14 -
+   12   2 *    SUSPEND
+   13   2 *    SetV4    v1, 0xffffffff          (i:-1, f:-1.#QNAN)
+   15   2 *    LoadThisR v20, 134217744
+   17   2 *    WRTV4    v1
+- 7,15 -
+   18   2 *    SUSPEND
+   19   2 *    SetV1    v1, 0x0
+   21   2 *    LoadThisR v24, 134217744
+   23   2 *    WRTV1    v1
+- 8,23 -
+   24   2 *    SUSPEND
+   25   2 *    PshC4    0x6          (i:6, f:8.40779e-045)
+   27   3 *    CALL     377           (float[]@ factstub(uint))
+   29   2 *    STOREOBJ v2
+   30   2 *    PshVPtr  v2
+   31   3 *    PshVPtr  v0
+   32   4 *    ADDSi    v28, 134217744
+   34   4 *    REFCPY   0x47974c0
+   36   3 *    FREE     v2, 75068608
+   38   3 *    PopPtr
+- 13,3 -
+   39   2 *    SUSPEND
+   40   2 *    CALLSYS  359           (int gfxCreateFrameBuffer())
+   42   2 *    CpyRtoV4 v1
+   43   2 *    LoadThisR v20, 134217744
+   45   2 *    WRTV4    v1
+- 14,3 -
+   46   2 *    SUSPEND
+   47   2 * 0:
+   47   2 *    RET      1

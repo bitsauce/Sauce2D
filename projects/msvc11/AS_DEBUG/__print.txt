@@ -1,0 +1,84 @@
+void print(vec2)
+
+Temps: 1, 3, 10, 17, 24, 26, 33
+
+Variables: 
+ 000: vec2 v
+ 010: string {noname}
+ 017: string {noname}
+ 024: string {noname}
+ 033: string {noname}
+
+
+- 26,2 -
+    0  33 *    VarDecl  0
+    0  33 *    SUSPEND
+    1  33 *    STR      107         (l:1 s:")")
+    2  35 *    CALLSYS  33           (const string& _string_factory_(const int, const uint8&))
+    4  33 *    PshRPtr
+    5  34 *    PSF      v33
+    6  35 *    CALLSYS  35           (string::string(const string&in))
+    8  33 *    ObjInfo  v33, 1
+    8  33 *    VAR      v33
+    9  34 *    PSF      v24
+   10  35 *    LoadThisR v4, 67108877
+   12  35 *    RDR4     v1
+   13  35 *    fTOd     v26, v1
+   15  35 *    PshV8    v26
+   16  37 *    PSF      v10
+   17  38 *    STR      106         (l:2 s:", ")
+   18  40 *    CALLSYS  33           (const string& _string_factory_(const int, const uint8&))
+   20  38 *    PshRPtr
+   21  39 *    PSF      v17
+   22  40 *    CALLSYS  35           (string::string(const string&in))
+   24  38 *    ObjInfo  v17, 1
+   24  38 *    VAR      v17
+   25  39 *    PSF      v24
+   26  40 *    LoadThisR v0, 67108877
+   28  40 *    RDR4     v1
+   29  40 *    fTOd     v3, v1
+   31  40 *    PshV8    v3
+   32  42 *    PSF      v10
+   33  43 *    STR      105         (l:1 s:"(")
+   34  45 *    CALLSYS  33           (const string& _string_factory_(const int, const uint8&))
+   36  43 *    PshRPtr
+   37  44 *    CALLSYS  51           (string string::opAdd(double) const)
+   39  40 *    ObjInfo  v10, 1
+   39  40 *    PSF      v10
+   40  41 *    GETREF   2
+   41  41 *    CALLSYS  41           (string string::opAdd(const string&in) const)
+   43  38 *    ObjInfo  v24, 1
+   43  38 *    PSF      v17
+   44  39 *    CALLSYS  36           (string::~string())
+   46  38 *    ObjInfo  v17, 0
+   46  38 *    PSF      v24
+   47  39 *    PSF      v10
+   48  40 *    CALLSYS  36           (string::~string())
+   50  39 *    ObjInfo  v10, 0
+   50  39 *    CALLSYS  51           (string string::opAdd(double) const)
+   52  35 *    ObjInfo  v10, 1
+   52  35 *    PSF      v10
+   53  36 *    PSF      v24
+   54  37 *    CALLSYS  36           (string::~string())
+   56  36 *    ObjInfo  v24, 0
+   56  36 *    GETREF   2
+   57  36 *    CALLSYS  41           (string string::opAdd(const string&in) const)
+   59  33 *    ObjInfo  v24, 1
+   59  33 *    PSF      v33
+   60  34 *    CALLSYS  36           (string::~string())
+   62  33 *    ObjInfo  v33, 0
+   62  33 *    PSF      v24
+   63  34 *    PSF      v10
+   64  35 *    CALLSYS  36           (string::~string())
+   66  34 *    ObjInfo  v10, 0
+   66  34 *    PopPtr
+   67  33 *    PSF      v24
+   68  34 *    CALLSYS  304           (void print(const string&in))
+   70  33 *    PSF      v24
+   71  34 *    CALLSYS  36           (string::~string())
+- 27,2 -
+   73  33 *    ObjInfo  v24, 0
+   73  33 *    SUSPEND
+   74  33 * 0:
+   74  33 *    FREE     v0, 73368176
+   76  33 *    RET      1

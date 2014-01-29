@@ -1,0 +1,64 @@
+void Mob::die()
+
+Temps: 1, 2, 3
+
+Variables: 
+ 000: Mob this
+ 001: Mob {noname}
+
+
+    0   3 *    PshVPtr  v0
+    1   4 *    CALLSYS  2           (void _builtin_object_::_beh_4_())
+- 39,3 -
+    3   3 *    SUSPEND
+    4   3 *    PshVPtr  v0
+    5   4 *    RefCpyV  v1, 152261008
+    7   4 *    PopPtr
+    8   3 *    VAR      v1
+    9   4 *    PshVPtr  v0
+   10   5 *    ADDSi    v32, 134217789
+   12   5 *    RDSPtr
+   13   5 *    ADDSi    v16, 134217788
+   15   5 *    RDSPtr
+   16   5 *    GETREF   1
+   17   5 *    CALLSYS  1489           (int array::find(Mob@const&in) const)
+   19   3 *    CpyRtoV4 v2
+   20   3 *    FREE     v1, 152261008
+   22   3 *    PshV4    v2
+   23   4 *    PshVPtr  v0
+   24   5 *    ADDSi    v32, 134217789
+   26   5 *    RDSPtr
+   27   5 *    ADDSi    v16, 134217788
+   29   5 *    RDSPtr
+   30   5 *    CALLSYS  83           (void array::removeAt(uint))
+- 40,3 -
+   32   3 *    SUSPEND
+   33   3 *    PshVPtr  v0
+   34   4 *    ADDSi    v32, 134217789
+   36   4 *    RDSPtr
+   37   4 *    ADDSi    v16, 134217788
+   39   4 *    RDSPtr
+   40   4 *    CALLSYS  86           (uint array::size() const)
+   42   3 *    CpyRtoV4 v2
+   43   3 *    CMPIu    v2, 0
+   45   3 *    JNZ      +13              (d:60)
+- 41,4 -
+   47   3 *    SUSPEND
+   48   3 *    PshVPtr  v0
+   49   4 *    ADDSi    v32, 134217789
+   51   4 *    RDSPtr
+   52   4 *    ADDSi    v52, 134217788
+   54   4 *    RDSPtr
+   55   4 *    ADDSi    v40, 134217828
+   57   4 *    RDSPtr
+   58   4 *    CALLSYS  89           (void array::clear())
+- 42,3 -
+   60   3 * 1:
+   60   3 *    SUSPEND
+   61   3 *    PshVPtr  v0
+   62   4 *    CALLINTF 1125           (void SceneObject::remove())
+- 43,3 -
+   64   3 *    SUSPEND
+   65   3 * 0:
+   65   3 *    FREE     v0, 152261008
+   67   3 *    RET      1

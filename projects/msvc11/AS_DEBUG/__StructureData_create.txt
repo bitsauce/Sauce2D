@@ -1,0 +1,92 @@
+void StructureData::create(float, float)
+
+Temps: 2, 3, 4, 5, 6, 8, 9
+
+Variables: 
+ -001: float x
+ -002: float y
+ 001: Structure@ s
+ 000: StructureData this
+ 004: string {noname}
+ 005: Structure {noname}
+ 006: Structure {noname}
+ 009: vec2 {noname}
+ 008: vec2 {noname}
+
+
+    0   9 *    VarDecl  0
+    0   9 *    VarDecl  1
+    0   9 *    PshVPtr  v0
+    1  10 *    CALLSYS  2           (void _builtin_object_::_beh_5_())
+- 28,3 -
+    3   9 *    SUSPEND
+- 29,3 -
+    4   9 *    VarDecl  2
+    4   9 *    SUSPEND
+    5   9 *    PshC4    0x1          (i:1, f:1.4013e-045)
+    7  10 *    CALLSYS  517           (void srcResizeCreateArgs(const uint))
+- 30,3 -
+    9   9 *    SUSPEND
+   10   9 *    TYPEID   0x2d          'Team'
+   12  10 *    PshGPtr  74561424
+   14  11 *    ADDSi    v44, 134217751
+   16  11 *    RDSPtr
+   17  11 *    ADDSi    v44, 134217771
+   19  11 *    PopRPtr
+   20  10 *    RDR4     v3
+   21  10 *    VAR      v3
+   22  11 *    PshC4    0x0          (i:0, f:0)
+   24  12 *    GETREF   1
+   25  12 *    CALLSYS  516           (void srcSetCreateArg(const uint, ?&in))
+- 31,3 -
+   27   9 *    SUSPEND
+   28   9 *    PSF      v4
+   29  10 *    PshVPtr  v0
+   30  11 *    ADDSi    v20, 134217772
+   32  11 *    RDSPtr
+   33  11 *    ALLOC    0x45ebf60, 35             (type:string)
+   36   9 *    VAR      v4
+   37  10 *    GETOBJ   0
+   38  10 *    CALLSYS  518           (void srcSetCreateObjectByName(const string))
+- 32,3 -
+   40   9 *    SUSPEND
+   41   9 *    PSF      v4
+   42  10 *    STR      45         (l:9 s:"Team team")
+   43  12 *    CALLSYS  33           (const string& _string_factory_(const int, const uint8&))
+   45  10 *    PshRPtr
+   46  11 *    ALLOC    0x45ebf60, 35             (type:string)
+   49   9 *    VAR      v4
+   50  10 *    TYPEID   0x4800002e          'Structure@'
+   52  11 *    PSF      v5
+   53  12 *    GETOBJ   2
+   54  12 *    CALLSYS  520           (void srcCreateObject(?&out, const string = ""))
+   56   9 *    PshVPtr  v5
+   57  10 *    RefCpyV  v6, 74301192
+   59  10 *    PopPtr
+   60   9 *    FREE     v5, 74301192
+   62   9 *    PshVPtr  v6
+   63  10 *    RefCpyV  v1, 74301192
+   65  10 *    FREE     v6, 74301192
+   67  10 *    PopPtr
+- 33,3 -
+   68   9 *    SUSPEND
+   69   9 *    PshC4    0x0          (i:0, f:0)
+   71  10 *    PSF      v9
+   72  11 *    PshV4    v-2
+   73  12 *    PshV4    v-1
+   74  13 *    PSF      v8
+   75  14 *    CALLSYS  135           (vec2::vec2(float, float))
+   77  11 *    ObjInfo  v8, 1
+   77  11 *    PSF      v8
+   78  12 *    ALLOC    0x45f8270, 133             (type:vec2)
+   81  10 *    ObjInfo  v8, 0
+   81  10 *    VAR      v9
+   82  11 *    PshVPtr  v1
+   83  12 *    GETOBJ   1
+   84  12 *    CALLINTF 1170           (void UnitBase::setTransform(vec2, float = 0.0f))
+- 34,3 -
+   86   9 *    SUSPEND
+   87   9 *    FREE     v1, 74301192
+   89   9 * 0:
+   89   9 *    FREE     v0, 74301768
+   91   9 *    RET      3

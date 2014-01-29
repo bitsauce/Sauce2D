@@ -1,0 +1,71 @@
+Action::Action()
+
+Temps: 1, 2
+
+Variables: 
+ 000: Action this
+ 002: _builtin_function_ {noname}
+
+
+- 150,9 -
+    0   2 *    SUSPEND
+    1   2 *    PshVPtr  v0
+    2   3 *    ADDSi    v20, 134217747
+    4   3 *    ALLOC    0x45ebf60, 34             (type:string)
+- 151,9 -
+    7   2 *    SUSPEND
+    8   2 *    PshVPtr  v0
+    9   3 *    ADDSi    v24, 134217747
+   11   3 *    ALLOC    0x45ebf60, 34             (type:string)
+- 171,3 -
+   14   2 *    SUSPEND
+   15   2 *    STR      59         (l:12 s:"Missing na")
+   16   4 *    CALLSYS  33           (const string& _string_factory_(const int, const uint8&))
+   18   2 *    PshRPtr
+   19   3 *    PshVPtr  v0
+   20   4 *    ADDSi    v20, 134217747
+   22   4 *    RDSPtr
+   23   4 *    CALLSYS  37           (string& string::opAssign(const string&in))
+- 172,3 -
+   25   2 *    SUSPEND
+   26   2 *    STR      60         (l:12 s:"Missing de")
+   27   4 *    CALLSYS  33           (const string& _string_factory_(const int, const uint8&))
+   29   2 *    PshRPtr
+   30   3 *    PshVPtr  v0
+   31   4 *    ADDSi    v24, 134217747
+   33   4 *    RDSPtr
+   34   4 *    CALLSYS  37           (string& string::opAssign(const string&in))
+- 173,3 -
+   36   2 *    SUSPEND
+   37   2 *    SetV4    v1, 0xffffffff          (i:-1, f:-1.#QNAN)
+   39   2 *    LoadThisR v28, 134217747
+   41   2 *    WRTV4    v1
+- 174,3 -
+   42   2 *    SUSPEND
+   43   2 *    SetV4    v1, 0xffffffff          (i:-1, f:-1.#QNAN)
+   45   2 *    LoadThisR v32, 134217747
+   47   2 *    WRTV4    v1
+- 175,3 -
+   48   2 *    SUSPEND
+   49   2 *    FREE     v2, 73289060
+   51   2 *    VAR      v2
+   52   3 *    PshVPtr  v0
+   53   4 *    ADDSi    v36, 134217747
+   55   4 *    GETOBJREF 1
+   56   4 *    REFCPY   0x45e4d64
+   58   3 *    FREE     v2, 73289060
+   60   3 *    PopPtr
+- 176,3 -
+   61   2 *    SUSPEND
+   62   2 *    FREE     v2, 73289060
+   64   2 *    VAR      v2
+   65   3 *    PshVPtr  v0
+   66   4 *    ADDSi    v40, 134217747
+   68   4 *    GETOBJREF 1
+   69   4 *    REFCPY   0x45e4d64
+   71   3 *    FREE     v2, 73289060
+   73   3 *    PopPtr
+- 177,3 -
+   74   2 *    SUSPEND
+   75   2 * 0:
+   75   2 *    RET      1

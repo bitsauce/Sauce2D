@@ -1,0 +1,77 @@
+void Menu::update()
+
+Temps: 1, 2, 3, 7, 8, 9, 11, 12
+
+Variables: 
+ 000: Menu this
+ 007: rect2 {noname}
+ 011: vec2 {noname}
+
+
+    0  12 *    PshVPtr  v0
+    1  13 *    CALLSYS  2           (void _builtin_object_::_beh_5_())
+- 15,3 -
+    3  12 *    SUSPEND
+    4  12 *    PSF      v11
+    5  13 *    CALLSYS  132           (vec2::vec2())
+    7  12 *    ObjInfo  v11, 1
+    7  12 *    PshGPtr  74268768
+    9  13 *    CHKREF
+   10  13 *    PSF      v11
+   11  14 *    COPY     v2, 67108877
+   13  13 *    PopPtr
+   14  12 *    VAR      v11
+   15  13 *    PshC4    0x41800000          (i:1098907648, f:16)
+   17  14 *    PshC4    0x42800000          (i:1115684864, f:64)
+   19  15 *    PshGPtr  74560968
+   21  16 *    ADDSi    v4, 67108877
+   23  16 *    PopRPtr
+   24  15 *    RDR4     v1
+   25  15 *    SetV4    v2, 0x40000000          (i:1073741824, f:2)
+   27  15 *    DIVf     v1, v1, v2
+   29  15 *    PshV4    v1
+   30  16 *    PshGPtr  74560968
+   32  17 *    ADDSi    v0, 67108877
+   34  17 *    PopRPtr
+   35  16 *    RDR4     v2
+   36  16 *    SetV4    v3, 0x40000000          (i:1073741824, f:2)
+   38  16 *    DIVf     v2, v2, v3
+   40  16 *    PshV4    v2
+   41  17 *    PSF      v7
+   42  18 *    CALLSYS  242           (rect2::rect2(const float, const float, const float, const float))
+   44  13 *    ObjInfo  v7, 1
+   44  13 *    PSF      v7
+   45  14 *    GETREF   1
+   46  14 *    CALLSYS  244           (bool rect2::contains(const vec2&in) const)
+   48  12 *    CpyRtoV4 v3
+   49  12 *    ObjInfo  v11, 0
+   49  12 *    ObjInfo  v7, 0
+   49  12 *    CpyVtoR4 v3
+   50  12 *    JLowNZ   +4              (d:56)
+   52  12 *    SetV4    v8, 0x0          (i:0, f:0)
+   54  12 *    JMP      +7              (d:63)
+   56  12 * 2:
+   56  12 *    PshC4    0x0          (i:0, f:0)
+   58  13 *    CALLSYS  353           (bool getKeyState(const VirtualKey))
+   60  12 *    CpyRtoV4 v2
+   61  12 *    CpyVtoV4 v8, v2
+   63  12 * 3:
+   63  12 *    CpyVtoR4 v8
+   64  12 *    JLowZ    +10              (d:76)
+- 17,4 -
+   66  12 * {
+   66  12 *    SUSPEND
+   67  12 *    SetV1    v3, 0x0
+   69  12 *    LDG      74602120
+   71  12 *    WRTV1    v3
+- 18,4 -
+   72  12 *    SUSPEND
+   73  12 *    PshVPtr  v0
+   74  13 *    CALLINTF 1016           (void Entity::remove())
+- 20,3 -
+   76  12 * }
+   76  12 * 1:
+   76  12 *    SUSPEND
+   77  12 * 0:
+   77  12 *    FREE     v0, 74305552
+   79  12 *    RET      1

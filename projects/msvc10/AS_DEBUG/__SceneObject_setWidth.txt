@@ -1,0 +1,24 @@
+void SceneObject::setWidth(const float)
+
+Temps: 
+
+Variables: 
+ -001: const float width
+ 000: SceneObject this
+
+
+    0   0 *    VarDecl  0
+    0   0 *    PshVPtr  v0
+    1   1 *    CALLSYS  2           (void _builtin_object_::_beh_4_())
+- 1,584 -
+    3   0 *    SUSPEND
+    4   0 *    PshV4    v-1
+    5   1 *    PshVPtr  v0
+    6   2 *    ADDSi    v16, 134217770
+    8   2 *    RDSPtr
+    9   2 *    CALLSYS  309           (void CSceneObject::setWidth(const float))
+- 1,609 -
+   11   0 *    SUSPEND
+   12   0 * 0:
+   12   0 *    FREE     v0, 104704768
+   14   0 *    RET      2

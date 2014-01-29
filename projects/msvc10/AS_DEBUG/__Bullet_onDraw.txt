@@ -1,0 +1,152 @@
+void Bullet::onDraw(DrawEvent)
+
+Temps: 1, 2, 3, 4, 5, 9, 11, 19, 27, 35, 37, 45, 47, 49, 51
+
+Variables: 
+ -001: DrawEvent e
+ 000: Bullet this
+ 001: Color {noname}
+ 009: Rect2 {noname}
+ 019: string {noname}
+ 027: string {noname}
+ 035: string {noname}
+ 045: string {noname}
+ 047: Vector2 {noname}
+ 049: Vector2 {noname}
+ 051: Vector2 {noname}
+
+
+    0  51 *    VarDecl  0
+    0  51 *    PshVPtr  v0
+    1  52 *    CALLSYS  2           (void _builtin_object_::_beh_4_())
+- 225,3 -
+    3  51 *    SUSPEND
+    4  51 *    SetV1    v2, 0xff
+    6  51 *    PshV4    v2
+    7  52 *    SetV1    v3, 0x0
+    9  52 *    PshV4    v3
+   10  53 *    SetV1    v4, 0xff
+   12  53 *    PshV4    v4
+   13  54 *    SetV1    v5, 0xff
+   15  54 *    PshV4    v5
+   16  55 *    PSF      v1
+   17  56 *    CALLSYS  178           (void Color::_beh_0_(uint8, uint8, uint8, uint8 arg3 = 255))
+   19  51 *    ObjInfo  v1, 1
+   19  51 *    VAR      v1
+   20  52 *    PSF      v9
+   21  53 *    PshVPtr  v0
+   22  54 *    CALLINTF 671           (Rect2 SceneObject::bounds() const)
+   24  52 *    ObjInfo  v9, 1
+   24  52 *    VAR      v9
+   25  53 *    PshGPtr  113433704
+   27  54 *    CHKREF
+   28  54 *    GETREF   1
+   29  54 *    GETREF   2
+   30  54 *    CALLSYS  435           (void CGFX::drawRect(const Rect2&in, const Color&in arg1 = Color ( )))
+- 226,3 -
+   32  51 *    ObjInfo  v1, 0
+   32  51 *    ObjInfo  v9, 0
+   32  51 *    SUSPEND
+   33  51 *    PSF      v1
+   34  52 *    CALLSYS  176           (void Color::_beh_0_())
+   36  51 *    ObjInfo  v1, 1
+   36  51 *    VAR      v1
+   37  52 *    STR      2         (l:1 s:")")
+   38  54 *    CALLSYS  32           (const string& _string_factory_(const int, const uint8&))
+   40  52 *    PshRPtr
+   41  53 *    PSF      v45
+   42  54 *    CALLSYS  34           (void string::_beh_0_(const string&in))
+   44  52 *    ObjInfo  v45, 1
+   44  52 *    VAR      v45
+   45  53 *    PSF      v35
+   46  54 *    PshVPtr  v0
+   47  55 *    CALLINTF 660           (float SceneObject::y() const)
+   49  54 *    CpyRtoV4 v3
+   50  54 *    fTOd     v37, v3
+   52  54 *    PshV8    v37
+   53  56 *    PSF      v19
+   54  57 *    STR      1         (l:2 s:", ")
+   55  59 *    CALLSYS  32           (const string& _string_factory_(const int, const uint8&))
+   57  57 *    PshRPtr
+   58  58 *    PSF      v27
+   59  59 *    CALLSYS  34           (void string::_beh_0_(const string&in))
+   61  57 *    ObjInfo  v27, 1
+   61  57 *    VAR      v27
+   62  58 *    PSF      v35
+   63  59 *    PshVPtr  v0
+   64  60 *    CALLINTF 659           (float SceneObject::x() const)
+   66  59 *    CpyRtoV4 v2
+   67  59 *    fTOd     v11, v2
+   69  59 *    PshV8    v11
+   70  61 *    PSF      v19
+   71  62 *    STR      0         (l:1 s:"(")
+   72  64 *    CALLSYS  32           (const string& _string_factory_(const int, const uint8&))
+   74  62 *    PshRPtr
+   75  63 *    CALLSYS  50           (string string::opAdd(double) const)
+   77  59 *    ObjInfo  v19, 1
+   77  59 *    PSF      v19
+   78  60 *    GETREF   2
+   79  60 *    CALLSYS  40           (string string::opAdd(const string&in) const)
+   81  57 *    ObjInfo  v35, 1
+   81  57 *    PSF      v27
+   82  58 *    CALLSYS  35           (void string::_beh_1_())
+   84  57 *    ObjInfo  v27, 0
+   84  57 *    PSF      v35
+   85  58 *    PSF      v19
+   86  59 *    CALLSYS  35           (void string::_beh_1_())
+   88  58 *    ObjInfo  v19, 0
+   88  58 *    CALLSYS  50           (string string::opAdd(double) const)
+   90  54 *    ObjInfo  v19, 1
+   90  54 *    PSF      v19
+   91  55 *    PSF      v35
+   92  56 *    CALLSYS  35           (void string::_beh_1_())
+   94  55 *    ObjInfo  v35, 0
+   94  55 *    GETREF   2
+   95  55 *    CALLSYS  40           (string string::opAdd(const string&in) const)
+   97  52 *    ObjInfo  v35, 1
+   97  52 *    PSF      v45
+   98  53 *    CALLSYS  35           (void string::_beh_1_())
+  100  52 *    ObjInfo  v45, 0
+  100  52 *    PSF      v35
+  101  53 *    PSF      v19
+  102  54 *    CALLSYS  35           (void string::_beh_1_())
+  104  53 *    ObjInfo  v19, 0
+  104  53 *    PopPtr
+  105  52 *    VAR      v35
+  106  53 *    PshC4    0x41200000          (i:1092616192, f:10)
+  108  54 *    PshC4    0x41200000          (i:1092616192, f:10)
+  110  55 *    PSF      v49
+  111  56 *    CALLSYS  132           (void Vector2::_beh_0_(float, float))
+  113  53 *    ObjInfo  v49, 1
+  113  53 *    VAR      v49
+  114  54 *    PSF      v51
+  115  55 *    PSF      v47
+  116  56 *    PshVPtr  v0
+  117  57 *    CALLINTF 658           (Vector2 SceneObject::pos() const)
+  119  55 *    ObjInfo  v47, 1
+  119  55 *    PSF      v47
+  120  56 *    GETREF   2
+  121  56 *    CALLSYS  138           (Vector2 Vector2::opAdd(const Vector2&in) const)
+  123  53 *    ObjInfo  v51, 1
+  123  53 *    ObjInfo  v49, 0
+  123  53 *    PSF      v51
+  124  54 *    ObjInfo  v47, 0
+  124  54 *    PopPtr
+  125  53 *    VAR      v51
+  126  54 *    PshGPtr  113433704
+  128  55 *    CHKREF
+  129  55 *    GETREF   1
+  130  55 *    GETREF   2
+  131  55 *    GETREF   3
+  132  55 *    CALLSYS  429           (void CGFX::drawText(const Vector2&in, const string&in, const Color&in arg2 = Color ( )))
+  134  51 *    ObjInfo  v1, 0
+  134  51 *    PSF      v35
+  135  52 *    CALLSYS  35           (void string::_beh_1_())
+- 227,3 -
+  137  51 *    ObjInfo  v35, 0
+  137  51 *    ObjInfo  v51, 0
+  137  51 *    SUSPEND
+  138  51 * 0:
+  138  51 *    FREE     v-1, 113422136
+  140  51 *    FREE     v0, 113546992
+  142  51 *    RET      2

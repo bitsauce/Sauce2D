@@ -1,0 +1,24 @@
+Menu::Menu()
+
+Temps: 1, 2
+
+Variables: 
+ 000: Menu this
+
+
+    0   2 *    PshVPtr  v0
+    1   3 *    CALL     584           (Entity::Entity())
+- 9,3 -
+    3   2 *    SUSPEND
+    4   2 *    SetV4    v1, 0x64          (i:100, f:1.4013e-043)
+    6   2 *    LoadThisR v32, 134217780
+    8   2 *    WRTV4    v1
+- 10,3 -
+    9   2 *    SUSPEND
+   10   2 *    PshC4    0x3          (i:3, f:4.2039e-045)
+   12   3 *    PshVPtr  v0
+   13   4 *    CALLINTF 1017           (void Entity::setRenderPass(const RenderPass))
+- 11,3 -
+   15   2 *    SUSPEND
+   16   2 * 0:
+   16   2 *    RET      1

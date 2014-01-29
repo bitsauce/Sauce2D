@@ -1,0 +1,109 @@
+Anim::Anim(int)
+
+Temps: 1, 3, 5, 6
+
+Variables: 
+ -001: int length
+ 002: uint i
+ 004: int j
+ 000: Anim this
+ 003: array {noname}
+ 005: array {noname}
+ 006: array {noname}
+
+
+- 54,22 -
+    0   6 *    VarDecl  0
+    0   6 *    SUSPEND
+    1   6 *    CALL     1252           (float[][]@ factstub())
+    3   6 *    STOREOBJ v6
+    4   6 *    PshVPtr  v6
+    5   7 *    PshVPtr  v0
+    6   8 *    ADDSi    v28, 134217788
+    8   8 *    REFCPY   0x44cee08
+   10   7 *    PopPtr
+   11   6 *    FREE     v6, 72150536
+- 52,8 -
+   13   6 *    SUSPEND
+   14   6 *    SetV4    v1, 0x0          (i:0, f:0)
+   16   6 *    LoadThisR v20, 134217788
+   18   6 *    WRTV4    v1
+- 59,3 -
+   19   6 *    SUSPEND
+   20   6 *    PshC4    0xa          (i:10, f:1.4013e-044)
+   22   7 *    PshVPtr  v0
+   23   8 *    ADDSi    v28, 134217788
+   25   8 *    RDSPtr
+   26   8 *    CALLSYS  91           (void array::resize(uint))
+- 60,7 -
+   28   6 *    SUSPEND
+   29   6 *    VarDecl  1
+   29   6 *    SetV4    v2, 0x0          (i:0, f:0)
+   31   6 *    JMP      +55              (d:88)
+   33   6 * 4:
+   33   6 *    SUSPEND
+- 62,4 -
+   34   6 * {
+   34   6 *    SUSPEND
+   35   6 *    PshV4    v-1
+   36   7 *    PshV4    v2
+   37   8 *    PshVPtr  v0
+   38   9 *    ADDSi    v28, 134217788
+   40   9 *    RDSPtr
+   41   9 *    RefCpyV  v3, 72150536
+   43   9 *    CALLSYS  1256           (float[]& array::opIndex(uint))
+   45   7 *    PshRPtr
+   46   8 *    CALLSYS  91           (void array::resize(uint))
+   48   6 *    FREE     v3, 72150536
+- 63,8 -
+   50   6 *    SUSPEND
+   51   6 *    VarDecl  2
+   51   6 *    SetV4    v4, 0x0          (i:0, f:0)
+   53   6 *    JMP      +26              (d:81)
+   55   6 * 8:
+   55   6 *    SUSPEND
+- 64,5 -
+   56   6 *    SUSPEND
+   57   6 *    SetV4    v1, 0x0          (i:0, f:0)
+   59   6 *    PshV4    v4
+   60   7 *    PshV4    v2
+   61   8 *    PshVPtr  v0
+   62   9 *    ADDSi    v28, 134217788
+   64   9 *    RDSPtr
+   65   9 *    RefCpyV  v3, 72150536
+   67   9 *    CALLSYS  1256           (float[]& array::opIndex(uint))
+   69   7 *    PshRPtr
+   70   8 *    RefCpyV  v5, 70803856
+   72   8 *    CALLSYS  497           (float& array::opIndex(uint))
+   74   6 *    WRTV4    v1
+   75   6 *    FREE     v3, 72150536
+   77   6 *    FREE     v5, 70803856
+- 63,31 -
+   79   6 * 7:
+   79   6 *    SUSPEND
+   80   6 *    IncVi    v4
+- 63,19 -
+   81   6 * 5:
+   81   6 *    SUSPEND
+   82   6 *    CMPi     v4, v-1
+   84   6 *    JS       -31              (d:55)
+- 60,38 -
+   86   6 * 6:
+   86   6 * }
+   86   6 * 3:
+   86   6 *    SUSPEND
+   87   6 *    IncVi    v2
+- 60,19 -
+   88   6 * 1:
+   88   6 *    SUSPEND
+   89   6 *    CMPIu    v2, 10
+   91   6 *    JS       -60              (d:33)
+- 66,3 -
+   93   6 * 2:
+   93   6 *    SUSPEND
+   94   6 *    LoadThisR v24, 134217788
+   96   6 *    WRTV4    v-1
+- 67,3 -
+   97   6 *    SUSPEND
+   98   6 * 0:
+   98   6 *    RET      2

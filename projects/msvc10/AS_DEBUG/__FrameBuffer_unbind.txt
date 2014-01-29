@@ -1,0 +1,139 @@
+void FrameBuffer::unbind()
+
+Temps: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12
+
+Variables: 
+ 000: FrameBuffer this
+ 002: array {noname}
+ 003: array {noname}
+ 004: array {noname}
+ 005: array {noname}
+ 006: array {noname}
+ 007: array {noname}
+
+
+    0  12 *    PshVPtr  v0
+    1  13 *    CALLSYS  2           (void _builtin_object_::_beh_4_())
+- 29,3 -
+    3  12 *    SUSPEND
+    4  12 *    LoadThisR v16, 134217744
+    6  12 *    RDR1     v1
+    7  12 *    NOT      v1
+    8  12 *    CpyVtoR4 v1
+    9  12 *    JLowZ    +3              (d:14)
+- 29,14 -
+   11  12 *    SUSPEND
+   12  12 * {
+   12  12 * }
+   12  12 *    JMP      +149              (d:163)
+- 32,3 -
+   14  12 * 1:
+   14  12 *    SUSPEND
+   15  12 *    PshC4    0x0          (i:0, f:0)
+   17  13 *    CALLSYS  360           (void gfxBindFrameBuffer(const int))
+- 33,3 -
+   19  12 *    SUSPEND
+   20  12 *    SetV1    v1, 0x0
+   22  12 *    LoadThisR v16, 134217744
+   24  12 *    WRTV1    v1
+- 36,3 -
+   25  12 *    SUSPEND
+   26  12 *    LoadThisR v24, 134217744
+   28  12 *    RDR1     v1
+   29  12 *    CpyVtoR4 v1
+   30  12 *    JLowZ    +124              (d:156)
+- 38,4 -
+   32  12 * {
+   32  12 *    SUSPEND
+   33  12 *    PshC4    0x5          (i:5, f:7.00649e-045)
+   35  13 *    PshVPtr  v0
+   36  14 *    ADDSi    v28, 134217744
+   38  14 *    RDSPtr
+   39  14 *    RefCpyV  v2, 75068608
+   41  14 *    CALLSYS  380           (float& array::opIndex(uint))
+   43  12 *    RDR4     v8
+   44  12 *    PshV4    v8
+   45  13 *    PshC4    0x4          (i:4, f:5.60519e-045)
+   47  14 *    PshVPtr  v0
+   48  15 *    ADDSi    v28, 134217744
+   50  15 *    RDSPtr
+   51  15 *    RefCpyV  v3, 75068608
+   53  15 *    CALLSYS  380           (float& array::opIndex(uint))
+   55  13 *    RDR4     v9
+   56  13 *    PshV4    v9
+   57  14 *    PshC4    0x3          (i:3, f:4.2039e-045)
+   59  15 *    PshVPtr  v0
+   60  16 *    ADDSi    v28, 134217744
+   62  16 *    RDSPtr
+   63  16 *    RefCpyV  v4, 75068608
+   65  16 *    CALLSYS  380           (float& array::opIndex(uint))
+   67  14 *    RDR4     v10
+   68  14 *    PshV4    v10
+   69  15 *    PshC4    0x2          (i:2, f:2.8026e-045)
+   71  16 *    PshVPtr  v0
+   72  17 *    ADDSi    v28, 134217744
+   74  17 *    RDSPtr
+   75  17 *    RefCpyV  v5, 75068608
+   77  17 *    CALLSYS  380           (float& array::opIndex(uint))
+   79  15 *    RDR4     v11
+   80  15 *    PshV4    v11
+   81  16 *    PshC4    0x1          (i:1, f:1.4013e-045)
+   83  17 *    PshVPtr  v0
+   84  18 *    ADDSi    v28, 134217744
+   86  18 *    RDSPtr
+   87  18 *    RefCpyV  v6, 75068608
+   89  18 *    CALLSYS  380           (float& array::opIndex(uint))
+   91  16 *    RDR4     v12
+   92  16 *    PshV4    v12
+   93  17 *    PshC4    0x0          (i:0, f:0)
+   95  18 *    PshVPtr  v0
+   96  19 *    ADDSi    v28, 134217744
+   98  19 *    RDSPtr
+   99  19 *    RefCpyV  v7, 75068608
+  101  19 *    CALLSYS  380           (float& array::opIndex(uint))
+  103  17 *    RDR4     v1
+  104  17 *    PshV4    v1
+  105  18 *    CALLSYS  329           (void gfxSetOrthoProjection(const float, const float, const float, const float, const float, const float))
+  107  12 *    FREE     v2, 75068608
+  109  12 *    FREE     v3, 75068608
+  111  12 *    FREE     v4, 75068608
+  113  12 *    FREE     v5, 75068608
+  115  12 *    FREE     v6, 75068608
+  117  12 *    FREE     v7, 75068608
+- 39,4 -
+  119  12 *    SUSPEND
+  120  12 *    PshC4    0x2          (i:2, f:2.8026e-045)
+  122  13 *    PshVPtr  v0
+  123  14 *    ADDSi    v28, 134217744
+  125  14 *    RDSPtr
+  126  14 *    RefCpyV  v7, 75068608
+  128  14 *    CALLSYS  380           (float& array::opIndex(uint))
+  130  12 *    RDR4     v8
+  131  12 *    fTOi     v8
+  132  12 *    PshV4    v8
+  133  13 *    PshC4    0x1          (i:1, f:1.4013e-045)
+  135  14 *    PshVPtr  v0
+  136  15 *    ADDSi    v28, 134217744
+  138  15 *    RDSPtr
+  139  15 *    RefCpyV  v6, 75068608
+  141  15 *    CALLSYS  380           (float& array::opIndex(uint))
+  143  13 *    RDR4     v9
+  144  13 *    fTOi     v9
+  145  13 *    PshV4    v9
+  146  14 *    PshC4    0x0          (i:0, f:0)
+  148  15 *    PshC4    0x0          (i:0, f:0)
+  150  16 *    CALLSYS  328           (void gfxSetViewport(const int, const int, const int, const int))
+  152  12 *    FREE     v7, 75068608
+  154  12 *    FREE     v6, 75068608
+- 41,3 -
+  156  12 * }
+  156  12 * 2:
+  156  12 *    SUSPEND
+  157  12 *    SetV1    v12, 0x0
+  159  12 *    LoadThisR v24, 134217744
+  161  12 *    WRTV1    v12
+- 42,3 -
+  162  12 *    SUSPEND
+  163  12 * 0:
+  163  12 *    FREE     v0, 75042192
+  165  12 *    RET      1

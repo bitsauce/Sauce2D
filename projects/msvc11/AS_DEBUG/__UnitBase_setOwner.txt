@@ -1,0 +1,21 @@
+void UnitBase::setOwner(const int)
+
+Temps: 
+
+Variables: 
+ -001: const int ownerId
+ 000: UnitBase this
+
+
+    0   0 *    VarDecl  0
+    0   0 *    PshVPtr  v0
+    1   1 *    CALLSYS  2           (void _builtin_object_::_beh_5_())
+- 86,3 -
+    3   0 *    SUSPEND
+    4   0 *    LoadThisR v48, 134217747
+    6   0 *    WRTV4    v-1
+- 87,3 -
+    7   0 *    SUSPEND
+    8   0 * 0:
+    8   0 *    FREE     v0, 95521976
+   10   0 *    RET      2

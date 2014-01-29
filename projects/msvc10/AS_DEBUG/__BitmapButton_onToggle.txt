@@ -1,0 +1,74 @@
+void BitmapButton::onToggle(bool)
+
+Temps: 1, 2, 3, 4
+
+Variables: 
+ -001: bool val
+ 000: BitmapButton this
+ 001: CFunctionPtr {noname}
+ 002: CFunctionPtr {noname}
+
+
+    0   4 *    VarDecl  0
+    0   4 *    PshVPtr  v0
+    1   5 *    CALLSYS  2           (void _builtin_object_::_beh_4_())
+- 59,3 -
+    3   4 *    SUSPEND
+    4   4 *    PshVPtr  v0
+    5   5 *    ADDSi    v60, 134217823
+    7   5 *    RDSPtr
+    8   5 *    RefCpyV  v1, 112061752
+   10   5 *    PopPtr
+   11   4 *    ClrVPtr  v2
+   12   4 *    CmpPtr   v1, v2
+   14   4 *    TNZ
+   15   4 *    CpyRtoV4 v3
+   16   4 *    FREE     v1, 112061752
+   18   4 *    FREE     v2, 112061752
+   20   4 *    CpyVtoR4 v3
+   21   4 *    JLowZ    +47              (d:70)
+- 61,4 -
+   23   4 * {
+   23   4 *    SUSPEND
+   24   4 *    TYPEID   0x1          'bool'
+   26   5 *    CpyVtoV4 v3, v-1
+   28   5 *    VAR      v3
+   29   6 *    PshC4    0x0          (i:0, f:0)
+   31   7 *    PshVPtr  v0
+   32   8 *    ADDSi    v60, 134217823
+   34   8 *    RDSPtr
+   35   8 *    GETREF   2
+   36   8 *    CALLSYS  269           (void CFunctionPtr::setArgument(const uint, ?&in))
+- 62,4 -
+   38   4 *    SUSPEND
+   39   4 *    PshVPtr  v0
+   40   5 *    ADDSi    v60, 134217823
+   42   5 *    RDSPtr
+   43   5 *    CALLSYS  271           (bool CFunctionPtr::isFuncDefined())
+   45   4 *    JLowNZ   +4              (d:51)
+   47   4 *    SetV4    v3, 0x0          (i:0, f:0)
+   49   4 *    JMP      +9              (d:60)
+   51   4 * 3:
+   51   4 *    PshVPtr  v0
+   52   5 *    ADDSi    v60, 134217823
+   54   5 *    RDSPtr
+   55   5 *    CALLSYS  272           (bool CFunctionPtr::isArgsDefined())
+   57   4 *    CpyRtoV4 v4
+   58   4 *    CpyVtoV4 v3, v4
+   60   4 * 4:
+   60   4 *    CpyVtoR4 v3
+   61   4 *    JLowZ    +7              (d:70)
+- 64,5 -
+   63   4 *    SUSPEND
+   64   4 *    PshVPtr  v0
+   65   5 *    ADDSi    v60, 134217823
+   67   5 *    RDSPtr
+   68   5 *    CALLSYS  265           (void CFunctionPtr::call())
+- 66,3 -
+   70   4 * 2:
+   70   4 * }
+   70   4 * 1:
+   70   4 *    SUSPEND
+   71   4 * 0:
+   71   4 *    FREE     v0, 152254128
+   73   4 *    RET      2

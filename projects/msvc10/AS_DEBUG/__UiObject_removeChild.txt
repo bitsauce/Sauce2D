@@ -1,0 +1,32 @@
+void UiObject::removeChild(UiObject@)
+
+Temps: 1
+
+Variables: 
+ -001: UiObject@ child
+ 000: UiObject this
+
+
+    0   1 *    VarDecl  0
+    0   1 *    PshVPtr  v0
+    1   2 *    CALLSYS  2           (void _builtin_object_::_beh_4_())
+- 275,38 -
+    3   1 *    SUSPEND
+    4   1 *    VAR      v-1
+    5   2 *    PshVPtr  v0
+    6   3 *    ADDSi    v24, 134217780
+    8   3 *    RDSPtr
+    9   3 *    GETREF   1
+   10   3 *    CALLSYS  1297           (int array::find(UiObject@const&in) const)
+   12   1 *    CpyRtoV4 v1
+   13   1 *    PshV4    v1
+   14   2 *    PshVPtr  v0
+   15   3 *    ADDSi    v24, 134217780
+   17   3 *    RDSPtr
+   18   3 *    CALLSYS  83           (void array::removeAt(uint))
+- 275,81 -
+   20   1 *    SUSPEND
+   21   1 * 0:
+   21   1 *    FREE     v-1, 150271928
+   23   1 *    FREE     v0, 150271928
+   25   1 *    RET      2

@@ -1,0 +1,25 @@
+float min(float, float)
+
+Temps: 1, 2
+
+Variables: 
+ 000: float a
+ -001: float b
+
+
+- 16,2 -
+    0   2 *    VarDecl  0
+    0   2 *    VarDecl  1
+    0   2 *    SUSPEND
+    1   2 *    CMPf     v0, v-1
+    3   2 *    JNS      +4              (d:9)
+    5   2 *    CpyVtoV4 v2, v0
+    7   2 *    JMP      +2              (d:11)
+    9   2 * 2:
+    9   2 *    CpyVtoV4 v2, v-1
+   11   2 * 1:
+   11   2 * {
+   11   2 * }
+   11   2 *    CpyVtoR4 v2
+   12   2 * 0:
+   12   2 *    RET      2

@@ -1,0 +1,33 @@
+void SceneObject::setBounds(const float, const float, const float, const float)
+
+Temps: 
+
+Variables: 
+ -001: const float x
+ -002: const float y
+ -003: const float width
+ -004: const float height
+ 000: SceneObject this
+
+
+    0   0 *    VarDecl  0
+    0   0 *    VarDecl  1
+    0   0 *    VarDecl  2
+    0   0 *    VarDecl  3
+    0   0 *    PshVPtr  v0
+    1   1 *    CALLSYS  2           (void _builtin_object_::_beh_4_())
+- 1,1056 -
+    3   0 *    SUSPEND
+    4   0 *    PshV4    v-4
+    5   1 *    PshV4    v-3
+    6   2 *    PshV4    v-2
+    7   3 *    PshV4    v-1
+    8   4 *    PshVPtr  v0
+    9   5 *    ADDSi    v16, 134217770
+   11   5 *    RDSPtr
+   12   5 *    CALLSYS  313           (void CSceneObject::setBounds(const float, const float, const float, const float))
+- 1,1096 -
+   14   0 *    SUSPEND
+   15   0 * 0:
+   15   0 *    FREE     v0, 104704768
+   17   0 *    RET      5

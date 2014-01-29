@@ -1,0 +1,79 @@
+GameData@ GameDataByName(string)
+
+Temps: 2, 3, 4
+
+Variables: 
+ 000: string name
+ 001: uint i
+ 003: array {noname}
+ 004: GameData {noname}
+
+
+- 99,6 -
+    0   4 *    VarDecl  0
+    0   4 *    SUSPEND
+    1   4 *    VarDecl  1
+    1   4 *    SetV4    v1, 0x0          (i:0, f:0)
+    3   4 *    JMP      +46              (d:51)
+    5   4 * 4:
+    5   4 *    SUSPEND
+- 101,3 -
+    6   4 * {
+    6   4 *    SUSPEND
+    7   4 *    VAR      v0
+    8   5 *    PshV4    v1
+    9   6 *    PshGPtr  152647896
+   11   7 *    CHKREF
+   12   7 *    RefCpyV  v3, 152639152
+   14   7 *    CALLSYS  1065           (GameData@& array::opIndex(uint))
+   16   5 *    PshRPtr
+   17   6 *    RDSPtr
+   18   6 *    ADDSi    v16, 134217775
+   20   6 *    RDSPtr
+   21   6 *    GETOBJREF 1
+   22   6 *    CALLSYS  38           (bool string::opEquals(const string&in) const)
+   24   4 *    CpyRtoV4 v2
+   25   4 *    FREE     v3, 152639152
+   27   4 *    CpyVtoR4 v2
+   28   4 *    JLowZ    +19              (d:49)
+- 102,4 -
+   30   4 *    SUSPEND
+   31   4 *    PshV4    v1
+   32   5 *    PshGPtr  152647896
+   34   6 *    CHKREF
+   35   6 *    RefCpyV  v3, 152639152
+   37   6 *    CALLSYS  1065           (GameData@& array::opIndex(uint))
+   39   4 *    PshRPtr
+   40   5 *    RDSPtr
+   41   5 *    RefCpyV  v4, 152221040
+   43   5 *    PopPtr
+   44   4 *    FREE     v3, 152639152
+   46   4 * {
+   46   4 * }
+   46   4 *    LOADOBJ  v4
+   47   4 *    JMP      +17              (d:66)
+- 99,39 -
+   49   4 * 5:
+   49   4 * }
+   49   4 * 3:
+   49   4 *    SUSPEND
+   50   4 *    IncVi    v1
+- 99,18 -
+   51   4 * 1:
+   51   4 *    SUSPEND
+   52   4 *    PshGPtr  152647896
+   54   5 *    CHKREF
+   55   5 *    CALLSYS  86           (uint array::size() const)
+   57   4 *    CpyRtoV4 v2
+   58   4 *    CMPu     v1, v2
+   60   4 *    JS       -57              (d:5)
+- 104,2 -
+   62   4 * 2:
+   62   4 *    SUSPEND
+   63   4 *    FREE     v4, 152221040
+   65   4 * {
+   65   4 * }
+   65   4 *    LOADOBJ  v4
+   66   4 * 0:
+   66   4 *    FREE     v0, 51694408
+   68   4 *    RET      1

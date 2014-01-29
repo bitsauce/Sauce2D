@@ -1,0 +1,236 @@
+void Projectile::onUpdate(UpdateEvent)
+
+Temps: 2, 3, 4, 6, 8, 9, 13, 14, 15
+
+Variables: 
+ -001: UpdateEvent e
+ 001: bool collision
+ 000: Projectile this
+ 003: CSprite {noname}
+ 004: CSprite {noname}
+ 006: Vector2 {noname}
+ 008: Vector2 {noname}
+ 013: Rect2 {noname}
+
+
+    0  15 *    VarDecl  0
+    0  15 *    PshVPtr  v0
+    1  16 *    CALLSYS  2           (void _builtin_object_::_beh_4_())
+- 35,3 -
+    3  15 *    SUSPEND
+- 36,3 -
+    4  15 *    VarDecl  1
+    4  15 *    SUSPEND
+    5  15 *    VAR      v2
+    6  16 *    PshVPtr  v0
+    7  17 *    GETREF   1
+    8  17 *    CALLINTF 1364           (void PhysicObject::updateMove(bool&out))
+   10  15 *    CpyVtoV4 v1, v2
+- 39,3 -
+   12  15 *    SUSPEND
+   13  15 *    PshVPtr  v0
+   14  16 *    ADDSi    v32, 134217827
+   16  16 *    RDSPtr
+   17  16 *    RefCpyV  v3, 112081552
+   19  16 *    PopPtr
+   20  15 *    ClrVPtr  v4
+   21  15 *    CmpPtr   v3, v4
+   23  15 *    TNZ
+   24  15 *    CpyRtoV4 v2
+   25  15 *    FREE     v3, 112081552
+   27  15 *    FREE     v4, 112081552
+   29  15 *    CpyVtoR4 v2
+   30  15 *    JLowZ    +31              (d:63)
+- 41,4 -
+   32  15 * {
+   32  15 *    SUSPEND
+   33  15 *    PSF      v6
+   34  16 *    PshVPtr  v0
+   35  17 *    CALLINTF 1099           (Vector2 SceneObject::size() const)
+   37  15 *    ObjInfo  v6, 1
+   37  15 *    VAR      v6
+   38  16 *    PSF      v8
+   39  17 *    PshVPtr  v0
+   40  18 *    CALLINTF 1092           (Vector2 SceneObject::pos() const)
+   42  16 *    ObjInfo  v8, 1
+   42  16 *    VAR      v8
+   43  17 *    PshVPtr  v0
+   44  18 *    ADDSi    v32, 134217827
+   46  18 *    RDSPtr
+   47  18 *    GETREF   1
+   48  18 *    GETREF   2
+   49  18 *    CALLSYS  492           (void CSprite::setRect(const Vector2&in, const Vector2&in))
+- 42,4 -
+   51  15 *    ObjInfo  v6, 0
+   51  15 *    ObjInfo  v8, 0
+   51  15 *    SUSPEND
+   52  15 *    LoadRObjR v-1, v4, 67108901
+   55  15 *    RDR4     v2
+   56  15 *    PshV4    v2
+   57  16 *    PshVPtr  v0
+   58  17 *    ADDSi    v32, 134217827
+   60  17 *    RDSPtr
+   61  17 *    CALLSYS  478           (void CSprite::update(const float))
+- 46,3 -
+   63  15 * }
+   63  15 * 1:
+   63  15 *    SUSPEND
+   64  15 *    LoadThisR v28, 134217827
+   66  15 *    RDR4     v9
+   67  15 *    CMPIi    v9, 2
+   69  15 *    JP       +155              (d:226)
+   71  15 *    CMPIi    v9, 0
+   73  15 *    JS       +151              (d:226)
+   75  15 *    SUBIi    v2, v9, 0
+   78  15 *    JMPP     v2
+   79  15 *    JMP      +4              (d:85)
+   81  15 *    JMP      +61              (d:144)
+   83  15 *    JMP      +122              (d:207)
+- 51,5 -
+   85  15 * 3:
+   85  15 * {
+   85  15 *    SUSPEND
+   86  15 *    PshVPtr  v0
+   87  16 *    ADDSi    v36, 134217827
+   89  16 *    RDSPtr
+   90  16 *    RefCpyV  v3, 112081552
+   92  16 *    PopPtr
+   93  15 *    VAR      v3
+   94  16 *    PshVPtr  v0
+   95  17 *    ADDSi    v32, 134217827
+   97  17 *    GETOBJREF 1
+   98  17 *    REFCPY   0x6ae3a90
+  100  16 *    FREE     v3, 112081552
+  102  16 *    PopPtr
+- 52,5 -
+  103  15 *    SUSPEND
+  104  15 *    PSF      v13
+  105  16 *    PshVPtr  v0
+  106  17 *    CALLINTF 1105           (Rect2 SceneObject::bounds() const)
+  108  15 *    ObjInfo  v13, 1
+  108  15 *    VAR      v13
+  109  16 *    PshVPtr  v0
+  110  17 *    ADDSi    v36, 134217827
+  112  17 *    RDSPtr
+  113  17 *    GETREF   1
+  114  17 *    CALLSYS  491           (void CSprite::setRect(const Rect2&in))
+- 53,5 -
+  116  15 *    ObjInfo  v13, 0
+  116  15 *    SUSPEND
+  117  15 *    PSF      v8
+  118  16 *    PSF      v13
+  119  17 *    PshVPtr  v0
+  120  18 *    ADDSi    v36, 134217827
+  122  18 *    RDSPtr
+  123  18 *    CALLSYS  486           (Rect2 CSprite::rect() const)
+  125  16 *    ObjInfo  v13, 1
+  125  16 *    PSF      v13
+  126  17 *    CALLSYS  171           (Vector2 Rect2::get_center() const)
+  128  15 *    ObjInfo  v8, 1
+  128  15 *    PSF      v8
+  129  16 *    ObjInfo  v13, 0
+  129  16 *    PopPtr
+  130  15 *    VAR      v8
+  131  16 *    PshVPtr  v0
+  132  17 *    ADDSi    v36, 134217827
+  134  17 *    RDSPtr
+  135  17 *    GETREF   1
+  136  17 *    CALLSYS  496           (void CSprite::setPivot(const Vector2&in))
+- 54,5 -
+  138  15 *    ObjInfo  v8, 0
+  138  15 *    SUSPEND
+  139  15 *    SetV4    v9, 0x1          (i:1, f:1.4013e-045)
+  141  15 *    LoadThisR v28, 134217827
+  143  15 *    WRTV4    v9
+- 60,5 -
+  144  15 * }
+  144  15 * 4:
+  144  15 * {
+  144  15 *    SUSPEND
+  145  15 *    LoadThisR v48, 134217827
+  147  15 *    RDR1     v2
+  148  15 *    CpyVtoR4 v2
+  149  15 *    JLowZ    +21              (d:172)
+- 61,6 -
+  151  15 *    SUSPEND
+  152  15 *    PshVPtr  v0
+  153  16 *    ADDSi    v20, 134217827
+  155  16 *    RDSPtr
+  156  16 *    CALLSYS  153           (float Vector2::angle() const)
+  158  15 *    CpyRtoV4 v2
+  159  15 *    MULIf    v2, v2, 57.324841
+  162  15 *    SUBIf    v14, v2, 45.000000
+  165  15 *    PshV4    v14
+  166  16 *    PshVPtr  v0
+  167  17 *    ADDSi    v36, 134217827
+  169  17 *    RDSPtr
+  170  17 *    CALLSYS  495           (void CSprite::setRotation(const float))
+- 64,5 -
+  172  15 * 8:
+  172  15 *    SUSPEND
+  173  15 *    LoadRObjR v-1, v4, 67108901
+  176  15 *    RDR4     v14
+  177  15 *    LoadThisR v44, 134217827
+  179  15 *    RDR4     v15
+  180  15 *    SUBf     v2, v15, v14
+  182  15 *    WRTV4    v2
+- 65,5 -
+  183  15 *    SUSPEND
+  184  15 *    LoadThisR v44, 134217827
+  186  15 *    RDR4     v14
+  187  15 *    CMPIf    v14, 0.000000
+  189  15 *    JP       +5              (d:196)
+- 66,6 -
+  191  15 *    SUSPEND
+  192  15 *    SetV1    v2, 0x1
+  194  15 *    CpyVtoV4 v1, v2
+- 69,5 -
+  196  15 * 9:
+  196  15 *    SUSPEND
+  197  15 *    CpyVtoR4 v1
+  198  15 *    JLowZ    +4              (d:204)
+- 70,6 -
+  200  15 *    SUSPEND
+  201  15 *    PshVPtr  v0
+  202  16 *    CALLINTF 1392           (void Projectile::hit())
+- 72,4 -
+  204  15 * 10:
+  204  15 * }
+  204  15 *    SUSPEND
+  205  15 * {
+  205  15 * }
+  205  15 *    JMP      +20              (d:227)
+- 77,5 -
+  207  15 * 5:
+  207  15 * {
+  207  15 *    SUSPEND
+  208  15 *    PshVPtr  v0
+  209  16 *    ADDSi    v40, 134217827
+  211  16 *    RDSPtr
+  212  16 *    CALLSYS  497           (uint CSprite::currentFrame() const)
+  214  15 *    CpyRtoV4 v15
+  215  15 *    CMPIu    v15, 0
+  217  15 *    JNZ      +4              (d:223)
+- 78,6 -
+  219  15 *    SUSPEND
+  220  15 *    PshVPtr  v0
+  221  16 *    CALLINTF 1125           (void SceneObject::remove())
+- 80,4 -
+  223  15 * 11:
+  223  15 * }
+  223  15 *    SUSPEND
+  224  15 * {
+  224  15 * }
+  224  15 *    JMP      +1              (d:227)
+- 83,5 -
+  226  15 * 6:
+  226  15 *    SUSPEND
+- 85,3 -
+  227  15 * {
+  227  15 * }
+  227  15 * 2:
+  227  15 *    SUSPEND
+  228  15 * 0:
+  228  15 *    FREE     v-1, 112323680
+  230  15 *    FREE     v0, 152260000
+  232  15 *    RET      2

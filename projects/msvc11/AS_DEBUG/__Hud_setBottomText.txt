@@ -1,0 +1,26 @@
+void Hud::setBottomText(string)
+
+Temps: 
+
+Variables: 
+ -001: string bottomText
+ 000: Hud this
+
+
+    0   0 *    VarDecl  0
+    0   0 *    PshVPtr  v0
+    1   1 *    CALLSYS  2           (void _builtin_object_::_beh_5_())
+- 113,3 -
+    3   0 *    SUSPEND
+    4   0 *    VAR      v-1
+    5   1 *    PshVPtr  v0
+    6   2 *    ADDSi    v72, 134217779
+    8   2 *    RDSPtr
+    9   2 *    GETOBJREF 1
+   10   2 *    CALLSYS  37           (string& string::opAssign(const string&in))
+- 114,3 -
+   12   0 *    SUSPEND
+   13   0 * 0:
+   13   0 *    FREE     v-1, 73318240
+   15   0 *    FREE     v0, 74303864
+   17   0 *    RET      2

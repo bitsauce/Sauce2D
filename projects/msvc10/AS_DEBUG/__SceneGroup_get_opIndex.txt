@@ -1,0 +1,54 @@
+SceneObject@ SceneGroup::get_opIndex(uint) const
+
+Temps: 2, 3, 4
+
+Variables: 
+ -001: uint idx
+ 001: SceneObject@ obj
+ 000: SceneGroup this
+ 003: array {noname}
+ 004: SceneObject {noname}
+
+
+    0   4 *    VarDecl  0
+    0   4 *    PshVPtr  v0
+    1   5 *    CALLSYS  2           (void _builtin_object_::_beh_4_())
+- 42,3 -
+    3   4 *    SUSPEND
+    4   4 *    VarDecl  1
+    4   4 *    FREE     v1, 150267072
+- 43,3 -
+    6   4 *    SUSPEND
+    7   4 *    PshVPtr  v0
+    8   5 *    ADDSi    v16, 134217799
+   10   5 *    RDSPtr
+   11   5 *    CALLSYS  86           (uint array::size() const)
+   13   4 *    CpyRtoV4 v2
+   14   4 *    CMPu     v-1, v2
+   16   4 *    JNS      +23              (d:41)
+- 44,4 -
+   18   4 *    SUSPEND
+   19   4 *    PshV4    v-1
+   20   5 *    PshVPtr  v0
+   21   6 *    ADDSi    v16, 134217799
+   23   6 *    RDSPtr
+   24   6 *    RefCpyV  v3, 150943320
+   26   6 *    CALLSYS  1350           (SceneObject@const& array::opIndex(uint) const)
+   28   4 *    PshRPtr
+   29   5 *    RDSPtr
+   30   5 *    RefCpyV  v4, 150267072
+   32   5 *    PopPtr
+   33   4 *    FREE     v3, 150943320
+   35   4 *    PshVPtr  v4
+   36   5 *    RefCpyV  v1, 150267072
+   38   5 *    FREE     v4, 150267072
+   40   5 *    PopPtr
+- 45,3 -
+   41   4 * 1:
+   41   4 *    SUSPEND
+   42   4 * {
+   42   4 * }
+   42   4 *    LOADOBJ  v1
+   43   4 * 0:
+   43   4 *    FREE     v0, 150274656
+   45   4 *    RET      2

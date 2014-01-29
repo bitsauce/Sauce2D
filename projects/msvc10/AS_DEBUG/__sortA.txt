@@ -1,0 +1,37 @@
+bool sortA(int, int)
+
+Temps: 1, 2, 3, 4
+
+Variables: 
+ 000: int a
+ -001: int b
+ 001: array {noname}
+ 002: array {noname}
+
+
+- 3,2 -
+    0   4 *    VarDecl  0
+    0   4 *    VarDecl  1
+    0   4 *    SUSPEND
+    1   4 *    PshV4    v0
+    2   5 *    PshGPtr  107988664
+    4   6 *    CHKREF
+    5   6 *    RefCpyV  v1, 107979832
+    7   6 *    CALLSYS  353           (int& array::opIndex(uint))
+    9   4 *    RDR4     v3
+   10   4 *    PshV4    v-1
+   11   5 *    PshGPtr  107988664
+   13   6 *    CHKREF
+   14   6 *    RefCpyV  v2, 107979832
+   16   6 *    CALLSYS  353           (int& array::opIndex(uint))
+   18   4 *    RDR4     v4
+   19   4 *    FREE     v1, 107979832
+   21   4 *    FREE     v2, 107979832
+   23   4 *    CMPi     v3, v4
+   25   4 *    TP
+   26   4 *    CpyRtoV4 v3
+   27   4 * {
+   27   4 * }
+   27   4 *    CpyVtoR4 v3
+   28   4 * 0:
+   28   4 *    RET      2

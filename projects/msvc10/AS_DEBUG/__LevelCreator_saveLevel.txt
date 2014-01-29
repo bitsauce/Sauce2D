@@ -1,0 +1,1681 @@
+void LevelCreator::saveLevel()
+
+Temps: 1, 9, 17, 25, 33, 41, 53, 65, 66, 67, 68, 76, 84, 92, 100, 108, 116, 124, 132, 158, 159, 160, 161, 162
+
+Variables: 
+ 042: CIniFile saveFile
+ 050: string entries
+ 051: uint i
+ 052: EditorRoom@ room
+ 061: string tiles
+ 062: uint y
+ 063: uint x
+ 064: EditorTile@ tile
+ 140: string obstacles
+ 148: string items
+ 156: string mobs
+ 063: uint j
+ 157: EditorObject@ object
+ 170: string key
+ 000: LevelCreator this
+ 053: array {noname}
+ 065: grid {noname}
+ 066: EditorTile {noname}
+ 067: TileSetData {noname}
+ 068: TileSetData {noname}
+ 158: array {noname}
+ 009: string {noname}
+ 017: string {noname}
+ 025: string {noname}
+ 033: string {noname}
+ 041: string {noname}
+ 076: string {noname}
+ 084: string {noname}
+ 092: string {noname}
+ 100: string {noname}
+ 108: string {noname}
+ 116: string {noname}
+ 124: string {noname}
+ 132: string {noname}
+
+
+    0 170 *    PshVPtr  v0
+    1 171 *    CALLSYS  2           (void _builtin_object_::_beh_4_())
+- 678,3 -
+    3 170 *    SUSPEND
+    4 170 *    PshVPtr  v0
+    5 171 *    ADDSi    v60, 134217814
+    7 171 *    RDSPtr
+    8 171 *    CALLSYS  45           (bool string::isEmpty() const)
+   10 170 *    JLowZ    +74              (d:86)
+- 680,4 -
+   12 170 * {
+   12 170 *    SUSPEND
+   13 170 *    PSF      v9
+   14 171 *    PshGPtr  112334928
+   16 172 *    CHKREF
+   17 172 *    CALLSYS  431           (string CX2DApp::workDirectory())
+   19 170 *    ObjInfo  v9, 1
+   19 170 *    VAR      v9
+   20 171 *    STR      104         (l:10 s:"Save Level")
+   21 173 *    CALLSYS  32           (const string& _string_factory_(const int, const uint8&))
+   23 171 *    PshRPtr
+   24 172 *    PSF      v17
+   25 173 *    CALLSYS  34           (void string::_beh_0_(const string&in))
+   27 171 *    ObjInfo  v17, 1
+   27 171 *    VAR      v17
+   28 172 *    STR      105         (l:18 s:"Level File")
+   29 174 *    CALLSYS  32           (const string& _string_factory_(const int, const uint8&))
+   31 172 *    PshRPtr
+   32 173 *    PSF      v25
+   33 174 *    CALLSYS  34           (void string::_beh_0_(const string&in))
+   35 172 *    ObjInfo  v25, 1
+   35 172 *    VAR      v25
+   36 173 *    STR      106         (l:5 s:"*.ini")
+   37 175 *    CALLSYS  32           (const string& _string_factory_(const int, const uint8&))
+   39 173 *    PshRPtr
+   40 174 *    PSF      v33
+   41 175 *    CALLSYS  34           (void string::_beh_0_(const string&in))
+   43 173 *    ObjInfo  v33, 1
+   43 173 *    VAR      v33
+   44 174 *    PSF      v41
+   45 175 *    GETREF   1
+   46 175 *    GETREF   2
+   47 175 *    GETREF   3
+   48 175 *    GETREF   4
+   49 175 *    CALLSYS  194           (string showSaveDialog(const string&in, const string&in, const string&in, const string&in))
+   51 170 *    ObjInfo  v41, 1
+   51 170 *    PSF      v9
+   52 171 *    CALLSYS  35           (void string::_beh_1_())
+   54 170 *    ObjInfo  v9, 0
+   54 170 *    PSF      v17
+   55 171 *    CALLSYS  35           (void string::_beh_1_())
+   57 170 *    ObjInfo  v17, 0
+   57 170 *    PSF      v25
+   58 171 *    CALLSYS  35           (void string::_beh_1_())
+   60 170 *    ObjInfo  v25, 0
+   60 170 *    PSF      v33
+   61 171 *    CALLSYS  35           (void string::_beh_1_())
+   63 170 *    ObjInfo  v33, 0
+   63 170 *    VAR      v41
+   64 171 *    PshVPtr  v0
+   65 172 *    ADDSi    v60, 134217814
+   67 172 *    RDSPtr
+   68 172 *    GETREF   1
+   69 172 *    CALLSYS  36           (string& string::opAssign(const string&in))
+   71 170 *    PSF      v41
+   72 171 *    CALLSYS  35           (void string::_beh_1_())
+- 681,4 -
+   74 170 *    ObjInfo  v41, 0
+   74 170 *    SUSPEND
+   75 170 *    PshVPtr  v0
+   76 171 *    ADDSi    v60, 134217814
+   78 171 *    RDSPtr
+   79 171 *    CALLSYS  45           (bool string::isEmpty() const)
+   81 170 *    JLowZ    +3              (d:86)
+- 682,5 -
+   83 170 *    SUSPEND
+   84 170 * {
+   84 170 * }
+   84 170 *    JMP      +1646              (d:1732)
+- 686,3 -
+   86 170 * 2:
+   86 170 * }
+   86 170 * 1:
+   86 170 *    SUSPEND
+   87 170 *    VarDecl  0
+   87 170 *    PshVPtr  v0
+   88 171 *    ADDSi    v60, 134217814
+   90 171 *    RDSPtr
+   91 171 *    PSF      v41
+   92 172 *    CALLSYS  34           (void string::_beh_0_(const string&in))
+   94 170 *    ObjInfo  v41, 1
+   94 170 *    PSF      v41
+   95 171 *    CALLSYS  304           (CIniFile@ _beh_2_(const string&in))
+   97 170 *    STOREOBJ v42
+   98 170 *    PSF      v41
+   99 171 *    CALLSYS  35           (void string::_beh_1_())
+- 687,3 -
+  101 170 *    ObjInfo  v41, 0
+  101 170 *    SUSPEND
+  102 170 *    LoadThisR v64, 134217814
+  104 170 *    RDR4     v1
+  105 170 *    PshV4    v1
+  106 171 *    PSF      v41
+  107 172 *    CALLSYS  523           (string itos(int))
+  109 170 *    ObjInfo  v41, 1
+  109 170 *    VAR      v41
+  110 171 *    STR      107         (l:11 s:"level/widt")
+  111 173 *    CALLSYS  32           (const string& _string_factory_(const int, const uint8&))
+  113 171 *    PshRPtr
+  114 172 *    PSF      v33
+  115 173 *    CALLSYS  34           (void string::_beh_0_(const string&in))
+  117 171 *    ObjInfo  v33, 1
+  117 171 *    VAR      v33
+  118 172 *    PshVPtr  v42
+  119 173 *    GETREF   1
+  120 173 *    GETREF   2
+  121 173 *    CALLSYS  308           (void CIniFile::setValue(const string&in, const string&in))
+  123 170 *    PSF      v41
+  124 171 *    CALLSYS  35           (void string::_beh_1_())
+  126 170 *    ObjInfo  v41, 0
+  126 170 *    PSF      v33
+  127 171 *    CALLSYS  35           (void string::_beh_1_())
+- 688,3 -
+  129 170 *    ObjInfo  v33, 0
+  129 170 *    SUSPEND
+  130 170 *    LoadThisR v68, 134217814
+  132 170 *    RDR4     v1
+  133 170 *    PshV4    v1
+  134 171 *    PSF      v33
+  135 172 *    CALLSYS  523           (string itos(int))
+  137 170 *    ObjInfo  v33, 1
+  137 170 *    VAR      v33
+  138 171 *    STR      108         (l:12 s:"level/heig")
+  139 173 *    CALLSYS  32           (const string& _string_factory_(const int, const uint8&))
+  141 171 *    PshRPtr
+  142 172 *    PSF      v41
+  143 173 *    CALLSYS  34           (void string::_beh_0_(const string&in))
+  145 171 *    ObjInfo  v41, 1
+  145 171 *    VAR      v41
+  146 172 *    PshVPtr  v42
+  147 173 *    GETREF   1
+  148 173 *    GETREF   2
+  149 173 *    CALLSYS  308           (void CIniFile::setValue(const string&in, const string&in))
+  151 170 *    PSF      v33
+  152 171 *    CALLSYS  35           (void string::_beh_1_())
+  154 170 *    ObjInfo  v33, 0
+  154 170 *    PSF      v41
+  155 171 *    CALLSYS  35           (void string::_beh_1_())
+- 689,3 -
+  157 170 *    ObjInfo  v41, 0
+  157 170 *    SUSPEND
+  158 170 *    PshVPtr  v0
+  159 171 *    ADDSi    v204, 134217814
+  161 171 *    RDSPtr
+  162 171 *    CALLSYS  86           (uint array::size() const)
+  164 170 *    CpyRtoV4 v1
+  165 170 *    PshV4    v1
+  166 171 *    PSF      v41
+  167 172 *    CALLSYS  523           (string itos(int))
+  169 170 *    ObjInfo  v41, 1
+  169 170 *    VAR      v41
+  170 171 *    STR      109         (l:15 s:"level/room")
+  171 173 *    CALLSYS  32           (const string& _string_factory_(const int, const uint8&))
+  173 171 *    PshRPtr
+  174 172 *    PSF      v33
+  175 173 *    CALLSYS  34           (void string::_beh_0_(const string&in))
+  177 171 *    ObjInfo  v33, 1
+  177 171 *    VAR      v33
+  178 172 *    PshVPtr  v42
+  179 173 *    GETREF   1
+  180 173 *    GETREF   2
+  181 173 *    CALLSYS  308           (void CIniFile::setValue(const string&in, const string&in))
+  183 170 *    PSF      v41
+  184 171 *    CALLSYS  35           (void string::_beh_1_())
+  186 170 *    ObjInfo  v41, 0
+  186 170 *    PSF      v33
+  187 171 *    CALLSYS  35           (void string::_beh_1_())
+- 692,3 -
+  189 170 *    ObjInfo  v33, 0
+  189 170 *    SUSPEND
+  190 170 *    VarDecl  1
+  190 170 *    PSF      v50
+  191 171 *    CALLSYS  33           (void string::_beh_0_())
+- 693,7 -
+  193 170 *    ObjInfo  v50, 1
+  193 170 *    SUSPEND
+  194 170 *    VarDecl  2
+  194 170 *    SetV4    v51, 0x0          (i:0, f:0)
+  196 170 *    JMP      +1487              (d:1685)
+  198 170 * 6:
+  198 170 *    SUSPEND
+- 695,4 -
+  199 170 * {
+  199 170 *    SUSPEND
+  200 170 *    VarDecl  3
+  200 170 *    PshV4    v51
+  201 171 *    PshVPtr  v0
+  202 172 *    ADDSi    v204, 134217814
+  204 172 *    RDSPtr
+  205 172 *    RefCpyV  v53, 152852632
+  207 172 *    CALLSYS  1345           (EditorRoom@& array::opIndex(uint))
+  209 170 *    PshRPtr
+  210 171 *    RDSPtr
+  211 171 *    RefCpyV  v52, 152236880
+  213 171 *    PopPtr
+  214 170 *    FREE     v53, 152852632
+- 696,4 -
+  216 170 *    SUSPEND
+  217 170 *    PshV4    v51
+  218 171 *    PSF      v33
+  219 172 *    STR      110         (l:12 s:"Saving roo")
+  220 174 *    CALLSYS  32           (const string& _string_factory_(const int, const uint8&))
+  222 172 *    PshRPtr
+  223 173 *    CALLSYS  58           (string string::opAdd(uint) const)
+  225 170 *    ObjInfo  v33, 1
+  225 170 *    PSF      v33
+  226 171 *    CALLSYS  190           (void print(string&in))
+  228 170 *    PSF      v33
+  229 171 *    CALLSYS  35           (void string::_beh_1_())
+- 699,4 -
+  231 170 *    ObjInfo  v33, 0
+  231 170 *    SUSPEND
+  232 170 *    VarDecl  4
+  232 170 *    PSF      v61
+  233 171 *    CALLSYS  33           (void string::_beh_0_())
+- 700,8 -
+  235 170 *    ObjInfo  v61, 1
+  235 170 *    SUSPEND
+  236 170 *    VarDecl  5
+  236 170 *    SetV4    v62, 0x0          (i:0, f:0)
+  238 170 *    JMP      +402              (d:642)
+  240 170 * 10:
+  240 170 *    SUSPEND
+- 702,9 -
+  241 170 * {
+  241 170 *    SUSPEND
+  242 170 *    VarDecl  6
+  242 170 *    SetV4    v63, 0x0          (i:0, f:0)
+  244 170 *    JMP      +382              (d:628)
+  246 170 * 14:
+  246 170 *    SUSPEND
+- 704,6 -
+  247 170 * {
+  247 170 *    SUSPEND
+  248 170 *    VarDecl  7
+  248 170 *    PshV4    v62
+  249 171 *    PshV4    v63
+  250 172 *    PshVPtr  v52
+  251 173 *    ADDSi    v40, 134217785
+  253 173 *    RDSPtr
+  254 173 *    RefCpyV  v65, 152807552
+  256 173 *    CALLSYS  1273           (EditorTile& grid::at(uint, uint))
+  258 170 *    PshRPtr
+  259 171 *    RefCpyV  v66, 152242000
+  261 171 *    PopPtr
+  262 170 *    PshVPtr  v66
+  263 171 *    RefCpyV  v64, 152242000
+  265 171 *    FREE     v66, 152242000
+  267 171 *    PopPtr
+  268 170 *    FREE     v65, 152807552
+- 705,6 -
+  270 170 *    SUSPEND
+  271 170 *    PshVPtr  v64
+  272 171 *    ADDSi    v16, 134217782
+  274 171 *    RDSPtr
+  275 171 *    RefCpyV  v67, 152222624
+  277 171 *    PopPtr
+  278 170 *    ClrVPtr  v68
+  279 170 *    CmpPtr   v67, v68
+  281 170 *    TZ
+  282 170 *    CpyRtoV4 v1
+  283 170 *    FREE     v67, 152222624
+  285 170 *    FREE     v68, 152222624
+  287 170 *    CpyVtoR4 v1
+  288 170 *    JLowZ    +95              (d:385)
+- 707,7 -
+  290 170 * {
+  290 170 *    SUSPEND
+  291 170 *    STR      114         (l:1 s:")")
+  292 172 *    CALLSYS  32           (const string& _string_factory_(const int, const uint8&))
+  294 170 *    PshRPtr
+  295 171 *    PSF      v76
+  296 172 *    CALLSYS  34           (void string::_beh_0_(const string&in))
+  298 170 *    ObjInfo  v76, 1
+  298 170 *    VAR      v76
+  299 171 *    PSF      v25
+  300 172 *    PshV4    v62
+  301 173 *    PSF      v17
+  302 174 *    STR      113         (l:2 s:", ")
+  303 176 *    CALLSYS  32           (const string& _string_factory_(const int, const uint8&))
+  305 174 *    PshRPtr
+  306 175 *    PSF      v33
+  307 176 *    CALLSYS  34           (void string::_beh_0_(const string&in))
+  309 174 *    ObjInfo  v33, 1
+  309 174 *    VAR      v33
+  310 175 *    PSF      v25
+  311 176 *    PshV4    v63
+  312 177 *    PSF      v41
+  313 178 *    STR      112         (l:5 s:" at (")
+  314 180 *    CALLSYS  32           (const string& _string_factory_(const int, const uint8&))
+  316 178 *    PshRPtr
+  317 179 *    PSF      v17
+  318 180 *    CALLSYS  34           (void string::_beh_0_(const string&in))
+  320 178 *    ObjInfo  v17, 1
+  320 178 *    VAR      v17
+  321 179 *    PSF      v25
+  322 180 *    PshV4    v51
+  323 181 *    PSF      v9
+  324 182 *    STR      111         (l:25 s:"WARNING: N")
+  325 184 *    CALLSYS  32           (const string& _string_factory_(const int, const uint8&))
+  327 182 *    PshRPtr
+  328 183 *    CALLSYS  58           (string string::opAdd(uint) const)
+  330 180 *    ObjInfo  v9, 1
+  330 180 *    PSF      v9
+  331 181 *    GETREF   2
+  332 181 *    CALLSYS  40           (string string::opAdd(const string&in) const)
+  334 178 *    ObjInfo  v25, 1
+  334 178 *    PSF      v17
+  335 179 *    CALLSYS  35           (void string::_beh_1_())
+  337 178 *    ObjInfo  v17, 0
+  337 178 *    PSF      v25
+  338 179 *    PSF      v9
+  339 180 *    CALLSYS  35           (void string::_beh_1_())
+  341 179 *    ObjInfo  v9, 0
+  341 179 *    CALLSYS  58           (string string::opAdd(uint) const)
+  343 176 *    ObjInfo  v41, 1
+  343 176 *    PSF      v41
+  344 177 *    PSF      v25
+  345 178 *    CALLSYS  35           (void string::_beh_1_())
+  347 177 *    ObjInfo  v25, 0
+  347 177 *    GETREF   2
+  348 177 *    CALLSYS  40           (string string::opAdd(const string&in) const)
+  350 174 *    ObjInfo  v25, 1
+  350 174 *    PSF      v33
+  351 175 *    CALLSYS  35           (void string::_beh_1_())
+  353 174 *    ObjInfo  v33, 0
+  353 174 *    PSF      v25
+  354 175 *    PSF      v41
+  355 176 *    CALLSYS  35           (void string::_beh_1_())
+  357 175 *    ObjInfo  v41, 0
+  357 175 *    CALLSYS  58           (string string::opAdd(uint) const)
+  359 172 *    ObjInfo  v17, 1
+  359 172 *    PSF      v17
+  360 173 *    PSF      v25
+  361 174 *    CALLSYS  35           (void string::_beh_1_())
+  363 173 *    ObjInfo  v25, 0
+  363 173 *    GETREF   2
+  364 173 *    CALLSYS  40           (string string::opAdd(const string&in) const)
+  366 170 *    ObjInfo  v25, 1
+  366 170 *    PSF      v76
+  367 171 *    CALLSYS  35           (void string::_beh_1_())
+  369 170 *    ObjInfo  v76, 0
+  369 170 *    PSF      v25
+  370 171 *    PSF      v17
+  371 172 *    CALLSYS  35           (void string::_beh_1_())
+  373 171 *    ObjInfo  v17, 0
+  373 171 *    PopPtr
+  374 170 *    PSF      v25
+  375 171 *    CALLSYS  190           (void print(string&in))
+  377 170 *    PSF      v25
+  378 171 *    CALLSYS  35           (void string::_beh_1_())
+- 708,7 -
+  380 170 *    ObjInfo  v25, 0
+  380 170 *    SUSPEND
+  381 170 * {
+  381 170 *    FREE     v64, 152242000
+  383 170 * }
+  383 170 *    JMP      +241              (d:626)
+- 710,6 -
+  385 169   }
+  385 170 * 15:
+  385 170 *    SUSPEND
+  386 170 *    STR      121         (l:3 s:";}#")
+  387 172 *    CALLSYS  32           (const string& _string_factory_(const int, const uint8&))
+  389 170 *    PshRPtr
+  390 171 *    PSF      v132
+  391 172 *    CALLSYS  34           (void string::_beh_0_(const string&in))
+  393 170 *    ObjInfo  v132, 1
+  393 170 *    VAR      v132
+  394 171 *    PSF      v41
+  395 172 *    LoadRObjR v64, v28, 134217782
+  398 172 *    RDR4     v1
+  399 172 *    PshV4    v1
+  400 173 *    PSF      v124
+  401 174 *    CALLSYS  523           (string itos(int))
+  403 172 *    ObjInfo  v124, 1
+  403 172 *    VAR      v124
+  404 173 *    PSF      v116
+  405 174 *    STR      120         (l:7 s:";tiley=")
+  406 176 *    CALLSYS  32           (const string& _string_factory_(const int, const uint8&))
+  408 174 *    PshRPtr
+  409 175 *    PSF      v116
+  410 176 *    CALLSYS  34           (void string::_beh_0_(const string&in))
+  412 174 *    ObjInfo  v116, 1
+  412 174 *    VAR      v116
+  413 175 *    PSF      v41
+  414 176 *    LoadRObjR v64, v24, 134217782
+  417 176 *    RDR4     v1
+  418 176 *    PshV4    v1
+  419 177 *    PSF      v108
+  420 178 *    CALLSYS  523           (string itos(int))
+  422 176 *    ObjInfo  v108, 1
+  422 176 *    VAR      v108
+  423 177 *    PSF      v100
+  424 178 *    STR      119         (l:7 s:";tilex=")
+  425 180 *    CALLSYS  32           (const string& _string_factory_(const int, const uint8&))
+  427 178 *    PshRPtr
+  428 179 *    PSF      v100
+  429 180 *    CALLSYS  34           (void string::_beh_0_(const string&in))
+  431 178 *    ObjInfo  v100, 1
+  431 178 *    VAR      v100
+  432 179 *    PSF      v41
+  433 180 *    LoadRObjR v64, v20, 134217782
+  436 180 *    RDR4     v1
+  437 180 *    PshV4    v1
+  438 181 *    PSF      v92
+  439 182 *    CALLSYS  523           (string itos(int))
+  441 180 *    ObjInfo  v92, 1
+  441 180 *    VAR      v92
+  442 181 *    PSF      v84
+  443 182 *    STR      118         (l:9 s:";tileIdx=")
+  444 184 *    CALLSYS  32           (const string& _string_factory_(const int, const uint8&))
+  446 182 *    PshRPtr
+  447 183 *    PSF      v84
+  448 184 *    CALLSYS  34           (void string::_beh_0_(const string&in))
+  450 182 *    ObjInfo  v84, 1
+  450 182 *    VAR      v84
+  451 183 *    PSF      v41
+  452 184 *    PshVPtr  v64
+  453 185 *    ADDSi    v16, 134217782
+  455 185 *    RDSPtr
+  456 185 *    ADDSi    v16, 134217805
+  458 185 *    RDSPtr
+  459 185 *    PSF      v33
+  460 186 *    CALLSYS  34           (void string::_beh_0_(const string&in))
+  462 184 *    ObjInfo  v33, 1
+  462 184 *    VAR      v33
+  463 185 *    PSF      v25
+  464 186 *    STR      117         (l:13 s:";tileSetNa")
+  465 188 *    CALLSYS  32           (const string& _string_factory_(const int, const uint8&))
+  467 186 *    PshRPtr
+  468 187 *    PSF      v9
+  469 188 *    CALLSYS  34           (void string::_beh_0_(const string&in))
+  471 186 *    ObjInfo  v9, 1
+  471 186 *    VAR      v9
+  472 187 *    PSF      v41
+  473 188 *    PshV4    v62
+  474 189 *    PSF      v76
+  475 190 *    CALLSYS  523           (string itos(int))
+  477 188 *    ObjInfo  v76, 1
+  477 188 *    VAR      v76
+  478 189 *    PSF      v25
+  479 190 *    STR      116         (l:3 s:";y=")
+  480 192 *    CALLSYS  32           (const string& _string_factory_(const int, const uint8&))
+  482 190 *    PshRPtr
+  483 191 *    PSF      v17
+  484 192 *    CALLSYS  34           (void string::_beh_0_(const string&in))
+  486 190 *    ObjInfo  v17, 1
+  486 190 *    VAR      v17
+  487 191 *    PSF      v41
+  488 192 *    PshV4    v63
+  489 193 *    PSF      v41
+  490 194 *    CALLSYS  523           (string itos(int))
+  492 192 *    ObjInfo  v41, 1
+  492 192 *    VAR      v41
+  493 193 *    PSF      v25
+  494 194 *    STR      115         (l:7 s:"Tile{x=")
+  495 196 *    CALLSYS  32           (const string& _string_factory_(const int, const uint8&))
+  497 194 *    PshRPtr
+  498 195 *    GETREF   2
+  499 195 *    CALLSYS  40           (string string::opAdd(const string&in) const)
+  501 192 *    ObjInfo  v25, 1
+  501 192 *    PSF      v41
+  502 193 *    CALLSYS  35           (void string::_beh_1_())
+  504 192 *    ObjInfo  v41, 0
+  504 192 *    PSF      v25
+  505 193 *    GETREF   2
+  506 193 *    CALLSYS  40           (string string::opAdd(const string&in) const)
+  508 190 *    ObjInfo  v41, 1
+  508 190 *    PSF      v17
+  509 191 *    CALLSYS  35           (void string::_beh_1_())
+  511 190 *    ObjInfo  v17, 0
+  511 190 *    PSF      v41
+  512 191 *    PSF      v25
+  513 192 *    CALLSYS  35           (void string::_beh_1_())
+  515 191 *    ObjInfo  v25, 0
+  515 191 *    GETREF   2
+  516 191 *    CALLSYS  40           (string string::opAdd(const string&in) const)
+  518 188 *    ObjInfo  v25, 1
+  518 188 *    PSF      v76
+  519 189 *    CALLSYS  35           (void string::_beh_1_())
+  521 188 *    ObjInfo  v76, 0
+  521 188 *    PSF      v25
+  522 189 *    PSF      v41
+  523 190 *    CALLSYS  35           (void string::_beh_1_())
+  525 189 *    ObjInfo  v41, 0
+  525 189 *    GETREF   2
+  526 189 *    CALLSYS  40           (string string::opAdd(const string&in) const)
+  528 186 *    ObjInfo  v41, 1
+  528 186 *    PSF      v9
+  529 187 *    CALLSYS  35           (void string::_beh_1_())
+  531 186 *    ObjInfo  v9, 0
+  531 186 *    PSF      v41
+  532 187 *    PSF      v25
+  533 188 *    CALLSYS  35           (void string::_beh_1_())
+  535 187 *    ObjInfo  v25, 0
+  535 187 *    GETREF   2
+  536 187 *    CALLSYS  40           (string string::opAdd(const string&in) const)
+  538 184 *    ObjInfo  v25, 1
+  538 184 *    PSF      v33
+  539 185 *    CALLSYS  35           (void string::_beh_1_())
+  541 184 *    ObjInfo  v33, 0
+  541 184 *    PSF      v25
+  542 185 *    PSF      v41
+  543 186 *    CALLSYS  35           (void string::_beh_1_())
+  545 185 *    ObjInfo  v41, 0
+  545 185 *    GETREF   2
+  546 185 *    CALLSYS  40           (string string::opAdd(const string&in) const)
+  548 182 *    ObjInfo  v41, 1
+  548 182 *    PSF      v84
+  549 183 *    CALLSYS  35           (void string::_beh_1_())
+  551 182 *    ObjInfo  v84, 0
+  551 182 *    PSF      v41
+  552 183 *    PSF      v25
+  553 184 *    CALLSYS  35           (void string::_beh_1_())
+  555 183 *    ObjInfo  v25, 0
+  555 183 *    GETREF   2
+  556 183 *    CALLSYS  40           (string string::opAdd(const string&in) const)
+  558 180 *    ObjInfo  v84, 1
+  558 180 *    PSF      v92
+  559 181 *    CALLSYS  35           (void string::_beh_1_())
+  561 180 *    ObjInfo  v92, 0
+  561 180 *    PSF      v84
+  562 181 *    PSF      v41
+  563 182 *    CALLSYS  35           (void string::_beh_1_())
+  565 181 *    ObjInfo  v41, 0
+  565 181 *    GETREF   2
+  566 181 *    CALLSYS  40           (string string::opAdd(const string&in) const)
+  568 178 *    ObjInfo  v41, 1
+  568 178 *    PSF      v100
+  569 179 *    CALLSYS  35           (void string::_beh_1_())
+  571 178 *    ObjInfo  v100, 0
+  571 178 *    PSF      v41
+  572 179 *    PSF      v84
+  573 180 *    CALLSYS  35           (void string::_beh_1_())
+  575 179 *    ObjInfo  v84, 0
+  575 179 *    GETREF   2
+  576 179 *    CALLSYS  40           (string string::opAdd(const string&in) const)
+  578 176 *    ObjInfo  v100, 1
+  578 176 *    PSF      v108
+  579 177 *    CALLSYS  35           (void string::_beh_1_())
+  581 176 *    ObjInfo  v108, 0
+  581 176 *    PSF      v100
+  582 177 *    PSF      v41
+  583 178 *    CALLSYS  35           (void string::_beh_1_())
+  585 177 *    ObjInfo  v41, 0
+  585 177 *    GETREF   2
+  586 177 *    CALLSYS  40           (string string::opAdd(const string&in) const)
+  588 174 *    ObjInfo  v41, 1
+  588 174 *    PSF      v116
+  589 175 *    CALLSYS  35           (void string::_beh_1_())
+  591 174 *    ObjInfo  v116, 0
+  591 174 *    PSF      v41
+  592 175 *    PSF      v100
+  593 176 *    CALLSYS  35           (void string::_beh_1_())
+  595 175 *    ObjInfo  v100, 0
+  595 175 *    GETREF   2
+  596 175 *    CALLSYS  40           (string string::opAdd(const string&in) const)
+  598 172 *    ObjInfo  v116, 1
+  598 172 *    PSF      v124
+  599 173 *    CALLSYS  35           (void string::_beh_1_())
+  601 172 *    ObjInfo  v124, 0
+  601 172 *    PSF      v116
+  602 173 *    PSF      v41
+  603 174 *    CALLSYS  35           (void string::_beh_1_())
+  605 173 *    ObjInfo  v41, 0
+  605 173 *    GETREF   2
+  606 173 *    CALLSYS  40           (string string::opAdd(const string&in) const)
+  608 170 *    ObjInfo  v41, 1
+  608 170 *    PSF      v132
+  609 171 *    CALLSYS  35           (void string::_beh_1_())
+  611 170 *    ObjInfo  v132, 0
+  611 170 *    PSF      v41
+  612 171 *    PSF      v116
+  613 172 *    CALLSYS  35           (void string::_beh_1_())
+  615 171 *    ObjInfo  v116, 0
+  615 171 *    PopPtr
+  616 170 *    VAR      v41
+  617 171 *    PSF      v61
+  618 172 *    GETREF   1
+  619 172 *    CALLSYS  37           (string& string::opAddAssign(const string&in))
+  621 170 *    PSF      v41
+  622 171 *    CALLSYS  35           (void string::_beh_1_())
+  624 170 *    ObjInfo  v41, 0
+  624 170 *    FREE     v64, 152242000
+- 702,48 -
+  626 170 * }
+  626 170 * 13:
+  626 170 *    SUSPEND
+  627 170 *    IncVi    v63
+- 702,21 -
+  628 170 * 11:
+  628 170 *    SUSPEND
+  629 170 *    PshVPtr  v52
+  630 171 *    ADDSi    v40, 134217785
+  632 171 *    RDSPtr
+  633 171 *    CALLSYS  123           (uint grid::width() const)
+  635 170 *    CpyRtoV4 v1
+  636 170 *    CMPu     v63, v1
+  638 170 *    JS       -394              (d:246)
+- 700,48 -
+  640 170 * 12:
+  640 170 * }
+  640 170 * 9:
+  640 170 *    SUSPEND
+  641 170 *    IncVi    v62
+- 700,20 -
+  642 170 * 7:
+  642 170 *    SUSPEND
+  643 170 *    PshVPtr  v52
+  644 171 *    ADDSi    v40, 134217785
+  646 171 *    RDSPtr
+  647 171 *    CALLSYS  124           (uint grid::height() const)
+  649 170 *    CpyRtoV4 v1
+  650 170 *    CMPu     v62, v1
+  652 170 *    JS       -414              (d:240)
+- 715,4 -
+  654 170 * 8:
+  654 170 *    SUSPEND
+  655 170 *    VarDecl  8
+  655 170 *    PSF      v140
+  656 171 *    CALLSYS  33           (void string::_beh_0_())
+  658 170 *    ObjInfo  v140, 1
+  658 170 *    VarDecl  9
+  658 170 *    PSF      v148
+  659 171 *    CALLSYS  33           (void string::_beh_0_())
+  661 170 *    ObjInfo  v148, 1
+  661 170 *    VarDecl  10
+  661 170 *    PSF      v156
+  662 171 *    CALLSYS  33           (void string::_beh_0_())
+- 716,8 -
+  664 170 *    ObjInfo  v156, 1
+  664 170 *    SUSPEND
+  665 170 *    VarDecl  11
+  665 170 *    SetV4    v63, 0x0          (i:0, f:0)
+  667 170 *    JMP      +697              (d:1366)
+  669 170 * 19:
+  669 170 *    SUSPEND
+- 718,5 -
+  670 170 * {
+  670 170 *    SUSPEND
+  671 170 *    VarDecl  12
+  671 170 *    PshV4    v63
+  672 171 *    PshVPtr  v52
+  673 172 *    ADDSi    v48, 134217785
+  675 172 *    RDSPtr
+  676 172 *    RefCpyV  v158, 152820312
+  678 172 *    CALLSYS  1289           (EditorObject@& array::opIndex(uint))
+  680 170 *    PshRPtr
+  681 171 *    RDSPtr
+  682 171 *    RefCpyV  v157, 152242504
+  684 171 *    PopPtr
+  685 170 *    FREE     v158, 152820312
+- 719,5 -
+  687 170 *    SUSPEND
+  688 170 *    PshVPtr  v157
+  689 171 *    ADDSi    v16, 134217783
+  691 171 *    RDSPtr
+  692 171 *    ADDSi    v48, 134217804
+  694 171 *    PopRPtr
+  695 170 *    RDR4     v159
+  696 170 *    CMPIi    v159, 1
+  698 170 *    JNZ      +194              (d:894)
+- 720,6 -
+  700 170 *    SUSPEND
+  701 170 *    STR      125         (l:2 s:"}#")
+  702 172 *    CALLSYS  32           (const string& _string_factory_(const int, const uint8&))
+  704 170 *    PshRPtr
+  705 171 *    PSF      v100
+  706 172 *    CALLSYS  34           (void string::_beh_0_(const string&in))
+  708 170 *    ObjInfo  v100, 1
+  708 170 *    VAR      v100
+  709 171 *    PSF      v9
+  710 172 *    PSF      v92
+  711 173 *    PshVPtr  v157
+  712 174 *    CALLINTF 1305           (string EditorObject::getPropertySaveString())
+  714 172 *    ObjInfo  v92, 1
+  714 172 *    VAR      v92
+  715 173 *    PSF      v25
+  716 174 *    STR      30         (l:1 s:";")
+  717 176 *    CALLSYS  32           (const string& _string_factory_(const int, const uint8&))
+  719 174 *    PshRPtr
+  720 175 *    PSF      v84
+  721 176 *    CALLSYS  34           (void string::_beh_0_(const string&in))
+  723 174 *    ObjInfo  v84, 1
+  723 174 *    VAR      v84
+  724 175 *    PSF      v9
+  725 176 *    LoadRObjR v157, v32, 134217783
+  728 176 *    RDR4     v162
+  729 176 *    PshV4    v162
+  730 177 *    PSF      v25
+  731 178 *    STR      124         (l:8 s:";height=")
+  732 180 *    CALLSYS  32           (const string& _string_factory_(const int, const uint8&))
+  734 178 *    PshRPtr
+  735 179 *    PSF      v33
+  736 180 *    CALLSYS  34           (void string::_beh_0_(const string&in))
+  738 178 *    ObjInfo  v33, 1
+  738 178 *    VAR      v33
+  739 179 *    PSF      v9
+  740 180 *    LoadRObjR v157, v28, 134217783
+  743 180 *    RDR4     v161
+  744 180 *    PshV4    v161
+  745 181 *    PSF      v25
+  746 182 *    STR      123         (l:7 s:";width=")
+  747 184 *    CALLSYS  32           (const string& _string_factory_(const int, const uint8&))
+  749 182 *    PshRPtr
+  750 183 *    PSF      v76
+  751 184 *    CALLSYS  34           (void string::_beh_0_(const string&in))
+  753 182 *    ObjInfo  v76, 1
+  753 182 *    VAR      v76
+  754 183 *    PSF      v9
+  755 184 *    LoadRObjR v157, v24, 134217783
+  758 184 *    RDR4     v160
+  759 184 *    PshV4    v160
+  760 185 *    PSF      v25
+  761 186 *    STR      116         (l:3 s:";y=")
+  762 188 *    CALLSYS  32           (const string& _string_factory_(const int, const uint8&))
+  764 186 *    PshRPtr
+  765 187 *    PSF      v17
+  766 188 *    CALLSYS  34           (void string::_beh_0_(const string&in))
+  768 186 *    ObjInfo  v17, 1
+  768 186 *    VAR      v17
+  769 187 *    PSF      v9
+  770 188 *    LoadRObjR v157, v20, 134217783
+  773 188 *    RDR4     v1
+  774 188 *    PshV4    v1
+  775 189 *    PSF      v25
+  776 190 *    STR      122         (l:3 s:"{x=")
+  777 192 *    CALLSYS  32           (const string& _string_factory_(const int, const uint8&))
+  779 190 *    PshRPtr
+  780 191 *    PSF      v25
+  781 192 *    CALLSYS  34           (void string::_beh_0_(const string&in))
+  783 190 *    ObjInfo  v25, 1
+  783 190 *    VAR      v25
+  784 191 *    PSF      v9
+  785 192 *    PshVPtr  v157
+  786 193 *    ADDSi    v16, 134217783
+  788 193 *    RDSPtr
+  789 193 *    ADDSi    v16, 134217804
+  791 193 *    RDSPtr
+  792 193 *    GETREF   2
+  793 193 *    CALLSYS  40           (string string::opAdd(const string&in) const)
+  795 190 *    ObjInfo  v9, 1
+  795 190 *    PSF      v25
+  796 191 *    CALLSYS  35           (void string::_beh_1_())
+  798 190 *    ObjInfo  v25, 0
+  798 190 *    PSF      v9
+  799 191 *    CALLSYS  54           (string string::opAdd(int) const)
+  801 188 *    ObjInfo  v25, 1
+  801 188 *    PSF      v25
+  802 189 *    PSF      v9
+  803 190 *    CALLSYS  35           (void string::_beh_1_())
+  805 189 *    ObjInfo  v9, 0
+  805 189 *    GETREF   2
+  806 189 *    CALLSYS  40           (string string::opAdd(const string&in) const)
+  808 186 *    ObjInfo  v9, 1
+  808 186 *    PSF      v17
+  809 187 *    CALLSYS  35           (void string::_beh_1_())
+  811 186 *    ObjInfo  v17, 0
+  811 186 *    PSF      v9
+  812 187 *    PSF      v25
+  813 188 *    CALLSYS  35           (void string::_beh_1_())
+  815 187 *    ObjInfo  v25, 0
+  815 187 *    CALLSYS  54           (string string::opAdd(int) const)
+  817 184 *    ObjInfo  v25, 1
+  817 184 *    PSF      v25
+  818 185 *    PSF      v9
+  819 186 *    CALLSYS  35           (void string::_beh_1_())
+  821 185 *    ObjInfo  v9, 0
+  821 185 *    GETREF   2
+  822 185 *    CALLSYS  40           (string string::opAdd(const string&in) const)
+  824 182 *    ObjInfo  v9, 1
+  824 182 *    PSF      v76
+  825 183 *    CALLSYS  35           (void string::_beh_1_())
+  827 182 *    ObjInfo  v76, 0
+  827 182 *    PSF      v9
+  828 183 *    PSF      v25
+  829 184 *    CALLSYS  35           (void string::_beh_1_())
+  831 183 *    ObjInfo  v25, 0
+  831 183 *    CALLSYS  54           (string string::opAdd(int) const)
+  833 180 *    ObjInfo  v25, 1
+  833 180 *    PSF      v25
+  834 181 *    PSF      v9
+  835 182 *    CALLSYS  35           (void string::_beh_1_())
+  837 181 *    ObjInfo  v9, 0
+  837 181 *    GETREF   2
+  838 181 *    CALLSYS  40           (string string::opAdd(const string&in) const)
+  840 178 *    ObjInfo  v9, 1
+  840 178 *    PSF      v33
+  841 179 *    CALLSYS  35           (void string::_beh_1_())
+  843 178 *    ObjInfo  v33, 0
+  843 178 *    PSF      v9
+  844 179 *    PSF      v25
+  845 180 *    CALLSYS  35           (void string::_beh_1_())
+  847 179 *    ObjInfo  v25, 0
+  847 179 *    CALLSYS  54           (string string::opAdd(int) const)
+  849 176 *    ObjInfo  v25, 1
+  849 176 *    PSF      v25
+  850 177 *    PSF      v9
+  851 178 *    CALLSYS  35           (void string::_beh_1_())
+  853 177 *    ObjInfo  v9, 0
+  853 177 *    GETREF   2
+  854 177 *    CALLSYS  40           (string string::opAdd(const string&in) const)
+  856 174 *    ObjInfo  v9, 1
+  856 174 *    PSF      v84
+  857 175 *    CALLSYS  35           (void string::_beh_1_())
+  859 174 *    ObjInfo  v84, 0
+  859 174 *    PSF      v9
+  860 175 *    PSF      v25
+  861 176 *    CALLSYS  35           (void string::_beh_1_())
+  863 175 *    ObjInfo  v25, 0
+  863 175 *    GETREF   2
+  864 175 *    CALLSYS  40           (string string::opAdd(const string&in) const)
+  866 172 *    ObjInfo  v25, 1
+  866 172 *    PSF      v92
+  867 173 *    CALLSYS  35           (void string::_beh_1_())
+  869 172 *    ObjInfo  v92, 0
+  869 172 *    PSF      v25
+  870 173 *    PSF      v9
+  871 174 *    CALLSYS  35           (void string::_beh_1_())
+  873 173 *    ObjInfo  v9, 0
+  873 173 *    GETREF   2
+  874 173 *    CALLSYS  40           (string string::opAdd(const string&in) const)
+  876 170 *    ObjInfo  v9, 1
+  876 170 *    PSF      v100
+  877 171 *    CALLSYS  35           (void string::_beh_1_())
+  879 170 *    ObjInfo  v100, 0
+  879 170 *    PSF      v9
+  880 171 *    PSF      v25
+  881 172 *    CALLSYS  35           (void string::_beh_1_())
+  883 171 *    ObjInfo  v25, 0
+  883 171 *    PopPtr
+  884 170 *    VAR      v9
+  885 171 *    PSF      v140
+  886 172 *    GETREF   1
+  887 172 *    CALLSYS  37           (string& string::opAddAssign(const string&in))
+  889 170 *    PSF      v9
+  890 171 *    CALLSYS  35           (void string::_beh_1_())
+  892 170 *    ObjInfo  v9, 0
+  892 170 *    JMP      +468              (d:1362)
+- 721,10 -
+  894 170 * 20:
+  894 170 *    SUSPEND
+  895 170 *    PshVPtr  v157
+  896 171 *    ADDSi    v16, 134217783
+  898 171 *    RDSPtr
+  899 171 *    ADDSi    v48, 134217804
+  901 171 *    PopRPtr
+  902 170 *    RDR4     v159
+  903 170 *    CMPIi    v159, 2
+  905 170 *    JNZ      +132              (d:1039)
+- 722,6 -
+  907 170 *    SUSPEND
+  908 170 *    STR      125         (l:2 s:"}#")
+  909 172 *    CALLSYS  32           (const string& _string_factory_(const int, const uint8&))
+  911 170 *    PshRPtr
+  912 171 *    PSF      v108
+  913 172 *    CALLSYS  34           (void string::_beh_0_(const string&in))
+  915 170 *    ObjInfo  v108, 1
+  915 170 *    VAR      v108
+  916 171 *    PSF      v25
+  917 172 *    PSF      v84
+  918 173 *    PshVPtr  v157
+  919 174 *    CALLINTF 1305           (string EditorObject::getPropertySaveString())
+  921 172 *    ObjInfo  v84, 1
+  921 172 *    VAR      v84
+  922 173 *    PSF      v9
+  923 174 *    STR      30         (l:1 s:";")
+  924 176 *    CALLSYS  32           (const string& _string_factory_(const int, const uint8&))
+  926 174 *    PshRPtr
+  927 175 *    PSF      v92
+  928 176 *    CALLSYS  34           (void string::_beh_0_(const string&in))
+  930 174 *    ObjInfo  v92, 1
+  930 174 *    VAR      v92
+  931 175 *    PSF      v25
+  932 176 *    LoadRObjR v157, v24, 134217783
+  935 176 *    RDR4     v1
+  936 176 *    PshV4    v1
+  937 177 *    PSF      v9
+  938 178 *    STR      116         (l:3 s:";y=")
+  939 180 *    CALLSYS  32           (const string& _string_factory_(const int, const uint8&))
+  941 178 *    PshRPtr
+  942 179 *    PSF      v100
+  943 180 *    CALLSYS  34           (void string::_beh_0_(const string&in))
+  945 178 *    ObjInfo  v100, 1
+  945 178 *    VAR      v100
+  946 179 *    PSF      v25
+  947 180 *    LoadRObjR v157, v20, 134217783
+  950 180 *    RDR4     v160
+  951 180 *    PshV4    v160
+  952 181 *    PSF      v9
+  953 182 *    STR      122         (l:3 s:"{x=")
+  954 184 *    CALLSYS  32           (const string& _string_factory_(const int, const uint8&))
+  956 182 *    PshRPtr
+  957 183 *    PSF      v9
+  958 184 *    CALLSYS  34           (void string::_beh_0_(const string&in))
+  960 182 *    ObjInfo  v9, 1
+  960 182 *    VAR      v9
+  961 183 *    PSF      v25
+  962 184 *    PshVPtr  v157
+  963 185 *    ADDSi    v16, 134217783
+  965 185 *    RDSPtr
+  966 185 *    ADDSi    v16, 134217804
+  968 185 *    RDSPtr
+  969 185 *    GETREF   2
+  970 185 *    CALLSYS  40           (string string::opAdd(const string&in) const)
+  972 182 *    ObjInfo  v25, 1
+  972 182 *    PSF      v9
+  973 183 *    CALLSYS  35           (void string::_beh_1_())
+  975 182 *    ObjInfo  v9, 0
+  975 182 *    PSF      v25
+  976 183 *    CALLSYS  54           (string string::opAdd(int) const)
+  978 180 *    ObjInfo  v9, 1
+  978 180 *    PSF      v9
+  979 181 *    PSF      v25
+  980 182 *    CALLSYS  35           (void string::_beh_1_())
+  982 181 *    ObjInfo  v25, 0
+  982 181 *    GETREF   2
+  983 181 *    CALLSYS  40           (string string::opAdd(const string&in) const)
+  985 178 *    ObjInfo  v25, 1
+  985 178 *    PSF      v100
+  986 179 *    CALLSYS  35           (void string::_beh_1_())
+  988 178 *    ObjInfo  v100, 0
+  988 178 *    PSF      v25
+  989 179 *    PSF      v9
+  990 180 *    CALLSYS  35           (void string::_beh_1_())
+  992 179 *    ObjInfo  v9, 0
+  992 179 *    CALLSYS  54           (string string::opAdd(int) const)
+  994 176 *    ObjInfo  v9, 1
+  994 176 *    PSF      v9
+  995 177 *    PSF      v25
+  996 178 *    CALLSYS  35           (void string::_beh_1_())
+  998 177 *    ObjInfo  v25, 0
+  998 177 *    GETREF   2
+  999 177 *    CALLSYS  40           (string string::opAdd(const string&in) const)
+ 1001 174 *    ObjInfo  v25, 1
+ 1001 174 *    PSF      v92
+ 1002 175 *    CALLSYS  35           (void string::_beh_1_())
+ 1004 174 *    ObjInfo  v92, 0
+ 1004 174 *    PSF      v25
+ 1005 175 *    PSF      v9
+ 1006 176 *    CALLSYS  35           (void string::_beh_1_())
+ 1008 175 *    ObjInfo  v9, 0
+ 1008 175 *    GETREF   2
+ 1009 175 *    CALLSYS  40           (string string::opAdd(const string&in) const)
+ 1011 172 *    ObjInfo  v9, 1
+ 1011 172 *    PSF      v84
+ 1012 173 *    CALLSYS  35           (void string::_beh_1_())
+ 1014 172 *    ObjInfo  v84, 0
+ 1014 172 *    PSF      v9
+ 1015 173 *    PSF      v25
+ 1016 174 *    CALLSYS  35           (void string::_beh_1_())
+ 1018 173 *    ObjInfo  v25, 0
+ 1018 173 *    GETREF   2
+ 1019 173 *    CALLSYS  40           (string string::opAdd(const string&in) const)
+ 1021 170 *    ObjInfo  v25, 1
+ 1021 170 *    PSF      v108
+ 1022 171 *    CALLSYS  35           (void string::_beh_1_())
+ 1024 170 *    ObjInfo  v108, 0
+ 1024 170 *    PSF      v25
+ 1025 171 *    PSF      v9
+ 1026 172 *    CALLSYS  35           (void string::_beh_1_())
+ 1028 171 *    ObjInfo  v9, 0
+ 1028 171 *    PopPtr
+ 1029 170 *    VAR      v25
+ 1030 171 *    PSF      v148
+ 1031 172 *    GETREF   1
+ 1032 172 *    CALLSYS  37           (string& string::opAddAssign(const string&in))
+ 1034 170 *    PSF      v25
+ 1035 171 *    CALLSYS  35           (void string::_beh_1_())
+ 1037 170 *    ObjInfo  v25, 0
+ 1037 170 *    JMP      +323              (d:1362)
+- 723,10 -
+ 1039 170 * 22:
+ 1039 170 *    SUSPEND
+ 1040 170 *    PshVPtr  v157
+ 1041 171 *    ADDSi    v16, 134217783
+ 1043 171 *    RDSPtr
+ 1044 171 *    ADDSi    v48, 134217804
+ 1046 171 *    PopRPtr
+ 1047 170 *    RDR4     v159
+ 1048 170 *    CMPIi    v159, 4
+ 1050 170 *    JNZ      +132              (d:1184)
+- 724,6 -
+ 1052 170 *    SUSPEND
+ 1053 170 *    STR      125         (l:2 s:"}#")
+ 1054 172 *    CALLSYS  32           (const string& _string_factory_(const int, const uint8&))
+ 1056 170 *    PshRPtr
+ 1057 171 *    PSF      v92
+ 1058 172 *    CALLSYS  34           (void string::_beh_0_(const string&in))
+ 1060 170 *    ObjInfo  v92, 1
+ 1060 170 *    VAR      v92
+ 1061 171 *    PSF      v25
+ 1062 172 *    PSF      v100
+ 1063 173 *    PshVPtr  v157
+ 1064 174 *    CALLINTF 1305           (string EditorObject::getPropertySaveString())
+ 1066 172 *    ObjInfo  v100, 1
+ 1066 172 *    VAR      v100
+ 1067 173 *    PSF      v9
+ 1068 174 *    STR      30         (l:1 s:";")
+ 1069 176 *    CALLSYS  32           (const string& _string_factory_(const int, const uint8&))
+ 1071 174 *    PshRPtr
+ 1072 175 *    PSF      v84
+ 1073 176 *    CALLSYS  34           (void string::_beh_0_(const string&in))
+ 1075 174 *    ObjInfo  v84, 1
+ 1075 174 *    VAR      v84
+ 1076 175 *    PSF      v25
+ 1077 176 *    LoadRObjR v157, v24, 134217783
+ 1080 176 *    RDR4     v1
+ 1081 176 *    PshV4    v1
+ 1082 177 *    PSF      v9
+ 1083 178 *    STR      116         (l:3 s:";y=")
+ 1084 180 *    CALLSYS  32           (const string& _string_factory_(const int, const uint8&))
+ 1086 178 *    PshRPtr
+ 1087 179 *    PSF      v108
+ 1088 180 *    CALLSYS  34           (void string::_beh_0_(const string&in))
+ 1090 178 *    ObjInfo  v108, 1
+ 1090 178 *    VAR      v108
+ 1091 179 *    PSF      v25
+ 1092 180 *    LoadRObjR v157, v20, 134217783
+ 1095 180 *    RDR4     v160
+ 1096 180 *    PshV4    v160
+ 1097 181 *    PSF      v9
+ 1098 182 *    STR      122         (l:3 s:"{x=")
+ 1099 184 *    CALLSYS  32           (const string& _string_factory_(const int, const uint8&))
+ 1101 182 *    PshRPtr
+ 1102 183 *    PSF      v9
+ 1103 184 *    CALLSYS  34           (void string::_beh_0_(const string&in))
+ 1105 182 *    ObjInfo  v9, 1
+ 1105 182 *    VAR      v9
+ 1106 183 *    PSF      v25
+ 1107 184 *    PshVPtr  v157
+ 1108 185 *    ADDSi    v16, 134217783
+ 1110 185 *    RDSPtr
+ 1111 185 *    ADDSi    v16, 134217804
+ 1113 185 *    RDSPtr
+ 1114 185 *    GETREF   2
+ 1115 185 *    CALLSYS  40           (string string::opAdd(const string&in) const)
+ 1117 182 *    ObjInfo  v25, 1
+ 1117 182 *    PSF      v9
+ 1118 183 *    CALLSYS  35           (void string::_beh_1_())
+ 1120 182 *    ObjInfo  v9, 0
+ 1120 182 *    PSF      v25
+ 1121 183 *    CALLSYS  54           (string string::opAdd(int) const)
+ 1123 180 *    ObjInfo  v9, 1
+ 1123 180 *    PSF      v9
+ 1124 181 *    PSF      v25
+ 1125 182 *    CALLSYS  35           (void string::_beh_1_())
+ 1127 181 *    ObjInfo  v25, 0
+ 1127 181 *    GETREF   2
+ 1128 181 *    CALLSYS  40           (string string::opAdd(const string&in) const)
+ 1130 178 *    ObjInfo  v25, 1
+ 1130 178 *    PSF      v108
+ 1131 179 *    CALLSYS  35           (void string::_beh_1_())
+ 1133 178 *    ObjInfo  v108, 0
+ 1133 178 *    PSF      v25
+ 1134 179 *    PSF      v9
+ 1135 180 *    CALLSYS  35           (void string::_beh_1_())
+ 1137 179 *    ObjInfo  v9, 0
+ 1137 179 *    CALLSYS  54           (string string::opAdd(int) const)
+ 1139 176 *    ObjInfo  v9, 1
+ 1139 176 *    PSF      v9
+ 1140 177 *    PSF      v25
+ 1141 178 *    CALLSYS  35           (void string::_beh_1_())
+ 1143 177 *    ObjInfo  v25, 0
+ 1143 177 *    GETREF   2
+ 1144 177 *    CALLSYS  40           (string string::opAdd(const string&in) const)
+ 1146 174 *    ObjInfo  v25, 1
+ 1146 174 *    PSF      v84
+ 1147 175 *    CALLSYS  35           (void string::_beh_1_())
+ 1149 174 *    ObjInfo  v84, 0
+ 1149 174 *    PSF      v25
+ 1150 175 *    PSF      v9
+ 1151 176 *    CALLSYS  35           (void string::_beh_1_())
+ 1153 175 *    ObjInfo  v9, 0
+ 1153 175 *    GETREF   2
+ 1154 175 *    CALLSYS  40           (string string::opAdd(const string&in) const)
+ 1156 172 *    ObjInfo  v9, 1
+ 1156 172 *    PSF      v100
+ 1157 173 *    CALLSYS  35           (void string::_beh_1_())
+ 1159 172 *    ObjInfo  v100, 0
+ 1159 172 *    PSF      v9
+ 1160 173 *    PSF      v25
+ 1161 174 *    CALLSYS  35           (void string::_beh_1_())
+ 1163 173 *    ObjInfo  v25, 0
+ 1163 173 *    GETREF   2
+ 1164 173 *    CALLSYS  40           (string string::opAdd(const string&in) const)
+ 1166 170 *    ObjInfo  v25, 1
+ 1166 170 *    PSF      v92
+ 1167 171 *    CALLSYS  35           (void string::_beh_1_())
+ 1169 170 *    ObjInfo  v92, 0
+ 1169 170 *    PSF      v25
+ 1170 171 *    PSF      v9
+ 1171 172 *    CALLSYS  35           (void string::_beh_1_())
+ 1173 171 *    ObjInfo  v9, 0
+ 1173 171 *    PopPtr
+ 1174 170 *    VAR      v25
+ 1175 171 *    PSF      v156
+ 1176 172 *    GETREF   1
+ 1177 172 *    CALLSYS  37           (string& string::opAddAssign(const string&in))
+ 1179 170 *    PSF      v25
+ 1180 171 *    CALLSYS  35           (void string::_beh_1_())
+ 1182 170 *    ObjInfo  v25, 0
+ 1182 170 *    JMP      +178              (d:1362)
+- 725,10 -
+ 1184 170 * 24:
+ 1184 170 *    SUSPEND
+ 1185 170 *    PshVPtr  v157
+ 1186 171 *    ADDSi    v16, 134217783
+ 1188 171 *    RDSPtr
+ 1189 171 *    ADDSi    v48, 134217804
+ 1191 171 *    PopRPtr
+ 1192 170 *    RDR4     v159
+ 1193 170 *    CMPIi    v159, 8
+ 1195 170 *    JNZ      +165              (d:1362)
+- 726,6 -
+ 1197 170 *    SUSPEND
+ 1198 170 *    STR      125         (l:2 s:"}#")
+ 1199 172 *    CALLSYS  32           (const string& _string_factory_(const int, const uint8&))
+ 1201 170 *    PshRPtr
+ 1202 171 *    PSF      v132
+ 1203 172 *    CALLSYS  34           (void string::_beh_0_(const string&in))
+ 1205 170 *    ObjInfo  v132, 1
+ 1205 170 *    VAR      v132
+ 1206 171 *    PSF      v25
+ 1207 172 *    PSF      v124
+ 1208 173 *    PshVPtr  v157
+ 1209 174 *    CALLINTF 1305           (string EditorObject::getPropertySaveString())
+ 1211 172 *    ObjInfo  v124, 1
+ 1211 172 *    VAR      v124
+ 1212 173 *    PSF      v9
+ 1213 174 *    STR      30         (l:1 s:";")
+ 1214 176 *    CALLSYS  32           (const string& _string_factory_(const int, const uint8&))
+ 1216 174 *    PshRPtr
+ 1217 175 *    PSF      v84
+ 1218 176 *    CALLSYS  34           (void string::_beh_0_(const string&in))
+ 1220 174 *    ObjInfo  v84, 1
+ 1220 174 *    VAR      v84
+ 1221 175 *    PSF      v25
+ 1222 176 *    LoadRObjR v157, v24, 134217783
+ 1225 176 *    RDR4     v1
+ 1226 176 *    PshV4    v1
+ 1227 177 *    PSF      v9
+ 1228 178 *    STR      116         (l:3 s:";y=")
+ 1229 180 *    CALLSYS  32           (const string& _string_factory_(const int, const uint8&))
+ 1231 178 *    PshRPtr
+ 1232 179 *    PSF      v108
+ 1233 180 *    CALLSYS  34           (void string::_beh_0_(const string&in))
+ 1235 178 *    ObjInfo  v108, 1
+ 1235 178 *    VAR      v108
+ 1236 179 *    PSF      v25
+ 1237 180 *    LoadRObjR v157, v20, 134217783
+ 1240 180 *    RDR4     v160
+ 1241 180 *    PshV4    v160
+ 1242 181 *    PSF      v9
+ 1243 182 *    STR      127         (l:3 s:";x=")
+ 1244 184 *    CALLSYS  32           (const string& _string_factory_(const int, const uint8&))
+ 1246 182 *    PshRPtr
+ 1247 183 *    PSF      v92
+ 1248 184 *    CALLSYS  34           (void string::_beh_0_(const string&in))
+ 1250 182 *    ObjInfo  v92, 1
+ 1250 182 *    VAR      v92
+ 1251 183 *    PSF      v25
+ 1252 184 *    PshV4    v51
+ 1253 185 *    PSF      v100
+ 1254 186 *    CALLSYS  523           (string itos(int))
+ 1256 184 *    ObjInfo  v100, 1
+ 1256 184 *    VAR      v100
+ 1257 185 *    PSF      v9
+ 1258 186 *    STR      126         (l:6 s:"{room=")
+ 1259 188 *    CALLSYS  32           (const string& _string_factory_(const int, const uint8&))
+ 1261 186 *    PshRPtr
+ 1262 187 *    PSF      v9
+ 1263 188 *    CALLSYS  34           (void string::_beh_0_(const string&in))
+ 1265 186 *    ObjInfo  v9, 1
+ 1265 186 *    VAR      v9
+ 1266 187 *    PSF      v25
+ 1267 188 *    PshVPtr  v157
+ 1268 189 *    ADDSi    v16, 134217783
+ 1270 189 *    RDSPtr
+ 1271 189 *    ADDSi    v16, 134217804
+ 1273 189 *    RDSPtr
+ 1274 189 *    GETREF   2
+ 1275 189 *    CALLSYS  40           (string string::opAdd(const string&in) const)
+ 1277 186 *    ObjInfo  v25, 1
+ 1277 186 *    PSF      v9
+ 1278 187 *    CALLSYS  35           (void string::_beh_1_())
+ 1280 186 *    ObjInfo  v9, 0
+ 1280 186 *    PSF      v25
+ 1281 187 *    GETREF   2
+ 1282 187 *    CALLSYS  40           (string string::opAdd(const string&in) const)
+ 1284 184 *    ObjInfo  v9, 1
+ 1284 184 *    PSF      v100
+ 1285 185 *    CALLSYS  35           (void string::_beh_1_())
+ 1287 184 *    ObjInfo  v100, 0
+ 1287 184 *    PSF      v9
+ 1288 185 *    PSF      v25
+ 1289 186 *    CALLSYS  35           (void string::_beh_1_())
+ 1291 185 *    ObjInfo  v25, 0
+ 1291 185 *    GETREF   2
+ 1292 185 *    CALLSYS  40           (string string::opAdd(const string&in) const)
+ 1294 182 *    ObjInfo  v25, 1
+ 1294 182 *    PSF      v92
+ 1295 183 *    CALLSYS  35           (void string::_beh_1_())
+ 1297 182 *    ObjInfo  v92, 0
+ 1297 182 *    PSF      v25
+ 1298 183 *    PSF      v9
+ 1299 184 *    CALLSYS  35           (void string::_beh_1_())
+ 1301 183 *    ObjInfo  v9, 0
+ 1301 183 *    CALLSYS  54           (string string::opAdd(int) const)
+ 1303 180 *    ObjInfo  v9, 1
+ 1303 180 *    PSF      v9
+ 1304 181 *    PSF      v25
+ 1305 182 *    CALLSYS  35           (void string::_beh_1_())
+ 1307 181 *    ObjInfo  v25, 0
+ 1307 181 *    GETREF   2
+ 1308 181 *    CALLSYS  40           (string string::opAdd(const string&in) const)
+ 1310 178 *    ObjInfo  v25, 1
+ 1310 178 *    PSF      v108
+ 1311 179 *    CALLSYS  35           (void string::_beh_1_())
+ 1313 178 *    ObjInfo  v108, 0
+ 1313 178 *    PSF      v25
+ 1314 179 *    PSF      v9
+ 1315 180 *    CALLSYS  35           (void string::_beh_1_())
+ 1317 179 *    ObjInfo  v9, 0
+ 1317 179 *    CALLSYS  54           (string string::opAdd(int) const)
+ 1319 176 *    ObjInfo  v9, 1
+ 1319 176 *    PSF      v9
+ 1320 177 *    PSF      v25
+ 1321 178 *    CALLSYS  35           (void string::_beh_1_())
+ 1323 177 *    ObjInfo  v25, 0
+ 1323 177 *    GETREF   2
+ 1324 177 *    CALLSYS  40           (string string::opAdd(const string&in) const)
+ 1326 174 *    ObjInfo  v25, 1
+ 1326 174 *    PSF      v84
+ 1327 175 *    CALLSYS  35           (void string::_beh_1_())
+ 1329 174 *    ObjInfo  v84, 0
+ 1329 174 *    PSF      v25
+ 1330 175 *    PSF      v9
+ 1331 176 *    CALLSYS  35           (void string::_beh_1_())
+ 1333 175 *    ObjInfo  v9, 0
+ 1333 175 *    GETREF   2
+ 1334 175 *    CALLSYS  40           (string string::opAdd(const string&in) const)
+ 1336 172 *    ObjInfo  v9, 1
+ 1336 172 *    PSF      v124
+ 1337 173 *    CALLSYS  35           (void string::_beh_1_())
+ 1339 172 *    ObjInfo  v124, 0
+ 1339 172 *    PSF      v9
+ 1340 173 *    PSF      v25
+ 1341 174 *    CALLSYS  35           (void string::_beh_1_())
+ 1343 173 *    ObjInfo  v25, 0
+ 1343 173 *    GETREF   2
+ 1344 173 *    CALLSYS  40           (string string::opAdd(const string&in) const)
+ 1346 170 *    ObjInfo  v25, 1
+ 1346 170 *    PSF      v132
+ 1347 171 *    CALLSYS  35           (void string::_beh_1_())
+ 1349 170 *    ObjInfo  v132, 0
+ 1349 170 *    PSF      v25
+ 1350 171 *    PSF      v9
+ 1351 172 *    CALLSYS  35           (void string::_beh_1_())
+ 1353 171 *    ObjInfo  v9, 0
+ 1353 171 *    PopPtr
+ 1354 170 *    VAR      v25
+ 1355 171 *    PSF      v50
+ 1356 172 *    GETREF   1
+ 1357 172 *    CALLSYS  37           (string& string::opAddAssign(const string&in))
+ 1359 170 *    PSF      v25
+ 1360 171 *    CALLSYS  35           (void string::_beh_1_())
+ 1362 170 *    ObjInfo  v25, 0
+ 1362 170 * 26:
+ 1362 170 * 25:
+ 1362 170 * 23:
+ 1362 170 * 21:
+ 1362 170 *    FREE     v157, 152242504
+- 716,45 -
+ 1364 170 * }
+ 1364 170 * 18:
+ 1364 170 *    SUSPEND
+ 1365 170 *    IncVi    v63
+- 716,20 -
+ 1366 170 * 16:
+ 1366 170 *    SUSPEND
+ 1367 170 *    PshVPtr  v52
+ 1368 171 *    ADDSi    v48, 134217785
+ 1370 171 *    RDSPtr
+ 1371 171 *    CALLSYS  86           (uint array::size() const)
+ 1373 170 *    CpyRtoV4 v1
+ 1374 170 *    CMPu     v63, v1
+ 1376 170 *    JS       -709              (d:669)
+- 730,4 -
+ 1378 170 * 17:
+ 1378 170 *    SUSPEND
+ 1379 170 *    VarDecl  13
+ 1379 170 *    PshV4    v51
+ 1380 171 *    PSF      v124
+ 1381 172 *    CALLSYS  523           (string itos(int))
+ 1383 170 *    ObjInfo  v124, 1
+ 1383 170 *    VAR      v124
+ 1384 171 *    PSF      v92
+ 1385 172 *    STR      128         (l:5 s:"room_")
+ 1386 174 *    CALLSYS  32           (const string& _string_factory_(const int, const uint8&))
+ 1388 172 *    PshRPtr
+ 1389 173 *    GETREF   2
+ 1390 173 *    CALLSYS  40           (string string::opAdd(const string&in) const)
+ 1392 170 *    ObjInfo  v92, 1
+ 1392 170 *    PSF      v124
+ 1393 171 *    CALLSYS  35           (void string::_beh_1_())
+ 1395 170 *    ObjInfo  v124, 0
+ 1395 170 *    VAR      v92
+ 1396 171 *    PSF      v170
+ 1397 172 *    CALLSYS  33           (void string::_beh_0_())
+ 1399 171 *    ObjInfo  v170, 1
+ 1399 171 *    PSF      v170
+ 1400 172 *    GETREF   1
+ 1401 172 *    CALLSYS  36           (string& string::opAssign(const string&in))
+ 1403 170 *    PSF      v92
+ 1404 171 *    CALLSYS  35           (void string::_beh_1_())
+- 731,4 -
+ 1406 170 *    ObjInfo  v92, 0
+ 1406 170 *    SUSPEND
+ 1407 170 *    LoadRObjR v52, v16, 134217785
+ 1410 170 *    RDR4     v1
+ 1411 170 *    PshV4    v1
+ 1412 171 *    PSF      v92
+ 1413 172 *    CALLSYS  523           (string itos(int))
+ 1415 170 *    ObjInfo  v92, 1
+ 1415 170 *    VAR      v92
+ 1416 171 *    STR      129         (l:2 s:"/x")
+ 1417 173 *    CALLSYS  32           (const string& _string_factory_(const int, const uint8&))
+ 1419 171 *    PshRPtr
+ 1420 172 *    PSF      v124
+ 1421 173 *    CALLSYS  34           (void string::_beh_0_(const string&in))
+ 1423 171 *    ObjInfo  v124, 1
+ 1423 171 *    VAR      v124
+ 1424 172 *    PSF      v108
+ 1425 173 *    PSF      v170
+ 1426 174 *    GETREF   2
+ 1427 174 *    CALLSYS  40           (string string::opAdd(const string&in) const)
+ 1429 171 *    ObjInfo  v108, 1
+ 1429 171 *    PSF      v124
+ 1430 172 *    CALLSYS  35           (void string::_beh_1_())
+ 1432 171 *    ObjInfo  v124, 0
+ 1432 171 *    VAR      v108
+ 1433 172 *    PshVPtr  v42
+ 1434 173 *    GETREF   1
+ 1435 173 *    GETREF   2
+ 1436 173 *    CALLSYS  308           (void CIniFile::setValue(const string&in, const string&in))
+ 1438 170 *    PSF      v92
+ 1439 171 *    CALLSYS  35           (void string::_beh_1_())
+ 1441 170 *    ObjInfo  v92, 0
+ 1441 170 *    PSF      v108
+ 1442 171 *    CALLSYS  35           (void string::_beh_1_())
+- 732,4 -
+ 1444 170 *    ObjInfo  v108, 0
+ 1444 170 *    SUSPEND
+ 1445 170 *    LoadRObjR v52, v20, 134217785
+ 1448 170 *    RDR4     v1
+ 1449 170 *    PshV4    v1
+ 1450 171 *    PSF      v108
+ 1451 172 *    CALLSYS  523           (string itos(int))
+ 1453 170 *    ObjInfo  v108, 1
+ 1453 170 *    VAR      v108
+ 1454 171 *    STR      130         (l:2 s:"/y")
+ 1455 173 *    CALLSYS  32           (const string& _string_factory_(const int, const uint8&))
+ 1457 171 *    PshRPtr
+ 1458 172 *    PSF      v92
+ 1459 173 *    CALLSYS  34           (void string::_beh_0_(const string&in))
+ 1461 171 *    ObjInfo  v92, 1
+ 1461 171 *    VAR      v92
+ 1462 172 *    PSF      v25
+ 1463 173 *    PSF      v170
+ 1464 174 *    GETREF   2
+ 1465 174 *    CALLSYS  40           (string string::opAdd(const string&in) const)
+ 1467 171 *    ObjInfo  v25, 1
+ 1467 171 *    PSF      v92
+ 1468 172 *    CALLSYS  35           (void string::_beh_1_())
+ 1470 171 *    ObjInfo  v92, 0
+ 1470 171 *    VAR      v25
+ 1471 172 *    PshVPtr  v42
+ 1472 173 *    GETREF   1
+ 1473 173 *    GETREF   2
+ 1474 173 *    CALLSYS  308           (void CIniFile::setValue(const string&in, const string&in))
+ 1476 170 *    PSF      v108
+ 1477 171 *    CALLSYS  35           (void string::_beh_1_())
+ 1479 170 *    ObjInfo  v108, 0
+ 1479 170 *    PSF      v25
+ 1480 171 *    CALLSYS  35           (void string::_beh_1_())
+- 733,4 -
+ 1482 170 *    ObjInfo  v25, 0
+ 1482 170 *    SUSPEND
+ 1483 170 *    LoadRObjR v52, v24, 134217785
+ 1486 170 *    RDR4     v1
+ 1487 170 *    PshV4    v1
+ 1488 171 *    PSF      v25
+ 1489 172 *    CALLSYS  523           (string itos(int))
+ 1491 170 *    ObjInfo  v25, 1
+ 1491 170 *    VAR      v25
+ 1492 171 *    STR      131         (l:6 s:"/width")
+ 1493 173 *    CALLSYS  32           (const string& _string_factory_(const int, const uint8&))
+ 1495 171 *    PshRPtr
+ 1496 172 *    PSF      v108
+ 1497 173 *    CALLSYS  34           (void string::_beh_0_(const string&in))
+ 1499 171 *    ObjInfo  v108, 1
+ 1499 171 *    VAR      v108
+ 1500 172 *    PSF      v124
+ 1501 173 *    PSF      v170
+ 1502 174 *    GETREF   2
+ 1503 174 *    CALLSYS  40           (string string::opAdd(const string&in) const)
+ 1505 171 *    ObjInfo  v124, 1
+ 1505 171 *    PSF      v108
+ 1506 172 *    CALLSYS  35           (void string::_beh_1_())
+ 1508 171 *    ObjInfo  v108, 0
+ 1508 171 *    VAR      v124
+ 1509 172 *    PshVPtr  v42
+ 1510 173 *    GETREF   1
+ 1511 173 *    GETREF   2
+ 1512 173 *    CALLSYS  308           (void CIniFile::setValue(const string&in, const string&in))
+ 1514 170 *    PSF      v25
+ 1515 171 *    CALLSYS  35           (void string::_beh_1_())
+ 1517 170 *    ObjInfo  v25, 0
+ 1517 170 *    PSF      v124
+ 1518 171 *    CALLSYS  35           (void string::_beh_1_())
+- 734,4 -
+ 1520 170 *    ObjInfo  v124, 0
+ 1520 170 *    SUSPEND
+ 1521 170 *    LoadRObjR v52, v28, 134217785
+ 1524 170 *    RDR4     v1
+ 1525 170 *    PshV4    v1
+ 1526 171 *    PSF      v124
+ 1527 172 *    CALLSYS  523           (string itos(int))
+ 1529 170 *    ObjInfo  v124, 1
+ 1529 170 *    VAR      v124
+ 1530 171 *    STR      132         (l:7 s:"/height")
+ 1531 173 *    CALLSYS  32           (const string& _string_factory_(const int, const uint8&))
+ 1533 171 *    PshRPtr
+ 1534 172 *    PSF      v25
+ 1535 173 *    CALLSYS  34           (void string::_beh_0_(const string&in))
+ 1537 171 *    ObjInfo  v25, 1
+ 1537 171 *    VAR      v25
+ 1538 172 *    PSF      v92
+ 1539 173 *    PSF      v170
+ 1540 174 *    GETREF   2
+ 1541 174 *    CALLSYS  40           (string string::opAdd(const string&in) const)
+ 1543 171 *    ObjInfo  v92, 1
+ 1543 171 *    PSF      v25
+ 1544 172 *    CALLSYS  35           (void string::_beh_1_())
+ 1546 171 *    ObjInfo  v25, 0
+ 1546 171 *    VAR      v92
+ 1547 172 *    PshVPtr  v42
+ 1548 173 *    GETREF   1
+ 1549 173 *    GETREF   2
+ 1550 173 *    CALLSYS  308           (void CIniFile::setValue(const string&in, const string&in))
+ 1552 170 *    PSF      v124
+ 1553 171 *    CALLSYS  35           (void string::_beh_1_())
+ 1555 170 *    ObjInfo  v124, 0
+ 1555 170 *    PSF      v92
+ 1556 171 *    CALLSYS  35           (void string::_beh_1_())
+- 735,4 -
+ 1558 170 *    ObjInfo  v92, 0
+ 1558 170 *    SUSPEND
+ 1559 170 *    VAR      v61
+ 1560 171 *    STR      133         (l:6 s:"/tiles")
+ 1561 173 *    CALLSYS  32           (const string& _string_factory_(const int, const uint8&))
+ 1563 171 *    PshRPtr
+ 1564 172 *    PSF      v108
+ 1565 173 *    CALLSYS  34           (void string::_beh_0_(const string&in))
+ 1567 171 *    ObjInfo  v108, 1
+ 1567 171 *    VAR      v108
+ 1568 172 *    PSF      v92
+ 1569 173 *    PSF      v170
+ 1570 174 *    GETREF   2
+ 1571 174 *    CALLSYS  40           (string string::opAdd(const string&in) const)
+ 1573 171 *    ObjInfo  v92, 1
+ 1573 171 *    PSF      v108
+ 1574 172 *    CALLSYS  35           (void string::_beh_1_())
+ 1576 171 *    ObjInfo  v108, 0
+ 1576 171 *    VAR      v92
+ 1577 172 *    PshVPtr  v42
+ 1578 173 *    GETREF   1
+ 1579 173 *    GETREF   2
+ 1580 173 *    CALLSYS  308           (void CIniFile::setValue(const string&in, const string&in))
+ 1582 170 *    PSF      v92
+ 1583 171 *    CALLSYS  35           (void string::_beh_1_())
+- 736,4 -
+ 1585 170 *    ObjInfo  v92, 0
+ 1585 170 *    SUSPEND
+ 1586 170 *    VAR      v140
+ 1587 171 *    STR      134         (l:10 s:"/obstacles")
+ 1588 173 *    CALLSYS  32           (const string& _string_factory_(const int, const uint8&))
+ 1590 171 *    PshRPtr
+ 1591 172 *    PSF      v124
+ 1592 173 *    CALLSYS  34           (void string::_beh_0_(const string&in))
+ 1594 171 *    ObjInfo  v124, 1
+ 1594 171 *    VAR      v124
+ 1595 172 *    PSF      v92
+ 1596 173 *    PSF      v170
+ 1597 174 *    GETREF   2
+ 1598 174 *    CALLSYS  40           (string string::opAdd(const string&in) const)
+ 1600 171 *    ObjInfo  v92, 1
+ 1600 171 *    PSF      v124
+ 1601 172 *    CALLSYS  35           (void string::_beh_1_())
+ 1603 171 *    ObjInfo  v124, 0
+ 1603 171 *    VAR      v92
+ 1604 172 *    PshVPtr  v42
+ 1605 173 *    GETREF   1
+ 1606 173 *    GETREF   2
+ 1607 173 *    CALLSYS  308           (void CIniFile::setValue(const string&in, const string&in))
+ 1609 170 *    PSF      v92
+ 1610 171 *    CALLSYS  35           (void string::_beh_1_())
+- 737,4 -
+ 1612 170 *    ObjInfo  v92, 0
+ 1612 170 *    SUSPEND
+ 1613 170 *    VAR      v148
+ 1614 171 *    STR      135         (l:6 s:"/items")
+ 1615 173 *    CALLSYS  32           (const string& _string_factory_(const int, const uint8&))
+ 1617 171 *    PshRPtr
+ 1618 172 *    PSF      v108
+ 1619 173 *    CALLSYS  34           (void string::_beh_0_(const string&in))
+ 1621 171 *    ObjInfo  v108, 1
+ 1621 171 *    VAR      v108
+ 1622 172 *    PSF      v92
+ 1623 173 *    PSF      v170
+ 1624 174 *    GETREF   2
+ 1625 174 *    CALLSYS  40           (string string::opAdd(const string&in) const)
+ 1627 171 *    ObjInfo  v92, 1
+ 1627 171 *    PSF      v108
+ 1628 172 *    CALLSYS  35           (void string::_beh_1_())
+ 1630 171 *    ObjInfo  v108, 0
+ 1630 171 *    VAR      v92
+ 1631 172 *    PshVPtr  v42
+ 1632 173 *    GETREF   1
+ 1633 173 *    GETREF   2
+ 1634 173 *    CALLSYS  308           (void CIniFile::setValue(const string&in, const string&in))
+ 1636 170 *    PSF      v92
+ 1637 171 *    CALLSYS  35           (void string::_beh_1_())
+- 738,4 -
+ 1639 170 *    ObjInfo  v92, 0
+ 1639 170 *    SUSPEND
+ 1640 170 *    VAR      v156
+ 1641 171 *    STR      136         (l:5 s:"/mobs")
+ 1642 173 *    CALLSYS  32           (const string& _string_factory_(const int, const uint8&))
+ 1644 171 *    PshRPtr
+ 1645 172 *    PSF      v124
+ 1646 173 *    CALLSYS  34           (void string::_beh_0_(const string&in))
+ 1648 171 *    ObjInfo  v124, 1
+ 1648 171 *    VAR      v124
+ 1649 172 *    PSF      v92
+ 1650 173 *    PSF      v170
+ 1651 174 *    GETREF   2
+ 1652 174 *    CALLSYS  40           (string string::opAdd(const string&in) const)
+ 1654 171 *    ObjInfo  v92, 1
+ 1654 171 *    PSF      v124
+ 1655 172 *    CALLSYS  35           (void string::_beh_1_())
+ 1657 171 *    ObjInfo  v124, 0
+ 1657 171 *    VAR      v92
+ 1658 172 *    PshVPtr  v42
+ 1659 173 *    GETREF   1
+ 1660 173 *    GETREF   2
+ 1661 173 *    CALLSYS  308           (void CIniFile::setValue(const string&in, const string&in))
+ 1663 170 *    PSF      v92
+ 1664 171 *    CALLSYS  35           (void string::_beh_1_())
+ 1666 170 *    ObjInfo  v92, 0
+ 1666 170 *    PSF      v170
+ 1667 171 *    CALLSYS  35           (void string::_beh_1_())
+ 1669 170 *    ObjInfo  v170, 0
+ 1669 170 *    PSF      v156
+ 1670 171 *    CALLSYS  35           (void string::_beh_1_())
+ 1672 170 *    ObjInfo  v156, 0
+ 1672 170 *    PSF      v148
+ 1673 171 *    CALLSYS  35           (void string::_beh_1_())
+ 1675 170 *    ObjInfo  v148, 0
+ 1675 170 *    PSF      v140
+ 1676 171 *    CALLSYS  35           (void string::_beh_1_())
+ 1678 170 *    ObjInfo  v140, 0
+ 1678 170 *    PSF      v61
+ 1679 171 *    CALLSYS  35           (void string::_beh_1_())
+ 1681 170 *    ObjInfo  v61, 0
+ 1681 170 *    FREE     v52, 152236880
+- 693,37 -
+ 1683 170 * }
+ 1683 170 * 5:
+ 1683 170 *    SUSPEND
+ 1684 170 *    IncVi    v51
+- 693,19 -
+ 1685 170 * 3:
+ 1685 170 *    SUSPEND
+ 1686 170 *    PshVPtr  v0
+ 1687 171 *    ADDSi    v204, 134217814
+ 1689 171 *    RDSPtr
+ 1690 171 *    CALLSYS  86           (uint array::size() const)
+ 1692 170 *    CpyRtoV4 v1
+ 1693 170 *    CMPu     v51, v1
+ 1695 170 *    JS       -1499              (d:198)
+- 742,3 -
+ 1697 170 * 4:
+ 1697 170 *    SUSPEND
+ 1698 170 *    VAR      v50
+ 1699 171 *    STR      137         (l:13 s:"level/entr")
+ 1700 173 *    CALLSYS  32           (const string& _string_factory_(const int, const uint8&))
+ 1702 171 *    PshRPtr
+ 1703 172 *    PSF      v108
+ 1704 173 *    CALLSYS  34           (void string::_beh_0_(const string&in))
+ 1706 171 *    ObjInfo  v108, 1
+ 1706 171 *    VAR      v108
+ 1707 172 *    PshVPtr  v42
+ 1708 173 *    GETREF   1
+ 1709 173 *    GETREF   2
+ 1710 173 *    CALLSYS  308           (void CIniFile::setValue(const string&in, const string&in))
+ 1712 170 *    PSF      v108
+ 1713 171 *    CALLSYS  35           (void string::_beh_1_())
+- 745,3 -
+ 1715 170 *    ObjInfo  v108, 0
+ 1715 170 *    SUSPEND
+ 1716 170 *    PshVPtr  v42
+ 1717 171 *    CALLSYS  306           (void CIniFile::save())
+- 746,3 -
+ 1719 170 *    SUSPEND
+ 1720 170 *    SetV1    v1, 0x0
+ 1722 170 *    PshV4    v1
+ 1723 171 *    PshVPtr  v0
+ 1724 172 *    CALLINTF 1324           (void LevelCreator::needToSave(bool))
+- 747,3 -
+ 1726 170 *    SUSPEND
+ 1727 170 *    PSF      v50
+ 1728 171 *    CALLSYS  35           (void string::_beh_1_())
+ 1730 170 *    ObjInfo  v50, 0
+ 1730 170 *    FREE     v42, 112068768
+ 1732 170 * 0:
+ 1732 170 *    FREE     v0, 152243168
+ 1734 170 *    RET      1

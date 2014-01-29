@@ -1,0 +1,108 @@
+void UiObject::onRemove(RemoveEvent)
+
+Temps: 2, 3, 4, 5, 6, 7
+
+Variables: 
+ -001: RemoveEvent e
+ 001: uint i
+ 000: UiObject this
+ 003: array {noname}
+ 004: CFunctionPtr {noname}
+ 005: GuiToggleGroup {noname}
+ 006: GuiToggleGroup {noname}
+ 007: UiObject {noname}
+
+
+    0   7 *    VarDecl  0
+    0   7 *    PshVPtr  v0
+    1   8 *    CALLSYS  2           (void _builtin_object_::_beh_4_())
+- 149,7 -
+    3   7 *    SUSPEND
+    4   7 *    VarDecl  1
+    4   7 *    SetV4    v1, 0x0          (i:0, f:0)
+    6   7 *    JMP      +28              (d:36)
+    8   7 * 4:
+    8   7 *    SUSPEND
+- 150,4 -
+    9   7 *    SUSPEND
+   10   7 *    FREE     v4, 88924136
+   12   7 *    VAR      v4
+   13   8 *    PshV4    v1
+   14   9 *    PshVPtr  v0
+   15  10 *    ADDSi    v48, 134217780
+   17  10 *    RDSPtr
+   18  10 *    RefCpyV  v3, 150922024
+   20  10 *    CALLSYS  1317           (UiCallback@& array::opIndex(uint))
+   22   8 *    PshRPtr
+   23   9 *    RDSPtr
+   24   9 *    ADDSi    v20, 134217782
+   26   9 *    GETOBJREF 1
+   27   9 *    REFCPY   0x54cdfe8
+   29   8 *    FREE     v4, 88924136
+   31   8 *    PopPtr
+   32   7 *    FREE     v3, 150922024
+- 149,41 -
+   34   7 * 3:
+   34   7 *    SUSPEND
+   35   7 *    IncVi    v1
+- 149,19 -
+   36   7 * 1:
+   36   7 *    SUSPEND
+   37   7 *    PshVPtr  v0
+   38   8 *    ADDSi    v48, 134217780
+   40   8 *    RDSPtr
+   41   8 *    CALLSYS  86           (uint array::size() const)
+   43   7 *    CpyRtoV4 v2
+   44   7 *    CMPu     v1, v2
+   46   7 *    JS       -40              (d:8)
+- 151,3 -
+   48   7 * 2:
+   48   7 *    SUSPEND
+   49   7 *    PshVPtr  v0
+   50   8 *    ADDSi    v48, 134217780
+   52   8 *    RDSPtr
+   53   8 *    CALLSYS  89           (void array::clear())
+- 152,3 -
+   55   7 *    SUSPEND
+   56   7 *    PshVPtr  v0
+   57   8 *    ADDSi    v28, 134217780
+   59   8 *    RDSPtr
+   60   8 *    RefCpyV  v5, 150276928
+   62   8 *    PopPtr
+   63   7 *    ClrVPtr  v6
+   64   7 *    CmpPtr   v5, v6
+   66   7 *    TNZ
+   67   7 *    CpyRtoV4 v2
+   68   7 *    FREE     v5, 150276928
+   70   7 *    FREE     v6, 150276928
+   72   7 *    CpyVtoR4 v2
+   73   7 *    JLowZ    +29              (d:104)
+- 153,4 -
+   75   7 *    SUSPEND
+   76   7 *    PshVPtr  v0
+   77   8 *    RefCpyV  v7, 150271928
+   79   8 *    PopPtr
+   80   7 *    VAR      v7
+   81   8 *    PshVPtr  v0
+   82   9 *    ADDSi    v28, 134217780
+   84   9 *    RDSPtr
+   85   9 *    ADDSi    v24, 134217797
+   87   9 *    RDSPtr
+   88   9 *    GETREF   1
+   89   9 *    CALLSYS  1297           (int array::find(UiObject@const&in) const)
+   91   7 *    CpyRtoV4 v2
+   92   7 *    FREE     v7, 150271928
+   94   7 *    PshV4    v2
+   95   8 *    PshVPtr  v0
+   96   9 *    ADDSi    v28, 134217780
+   98   9 *    RDSPtr
+   99   9 *    ADDSi    v24, 134217797
+  101   9 *    RDSPtr
+  102   9 *    CALLSYS  83           (void array::removeAt(uint))
+- 154,3 -
+  104   7 * 5:
+  104   7 *    SUSPEND
+  105   7 * 0:
+  105   7 *    FREE     v-1, 89185632
+  107   7 *    FREE     v0, 150271928
+  109   7 *    RET      2

@@ -1,0 +1,160 @@
+void Footman::drawLimb2(int)
+
+Temps: 4, 5, 6, 7, 8, 11, 14, 15, 16, 17, 18, 19, 20
+
+Variables: 
+ -001: int limb
+ 001: float x
+ 002: float y
+ 003: float a
+ 010: vec2 size
+ 013: vec2 pos
+ 000: Footman this
+ 004: array {noname}
+ 011: array {noname}
+
+
+    0  20 *    VarDecl  0
+    0  20 *    PshVPtr  v0
+    1  21 *    CALLSYS  2           (void _builtin_object_::_beh_4_())
+- 482,3 -
+    3  20 *    SUSPEND
+- 483,3 -
+    4  20 *    VarDecl  1
+    4  20 *    VarDecl  2
+    4  20 *    VarDecl  3
+    4  20 *    SUSPEND
+    5  20 *    VAR      v5
+    6  21 *    VAR      v6
+    7  22 *    VAR      v7
+    8  23 *    PshV4    v-1
+    9  24 *    PshVPtr  v0
+   10  25 *    ADDSi    v112, 134217769
+   12  25 *    RDSPtr
+   13  25 *    RefCpyV  v4, 13784624
+   15  25 *    CALLSYS  347           (int& array::opIndex(uint))
+   17  23 *    RDR4     v8
+   18  23 *    PshV4    v8
+   19  24 *    GETREF   1
+   20  24 *    GETREF   2
+   21  24 *    GETREF   3
+   22  24 *    CALLSYS  416           (void b2dGetBodyTransform(int, float&out, float&out, float&out))
+   24  20 *    CpyVtoV4 v3, v5
+   26  20 *    CpyVtoV4 v2, v6
+   28  20 *    CpyVtoV4 v1, v7
+   30  20 *    FREE     v4, 13784624
+- 484,3 -
+   32  20 *    SUSPEND
+   33  20 *    VarDecl  4
+   33  20 *    PSF      v10
+   34  21 *    CALLSYS  132           (void vec2::_beh_0_())
+   36  20 *    ObjInfo  v10, 1
+   36  20 *    PshV4    v-1
+   37  21 *    PshVPtr  v0
+   38  22 *    ADDSi    v124, 134217769
+   40  22 *    RDSPtr
+   41  22 *    RefCpyV  v11, 7069968
+   43  22 *    CALLSYS  273           (vec2& array::opIndex(uint))
+   45  20 *    PshRPtr
+   46  21 *    PSF      v10
+   47  22 *    COPY     v2, 67108877
+   49  21 *    PopPtr
+   50  20 *    FREE     v11, 7069968
+- 485,3 -
+   52  20 *    SUSPEND
+   53  20 *    VarDecl  5
+   53  20 *    PSF      v13
+   54  21 *    CALLSYS  132           (void vec2::_beh_0_())
+   56  20 *    ObjInfo  v13, 1
+   56  20 *    PshV4    v-1
+   57  21 *    PshVPtr  v0
+   58  22 *    ADDSi    v128, 134217769
+   60  22 *    RDSPtr
+   61  22 *    RefCpyV  v11, 7069968
+   63  22 *    CALLSYS  273           (vec2& array::opIndex(uint))
+   65  20 *    PshRPtr
+   66  21 *    PSF      v13
+   67  22 *    COPY     v2, 67108877
+   69  21 *    PopPtr
+   70  20 *    FREE     v11, 7069968
+- 487,3 -
+   72  20 *    SUSPEND
+   73  20 *    PshC4    0x3f800000          (i:1065353216, f:1)
+   75  21 *    PshC4    0x3f800000          (i:1065353216, f:1)
+   77  22 *    PshC4    0x3f800000          (i:1065353216, f:1)
+   79  23 *    PshC4    0x3f800000          (i:1065353216, f:1)
+   81  24 *    PshC4    0x0          (i:0, f:0)
+   83  25 *    PshC4    0x0          (i:0, f:0)
+   85  26 *    SetV4    v5, 0x43340000          (i:1127481344, f:180)
+   87  26 *    CpyGtoV4 v8, 117096696
+   89  26 *    DIVf     v6, v5, v8
+   91  26 *    MULf     v8, v3, v6
+   93  26 *    PshV4    v8
+   94  27 *    PshC4    0x0          (i:0, f:0)
+   96  28 *    PshV4    v2
+   97  29 *    PshV4    v1
+   98  30 *    CALLSYS  336           (void gfxPushTransform(const float, const float, const float, const float arg3 = 0.0f, const float arg4 = 0.0f, const float arg5 = 0.0f, const float arg6 = 0.0f, const float arg7 = 1.0f, const float arg8 = 1.0f, const float arg9 = 1.0f))
+- 488,3 -
+  100  20 *    SUSPEND
+  101  20 *    PshV4    v-1
+  102  21 *    PshVPtr  v0
+  103  22 *    ADDSi    v120, 134217769
+  105  22 *    RDSPtr
+  106  22 *    RefCpyV  v4, 13784624
+  108  22 *    CALLSYS  347           (int& array::opIndex(uint))
+  110  20 *    RDR4     v6
+  111  20 *    PshV4    v6
+  112  21 *    CALLSYS  331           (void gfxSetDrawImage(const uint))
+  114  20 *    FREE     v4, 13784624
+- 489,3 -
+  116  20 *    SUSPEND
+  117  20 *    PshC4    0x7          (i:7, f:9.80909e-045)
+  119  21 *    CALLSYS  324           (void gfxBeginDraw(const uint))
+- 490,3 -
+  121  20 *    SUSPEND
+  122  20 *    PshC4    0x3f800000          (i:1065353216, f:1)
+  124  21 *    PshC4    0x3f800000          (i:1065353216, f:1)
+  126  22 *    PshC4    0x0          (i:0, f:0)
+  128  23 *    PshC4    0x0          (i:0, f:0)
+  130  24 *    LoadVObjR v10, v4, 67108877
+  133  24 *    RDR4     v19
+  134  24 *    PshV4    v19
+  135  25 *    LoadVObjR v10, v0, 67108877
+  138  25 *    RDR4     v20
+  139  25 *    PshV4    v20
+  140  26 *    LoadVObjR v10, v4, 67108877
+  143  26 *    RDR4     v5
+  144  26 *    NEGf     v5
+  145  26 *    SetV4    v8, 0x40000000          (i:1073741824, f:2)
+  147  26 *    DIVf     v6, v5, v8
+  149  26 *    LoadVObjR v13, v4, 67108877
+  152  26 *    RDR4     v7
+  153  26 *    ADDf     v8, v6, v7
+  155  26 *    PshV4    v8
+  156  27 *    LoadVObjR v10, v0, 67108877
+  159  27 *    RDR4     v7
+  160  27 *    NEGf     v7
+  161  27 *    SetV4    v6, 0x40000000          (i:1073741824, f:2)
+  163  27 *    DIVf     v18, v7, v6
+  165  27 *    LoadVObjR v13, v0, 67108877
+  168  27 *    RDR4     v5
+  169  27 *    ADDf     v6, v18, v5
+  171  27 *    PshV4    v6
+  172  28 *    CALL     725           (void gfxDrawImageQuad(const float, const float, const float, const float, const float arg4 = 0.0f, const float arg5 = 0.0f, const float arg6 = 1.0f, const float arg7 = 1.0f))
+- 491,3 -
+  174  20 *    SUSPEND
+  175  20 *    CALLSYS  326           (void gfxEndDraw())
+- 492,3 -
+  177  20 *    SUSPEND
+  178  20 *    PshC4    0x0          (i:0, f:0)
+  180  21 *    CALLSYS  331           (void gfxSetDrawImage(const uint))
+- 493,3 -
+  182  20 *    SUSPEND
+  183  20 *    CALLSYS  337           (void gfxPopTransform())
+- 494,3 -
+  185  20 *    SUSPEND
+  186  20 *    ObjInfo  v13, 0
+  186  20 *    ObjInfo  v10, 0
+  186  20 * 0:
+  186  20 *    FREE     v0, 116863720
+  188  20 *    RET      2

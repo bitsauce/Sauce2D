@@ -1,0 +1,104 @@
+LevelEditor::LevelEditor()
+
+Temps: 1, 2, 3, 4, 5, 6, 7, 9, 10
+
+Variables: 
+ 008: Vector2[] resolutions
+ 000: LevelEditor this
+ 001: LevelEditor {noname}
+ 002: LevelCreator {noname}
+ 009: array {noname}
+ 010: Vector2 {noname}
+ 003: Color {noname}
+
+
+- 56,16 -
+    0  10 *    SUSPEND
+    1  10 *    PshVPtr  v0
+    2  11 *    CALL     703           (Gui::Gui())
+- 40,3 -
+    4  10 *    SUSPEND
+    5  10 *    PshVPtr  v0
+    6  11 *    RefCpyV  v1, 152223320
+    8  11 *    PopPtr
+    9  10 *    VAR      v1
+   10  11 *    GETOBJ   0
+   11  11 *    CALL     771           (LevelCreator@ LevelCreator(UiObject@ arg0 = null))
+   13  10 *    STOREOBJ v2
+   14  10 *    VAR      v2
+   15  11 *    PshVPtr  v0
+   16  12 *    ADDSi    v52, 134217806
+   18  12 *    GETOBJREF 1
+   19  12 *    REFCPY   0x9130be0
+   21  11 *    FREE     v2, 152243168
+   23  11 *    PopPtr
+- 41,3 -
+   24  10 *    SUSPEND
+   25  10 *    SetV1    v4, 0xff
+   27  10 *    PshV4    v4
+   28  11 *    SetV1    v5, 0x64
+   30  11 *    PshV4    v5
+   31  12 *    SetV1    v6, 0x64
+   33  12 *    PshV4    v6
+   34  13 *    SetV1    v7, 0x64
+   36  13 *    PshV4    v7
+   37  14 *    PSF      v3
+   38  15 *    CALLSYS  178           (void Color::_beh_0_(uint8, uint8, uint8, uint8 arg3 = 255))
+   40  10 *    ObjInfo  v3, 1
+   40  10 *    VAR      v3
+   41  11 *    PshGPtr  112336760
+   43  12 *    CHKREF
+   44  12 *    GETREF   1
+   45  12 *    CALLSYS  469           (void CGFX::setClearColor(const Color&in))
+- 42,3 -
+   47  10 *    ObjInfo  v3, 0
+   47  10 *    SUSPEND
+   48  10 *    SetV1    v4, 0x0
+   50  10 *    PshV4    v4
+   51  11 *    PshGPtr  152619712
+   53  12 *    CHKREF
+   54  12 *    CALLINTF 1113           (void SceneObject::setVisible(const bool))
+- 43,3 -
+   56  10 *    SUSPEND
+   57  10 *    VarDecl  0
+   57  10 *    PshGPtr  112334928
+   59  11 *    CHKREF
+   60  11 *    CALLSYS  423           (Vector2[]@ CX2DApp::resolutionList())
+   62  10 *    STOREOBJ v9
+   63  10 *    ChkNullV v9
+   64  10 *    VAR      v9
+   65  11 *    CALL     410           (Vector2[]@ factstub())
+   67  11 *    STOREOBJ v8
+   68  11 *    PshVPtr  v8
+   69  12 *    GETOBJREF 1
+   70  12 *    CALLSYS  416           (Vector2[]& array::opAssign(const Vector2[]&in))
+   72  10 *    FREE     v9, 112183976
+- 44,3 -
+   74  10 *    SUSPEND
+   75  10 *    PSF      v10
+   76  11 *    PshVPtr  v8
+   77  12 *    CALLSYS  86           (uint array::size() const)
+   79  11 *    CpyRtoV4 v5
+   80  11 *    SUBIi    v4, v5, 3
+   83  11 *    PshV4    v4
+   84  12 *    PshVPtr  v8
+   85  13 *    CALLSYS  414           (Vector2& array::opIndex(uint))
+   87  11 *    PshRPtr
+   88  12 *    ALLOC    0x6acceb8, 131             (type:Vector2)
+   91  10 *    VAR      v10
+   92  11 *    PshGPtr  112334928
+   94  12 *    CHKREF
+   95  12 *    GETOBJ   1
+   96  12 *    CALLSYS  426           (void CX2DApp::resize(Vector2))
+- 45,3 -
+   98  10 *    SUSPEND
+   99  10 *    SetV1    v6, 0x1
+  101  10 *    PshGPtr  152617952
+  103  11 *    ADDSi    v32, 134217807
+  105  11 *    PopRPtr
+  106  10 *    WRTV1    v6
+- 46,3 -
+  107  10 *    SUSPEND
+  108  10 *    FREE     v8, 112183976
+  110  10 * 0:
+  110  10 *    RET      1

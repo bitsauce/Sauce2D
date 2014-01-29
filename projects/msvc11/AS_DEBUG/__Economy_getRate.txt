@@ -1,0 +1,20 @@
+float Economy::getRate()
+
+Temps: 1
+
+Variables: 
+ 000: Economy this
+
+
+    0   1 *    PshVPtr  v0
+    1   2 *    CALLSYS  2           (void _builtin_object_::_beh_5_())
+- 43,3 -
+    3   1 *    SUSPEND
+    4   1 *    LoadThisR v48, 134217796
+    6   1 *    RDR4     v1
+    7   1 * {
+    7   1 * }
+    7   1 *    CpyVtoR4 v1
+    8   1 * 0:
+    8   1 *    FREE     v0, 74318688
+   10   1 *    RET      1

@@ -1,0 +1,106 @@
+void LevelCreator::applyZoom(float)
+
+Temps: 4, 5, 7, 10, 11, 12, 13
+
+Variables: 
+ -001: float amt
+ 002: Vector2 prevSize
+ 009: Vector2 size
+ 000: LevelCreator this
+ 004: Vector2 {noname}
+ 007: Vector2 {noname}
+
+
+    0  13 *    VarDecl  0
+    0  13 *    PshVPtr  v0
+    1  14 *    CALLSYS  2           (void _builtin_object_::_beh_4_())
+- 882,3 -
+    3  13 *    SUSPEND
+    4  13 *    VarDecl  1
+    4  13 *    LoadThisR v56, 134217814
+    6  13 *    RDR4     v5
+    7  13 *    PshV4    v5
+    8  14 *    PSF      v7
+    9  15 *    PSF      v4
+   10  16 *    PshGPtr  112337720
+   12  17 *    CHKREF
+   13  17 *    CALLSYS  399           (Vector2 CViewport::gameSize() const)
+   15  15 *    ObjInfo  v4, 1
+   15  15 *    PSF      v4
+   16  16 *    CALLSYS  140           (Vector2 Vector2::opMul(const float) const)
+   18  13 *    ObjInfo  v7, 1
+   18  13 *    PSF      v7
+   19  14 *    ObjInfo  v4, 0
+   19  14 *    PopPtr
+   20  13 *    PSF      v7
+   21  14 *    PSF      v2
+   22  15 *    CALLSYS  131           (void Vector2::_beh_0_(const Vector2&in))
+- 883,3 -
+   24  13 *    ObjInfo  v7, 0
+   24  13 *    ObjInfo  v2, 1
+   24  13 *    SUSPEND
+   25  13 *    LoadThisR v56, 134217814
+   27  13 *    RDR4     v5
+   28  13 *    MULf     v5, v5, v-1
+   30  13 *    WRTV4    v5
+- 884,3 -
+   31  13 *    SUSPEND
+   32  13 *    VarDecl  2
+   32  13 *    LoadThisR v56, 134217814
+   34  13 *    RDR4     v5
+   35  13 *    PshV4    v5
+   36  14 *    PSF      v4
+   37  15 *    PSF      v7
+   38  16 *    PshGPtr  112337720
+   40  17 *    CHKREF
+   41  17 *    CALLSYS  399           (Vector2 CViewport::gameSize() const)
+   43  15 *    ObjInfo  v7, 1
+   43  15 *    PSF      v7
+   44  16 *    CALLSYS  140           (Vector2 Vector2::opMul(const float) const)
+   46  13 *    ObjInfo  v4, 1
+   46  13 *    PSF      v4
+   47  14 *    ObjInfo  v7, 0
+   47  14 *    PopPtr
+   48  13 *    PSF      v4
+   49  14 *    PSF      v9
+   50  15 *    CALLSYS  131           (void Vector2::_beh_0_(const Vector2&in))
+- 885,3 -
+   52  13 *    ObjInfo  v4, 0
+   52  13 *    ObjInfo  v9, 1
+   52  13 *    SUSPEND
+   53  13 *    PshGPtr  112337720
+   55  14 *    CHKREF
+   56  14 *    CALLSYS  396           (float CViewport::gameY() const)
+   58  13 *    CpyRtoV4 v5
+   59  13 *    LoadVObjR v2, v4, 67108877
+   62  13 *    RDR4     v10
+   63  13 *    LoadVObjR v9, v4, 67108877
+   66  13 *    RDR4     v11
+   67  13 *    SUBf     v10, v10, v11
+   69  13 *    SetV4    v12, 0x40000000          (i:1073741824, f:2)
+   71  13 *    DIVf     v11, v10, v12
+   73  13 *    SUBf     v12, v5, v11
+   75  13 *    PshV4    v12
+   76  14 *    PshGPtr  112337720
+   78  15 *    CHKREF
+   79  15 *    CALLSYS  395           (float CViewport::gameX() const)
+   81  14 *    CpyRtoV4 v11
+   82  14 *    LoadVObjR v2, v0, 67108877
+   85  14 *    RDR4     v5
+   86  14 *    LoadVObjR v9, v0, 67108877
+   89  14 *    RDR4     v10
+   90  14 *    SUBf     v5, v5, v10
+   92  14 *    SetV4    v13, 0x40000000          (i:1073741824, f:2)
+   94  14 *    DIVf     v10, v5, v13
+   96  14 *    SUBf     v13, v11, v10
+   98  14 *    PshV4    v13
+   99  15 *    PshGPtr  112337720
+  101  16 *    CHKREF
+  102  16 *    CALLSYS  393           (void CViewport::setGamePos(const float, const float))
+- 886,3 -
+  104  13 *    SUSPEND
+  105  13 *    ObjInfo  v9, 0
+  105  13 *    ObjInfo  v2, 0
+  105  13 * 0:
+  105  13 *    FREE     v0, 152243168
+  107  13 *    RET      2

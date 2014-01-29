@@ -1,0 +1,75 @@
+void UnitBase::decHealth(int, UnitBase@ = null)
+
+Temps: 1, 2, 3, 4, 5, 6
+
+Variables: 
+ -001: int amt
+ -002: UnitBase@ attacker
+ 000: UnitBase this
+ 002: UnitBase {noname}
+ 004: array {noname}
+ 005: UnitBase {noname}
+
+
+    0   6 *    VarDecl  0
+    0   6 *    VarDecl  1
+    0   6 *    PshVPtr  v0
+    1   7 *    CALLSYS  2           (void _builtin_object_::_beh_5_())
+- 105,3 -
+    3   6 *    SUSPEND
+    4   6 *    LoadThisR v52, 134217750
+    6   6 *    RDR4     v1
+    7   6 *    SUBi     v1, v1, v-1
+    9   6 *    WRTV4    v1
+- 108,3 -
+   10   6 *    SUSPEND
+   11   6 *    ClrVPtr  v2
+   12   6 *    CmpPtr   v-2, v2
+   14   6 *    TNZ
+   15   6 *    CpyRtoV4 v1
+   16   6 *    FREE     v2, 116900680
+   18   6 *    CpyVtoR4 v1
+   19   6 *    JLowZ    +30              (d:51)
+- 110,4 -
+   21   6 * {
+   21   6 *    SUSPEND
+   22   6 *    PshVPtr  v-2
+   23   7 *    RefCpyV  v5, 116900680
+   25   7 *    PopPtr
+   26   6 *    VAR      v5
+   27   7 *    PshVPtr  v0
+   28   8 *    RefCpyV  v2, 116900680
+   30   8 *    PopPtr
+   31   7 *    VAR      v2
+   32   8 *    LoadThisR v48, 134217750
+   34   8 *    RDR4     v3
+   35   8 *    PshV4    v3
+   36   9 *    PshGPtr  117214864
+   38  10 *    CHKREF
+   39  10 *    RefCpyV  v4, 117205480
+   41  10 *    CALLSYS  935           (Player@& array::opIndex(uint))
+   43   8 *    PshRPtr
+   44   9 *    RDSPtr
+   45   9 *    GETOBJ   1
+   46   9 *    GETOBJ   2
+   47   9 *    CALLINTF 1147           (void Player::unitAttacked(UnitBase@, UnitBase@))
+   49   6 *    FREE     v4, 117205480
+- 114,3 -
+   51   6 * }
+   51   6 * 1:
+   51   6 *    SUSPEND
+   52   6 *    LoadThisR v52, 134217750
+   54   6 *    RDR4     v1
+   55   6 *    CMPIi    v1, 0
+   57   6 *    JP       +4              (d:63)
+- 115,4 -
+   59   6 *    SUSPEND
+   60   6 *    PshVPtr  v0
+   61   7 *    CALLINTF 981           (void Entity::remove())
+- 116,3 -
+   63   6 * 2:
+   63   6 *    SUSPEND
+   64   6 * 0:
+   64   6 *    FREE     v-2, 116900680
+   66   6 *    FREE     v0, 116900680
+   68   6 *    RET      3

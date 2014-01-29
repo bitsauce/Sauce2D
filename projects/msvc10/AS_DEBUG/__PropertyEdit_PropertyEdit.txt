@@ -1,0 +1,85 @@
+PropertyEdit::PropertyEdit(EditorObject@, string)
+
+Temps: 1, 2, 3, 11
+
+Variables: 
+ -001: EditorObject@ object
+ -002: string key
+ 000: PropertyEdit this
+ 001: UiObject {noname}
+ 002: _builtin_function_ {noname}
+ 003: string {noname}
+ 011: string {noname}
+
+
+- 245,9 -
+    0  11 *    VarDecl  0
+    0  11 *    VarDecl  1
+    0  11 *    SUSPEND
+    1  11 *    PshVPtr  v0
+    2  12 *    ADDSi    v72, 134217811
+    4  12 *    ALLOC    0x314cb48, 33             (type:string)
+- 249,3 -
+    7  11 *    SUSPEND
+    8  11 *    FREE     v1, 152204136
+   10  11 *    VAR      v1
+   11  12 *    PshVPtr  v0
+   12  13 *    GETOBJ   1
+   13  13 *    CALL     855           (LineEdit::LineEdit(UiObject@ arg0 = null))
+- 250,3 -
+   15  11 *    SUSPEND
+   16  11 *    PshVPtr  v0
+   17  12 *    FuncPtr  153103712
+   19  13 *    CALLSYS  17           (_builtin_function_@ %delegate_factory(int&in, int&in))
+   21  11 *    STOREOBJ v2
+   22  11 *    VAR      v2
+   23  12 *    PshVPtr  v0
+   24  13 *    ADDSi    v68, 134217811
+   26  13 *    GETOBJREF 1
+   27  13 *    REFCPY   0x3144a38
+   29  12 *    FREE     v2, 51661368
+   31  12 *    PopPtr
+- 251,3 -
+   32  11 *    SUSPEND
+   33  11 *    VAR      v-1
+   34  12 *    PshVPtr  v0
+   35  13 *    ADDSi    v76, 134217811
+   37  13 *    GETOBJREF 1
+   38  13 *    REFCPY   0x9130948
+   40  12 *    PopPtr
+- 252,3 -
+   41  11 *    SUSPEND
+   42  11 *    VAR      v-2
+   43  12 *    PshVPtr  v0
+   44  13 *    ADDSi    v72, 134217811
+   46  13 *    RDSPtr
+   47  13 *    GETOBJREF 1
+   48  13 *    CALLSYS  36           (string& string::opAssign(const string&in))
+- 253,3 -
+   50  11 *    SUSPEND
+   51  11 *    PSF      v3
+   52  12 *    PshVPtr  v-2
+   53  13 *    ALLOC    0x314cb48, 34             (type:string)
+   56  11 *    VAR      v3
+   57  12 *    PSF      v11
+   58  13 *    PshVPtr  v0
+   59  14 *    ADDSi    v76, 134217811
+   61  14 *    RDSPtr
+   62  14 *    GETOBJ   2
+   63  14 *    CALLINTF 1304           (string EditorObject::getProperty(string))
+   65  11 *    ObjInfo  v11, 1
+   65  11 *    VAR      v11
+   66  12 *    PshVPtr  v0
+   67  13 *    ADDSi    v52, 134217811
+   69  13 *    RDSPtr
+   70  13 *    GETREF   1
+   71  13 *    CALLSYS  36           (string& string::opAssign(const string&in))
+   73  11 *    PSF      v11
+   74  12 *    CALLSYS  35           (void string::_beh_1_())
+- 254,3 -
+   76  11 *    ObjInfo  v11, 0
+   76  11 *    SUSPEND
+   77  11 * 0:
+   77  11 *    FREE     v-1, 152242504
+   79  11 *    FREE     v-2, 51694408
+   81  11 *    RET      3

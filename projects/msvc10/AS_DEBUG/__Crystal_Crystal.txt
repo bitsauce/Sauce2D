@@ -1,0 +1,176 @@
+Crystal::Crystal()
+
+Temps: 8, 16, 17, 18, 19, 20
+
+Variables: 
+ 000: Crystal this
+ 020: CSprite {noname}
+ 008: string {noname}
+ 016: string {noname}
+
+
+- 201,11 -
+    0  20 *    SUSPEND
+    1  20 *    PshVPtr  v0
+    2  21 *    CALL     928           (Mob::Mob())
+- 67,3 -
+    4  20 *    SUSPEND
+    5  20 *    PshC4    0x3d99999a          (i:1033476506, f:0.075)
+    7  21 *    PshC4    0x1          (i:1, f:1.4013e-045)
+    9  22 *    PshC4    0x8          (i:8, f:1.12104e-044)
+   11  23 *    STR      196         (l:28 s:"sprites/mo")
+   12  25 *    CALLSYS  32           (const string& _string_factory_(const int, const uint8&))
+   14  23 *    PshRPtr
+   15  24 *    PSF      v8
+   16  25 *    CALLSYS  34           (void string::_beh_0_(const string&in))
+   18  23 *    ObjInfo  v8, 1
+   18  23 *    VAR      v8
+   19  24 *    PSF      v16
+   20  25 *    PshGPtr  112334928
+   22  26 *    CHKREF
+   23  26 *    GETREF   2
+   24  26 *    CALLSYS  432           (string CX2DApp::workPath(const string&in))
+   26  23 *    ObjInfo  v16, 1
+   26  23 *    PSF      v8
+   27  24 *    CALLSYS  35           (void string::_beh_1_())
+   29  23 *    ObjInfo  v8, 0
+   29  23 *    PSF      v16
+   30  24 *    CALLSYS  477           (CSprite@ _beh_2_(const string&in, const uint arg1 = 1, const uint arg2 = 1, const float arg3 = 0.0f))
+   32  20 *    STOREOBJ v20
+   33  20 *    PSF      v16
+   34  21 *    CALLSYS  35           (void string::_beh_1_())
+   36  20 *    ObjInfo  v16, 0
+   36  20 *    VAR      v20
+   37  21 *    PshVPtr  v0
+   38  22 *    ADDSi    v64, 134217830
+   40  22 *    GETOBJREF 1
+   41  22 *    REFCPY   0x6ae3a90
+   43  21 *    FREE     v20, 112081552
+   45  21 *    PopPtr
+- 68,3 -
+   46  20 *    SUSPEND
+   47  20 *    PshC4    0x3d178d50          (i:1024953680, f:0.037)
+   49  21 *    PshC4    0x1          (i:1, f:1.4013e-045)
+   51  22 *    PshC4    0x4          (i:4, f:5.60519e-045)
+   53  23 *    STR      197         (l:30 s:"sprites/mo")
+   54  25 *    CALLSYS  32           (const string& _string_factory_(const int, const uint8&))
+   56  23 *    PshRPtr
+   57  24 *    PSF      v8
+   58  25 *    CALLSYS  34           (void string::_beh_0_(const string&in))
+   60  23 *    ObjInfo  v8, 1
+   60  23 *    VAR      v8
+   61  24 *    PSF      v16
+   62  25 *    PshGPtr  112334928
+   64  26 *    CHKREF
+   65  26 *    GETREF   2
+   66  26 *    CALLSYS  432           (string CX2DApp::workPath(const string&in))
+   68  23 *    ObjInfo  v16, 1
+   68  23 *    PSF      v8
+   69  24 *    CALLSYS  35           (void string::_beh_1_())
+   71  23 *    ObjInfo  v8, 0
+   71  23 *    PSF      v16
+   72  24 *    CALLSYS  477           (CSprite@ _beh_2_(const string&in, const uint arg1 = 1, const uint arg2 = 1, const float arg3 = 0.0f))
+   74  20 *    STOREOBJ v20
+   75  20 *    PSF      v16
+   76  21 *    CALLSYS  35           (void string::_beh_1_())
+   78  20 *    ObjInfo  v16, 0
+   78  20 *    VAR      v20
+   79  21 *    PshVPtr  v0
+   80  22 *    ADDSi    v68, 134217830
+   82  22 *    GETOBJREF 1
+   83  22 *    REFCPY   0x6ae3a90
+   85  21 *    FREE     v20, 112081552
+   87  21 *    PopPtr
+- 69,3 -
+   88  20 *    SUSPEND
+   89  20 *    PshC4    0x3d99999a          (i:1033476506, f:0.075)
+   91  21 *    PshC4    0x1          (i:1, f:1.4013e-045)
+   93  22 *    PshC4    0x8          (i:8, f:1.12104e-044)
+   95  23 *    STR      198         (l:31 s:"sprites/mo")
+   96  25 *    CALLSYS  32           (const string& _string_factory_(const int, const uint8&))
+   98  23 *    PshRPtr
+   99  24 *    PSF      v8
+  100  25 *    CALLSYS  34           (void string::_beh_0_(const string&in))
+  102  23 *    ObjInfo  v8, 1
+  102  23 *    VAR      v8
+  103  24 *    PSF      v16
+  104  25 *    PshGPtr  112334928
+  106  26 *    CHKREF
+  107  26 *    GETREF   2
+  108  26 *    CALLSYS  432           (string CX2DApp::workPath(const string&in))
+  110  23 *    ObjInfo  v16, 1
+  110  23 *    PSF      v8
+  111  24 *    CALLSYS  35           (void string::_beh_1_())
+  113  23 *    ObjInfo  v8, 0
+  113  23 *    PSF      v16
+  114  24 *    CALLSYS  477           (CSprite@ _beh_2_(const string&in, const uint arg1 = 1, const uint arg2 = 1, const float arg3 = 0.0f))
+  116  20 *    STOREOBJ v20
+  117  20 *    PSF      v16
+  118  21 *    CALLSYS  35           (void string::_beh_1_())
+  120  20 *    ObjInfo  v16, 0
+  120  20 *    VAR      v20
+  121  21 *    PshVPtr  v0
+  122  22 *    ADDSi    v72, 134217830
+  124  22 *    GETOBJREF 1
+  125  22 *    REFCPY   0x6ae3a90
+  127  21 *    FREE     v20, 112081552
+  129  21 *    PopPtr
+- 70,3 -
+  130  20 *    SUSPEND
+  131  20 *    PshVPtr  v0
+  132  21 *    ADDSi    v64, 134217830
+  134  21 *    RDSPtr
+  135  21 *    RefCpyV  v20, 112081552
+  137  21 *    PopPtr
+  138  20 *    VAR      v20
+  139  21 *    PshVPtr  v0
+  140  22 *    ADDSi    v60, 134217830
+  142  22 *    GETOBJREF 1
+  143  22 *    REFCPY   0x6ae3a90
+  145  21 *    FREE     v20, 112081552
+  147  21 *    PopPtr
+- 73,3 -
+  148  20 *    SUSPEND
+  149  20 *    SetV4    v17, 0x3          (i:3, f:4.2039e-045)
+  151  20 *    LoadThisR v28, 134217830
+  153  20 *    WRTV4    v17
+- 74,3 -
+  154  20 *    SUSPEND
+  155  20 *    SetV1    v18, 0x0
+  157  20 *    LoadThisR v56, 134217830
+  159  20 *    WRTV1    v18
+- 77,3 -
+  160  20 *    SUSPEND
+  161  20 *    SetV4    v17, 0x3f800000          (i:1065353216, f:1)
+  163  20 *    LoadThisR v36, 134217830
+  165  20 *    WRTV4    v17
+- 78,3 -
+  166  20 *    SUSPEND
+  167  20 *    SetV4    v18, 0x0          (i:0, f:0)
+  169  20 *    LoadThisR v40, 134217830
+  171  20 *    WRTV4    v18
+- 81,3 -
+  172  20 *    SUSPEND
+  173  20 *    SetV4    v17, 0x3f800000          (i:1065353216, f:1)
+  175  20 *    LoadThisR v44, 134217830
+  177  20 *    WRTV4    v17
+- 82,3 -
+  178  20 *    SUSPEND
+  179  20 *    SetV4    v18, 0x41200000          (i:1092616192, f:10)
+  181  20 *    LoadThisR v48, 134217830
+  183  20 *    WRTV4    v18
+- 83,3 -
+  184  20 *    SUSPEND
+  185  20 *    SetV4    v17, 0x7          (i:7, f:9.80909e-045)
+  187  20 *    LoadThisR v24, 134217830
+  189  20 *    WRTV4    v17
+- 88,3 -
+  190  20 *    SUSPEND
+  191  20 *    PshC4    0x40          (i:64, f:8.96831e-044)
+  193  21 *    PshC4    0x40          (i:64, f:8.96831e-044)
+  195  22 *    PshVPtr  v0
+  196  23 *    CALLINTF 1095           (void SceneObject::setSize(const uint, const uint))
+- 89,3 -
+  198  20 *    SUSPEND
+  199  20 * 0:
+  199  20 *    RET      1

@@ -1,0 +1,28 @@
+void UnitFrame::update()
+
+Temps: 1
+
+Variables: 
+ 000: UnitFrame this
+ 001: vec2 {noname}
+
+
+    0   1 *    PshVPtr  v0
+    1   2 *    CALLSYS  2           (void _builtin_object_::_beh_5_())
+- 41,3 -
+    3   1 *    SUSPEND
+    4   1 *    PSF      v1
+    5   2 *    PshGPtr  71880608
+    7   3 *    CHKREF
+    8   3 *    ALLOC    0x4353a20, 133             (type:vec2)
+   11   1 *    VAR      v1
+   12   2 *    PshVPtr  v0
+   13   3 *    ADDSi    v44, 134217762
+   15   3 *    RDSPtr
+   16   3 *    GETOBJ   1
+   17   3 *    CALLINTF 1244           (void Button::update(vec2))
+- 42,3 -
+   19   1 *    SUSPEND
+   20   1 * 0:
+   20   1 *    FREE     v0, 71622208
+   22   1 *    RET      1

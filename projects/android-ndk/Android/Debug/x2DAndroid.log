@@ -1,0 +1,101 @@
+﻿C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V110\Platforms\Android\Microsoft.Cpp.Android.Targets(234,5): warning MSB8015: Forcing a rebuild of all source files due to the contents of "D:\x2D Game Engine\projects\android-ndk\Android\Debug\ant.command.1.tlog" being invalid.
+  Envvar: JAVA_HOME is set to 'C:\Program Files (x86)\Java\jdk1.7.0_45'
+  Envvar: ANT_OPTS is set to '-Xms512m -Xmx512m'
+  C:\Android\apache-ant-1.9.2\bin\ant.bat  debug
+  Buildfile: D:\x2D Game Engine\projects\android-ndk\AndroidApk\build.xml
+  
+  -set-mode-check:
+  
+  -set-debug-files:
+  
+  -check-env:
+   [checkenv] Android SDK Tools Revision 22.3.0
+   [checkenv] Installed at C:\Program Files (x86)\android-studio\sdk
+  
+  -setup:
+       [echo] Project Name: X2DActivity
+    [gettype] Project Type: Application
+  
+  -set-debug-mode:
+  
+  -debug-obfuscation-check:
+  
+  -pre-build:
+  
+  -build-setup:
+  [getbuildtools] Using latest Build Tools: 19.0.0
+       [echo] Resolving Build Target for X2DActivity...
+  [gettarget] Project Target:   Android 4.4.2
+  [gettarget] API level:        19
+       [echo] ----------
+       [echo] Creating output directories if needed...
+       [echo] ----------
+       [echo] Resolving Dependencies for X2DActivity...
+  [dependency] Library dependencies:
+  [dependency] No Libraries
+  [dependency] 
+  [dependency] ------------------
+       [echo] ----------
+       [echo] Building Libraries with 'debug'...
+     [subant] No sub-builds to iterate on
+  
+  -code-gen:
+  [mergemanifest] Found Deleted Target File
+  [mergemanifest] Merging AndroidManifest files into one.
+  [mergemanifest] Manifest merger disabled. Using project manifest only.
+       [echo] hasCode = false. Skipping aidl/renderscript/R.java
+  
+  -pre-compile:
+  
+  -compile:
+       [echo] hasCode = false. Skipping...
+  
+  -post-compile:
+  
+  -obfuscate:
+  
+  -dex:
+       [echo] hasCode = false. Skipping...
+  
+  -crunch:
+     [crunch] Crunching PNG Files in source dir: D:\x2D Game Engine\projects\android-ndk\AndroidApk\res
+     [crunch] To destination dir: D:\x2D Game Engine\projects\android-ndk\AndroidApk\bin\res
+     [crunch] Crunched 0 PNG files to update cache
+  
+  -package-resources:
+       [aapt] Found Deleted Target File
+       [aapt] Creating full resource package...
+  
+  -package:
+  [apkbuilder] Found Deleted Target File
+  [apkbuilder] Creating X2DActivity-debug-unaligned.apk and signing it with a debug key...
+  
+  -post-package:
+  
+  -do-debug:
+   [zipalign] Running zip align on final apk...
+       [echo] Debug Package: D:\x2D Game Engine\projects\android-ndk\AndroidApk\bin\X2DActivity-debug.apk
+  [propertyfile] Updating property file: D:\x2D Game Engine\projects\android-ndk\AndroidApk\bin\build.prop
+  [propertyfile] Updating property file: D:\x2D Game Engine\projects\android-ndk\AndroidApk\bin\build.prop
+  [propertyfile] Updating property file: D:\x2D Game Engine\projects\android-ndk\AndroidApk\bin\build.prop
+  [propertyfile] Updating property file: D:\x2D Game Engine\projects\android-ndk\AndroidApk\bin\build.prop
+  
+  -post-build:
+  
+  debug:
+  
+  BUILD SUCCESSFUL
+  Total time: 6 seconds
+C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V110\Platforms\Android\Microsoft.Cpp.Android.Targets(234,5): warning MSB8015: Forcing a rebuild of all source files due to the contents of "D:\x2D Game Engine\projects\android-ndk\Android\Debug\ant.command.1.tlog" being invalid.
+  
+  
+  Deploying... ( Use 'Build -> Cancel' - to halt deploy )
+  
+  C:\Program Files (x86)\android-studio\sdk\platform-tools\adb.exe  -e wait-for-device
+  C:\Program Files (x86)\android-studio\sdk\platform-tools\adb.exe  -e install -r "D:\x2D Game Engine\projects\android-ndk\AndroidApk\bin\X2DActivity-debug.apk"
+  	pkg: /data/local/tmp/X2DActivity-debug.apk
+  
+  Success
+  
+  395 KB/s (4889873 bytes in 12.077s)
+C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V110\Platforms\Android\Microsoft.Cpp.Android.Targets(363,5): warning MSB8015: Forcing a rebuild of all source files due to the contents of "D:\x2D Game Engine\projects\android-ndk\Android\Debug\adb.command.1.tlog" being invalid.

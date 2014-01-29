@@ -1,0 +1,11 @@
+<unrecognized token> _unnamed_function_()
+
+Temps: 1
+
+Variables: 
+
+
+- 21,7 -
+    0   1 *    SUSPEND
+    1   1 *    SetG4    74605680, 1073741824
+    4   1 *    RET      0

@@ -1,0 +1,30 @@
+void Unit::setRevealRadius(int)
+
+Temps: 1
+
+Variables: 
+ -001: int radius
+ 000: Unit this
+ 001: RevealCircle {noname}
+
+
+    0   1 *    VarDecl  0
+    0   1 *    PshVPtr  v0
+    1   2 *    CALLSYS  2           (void _builtin_object_::_beh_5_())
+- 72,3 -
+    3   1 *    SUSPEND
+    4   1 *    PshV4    v-1
+    5   2 *    CALL     615           (RevealCircle@ RevealCircle(const int))
+    7   1 *    STOREOBJ v1
+    8   1 *    VAR      v1
+    9   2 *    PshVPtr  v0
+   10   3 *    ADDSi    v84, 134217749
+   12   3 *    GETOBJREF 1
+   13   3 *    REFCPY   0x5d49898
+   15   2 *    FREE     v1, 97818776
+   17   2 *    PopPtr
+- 73,3 -
+   18   1 *    SUSPEND
+   19   1 * 0:
+   19   1 *    FREE     v0, 97819360
+   21   1 *    RET      2

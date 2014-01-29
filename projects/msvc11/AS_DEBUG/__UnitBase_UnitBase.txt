@@ -1,0 +1,184 @@
+UnitBase::UnitBase(const Team)
+
+Temps: 1, 2, 3, 4, 5, 6, 7, 8, 9, 11, 13, 14, 15, 16, 17
+
+Variables: 
+ -001: const Team team
+ 000: UnitBase this
+ 001: _builtin_function_ {noname}
+ 002: _builtin_function_ {noname}
+ 003: UnitBase {noname}
+ 005: array {noname}
+ 008: Health {noname}
+ 014: vec2 {noname}
+ 015: vec2 {noname}
+ 016: Button {noname}
+ 017: RevealCircle {noname}
+ 011: vec2 {noname}
+ 013: vec2 {noname}
+
+
+- 31,25 -
+    0  17 *    VarDecl  0
+    0  17 *    SUSPEND
+    1  17 *    CALL     745           (Action@[]@ factstub())
+    3  17 *    STOREOBJ v5
+    4  17 *    PshVPtr  v5
+    5  18 *    PshVPtr  v0
+    6  19 *    ADDSi    v76, 134217750
+    8  19 *    REFCPY   0x46fd708
+   10  18 *    PopPtr
+   11  17 *    FREE     v5, 74438408
+   13  17 *    PshVPtr  v0
+   14  18 *    CALL     584           (Entity::Entity())
+- 15,21 -
+   16  17 *    SUSPEND
+   17  17 *    SetV4    v6, 0x0          (i:0, f:0)
+   19  17 *    LoadThisR v44, 134217750
+   21  17 *    WRTV4    v6
+- 16,15 -
+   22  17 *    SUSPEND
+   23  17 *    SetV4    v7, 0x2          (i:2, f:2.8026e-045)
+   25  17 *    LoadThisR v48, 134217750
+   27  17 *    WRTV4    v7
+- 19,9 -
+   28  17 *    SUSPEND
+   29  17 *    PshVPtr  v0
+   30  18 *    RefCpyV  v3, 74300496
+   32  18 *    PopPtr
+   33  17 *    VAR      v3
+   34  18 *    GETOBJ   0
+   35  18 *    CALL     701           (Health@ Health(UnitBase@))
+   37  17 *    STOREOBJ v8
+   38  17 *    PshVPtr  v8
+   39  18 *    PshVPtr  v0
+   40  19 *    ADDSi    v52, 134217750
+   42  19 *    REFCPY   0x46dba58
+   44  18 *    FREE     v8, 74299992
+   46  18 *    PopPtr
+- 20,8 -
+   47  17 *    SUSPEND
+   48  17 *    SetV4    v9, 0x3dcccccd          (i:1036831949, f:0.1)
+   50  17 *    LoadThisR v56, 134217750
+   52  17 *    WRTV4    v9
+- 23,8 -
+   53  17 *    SUSPEND
+   54  17 *    SetV4    v9, 0x0          (i:0, f:0)
+   56  17 *    LoadThisR v60, 134217750
+   58  17 *    WRTV4    v9
+- 24,8 -
+   59  17 *    SUSPEND
+   60  17 *    SetV4    v9, 0x3f800000          (i:1065353216, f:1)
+   62  17 *    LoadThisR v64, 134217750
+   64  17 *    WRTV4    v9
+- 25,6 -
+   65  17 *    SUSPEND
+   66  17 *    SetV4    v9, 0x1          (i:1, f:1.4013e-045)
+   68  17 *    LoadThisR v68, 134217750
+   70  17 *    WRTV4    v9
+- 28,17 -
+   71  17 *    SUSPEND
+   72  17 *    PSF      v14
+   73  18 *    PshC4    0x0          (i:0, f:0)
+   75  19 *    PSF      v11
+   76  20 *    CALLSYS  134           (vec2::vec2(float))
+   78  18 *    ObjInfo  v11, 1
+   78  18 *    PSF      v11
+   79  19 *    ALLOC    0x45f8270, 133             (type:vec2)
+   82  17 *    ObjInfo  v11, 0
+   82  17 *    VAR      v14
+   83  18 *    PSF      v15
+   84  19 *    PshC4    0x0          (i:0, f:0)
+   86  20 *    PSF      v13
+   87  21 *    CALLSYS  134           (vec2::vec2(float))
+   89  19 *    ObjInfo  v13, 1
+   89  19 *    PSF      v13
+   90  20 *    ALLOC    0x45f8270, 133             (type:vec2)
+   93  18 *    ObjInfo  v13, 0
+   93  18 *    VAR      v15
+   94  19 *    GETOBJ   0
+   95  19 *    GETOBJ   1
+   96  19 *    CALL     770           (Button@ Button(vec2 = vec2 ( 0.0f ), vec2 = vec2 ( 0.0f )))
+   98  17 *    STOREOBJ v16
+   99  17 *    PshVPtr  v16
+  100  18 *    PshVPtr  v0
+  101  19 *    ADDSi    v72, 134217750
+  103  19 *    REFCPY   0x46dd438
+  105  18 *    FREE     v16, 74306616
+  107  18 *    PopPtr
+- 34,6 -
+  108  17 *    SUSPEND
+  109  17 *    SetV4    v9, 0xffffffff          (i:-1, f:-1.#QNAN)
+  111  17 *    LoadThisR v80, 134217750
+  113  17 *    WRTV4    v9
+- 35,6 -
+  114  17 *    SUSPEND
+  115  17 *    SetV4    v9, 0xffffffff          (i:-1, f:-1.#QNAN)
+  117  17 *    LoadThisR v84, 134217750
+  119  17 *    WRTV4    v9
+- 38,16 -
+  120  17 *    SUSPEND
+  121  17 *    PshGPtr  74654984
+  123  18 *    CHKREF
+  124  18 *    RefCpyV  v17, 74298920
+  126  18 *    PopPtr
+  127  17 *    PshVPtr  v17
+  128  18 *    PshVPtr  v0
+  129  19 *    ADDSi    v88, 134217750
+  131  19 *    REFCPY   0x46db628
+  133  18 *    FREE     v17, 74298920
+  135  18 *    PopPtr
+- 44,3 -
+  136  17 *    SUSPEND
+  137  17 *    LoadThisR v48, 134217750
+  139  17 *    WRTV4    v-1
+- 47,3 -
+  140  17 *    SUSPEND
+  141  17 *    PshVPtr  v0
+  142  18 *    FuncPtr  74757912
+  144  19 *    CALLSYS  18           (_builtin_function_@ %delegate_factory(int&in, int&in))
+  146  17 *    STOREOBJ v1
+  147  17 *    VAR      v1
+  148  18 *    PshVPtr  v0
+  149  19 *    ADDSi    v52, 134217750
+  151  19 *    RDSPtr
+  152  19 *    ADDSi    v24, 134217769
+  154  19 *    GETOBJREF 1
+  155  19 *    REFCPY   0x45e4d64
+  157  18 *    FREE     v1, 73289060
+  159  18 *    PopPtr
+- 50,3 -
+  160  17 *    SUSPEND
+  161  17 *    PshVPtr  v0
+  162  18 *    FuncPtr  74758152
+  164  19 *    CALLSYS  18           (_builtin_function_@ %delegate_factory(int&in, int&in))
+  166  17 *    STOREOBJ v2
+  167  17 *    VAR      v2
+  168  18 *    PshVPtr  v0
+  169  19 *    ADDSi    v72, 134217750
+  171  19 *    RDSPtr
+  172  19 *    ADDSi    v44, 134217770
+  174  19 *    GETOBJREF 1
+  175  19 *    REFCPY   0x45e4d64
+  177  18 *    FREE     v2, 73289060
+  179  18 *    PopPtr
+- 53,3 -
+  180  17 *    SUSPEND
+  181  17 *    PshVPtr  v0
+  182  18 *    RefCpyV  v3, 74300496
+  184  18 *    PopPtr
+  185  17 *    VAR      v3
+  186  18 *    PshGPtr  74621720
+  188  19 *    CHKREF
+  189  19 *    GETREF   1
+  190  19 *    CALLSYS  961           (void array::insertLast(UnitBase@const&in))
+  192  17 *    FREE     v3, 74300496
+- 55,3 -
+  194  17 *    SUSPEND
+  195  17 *    PshC4    0x1          (i:1, f:1.4013e-045)
+  197  18 *    PshVPtr  v0
+  198  19 *    CALLINTF 1017           (void Entity::setRenderPass(const RenderPass))
+- 56,3 -
+  200  17 *    SUSPEND
+  201  17 * 0:
+  201  17 *    RET      2

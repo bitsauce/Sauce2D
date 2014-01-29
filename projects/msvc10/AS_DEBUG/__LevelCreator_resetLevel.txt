@@ -1,0 +1,83 @@
+void LevelCreator::resetLevel()
+
+Temps: 1, 2, 3, 5, 6, 7
+
+Variables: 
+ 004: EditorRoom room
+ 000: LevelCreator this
+ 001: EditorObject {noname}
+ 007: EditorRoom {noname}
+
+
+    0   7 *    PshVPtr  v0
+    1   8 *    CALLSYS  2           (void _builtin_object_::_beh_4_())
+- 648,3 -
+    3   7 *    SUSPEND
+    4   7 *    PshVPtr  v0
+    5   8 *    ADDSi    v204, 134217814
+    7   8 *    RDSPtr
+    8   8 *    CALLSYS  89           (void array::clear())
+- 649,3 -
+   10   7 *    SUSPEND
+   11   7 *    PshVPtr  v0
+   12   8 *    ADDSi    v208, 134217814
+   14   8 *    RDSPtr
+   15   8 *    CALLSYS  125           (void grid::clear())
+- 650,3 -
+   17   7 *    SUSPEND
+   18   7 *    PshVPtr  v0
+   19   8 *    ADDSi    v200, 134217814
+   21   8 *    RDSPtr
+   22   8 *    CALLSYS  89           (void array::clear())
+- 651,3 -
+   24   7 *    SUSPEND
+   25   7 *    FREE     v1, 152242504
+   27   7 *    VAR      v1
+   28   8 *    PshVPtr  v0
+   29   9 *    ADDSi    v196, 134217814
+   31   9 *    GETOBJREF 1
+   32   9 *    REFCPY   0x9130948
+   34   8 *    FREE     v1, 152242504
+   36   8 *    PopPtr
+- 654,3 -
+   37   7 *    SUSPEND
+   38   7 *    PshC4    0x9          (i:9, f:1.26117e-044)
+   40   8 *    PshC4    0xf          (i:15, f:2.10195e-044)
+   42   9 *    PshVPtr  v0
+   43  10 *    CALLINTF 1315           (void LevelCreator::resizeLevel(uint, uint))
+- 655,3 -
+   45   7 *    SUSPEND
+   46   7 *    VarDecl  0
+   46   7 *    PshC4    0x9          (i:9, f:1.26117e-044)
+   48   8 *    PshC4    0xf          (i:15, f:2.10195e-044)
+   50   9 *    PshC4    0x0          (i:0, f:0)
+   52  10 *    PshC4    0x0          (i:0, f:0)
+   54  11 *    CALL     751           (EditorRoom@ EditorRoom(int arg0 = 0, int arg1 = 0, int arg2 = 1, int arg3 = 1))
+   56   7 *    STOREOBJ v4
+- 656,3 -
+   57   7 *    SUSPEND
+   58   7 *    PshVPtr  v4
+   59   8 *    RefCpyV  v7, 152236880
+   61   8 *    PopPtr
+   62   7 *    VAR      v7
+   63   8 *    PshVPtr  v0
+   64   9 *    GETOBJ   1
+   65   9 *    CALLINTF 1317           (void LevelCreator::updateRoom(EditorRoom@))
+- 657,3 -
+   67   7 *    SUSPEND
+   68   7 *    PshVPtr  v4
+   69   8 *    RefCpyV  v7, 152236880
+   71   8 *    PopPtr
+   72   7 *    VAR      v7
+   73   8 *    PshVPtr  v0
+   74   9 *    ADDSi    v204, 134217814
+   76   9 *    RDSPtr
+   77   9 *    GETREF   1
+   78   9 *    CALLSYS  1350           (void array::insertLast(EditorRoom@const&in))
+   80   7 *    FREE     v7, 152236880
+- 658,3 -
+   82   7 *    SUSPEND
+   83   7 *    FREE     v4, 152236880
+   85   7 * 0:
+   85   7 *    FREE     v0, 152243168
+   87   7 *    RET      1

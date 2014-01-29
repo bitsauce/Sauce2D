@@ -1,0 +1,100 @@
+void printInts()
+
+Temps: 10, 11, 19, 27, 35
+
+Variables: 
+ 008: string str
+ 009: uint i
+ 011: array {noname}
+ 019: string {noname}
+ 027: string {noname}
+ 035: string {noname}
+
+
+- 7,2 -
+    0  35 *    SUSPEND
+    1  35 *    VarDecl  0
+    1  35 *    PSF      v8
+    2  36 *    CALLSYS  33           (void string::_beh_0_())
+- 8,6 -
+    4  35 *    ObjInfo  v8, 1
+    4  35 *    SUSPEND
+    5  35 *    VarDecl  1
+    5  35 *    SetV4    v9, 0x0          (i:0, f:0)
+    7  35 *    JMP      +48              (d:57)
+    9  35 * 4:
+    9  35 *    SUSPEND
+- 8,40 -
+   10  35 *    SUSPEND
+   11  35 *    STR      0         (l:1 s:" ")
+   12  37 *    CALLSYS  32           (const string& _string_factory_(const int, const uint8&))
+   14  35 *    PshRPtr
+   15  36 *    PSF      v27
+   16  37 *    CALLSYS  34           (void string::_beh_0_(const string&in))
+   18  35 *    ObjInfo  v27, 1
+   18  35 *    VAR      v27
+   19  36 *    PSF      v35
+   20  37 *    PshV4    v9
+   21  38 *    PshGPtr  107988664
+   23  39 *    CHKREF
+   24  39 *    RefCpyV  v11, 107979832
+   26  39 *    CALLSYS  353           (int& array::opIndex(uint))
+   28  37 *    RDR4     v10
+   29  37 *    PshV4    v10
+   30  38 *    PSF      v19
+   31  39 *    CALLSYS  239           (string itos(int))
+   33  37 *    ObjInfo  v19, 1
+   33  37 *    FREE     v11, 107979832
+   35  37 *    PSF      v19
+   36  38 *    GETREF   2
+   37  38 *    CALLSYS  40           (string string::opAdd(const string&in) const)
+   39  35 *    ObjInfo  v35, 1
+   39  35 *    PSF      v27
+   40  36 *    CALLSYS  35           (void string::_beh_1_())
+   42  35 *    ObjInfo  v27, 0
+   42  35 *    PSF      v35
+   43  36 *    PSF      v19
+   44  37 *    CALLSYS  35           (void string::_beh_1_())
+   46  36 *    ObjInfo  v19, 0
+   46  36 *    PopPtr
+   47  35 *    VAR      v35
+   48  36 *    PSF      v8
+   49  37 *    GETREF   1
+   50  37 *    CALLSYS  37           (string& string::opAddAssign(const string&in))
+   52  35 *    PSF      v35
+   53  36 *    CALLSYS  35           (void string::_beh_1_())
+- 8,35 -
+   55  35 *    ObjInfo  v35, 0
+   55  35 * 3:
+   55  35 *    SUSPEND
+   56  35 *    IncVi    v9
+- 8,18 -
+   57  35 * 1:
+   57  35 *    SUSPEND
+   58  35 *    PshGPtr  107988664
+   60  36 *    CHKREF
+   61  36 *    CALLSYS  87           (uint array::size() const)
+   63  35 *    CpyRtoV4 v10
+   64  35 *    CMPu     v9, v10
+   66  35 *    JS       -59              (d:9)
+- 9,2 -
+   68  35 * 2:
+   68  35 *    SUSPEND
+   69  35 *    PSF      v27
+   70  36 *    CALLSYS  33           (void string::_beh_0_())
+   72  35 *    ObjInfo  v27, 1
+   72  35 *    PSF      v8
+   73  36 *    PSF      v27
+   74  37 *    CALLSYS  36           (string& string::opAssign(const string&in))
+   76  35 *    PSF      v27
+   77  36 *    CALLSYS  192           (void print(string&in))
+   79  35 *    PSF      v27
+   80  36 *    CALLSYS  35           (void string::_beh_1_())
+- 10,2 -
+   82  35 *    ObjInfo  v27, 0
+   82  35 *    SUSPEND
+   83  35 *    PSF      v8
+   84  36 *    CALLSYS  35           (void string::_beh_1_())
+   86  35 *    ObjInfo  v8, 0
+   86  35 * 0:
+   86  35 *    RET      0
