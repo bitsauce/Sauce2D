@@ -1,5 +1,6 @@
 *.log
 *.obj
+*.o
 *.tlog
 *.sbr
 *.pch
