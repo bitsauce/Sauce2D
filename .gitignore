@@ -5,6 +5,8 @@
 # Exclude linker object files
 *.obj
 *.o
+*.exe
+*.dll
 
 # Exclude Visual Studio files
 *.sbr
@@ -19,9 +21,11 @@
 *.res
 *.opensdf
 *.sdf
+*.lastbuildstate
 
 # Exclude subversion control folders
 .svn
+AS_DEBUG
 
 # Exclude this...
 lib/vld-2.2.3/src/Debug/
