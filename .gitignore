@@ -12,4 +12,5 @@
 *.exp
 *.res
 *.opensdf
+*.sdf
 lib/vld-2.2.3/src/Debug/
