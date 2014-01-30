@@ -1,5 +1,46 @@
-﻿Build started 30.01.2014 00:34:38.
+﻿Build started 30.01.2014 00:56:32.
+     1>Project "C:\Users\Marcus\Documents\GitHub\x2D-Game-Engine\lib\lpng154\projects\vstudio\libpng\libpng.vcxproj" on node 2 (Build target(s)).
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /I"C:\Users\Marcus\Documents\GitHub\x2D-Game-Engine\projects\msvc12\..\..\lib\zlib-1.2.5" /Zi /nologo /W4 /WX /Od /Oi /Oy- /D WIN32 /D _WINDOWS /D PNG_BUILD_DLL /GF /Gm- /EHsc /RTC1 /MTd /GS /Gy /fp:precise /fp:except- /Zc:wchar_t- /Zc:forScope /Yc"pngpriv.h" /Fp"Debug\libpng15_d.pch" /Fo"Debug\\" /Fd"Debug\vc120.pdb" /FR"Debug\\" /Gd /TC /wd4996 /wd4127 /analyze- /errorReport:prompt ..\..\..\png.c
+         png.c
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /I"C:\Users\Marcus\Documents\GitHub\x2D-Game-Engine\projects\msvc12\..\..\lib\zlib-1.2.5" /Zi /nologo /W4 /WX /Od /Oi /Oy- /D WIN32 /D _WINDOWS /D PNG_BUILD_DLL /GF /Gm- /EHsc /RTC1 /MTd /GS /Gy /fp:precise /fp:except- /Zc:wchar_t- /Zc:forScope /Yu"pngpriv.h" /Fp"Debug\libpng15_d.pch" /Fo"Debug\\" /Fd"Debug\vc120.pdb" /FR"Debug\\" /Gd /TC /wd4996 /wd4127 /analyze- /errorReport:prompt ..\..\..\pngerror.c ..\..\..\pngget.c ..\..\..\pngmem.c ..\..\..\pngpread.c ..\..\..\pngread.c ..\..\..\pngrio.c ..\..\..\pngrtran.c ..\..\..\pngrutil.c ..\..\..\pngset.c ..\..\..\pngtrans.c ..\..\..\pngwio.c ..\..\..\pngwrite.c ..\..\..\pngwtran.c ..\..\..\pngwutil.c
+         pngerror.c
+         pngget.c
+         pngmem.c
+         pngpread.c
+         pngread.c
+         pngrio.c
+         pngrtran.c
+         pngrutil.c
+         pngset.c
+         pngtrans.c
+         pngwio.c
+         pngwrite.c
+         pngwtran.c
+         pngwutil.c
+         Generating Code...
+       Link:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Marcus\Documents\GitHub\x2D-Game-Engine\projects\msvc12\..\..\lib\lpng154\lib\libpng15_d.dll" /VERSION:"15" /INCREMENTAL:NO /NOLOGO /LIBPATH:"C:\Users\Marcus\Documents\GitHub\x2D-Game-Engine\projects\msvc12\..\..\lib\zlib-1.2.5\lib" zlib_d.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\Marcus\Documents\GitHub\x2D-Game-Engine\projects\msvc12\..\..\lib\lpng154\lib\libpng15_d.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\Marcus\Documents\GitHub\x2D-Game-Engine\projects\msvc12\..\..\lib\lpng154\lib\libpng15_d.lib" /MACHINE:X86 /SAFESEH /DLL Debug\png.obj
+         Debug\pngerror.obj
+         Debug\pngget.obj
+         Debug\pngmem.obj
+         Debug\pngpread.obj
+         Debug\pngread.obj
+         Debug\pngrio.obj
+         Debug\pngrtran.obj
+         Debug\pngrutil.obj
+         Debug\pngset.obj
+         Debug\pngtrans.obj
+         Debug\pngwio.obj
+         Debug\pngwrite.obj
+         Debug\pngwtran.obj
+         Debug\pngwutil.obj
+            Creating library C:\Users\Marcus\Documents\GitHub\x2D-Game-Engine\projects\msvc12\..\..\lib\lpng154\lib\libpng15_d.lib and object C:\Users\Marcus\Documents\GitHub\x2D-Game-Engine\projects\msvc12\..\..\lib\lpng154\lib\libpng15_d.exp
+         libpng.vcxproj -> C:\Users\Marcus\Documents\GitHub\x2D-Game-Engine\projects\msvc12\..\..\lib\lpng154\lib\libpng15_d.dll
+       BscMake:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\bscmake.exe /nologo /o"C:\Users\Marcus\Documents\GitHub\x2D-Game-Engine\projects\msvc12\..\..\lib\lpng154\lib\libpng15_d.bsc" Debug\png.sbr Debug\pngerror.sbr Debug\pngget.sbr Debug\pngmem.sbr Debug\pngpread.sbr Debug\pngread.sbr Debug\pngrio.sbr Debug\pngrtran.sbr Debug\pngrutil.sbr Debug\pngset.sbr Debug\pngtrans.sbr Debug\pngwio.sbr Debug\pngwrite.sbr Debug\pngwtran.sbr Debug\pngwutil.sbr
+     1>Done Building Project "C:\Users\Marcus\Documents\GitHub\x2D-Game-Engine\lib\lpng154\projects\vstudio\libpng\libpng.vcxproj" (Build target(s)).
 
 Build succeeded.
 
-Time Elapsed 00:00:00.03
+Time Elapsed 00:00:03.22

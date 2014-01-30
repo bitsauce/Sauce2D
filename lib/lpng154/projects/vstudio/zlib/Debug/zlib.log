@@ -1,5 +1,37 @@
-﻿Build started 30.01.2014 00:34:38.
+﻿Build started 30.01.2014 00:56:30.
+     1>Project "C:\Users\Marcus\Documents\GitHub\x2D-Game-Engine\lib\lpng154\projects\vstudio\zlib\zlib.vcxproj" on node 2 (Build target(s)).
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /Zi /nologo /W0 /WX- /Od /Oy- /D WIN32 /D NDEBUG /D ZLIB_DLL /Gm- /EHsc /MTd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /FR"Debug\\" /Gd /TC /analyze- /errorReport:prompt "..\..\..\..\zlib-1.2.5\adler32.c" "..\..\..\..\zlib-1.2.5\compress.c" "..\..\..\..\zlib-1.2.5\crc32.c" "..\..\..\..\zlib-1.2.5\deflate.c" "..\..\..\..\zlib-1.2.5\infback.c" "..\..\..\..\zlib-1.2.5\inffast.c" "..\..\..\..\zlib-1.2.5\inflate.c" "..\..\..\..\zlib-1.2.5\inftrees.c" "..\..\..\..\zlib-1.2.5\trees.c" "..\..\..\..\zlib-1.2.5\uncompr.c" "..\..\..\..\zlib-1.2.5\zutil.c"
+         adler32.c
+         compress.c
+         crc32.c
+         deflate.c
+         infback.c
+         inffast.c
+         inflate.c
+         inftrees.c
+         trees.c
+         uncompr.c
+         zutil.c
+         Generating Code...
+       Link:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Marcus\Documents\GitHub\x2D-Game-Engine\projects\msvc12\..\..\lib\zlib-1.2.5\lib\zlib_d.dll" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\Marcus\Documents\GitHub\x2D-Game-Engine\projects\msvc12\..\..\lib\zlib-1.2.5\lib\zlib_d.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\Marcus\Documents\GitHub\x2D-Game-Engine\projects\msvc12\..\..\lib\zlib-1.2.5\lib\zlib_d.lib" /MACHINE:X86 /SAFESEH /DLL Debug\adler32.obj
+         Debug\compress.obj
+         Debug\crc32.obj
+         Debug\deflate.obj
+         Debug\infback.obj
+         Debug\inffast.obj
+         Debug\inflate.obj
+         Debug\inftrees.obj
+         Debug\trees.obj
+         Debug\uncompr.obj
+         Debug\zutil.obj
+            Creating library C:\Users\Marcus\Documents\GitHub\x2D-Game-Engine\projects\msvc12\..\..\lib\zlib-1.2.5\lib\zlib_d.lib and object C:\Users\Marcus\Documents\GitHub\x2D-Game-Engine\projects\msvc12\..\..\lib\zlib-1.2.5\lib\zlib_d.exp
+         zlib.vcxproj -> C:\Users\Marcus\Documents\GitHub\x2D-Game-Engine\projects\msvc12\..\..\lib\zlib-1.2.5\lib\zlib_d.dll
+       BscMake:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\bscmake.exe /nologo /o"C:\Users\Marcus\Documents\GitHub\x2D-Game-Engine\projects\msvc12\..\..\lib\zlib-1.2.5\lib\zlib_d.bsc" Debug\adler32.sbr Debug\compress.sbr Debug\crc32.sbr Debug\deflate.sbr Debug\infback.sbr Debug\inffast.sbr Debug\inflate.sbr Debug\inftrees.sbr Debug\trees.sbr Debug\uncompr.sbr Debug\zutil.sbr
+     1>Done Building Project "C:\Users\Marcus\Documents\GitHub\x2D-Game-Engine\lib\lpng154\projects\vstudio\zlib\zlib.vcxproj" (Build target(s)).
 
 Build succeeded.
 
-Time Elapsed 00:00:00.02
+Time Elapsed 00:00:02.15
