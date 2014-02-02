@@ -163,8 +163,11 @@ void iosystem::removeFile(const string &filePath)
 
 void iosystem::print(const string &msg, const X2DMessageType type)
 {
-	// Send message to application
-	gameEngine->app->print(msg, type);
+	// Send message to debugger log
+#if defined(X2D_WINDOWS)
+	OutputDebugString((msg + "\n").c_str());
+#elif defined(X2D_ANDROID)
+#endif
 
 	// Send message to debugger
 	if(gameEngine->isEnabled(X2D_Debug))

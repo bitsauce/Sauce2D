@@ -1,0 +1,5 @@
+AngelScript 2.28.1
+GLFW 3.0.4
+FreeType 2.4.8
+FreeImage
+VLD 2.2.3

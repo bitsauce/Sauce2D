@@ -1,9 +1,10 @@
-//     _                                     ____  ____  
-//    / \  _   _ _ __ ___  _ __ __ _  __  __|___ \|  _ \ 
-//   / _ \| | | |  __/ _ \|  __/ _  | \ \/ /  __) | | | |
-//  / ___ \ |_| | | | (_) | | | (_| |  >  <  / __/| |_| |
-// /_/   \_\__ _|_|  \___/|_|  \__ _| /_/\_\|_____|____/ 
-//		MixedGraphics (C)
+//       ____  ____     ____                        _____             _            
+// __  _|___ \|  _ \   / ___| __ _ _ __ ___   ___  | ____|_ __   __ _(_)_ __   ___ 
+// \ \/ / __) | | | | | |  _ / _  |  _   _ \ / _ \ |  _| |  _ \ / _  | |  _ \ / _ \
+//  >  < / __/| |_| | | |_| | (_| | | | | | |  __/ | |___| | | | (_| | | | | |  __/
+// /_/\_\_____|____/   \____|\__ _|_| |_| |_|\___| |_____|_| |_|\__, |_|_| |_|\___|
+//                                                              |___/              
+//		MacroByte (C)
 
 #include "x2d/platform.h"
 #include "x2d/app.h"
@@ -137,7 +138,7 @@ X2DRetCode X2DEngine::init()
 	if(!app || !gfx || !sfx || !debug || !assetLoader)
 		return X2D_MissingComponent;
 
-	// 
+	// Setup debugger (if flagged)
 	if(isEnabled(X2D_Debug))
 	{
 		// Init debugger
@@ -152,18 +153,18 @@ X2DRetCode X2DEngine::init()
 					// Tell the external debugger the connection was successful
 					debug->sendPacket(X2DDebug::ConnectedPacket);
 				}else{
-					// Failed to connect to external debugger (timed out)
+					iosystem::error("Failed to connect to debugger (timed out)!");
 				}
 			}else{
-				// Failed to listen on port
+				iosystem::error("Failed to listen to port '5120' for the external debugger!");
 			}
 		}else{
-			// Failed to initialize socket
+			iosystem::error("Failed to initialize debugging socket!");
 		}
 	}
 	
 	// Print application message
-	iosystem::success("** Aurora x2D **");
+	iosystem::success("** x2D Game Engine **");
 	
 	// Create the script engine
 	iosystem::success("** Initializing AngelScript (%s) **", ANGELSCRIPT_VERSION_STRING);

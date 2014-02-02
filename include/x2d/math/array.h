@@ -3,8 +3,6 @@
 
 #include "x2d/platform.h"
 
-// TODO: This should probably not be here...
-
 class X2DAPI Array
 {
 public:

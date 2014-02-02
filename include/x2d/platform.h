@@ -6,10 +6,20 @@
 **********************************************************************/
 #if !defined(X2D_WINDOWS) && !defined(X2D_LINUX) && !defined(X2D_OSX)
 	#ifdef _MSC_VER
+
+		// Windows platform
 		#define X2D_WINDOWS
-#if _MSC_VER >= 1500
-		#define USE_CTR_SECURE
-#endif
+
+		// Enable CTR secure
+		#if _MSC_VER >= 1500
+			#define USE_CTR_SECURE
+		#endif
+
+		// Check for debug
+		#ifdef _DEBUG
+			#define X2D_DEBUG
+		#endif
+
 	#elif __GNUC__
 		#define X2D_LINUX
 	#elif __APPLE__

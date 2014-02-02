@@ -127,9 +127,6 @@ class X2DAPI X2DApp
 {
 public:
 
-	// Printing
-	virtual void print(const string &msg, const X2DMessageType type) { NOT_IMPLEMENTED(print) }
-
 	// Application functions
 	virtual void processEvents()									= 0;
 	virtual void exception(X2DRetCode error, const char* message)	= 0;
@@ -175,6 +172,38 @@ public:
 	// Vsync
 	virtual void enableVsync()										{ NOT_IMPLEMENTED(enableVsync) }
 	virtual void disableVsync()										{ NOT_IMPLEMENTED(disableVsync) }
+	
+public:
+	
+	// Application config
+	struct Config
+	{
+		// Window position
+		int x, y;
+
+		// Window size
+		int width, height;
+
+		// Fullscreen state
+		bool fullscreen;
+
+		// Borderless state
+		bool borderless;
+
+		// Default constructor
+		Config() :
+			x(0), y(0),
+			width(800),
+			height(600),
+			fullscreen(false),
+			borderless(false)
+		{
+		}
+	};
+	
+	vec2i m_position;
+	vec2i m_size;
+	bool m_fullscreen;
 };
 
 #endif // X2D_APP_H
