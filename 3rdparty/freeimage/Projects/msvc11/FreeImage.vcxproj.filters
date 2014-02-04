@@ -295,11 +295,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="FreeImage.rc">
-      <Filter>Source Files</Filter>
-    </ResourceCompile>
-  </ItemGroup>
-  <ItemGroup>
     <ClInclude Include="..\..\Source\CacheFile.h">
       <Filter>Header Files</Filter>
     </ClInclude>

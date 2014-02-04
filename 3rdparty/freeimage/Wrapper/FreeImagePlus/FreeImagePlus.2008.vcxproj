@@ -312,9 +312,6 @@ copy         FreeImagePlus.h         dist\
     <ClCompile Include="src\FreeImagePlus.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="FreeImagePlus.rc" />
-  </ItemGroup>
-  <ItemGroup>
     <ClInclude Include="FreeImagePlus.h" />
   </ItemGroup>
   <ItemGroup>
@@ -325,6 +322,9 @@ copy         FreeImagePlus.h         dist\
       <Project>{b39ed2b3-d53a-4077-b957-930979a3577d}</Project>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="FreeImagePlus.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
