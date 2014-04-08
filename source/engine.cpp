@@ -1,16 +1,18 @@
-//     _                                     ____  ____  
-//    / \  _   _ _ __ ___  _ __ __ _  __  __|___ \|  _ \ 
-//   / _ \| | | |  __/ _ \|  __/ _  | \ \/ /  __) | | | |
-//  / ___ \ |_| | | | (_) | | | (_| |  >  <  / __/| |_| |
-// /_/   \_\__ _|_|  \___/|_|  \__ _| /_/\_\|_____|____/ 
-//		MixedGraphics (C)
+//       ____  ____     ____                        _____             _            
+// __  _|___ \|  _ \   / ___| __ _ _ __ ___   ___  | ____|_ __   __ _(_)_ __   ___ 
+// \ \/ / __) | | | | | |  _ / _  |  _   _ \ / _ \ |  _| |  _ \ / _  | |  _ \ / _ \
+//  >  < / __/| |_| | | |_| | (_| | | | | | |  __/ | |___| | | | (_| | | | | |  __/
+// /_/\_\_____|____/   \____|\__ _|_| |_| |_|\___| |_____|_| |_|\__, |_|_| |_|\___|
+//                                                              |___/     
+//				Originally written by Marcus Loo Vergara (aka. Bitsauce)
+//									2011-2014 (C)
 
 #include "x2d/platform.h"
 #include "x2d/app.h"
 #include "x2d/sfx.h"
-#include "x2d/gfx.h"
+#include "core/base.h"
 #include "x2d/engine.h"
-#include "x2d/math.h"
+#include <x2d/math.h>
 
 // AngelScript add-ons
 #include "scripts/scriptstdstring.h"
@@ -127,17 +129,52 @@ X2DEngine::~X2DEngine()
 	scriptEngine = 0;
 }
 
+// Visual Leak Detector
+#if defined(X2D_WINDOWS) && defined(X2D_DEBUG)
+#include <vld.h>
+#endif
+
+// Win32 entry point
+int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, INT)
+{
+	// Process the command-line
+	int flags = 0;
+	for(int i = 0; i < __argc; i++) {
+		if(strcmp(__argv[i], "-d") == 0)
+			flags |= X2D_Debug;
+		else if(strcmp(__argv[i], "-v") == 0)
+			flags |= X2D_ExportLog;
+	}
+	
+	string assetDir;
+#ifdef _DEBUG
+	assetDir = "C:/Users/Marcus/Dropbox/Random Projects/ScriptDebug/";
+	//assetDir = "C:/Users/Marcus/Documents/GitHub/ctw/";
+	flags |= X2D_Debug;
+#endif
+
+	// Init engine
+	X2DEngine *engine = CreateEngine(flags);
+
+	// Initialize engine
+	if(engine->init() != X2D_OK)
+		return -1; // Initialization failed
+
+	// Run engine (and return)
+	return engine->run();
+}
+
 //------------------------------------------------------------------------
 // Run
 //------------------------------------------------------------------------
-
+#include "gfx/color.h"
 X2DRetCode X2DEngine::init()
 {
 	// Make sure all components are specified
 	if(!app || !gfx || !sfx || !debug || !assetLoader)
 		return X2D_MissingComponent;
 
-	// 
+	// Check for debug flag
 	if(isEnabled(X2D_Debug))
 	{
 		// Init debugger
@@ -163,7 +200,7 @@ X2DRetCode X2DEngine::init()
 	}
 	
 	// Print application message
-	iosystem::success("** Aurora x2D **");
+	iosystem::success("** x2D Game Engine **");
 	
 	// Create the script engine
 	iosystem::success("** Initializing AngelScript (%s) **", ANGELSCRIPT_VERSION_STRING);
@@ -180,6 +217,9 @@ X2DRetCode X2DEngine::init()
 	RegisterGrid(); // TODO: Re-implement
 	RegisterMath();
 	RegisterStdStringUtils(scriptEngine);
+
+	// This will register all game objects
+	Base::Register(scriptEngine);
 	
 	// Io system
 	AS_GLOBAL_FUNCTIONPR("void print(const string &in)", iosystem::print, (const string&), void)
@@ -355,7 +395,7 @@ X2DRetCode X2DEngine::init()
 	// Fullscreen and resolution
 	AS_SINGLETON_FUNCTION(X2DApp, "void appEnableFullscreen()", enableFullscreen, app)
 	AS_SINGLETON_FUNCTION(X2DApp, "void appDisableFullscreen()", disableFullscreen, app)
-	AS_SINGLETON_FUNCTION(X2DApp, "array<vec2> @appGetResolutionList()", resolutionList, app)
+	AS_SINGLETON_FUNCTION(X2DApp, "array<Vector2> @appGetResolutionList()", resolutionList, app)
 
 	// Window flags
 	AS_SINGLETON_FUNCTION(X2DApp, "void appEnableResize()", enableResize, app)
@@ -431,7 +471,7 @@ X2DRetCode X2DEngine::init()
 	AS_SINGLETON_FUNCTION(X2DSound, "int sfxDeleteBuffer(const int)", deleteBuffer, sfx)
 	
 	// Enums
-	AS_ENUM_REGISTER("BlendFunc")
+	/*AS_ENUM_REGISTER("BlendFunc")
 	AS_ENUM_VALUE("BlendFunc", "ZeroBlend", X2D_ZeroBlend)
 	AS_ENUM_VALUE("BlendFunc", "OneBlend", X2D_OneBlend)
 	AS_ENUM_VALUE("BlendFunc", "SrcColorBlend", X2D_SrcColorBlend)
@@ -462,7 +502,7 @@ X2DRetCode X2DEngine::init()
 	AS_ENUM_VALUE("TextureFilter", "BilinearFilter", X2D_BilinearFilter)
 
 	// Projection functions
-	AS_SINGLETON_FUNCTIONPR(X2DRender, "void gfxSetViewport(const vec2i pos, const vec2i size)", setViewport, (const vec2i, const vec2i), void, gfx)
+	AS_SINGLETON_FUNCTIONPR(X2DRender, "void gfxSetViewport(const Vector2i pos, const Vector2i size)", setViewport, (const Vector2i, const Vector2i), void, gfx)
 	AS_SINGLETON_FUNCTIONPR(X2DRender, "void gfxSetViewport(const int x, const int y, const int w, const int h)", setViewport, (const int, const int, const int, const int), void, gfx)
 	//AS_SINGLETON_FUNCTION(X2DRender, "void gfxGetViewport()", gfxGetViewport, gfx)
 	AS_SINGLETON_FUNCTION(X2DRender, "void gfxSetOrthoProjection(const float l, const float r, const float b, const float t, const float n, const float f)", setOrthoProjection, gfx)
@@ -472,7 +512,7 @@ X2DRetCode X2DEngine::init()
 	// State modifiers
 	AS_SINGLETON_FUNCTION(X2DRender, "void gfxSetFont(const uint font)", setFont, gfx)
 	AS_SINGLETON_FUNCTIONPR(X2DRender, "void gfxSetTexCoord(const float x, const float y)", setTexCoord, (const float, const float), void, gfx)
-	AS_SINGLETON_FUNCTIONPR(X2DRender, "void gfxSetTexCoord(const vec2)", setTexCoord, (const vec2), void, gfx)
+	AS_SINGLETON_FUNCTIONPR(X2DRender, "void gfxSetTexCoord(const Vector2)", setTexCoord, (const Vector2), void, gfx)
 	AS_SINGLETON_FUNCTIONPR(X2DRender, "void gfxSetColor(const vec4 color)", setColor, (const vec4), void, gfx)
 	AS_SINGLETON_FUNCTIONPR(X2DRender, "void gfxSetColor(const float, const float, const float, const float a = 1.0f)", setColor, (const float, const float, const float, const float), void, gfx)
 	AS_SINGLETON_FUNCTION(X2DRender, "void gfxSetTexture(const int)", setTexture, gfx)
@@ -496,11 +536,11 @@ X2DRetCode X2DEngine::init()
 	// Drawing functions
 	AS_SINGLETON_FUNCTION(X2DRender, "void gfxBegin(const DrawMode = DrawTriangles)", begin, gfx)
 	AS_SINGLETON_FUNCTION(X2DRender, "void gfxEnd()", end, gfx)
-	AS_SINGLETON_FUNCTIONPR(X2DRender, "void gfxAddText(const vec2 pos, const string &in)", addText, (const vec2, const string&), void, gfx)
+	AS_SINGLETON_FUNCTIONPR(X2DRender, "void gfxAddText(const Vector2 pos, const string &in)", addText, (const Vector2, const string&), void, gfx)
 	AS_SINGLETON_FUNCTIONPR(X2DRender, "void gfxAddText(const float x, const float y, const string &in)", addText, (const float, const float, const string&), void, gfx)
-	AS_SINGLETON_FUNCTIONPR(X2DRender, "void gfxAddVertex(const vec2 pos)", addVertex, (const vec2), void, gfx)
+	AS_SINGLETON_FUNCTIONPR(X2DRender, "void gfxAddVertex(const Vector2 pos)", addVertex, (const Vector2), void, gfx)
 	AS_SINGLETON_FUNCTIONPR(X2DRender, "void gfxAddVertex(const float x, const float y)", addVertex, (const float, const float), void, gfx)
-	AS_SINGLETON_FUNCTIONPR(X2DRender, "void gfxAddRect(const vec2 pos, const vec2 size, const vec2 coord0, const vec2 coord1, const bool center = false)", addRect, (const vec2, const vec2, const vec2, const vec2, const bool), void, gfx)
+	AS_SINGLETON_FUNCTIONPR(X2DRender, "void gfxAddRect(const Vector2 pos, const Vector2 size, const Vector2 coord0, const Vector2 coord1, const bool center = false)", addRect, (const Vector2, const Vector2, const Vector2, const Vector2, const bool), void, gfx)
 	AS_SINGLETON_FUNCTIONPR(X2DRender, "void gfxAddRect(const float, const float, const float, const float, const float, const float, const float, const float, const bool center = false)", addRect, (const float, const float, const float, const float, const float, const float, const float, const float, const bool), void, gfx)
 
 	// Clipping
@@ -516,8 +556,8 @@ X2DRetCode X2DEngine::init()
 															"const float rx = 0.0f, const float ry = 0.0f, const float rz = 0.0f, const float ang = 0.0f,"
 															"const float sx = 1.0f, const float sy = 1.0f)", pushTransform,
 															(const float, const float, const float, const float, const float, const float, const float, const float), void, gfx)
-	AS_SINGLETON_FUNCTIONPR(X2DRender, "void gfxPushTransform(const vec2 pos, const vec4 rot = vec4(0.0f), const vec2 scale = vec2(1.0f))", pushTransform,
-															(const vec2, const vec4, const vec2), void, gfx)
+	AS_SINGLETON_FUNCTIONPR(X2DRender, "void gfxPushTransform(const Vector2 pos, const vec4 rot = vec4(0.0f), const Vector2 scale = Vector2(1.0f))", pushTransform,
+															(const Vector2, const vec4, const Vector2), void, gfx)
 	AS_SINGLETON_FUNCTION(X2DRender, "void gfxPopTransform()", popTransform, gfx)
 
 	// Texture processing
@@ -561,7 +601,7 @@ X2DRetCode X2DEngine::init()
 	AS_SINGLETON_FUNCTION(X2DRender, "void gfxBindVertexBuffer(const int vboId)", bindVertexBuffer, gfx)
 	AS_SINGLETON_FUNCTION(X2DRender, "void gfxSetVertexBufferData(const array<float> &in, const VertexBufferMode mode)", setVertexBufferData, gfx)
 	AS_SINGLETON_FUNCTION(X2DRender, "void gfxSetVertexBufferSubData(const int offset, const array<float> &in)", setVertexBufferSubData, gfx)
-	AS_SINGLETON_FUNCTION(X2DRender, "void gfxDrawVertexBuffer(const int mode, const int begin, const int count)", drawVertexBuffer, gfx)
+	AS_SINGLETON_FUNCTION(X2DRender, "void gfxDrawVertexBuffer(const int mode, const int begin, const int count)", drawVertexBuffer, gfx)*/
 
 	// Create managers
 	scripts = new ScriptManager();
@@ -682,7 +722,7 @@ void X2DEngine::draw()
 {
 	// Start draw
 	m_profiler->pushProfile("Draw");
-	gfx->beginDraw();
+	//gfx->beginDraw();
 
 	ScriptContext *ctx = scripts->createScriptContext();
 	int r = ctx->Prepare(m_drawFunc); assert(r >= 0);
@@ -690,7 +730,7 @@ void X2DEngine::draw()
 	r = ctx->Release(); assert(r >= 0);
 
 	// End draw
-	gfx->endDraw();
+	//gfx->endDraw();
 	m_profiler->popProfile();
 }
 

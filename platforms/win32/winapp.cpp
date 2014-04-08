@@ -4,18 +4,17 @@
 //  >  < / __/| |_| | | |_| | (_| | | | | | |  __/ | |___| | | | (_| | | | | |  __/
 // /_/\_\_____|____/   \____|\__ _|_| |_| |_|\___| |_____|_| |_|\__, |_|_| |_|\___|
 //                                                              |___/              
-//		Macro#byte (C)
+//		MacroByte (C)
 
 #include "x2d/platform.h"
 #include "x2d/engine.h"
 #include "x2d/math.h"
 #include "x2d/scripts.h"
 #include "x2d/ini.h"
-#include "x2d/gfx.h"
+#include "x2d/render.h"
 
 #include "winapp.h"
 #include "opengl.h"
-
 
 // Time functions
 #include <ctime>

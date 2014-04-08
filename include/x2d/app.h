@@ -144,7 +144,7 @@ public:
 	// Virtual window functions
 	virtual void enableFullscreen()									{ NOT_IMPLEMENTED(enableFullscreen) }
 	virtual void disableFullscreen()								{ NOT_IMPLEMENTED(disableFullscreen) }
-	virtual Array* resolutionList()									{ NOT_IMPLEMENTED_ARR(resolutionList, "vec2i") }
+	virtual Array* resolutionList()									{ NOT_IMPLEMENTED_ARR(resolutionList, "Vector2i") }
 
 	// Window flags
 	virtual void enableResize()										{ NOT_IMPLEMENTED(enableResize) }

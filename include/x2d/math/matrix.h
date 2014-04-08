@@ -17,9 +17,9 @@ public:
     void        set(const float src[4]);
     void        set(float xx, float xy, float yx, float yy);
     void        setRow(int index, const float row[2]);
-    void        setRow(int index, const vec2& v);
+    void        setRow(int index, const Vector2& v);
     void        setColumn(int index, const float col[2]);
-    void        setColumn(int index, const vec2& v);
+    void        setColumn(int index, const Vector2& v);
 
     const float* get() const;
     float        getDeterminant();
@@ -33,7 +33,7 @@ public:
     mat2     operator-(const mat2& rhs) const;    // subtract rhs
     mat2&    operator+=(const mat2& rhs);         // add rhs and update this object
     mat2&    operator-=(const mat2& rhs);         // subtract rhs and update this object
-    vec2     operator*(const vec2& rhs) const;    // multiplication: v' = M * v
+    Vector2     operator*(const Vector2& rhs) const;    // multiplication: v' = M * v
     mat2     operator*(const mat2& rhs) const;    // multiplication: M3 = M1 * M2
     mat2&    operator*=(const mat2& rhs);         // multiplication: M1' = M1 * M2
     bool     operator==(const mat2& rhs) const;   // exact compare, no epsilon
@@ -43,7 +43,7 @@ public:
 
     friend mat2 operator-(const mat2& m);                     // unary operator (-)
     friend mat2 operator*(float scalar, const mat2& m);       // pre-multiplication
-    friend vec2 operator*(const vec2& vec, const mat2& m);    // pre-multiplication
+    friend Vector2 operator*(const Vector2& vec, const mat2& m);    // pre-multiplication
     friend std::ostream& operator<<(std::ostream& os, const mat2& m);
 
 private:
@@ -222,7 +222,7 @@ inline void mat2::setRow(int index, const float row[2])
     m[index*2] = row[0];  m[index*2 + 1] = row[1];
 }
 
-inline void mat2::setRow(int index, const vec2& v)
+inline void mat2::setRow(int index, const Vector2& v)
 {
     m[index*2] = v.x;  m[index*2 + 1] = v.y;
 }
@@ -232,7 +232,7 @@ inline void mat2::setColumn(int index, const float col[2])
     m[index] = col[0];  m[index + 2] = col[1];
 }
 
-inline void mat2::setColumn(int index, const vec2& v)
+inline void mat2::setColumn(int index, const Vector2& v)
 {
     m[index] = v.x;  m[index + 2] = v.y;
 }
@@ -271,9 +271,9 @@ inline mat2& mat2::operator-=(const mat2& rhs)
     return *this;
 }
 
-inline vec2 mat2::operator*(const vec2& rhs) const
+inline Vector2 mat2::operator*(const Vector2& rhs) const
 {
-    return vec2(m[0]*rhs.x + m[1]*rhs.y,  m[2]*rhs.x + m[3]*rhs.y);
+    return Vector2(m[0]*rhs.x + m[1]*rhs.y,  m[2]*rhs.x + m[3]*rhs.y);
 }
 
 inline mat2 mat2::operator*(const mat2& rhs) const
@@ -318,9 +318,9 @@ inline mat2 operator*(float s, const mat2& rhs)
     return mat2(s*rhs[0], s*rhs[1], s*rhs[2], s*rhs[3]);
 }
 
-inline vec2 operator*(const vec2& v, const mat2& rhs)
+inline Vector2 operator*(const Vector2& v, const mat2& rhs)
 {
-    return vec2(v.x*rhs[0] + v.y*rhs[2],  v.x*rhs[1] + v.y*rhs[3]);
+    return Vector2(v.x*rhs[0] + v.y*rhs[2],  v.x*rhs[1] + v.y*rhs[3]);
 }
 
 #ifdef DEPRICATED

@@ -419,9 +419,9 @@ void X2DDebug::takeCommands(void *ctxptr)
 			{
 				// String type
 				s << "\"" << *(string*)value << "\"";
-			}else if((int)typeId == scriptEngine->GetTypeIdByDecl("vec2")){
-				// vec2 type
-				vec2 p = *(vec2*)value;
+			}else if((int)typeId == scriptEngine->GetTypeIdByDecl("Vector2")){
+				// Vector2 type
+				Vector2 p = *(Vector2*)value;
 				s << "(" << p.x << ", " << p.y << ")";
 			}else{
 				// Just print the address

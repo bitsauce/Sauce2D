@@ -1,0 +1,66 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="source\gfx\opengl\gltexture.cpp">
+      <Filter>source\gfx\opengl</Filter>
+    </ClCompile>
+    <ClCompile Include="openal.cpp">
+      <Filter>source\sfx</Filter>
+    </ClCompile>
+    <ClCompile Include="winapp.cpp">
+      <Filter>source\app</Filter>
+    </ClCompile>
+    <ClCompile Include="winassetloader.cpp">
+      <Filter>source\app</Filter>
+    </ClCompile>
+    <ClCompile Include="windebug.cpp">
+      <Filter>source\app</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\gfx\opengl\glgraphics.cpp">
+      <Filter>source\gfx\opengl</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="source\gfx\opengl\gltexture.h">
+      <Filter>source\gfx\opengl</Filter>
+    </ClInclude>
+    <ClInclude Include="openal.h">
+      <Filter>source\sfx</Filter>
+    </ClInclude>
+    <ClInclude Include="windebug.h">
+      <Filter>source\app</Filter>
+    </ClInclude>
+    <ClInclude Include="winapp.h">
+      <Filter>source\app</Filter>
+    </ClInclude>
+    <ClInclude Include="winassetloader.h">
+      <Filter>source\app</Filter>
+    </ClInclude>
+    <ClInclude Include="source\gfx\opengl\glgraphics.h">
+      <Filter>source\gfx\opengl</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="resources.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="source">
+      <UniqueIdentifier>{b3c95390-4192-4e8a-8916-a28c5eb294b1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source\gfx">
+      <UniqueIdentifier>{aa8584c8-c503-4a3c-be00-b8c16c86756b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source\gfx\opengl">
+      <UniqueIdentifier>{f921ce0a-bdfb-4878-b709-16aef6b420c6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source\sfx">
+      <UniqueIdentifier>{d1f1b68b-d0be-4bce-83ac-1a69f7902e5a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source\app">
+      <UniqueIdentifier>{5b6e9077-38fb-4f33-915f-83551baa960a}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

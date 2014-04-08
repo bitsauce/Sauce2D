@@ -5,22 +5,22 @@
 
 /** \brief A class which holds a 2 dimentional vector
  *
- * The vec2 class is a 2 dimentional (hence the 2) vector.
+ * The Vector2 class is a 2 dimentional (hence the 2) vector.
  * It stores the x and y value as floating-point values.
  *
  */
 
 void RegisterVectors();
 
-class vec2i;
+class Vector2i;
 
-class X2DAPI vec2
+class X2DAPI Vector2
 {
 public:
 	// Constructor
-    vec2(float xy);
-    vec2(float x, float y);
-    vec2(const vec2i &v);
+    Vector2(float xy);
+    Vector2(float x, float y);
+    Vector2(const Vector2i &v);
  
 	// Setting
 	void set(const float x, const float y);
@@ -28,36 +28,36 @@ public:
 	// Transform
     void rotate(const float angle);
     float angle() const;
-	float angle(const vec2& v2) const;
+	float angle(const Vector2& v2) const;
 
 	// Vector functions
     void normalize();
-    vec2 normalized() const;
-    float dot(const vec2& v2) const;
-    float cross(const vec2& v2) const;
-    float distance(const vec2& v2) const;
+    Vector2 normalized() const;
+    float dot(const Vector2& v2) const;
+    float cross(const Vector2& v2) const;
+    float distance(const Vector2& v2) const;
 	float magnitude() const;
  
 	// Operators
-    vec2& operator=(const vec2& v2);
-    vec2& operator+=(const vec2& v2);
-    vec2& operator-=(const vec2& v2);
-    vec2& operator*=(const float scalar);
-    vec2& operator/=(const float scalar);
-    const vec2 operator+(const vec2 &v2) const;
-    const vec2 operator-(const vec2 &v2) const;
-    const vec2 operator*(const float scalar) const;
-    const vec2 operator/(const float scalar) const;
-    bool operator==(const vec2& v2) const;
+    Vector2& operator=(const Vector2& v2);
+    Vector2& operator+=(const Vector2& v2);
+    Vector2& operator-=(const Vector2& v2);
+    Vector2& operator*=(const float scalar);
+    Vector2& operator/=(const float scalar);
+    const Vector2 operator+(const Vector2 &v2) const;
+    const Vector2 operator-(const Vector2 &v2) const;
+    const Vector2 operator*(const float scalar) const;
+    const Vector2 operator/(const float scalar) const;
+    bool operator==(const Vector2& v2) const;
 
 public:
 
 	// AngelScript
-	static void DefaultConstructor(vec2 *self);
-	static void CopyConstructor1(const vec2 &other, vec2 *self);
-	static void CopyConstructor2(const vec2i &other, vec2 *self);
-	static void InitConstructor1(float xy, vec2 *self);
-	static void InitConstructor2(float x, float y, vec2 *self);
+	static void DefaultConstructor(Vector2 *self);
+	static void CopyConstructor1(const Vector2 &other, Vector2 *self);
+	static void CopyConstructor2(const Vector2i &other, Vector2 *self);
+	static void InitConstructor1(float xy, Vector2 *self);
+	static void InitConstructor2(float x, float y, Vector2 *self);
  
 public:
     float x, y;
@@ -74,13 +74,13 @@ public:
 	if(a < b) return false; \
 	if(a > b) return true;
 
-class X2DAPI vec2i
+class X2DAPI Vector2i
 {
 public:
 	// Constructor
-    vec2i(int xy);
-    vec2i(int x, int y);
-    vec2i(const vec2 &v);
+    Vector2i(int xy);
+    Vector2i(int x, int y);
+    Vector2i(const Vector2 &v);
  
 	// Setting
 	void set(const int x, const int y);
@@ -88,36 +88,36 @@ public:
 	// Transform
     void rotate(const float angle);
     float angle() const;
-	float angle(const vec2i& v2) const;
+	float angle(const Vector2i& v2) const;
 
 	// Vector functions
     void normalize();
-    vec2i normalized() const;
-    float dot(const vec2i& v2) const;
-    float cross(const vec2i& v2) const;
-    float distance(const vec2i& v2) const;
+    Vector2i normalized() const;
+    float dot(const Vector2i& v2) const;
+    float cross(const Vector2i& v2) const;
+    float distance(const Vector2i& v2) const;
 	float magnitude() const;
  
 	// Operators
-    vec2i& operator=(const vec2i& v2);
-    vec2i& operator+=(const vec2i& v2);
-    vec2i& operator-=(const vec2i& v2);
-    vec2i& operator*=(const float scalar);
-    vec2i& operator/=(const float scalar);
-    const vec2i operator+(const vec2i &v2) const;
-    const vec2i operator-(const vec2i &v2) const;
-    const vec2i operator*(const float scalar) const;
-    const vec2i operator/(const float scalar) const;
-    bool operator==(const vec2i& v2) const;
+    Vector2i& operator=(const Vector2i& v2);
+    Vector2i& operator+=(const Vector2i& v2);
+    Vector2i& operator-=(const Vector2i& v2);
+    Vector2i& operator*=(const float scalar);
+    Vector2i& operator/=(const float scalar);
+    const Vector2i operator+(const Vector2i &v2) const;
+    const Vector2i operator-(const Vector2i &v2) const;
+    const Vector2i operator*(const float scalar) const;
+    const Vector2i operator/(const float scalar) const;
+    bool operator==(const Vector2i& v2) const;
 
-	bool operator<(const vec2i& v2) const
+	bool operator<(const Vector2i& v2) const
 	{
 		TUPLE_CMP(this->x, v2.x)
 		TUPLE_CMP(this->y, v2.y)
 		return false;
 	}
 
-	bool operator>(const vec2i& v2) const
+	bool operator>(const Vector2i& v2) const
 	{
 		TUPLE_CMP2(this->x, v2.x)
 		TUPLE_CMP2(this->y, v2.y)
@@ -127,11 +127,11 @@ public:
 public:
 
 	// AngelScript
-	static void DefaultConstructor(vec2i *self);
-	static void CopyConstructor1(const vec2i &other, vec2i *self);
-	static void CopyConstructor2(const vec2 &other, vec2i *self);
-	static void InitConstructor1(int xy, vec2i *self);
-	static void InitConstructor2(int x, int y, vec2i *self);
+	static void DefaultConstructor(Vector2i *self);
+	static void CopyConstructor1(const Vector2i &other, Vector2i *self);
+	static void CopyConstructor2(const Vector2 &other, Vector2i *self);
+	static void InitConstructor1(int xy, Vector2i *self);
+	static void InitConstructor2(int x, int y, Vector2i *self);
  
 public:
     int x, y;

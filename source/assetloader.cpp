@@ -7,7 +7,6 @@
 //		MacroByte (C)
 
 #include "x2d/assetloader.h"
-#include "x2d/gfx.h"
 #include "x2d/iosystem.h"
 
 #include <freeimage.h>

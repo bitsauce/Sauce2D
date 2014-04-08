@@ -3,6 +3,123 @@
 // \ \/ / __) | | | | | |  _ / _  |  _   _ \ / _ \ |  _| |  _ \ / _  | |  _ \ / _ \
 //  >  < / __/| |_| | | |_| | (_| | | | | | |  __/ | |___| | | | (_| | | | | |  __/
 // /_/\_\_____|____/   \____|\__ _|_| |_| |_|\___| |_____|_| |_|\__, |_|_| |_|\___|
+//                                                              |___/     
+//				Originally written by Marcus Loo Vergara (aka. Bitsauce)
+//									2011-2014 (C)
+
+#include "opengl.h"
+#include "gltexture.h"
+
+void OpenGL::renderBatch(const Batch &batch)
+{
+	// Enable client state
+	glEnableClientState(GL_VERTEX_ARRAY);
+	glEnableClientState(GL_COLOR_ARRAY);
+	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+
+	// Bind the batch texture
+	const State *state = &batchItr->first;
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, state->texture);
+
+	// Set blend mode
+	glBlendFuncSeparate(state->srcBlendColor, state->dstBlendColor,
+		state->srcBlendAlpha, state->dstBlendAlpha);
+
+	// Bind shader
+	//if(state->shader.program > 0)
+	{
+		const ShaderState *shader = &state->shader;
+		glUseProgram(shader->program);
+
+		// Set all uniforms
+		for(uint i = 0; i < shader->uniforms.size(); i++)
+		{
+			const Uniform *uniform = &shader->uniforms[i];
+			switch(uniform->type)
+			{
+			case Uniform1i: glUniform1i(uniform->loc, ((int*)uniform->data)[0]); break;
+			case Uniform2i: glUniform2i(uniform->loc, ((int*)uniform->data)[0], ((int*)uniform->data)[1]); break;
+			case Uniform3i: glUniform3i(uniform->loc, ((int*)uniform->data)[0], ((int*)uniform->data)[1], ((int*)uniform->data)[2]); break;
+			case Uniform4i: glUniform4i(uniform->loc, ((int*)uniform->data)[0], ((int*)uniform->data)[1], ((int*)uniform->data)[2], ((int*)uniform->data)[3]); break;
+			case Uniform1f: glUniform1f(uniform->loc, ((float*)uniform->data)[0]); break;
+			case Uniform2f: glUniform2f(uniform->loc, ((float*)uniform->data)[0], ((float*)uniform->data)[1]); break;
+			case Uniform3f: glUniform3f(uniform->loc, ((float*)uniform->data)[0], ((float*)uniform->data)[1], ((float*)uniform->data)[2]); break;
+			case Uniform4f: glUniform4f(uniform->loc, ((float*)uniform->data)[0], ((float*)uniform->data)[1], ((float*)uniform->data)[2], ((float*)uniform->data)[3]); break;
+			case UniformTexture:
+				{
+					int target = ((int*)uniform->data)[1];
+					glActiveTexture(GL_TEXTURE0+target);
+					glBindTexture(GL_TEXTURE_2D, ((int*)uniform->data)[0]);
+					glUniform1i(uniform->loc, target);
+				}
+				break;
+			}
+			delete[] uniform->data;
+		}
+	}
+
+	// Apply clipping
+	if(state->clipRect.getArea() != 0)
+	{
+		glEnable(GL_SCISSOR_TEST);
+		glScissor(state->clipRect.getX(), state->clipRect.getY(), state->clipRect.getWidth(), state->clipRect.getHeight());
+	}
+
+	// Get vertices and vertex data
+	DrawBuffer *buffer = batchItr->second;
+	if(buffer->type == DynamicBufferType)
+	{
+		DynamicBuffer *dynbuf = static_cast<DynamicBuffer*>(buffer);
+		float *vertexData = (float*)dynbuf->data();
+
+		// Draw arrays
+		glVertexPointer(2, GL_FLOAT, 8*floatSize, vertexData);
+		glColorPointer(4, GL_FLOAT, 8*floatSize, vertexData + 2);
+		glTexCoordPointer(2, GL_FLOAT, 8*floatSize, vertexData + 6);
+
+		glDrawArrays(state->drawMode, 0, dynbuf->vertexCount());
+	}else{
+		StaticBuffer *vbo = static_cast<StaticBuffer*>(buffer);
+
+		glLoadMatrixf(vbo->transform);
+
+		glBindBufferARB(GL_ARRAY_BUFFER_ARB, state->vbo);
+
+		glVertexPointer(2, GL_FLOAT, 8*floatSize, (void*)(0*floatSize));
+		glColorPointer(4, GL_FLOAT, 8*floatSize, (void*)(2*floatSize));
+		glTexCoordPointer(2, GL_FLOAT, 8*floatSize, (void*)(6*floatSize));
+
+		glDrawArrays(vbo->drawMode, vbo->begin, vbo->count);
+
+		glBindBufferARB(GL_ARRAY_BUFFER_ARB, 0);
+
+		glLoadIdentity();
+	}
+	delete buffer;
+	glDisable(GL_SCISSOR_TEST);
+
+	// Reset current batch
+	glBindTexture(GL_TEXTURE_2D, 0);
+
+	// Disable client state
+	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+	glDisableClientState(GL_COLOR_ARRAY);
+	glDisableClientState(GL_VERTEX_ARRAY);
+}
+
+Texture *OpenGL::createTexture(const Pixmap &pixmap)
+{
+	return new GLtexture(pixmap);
+}
+
+
+#ifdef OLD
+//       ____  ____     ____                        _____             _            
+// __  _|___ \|  _ \   / ___| __ _ _ __ ___   ___  | ____|_ __   __ _(_)_ __   ___ 
+// \ \/ / __) | | | | | |  _ / _  |  _   _ \ / _ \ |  _| |  _ \ / _  | |  _ \ / _ \
+//  >  < / __/| |_| | | |_| | (_| | | | | | |  __/ | |___| | | | (_| | | | | |  __/
+// /_/\_\_____|____/   \____|\__ _|_| |_| |_|\___| |_____|_| |_|\__, |_|_| |_|\___|
 //                                                              |___/              
 //		Macro#byte (C)
 
@@ -17,12 +134,12 @@
 
 bool is_big_endian()
 {
-    union {
-        uint i;
-        char c[4];
-    } bint = {0x01020304};
+	union {
+		uint i;
+		char c[4];
+	} bint = {0x01020304};
 
-    return bint.c[0] == 1; 
+	return bint.c[0] == 1; 
 }
 
 uint toGLBlend(const X2DBlendFunc val)
@@ -103,7 +220,7 @@ OpenGLRender::~OpenGLRender()
 		glDeleteTextures(1, &font->texture);
 	}
 	Fonts.clear();
-	
+
 	// Delete all loaded textures
 	for(map<int, Texture>::iterator itr = Textures.begin(); itr != Textures.end(); ++itr)
 	{
@@ -142,18 +259,18 @@ void OpenGLRender::init()
 	// Check if PBOs are supported
 	if(!GLEW_EXT_pixel_buffer_object)
 		iosystem::warn("WARNING: PBO is not supported on this card!");
-	
+
 	// Check if (changing) v-sync (state) is supported
 	if(!WGLEW_EXT_swap_control)
 		iosystem::warn("WARNING: VSYNC is not supported on this card!");
-	
+
 	int w, h; m_engine->app->size(w, h);
 	setOrthoProjection(0.0f, (float)w, (float)h, 0.0f, -1.0f, 1.0f);
 	X2DRender::setViewport(0, 0, w, h);
 
 	// Init OpenGL
 	glEnable(GL_TEXTURE_2D);
-    glShadeModel(GL_SMOOTH);
+	glShadeModel(GL_SMOOTH);
 	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 
 	// Enable alpha
@@ -200,8 +317,8 @@ void OpenGLRender::createContext(HWND window)
 	pfd.nSize = sizeof(PIXELFORMATDESCRIPTOR);
 	pfd.nVersion = 1;					// Version Number
 	pfd.dwFlags = PFD_DRAW_TO_WINDOW |	// Draws to a window
-				  PFD_SUPPORT_OPENGL |	// The format must support OpenGL
-				  PFD_DOUBLEBUFFER;		// Support for double buffering
+		PFD_SUPPORT_OPENGL |	// The format must support OpenGL
+		PFD_DOUBLEBUFFER;		// Support for double buffering
 	pfd.iPixelType = PFD_TYPE_RGBA;		// Uses an RGBA pixel format
 	pfd.cColorBits = 24;				// 24 bits colors
 	pfd.cAlphaBits = 8;					// 8 bits alpha
@@ -251,11 +368,11 @@ void OpenGLRender::setViewport(const vec2i pos, const vec2i size)
 void OpenGLRender::setOrthoProjection(const float l, const float r, const float b, const float t, const float n, const float f)
 {
 	// Set orthographic projection
-    glMatrixMode(GL_PROJECTION);
-    glLoadIdentity();
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
 	glOrtho(l, r, b, t, n, f);
 	glMatrixMode(GL_MODELVIEW);
-    glLoadIdentity();
+	glLoadIdentity();
 
 	// Store orthographic projection
 	m_currentOrtho[0] = l;
@@ -290,7 +407,7 @@ void OpenGLRender::addText(const vec2 pos, const string &text)
 	float h = m_currentFont->fontSize/0.63f;
 	float yOffset = 0.0f;
 	float xOffset = 0.0f;
- 
+
 	// Split string lines
 	string line;
 	setTexture(m_currentFont->texture);
@@ -374,7 +491,7 @@ bool getFontFile(LPCTSTR fontName, string &fileName)
 				delete[] winDir;
 				return true;
 			}
-			
+
 			// Reset variables
 			ZeroMemory(value, maxValue);
 			ZeroMemory(data, maxData);
@@ -412,7 +529,7 @@ int OpenGLRender::loadFont(const string &fontPathOrName, const uint fontSize)
 			return -1;
 		}
 	}
-	
+
 	// Create and initialize a FreeType library
 	FT_Library library;
 	if(FT_Init_FreeType(&library))
@@ -432,13 +549,13 @@ int OpenGLRender::loadFont(const string &fontPathOrName, const uint fontSize)
 	// Generate texture and resize chars
 	glGenTextures(1, &font->texture);
 	font->chars.resize(128);
-	
+
 	// Get font name
 	font->fontName = face->family_name + string(" ") + math::intToStr(fontSize);
- 
+
 	// Set character size
 	FT_Set_Char_Size(face, fontSize << 6, fontSize << 6, 96, 96);
- 
+
 	// Load bitmap data for each of the character of the font
 	RectPacker packer;
 	for(uchar ch = 0; ch < 128; ch++)
@@ -447,7 +564,7 @@ int OpenGLRender::loadFont(const string &fontPathOrName, const uint fontSize)
 		if(FT_Load_Glyph(face, FT_Get_Char_Index(face, ch), FT_LOAD_DEFAULT))
 			assert("FT_Load_Glyph failed");
 
- 		// Move The Face's Glyph Into A Glyph Object.
+		// Move The Face's Glyph Into A Glyph Object.
 		FT_Glyph glyph;
 		if(FT_Get_Glyph(face->glyph, &glyph))
 			assert("FT_Get_Glyph failed");
@@ -462,7 +579,7 @@ int OpenGLRender::loadFont(const string &fontPathOrName, const uint fontSize)
 		// Get dimentions of glyph
 		int width = next_p2(bitmap.width);
 		int height = next_p2(bitmap.rows);
- 
+
 		// Allocate memory for the texture data
 		uchar* charData = new uchar[1 + 2*width*height]; // Create a 16-bit buffer
 		for(uint y = 0; y < height; y++)
@@ -524,12 +641,12 @@ int OpenGLRender::loadFont(const string &fontPathOrName, const uint fontSize)
 	glBindTexture(GL_TEXTURE_2D, font->texture);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
- 
+
 	// Fill texture data
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, result.canvas.x, result.canvas.y, 0,
 		GL_LUMINANCE_ALPHA, GL_UNSIGNED_BYTE, (GLvoid*)dataPtr);
 	glBindTexture(GL_TEXTURE_2D, 0);
- 
+
 	// Clean up FreeType
 	FT_Done_Face(face);
 	FT_Done_FreeType(library);
@@ -568,7 +685,7 @@ float OpenGLRender::stringWidth(const string &str)
 	FT_Face face;
 	if(FT_New_Face(library, m_currentFont->filePath.c_str(), 0, &face))
 		assert("FT_New_Face failed (there is probably a problem with your font file)");
- 
+
 	// Set character size
 	FT_Set_Char_Size(face, 0, m_currentFont->fontSize << 6, 96, 96);
 
@@ -580,7 +697,7 @@ float OpenGLRender::stringWidth(const string &str)
 		if(error) continue;
 		width += slot->advance.x >> 6;
 	}
- 
+
 	// Clean up FreeType
 	FT_Done_Face(face);
 	FT_Done_FreeType(library);
@@ -625,15 +742,15 @@ void OpenGLRender::begin(const X2DDrawMode mode)
 
 /*void printCallstack()
 {
-	ScriptContext *ctx = asGetActiveContext();
-	for(uint i = 0; i < ctx->GetCallstackSize(); i++)
-	{
-		const char *scriptSection;
-		int line, col;
-		ScriptFunction *func = ctx->GetFunction(i);
-		line = ctx->GetLineNumber(i, &col, &scriptSection);
-		print("%s:%s:%d,%d", scriptSection, func->GetDeclaration(), line, col);
-	}
+ScriptContext *ctx = asGetActiveContext();
+for(uint i = 0; i < ctx->GetCallstackSize(); i++)
+{
+const char *scriptSection;
+int line, col;
+ScriptFunction *func = ctx->GetFunction(i);
+line = ctx->GetLineNumber(i, &col, &scriptSection);
+print("%s:%s:%d,%d", scriptSection, func->GetDeclaration(), line, col);
+}
 }*/
 
 void OpenGLRender::addVertex(const vec2 pos)
@@ -658,17 +775,17 @@ void OpenGLRender::addRect(const vec2 pos, const vec2 size, const vec2 coord0, c
 		m_currentVertex.texCoord.set(coord0.x, coord1.y);
 	}
 	Vertex v0 = m_currentVertex;
-		
+
 	// Top-right
 	m_currentVertex.position.x += size.x;
 	m_currentVertex.texCoord.set(coord1.x, coord1.y);
 	Vertex v1 = m_currentVertex;
-		
+
 	// Bottom-right
 	m_currentVertex.position.y += size.y;
 	m_currentVertex.texCoord.set(coord1.x, coord0.y);
 	Vertex v2 = m_currentVertex;
-		
+
 	// Bottom-left
 	m_currentVertex.position.x -= size.x;
 	m_currentVertex.texCoord.set(coord0.x, coord0.y);
@@ -677,7 +794,7 @@ void OpenGLRender::addRect(const vec2 pos, const vec2 size, const vec2 coord0, c
 	m_currentBuffer->addVertex(v0);
 	m_currentBuffer->addVertex(v3);
 	m_currentBuffer->addVertex(v1);
-	
+
 	m_currentBuffer->addVertex(v1);
 	m_currentBuffer->addVertex(v3);
 	m_currentBuffer->addVertex(v2);
@@ -821,7 +938,7 @@ void OpenGLRender::drawFrontBatch()
 		{
 			const ShaderState *shader = &state->shader;
 			glUseProgram(shader->program);
-			
+
 			// Set all uniforms
 			for(uint i = 0; i < shader->uniforms.size(); i++)
 			{
@@ -912,7 +1029,7 @@ int OpenGLRender::createTexture(const int width, const int height, const X2DText
 	Texture *texture = &Textures[texid];
 	texture->width = width;
 	texture->height = height;
-	
+
 	glBindTexture(GL_TEXTURE_2D, texid);
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, width, height, 0, GL_RGBA, GL_UNSIGNED_INT_8_8_8_8_REV, (GLvoid*)vector<uint>(width*height, 0).data());
 	if(mipmap) glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, toGLFilterMode(filter) == GL_NEAREST ? GL_NEAREST_MIPMAP_LINEAR : GL_LINEAR_MIPMAP_LINEAR);
@@ -965,9 +1082,9 @@ void OpenGLRender::setTextureData(const int texId, const int width, const int he
 
 Array *OpenGLRender::getTextureData(const int texId)
 {
-    // Create the array object
+	// Create the array object
 	Texture *texture = &Textures[texId];
-    Array *arr = CreateArray("uint", texture->width*texture->height);
+	Array *arr = CreateArray("uint", texture->width*texture->height);
 
 	// Get texture data
 	uint *data = new uint[texture->width*texture->height];
@@ -990,81 +1107,81 @@ Array *OpenGLRender::getTextureData(const int texId)
 int OpenGLRender::loadShader(const string &vertFilePath, const string &fragFilePath)
 {
 	// Create vertex and fragment shaders
-    GLuint vertShader = glCreateShader(GL_VERTEX_SHADER);
-    GLuint fragShader = glCreateShader(GL_FRAGMENT_SHADER);
+	GLuint vertShader = glCreateShader(GL_VERTEX_SHADER);
+	GLuint fragShader = glCreateShader(GL_FRAGMENT_SHADER);
 
-    // Read shader files to string
+	// Read shader files to string
 	const char *vertShaderBuffer, *fragShaderBuffer;
 	long vertBufferLen = 0, fragBufferLen = 0; 
 	m_assetLoader->loadAsset(vertFilePath.c_str(), &vertShaderBuffer, &vertBufferLen);
 	m_assetLoader->loadAsset(fragFilePath.c_str(), &fragShaderBuffer, &fragBufferLen);
 
 	// Default vars
-    int result = 0;
-    int logLength;
+	int result = 0;
+	int logLength;
 
-    // Compile vertex shader
+	// Compile vertex shader
 	iosystem::print("Compiling vertex shader: %s", vertFilePath.c_str());
 	glShaderSource(vertShader, 1, &vertShaderBuffer, (int*)&vertBufferLen);
-    glCompileShader(vertShader);
+	glCompileShader(vertShader);
 	delete[] vertShaderBuffer;
 
-    // Validate vertex shader
-    glGetShaderiv(vertShader, GL_COMPILE_STATUS, &result);
-    glGetShaderiv(vertShader, GL_INFO_LOG_LENGTH, &logLength);
+	// Validate vertex shader
+	glGetShaderiv(vertShader, GL_COMPILE_STATUS, &result);
+	glGetShaderiv(vertShader, GL_INFO_LOG_LENGTH, &logLength);
 
 	// Get error log
-    char* compileLog = new char[logLength];
-    glGetShaderInfoLog(vertShader, logLength, NULL, compileLog);
+	char* compileLog = new char[logLength];
+	glGetShaderInfoLog(vertShader, logLength, NULL, compileLog);
 
 	// Print shader error to console
 	if(logLength > 1)
 		iosystem::print("\tCompile error: %s", compileLog);
 
-    // Compile fragment shader
-    iosystem::print("Compiling fragment shader: %s", fragFilePath.c_str());
-    glShaderSource(fragShader, 1, &fragShaderBuffer, (int*)&fragBufferLen);
-    glCompileShader(fragShader);
+	// Compile fragment shader
+	iosystem::print("Compiling fragment shader: %s", fragFilePath.c_str());
+	glShaderSource(fragShader, 1, &fragShaderBuffer, (int*)&fragBufferLen);
+	glCompileShader(fragShader);
 	delete[] fragShaderBuffer;
 
-    // Check fragment shader
-    glGetShaderiv(fragShader, GL_COMPILE_STATUS, &result);
-    glGetShaderiv(fragShader, GL_INFO_LOG_LENGTH, &logLength);
+	// Check fragment shader
+	glGetShaderiv(fragShader, GL_COMPILE_STATUS, &result);
+	glGetShaderiv(fragShader, GL_INFO_LOG_LENGTH, &logLength);
 
 	// Get error log
-    glGetShaderInfoLog(vertShader, logLength, NULL, compileLog);
+	glGetShaderInfoLog(vertShader, logLength, NULL, compileLog);
 
 	// Print shader error to console
 	if(logLength > 1)
 		iosystem::print("\tCompile error: %s", compileLog);
 
-    // Create shader program
-    GLuint program = glCreateProgram();
-    glAttachShader(program, vertShader);
-    glAttachShader(program, fragShader);
-    glLinkProgram(program);
+	// Create shader program
+	GLuint program = glCreateProgram();
+	glAttachShader(program, vertShader);
+	glAttachShader(program, fragShader);
+	glLinkProgram(program);
 
-    glGetProgramiv(program, GL_LINK_STATUS, &result);
-    glGetProgramiv(program, GL_INFO_LOG_LENGTH, &logLength);
+	glGetProgramiv(program, GL_LINK_STATUS, &result);
+	glGetProgramiv(program, GL_INFO_LOG_LENGTH, &logLength);
 
 	// Get error log
-    char* programLog = new char[(logLength > 1) ? logLength : 1];
-    glGetProgramInfoLog(program, logLength, NULL, programLog);
+	char* programLog = new char[(logLength > 1) ? logLength : 1];
+	glGetProgramInfoLog(program, logLength, NULL, programLog);
 
 	// Print program error to console
 	if(logLength > 1)
 		iosystem::print("\tCompile error: %s", compileLog);
 
 	// Delete shader buffers as they are loaded into the shader program
-    glDeleteShader(vertShader);
-    glDeleteShader(fragShader);
+	glDeleteShader(vertShader);
+	glDeleteShader(fragShader);
 
 	// Delete log buffers
 	delete[] compileLog;
 	delete[] programLog;
 
 	// Return shader program
-    return program;
+	return program;
 }
 
 void OpenGLRender::setUniform1i(const string &name, const int v0)
@@ -1184,7 +1301,7 @@ int OpenGLRender::loadImage(const string &filePath, const X2DTextureFilter filte
 
 	// Set texture data
 	setTextureData(texture, width, height, *arr, mipmap);
-	
+
 	// Return texture id
 	return texture;
 }
@@ -1192,7 +1309,7 @@ int OpenGLRender::loadImage(const string &filePath, const X2DTextureFilter filte
 Array *OpenGLRender::loadImageData(const string &filePath, int &w, int &h)
 {
 	// Create script array
-    Array *arr = CreateArray("uint", 0);
+	Array *arr = CreateArray("uint", 0);
 
 	if(!iosystem::isFile(filePath))
 	{
@@ -1290,7 +1407,7 @@ int OpenGLRender::copyToTexture(const int texId, const int x, const int y, const
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 	glBindTexture(GL_TEXTURE_2D, 0);
-	
+
 	// Setup texture
 	Texture *texture = &Textures[id];
 	texture->width = width;
@@ -1386,4 +1503,5 @@ int OpenGLRender::getDrawCallCount()
 {
 	if(m_batchStack.size() == 0) return 0;
 	return m_batchStack.back().buffers.size();
-}
+}  
+#endif // OLD

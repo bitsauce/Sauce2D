@@ -7,7 +7,7 @@
 class X2DAPI RectPacker
 {
 public:
-	class X2DAPI Rect : public rect2i
+	class X2DAPI Rect : public Recti
 	{
 	public:
 		Rect(void *data) :
@@ -43,7 +43,7 @@ public:
 		}
 
 		bool valid;
-		vec2i canvas;
+		Vector2i canvas;
 		int area;
 		float efficiency;
 		vector<Rect> rectList;

@@ -26,9 +26,9 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, INT)
 	// Process the command-line
 	int flags = 0;
 	for(int i = 0; i < __argc; i++) {
-		if(strcmp(__argv[i], "-debug") == 0)
+		if(strcmp(__argv[i], "-d") == 0)
 			flags |= X2D_Debug;
-		else if(strcmp(__argv[i], "-exportlog") == 0)
+		else if(strcmp(__argv[i], "-v") == 0)
 			flags |= X2D_ExportLog;
 	}
 	

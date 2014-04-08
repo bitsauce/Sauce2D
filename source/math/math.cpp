@@ -18,7 +18,7 @@ void RegisterMath()
 {
 	// Register value types
 	RegisterVectors();
-	RegisterRect2();
+	RegisterRect();
 }
 
 int math::strToInt(const string &str)

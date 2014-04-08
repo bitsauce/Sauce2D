@@ -4,107 +4,107 @@
 //  / ___ \ |_| | | | (_) | | | (_| |  >  <  / __/| |_| |
 // /_/   \_\__ _|_|  \___/|_|  \__ _| /_/\_\|_____|____/ 
 //		MixedGraphics (C)
-//		Inspired by: http://www.danielsoltyka.com/index.php/2010/05/30/c-vec2-rectangle-classes/
+//		Inspired by: http://www.danielsoltyka.com/index.php/2010/05/30/c-Vector2-rectangle-classes/
 
 
 #include "x2d/math/vector.h"
 #include "x2d/scripts.h"
 
-void ConstructVec2(vec2 *self)
+void ConstructVector2(Vector2 *self)
 {
-	new(self) vec2(0.0f);
+	new(self) Vector2(0.0f);
 }
  
 //-----------------------------------------------------
-// vec2
+// Vector2
 // - A 2-dimentional vector class
 //-----------------------------------------------------
 
 void RegisterVectors()
 {
-	// vec2
+	// Vector2
 	int r;
 
 	// Register the value type
-	AS_REGISTER_VALUE(vec2)
-	vec2::TypeId = r;
+	AS_REGISTER_VALUE(Vector2)
+	Vector2::TypeId = r;
 
 	// Register the object properties
-	AS_VALUE_PROPERTY(vec2, "float x", x)
-	AS_VALUE_PROPERTY(vec2, "float y", y)
+	AS_VALUE_PROPERTY(Vector2, "float x", x)
+	AS_VALUE_PROPERTY(Vector2, "float y", y)
 
 	// Register the constructors
-	r = scriptEngine->RegisterObjectBehaviour("vec2", asBEHAVE_CONSTRUCT, "void f()", asFUNCTION(ConstructVec2), asCALL_CDECL_OBJLAST); assert( r >= 0 );
-	//AS_VALUE_BEHAVIOURO(vec2, "void f()", asBEHAVE_CONSTRUCT, DefaultConstructor)
-	AS_VALUE_BEHAVIOURO(vec2, "void f(const vec2 &in)", asBEHAVE_CONSTRUCT, CopyConstructor1)
-	AS_VALUE_BEHAVIOURO(vec2, "void f(float)", asBEHAVE_CONSTRUCT, InitConstructor1)
-	AS_VALUE_BEHAVIOURO(vec2, "void f(float, float)", asBEHAVE_CONSTRUCT, InitConstructor2)
+	r = scriptEngine->RegisterObjectBehaviour("Vector2", asBEHAVE_CONSTRUCT, "void f()", asFUNCTION(ConstructVector2), asCALL_CDECL_OBJLAST); assert( r >= 0 );
+	//AS_VALUE_BEHAVIOURO(Vector2, "void f()", asBEHAVE_CONSTRUCT, DefaultConstructor)
+	AS_VALUE_BEHAVIOURO(Vector2, "void f(const Vector2 &in)", asBEHAVE_CONSTRUCT, CopyConstructor1)
+	AS_VALUE_BEHAVIOURO(Vector2, "void f(float)", asBEHAVE_CONSTRUCT, InitConstructor1)
+	AS_VALUE_BEHAVIOURO(Vector2, "void f(float, float)", asBEHAVE_CONSTRUCT, InitConstructor2)
 
 	// Register the operator overloads
-	AS_VALUE_METHOD(vec2, "vec2 &opAddAssign(const vec2 &in)", operator+=)
-	AS_VALUE_METHOD(vec2, "vec2 &opSubAssign(const vec2 &in)", operator-=)
-	AS_VALUE_METHOD(vec2, "vec2 &opMulAssign(const float)", operator*=)
-	AS_VALUE_METHOD(vec2, "vec2 &opDivAssign(const float)", operator/=)
-	AS_VALUE_METHOD(vec2, "bool opEquals(const vec2 &in) const", operator==)
-	AS_VALUE_METHOD(vec2, "vec2 opAdd(const vec2 &in) const", operator+)
-	AS_VALUE_METHOD(vec2, "vec2 opSub(const vec2 &in) const", operator-)
-	AS_VALUE_METHOD(vec2, "vec2 opMul(const float) const", operator*)
-	AS_VALUE_METHOD(vec2, "vec2 opDiv(const float) const", operator/)
+	AS_VALUE_METHOD(Vector2, "Vector2 &opAddAssign(const Vector2 &in)", operator+=)
+	AS_VALUE_METHOD(Vector2, "Vector2 &opSubAssign(const Vector2 &in)", operator-=)
+	AS_VALUE_METHOD(Vector2, "Vector2 &opMulAssign(const float)", operator*=)
+	AS_VALUE_METHOD(Vector2, "Vector2 &opDivAssign(const float)", operator/=)
+	AS_VALUE_METHOD(Vector2, "bool opEquals(const Vector2 &in) const", operator==)
+	AS_VALUE_METHOD(Vector2, "Vector2 opAdd(const Vector2 &in) const", operator+)
+	AS_VALUE_METHOD(Vector2, "Vector2 opSub(const Vector2 &in) const", operator-)
+	AS_VALUE_METHOD(Vector2, "Vector2 opMul(const float) const", operator*)
+	AS_VALUE_METHOD(Vector2, "Vector2 opDiv(const float) const", operator/)
 
 	// Register the object methods
-	AS_VALUE_METHOD(vec2, "void set(const float x, const float y)", set)
-	AS_VALUE_METHOD(vec2, "void rotate(const float)", rotate)
-	AS_VALUE_METHOD(vec2, "vec2 normalized() const", normalized)
-	AS_VALUE_METHOD(vec2, "void normalize()", normalize)
-	AS_VALUE_METHOD(vec2, "float dot(const vec2 &in) const", dot)
-	AS_VALUE_METHOD(vec2, "float cross(const vec2 &in) const", cross)
-	AS_VALUE_METHOD(vec2, "float distance(const vec2 &in) const", distance)
-	AS_VALUE_METHOD(vec2, "float magnitude() const", magnitude)
-	AS_VALUE_METHOD(vec2, "float length() const", magnitude)
-	AS_VALUE_METHODPR(vec2, "float angle() const", angle, () const, float)
-	AS_VALUE_METHODPR(vec2, "float angle(const vec2 &in) const", angle, (const vec2&) const, float)
+	AS_VALUE_METHOD(Vector2, "void set(const float x, const float y)", set)
+	AS_VALUE_METHOD(Vector2, "void rotate(const float)", rotate)
+	AS_VALUE_METHOD(Vector2, "Vector2 normalized() const", normalized)
+	AS_VALUE_METHOD(Vector2, "void normalize()", normalize)
+	AS_VALUE_METHOD(Vector2, "float dot(const Vector2 &in) const", dot)
+	AS_VALUE_METHOD(Vector2, "float cross(const Vector2 &in) const", cross)
+	AS_VALUE_METHOD(Vector2, "float distance(const Vector2 &in) const", distance)
+	AS_VALUE_METHOD(Vector2, "float magnitude() const", magnitude)
+	AS_VALUE_METHOD(Vector2, "float length() const", magnitude)
+	AS_VALUE_METHODPR(Vector2, "float angle() const", angle, () const, float)
+	AS_VALUE_METHODPR(Vector2, "float angle(const Vector2 &in) const", angle, (const Vector2&) const, float)
 
-	// vec2i
+	// Vector2i
 
 	// Register the value type
-	AS_REGISTER_VALUE(vec2i)
-	vec2i::TypeId = r;
+	AS_REGISTER_VALUE(Vector2i)
+	Vector2i::TypeId = r;
 
 	// Register the object properties
-	AS_VALUE_PROPERTY(vec2i, "int x", x)
-	AS_VALUE_PROPERTY(vec2i, "int y", y)
+	AS_VALUE_PROPERTY(Vector2i, "int x", x)
+	AS_VALUE_PROPERTY(Vector2i, "int y", y)
 
 	// Register the constructors
-	AS_VALUE_BEHAVIOURO(vec2i, "void f()", asBEHAVE_CONSTRUCT, DefaultConstructor)
-	AS_VALUE_BEHAVIOURO(vec2i, "void f(const vec2i &in)", asBEHAVE_CONSTRUCT, CopyConstructor1)
-	AS_VALUE_BEHAVIOURO(vec2i, "void f(const vec2 &in)", asBEHAVE_CONSTRUCT, CopyConstructor2)
-	AS_VALUE_BEHAVIOURO(vec2, "void f(const vec2i &in)", asBEHAVE_CONSTRUCT, CopyConstructor2) // vec2 to vec2i
-	AS_VALUE_BEHAVIOURO(vec2i, "void f(int)", asBEHAVE_CONSTRUCT, InitConstructor1)
-	AS_VALUE_BEHAVIOURO(vec2i, "void f(int, int)", asBEHAVE_CONSTRUCT, InitConstructor2)
+	AS_VALUE_BEHAVIOURO(Vector2i, "void f()", asBEHAVE_CONSTRUCT, DefaultConstructor)
+	AS_VALUE_BEHAVIOURO(Vector2i, "void f(const Vector2i &in)", asBEHAVE_CONSTRUCT, CopyConstructor1)
+	AS_VALUE_BEHAVIOURO(Vector2i, "void f(const Vector2 &in)", asBEHAVE_CONSTRUCT, CopyConstructor2)
+	AS_VALUE_BEHAVIOURO(Vector2, "void f(const Vector2i &in)", asBEHAVE_CONSTRUCT, CopyConstructor2) // Vector2 to Vector2i
+	AS_VALUE_BEHAVIOURO(Vector2i, "void f(int)", asBEHAVE_CONSTRUCT, InitConstructor1)
+	AS_VALUE_BEHAVIOURO(Vector2i, "void f(int, int)", asBEHAVE_CONSTRUCT, InitConstructor2)
 
 	// Register the operator overloads
-	AS_VALUE_METHOD(vec2i, "vec2i &opAddAssign(const vec2i &in)", operator+=)
-	AS_VALUE_METHOD(vec2i, "vec2i &opSubAssign(const vec2i &in)", operator-=)
-	AS_VALUE_METHOD(vec2i, "vec2i &opMulAssign(const float)", operator*=)
-	AS_VALUE_METHOD(vec2i, "vec2i &opDivAssign(const float)", operator/=)
-	AS_VALUE_METHOD(vec2i, "bool opEquals(const vec2i &in) const", operator==)
-	AS_VALUE_METHOD(vec2i, "vec2i opAdd(const vec2i &in) const", operator+)
-	AS_VALUE_METHOD(vec2i, "vec2i opSub(const vec2i &in) const", operator-)
-	AS_VALUE_METHOD(vec2i, "vec2i opMul(const float) const", operator*)
-	AS_VALUE_METHOD(vec2i, "vec2i opDiv(const float) const", operator/)
+	AS_VALUE_METHOD(Vector2i, "Vector2i &opAddAssign(const Vector2i &in)", operator+=)
+	AS_VALUE_METHOD(Vector2i, "Vector2i &opSubAssign(const Vector2i &in)", operator-=)
+	AS_VALUE_METHOD(Vector2i, "Vector2i &opMulAssign(const float)", operator*=)
+	AS_VALUE_METHOD(Vector2i, "Vector2i &opDivAssign(const float)", operator/=)
+	AS_VALUE_METHOD(Vector2i, "bool opEquals(const Vector2i &in) const", operator==)
+	AS_VALUE_METHOD(Vector2i, "Vector2i opAdd(const Vector2i &in) const", operator+)
+	AS_VALUE_METHOD(Vector2i, "Vector2i opSub(const Vector2i &in) const", operator-)
+	AS_VALUE_METHOD(Vector2i, "Vector2i opMul(const float) const", operator*)
+	AS_VALUE_METHOD(Vector2i, "Vector2i opDiv(const float) const", operator/)
 
 	// Register the object methods
-	AS_VALUE_METHOD(vec2i, "void set(const int x, const int y)", set)
-	AS_VALUE_METHOD(vec2i, "void rotate(const float)", rotate)
-	AS_VALUE_METHOD(vec2i, "vec2i normalized() const", normalized)
-	AS_VALUE_METHOD(vec2i, "void normalize()", normalize)
-	AS_VALUE_METHOD(vec2i, "float dot(const vec2i &in) const", dot)
-	AS_VALUE_METHOD(vec2i, "float cross(const vec2i &in) const", cross)
-	AS_VALUE_METHOD(vec2i, "float distance(const vec2i &in) const", distance)
-	AS_VALUE_METHOD(vec2i, "float magnitude() const", magnitude)
-	AS_VALUE_METHOD(vec2i, "float length() const", magnitude)
-	AS_VALUE_METHODPR(vec2i, "float angle() const", angle, () const, float)
-	AS_VALUE_METHODPR(vec2i, "float angle(const vec2i &in) const", angle, (const vec2i&) const, float)
+	AS_VALUE_METHOD(Vector2i, "void set(const int x, const int y)", set)
+	AS_VALUE_METHOD(Vector2i, "void rotate(const float)", rotate)
+	AS_VALUE_METHOD(Vector2i, "Vector2i normalized() const", normalized)
+	AS_VALUE_METHOD(Vector2i, "void normalize()", normalize)
+	AS_VALUE_METHOD(Vector2i, "float dot(const Vector2i &in) const", dot)
+	AS_VALUE_METHOD(Vector2i, "float cross(const Vector2i &in) const", cross)
+	AS_VALUE_METHOD(Vector2i, "float distance(const Vector2i &in) const", distance)
+	AS_VALUE_METHOD(Vector2i, "float magnitude() const", magnitude)
+	AS_VALUE_METHOD(Vector2i, "float length() const", magnitude)
+	AS_VALUE_METHODPR(Vector2i, "float angle() const", angle, () const, float)
+	AS_VALUE_METHODPR(Vector2i, "float angle(const Vector2i &in) const", angle, (const Vector2i&) const, float)
 	
 	// vec3
 
@@ -206,53 +206,53 @@ void RegisterVectors()
 // Functions
 //----------------------------------------------------------------------------
 
-// vec2
+// Vector2
 
-int vec2::TypeId;
+int Vector2::TypeId;
 
-vec2::vec2(float xy)
+Vector2::Vector2(float xy)
 {
 	x = xy;
 	y = xy;
 }
 
-vec2::vec2(float x, float y)
+Vector2::Vector2(float x, float y)
 {
     this->x = x;
     this->y = y;
 }
 
-vec2::vec2(const vec2i &v)
+Vector2::Vector2(const Vector2i &v)
 {
     this->x = (float)v.x;
     this->y = (float)v.y;
 }
 
-void vec2::set(const float x, const float y)
+void Vector2::set(const float x, const float y)
 {
     this->x = x;
     this->y = y;
 }
 
 // Transform
-void vec2::rotate(const float angle)
+void Vector2::rotate(const float angle)
 {
     x = (x * cosf(angle)) - (y * sinf(angle));
     y = (y * cosf(angle)) + (x * sinf(angle));
 }
 
-float vec2::angle() const
+float Vector2::angle() const
 {
     return atan2(y, x);
 }
 
-float vec2::angle(const vec2& v2) const
+float Vector2::angle(const Vector2& v2) const
 {
 	return acos(dot(v2)/(magnitude()*v2.magnitude()));
 }
 
 // Vector functions
-void vec2::normalize()
+void Vector2::normalize()
 {
     float mag = magnitude();
     if(mag != 0.0) {
@@ -261,35 +261,35 @@ void vec2::normalize()
     }
 }
 
-vec2 vec2::normalized() const
+Vector2 Vector2::normalized() const
 {
 	if(x == 0.0f && y == 0.0f)
-		return vec2(0.0f);
+		return Vector2(0.0f);
     float mag = magnitude();
-	return vec2(x/mag, y/mag);
+	return Vector2(x/mag, y/mag);
 }
 
-float vec2::dot(const vec2 &v2) const
+float Vector2::dot(const Vector2 &v2) const
 {
     return (x*v2.x)+(y*v2.y);
 }
 
-float vec2::cross(const vec2 &v2) const
+float Vector2::cross(const Vector2 &v2) const
 {
     return (x*v2.y)-(y*v2.x);
 }
 
-float vec2::magnitude() const
+float Vector2::magnitude() const
 {
     return sqrtf(x*x+y*y);
 }
 
-float vec2::distance(const vec2& v2) const
+float Vector2::distance(const Vector2& v2) const
 {
     return sqrtf(pow((v2.x - x), 2 ) + pow((v2.y - y), 2));
 }
 
-vec2& vec2::operator=(const vec2& v2)
+Vector2& Vector2::operator=(const Vector2& v2)
 {
     if(this == &v2) return *this;
     x = v2.x;
@@ -297,107 +297,107 @@ vec2& vec2::operator=(const vec2& v2)
     return *this;
 }
 
-vec2& vec2::operator+=(const vec2& v2)
+Vector2& Vector2::operator+=(const Vector2& v2)
 {
     x += v2.x;
     y += v2.y;
     return *this;
 }
  
-vec2& vec2::operator-=(const vec2& v2)
+Vector2& Vector2::operator-=(const Vector2& v2)
 {
     x -= v2.x;
     y -= v2.y;
     return *this;
 }
  
-vec2& vec2::operator*=(const float scalar)
+Vector2& Vector2::operator*=(const float scalar)
 {
     x *= scalar;
     y *= scalar;
     return *this;
 }
  
-vec2& vec2::operator/=(const float scalar)
+Vector2& Vector2::operator/=(const float scalar)
 {
     x /= scalar;
     y /= scalar;
     return *this;
 }
  
-const vec2 vec2::operator+(const vec2 &v2) const
+const Vector2 Vector2::operator+(const Vector2 &v2) const
 {
-    return vec2(*this) += v2;
+    return Vector2(*this) += v2;
 }
  
-const vec2 vec2::operator-(const vec2 &v2) const
+const Vector2 Vector2::operator-(const Vector2 &v2) const
 {
-    return vec2(*this) -= v2;
+    return Vector2(*this) -= v2;
 }
  
-const vec2 vec2::operator*(const float scalar) const
+const Vector2 Vector2::operator*(const float scalar) const
 {
-    return vec2(*this) *= scalar;
+    return Vector2(*this) *= scalar;
 }
  
-const vec2 vec2::operator/(const float scalar) const
+const Vector2 Vector2::operator/(const float scalar) const
 {
-    return vec2(*this) /= scalar;
+    return Vector2(*this) /= scalar;
 }
  
-bool vec2::operator== (const vec2& v2) const
+bool Vector2::operator== (const Vector2& v2) const
 {
     return ((x == v2.x) && (y == v2.y));
 }
 
-// vec2i
+// Vector2i
 
-int vec2i::TypeId;
+int Vector2i::TypeId;
 
-vec2i::vec2i(int xy)
+Vector2i::Vector2i(int xy)
 {
 	x = xy;
 	y = xy;
 }
 
-vec2i::vec2i(int x, int y)
+Vector2i::Vector2i(int x, int y)
 {
     this->x = x;
     this->y = y;
 }
 
-vec2i::vec2i(const vec2 &v)
+Vector2i::Vector2i(const Vector2 &v)
 {
     this->x = (int)v.x;
     this->y = (int)v.y;
 }
 
 // Setting
-void vec2i::set(const int x, const int y)
+void Vector2i::set(const int x, const int y)
 {
     this->x = x;
     this->y = y;
 }
 
 // Transform
-void vec2i::rotate(const float angle)
+void Vector2i::rotate(const float angle)
 {
     x = int(x * cosf(angle)) - int(y * sinf(angle));
     y = int(y * cosf(angle)) + int(x * sinf(angle));
 }
 
-float vec2i::angle() const
+float Vector2i::angle() const
 {
     return atan2((float)y, (float)x);
 }
 
-float vec2i::angle(const vec2i& v2) const
+float Vector2i::angle(const Vector2i& v2) const
 {
 	return acos(dot(v2)/(magnitude()*v2.magnitude()));
 }
 
 // Vector functions
-void vec2i::normalize()
+void Vector2i::normalize()
 {
     int mag = (int)magnitude();
     if(mag != 0.0) {
@@ -406,35 +406,35 @@ void vec2i::normalize()
     }
 }
 
-vec2i vec2i::normalized() const
+Vector2i Vector2i::normalized() const
 {
 	if(x == 0.0f && y == 0.0f)
-		return vec2i(0);
+		return Vector2i(0);
     float mag = magnitude();
-	return vec2i(int(x/mag), int(y/mag));
+	return Vector2i(int(x/mag), int(y/mag));
 }
 
-float vec2i::dot(const vec2i &v2) const
+float Vector2i::dot(const Vector2i &v2) const
 {
     return float(x*v2.x)+float(y*v2.y);
 }
 
-float vec2i::cross(const vec2i &v2) const
+float Vector2i::cross(const Vector2i &v2) const
 {
     return float(x*v2.y)-float(y*v2.x);
 }
 
-float vec2i::magnitude() const
+float Vector2i::magnitude() const
 {
     return sqrtf((float)x*x+(float)y*y);
 }
 
-float vec2i::distance(const vec2i& v2) const
+float Vector2i::distance(const Vector2i& v2) const
 {
     return sqrtf(pow(float(v2.x - x), 2.0f) + pow(float(v2.y - y), 2.0f));
 }
 
-vec2i& vec2i::operator=(const vec2i& v2)
+Vector2i& Vector2i::operator=(const Vector2i& v2)
 {
     if(this == &v2) return *this;
     x = v2.x;
@@ -442,55 +442,55 @@ vec2i& vec2i::operator=(const vec2i& v2)
     return *this;
 }
 
-vec2i& vec2i::operator+=(const vec2i& v2)
+Vector2i& Vector2i::operator+=(const Vector2i& v2)
 {
     x += v2.x;
     y += v2.y;
     return *this;
 }
  
-vec2i& vec2i::operator-=(const vec2i& v2)
+Vector2i& Vector2i::operator-=(const Vector2i& v2)
 {
     x -= v2.x;
     y -= v2.y;
     return *this;
 }
  
-vec2i& vec2i::operator*=(const float scalar)
+Vector2i& Vector2i::operator*=(const float scalar)
 {
     x *= (int)scalar;
     y *= (int)scalar;
     return *this;
 }
  
-vec2i& vec2i::operator/=(const float scalar)
+Vector2i& Vector2i::operator/=(const float scalar)
 {
     x /= (int)scalar;
     y /= (int)scalar;
     return *this;
 }
  
-const vec2i vec2i::operator+(const vec2i &v2) const
+const Vector2i Vector2i::operator+(const Vector2i &v2) const
 {
-    return vec2i(*this) += v2;
+    return Vector2i(*this) += v2;
 }
  
-const vec2i vec2i::operator-(const vec2i &v2) const
+const Vector2i Vector2i::operator-(const Vector2i &v2) const
 {
-    return vec2i(*this) -= v2;
+    return Vector2i(*this) -= v2;
 }
  
-const vec2i vec2i::operator*(const float scalar) const
+const Vector2i Vector2i::operator*(const float scalar) const
 {
-    return vec2i(*this) *= scalar;
+    return Vector2i(*this) *= scalar;
 }
  
-const vec2i vec2i::operator/(const float scalar) const
+const Vector2i Vector2i::operator/(const float scalar) const
 {
-    return vec2i(*this) /= scalar;
+    return Vector2i(*this) /= scalar;
 }
  
-bool vec2i::operator== (const vec2i& v2) const
+bool Vector2i::operator== (const Vector2i& v2) const
 {
     return ((x == v2.x) && (y == v2.y));
 }
@@ -499,53 +499,53 @@ bool vec2i::operator== (const vec2i& v2) const
 // AngelScript
 //----------------------------------------------------------------------------
 
-// vec2
+// Vector2
 
-void vec2::CopyConstructor1(const vec2 &other, vec2 *self)
+void Vector2::CopyConstructor1(const Vector2 &other, Vector2 *self)
 {
-	new(self) vec2(other);
+	new(self) Vector2(other);
 }
 
-void vec2::CopyConstructor2(const vec2i &other, vec2 *self)
+void Vector2::CopyConstructor2(const Vector2i &other, Vector2 *self)
 {
-	new(self) vec2(other);
+	new(self) Vector2(other);
 }
 
-void vec2::InitConstructor1(float xy, vec2 *self)
+void Vector2::InitConstructor1(float xy, Vector2 *self)
 {
-	new(self) vec2(xy);
+	new(self) Vector2(xy);
 }
 
-void vec2::InitConstructor2(float x, float y, vec2 *self)
+void Vector2::InitConstructor2(float x, float y, Vector2 *self)
 {
-	new(self) vec2(x, y);
+	new(self) Vector2(x, y);
 }
 
-// vec2i
+// Vector2i
 
-void vec2i::DefaultConstructor(vec2i *self)
+void Vector2i::DefaultConstructor(Vector2i *self)
 {
-	new(self) vec2i(0);
+	new(self) Vector2i(0);
 }
 
-void vec2i::CopyConstructor1(const vec2i &other, vec2i *self)
+void Vector2i::CopyConstructor1(const Vector2i &other, Vector2i *self)
 {
-	new(self) vec2i(other);
+	new(self) Vector2i(other);
 }
 
-void vec2i::CopyConstructor2(const vec2 &other, vec2i *self)
+void Vector2i::CopyConstructor2(const Vector2 &other, Vector2i *self)
 {
-	new(self) vec2i(other);
+	new(self) Vector2i(other);
 }
 
-void vec2i::InitConstructor1(int xy, vec2i *self)
+void Vector2i::InitConstructor1(int xy, Vector2i *self)
 {
-	new(self) vec2i(xy);
+	new(self) Vector2i(xy);
 }
 
-void vec2i::InitConstructor2(int x, int y, vec2i *self)
+void Vector2i::InitConstructor2(int x, int y, Vector2i *self)
 {
-	new(self) vec2i(x, y);
+	new(self) Vector2i(x, y);
 }
  
 //-----------------------------------------------------
