@@ -7,8 +7,9 @@
 //				Originally written by Marcus Loo Vergara (aka. Bitsauce)
 //									2011-2014 (C)
 
-#include "opengl.h"
+#include "glgraphics.h"
 #include "gltexture.h"
+#include "glshader.h"
 
 void OpenGL::renderBatch(const Batch &batch)
 {
@@ -111,6 +112,11 @@ void OpenGL::renderBatch(const Batch &batch)
 Texture *OpenGL::createTexture(const Pixmap &pixmap)
 {
 	return new GLtexture(pixmap);
+}
+
+Shader *OpenGL::createShader(const string &vertFilePath, const string &fragFilePath)
+{
+	return new GLshader(vertFilePath, fragFilePath);
 }
 
 

@@ -43,9 +43,9 @@ int Texture::Register(asIScriptEngine *scriptEngine)
 	r = scriptEngine->RegisterObjectMethod("Texture", "void setFiltering(const TextureFilter filter)", asMETHODPR(Texture, setFiltering, (const xdTextureFilter), void), asCALL_THISCALL); AS_ASSERT
 	r = scriptEngine->RegisterObjectMethod("Texture", "Pixmap getPixmap() const", asMETHODPR(Texture, getPixmap, () const, Pixmap), asCALL_THISCALL); AS_ASSERT
 
-	r = scriptEngine->RegisterObjectMethod("Texture", "void updatePixmap(const Pixmap &in)", asMETHODPR(Texture, updatePixmap, (const Pixmap &), void), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("Texture", "void updatePixmap(const int, const int, const Pixmap &in)", asMETHODPR(Texture, updatePixmap, (const int, const int, const Pixmap &), void), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("Texture", "void clear(c)", asMETHODPR(Texture, clear, (), void), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("Texture", "void update(const Pixmap &in)", asMETHODPR(Texture, updatePixmap, (const Pixmap &), void), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("Texture", "void updateSection(const int, const int, const Pixmap &in)", asMETHODPR(Texture, updatePixmap, (const int, const int, const Pixmap &), void), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("Texture", "void clear()", asMETHODPR(Texture, clear, (), void), asCALL_THISCALL); AS_ASSERT
 
 	return r;
 }

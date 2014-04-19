@@ -7,6 +7,7 @@ public:
 	Batch();
 
 	void addVertex();
+	void setProjectionMatrix();
 
 private:
 

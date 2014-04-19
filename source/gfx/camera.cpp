@@ -8,3 +8,12 @@
 //									2011-2014 (C)
 
 #include "camera.h"
+
+Camera::Camera()
+{
+}
+
+Matrix4 Camera::getProjectionMatix()
+{
+	return m_projMatrix;
+}

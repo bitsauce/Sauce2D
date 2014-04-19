@@ -3,8 +3,7 @@
 
 #include <x2d/math.h>
 
-// Will use:
-// - glOrtho()
+// NOTE: Camera == Transform == Matrix4
 
 class Camera
 {

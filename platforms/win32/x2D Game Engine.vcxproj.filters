@@ -22,6 +22,9 @@
     <ClCompile Include="source\gfx\opengl\glgraphics.cpp">
       <Filter>source\gfx\opengl</Filter>
     </ClCompile>
+    <ClCompile Include="source\gfx\opengl\glshader.cpp">
+      <Filter>source\gfx\opengl</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\gfx\opengl\gltexture.h">
@@ -40,6 +43,9 @@
       <Filter>source\app</Filter>
     </ClInclude>
     <ClInclude Include="source\gfx\opengl\glgraphics.h">
+      <Filter>source\gfx\opengl</Filter>
+    </ClInclude>
+    <ClInclude Include="source\gfx\opengl\glshader.h">
       <Filter>source\gfx\opengl</Filter>
     </ClInclude>
   </ItemGroup>

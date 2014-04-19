@@ -82,6 +82,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="source\gfx\opengl\glshader.cpp" />
     <ClCompile Include="source\gfx\opengl\gltexture.cpp" />
     <ClCompile Include="source\gfx\opengl\glgraphics.cpp" />
     <ClCompile Include="winassetloader.cpp" />
@@ -94,6 +95,7 @@
     <ResourceCompile Include="resources.rc" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="source\gfx\opengl\glshader.h" />
     <ClInclude Include="source\gfx\opengl\gltexture.h" />
     <ClInclude Include="source\gfx\opengl\glgraphics.h" />
     <ClInclude Include="winassetloader.h" />

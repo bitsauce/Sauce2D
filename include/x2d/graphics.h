@@ -5,6 +5,7 @@
 
 class Pixmap;
 class Texture;
+class Shader;
 class Batch;
 
 /*********************************************************************
@@ -14,14 +15,17 @@ class Batch;
 class X2DAPI Graphics
 {
 public:
+	// Global factory
 	static Texture *CreateTexture(const Pixmap &pixmap);
 	static Texture *CreateTexture(const string &filePath);
 	static Texture *CreateTexture(const int width, const int height);
 	static Texture *CreateTexture(const Texture &texture);
+	static Shader *CreateShader(const string &vertFilePath, const string &fragFilePath); 
 
 private:
 	virtual void renderBatch(const Batch &batch) = 0;
 	virtual Texture *createTexture(const Pixmap &pixmap) = 0;
+	virtual Shader *createShader(const string &vertFilePath, const string &fragFilePath) = 0;
 	static Graphics *gfx;
 };
 
@@ -206,7 +210,7 @@ private:
 			// Apply modelview
 			float m[16];
 			glGetFloatv(GL_MODELVIEW_MATRIX, m);
-			mat4 modelView(m);
+			Matrix4 modelView(m);
 			vec4 newpos = vec4(v0.position.x, v0.position.y, 0.0f, 1.0f)*modelView; // TDOD: Speed up by using my own vec4
 			v0.position.set(newpos.x, newpos.y); 
 
@@ -305,7 +309,7 @@ private:
 	DynamicBuffer *m_currentBuffer;
 	
 	// TODO: Move matrix stack to X2DRender
-	vector<mat4> m_matrixStack;
+	vector<Matrix4> m_matrixStack;
 
 	// Engine handle
 	X2DEngine *m_engine;

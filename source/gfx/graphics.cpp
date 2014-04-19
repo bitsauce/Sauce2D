@@ -31,3 +31,8 @@ Texture* Graphics::CreateTexture(const Texture &texture)
 {
 	return gfx->createTexture(texture.getPixmap());
 }
+
+Shader* Graphics::CreateShader(const string &vertFilePath, const string &fragFilePath)
+{
+	return gfx->createShader(vertFilePath, fragFilePath);
+}
