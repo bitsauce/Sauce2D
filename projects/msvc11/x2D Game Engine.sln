@@ -11,6 +11,9 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "x2d", "x2d.vcxproj", "{F3F2
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "x2D Game Engine", "..\..\platforms\win32\x2D Game Engine.vcxproj", "{B781FFBE-67AB-4B3D-92D7-9C9D89A36CC0}"
+	ProjectSection(ProjectDependencies) = postProject
+		{F3F25B49-2C6B-4FF0-98FB-47695DF70B8A} = {F3F25B49-2C6B-4FF0-98FB-47695DF70B8A}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "angelscript", "..\..\3rdparty\angelscript\sdk\angelscript\projects\msvc11\angelscript.vcxproj", "{39E6AF97-6BA3-4A72-8C61-BCEBF214EBFD}"
 EndProject

@@ -10,8 +10,189 @@
 #include "glgraphics.h"
 #include "gltexture.h"
 #include "glshader.h"
+#include "../../../window.h"
+
+void OpenGL::init(Window *window)
+{
+	// Init glew
+	//glewExperimental = true;
+	if(glewInit() != GLEW_OK)
+		assert("GLEW did not initialize!");
+
+	// Check if non-power of two textures are supported
+	if(!GLEW_ARB_texture_non_power_of_two)
+		LOG("WARNING: NPOT is not supported on this card!");
+
+	// Check if FBOs are supported
+	if(!GLEW_EXT_framebuffer_object)
+		LOG("WARNING: FBO is not supported on this card!");
+
+	// Check if VBOs are supported
+	if(!GLEW_ARB_vertex_buffer_object)
+		LOG("WARNING: VBO is not supported on this card!");
+
+	// Check if PBOs are supported
+	if(!GLEW_EXT_pixel_buffer_object)
+		LOG("WARNING: PBO is not supported on this card!");
+
+	// Check if (changing) v-sync (state) is supported
+	if(!WGLEW_EXT_swap_control)
+		LOG("WARNING: VSYNC is not supported on this card!");
+
+	Vector2i size = window->getSize();
+	setOrthoProjection(0.0f, (float)size.x, (float)size.y, 0.0f, -1.0f, 1.0f);
+	setViewport(Recti(0, 0, size.x, size.y));
+
+	// Init OpenGL
+	glEnable(GL_TEXTURE_2D);
+	glShadeModel(GL_SMOOTH);
+	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+
+	// Enable alpha
+	glEnable(GL_ALPHA_TEST);
+	glAlphaFunc(GL_GREATER, 0.0f);
+
+	// Enable blend
+	glEnable(GL_BLEND);
+
+	// Set OpenGL hints
+	glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
+
+	// Setup matrix stack
+	//m_matrixStack.resize(1);
+}
+
+void OpenGL::createContext(HWND window)
+{
+	// Describes the pixel format of the drawing surface
+	PIXELFORMATDESCRIPTOR pfd;
+	memset(&pfd, 0, sizeof(PIXELFORMATDESCRIPTOR));
+	pfd.nSize = sizeof(PIXELFORMATDESCRIPTOR);
+	pfd.nVersion = 1;					// Version Number
+	pfd.dwFlags = PFD_DRAW_TO_WINDOW |	// Draws to a window
+		PFD_SUPPORT_OPENGL |	// The format must support OpenGL
+		PFD_DOUBLEBUFFER;		// Support for double buffering
+	pfd.iPixelType = PFD_TYPE_RGBA;		// Uses an RGBA pixel format
+	pfd.cColorBits = 24;				// 24 bits colors
+	pfd.cAlphaBits = 8;					// 8 bits alpha
+
+	// Get device context
+	m_deviceContext = GetDC(window);
+	if(!m_deviceContext)	
+		assert("Unable to create rendering context");
+
+	// Do Windows find a matching pixel format?
+	int pixelFormat = ChoosePixelFormat(m_deviceContext, &pfd);
+	if(!pixelFormat)				
+		assert("Unable to create rendering context");
+
+	// Set the new pixel format
+	if(!SetPixelFormat(m_deviceContext, pixelFormat, &pfd))			
+		assert("Unable to create rendering context");
+
+	// Create the OpenGL rendering context
+	m_openGLContext = wglCreateContext(m_deviceContext);
+	if(!m_openGLContext)
+		assert("Unable to create rendering context");
+
+	// Activate the rendering context
+	if(!wglMakeCurrent(m_deviceContext, m_openGLContext))
+		assert("Unable to create rendering context");
+}
+
+void OpenGL::destroyContext()
+{
+	if(m_openGLContext)
+	{
+		// Make the rendering context not current
+		wglMakeCurrent(NULL, NULL);
+
+		// Delete the OpenGL rendering context
+		wglDeleteContext(m_openGLContext);
+		m_openGLContext = NULL;
+	}
+}
+
+void OpenGL::swapBuffers()
+{
+	SwapBuffers(m_deviceContext);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+}
+
+void OpenGL::setViewport(const Recti &rect)
+{
+	glViewport(rect.getX(), rect.getY(), rect.getWidth(), rect.getHeight());
+}
+
+void OpenGL::setOrthoProjection(const float l, const float r, const float b, const float t, const float n, const float f)
+{
+	// Set orthographic projection
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+	glOrtho(l, r, b, t, n, f);
+	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
+
+	// Store orthographic projection
+	m_currentOrtho[0] = l;
+	m_currentOrtho[1] = r;
+	m_currentOrtho[2] = b;
+	m_currentOrtho[3] = t;
+	m_currentOrtho[4] = n;
+	m_currentOrtho[5] = f;
+}
+
+void OpenGL::getOrthoProjection(float &l, float &r, float &b, float &t, float &n, float &f)
+{
+	// Get orthographic projection
+	l = m_currentOrtho[0];
+	r = m_currentOrtho[1];
+	b = m_currentOrtho[2];
+	t = m_currentOrtho[3];
+	n = m_currentOrtho[4];
+	f = m_currentOrtho[5];
+}
+
+#include "../source/gfx/batch.h"
+
+const int floatSize = sizeof(float);
 
 void OpenGL::renderBatch(const Batch &batch)
+{
+	// Enable client state
+	glEnableClientState(GL_VERTEX_ARRAY);
+	glEnableClientState(GL_COLOR_ARRAY);
+	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+
+	map<Texture*, Batch::Buffer> buffers = batch.m_buffers;
+	for(map<Texture*, Batch::Buffer>::iterator itr = buffers.begin(); itr != buffers.end(); ++itr)
+	{
+		glActiveTexture(GL_TEXTURE0);
+		if(itr->first) {
+			glBindTexture(GL_TEXTURE_2D, ((GLtexture*)itr->first)->m_id);
+		}else{
+			glBindTexture(GL_TEXTURE_2D, 0);
+		}
+		
+		// Get vertices and vertex data
+		float *vertexData = (float*)itr->second.vertices.data();
+		uint *indexData = (uint*)itr->second.indices.data();
+
+		// Draw arrays
+		glVertexPointer(2, GL_FLOAT, 8*floatSize, vertexData);
+		glColorPointer(4, GL_FLOAT, 8*floatSize, vertexData + 2);
+		glTexCoordPointer(2, GL_FLOAT, 8*floatSize, vertexData + 6);
+
+		glDrawElements(GL_TRIANGLES, itr->second.indices.size(), GL_UNSIGNED_INT, indexData);
+	}
+
+	// Disable client state
+	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+	glDisableClientState(GL_COLOR_ARRAY);
+	glDisableClientState(GL_VERTEX_ARRAY);
+}
+
+/*void OpenGL::renderBatch(const Batch &batch)
 {
 	// Enable client state
 	glEnableClientState(GL_VERTEX_ARRAY);
@@ -107,7 +288,7 @@ void OpenGL::renderBatch(const Batch &batch)
 	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 	glDisableClientState(GL_COLOR_ARRAY);
 	glDisableClientState(GL_VERTEX_ARRAY);
-}
+}*/
 
 Texture *OpenGL::createTexture(const Pixmap &pixmap)
 {
@@ -119,6 +300,16 @@ Shader *OpenGL::createShader(const string &vertFilePath, const string &fragFileP
 	return new GLshader(vertFilePath, fragFilePath);
 }
 
+// Vsync
+void OpenGL::enableVsync()
+{
+	wglSwapIntervalEXT(1);
+}
+
+void OpenGL::disableVsync()
+{
+	wglSwapIntervalEXT(0);
+}
 
 #ifdef OLD
 //       ____  ____     ____                        _____             _            
@@ -243,56 +434,6 @@ OpenGLRender::~OpenGLRender()
 	destroyContext();
 }
 
-void OpenGLRender::init()
-{
-	// Init glew
-	//glewExperimental = true;
-	if(glewInit() != GLEW_OK)
-		assert("GLEW did not initialize!");
-
-	// Check if non-power of two textures are supported
-	if(!GLEW_ARB_texture_non_power_of_two)
-		iosystem::warn("WARNING: NPOT is not supported on this card!");
-
-	// Check if FBOs are supported
-	if(!GLEW_EXT_framebuffer_object)
-		iosystem::warn("WARNING: FBO is not supported on this card!");
-
-	// Check if VBOs are supported
-	if(!GLEW_ARB_vertex_buffer_object)
-		iosystem::warn("WARNING: VBO is not supported on this card!");
-
-	// Check if PBOs are supported
-	if(!GLEW_EXT_pixel_buffer_object)
-		iosystem::warn("WARNING: PBO is not supported on this card!");
-
-	// Check if (changing) v-sync (state) is supported
-	if(!WGLEW_EXT_swap_control)
-		iosystem::warn("WARNING: VSYNC is not supported on this card!");
-
-	int w, h; m_engine->app->size(w, h);
-	setOrthoProjection(0.0f, (float)w, (float)h, 0.0f, -1.0f, 1.0f);
-	X2DRender::setViewport(0, 0, w, h);
-
-	// Init OpenGL
-	glEnable(GL_TEXTURE_2D);
-	glShadeModel(GL_SMOOTH);
-	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
-
-	// Enable alpha
-	glEnable(GL_ALPHA_TEST);
-	glAlphaFunc(GL_GREATER, 0.0f);
-
-	// Enable blend
-	glEnable(GL_BLEND);
-
-	// Set OpenGL hints
-	glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
-
-	// Setup matrix stack
-	m_matrixStack.resize(1);
-}
-
 void OpenGLRender::beginDraw()
 {
 	// Clear front buffer
@@ -310,102 +451,17 @@ void OpenGLRender::endDraw()
 	int r = 0;
 	if((r = glGetError()) != GL_NO_ERROR)
 	{
-		iosystem::print("GL Error '%i' occurred!", r);
+		LOG("GL Error '%i' occurred!", r);
 	}
 #endif
 }
 
-void OpenGLRender::createContext(HWND window)
-{
-	// Describes the pixel format of the drawing surface
-	PIXELFORMATDESCRIPTOR pfd;
-	memset(&pfd, 0, sizeof(PIXELFORMATDESCRIPTOR));
-	pfd.nSize = sizeof(PIXELFORMATDESCRIPTOR);
-	pfd.nVersion = 1;					// Version Number
-	pfd.dwFlags = PFD_DRAW_TO_WINDOW |	// Draws to a window
-		PFD_SUPPORT_OPENGL |	// The format must support OpenGL
-		PFD_DOUBLEBUFFER;		// Support for double buffering
-	pfd.iPixelType = PFD_TYPE_RGBA;		// Uses an RGBA pixel format
-	pfd.cColorBits = 24;				// 24 bits colors
-	pfd.cAlphaBits = 8;					// 8 bits alpha
-
-	// Get device context
-	m_deviceContext = GetDC(window);
-	if(!m_deviceContext)	
-		assert("Unable to create rendering context");
-
-	// Do Windows find a matching pixel format?
-	int pixelFormat = ChoosePixelFormat(m_deviceContext, &pfd);
-	if(!pixelFormat)				
-		assert("Unable to create rendering context");
-
-	// Set the new pixel format
-	if(!SetPixelFormat(m_deviceContext, pixelFormat, &pfd))			
-		assert("Unable to create rendering context");
-
-	// Create the OpenGL rendering context
-	m_openGLContext = wglCreateContext(m_deviceContext);
-	if(!m_openGLContext)
-		assert("Unable to create rendering context");
-
-	// Activate the rendering context
-	if(!wglMakeCurrent(m_deviceContext, m_openGLContext))
-		assert("Unable to create rendering context");
-}
-
-void OpenGLRender::destroyContext()
-{
-	if(m_openGLContext)
-	{
-		// Make the rendering context not current
-		wglMakeCurrent(NULL, NULL);
-
-		// Delete the OpenGL rendering context
-		wglDeleteContext(m_openGLContext);
-		m_openGLContext = NULL;
-	}
-}
-
-void OpenGLRender::setViewport(const vec2i pos, const vec2i size)
-{
-	glViewport(pos.x, pos.y, size.x, size.y);
-}
-
-void OpenGLRender::setOrthoProjection(const float l, const float r, const float b, const float t, const float n, const float f)
-{
-	// Set orthographic projection
-	glMatrixMode(GL_PROJECTION);
-	glLoadIdentity();
-	glOrtho(l, r, b, t, n, f);
-	glMatrixMode(GL_MODELVIEW);
-	glLoadIdentity();
-
-	// Store orthographic projection
-	m_currentOrtho[0] = l;
-	m_currentOrtho[1] = r;
-	m_currentOrtho[2] = b;
-	m_currentOrtho[3] = t;
-	m_currentOrtho[4] = n;
-	m_currentOrtho[5] = f;
-}
-
-void OpenGLRender::getOrthoProjection(float &l, float &r, float &b, float &t, float &n, float &f)
-{
-	// Get orthographic projection
-	l = m_currentOrtho[0];
-	r = m_currentOrtho[1];
-	b = m_currentOrtho[2];
-	t = m_currentOrtho[3];
-	n = m_currentOrtho[4];
-	f = m_currentOrtho[5];
-}
-
-void OpenGLRender::addText(const vec2 pos, const string &text)
+void OpenGLRender::addText(const Vector2 pos, const string &text)
 {
 	// Draw text using current font
 	if(m_currentFont == 0)
 	{
-		iosystem::error("OpenGLRender::drawText() No font is set!");
+		ERR("OpenGLRender::drawText() No font is set!");
 		return;
 	}
 
@@ -434,7 +490,7 @@ void OpenGLRender::addText(const vec2 pos, const string &text)
 		// Draw char
 		float px = pos.x + xOffset + c.pos.x;
 		float py = pos.y + yOffset + c.pos.y + m_currentFont->fontSize;
-		addRect(vec2(px, py), c.size, c.texCoord0, c.texCoord1);
+		addRect(Vector2(px, py), c.size, c.texCoord0, c.texCoord1);
 		/*setTexCoord(c.texCoord0.x, c.texCoord1.y); addVertex(px, py);
 		setTexCoord(c.texCoord0.x, c.texCoord0.y); addVertex(px, py + c.size.y);
 		setTexCoord(c.texCoord1.x, c.texCoord0.y); addVertex(px + c.size.x, py + c.size.y);
@@ -531,7 +587,7 @@ int OpenGLRender::loadFont(const string &fontPathOrName, const uint fontSize)
 	}else{
 		// Loop throught the registry to find the file by font name
 		if(!getFontFile(fontPathOrName.c_str(), filePath)) {
-			iosystem::error("Font '%s' not found!", filePath.c_str());
+			ERR("Font '%s' not found!", filePath.c_str());
 			return -1;
 		}
 	}
@@ -678,7 +734,7 @@ float OpenGLRender::stringWidth(const string &str)
 	// Draw text using current font
 	if(m_currentFont == 0)
 	{
-		iosystem::error("OpenGLRender::stringWidth() No font is set!");
+		ERR("OpenGLRender::stringWidth() No font is set!");
 		return 0.0f;
 	}
 
@@ -759,7 +815,7 @@ print("%s:%s:%d,%d", scriptSection, func->GetDeclaration(), line, col);
 }
 }*/
 
-void OpenGLRender::addVertex(const vec2 pos)
+void OpenGLRender::addVertex(const Vector2 pos)
 {
 	// Make sure we have a buffer bound
 	if(!m_currentBuffer)
@@ -770,7 +826,7 @@ void OpenGLRender::addVertex(const vec2 pos)
 	m_currentBuffer->addVertex(m_currentVertex);
 }
 
-void OpenGLRender::addRect(const vec2 pos, const vec2 size, const vec2 coord0, const vec2 coord1, const bool center)
+void OpenGLRender::addRect(const Vector2 pos, const Vector2 size, const Vector2 coord0, const Vector2 coord1, const bool center)
 {
 	// Top-left
 	if(center) {
@@ -811,7 +867,7 @@ void OpenGLRender::end()
 	m_currentBuffer = 0;
 }
 
-void OpenGLRender::beginClip(const vec2i pos, const vec2i size)
+void OpenGLRender::beginClip(const Vector2i pos, const Vector2i size)
 {
 	rect2i rect(pos, size);
 
@@ -860,7 +916,7 @@ void OpenGLRender::setShader(const int shaderId)
 	}
 }
 
-void OpenGLRender::setTexCoord(const vec2 coord)
+void OpenGLRender::setTexCoord(const Vector2 coord)
 {
 	m_currentVertex.texCoord = coord;
 }
@@ -896,7 +952,7 @@ void OpenGLRender::reset(const uint bits)
 		setShader(0);
 }
 
-void OpenGLRender::pushTransform(const vec2 t, const vec4 r, const vec2 s)
+void OpenGLRender::pushTransform(const Vector2 t, const vec4 r, const Vector2 s)
 {
 	//Matrix4 mat;
 	//mat.translate(px, py, pz);
@@ -1071,7 +1127,7 @@ void OpenGLRender::setTextureData(const int texId, const int width, const int he
 {
 	if(data.GetSize() != uint(width*height))
 	{
-		iosystem::error("gfxSetTextureData(): Invalid data size (%i != %i)", data.GetSize(), width*height);
+		ERR("gfxSetTextureData(): Invalid data size (%i != %i)", data.GetSize(), width*height);
 		return;
 	}
 
@@ -1127,7 +1183,7 @@ int OpenGLRender::loadShader(const string &vertFilePath, const string &fragFileP
 	int logLength;
 
 	// Compile vertex shader
-	iosystem::print("Compiling vertex shader: %s", vertFilePath.c_str());
+	LOG("Compiling vertex shader: %s", vertFilePath.c_str());
 	glShaderSource(vertShader, 1, &vertShaderBuffer, (int*)&vertBufferLen);
 	glCompileShader(vertShader);
 	delete[] vertShaderBuffer;
@@ -1142,10 +1198,10 @@ int OpenGLRender::loadShader(const string &vertFilePath, const string &fragFileP
 
 	// Print shader error to console
 	if(logLength > 1)
-		iosystem::print("\tCompile error: %s", compileLog);
+		LOG("\tCompile error: %s", compileLog);
 
 	// Compile fragment shader
-	iosystem::print("Compiling fragment shader: %s", fragFilePath.c_str());
+	LOG("Compiling fragment shader: %s", fragFilePath.c_str());
 	glShaderSource(fragShader, 1, &fragShaderBuffer, (int*)&fragBufferLen);
 	glCompileShader(fragShader);
 	delete[] fragShaderBuffer;
@@ -1159,7 +1215,7 @@ int OpenGLRender::loadShader(const string &vertFilePath, const string &fragFileP
 
 	// Print shader error to console
 	if(logLength > 1)
-		iosystem::print("\tCompile error: %s", compileLog);
+		LOG("\tCompile error: %s", compileLog);
 
 	// Create shader program
 	GLuint program = glCreateProgram();
@@ -1176,7 +1232,7 @@ int OpenGLRender::loadShader(const string &vertFilePath, const string &fragFileP
 
 	// Print program error to console
 	if(logLength > 1)
-		iosystem::print("\tCompile error: %s", compileLog);
+		LOG("\tCompile error: %s", compileLog);
 
 	// Delete shader buffers as they are loaded into the shader program
 	glDeleteShader(vertShader);
@@ -1319,7 +1375,7 @@ Array *OpenGLRender::loadImageData(const string &filePath, int &w, int &h)
 
 	if(!iosystem::isFile(filePath))
 	{
-		iosystem::error("gfxLoadImageData() file '%s' does not exist", filePath.c_str());
+		ERR("gfxLoadImageData() file '%s' does not exist", filePath.c_str());
 		return arr;
 	}
 
@@ -1328,7 +1384,7 @@ Array *OpenGLRender::loadImageData(const string &filePath, int &w, int &h)
 	int e = 0;
 	if((e = m_assetLoader->loadAssetAsImage(filePath.c_str(), &data, width, height)) != X2D_OK)
 	{
-		iosystem::error("Unable to load image with error code '%i'", e);
+		ERR("Unable to load image with error code '%i'", e);
 		return arr;
 	}
 

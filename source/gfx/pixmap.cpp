@@ -8,29 +8,61 @@
 //									2011-2014 (C)
 
 #include "pixmap.h"
-#include "color.h"
+#include <x2d/console.h>
 
-AS_REGISTER_VALUE(Pixmap)
+AS_REG_VALUE(Pixmap)
 
 int Pixmap::Register(asIScriptEngine *scriptEngine)
 {
 	int r = 0;
-
-	AS_REGISTER_CONSTRUCTOR(Pixmap, "const int, const int", (const int, const int, Pixmap*))
-	AS_REGISTER_CONSTRUCTOR(Pixmap, "const int, const int, const array<Color> &in", (const int, const int, const Color*, Pixmap*))
-	AS_REGISTER_CONSTRUCTOR(Pixmap, "Pixmap &in", (const Pixmap&, Pixmap*))
+	
+	r = scriptEngine->RegisterObjectBehaviour("Pixmap", asBEHAVE_CONSTRUCT, "void f(Pixmap &in)", asFUNCTIONPR(Factory, (Pixmap&, Pixmap*), void), asCALL_CDECL_OBJLAST); AS_ASSERT
+	r = scriptEngine->RegisterObjectBehaviour("Pixmap", asBEHAVE_CONSTRUCT, "void f(const int, const int)", asFUNCTIONPR(Factory, (const int, const int, Pixmap*), void), asCALL_CDECL_OBJLAST); AS_ASSERT
+	r = scriptEngine->RegisterObjectBehaviour("Pixmap", asBEHAVE_CONSTRUCT, "void f(const int, const int, const array<Vector4> &in)", asFUNCTIONPR(Factory, (const int, const int, Array&, Pixmap*), void), asCALL_CDECL_OBJLAST); AS_ASSERT
 
 	return r;
 }
 
-Pixmap::Pixmap(const int width, const int height, const Color *pixels) :
+void printContent(Pixmap &px)
+{
+	int i = 0;
+	for(int y = 0; y < px.getHeight(); y++) {
+		for(int x = 0; x < px.getWidth(); x++) {
+			Vector4 c = px.getColor(x, y);
+			LOG("Pixmap[%i][%i]: (%f,%f,%f,%f)", y, x, c.r(), c.g(), c.b(), c.a());
+		}
+	}
+}
+
+Pixmap::Pixmap(const int width, const int height, const Vector4 *pixels) :
 	m_width(width),
 	m_height(height)
 {
 	if (width >= 0 && height >= 0) {
 		// Copy pixels
-		m_data = new Color[width*height];
-		memcpy(m_data, pixels, width*height*4);
+		m_data = new Vector4[width*height];
+		memcpy(m_data, pixels, width*height*sizeof(Vector4));
+	}else{
+		//error("Pixmaps cannot have width or height less than 0!");
+		return;
+	}
+	printContent(*this);
+}
+
+Pixmap::Pixmap(const int width, const int height, const Array &pixels) :
+	m_width(width),
+	m_height(height)
+{
+	if (width >= 0 && height >= 0) {
+		// Copy pixels
+		m_data = new Vector4[width*height];
+		int i = 0;
+		for(int y = 0; y < height; y++) {
+			for(int x = 0; x < width; x++) {
+				m_data[i] = *(Vector4*)pixels.At(i);
+				i++;
+			}
+		}
 	}else{
 		//error("Pixmaps cannot have width or height less than 0!");
 		return;
@@ -41,7 +73,7 @@ Pixmap::Pixmap(const int width, const int height)
 {
 	if (width >= 0 && height >= 0) {
 		// Create empty pixmap
-		m_data = new Color[width*height];
+		m_data = new Vector4[width*height];
 	}else{
 		//error("Pixmaps cannot have width or height less than 0!");
 		return;
@@ -53,9 +85,9 @@ Pixmap::~Pixmap()
 	delete[] m_data;
 }
 
-const char *Pixmap::getData() const
+const float *Pixmap::getData() const
 {
-	return (const char*)m_data;
+	return (const float*)m_data;
 }
 
 int Pixmap::getWidth() const
@@ -68,7 +100,7 @@ int Pixmap::getHeight() const
 	return m_height;
 }
 
-Color Pixmap::getColor(const int x, const int y) const
+Vector4 Pixmap::getColor(const int x, const int y) const
 {
 	if(x >= 0 && x < m_width && y >= 0 && y < m_height)
 	{
@@ -76,10 +108,10 @@ Color Pixmap::getColor(const int x, const int y) const
 	}else{
 		//warn("");
 	}
-	return Color();
+	return Vector4();
 }
 
-void Pixmap::setColor(const int x, const int y, const Color &color)
+void Pixmap::setColor(const int x, const int y, const Vector4 &color)
 {
 	if(x >= 0 && x < m_width && y >= 0 && y < m_height)
 	{

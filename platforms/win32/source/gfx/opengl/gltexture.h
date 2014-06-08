@@ -5,10 +5,11 @@
 
 #include "../source/gfx/pixmap.h"
 #include "../source/gfx/texture.h"
-#include "../source/gfx/color.h"
+//#include "../source/gfx/color.h"
 
 class GLtexture : public Texture
 {
+	friend class OpenGL;
 public:
 	GLtexture(const Pixmap &pixmap);
 	~GLtexture();

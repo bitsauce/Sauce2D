@@ -26,7 +26,7 @@ bool WinDebug::init()
 	int r = WSAStartup(MAKEWORD(2, 2), &wsaData);
 	if(r < 0) {
 		// Error initializing socket
-		iosystem::print("WSAStartup() failed with error code '%i'!", r);
+		LOG("WSAStartup() failed with error code '%i'!", r);
 		return false;
 	}
 	return true;
@@ -43,9 +43,9 @@ bool WinDebug::listen(ushort port)
 	hints.ai_flags = AI_PASSIVE;
 
 	// Resolve the server address and port
-	int r = getaddrinfo(NULL, math::intToStr(port).c_str(), &hints, &result);
+	int r = getaddrinfo(NULL, util::intToStr(port).c_str(), &hints, &result);
 	if(r < 0) {
-		iosystem::print("getaddrinfo() failed with error code '%i'!", r);
+		LOG("getaddrinfo() failed with error code '%i'!", r);
 		WSACleanup();
 		return false;
 	}
@@ -53,7 +53,7 @@ bool WinDebug::listen(ushort port)
 	// Create a SOCKET for the server to listen for client connections
 	m_server = socket(result->ai_family, result->ai_socktype, result->ai_protocol);
 	if(m_server == INVALID_SOCKET) {
-		iosystem::print("socket() failed!");
+		LOG("socket() failed!");
 		freeaddrinfo(result);
 		WSACleanup();
 		return false;
@@ -66,7 +66,7 @@ bool WinDebug::listen(ushort port)
 	// Setup the TCP listening socket
     r = bind(m_server, result->ai_addr, (int)result->ai_addrlen);
     if(r == SOCKET_ERROR) {
-        iosystem::print("bind() failed with error code '%i'!", r);
+        LOG("bind() failed with error code '%i'!", r);
         freeaddrinfo(result);
         closesocket(m_server);
         WSACleanup();
@@ -77,7 +77,7 @@ bool WinDebug::listen(ushort port)
 	// Listen at the port
 	r = ::listen(m_server, SOMAXCONN);
 	if(r == SOCKET_ERROR) {
-		iosystem::print("listen() failed with error code '%i'!", r);
+		LOG("listen() failed with error code '%i'!", r);
 		closesocket(m_server);
 		WSACleanup();
 		return false;

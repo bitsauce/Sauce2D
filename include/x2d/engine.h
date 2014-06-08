@@ -1,32 +1,159 @@
-#ifndef CORE_ENGINE_H
-#define CORE_ENGINE_H
+#ifndef X2D_ENGINE_H
+#define X2D_ENGINE_H
 
-#include "platform.h"
+#include <x2d/config.h>
+#include <x2d/base.h>
+#include <x2d/util.h>
 
-class X2DApp;
-class X2DRender;
-class X2DSound;
-class X2DDebug;
-class X2DAssetLoader;
-enum X2DRetCode;
-enum X2DRunFlag;
-enum X2DState;
+class xdTimer;
+class xdWindow;
+class xdMath;
+class xdInput;
+class xdFileSystem;
+class xdScripts;
+class xdGraphics;
+class xdAudio;
+class xdConsole;
+class xdProfiler;
+class xdDebug;
+class xdAssetLoader;
+enum xdRetCode;
+enum xdEngineFlag;
+enum xdState;
+
+typedef int (*LoadPluginsFunc)();
+typedef void (*ProcessEventsFunc)();
+
+struct XDAPI xdConfig
+{
+	xdConfig();
+
+	bool isValid() const {
+		return strlen(platform) > 0 && strlen(workDir) > 0 &&
+			fileSystem != 0 && timer != 0 && input != 0 &&
+			graphics != 0 && audio != 0;
+	}
+
+	void operator=(const xdConfig &other) {
+		flags = other.flags;
+		platform = other.platform;
+		workDir = other.workDir;
+		loadPluginsFunc = other.loadPluginsFunc;
+		timer = other.timer;
+		fileSystem = other.fileSystem;
+		window = other.window;
+		input = other.input;
+		math = other.math;
+		graphics = other.graphics;
+		audio = other.audio;
+		console = other.console;
+	}
+
+	// Engine running flags (optional)
+	int				flags;
+
+	// Platform string (required)
+	const char*		platform;
+
+	// Engine working directory (required)
+	const char*		workDir;
+
+	// System save directory (optional)
+	const char*		saveDir;
+
+	// Syster user directory (optional)
+	const char*		userDir;
+
+	// Plugin load function (optional)
+	LoadPluginsFunc	loadPluginsFunc;
+
+	// Engine timer object (required)
+	xdTimer*		timer;
+
+	// File system manager (required)
+	xdFileSystem*	fileSystem;
+
+	// Game window manager (optional)
+	xdWindow*		window;
+
+	// Input class (required)
+	xdInput*		input;
+
+	// Math class (optional)
+	xdMath*			math;
+
+	// Graphics manager (required)
+	xdGraphics*		graphics;
+
+	// Audio manager (required)
+	xdAudio*		audio;
+
+	// Game console (optional)
+	xdConsole*		console;
+};
 
 /*********************************************************************
-**	Abstract? Engine												**
+**	Game Engine														**
 **********************************************************************/
-// TODO: Make this semi-virtual having the application writer implement:
-// - Printing
-// - Game loop
-// (- Asset loading)
-class X2DAPI X2DEngine
+class XDAPI xdEngine
 {
 public:
-	X2DEngine(const int flags);
-	~X2DEngine();
+	AS_DECL_SINGLETON
 
-	X2DRetCode init();
-	X2DRetCode run();
+	xdEngine();
+	~xdEngine();
+
+	// Initialize the engine
+	xdRetCode init(const xdConfig &config);
+
+	// Run game
+	xdRetCode run();
+	
+	// Exit game
+	void exit();
+
+	// Exception
+	//virtual void exception(const xdRetCode) = 0;
+
+	// Platform string
+	string getPlatformString() const;
+
+	// Working directory
+	string getWorkingDirectory() const;
+
+	// Profiler
+	void setProfiler(xdProfiler *profiler) { m_profiler = profiler; }
+
+	// Debugger
+	void setDebugger(xdDebug *debugger) { m_debugger = debugger; }
+
+	// Exceptions
+	void exception(xdRetCode errorCode, const char* message);
+
+	// Run flags
+	static bool IsEnabled(const xdEngineFlag flag) { return (s_this->m_flags & flag) != 0; }
+	
+	// Static engine modules
+	static xdConsole* GetConsole() { return s_this->m_console; }
+
+private:
+	int m_flags;
+
+	string m_platformString;
+	string m_workDir;
+	
+	xdFileSystem *m_fileSystem;
+	xdGraphics *m_graphics;
+	xdAudio *m_audio;
+	xdProfiler *m_profiler;
+	xdDebug *m_debugger;
+	xdTimer *m_timer;
+	xdScripts *m_scripts;
+	xdConsole *m_console;
+	xdWindow *m_window;
+	xdMath *m_math;
+	xdInput *m_input;
+	xdAssetLoader *m_assetLoader;
 
 	// Game loop
 	void draw();
@@ -34,66 +161,24 @@ public:
 	void pause() { m_paused = true; }
 	void resume() { m_paused = false; }
 	void close() { m_running = false; }
-
-	// Profiler
-	void startProfiler();
-	void stopProfiler();
-	void pushProfile(const string &name);
-	void popProfile();
-	void printProfilerResults();
 	
-	// Refresh rate
-	void setRefreshRate(const int hz);
-	int getRefreshRate();
-	float getTimeStep();
-
-	// Run flags
-	bool isEnabled(const X2DRunFlag flag)
-	{
-		return (m_flags & flag) != 0;
-	}
-
-public:
-	// The engine parts
-	X2DApp *app;
-	X2DRender *gfx;
-	X2DSound *sfx;
-	X2DDebug *debug;
-	X2DAssetLoader *assetLoader;
-
-	class ScriptManager *scripts;
-
-private:
-
-	// Flags
-	int m_flags;
-
 	// State
-	bool m_initialized;
 	bool m_running;
 	bool m_paused;
-	
-	// Profiler
-	class X2DProfiler *m_profiler;
+
 	bool m_toggleProfiler;
-
-	// Time step
-	float m_timeStep;
-
-	// Fps
-	int m_framesPerSecond;
-
-	// Refresh rate
-	int m_refreshRate;
 
 	// Event functions
 	class asIScriptFunction *m_updateFunc;
 	class asIScriptFunction *m_drawFunc;
+
+	bool m_initialized;
+
+	static xdEngine *s_this;
 };
 
-X2DAPI X2DEngine *CreateEngine(const int flags);
+extern xdEngine *g_engine;
 
-// Game engine
-extern X2DEngine *gameEngine;
+XDAPI xdEngine *CreateEngine();
 
-#endif // CORE_ENGINE_H
+#endif // X2D_ENGINE_H

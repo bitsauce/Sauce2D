@@ -1,37 +1,41 @@
 #ifndef GFX_PIXMAP_H
 #define GFX_PIXMAP_H
 
+#include <x2d/math.h>
 #include <x2d/base.h>
+#include <x2d/math/array.h>
 
-struct Color;
-
-class Pixmap
+class XDAPI Pixmap
 {
 public:
-	AS_VALUE_CLASS(Pixmap)
-	AS_CONSTRUCTOR_ARG2(Pixmap, const int, const int)
-	AS_CONSTRUCTOR_ARG3(Pixmap, const int, const int, const Color*)
-	AS_CONSTRUCTOR_ARG1(Pixmap, const Pixmap&)
+	AS_DECL_VALUE
 
 	Pixmap(const int width, const int height);
-	Pixmap(const int width, const int height, const Color *pixels);
+	Pixmap(const int width, const int height, const Vector4 *pixels);
+	Pixmap(const int width, const int height, const Array &pixels);
 	~Pixmap();
 
 	int getWidth() const;
 	int getHeight() const;
 
-	Color getColor(const int x, const int y) const;
-	void setColor(const int x, const int y, const Color &color);
+	Vector4 getColor(const int x, const int y) const;
+	void setColor(const int x, const int y, const Vector4 &color);
 
-	void fill(const Color &color);
+	void fill(const Vector4 &color);
 	void clear();
 
-	const char *getData() const;
+	const float *getData() const;
 
 private:
-	Color *m_data;
+	Vector4 *m_data;
 	int m_width;
 	int m_height;
+	
+	static void Factory(Pixmap &other, Pixmap *self) { new (self) Pixmap(other); }
+	static void Factory(const int width, const int height, Pixmap *self) { new (self) Pixmap(width, height); }
+	static void Factory(const int width, const int height, Array &arr, Pixmap *self) {
+		new (self) Pixmap(width, height, arr);
+	}
 };
 
 #endif // GFX_PIXMAP_H

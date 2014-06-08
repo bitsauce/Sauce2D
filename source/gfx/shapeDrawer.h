@@ -1,4 +1,0 @@
-#ifndef GFX_SHAPE_DRAWER_H
-#define GFX_SHAPE_DRAWER_H
-
-#endif // GFX_SHAPE_DRAWER_H

@@ -52,12 +52,12 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>..\..\include;..\..\3rdparty\vld\include;..\..\3rdparty\openal\include;..\..\3rdparty\glew\include;..\..\3rdparty\freetype\include</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>X2D_DEBUG</PreprocessorDefinitions>
+      <PreprocessorDefinitions>X2D_DEBUG;X2D_IMPORT;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>..\..\build\$(Platform)\$(Configuration)\;..\..\3rdparty\vld\lib;..\..\3rdparty\freetype\lib;..\..\3rdparty\openal\libs\Win32;..\..\3rdparty\glew\lib</AdditionalLibraryDirectories>
-      <AdditionalDependencies>vld.lib;x2dd.lib;openal32.lib;opengl32.lib;glewd.lib;glu32.lib;freetyped.lib;ws2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>..\..\build\$(Platform)\$(Configuration)\;..\..\3rdparty\vld\lib;..\..\3rdparty\glew\lib;..\..\3rdparty\openal\libs;..\..\3rdparty\freetype\lib;..\..\3rdparty\freeimage\lib;..\..\3rdparty\openal\libs\Win32</AdditionalLibraryDirectories>
+      <AdditionalDependencies>ws2_32.lib;iphlpapi.lib;x2dd.lib;openal32.lib;opengl32.lib;glewd.lib;glu32.lib;freetyped.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
     </Link>
   </ItemDefinitionGroup>
@@ -82,25 +82,33 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="fileSystem.cpp" />
+    <ClCompile Include="input.cpp" />
     <ClCompile Include="source\gfx\opengl\glshader.cpp" />
     <ClCompile Include="source\gfx\opengl\gltexture.cpp" />
     <ClCompile Include="source\gfx\opengl\glgraphics.cpp" />
+    <ClCompile Include="source\sfx\openal\alaudio.cpp" />
+    <ClCompile Include="timer.cpp" />
     <ClCompile Include="winassetloader.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="openal.cpp" />
-    <ClCompile Include="winapp.cpp" />
+    <ClCompile Include="window.cpp" />
+    <ClCompile Include="console.cpp" />
     <ClCompile Include="windebug.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="resources.rc" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="fileSystem.h" />
+    <ClInclude Include="input.h" />
     <ClInclude Include="source\gfx\opengl\glshader.h" />
     <ClInclude Include="source\gfx\opengl\gltexture.h" />
     <ClInclude Include="source\gfx\opengl\glgraphics.h" />
+    <ClInclude Include="source\sfx\openal\alaudio.h" />
+    <ClInclude Include="timer.h" />
     <ClInclude Include="winassetloader.h" />
-    <ClInclude Include="openal.h" />
-    <ClInclude Include="winapp.h" />
+    <ClInclude Include="window.h" />
+    <ClInclude Include="console.h" />
     <ClInclude Include="windebug.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

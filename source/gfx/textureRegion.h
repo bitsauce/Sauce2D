@@ -9,22 +9,10 @@ class Texture;
 class TextureRegion
 {
 public:
-	AS_REF_CLASS(TextureRegion)
-	AS_FACTORY_ARG1(TextureRegion, const Texture*)
-	AS_FACTORY_ARG3(TextureRegion, const Texture*, const Vector2&, const Vector2&)
-	AS_FACTORY_ARG5(TextureRegion, const Texture*, const float, const float, const float, const float)
-
-	TextureRegion(const Texture *texture);
-	TextureRegion(const Texture *texture, const Vector2 &uv0, const Vector2 &uv1);
-	TextureRegion(const Texture *texture, const float u0, const float v0, const float u1, const float v1);
-	/*TextureRegion(const TextureRegion &other) :
-		refCounter(this),
-		uv0(other.uv0),
-		uv1(other.uv1),
-		texture(other.getTexture())
-	{
-	}*/
+	AS_DECL_REF
 	
+	TextureRegion(const Texture *texture, const Vector2 &uv0, const Vector2 &uv1);
+
 	void setTexture(const Texture *texture);
 	const Texture *getTexture() const;
 
@@ -37,6 +25,9 @@ public:
 	Vector2 uv1;
 
 private:
+	static TextureRegion *Factory(const Texture *texture) { return new TextureRegion(texture, Vector2(0.0f), Vector2(1.0f)); }
+	static TextureRegion *Factory(const Texture *texture, const Vector2 &uv0, const Vector2 &uv1) { return new TextureRegion(texture, uv0, uv1); }
+	static TextureRegion *Factory(const Texture *texture, const float u0, const float v0, const float u1, const float v1) { return new TextureRegion(texture, Vector2(u0, v0), Vector2(u1, v1)); }
 	const Texture *texture;
 };
 

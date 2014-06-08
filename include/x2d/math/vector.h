@@ -1,7 +1,8 @@
 #ifndef MATH_VECTOR_H
 #define MATH_VECTOR_H
  
-#include "x2d/platform.h"
+#include <x2d/config.h>
+#include <x2d/base.h>
 
 /** \brief A class which holds a 2 dimentional vector
  *
@@ -10,17 +11,22 @@
  *
  */
 
-void RegisterVectors();
-
 class Vector2i;
+class Vector3;
+class Vector4;
 
-class X2DAPI Vector2
+class XDAPI Vector2
 {
 public:
+	AS_DECL_VALUE
+
 	// Constructor
-    Vector2(float xy);
-    Vector2(float x, float y);
+    Vector2(const float xy);
+    Vector2(const float d[2]);
+    Vector2(const float x, const float y);
     Vector2(const Vector2i &v);
+    Vector2(const Vector3 &v);
+    Vector2(const Vector4 &v);
  
 	// Setting
 	void set(const float x, const float y);
@@ -56,14 +62,11 @@ public:
 	static void DefaultConstructor(Vector2 *self);
 	static void CopyConstructor1(const Vector2 &other, Vector2 *self);
 	static void CopyConstructor2(const Vector2i &other, Vector2 *self);
-	static void InitConstructor1(float xy, Vector2 *self);
-	static void InitConstructor2(float x, float y, Vector2 *self);
+	static void InitConstructor1(const float xy, Vector2 *self);
+	static void InitConstructor2(const float x, const float y, Vector2 *self);
  
 public:
     float x, y;
-	
-	// Type id
-	static int TypeId;
 };
 
 #define TUPLE_CMP(a, b) \
@@ -74,9 +77,11 @@ public:
 	if(a < b) return false; \
 	if(a > b) return true;
 
-class X2DAPI Vector2i
+class XDAPI Vector2i
 {
 public:
+	AS_DECL_VALUE
+
 	// Constructor
     Vector2i(int xy);
     Vector2i(int x, int y);
@@ -141,12 +146,15 @@ public:
 };
 
 
-class X2DAPI vec3
+class XDAPI Vector3
 {
 public:
+	AS_DECL_VALUE
+
 	// Constructor
-    vec3(float xyz);
-    vec3(float x, float y, float z);
+    Vector3(float xyz);
+    Vector3(float x, float y, float z);
+    Vector3(const Vector4 &v);
  
 	// Setting
 	void set(const float x, const float y, const float z);
@@ -158,36 +166,36 @@ public:
 	// Transform
     void rotate(const float angle);
     float angle() const;
-	float angle(const vec3& v2) const;
+	float angle(const Vector3& v2) const;
 
 	// Vector functions
     void normalize();
-    vec3 normalized() const;
-    float dot(const vec3& v2) const;
-    vec3 cross(const vec3& v2) const;
-    float distance(const vec3& v2) const;
+    Vector3 normalized() const;
+    float dot(const Vector3& v2) const;
+    Vector3 cross(const Vector3& v2) const;
+    float distance(const Vector3& v2) const;
 	float magnitude() const;
 	float length() const;
  
 	// Operators
-    vec3& operator= (const vec3& v2);
-    vec3& operator+= (const vec3& v2);
-    vec3& operator-= (const vec3& v2);
-    vec3& operator*= (const float scalar);
-    vec3& operator/= (const float scalar);
-    const vec3 operator+(const vec3 &v2) const;
-    const vec3 operator-(const vec3 &v2) const;
-    const vec3 operator*(const float scalar) const;
-    const vec3 operator/(const float scalar) const;
-    bool operator== (const vec3& v2) const;
+    Vector3& operator= (const Vector3& v2);
+    Vector3& operator+= (const Vector3& v2);
+    Vector3& operator-= (const Vector3& v2);
+    Vector3& operator*= (const float scalar);
+    Vector3& operator/= (const float scalar);
+    const Vector3 operator+(const Vector3 &v2) const;
+    const Vector3 operator-(const Vector3 &v2) const;
+    const Vector3 operator*(const float scalar) const;
+    const Vector3 operator/(const float scalar) const;
+    bool operator== (const Vector3& v2) const;
 
 public:
 
 	// AngelScript
-	static void DefaultConstructor(vec3 *self);
-	static void CopyConstructor(const vec3 &other, vec3 *self);
-	static void InitConstructor1(float xyz, vec3 *self);
-	static void InitConstructor2(float x, float y, float z, vec3 *self);
+	static void DefaultConstructor(Vector3 *self);
+	static void CopyConstructor(const Vector3 &other, Vector3 *self);
+	static void InitConstructor1(float xyz, Vector3 *self);
+	static void InitConstructor2(float x, float y, float z, Vector3 *self);
  
 public:
     float x, y, z;
@@ -196,12 +204,15 @@ public:
 	static int TypeId;
 };
 
-class X2DAPI vec4
+class XDAPI Vector4
 {
 public:
+	AS_DECL_VALUE
+
 	// Constructor
-    vec4(float xyzw);
-    vec4(float x, float y, float z, float w);
+    Vector4(float xyzw = 0.0f);
+    Vector4(float x, float y, float z, float w);
+    Vector4(const float d[4]);
 
 	// Color
 	float r() { return x; }
@@ -219,42 +230,39 @@ public:
 	// Transform
     void rotate(const float angle);
     float angle() const;
-	float angle(const vec4& v2) const;
+	float angle(const Vector4& v2) const;
 
 	// Vector functions
     void normalize();
-    vec4 normalized() const;
-    float dot(const vec4& v2) const;
-    vec4 cross(const vec4& v2) const;
-    float distance(const vec4& v2) const;
+    Vector4 normalized() const;
+    float dot(const Vector4& v2) const;
+    Vector4 cross(const Vector4& v2) const;
+    float distance(const Vector4& v2) const;
 	float magnitude() const;
 	float length() const;
  
 	// Operators
-    vec4& operator= (const vec4& v2);
-    vec4& operator+= (const vec4& v2);
-    vec4& operator-= (const vec4& v2);
-    vec4& operator*= (const float scalar);
-    vec4& operator/= (const float scalar);
-    const vec4 operator+(const vec4 &v2) const;
-    const vec4 operator-(const vec4 &v2) const;
-    const vec4 operator*(const float scalar) const;
-    const vec4 operator/(const float scalar) const;
-    bool operator== (const vec4& v2) const;
+    Vector4& operator= (const Vector4& v2);
+    Vector4& operator+= (const Vector4& v2);
+    Vector4& operator-= (const Vector4& v2);
+    Vector4& operator*= (const float scalar);
+    Vector4& operator/= (const float scalar);
+    const Vector4 operator+(const Vector4 &v2) const;
+    const Vector4 operator-(const Vector4 &v2) const;
+    const Vector4 operator*(const float scalar) const;
+    const Vector4 operator/(const float scalar) const;
+    bool operator== (const Vector4& v2) const;
 
 public:
 
 	// AngelScript
-	static void DefaultConstructor(vec4 *self);
-	static void CopyConstructor(const vec4 &other, vec4 *self);
-	static void InitConstructor1(float xyz, vec4 *self);
-	static void InitConstructor2(float x, float y, float z, float w, vec4 *self);
+	static void DefaultConstructor(Vector4 *self);
+	static void CopyConstructor(const Vector4 &other, Vector4 *self);
+	static void InitConstructor1(float xyz, Vector4 *self);
+	static void InitConstructor2(float x, float y, float z, float w, Vector4 *self);
  
 public:
     float x, y, z, w;
-	
-	// Type id
-	static int TypeId;
 };
 
 #endif // MATH_VECTOR_H

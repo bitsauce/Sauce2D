@@ -1,5 +1,5 @@
-#ifndef CORE_BASE_H
-#define CORE_BASE_H
+#ifndef X2D_BASE_H
+#define X2D_BASE_H
 
 // Standard libraries
 #include <vector>
@@ -94,6 +94,12 @@ public:
 		owner(owner)
 	{
 	}
+	
+	RefCounter(const RefCounter &other) :
+		refCount(1),
+		owner(other.owner)
+	{
+	}
 
 	void add()
 	{
@@ -107,7 +113,6 @@ public:
 	}
 
 private:
-	RefCounter(RefCounter &) { };
 	int refCount;
 	void *owner;
 };
@@ -120,10 +125,38 @@ private:
 #include <angelscript.h>
 #endif
 
-#define AS_ASSERT \
-	if(r < 0) return r;
+#ifdef X2D_DEBUG
+#include <assert.h>
+#define AS_ASSERT assert(r >= 0);
+#else
+#define AS_ASSERT if(r < 0) return r;
+#endif
 
-#define AS_REGISTER_REF(clazz)															\
+#define AS_DECL_REF																		\
+	private:																			\
+	RefCounter refCounter;																\
+	static Base::Registerer s_basereg;													\
+	void addRef() { refCounter.add(); }													\
+	void release() { refCounter.release(); }											\
+	static int Declare(asIScriptEngine *scriptEngine);									\
+	static int Register(asIScriptEngine *scriptEngine);									\
+	public:
+
+#define AS_DECL_VALUE																	\
+	private:																			\
+	static Base::Registerer s_basereg;													\
+	static int Declare(asIScriptEngine *scriptEngine);									\
+	static int Register(asIScriptEngine *scriptEngine);									\
+	public:
+
+#define AS_DECL_SINGLETON																\
+	private:																			\
+	static Base::Registerer s_basereg;													\
+	static int Declare(asIScriptEngine *scriptEngine);									\
+	static int Register(asIScriptEngine *scriptEngine);									\
+	public:
+
+#define AS_REG_REF(clazz)																\
 	Base::Registerer clazz::s_basereg(&clazz::Declare, &clazz::Register);				\
 	int clazz::Declare(asIScriptEngine *scriptEngine)									\
 	{																					\
@@ -133,34 +166,25 @@ private:
 		r = scriptEngine->RegisterObjectBehaviour(#clazz, asBEHAVE_RELEASE, "void f()", \
 						asMETHOD(clazz, release), asCALL_THISCALL); AS_ASSERT			\
 		return r;																		\
-	}																					\
+	}
 
-
-#define AS_REGISTER_VALUE(clazz)														\
+#define AS_REG_VALUE(clazz)																\
 	Base::Registerer clazz::s_basereg(&clazz::Declare, &clazz::Register);				\
 	int clazz::Declare(asIScriptEngine *scriptEngine)									\
 	{																					\
 		int r = scriptEngine->RegisterObjectType(#clazz, sizeof(clazz),					\
 						asOBJ_VALUE | asOBJ_POD | asOBJ_APP_CLASS_CAK); AS_ASSERT		\
 		return r;																		\
-	}																					\
+	}
 
-#define AS_REF_CLASS(clazz)																\
-	private:																			\
-	RefCounter refCounter;																\
-	static Base::Registerer s_basereg;													\
-	void addRef() { refCounter.add(); }													\
-	void release() { refCounter.release(); }											\
-	static int Declare(asIScriptEngine *scriptEngine);									\
-	static int Register(asIScriptEngine *scriptEngine);									\
-	public:												
-
-#define AS_VALUE_CLASS(clazz)															\
-	private:																			\
-	static Base::Registerer s_basereg;													\
-	static int Declare(asIScriptEngine *scriptEngine);									\
-	static int Register(asIScriptEngine *scriptEngine);									\
-	public:			
+#define AS_REG_SINGLETON(clazz, name)													\
+	Base::Registerer clazz::s_basereg(&clazz::Declare, &clazz::Register);				\
+	int clazz::Declare(asIScriptEngine *scriptEngine)									\
+	{																					\
+		int r = scriptEngine->RegisterObjectType(name, 0, asOBJ_REF | asOBJ_NOHANDLE);	\
+		AS_ASSERT																		\
+		return r;																		\
+	}
 
 // TODO: I wish there was some way to merge these, but evidently not
 #define AS_FACTORY_ARG0(clazz) static clazz *Factory() { return new clazz(); }
@@ -184,4 +208,4 @@ private:
 #define AS_REGISTER_MEMBER(clazz, decl, membr) r = scriptEngine->RegisterObjectProperty(#clazz, decl, offsetof(clazz, membr)); AS_ASSERT
 #define AS_REGISTER_CONSTRUCTOR(clazz, decl, params) r = scriptEngine->RegisterObjectBehaviour(#clazz, asBEHAVE_CONSTRUCT, "void f(" decl ")", asFUNCTIONPR(clazz::Construct, params, void), asCALL_CDECL_OBJLAST); AS_ASSERT
 
-#endif // CORE_BASE_H
+#endif // X2D_BASE_H

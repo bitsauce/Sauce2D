@@ -1,34 +1,40 @@
 #ifndef X2D_DEBUG_H
 #define X2D_DEBUG_H
 
-#include "x2d/platform.h"
+#include <x2d/config.h>
+#include <x2d/util.h>
+#include <x2d/console.h>
+
+// Packet types
+enum xdPacketType
+{
+	XD_NULL_PACKET = 0x00,
+	XD_CONNECTED_PACKET,
+	XD_INITIALIZED_PACKET,
+	XD_MESSAGE_PACKET,
+	XD_COMPILE_PACKET,
+	XD_BREAK_PACKET,
+	XD_TEXT_VAR_PACKET,
+	XD_IMAGE_VAR_PACKET
+};
 
 /*********************************************************************
 **	Default Debugger												**
 **********************************************************************/
-class X2DDebug
+class xdDebug
 {
 public:
-	X2DDebug() :
+	xdDebug() :
 		m_connected(false),
 		m_command(NoCommand),
 		m_prevStackSize(0),
 		m_timeoutValue(60000)
 	{
 	}
-
-	// Packet types
-	enum PacketType {
-		NullPacket = 0x00,
-		ConnectedPacket,
-		InitializedPacket,
-		MessagePacket,
-		CompilePacket,
-		BreakpointPacket,
-		TextVariablePacket,
-		ImageVariablePacket,
-	};
 	
+	virtual ~xdDebug() {
+	}
+
 	/*********************************************************************
 	**	Virtual part													**
 	**********************************************************************/
@@ -45,8 +51,7 @@ public:
 	**	Implemented part												**
 	**********************************************************************/
 	bool connect();
-	void sendPacket(PacketType type, const char *data = 0);
-	void sendMessage(const string &data, const X2DMessageType type);
+	void sendPacket(xdPacketType type, const char *data = 0);
 	void recvPacket(char **data);
 
 	void lineCallback(void *ctx);
@@ -77,7 +82,7 @@ private:
 
 	bool m_connected;
 	Command m_command;
-	int m_prevStackSize;
+	uint m_prevStackSize;
 	uint m_timeoutValue;
 	list<Breakpoint> m_breakpoints;
 };

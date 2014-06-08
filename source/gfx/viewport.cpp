@@ -9,7 +9,7 @@
 
 #include "viewport.h"
 
-AS_REGISTER_REF(Viewport)
+AS_REG_REF(Viewport)
 
 int Viewport::Register(asIScriptEngine *scriptEngine)
 {

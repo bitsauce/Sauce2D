@@ -3,80 +3,77 @@
 // \ \/ / __) | | | | | |  _ / _  |  _   _ \ / _ \ |  _| |  _ \ / _  | |  _ \ / _ \
 //  >  < / __/| |_| | | |_| | (_| | | | | | |  __/ | |___| | | | (_| | | | | |  __/
 // /_/\_\_____|____/   \____|\__ _|_| |_| |_|\___| |_____|_| |_|\__, |_|_| |_|\___|
-//                                                              |___/              
-//		Macro#byte (C)
+//                                                              |___/     
+//				Originally written by Marcus Loo Vergara (aka. Bitsauce)
+//									2011-2014 (C)
 
-#include "x2d/math.h"
-
+#include <x2d/math.h>
 #include <angelscript.h>
 #include <cmath>
-#include <sstream>
 
-#define PI 3.14159265359f
+AS_REG_SINGLETON(xdMath, "ScriptMath")
 
-void RegisterMath()
+int xdMath::Register(asIScriptEngine *scriptEngine)
 {
-	// Register value types
-	RegisterVectors();
-	RegisterRect();
+	int r = 0;
+
+	// Type Conversion
+	/*r = scriptEngine->RegisterObjectMethod("ScriptMath", "string intToStr(const int)", asMETHOD(xdMath, intToStr), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("ScriptMath", "string floatToStr(const float)", asMETHOD(xdMath, floatToStr), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("ScriptMath", "string boolToStr(const bool)", asMETHOD(xdMath, boolToStr), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("ScriptMath", "int strToInt(const string &in)", asMETHOD(xdMath, strToInt), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("ScriptMath", "float strToFloat(const string &in)", asMETHOD(xdMath, strToFloat), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("ScriptMath", "bool strToBool(const string &in)", asMETHOD(xdMath, strToBool), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("ScriptMath", "string strToAscii(const uint8)", asMETHOD(xdMath, strToAscii), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("ScriptMath", "uint8 asciiToStr(const string &in)", asMETHOD(xdMath, asciiToStr), asCALL_THISCALL); AS_ASSERT*/
+	r = scriptEngine->RegisterObjectMethod("ScriptMath", "void setEnumValue(?&out, const int value)", asMETHOD(xdMath, setEnumValue), asCALL_THISCALL); AS_ASSERT
+
+	// Supplementary math funcs
+	/*r = scriptEngine->RegisterObjectMethod("ScriptMath", "string tolower(string &in, const int begin = 0, const int end = 0)", asMETHOD(xdMath, toLower), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("ScriptMath", "string toupper(string &in, const int begin = 0, const int end = 0)", asMETHOD(xdMath, toUpper), asCALL_THISCALL); AS_ASSERT*/
+	r = scriptEngine->RegisterObjectMethod("ScriptMath", "int round(const float)", asMETHOD(xdMath, round), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("ScriptMath", "int ceil(const float)", asMETHOD(xdMath, ceil), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("ScriptMath", "int floor(const float)", asMETHOD(xdMath, floor), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("ScriptMath", "int clamp(const float)", asMETHOD(xdMath, clamp), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("ScriptMath", "int max(const float)", asMETHOD(xdMath, maximum), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("ScriptMath", "int min(const float)", asMETHOD(xdMath, minimum), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("ScriptMath", "float abs(const float)", asMETHOD(xdMath, abs), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("ScriptMath", "float sqrt(const float)", asMETHOD(xdMath, sqrt), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("ScriptMath", "float pow(const float, const float)", asMETHOD(xdMath, pow), asCALL_THISCALL); AS_ASSERT
+	
+	// Trigonometry
+	r = scriptEngine->RegisterObjectMethod("ScriptMath", "float cos(const float)", asMETHOD(xdMath, cos), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("ScriptMath", "float sin(const float)", asMETHOD(xdMath, sin), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("ScriptMath", "float tan(const float)", asMETHOD(xdMath, tan), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("ScriptMath", "float acos(const float)", asMETHOD(xdMath, acos), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("ScriptMath", "float asin(const float)", asMETHOD(xdMath, asin), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("ScriptMath", "float atan(const float)", asMETHOD(xdMath, atan), asCALL_THISCALL); AS_ASSERT
+
+	// Random
+	r = scriptEngine->RegisterObjectMethod("ScriptMath", "void seedRandom(const uint)", asMETHOD(xdMath, seedRandom), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("ScriptMath", "int getRandomInt()", asMETHODPR(xdMath, getRandomInt, (), int), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("ScriptMath", "int getRandomInt(const int, const int)", asMETHODPR(xdMath, getRandomInt, (int, int), int), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("ScriptMath", "float getRandomFloat()", asMETHOD(xdMath, getRandomFloat), asCALL_THISCALL); AS_ASSERT
+
+	return r;
 }
 
-int math::strToInt(const string &str)
+void xdMath::setEnumValue(int *out, int typeId, int val) 
 {
-	return atoi(str.c_str());
+	if(typeId & asTYPEID_MASK_SEQNBR)
+		*out = val;
 }
 
-float math::strToFloat(const string &str)
-{
-	return atof(str.c_str());
-}
-
-uchar math::strToAscii(const string &str)
-{
-	return str.size() != 0 ? str[0] : 0;
-}
-
-bool math::strToBool(const string &str)
-{
-	return (str == "true" || str == "TRUE" || str == "1") ? true : false;
-}
-
-string math::intToStr(const int value)
-{
-	stringstream ss;
-	ss << value;    
-	return ss.str();
-}
-
-string math::floatToStr(const float value)
-{
-	stringstream ss;
-	ss << value;    
-	return ss.str();
-}
-
-string math::boolToStr(const bool value)
-{
-	return value ? "true" : "false";
-}
-
-string math::asciiToStr(const uchar value)
-{
-	string s;
-	s += value;
-	return s;
-}
-
-float math::getRandomFloat()
+float xdMath::getRandomFloat()
 {
 #if defined(X2D_LINUX)
 	return (float)drand48();
 #elif defined(X2D_WINDOWS)
-	return rand();
+	return (float)rand()/RAND_MAX;
 #endif
 }
 
-int math::getRandomInt()
+int xdMath::getRandomInt()
 {
 #if defined(X2D_LINUX)
 	return (int)lrand48();
@@ -85,7 +82,7 @@ int math::getRandomInt()
 #endif
 }
 
-int math::getRandomInt(int start, int end)
+int xdMath::getRandomInt(int start, int end)
 {
 	// Start shouldn't be larger than end
 	if(start > end)
@@ -106,7 +103,7 @@ int math::getRandomInt(int start, int end)
 #endif
 }
 
-void math::seedRandom(const uint seed)
+void xdMath::seedRandom(const uint seed)
 {
 #if defined(X2D_WINDOWS)
 	srand(seed);
@@ -115,64 +112,27 @@ void math::seedRandom(const uint seed)
 #endif
 }
 
-float math::radToDeg(const float rad)
+float xdMath::radToDeg(const float rad)
 {
 	return rad*(180.0f/PI);
 }
 
-float math::degToRad(const float deg)
+float xdMath::degToRad(const float deg)
 {
 	return deg*(PI/180.0f);
 }
 
-string math::toUpper(string &str, const int begin, const int end)
-{
-	if(begin < 0 || end < 0 || begin >= end)
-		transform(str.begin(), str.end(), str.begin(), ::toupper);
-	else
-		transform(str.begin()+begin, str.begin()+end, str.begin(), ::toupper);
-	return str;
-}
-
-string math::toLower(string &str, const int begin, const int end)
-{
-	if(begin < 0 || end < 0 || begin >= end)
-		transform(str.begin(), str.end(), str.begin(), ::tolower);
-	else
-		transform(str.begin()+begin, str.begin()+end, str.begin(), ::tolower);
-	return str;
-}
-
-float math::clampValue(const float min, const float max, const float x)
+float xdMath::clamp(const float min, const float max, const float x)
 {
 	return x < min ? min : (x > max ? max : x);
 }
 
-float math::maximum(const float a, const float b)
+float xdMath::maximum(const float a, const float b)
 {
 	return (a > b ? a : b);
 }
 
-float math::minimum(const float a, const float b)
+float xdMath::minimum(const float a, const float b)
 {
 	return (a < b ? a : b);
 }
-
-void math::setEnumValue(int *out, int typeId, int val)
-{
-	// Enum check
-	if(!(typeId & asTYPEID_MASK_SEQNBR))
-		return;
-
-	// Set out value
-	*out = val;
-}
-
-#ifdef DEPRICATED
-
-float round(const float r)
-{
-    return (r > 0.0f) ? floor(r + 0.5f) : ceil(r - 0.5f);
-}
-
-#endif

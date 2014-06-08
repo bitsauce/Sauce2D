@@ -19,7 +19,8 @@ BEGIN_AS_NAMESPACE
 // Helper functions
 static const char *GetCurrentDir(char *buf, size_t size);
 
-CScriptBuilder::CScriptBuilder()
+CScriptBuilder::CScriptBuilder(xdFileSystem *fileSystem) :
+	fileSystem(fileSystem)
 {
 	engine = 0;
 	module = 0;
@@ -142,16 +143,16 @@ bool CScriptBuilder::IncludeIfNotAlreadyIncluded(const char *filename)
 	return true;
 }
 
-#include "x2d/assetloader.h"
-#include "x2d/engine.h"
+#include <x2d/engine.h>
+#include <x2d/filesystem.h>
 
 int CScriptBuilder::LoadScriptSection(const char *filename)
 {
 	// Load file as asset
-	const char *data = 0; long len;
+	string conent;
 	string assetPath(":/");
 	assetPath.append(filename);
-	if(gameEngine->assetLoader->loadAsset(assetPath.c_str(), &data, &len) != X2D_OK)
+	if(!fileSystem->readFile(assetPath.c_str(), conent))
 	{
 		// Write a message to the engine's message callback
 		char buf[256];
@@ -161,10 +162,7 @@ int CScriptBuilder::LoadScriptSection(const char *filename)
 	}
 
 	// Process the script section even if it is zero length so that the name is registered
-	int r = ProcessScriptSection(data, len, filename);
-
-	// Clear buffer data
-	delete[] data;
+	int r = ProcessScriptSection(conent.c_str(), conent.size(), filename);
 
 	// Return result
 	return r;

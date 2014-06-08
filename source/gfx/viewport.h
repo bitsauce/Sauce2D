@@ -7,7 +7,7 @@
 class Viewport
 {
 public:
-	AS_REF_CLASS(Viewport)
+	AS_DECL_REF
 	AS_FACTORY_ARG1(Viewport, const Recti&)
 	AS_FACTORY_ARG4(Viewport, const int, const int, const int, const int)
 

@@ -1,20 +1,19 @@
 #ifndef GFX_SHADER_H
 #define GFX_SHADER_H
 
-#include <x2d/platform.h>
+#include <x2d/config.h>
 #include <x2d/base.h>
 
 #define TUPLE_CMP(a, b) \
 	if(a < b) return true; \
 	if(a > b) return false;
 
-class Shader
+class XDAPI Shader
 {
 public:
-	AS_REF_CLASS(Shader)
+	AS_DECL_REF
 
 	Shader();
-	virtual ~Shader();
 	
 	virtual void setUniform1i(const string &name, const int v0) = 0;
 	virtual void setUniform2i(const string &name, const int v0, const int v1) = 0;

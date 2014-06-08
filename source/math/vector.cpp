@@ -1,205 +1,213 @@
-//     _                                     ____  ____  
-//    / \  _   _ _ __ ___  _ __ __ _  __  __|___ \|  _ \ 
-//   / _ \| | | |  __/ _ \|  __/ _  | \ \/ /  __) | | | |
-//  / ___ \ |_| | | | (_) | | | (_| |  >  <  / __/| |_| |
-// /_/   \_\__ _|_|  \___/|_|  \__ _| /_/\_\|_____|____/ 
-//		MixedGraphics (C)
+//       ____  ____     ____                        _____             _            
+// __  _|___ \|  _ \   / ___| __ _ _ __ ___   ___  | ____|_ __   __ _(_)_ __   ___ 
+// \ \/ / __) | | | | | |  _ / _  |  _   _ \ / _ \ |  _| |  _ \ / _  | |  _ \ / _ \
+//  >  < / __/| |_| | | |_| | (_| | | | | | |  __/ | |___| | | | (_| | | | | |  __/
+// /_/\_\_____|____/   \____|\__ _|_| |_| |_|\___| |_____|_| |_|\__, |_|_| |_|\___|
+//                                                              |___/     
+//				Originally written by Marcus Loo Vergara (aka. Bitsauce)
+//									2011-2014 (C)
 //		Inspired by: http://www.danielsoltyka.com/index.php/2010/05/30/c-Vector2-rectangle-classes/
 
 
-#include "x2d/math/vector.h"
-#include "x2d/scripts.h"
-
-void ConstructVector2(Vector2 *self)
-{
-	new(self) Vector2(0.0f);
-}
+#include <x2d/math/vector.h>
+#include <x2d/scripts.h>
  
 //-----------------------------------------------------
 // Vector2
 // - A 2-dimentional vector class
 //-----------------------------------------------------
 
-void RegisterVectors()
+AS_REG_VALUE(Vector2)
+
+int Vector2::Register(asIScriptEngine *scriptEngine)
 {
 	// Vector2
 	int r;
 
-	// Register the value type
-	AS_REGISTER_VALUE(Vector2)
-	Vector2::TypeId = r;
-
 	// Register the object properties
-	AS_VALUE_PROPERTY(Vector2, "float x", x)
-	AS_VALUE_PROPERTY(Vector2, "float y", y)
+	r = scriptEngine->RegisterObjectProperty("Vector2", "float x", offsetof(Vector2, x)); AS_ASSERT
+	r = scriptEngine->RegisterObjectProperty("Vector2", "float y", offsetof(Vector2, y)); AS_ASSERT
 
 	// Register the constructors
-	r = scriptEngine->RegisterObjectBehaviour("Vector2", asBEHAVE_CONSTRUCT, "void f()", asFUNCTION(ConstructVector2), asCALL_CDECL_OBJLAST); assert( r >= 0 );
-	//AS_VALUE_BEHAVIOURO(Vector2, "void f()", asBEHAVE_CONSTRUCT, DefaultConstructor)
-	AS_VALUE_BEHAVIOURO(Vector2, "void f(const Vector2 &in)", asBEHAVE_CONSTRUCT, CopyConstructor1)
-	AS_VALUE_BEHAVIOURO(Vector2, "void f(float)", asBEHAVE_CONSTRUCT, InitConstructor1)
-	AS_VALUE_BEHAVIOURO(Vector2, "void f(float, float)", asBEHAVE_CONSTRUCT, InitConstructor2)
+	r = scriptEngine->RegisterObjectBehaviour("Vector2", asBEHAVE_CONSTRUCT, "void f()", asFUNCTION(DefaultConstructor), asCALL_CDECL_OBJLAST); AS_ASSERT
+	r = scriptEngine->RegisterObjectBehaviour("Vector2", asBEHAVE_CONSTRUCT, "void f(float)", asFUNCTION(InitConstructor1), asCALL_CDECL_OBJLAST); AS_ASSERT
+	r = scriptEngine->RegisterObjectBehaviour("Vector2", asBEHAVE_CONSTRUCT, "void f(float, float)", asFUNCTION(InitConstructor2), asCALL_CDECL_OBJLAST); AS_ASSERT
+	r = scriptEngine->RegisterObjectBehaviour("Vector2", asBEHAVE_CONSTRUCT, "void f(const Vector2 &in)", asFUNCTION(CopyConstructor1), asCALL_CDECL_OBJLAST); AS_ASSERT
+	r = scriptEngine->RegisterObjectBehaviour("Vector2", asBEHAVE_CONSTRUCT, "void f(const Vector2i &in)", asFUNCTION(CopyConstructor2), asCALL_CDECL_OBJLAST); AS_ASSERT
 
 	// Register the operator overloads
-	AS_VALUE_METHOD(Vector2, "Vector2 &opAddAssign(const Vector2 &in)", operator+=)
-	AS_VALUE_METHOD(Vector2, "Vector2 &opSubAssign(const Vector2 &in)", operator-=)
-	AS_VALUE_METHOD(Vector2, "Vector2 &opMulAssign(const float)", operator*=)
-	AS_VALUE_METHOD(Vector2, "Vector2 &opDivAssign(const float)", operator/=)
-	AS_VALUE_METHOD(Vector2, "bool opEquals(const Vector2 &in) const", operator==)
-	AS_VALUE_METHOD(Vector2, "Vector2 opAdd(const Vector2 &in) const", operator+)
-	AS_VALUE_METHOD(Vector2, "Vector2 opSub(const Vector2 &in) const", operator-)
-	AS_VALUE_METHOD(Vector2, "Vector2 opMul(const float) const", operator*)
-	AS_VALUE_METHOD(Vector2, "Vector2 opDiv(const float) const", operator/)
+	r = scriptEngine->RegisterObjectMethod("Vector2", "Vector2 &opAddAssign(const Vector2 &in)", asMETHOD(Vector2, operator+=), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("Vector2", "Vector2 &opSubAssign(const Vector2 &in)", asMETHOD(Vector2, operator-=), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("Vector2", "Vector2 &opMulAssign(const float)", asMETHOD(Vector2, operator*=), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("Vector2", "Vector2 &opDivAssign(const float)", asMETHOD(Vector2, operator/=), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("Vector2", "bool opEquals(const Vector2 &in) const", asMETHOD(Vector2, operator==), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("Vector2", "Vector2 opAdd(const Vector2 &in) const", asMETHOD(Vector2, operator+), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("Vector2", "Vector2 opSub(const Vector2 &in) const", asMETHOD(Vector2, operator-), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("Vector2", "Vector2 opMul(const float) const", asMETHOD(Vector2, operator*), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("Vector2", "Vector2 opDiv(const float) const", asMETHOD(Vector2, operator/), asCALL_THISCALL); AS_ASSERT
 
 	// Register the object methods
-	AS_VALUE_METHOD(Vector2, "void set(const float x, const float y)", set)
-	AS_VALUE_METHOD(Vector2, "void rotate(const float)", rotate)
-	AS_VALUE_METHOD(Vector2, "Vector2 normalized() const", normalized)
-	AS_VALUE_METHOD(Vector2, "void normalize()", normalize)
-	AS_VALUE_METHOD(Vector2, "float dot(const Vector2 &in) const", dot)
-	AS_VALUE_METHOD(Vector2, "float cross(const Vector2 &in) const", cross)
-	AS_VALUE_METHOD(Vector2, "float distance(const Vector2 &in) const", distance)
-	AS_VALUE_METHOD(Vector2, "float magnitude() const", magnitude)
-	AS_VALUE_METHOD(Vector2, "float length() const", magnitude)
-	AS_VALUE_METHODPR(Vector2, "float angle() const", angle, () const, float)
-	AS_VALUE_METHODPR(Vector2, "float angle(const Vector2 &in) const", angle, (const Vector2&) const, float)
+	r = scriptEngine->RegisterObjectMethod("Vector2", "void set(const float x, const float y)", asMETHOD(Vector2, set), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("Vector2", "void rotate(const float)", asMETHOD(Vector2, rotate), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("Vector2", "Vector2 normalized() const", asMETHOD(Vector2, normalized), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("Vector2", "void normalize()", asMETHOD(Vector2, normalize), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("Vector2", "float dot(const Vector2 &in) const", asMETHOD(Vector2, dot), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("Vector2", "float cross(const Vector2 &in) const", asMETHOD(Vector2, cross), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("Vector2", "float distance(const Vector2 &in) const", asMETHOD(Vector2, distance), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("Vector2", "float magnitude() const", asMETHOD(Vector2, magnitude), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("Vector2", "float length() const", asMETHOD(Vector2, magnitude), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("Vector2", "float angle() const", asMETHODPR(Vector2, angle, () const, float), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("Vector2", "float angle(const Vector2 &in) const", asMETHODPR(Vector2, angle, (const Vector2&) const, float), asCALL_THISCALL); AS_ASSERT
+	
+	return r;
+}
 
+AS_REG_VALUE(Vector2i)
+
+int Vector2i::Register(asIScriptEngine *scriptEngine)
+{
 	// Vector2i
-
-	// Register the value type
-	AS_REGISTER_VALUE(Vector2i)
-	Vector2i::TypeId = r;
+	int r = 0;
 
 	// Register the object properties
-	AS_VALUE_PROPERTY(Vector2i, "int x", x)
-	AS_VALUE_PROPERTY(Vector2i, "int y", y)
+	r = scriptEngine->RegisterObjectProperty("Vector2i", "int x", offsetof(Vector2i, x)); AS_ASSERT
+	r = scriptEngine->RegisterObjectProperty("Vector2i", "int y", offsetof(Vector2i, y)); AS_ASSERT
 
 	// Register the constructors
-	AS_VALUE_BEHAVIOURO(Vector2i, "void f()", asBEHAVE_CONSTRUCT, DefaultConstructor)
-	AS_VALUE_BEHAVIOURO(Vector2i, "void f(const Vector2i &in)", asBEHAVE_CONSTRUCT, CopyConstructor1)
-	AS_VALUE_BEHAVIOURO(Vector2i, "void f(const Vector2 &in)", asBEHAVE_CONSTRUCT, CopyConstructor2)
-	AS_VALUE_BEHAVIOURO(Vector2, "void f(const Vector2i &in)", asBEHAVE_CONSTRUCT, CopyConstructor2) // Vector2 to Vector2i
-	AS_VALUE_BEHAVIOURO(Vector2i, "void f(int)", asBEHAVE_CONSTRUCT, InitConstructor1)
-	AS_VALUE_BEHAVIOURO(Vector2i, "void f(int, int)", asBEHAVE_CONSTRUCT, InitConstructor2)
+	r = scriptEngine->RegisterObjectBehaviour("Vector2i", asBEHAVE_CONSTRUCT, "void f()", asFUNCTION(DefaultConstructor), asCALL_CDECL_OBJLAST); 
+	r = scriptEngine->RegisterObjectBehaviour("Vector2i", asBEHAVE_CONSTRUCT, "void f(const Vector2i &in)", asFUNCTION(CopyConstructor1), asCALL_CDECL_OBJLAST); AS_ASSERT
+	r = scriptEngine->RegisterObjectBehaviour("Vector2i", asBEHAVE_CONSTRUCT, "void f(const Vector2 &in)", asFUNCTION(CopyConstructor2), asCALL_CDECL_OBJLAST); AS_ASSERT
+	r = scriptEngine->RegisterObjectBehaviour("Vector2i", asBEHAVE_CONSTRUCT, "void f(int)", asFUNCTION(InitConstructor1), asCALL_CDECL_OBJLAST); AS_ASSERT
+	r = scriptEngine->RegisterObjectBehaviour("Vector2i", asBEHAVE_CONSTRUCT, "void f(int, int)", asFUNCTION(InitConstructor2), asCALL_CDECL_OBJLAST); AS_ASSERT
 
 	// Register the operator overloads
-	AS_VALUE_METHOD(Vector2i, "Vector2i &opAddAssign(const Vector2i &in)", operator+=)
-	AS_VALUE_METHOD(Vector2i, "Vector2i &opSubAssign(const Vector2i &in)", operator-=)
-	AS_VALUE_METHOD(Vector2i, "Vector2i &opMulAssign(const float)", operator*=)
-	AS_VALUE_METHOD(Vector2i, "Vector2i &opDivAssign(const float)", operator/=)
-	AS_VALUE_METHOD(Vector2i, "bool opEquals(const Vector2i &in) const", operator==)
-	AS_VALUE_METHOD(Vector2i, "Vector2i opAdd(const Vector2i &in) const", operator+)
-	AS_VALUE_METHOD(Vector2i, "Vector2i opSub(const Vector2i &in) const", operator-)
-	AS_VALUE_METHOD(Vector2i, "Vector2i opMul(const float) const", operator*)
-	AS_VALUE_METHOD(Vector2i, "Vector2i opDiv(const float) const", operator/)
+	r = scriptEngine->RegisterObjectMethod("Vector2i", "Vector2i &opAddAssign(const Vector2i &in)", asMETHOD(Vector2i, operator+=), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("Vector2i", "Vector2i &opSubAssign(const Vector2i &in)", asMETHOD(Vector2i, operator-=), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("Vector2i", "Vector2i &opMulAssign(const float)", asMETHOD(Vector2i, operator*=), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("Vector2i", "Vector2i &opDivAssign(const float)", asMETHOD(Vector2i, operator/=), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("Vector2i", "bool opEquals(const Vector2i &in) const", asMETHOD(Vector2i, operator==), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("Vector2i", "Vector2i opAdd(const Vector2i &in) const", asMETHOD(Vector2i, operator+), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("Vector2i", "Vector2i opSub(const Vector2i &in) const", asMETHOD(Vector2i, operator-), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("Vector2i", "Vector2i opMul(const float) const", asMETHOD(Vector2i, operator*), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("Vector2i", "Vector2i opDiv(const float) const", asMETHOD(Vector2i, operator/), asCALL_THISCALL); AS_ASSERT
 
 	// Register the object methods
-	AS_VALUE_METHOD(Vector2i, "void set(const int x, const int y)", set)
-	AS_VALUE_METHOD(Vector2i, "void rotate(const float)", rotate)
-	AS_VALUE_METHOD(Vector2i, "Vector2i normalized() const", normalized)
-	AS_VALUE_METHOD(Vector2i, "void normalize()", normalize)
-	AS_VALUE_METHOD(Vector2i, "float dot(const Vector2i &in) const", dot)
-	AS_VALUE_METHOD(Vector2i, "float cross(const Vector2i &in) const", cross)
-	AS_VALUE_METHOD(Vector2i, "float distance(const Vector2i &in) const", distance)
-	AS_VALUE_METHOD(Vector2i, "float magnitude() const", magnitude)
-	AS_VALUE_METHOD(Vector2i, "float length() const", magnitude)
-	AS_VALUE_METHODPR(Vector2i, "float angle() const", angle, () const, float)
-	AS_VALUE_METHODPR(Vector2i, "float angle(const Vector2i &in) const", angle, (const Vector2i&) const, float)
+	r = scriptEngine->RegisterObjectMethod("Vector2i", "void set(const int x, const int y)", asMETHOD(Vector2i, set), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("Vector2i", "void rotate(const float)", asMETHOD(Vector2i, rotate), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("Vector2i", "Vector2i normalized() const", asMETHOD(Vector2i, normalized), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("Vector2i", "void normalize()", asMETHOD(Vector2i, normalize), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("Vector2i", "float dot(const Vector2i &in) const", asMETHOD(Vector2i, dot), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("Vector2i", "float cross(const Vector2i &in) const", asMETHOD(Vector2i, cross), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("Vector2i", "float distance(const Vector2i &in) const", asMETHOD(Vector2i, distance), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("Vector2i", "float magnitude() const", asMETHOD(Vector2i, magnitude), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("Vector2i", "float length() const", asMETHOD(Vector2i, magnitude), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("Vector2i", "float angle() const", asMETHODPR(Vector2i, angle, () const, float), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("Vector2i", "float angle(const Vector2i &in) const", asMETHODPR(Vector2i, angle, (const Vector2i&) const, float), asCALL_THISCALL); AS_ASSERT
+
+	return r;
+}
+
+AS_REG_VALUE(Vector3)
 	
-	// vec3
-
-	// Register the value type
-	AS_REGISTER_VALUE(vec3)
-	vec3::TypeId = r;
-
-	// Register the object properties
-	AS_VALUE_PROPERTY(vec3, "float x", x)
-	AS_VALUE_PROPERTY(vec3, "float y", y)
-	AS_VALUE_PROPERTY(vec3, "float z", z)
-
-	// Register the constructors
-	AS_VALUE_BEHAVIOURO(vec3, "void f()", asBEHAVE_CONSTRUCT, DefaultConstructor)
-	AS_VALUE_BEHAVIOURO(vec3, "void f(const vec3 &in)", asBEHAVE_CONSTRUCT, CopyConstructor)
-	AS_VALUE_BEHAVIOURO(vec3, "void f(float)", asBEHAVE_CONSTRUCT, InitConstructor1)
-	AS_VALUE_BEHAVIOURO(vec3, "void f(float, float, float)", asBEHAVE_CONSTRUCT, InitConstructor2)
-
-	// Register the operator overloads
-	AS_VALUE_METHOD(vec3, "vec3 &opAddAssign(const vec3 &in)", operator+=)
-	AS_VALUE_METHOD(vec3, "vec3 &opSubAssign(const vec3 &in)", operator-=)
-	AS_VALUE_METHOD(vec3, "vec3 &opMulAssign(const float)", operator*=)
-	AS_VALUE_METHOD(vec3, "vec3 &opDivAssign(const float)", operator/=)
-	AS_VALUE_METHOD(vec3, "bool opEquals(const vec3 &in) const", operator==)
-	AS_VALUE_METHOD(vec3, "vec3 opAdd(const vec3 &in) const", operator+)
-	AS_VALUE_METHOD(vec3, "vec3 opSub(const vec3 &in) const", operator-)
-	AS_VALUE_METHOD(vec3, "vec3 opMul(const float) const", operator*)
-	AS_VALUE_METHOD(vec3, "vec3 opDiv(const float) const", operator/)
-
-	// Register the object methods
-	AS_VALUE_METHOD(vec3, "void set(const float x, const float y, const float z)", set)
-	AS_VALUE_METHOD(vec3, "void nullify()", nullify)
-	AS_VALUE_METHOD(vec3, "bool isNull()", isNull)
-	AS_VALUE_METHOD(vec3, "void rotate(const float)", rotate)
-	AS_VALUE_METHOD(vec3, "vec3 normalized() const", normalized)
-	AS_VALUE_METHOD(vec3, "void normalize()", normalize)
-	AS_VALUE_METHOD(vec3, "float dot(const vec3 &in) const", dot)
-	AS_VALUE_METHOD(vec3, "float cross(const vec3 &in) const", cross)
-	AS_VALUE_METHOD(vec3, "float distance(const vec3 &in) const", distance)
-	AS_VALUE_METHOD(vec3, "float magnitude() const", magnitude)
-	AS_VALUE_METHOD(vec3, "float length() const", length)
-	AS_VALUE_METHODPR(vec3, "float angle() const", angle, () const, float)
-	AS_VALUE_METHODPR(vec3, "float angle(const vec3 &in) const", angle, (const vec3&) const, float)
-	
-	// vec4
-
-	// Register the value type
-	AS_REGISTER_VALUE(vec4)
-	vec4::TypeId = r;
+int Vector3::Register(asIScriptEngine *scriptEngine)
+{
+	// Vector3
+	int r = 0;
 
 	// Register the object properties
-	AS_VALUE_PROPERTY(vec4, "float x", x)
-	AS_VALUE_PROPERTY(vec4, "float y", y)
-	AS_VALUE_PROPERTY(vec4, "float z", z)
-	AS_VALUE_PROPERTY(vec4, "float w", w)
-
-	AS_VALUE_METHOD(vec4, "float get_r()", r)
-	AS_VALUE_METHOD(vec4, "float get_g()", g)
-	AS_VALUE_METHOD(vec4, "float get_b()", b)
-	AS_VALUE_METHOD(vec4, "float get_a()", a)
-
-	AS_VALUE_METHOD(vec4, "void set_r(const float)", setR)
-	AS_VALUE_METHOD(vec4, "void set_g(const float)", setG)
-	AS_VALUE_METHOD(vec4, "void set_b(const float)", setB)
-	AS_VALUE_METHOD(vec4, "void set_a(const float)", setA)
+	r = scriptEngine->RegisterObjectProperty("Vector3", "int x", offsetof(Vector3, x)); AS_ASSERT
+	r = scriptEngine->RegisterObjectProperty("Vector3", "int y", offsetof(Vector3, y)); AS_ASSERT
+	r = scriptEngine->RegisterObjectProperty("Vector3", "int z", offsetof(Vector3, z)); AS_ASSERT
 
 	// Register the constructors
-	AS_VALUE_BEHAVIOURO(vec4, "void f()", asBEHAVE_CONSTRUCT, DefaultConstructor)
-	AS_VALUE_BEHAVIOURO(vec4, "void f(const vec4 &in)", asBEHAVE_CONSTRUCT, CopyConstructor)
-	AS_VALUE_BEHAVIOURO(vec4, "void f(float)", asBEHAVE_CONSTRUCT, InitConstructor1)
-	AS_VALUE_BEHAVIOURO(vec4, "void f(float, float, float, float)", asBEHAVE_CONSTRUCT, InitConstructor2)
+	r = scriptEngine->RegisterObjectBehaviour("Vector3", asBEHAVE_CONSTRUCT, "void f()", asFUNCTION(DefaultConstructor), asCALL_CDECL_OBJLAST); 
+	r = scriptEngine->RegisterObjectBehaviour("Vector3", asBEHAVE_CONSTRUCT, "void f(const Vector3 &in)", asFUNCTION(CopyConstructor), asCALL_CDECL_OBJLAST); AS_ASSERT
+	r = scriptEngine->RegisterObjectBehaviour("Vector3", asBEHAVE_CONSTRUCT, "void f(float)", asFUNCTION(InitConstructor1), asCALL_CDECL_OBJLAST); AS_ASSERT
+	r = scriptEngine->RegisterObjectBehaviour("Vector3", asBEHAVE_CONSTRUCT, "void f(float, float, float)", asFUNCTION(InitConstructor2), asCALL_CDECL_OBJLAST); AS_ASSERT
 
 	// Register the operator overloads
-	AS_VALUE_METHOD(vec4, "vec4 &opAddAssign(const vec4 &in)", operator+=)
-	AS_VALUE_METHOD(vec4, "vec4 &opSubAssign(const vec4 &in)", operator-=)
-	AS_VALUE_METHOD(vec4, "vec4 &opMulAssign(const float)", operator*=)
-	AS_VALUE_METHOD(vec4, "vec4 &opDivAssign(const float)", operator/=)
-	AS_VALUE_METHOD(vec4, "bool opEquals(const vec4 &in) const", operator==)
-	AS_VALUE_METHOD(vec4, "vec4 opAdd(const vec4 &in) const", operator+)
-	AS_VALUE_METHOD(vec4, "vec4 opSub(const vec4 &in) const", operator-)
-	AS_VALUE_METHOD(vec4, "vec4 opMul(const float) const", operator*)
-	AS_VALUE_METHOD(vec4, "vec4 opDiv(const float) const", operator/)
+	r = scriptEngine->RegisterObjectMethod("Vector3", "Vector3 &opAddAssign(const Vector3 &in)", asMETHOD(Vector3, operator+=), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("Vector3", "Vector3 &opSubAssign(const Vector3 &in)", asMETHOD(Vector3, operator-=), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("Vector3", "Vector3 &opMulAssign(const float)", asMETHOD(Vector3, operator*=), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("Vector3", "Vector3 &opDivAssign(const float)", asMETHOD(Vector3, operator/=), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("Vector3", "bool opEquals(const Vector3 &in) const", asMETHOD(Vector3, operator==), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("Vector3", "Vector3 opAdd(const Vector3 &in) const", asMETHOD(Vector3, operator+), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("Vector3", "Vector3 opSub(const Vector3 &in) const", asMETHOD(Vector3, operator-), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("Vector3", "Vector3 opMul(const float) const", asMETHOD(Vector3, operator*), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("Vector3", "Vector3 opDiv(const float) const", asMETHOD(Vector3, operator/), asCALL_THISCALL); AS_ASSERT
 
 	// Register the object methods
-	AS_VALUE_METHOD(vec4, "void set(const float x, const float y, const float z, const float w)", set)
-	AS_VALUE_METHOD(vec4, "void rotate(const float)", rotate)
-	AS_VALUE_METHOD(vec4, "vec4 normalized() const", normalized)
-	AS_VALUE_METHOD(vec4, "void normalize()", normalize)
-	AS_VALUE_METHOD(vec4, "float dot(const vec4 &in) const", dot)
-	AS_VALUE_METHOD(vec4, "float cross(const vec4 &in) const", cross)
-	AS_VALUE_METHOD(vec4, "float distance(const vec4 &in) const", distance)
-	AS_VALUE_METHOD(vec4, "float magnitude() const", magnitude)
-	AS_VALUE_METHOD(vec4, "float length() const", length)
-	AS_VALUE_METHODPR(vec4, "float angle() const", angle, () const, float)
-	AS_VALUE_METHODPR(vec4, "float angle(const vec4 &in) const", angle, (const vec4&) const, float)
+	r = scriptEngine->RegisterObjectMethod("Vector3", "void set(const float x, const float y, const float z)", asMETHOD(Vector3, set), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("Vector3", "void nullify()", asMETHOD(Vector3, nullify), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("Vector3", "bool isNull()", asMETHOD(Vector3, isNull), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("Vector3", "void rotate(const float)", asMETHOD(Vector3, rotate), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("Vector3", "Vector3 normalized() const", asMETHOD(Vector3, normalized), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("Vector3", "void normalize()", asMETHOD(Vector3, normalize), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("Vector3", "float dot(const Vector3 &in) const", asMETHOD(Vector3, dot), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("Vector3", "float cross(const Vector3 &in) const", asMETHOD(Vector3, cross), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("Vector3", "float distance(const Vector3 &in) const", asMETHOD(Vector3, distance), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("Vector3", "float magnitude() const", asMETHOD(Vector3, magnitude), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("Vector3", "float length() const", asMETHOD(Vector3, length), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("Vector3", "float angle() const", asMETHODPR(Vector3, angle, () const, float), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("Vector3", "float angle(const Vector3 &in) const", asMETHODPR(Vector3, angle, (const Vector3&) const, float), asCALL_THISCALL); AS_ASSERT
+
+	return r;
+}
+
+AS_REG_VALUE(Vector4)
+
+int Vector4::Register(asIScriptEngine *scriptEngine)
+{
+	// Vector4
+	int r = 0;
+
+	// Register the object properties
+	r = scriptEngine->RegisterObjectProperty("Vector4", "int x", offsetof(Vector4, x)); AS_ASSERT
+	r = scriptEngine->RegisterObjectProperty("Vector4", "int y", offsetof(Vector4, y)); AS_ASSERT
+	r = scriptEngine->RegisterObjectProperty("Vector4", "int z", offsetof(Vector4, z)); AS_ASSERT
+	r = scriptEngine->RegisterObjectProperty("Vector4", "int w", offsetof(Vector4, w)); AS_ASSERT
+
+	r = scriptEngine->RegisterObjectMethod("Vector4", "float get_r()", asMETHOD(Vector4, r), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("Vector4", "float get_g()", asMETHOD(Vector4, g), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("Vector4", "float get_b()", asMETHOD(Vector4, b), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("Vector4", "float get_a()", asMETHOD(Vector4, a), asCALL_THISCALL); AS_ASSERT
+
+	r = scriptEngine->RegisterObjectMethod("Vector4", "void set_r(const float)", asMETHOD(Vector4, setR), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("Vector4", "void set_g(const float)", asMETHOD(Vector4, setG), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("Vector4", "void set_b(const float)", asMETHOD(Vector4, setB), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("Vector4", "void set_a(const float)", asMETHOD(Vector4, setA), asCALL_THISCALL); AS_ASSERT
+
+	// Register the constructors
+	r = scriptEngine->RegisterObjectBehaviour("Vector4", asBEHAVE_CONSTRUCT, "void f()", asFUNCTION(DefaultConstructor), asCALL_CDECL_OBJLAST); 
+	r = scriptEngine->RegisterObjectBehaviour("Vector4", asBEHAVE_CONSTRUCT, "void f(const Vector4 &in)", asFUNCTION(CopyConstructor), asCALL_CDECL_OBJLAST); AS_ASSERT
+	r = scriptEngine->RegisterObjectBehaviour("Vector4", asBEHAVE_CONSTRUCT, "void f(float)", asFUNCTION(InitConstructor1), asCALL_CDECL_OBJLAST); AS_ASSERT
+	r = scriptEngine->RegisterObjectBehaviour("Vector4", asBEHAVE_CONSTRUCT, "void f(float, float, float, float)", asFUNCTION(InitConstructor2), asCALL_CDECL_OBJLAST); AS_ASSERT
+
+	// Register the operator overloads
+	r = scriptEngine->RegisterObjectMethod("Vector4", "Vector4 &opAddAssign(const Vector4 &in)", asMETHOD(Vector4, operator+=), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("Vector4", "Vector4 &opSubAssign(const Vector4 &in)", asMETHOD(Vector4, operator-=), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("Vector4", "Vector4 &opMulAssign(const float)", asMETHOD(Vector4, operator*=), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("Vector4", "Vector4 &opDivAssign(const float)", asMETHOD(Vector4, operator/=), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("Vector4", "bool opEquals(const Vector4 &in) const", asMETHOD(Vector4, operator==), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("Vector4", "Vector4 opAdd(const Vector4 &in) const", asMETHOD(Vector4, operator+), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("Vector4", "Vector4 opSub(const Vector4 &in) const", asMETHOD(Vector4, operator-), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("Vector4", "Vector4 opMul(const float) const", asMETHOD(Vector4, operator*), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("Vector4", "Vector4 opDiv(const float) const", asMETHOD(Vector4, operator/), asCALL_THISCALL); AS_ASSERT
+
+	// Register the object methods
+	r = scriptEngine->RegisterObjectMethod("Vector4", "void set(const float x, const float y, const float z, const float w)", asMETHOD(Vector4, set), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("Vector4", "void rotate(const float)", asMETHOD(Vector4, rotate), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("Vector4", "Vector4 normalized() const", asMETHOD(Vector4, normalized), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("Vector4", "void normalize()", asMETHOD(Vector4, normalize), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("Vector4", "float dot(const Vector4 &in) const", asMETHOD(Vector4, dot), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("Vector4", "float cross(const Vector4 &in) const", asMETHOD(Vector4, cross), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("Vector4", "float distance(const Vector4 &in) const", asMETHOD(Vector4, distance), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("Vector4", "float magnitude() const", asMETHOD(Vector4, magnitude), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("Vector4", "float length() const", asMETHOD(Vector4, length), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("Vector4", "float angle() const", asMETHODPR(Vector4, angle, () const, float), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("Vector4", "float angle(const Vector4 &in) const", asMETHODPR(Vector4, angle, (const Vector4&) const, float), asCALL_THISCALL); AS_ASSERT
+
+	return r;
 }
 
 //----------------------------------------------------------------------------
@@ -208,15 +216,19 @@ void RegisterVectors()
 
 // Vector2
 
-int Vector2::TypeId;
-
-Vector2::Vector2(float xy)
+Vector2::Vector2(const float xy)
 {
 	x = xy;
 	y = xy;
 }
 
-Vector2::Vector2(float x, float y)
+Vector2::Vector2(const float d[2])
+{
+	x = d[0];
+	y = d[1];
+}
+
+Vector2::Vector2(const float x, const float y)
 {
     this->x = x;
     this->y = y;
@@ -226,6 +238,18 @@ Vector2::Vector2(const Vector2i &v)
 {
     this->x = (float)v.x;
     this->y = (float)v.y;
+}
+
+Vector2::Vector2(const Vector3 &v)
+{
+    this->x = v.x;
+    this->y = v.y;
+}
+
+Vector2::Vector2(const Vector4 &v)
+{
+    this->x = v.x;
+    this->y = v.y;
 }
 
 void Vector2::set(const float x, const float y)
@@ -501,6 +525,11 @@ bool Vector2i::operator== (const Vector2i& v2) const
 
 // Vector2
 
+void Vector2::DefaultConstructor(Vector2 *self)
+{
+	new(self) Vector2(0.0f);
+}
+
 void Vector2::CopyConstructor1(const Vector2 &other, Vector2 *self)
 {
 	new(self) Vector2(other);
@@ -511,12 +540,12 @@ void Vector2::CopyConstructor2(const Vector2i &other, Vector2 *self)
 	new(self) Vector2(other);
 }
 
-void Vector2::InitConstructor1(float xy, Vector2 *self)
+void Vector2::InitConstructor1(const float xy, Vector2 *self)
 {
 	new(self) Vector2(xy);
 }
 
-void Vector2::InitConstructor2(float x, float y, Vector2 *self)
+void Vector2::InitConstructor2(const float x, const float y, Vector2 *self)
 {
 	new(self) Vector2(x, y);
 }
@@ -549,24 +578,31 @@ void Vector2i::InitConstructor2(int x, int y, Vector2i *self)
 }
  
 //-----------------------------------------------------
-// vec3
+// Vector3
 // - A 3-dimentional vector class
 //-----------------------------------------------------
 
-int vec3::TypeId;
+int Vector3::TypeId;
 
-vec3::vec3(float xyz)
+Vector3::Vector3(float xyz)
 {
 	x = xyz;
 	y = xyz;
 	z = xyz;
 }
 
-vec3::vec3(float x, float y, float z)
+Vector3::Vector3(float x, float y, float z)
 {
     this->x = x;
     this->y = y;
 	this->z = z;
+}
+
+Vector3::Vector3(const Vector4 &v)
+{
+    this->x = v.x;
+    this->y = v.y;
+	this->z = v.z;
 }
 
 //----------------------------------------------------------------------------
@@ -574,7 +610,7 @@ vec3::vec3(float x, float y, float z)
 //----------------------------------------------------------------------------
 
 // Setting
-void vec3::set(const float x, const float y, const float z)
+void Vector3::set(const float x, const float y, const float z)
 {
     this->x = x;
     this->y = y;
@@ -582,38 +618,38 @@ void vec3::set(const float x, const float y, const float z)
 }
 
 // Null
-void vec3::nullify()
+void Vector3::nullify()
 {
 	x = 0.0f;
 	y = 0.0f;
 	z = 0.0f;
 }
 
-bool vec3::isNull() const
+bool Vector3::isNull() const
 {
 	return x == 0.0f && y == 0.0f && z == 0.0f;
 }
 
 // Transform
-void vec3::rotate(const float angle)
+void Vector3::rotate(const float angle)
 {
     // TODO: Implement
 }
 
-float vec3::angle() const
+float Vector3::angle() const
 {
     // TODO: Implement
 	return 0;
 }
 
-float vec3::angle(const vec3& v2) const
+float Vector3::angle(const Vector3& v2) const
 {
     // TODO: Implement
 	return 0;
 }
 
 // Vector functions
-void vec3::normalize()
+void Vector3::normalize()
 {
 	if(isNull()) return;
     float mag = magnitude();
@@ -622,40 +658,40 @@ void vec3::normalize()
     z /= mag;
 }
 
-vec3 vec3::normalized() const
+Vector3 Vector3::normalized() const
 {
-	if(isNull()) return vec3(0.0f);
+	if(isNull()) return Vector3(0.0f);
     float mag = magnitude();
-	return vec3(x/mag, y/mag, z/mag);
+	return Vector3(x/mag, y/mag, z/mag);
 }
 
-float vec3::dot(const vec3 &v2) const
+float Vector3::dot(const Vector3 &v2) const
 {
     return (x*v2.x)+(y*v2.y)+(z*v2.z);
 }
 
-vec3 vec3::cross(const vec3 &v2) const
+Vector3 Vector3::cross(const Vector3 &v2) const
 {
-    return vec3((y*v2.z)-(z*v2.y), (z*v2.x)-(x*v2.z), (x*v2.y)-(y*v2.x));
+    return Vector3((y*v2.z)-(z*v2.y), (z*v2.x)-(x*v2.z), (x*v2.y)-(y*v2.x));
 }
 
-float vec3::magnitude() const
-{
-    return sqrtf(x*x+y*y+z*z);
-}
-
-float vec3::length() const
+float Vector3::magnitude() const
 {
     return sqrtf(x*x+y*y+z*z);
 }
 
-float vec3::distance(const vec3& v2) const
+float Vector3::length() const
+{
+    return sqrtf(x*x+y*y+z*z);
+}
+
+float Vector3::distance(const Vector3& v2) const
 {
     // TODO: Implement
 	return 0;
 }
 
-vec3& vec3::operator=(const vec3& v2)
+Vector3& Vector3::operator=(const Vector3& v2)
 {
     if(this == &v2) return *this;
     x = v2.x;
@@ -664,7 +700,7 @@ vec3& vec3::operator=(const vec3& v2)
     return *this;
 }
 
-vec3& vec3::operator+=(const vec3& v2)
+Vector3& Vector3::operator+=(const Vector3& v2)
 {
     x += v2.x;
     y += v2.y;
@@ -672,7 +708,7 @@ vec3& vec3::operator+=(const vec3& v2)
     return *this;
 }
  
-vec3& vec3::operator-=(const vec3& v2)
+Vector3& Vector3::operator-=(const Vector3& v2)
 {
     x -= v2.x;
     y -= v2.y;
@@ -680,7 +716,7 @@ vec3& vec3::operator-=(const vec3& v2)
     return *this;
 }
  
-vec3& vec3::operator*=(const float scalar)
+Vector3& Vector3::operator*=(const float scalar)
 {
     x *= scalar;
     y *= scalar;
@@ -688,7 +724,7 @@ vec3& vec3::operator*=(const float scalar)
     return *this;
 }
  
-vec3& vec3::operator/=(const float scalar)
+Vector3& Vector3::operator/=(const float scalar)
 {
     x /= scalar;
     y /= scalar;
@@ -696,27 +732,27 @@ vec3& vec3::operator/=(const float scalar)
     return *this;
 }
  
-const vec3 vec3::operator+(const vec3 &v2) const
+const Vector3 Vector3::operator+(const Vector3 &v2) const
 {
-    return vec3(*this) += v2;
+    return Vector3(*this) += v2;
 }
  
-const vec3 vec3::operator-(const vec3 &v2) const
+const Vector3 Vector3::operator-(const Vector3 &v2) const
 {
-    return vec3(*this) -= v2;
+    return Vector3(*this) -= v2;
 }
  
-const vec3 vec3::operator*(const float scalar) const
+const Vector3 Vector3::operator*(const float scalar) const
 {
-    return vec3(*this) *= scalar;
+    return Vector3(*this) *= scalar;
 }
  
-const vec3 vec3::operator/(const float scalar) const
+const Vector3 Vector3::operator/(const float scalar) const
 {
-    return vec3(*this) /= scalar;
+    return Vector3(*this) /= scalar;
 }
  
-bool vec3::operator== (const vec3& v2) const
+bool Vector3::operator== (const Vector3& v2) const
 {
     return ((x == v2.x) && (y == v2.y)) && (z == v2.z);
 }
@@ -725,42 +761,37 @@ bool vec3::operator== (const vec3& v2) const
 // AngelScript
 //----------------------------------------------------------------------------
 
-void vec3::DefaultConstructor(vec3 *self)
+void Vector3::DefaultConstructor(Vector3 *self)
 {
-	new(self) vec3(0.0f);
+	new(self) Vector3(0.0f);
 }
 
-void vec3::CopyConstructor(const vec3 &other, vec3 *self)
+void Vector3::CopyConstructor(const Vector3 &other, Vector3 *self)
 {
-	new(self) vec3(other);
+	new(self) Vector3(other);
 }
 
-void vec3::InitConstructor1(float xyz, vec3 *self)
+void Vector3::InitConstructor1(float xyz, Vector3 *self)
 {
-	new(self) vec3(xyz);
+	new(self) Vector3(xyz);
 }
 
-void vec3::InitConstructor2(float x, float y, float z, vec3 *self)
+void Vector3::InitConstructor2(float x, float y, float z, Vector3 *self)
 {
-	new(self) vec3(x, y, z);
+	new(self) Vector3(x, y, z);
 }
 
 //-----------------------------------------------------
-// vec4
+// Vector4
 // - A 4-dimentional vector class
 //-----------------------------------------------------
 
-int vec4::TypeId;
-
-vec4::vec4(float xyzw)
+Vector4::Vector4(float xyzw)
 {
-	x = xyzw;
-	y = xyzw;
-	z = xyzw;
-	w = xyzw;
+	x = y = z = w = xyzw;
 }
 
-vec4::vec4(float x, float y, float z, float w)
+Vector4::Vector4(float x, float y, float z, float w)
 {
     this->x = x;
     this->y = y;
@@ -768,12 +799,20 @@ vec4::vec4(float x, float y, float z, float w)
 	this->w = w;
 }
 
+Vector4::Vector4(const float d[4])
+{
+    this->x = d[0];
+	this->y = d[1];
+	this->z = d[2];
+	this->w = d[3];
+}
+
 //----------------------------------------------------------------------------
 // Functions
 //----------------------------------------------------------------------------
 
 // Setting
-void vec4::set(const float x, const float y, const float z, const float w)
+void Vector4::set(const float x, const float y, const float z, const float w)
 {
     this->x = x;
     this->y = y;
@@ -782,25 +821,25 @@ void vec4::set(const float x, const float y, const float z, const float w)
 }
 
 // Transform
-void vec4::rotate(const float angle)
+void Vector4::rotate(const float angle)
 {
     // TODO: Implement
 }
 
-float vec4::angle() const
+float Vector4::angle() const
 {
     // TODO: Implement
 	return 0;
 }
 
-float vec4::angle(const vec4& v2) const
+float Vector4::angle(const Vector4& v2) const
 {
     // TODO: Implement
 	return 0;
 }
 
 // Vector functions
-void vec4::normalize()
+void Vector4::normalize()
 {
 	if(x == 0.0f && y == 0.0f && z == 0.0f && w == 0.0f) return;
     float mag = magnitude();
@@ -810,41 +849,41 @@ void vec4::normalize()
     w /= mag;
 }
 
-vec4 vec4::normalized() const
+Vector4 Vector4::normalized() const
 {
-	if(x == 0.0f && y == 0.0f && z == 0.0f && w == 0.0f) return vec4(0.0f);
+	if(x == 0.0f && y == 0.0f && z == 0.0f && w == 0.0f) return Vector4(0.0f);
     float mag = magnitude();
-	return vec4(x/mag, y/mag, z/mag, w/mag);
+	return Vector4(x/mag, y/mag, z/mag, w/mag);
 }
 
-float vec4::dot(const vec4 &v2) const
+float Vector4::dot(const Vector4 &v2) const
 {
     return (x*v2.x)+(y*v2.y)+(z*v2.z)+(w*v2.w);
 }
 
-vec4 vec4::cross(const vec4 &v2) const
+Vector4 Vector4::cross(const Vector4 &v2) const
+{
+    // TODO: Implement?
+	return Vector4(0.0f);
+}
+
+float Vector4::magnitude() const
+{
+    return sqrtf(x*x+y*y+z*z+w*w);
+}
+
+float Vector4::length() const
+{
+    return sqrtf(x*x+y*y+z*z+w*w);
+}
+
+float Vector4::distance(const Vector4& v2) const
 {
     // TODO: Implement?
 	return 0;
 }
 
-float vec4::magnitude() const
-{
-    return sqrtf(x*x+y*y+z*z+w*w);
-}
-
-float vec4::length() const
-{
-    return sqrtf(x*x+y*y+z*z+w*w);
-}
-
-float vec4::distance(const vec4& v2) const
-{
-    // TODO: Implement?
-	return 0;
-}
-
-vec4& vec4::operator=(const vec4& v2)
+Vector4& Vector4::operator=(const Vector4& v2)
 {
     if(this == &v2) return *this;
     x = v2.x;
@@ -854,7 +893,7 @@ vec4& vec4::operator=(const vec4& v2)
     return *this;
 }
 
-vec4& vec4::operator+=(const vec4& v2)
+Vector4& Vector4::operator+=(const Vector4& v2)
 {
     x += v2.x;
     y += v2.y;
@@ -862,7 +901,7 @@ vec4& vec4::operator+=(const vec4& v2)
     return *this;
 }
  
-vec4& vec4::operator-=(const vec4& v2)
+Vector4& Vector4::operator-=(const Vector4& v2)
 {
     x -= v2.x;
     y -= v2.y;
@@ -871,7 +910,7 @@ vec4& vec4::operator-=(const vec4& v2)
     return *this;
 }
  
-vec4& vec4::operator*=(const float scalar)
+Vector4& Vector4::operator*=(const float scalar)
 {
     x *= scalar;
     y *= scalar;
@@ -880,7 +919,7 @@ vec4& vec4::operator*=(const float scalar)
     return *this;
 }
  
-vec4& vec4::operator/=(const float scalar)
+Vector4& Vector4::operator/=(const float scalar)
 {
     x /= scalar;
     y /= scalar;
@@ -889,27 +928,27 @@ vec4& vec4::operator/=(const float scalar)
     return *this;
 }
  
-const vec4 vec4::operator+(const vec4 &v2) const
+const Vector4 Vector4::operator+(const Vector4 &v2) const
 {
-    return vec4(*this) += v2;
+    return Vector4(*this) += v2;
 }
  
-const vec4 vec4::operator-(const vec4 &v2) const
+const Vector4 Vector4::operator-(const Vector4 &v2) const
 {
-    return vec4(*this) -= v2;
+    return Vector4(*this) -= v2;
 }
  
-const vec4 vec4::operator*(const float scalar) const
+const Vector4 Vector4::operator*(const float scalar) const
 {
-    return vec4(*this) *= scalar;
+    return Vector4(*this) *= scalar;
 }
  
-const vec4 vec4::operator/(const float scalar) const
+const Vector4 Vector4::operator/(const float scalar) const
 {
-    return vec4(*this) /= scalar;
+    return Vector4(*this) /= scalar;
 }
  
-bool vec4::operator== (const vec4& v2) const
+bool Vector4::operator== (const Vector4& v2) const
 {
     return ((x == v2.x) && (y == v2.y)) && (z == v2.z) && (w == v2.w);
 }
@@ -918,22 +957,22 @@ bool vec4::operator== (const vec4& v2) const
 // AngelScript
 //----------------------------------------------------------------------------
 
-void vec4::DefaultConstructor(vec4 *self)
+void Vector4::DefaultConstructor(Vector4 *self)
 {
-	new(self) vec4(0.0f);
+	new(self) Vector4(0.0f);
 }
 
-void vec4::CopyConstructor(const vec4 &other, vec4 *self)
+void Vector4::CopyConstructor(const Vector4 &other, Vector4 *self)
 {
-	new(self) vec4(other);
+	new(self) Vector4(other);
 }
 
-void vec4::InitConstructor1(float xyz, vec4 *self)
+void Vector4::InitConstructor1(float xyz, Vector4 *self)
 {
-	new(self) vec4(xyz);
+	new(self) Vector4(xyz);
 }
 
-void vec4::InitConstructor2(float x, float y, float z, float w, vec4 *self)
+void Vector4::InitConstructor2(float x, float y, float z, float w, Vector4 *self)
 {
-	new(self) vec4(x, y, z, w);
+	new(self) Vector4(x, y, z, w);
 }

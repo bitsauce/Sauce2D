@@ -1,10 +1,10 @@
 #ifndef GFX_TEXTURE_H
 #define GFX_TEXTURE_H
 
+#include <x2d/config.h>
 #include <x2d/base.h>
 
 class Pixmap;
-struct Color;
 
 enum xdTextureFilter
 {
@@ -12,13 +12,12 @@ enum xdTextureFilter
 	xdLinear
 };
 
-class Texture
+class XDAPI Texture
 {
 public:
-	AS_REF_CLASS(Texture)
+	AS_DECL_REF
 
 	Texture();
-	virtual ~Texture();
 
 	// Mipmapping
 	virtual void enableMipmaps() = 0;

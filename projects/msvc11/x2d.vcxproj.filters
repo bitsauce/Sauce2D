@@ -19,30 +19,27 @@
     <Filter Include="source\gfx">
       <UniqueIdentifier>{886cf122-dec7-49d6-bb07-8397dbdec785}</UniqueIdentifier>
     </Filter>
-    <Filter Include="source\core">
-      <UniqueIdentifier>{a618e2e1-be77-4617-8402-512a1f33e263}</UniqueIdentifier>
-    </Filter>
     <Filter Include="source\gfx\abstract">
       <UniqueIdentifier>{1a7bf352-53bf-4367-8140-81bebf7e824c}</UniqueIdentifier>
     </Filter>
     <Filter Include="source\gfx\portable">
       <UniqueIdentifier>{815faabe-e862-4175-aff2-fca537eabb43}</UniqueIdentifier>
     </Filter>
+    <Filter Include="source\core">
+      <UniqueIdentifier>{14948e6d-8616-4118-b570-b573ac4adb68}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source\sfx">
+      <UniqueIdentifier>{43ec08c3-6bf6-475f-8617-ab1188e8c430}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\gfx">
+      <UniqueIdentifier>{7165c08c-b771-49f1-87a3-42c5fce47fe9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\include\x2d\app.h">
-      <Filter>include</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\include\x2d\engine.h">
       <Filter>include</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\x2d\platform.h">
-      <Filter>include</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\include\x2d\scripts.h">
-      <Filter>include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\x2d\sfx.h">
       <Filter>include</Filter>
     </ClInclude>
     <ClInclude Include="..\..\include\x2d\math\matrix.h">
@@ -63,9 +60,6 @@
     <ClInclude Include="..\..\source\scripts\scriptbuilder.h">
       <Filter>source\scripts</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\source\scripts\scriptgrid.h">
-      <Filter>source\scripts</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\source\scripts\scripthelper.h">
       <Filter>source\scripts</Filter>
     </ClInclude>
@@ -78,43 +72,13 @@
     <ClInclude Include="..\..\include\x2d\math\rectPacker.h">
       <Filter>include\math</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\x2d\iosystem.h">
-      <Filter>include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\x2d\assetloader.h">
-      <Filter>include</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\include\x2d\math\array.h">
       <Filter>include\math</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\x2d\math\profiler.h">
-      <Filter>include\math</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\core\base.h">
-      <Filter>source\core</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\gfx\frameBuffer.h">
-      <Filter>source\gfx\abstract</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\gfx\shader.h">
-      <Filter>source\gfx\abstract</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\gfx\texture.h">
-      <Filter>source\gfx\abstract</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\gfx\vertexBuffer.h">
-      <Filter>source\gfx\abstract</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\gfx\viewport.h">
-      <Filter>source\gfx\abstract</Filter>
     </ClInclude>
     <ClInclude Include="..\..\source\gfx\animation.h">
       <Filter>source\gfx\portable</Filter>
     </ClInclude>
     <ClInclude Include="..\..\source\gfx\batch.h">
-      <Filter>source\gfx\portable</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\gfx\color.h">
       <Filter>source\gfx\portable</Filter>
     </ClInclude>
     <ClInclude Include="..\..\source\gfx\font.h">
@@ -123,20 +87,74 @@
     <ClInclude Include="..\..\source\gfx\pixmap.h">
       <Filter>source\gfx\portable</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\source\gfx\shapeDrawer.h">
-      <Filter>source\gfx\portable</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\source\gfx\sprite.h">
       <Filter>source\gfx\portable</Filter>
     </ClInclude>
     <ClInclude Include="..\..\source\gfx\textureRegion.h">
       <Filter>source\gfx\portable</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\source\gfx\camera.h">
-      <Filter>source\gfx\abstract</Filter>
+    <ClInclude Include="..\..\include\x2d\console.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\x2d\base.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\x2d\input.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\x2d\window.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\x2d\eventhandler.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\x2d\exception.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\x2d\profiler.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\x2d\filesystem.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\x2d\audio.h">
+      <Filter>include</Filter>
     </ClInclude>
     <ClInclude Include="..\..\include\x2d\graphics.h">
-      <Filter>source\gfx</Filter>
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\gfx\shape.h">
+      <Filter>source\gfx\portable</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\x2d\util.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\x2d\config.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\x2d\timer.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\gfx\texture.h">
+      <Filter>include\gfx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\gfx\frameBuffer.h">
+      <Filter>include\gfx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\gfx\camera.h">
+      <Filter>include\gfx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\gfx\shader.h">
+      <Filter>include\gfx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\gfx\viewport.h">
+      <Filter>include\gfx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\gfx\vertexBuffer.h">
+      <Filter>include\gfx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\x2d\assetloader.h">
+      <Filter>include</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -158,9 +176,6 @@
     <ClCompile Include="..\..\source\scripts\scriptbuilder.cpp">
       <Filter>source\scripts</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\source\scripts\scriptgrid.cpp">
-      <Filter>source\scripts</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\source\scripts\scripthelper.cpp">
       <Filter>source\scripts</Filter>
     </ClCompile>
@@ -170,29 +185,8 @@
     <ClCompile Include="..\..\source\scripts\scriptstdstring_utils.cpp">
       <Filter>source\scripts</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\source\engine.cpp">
-      <Filter>source</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\scripts.cpp">
-      <Filter>source</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\array.cpp">
-      <Filter>source</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\iosystem.cpp">
-      <Filter>source</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\profiler.cpp">
-      <Filter>source</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\assetloader.cpp">
-      <Filter>source</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\source\math\rectPacker.cpp">
       <Filter>source\math</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\x2d\debug.cpp">
-      <Filter>source</Filter>
     </ClCompile>
     <ClCompile Include="..\..\source\gfx\frameBuffer.cpp">
       <Filter>source\gfx\abstract</Filter>
@@ -215,16 +209,10 @@
     <ClCompile Include="..\..\source\gfx\batch.cpp">
       <Filter>source\gfx\portable</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\source\gfx\color.cpp">
-      <Filter>source\gfx\portable</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\source\gfx\font.cpp">
       <Filter>source\gfx\portable</Filter>
     </ClCompile>
     <ClCompile Include="..\..\source\gfx\pixmap.cpp">
-      <Filter>source\gfx\portable</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\gfx\shapeDrawer.cpp">
       <Filter>source\gfx\portable</Filter>
     </ClCompile>
     <ClCompile Include="..\..\source\gfx\sprite.cpp">
@@ -238,6 +226,48 @@
     </ClCompile>
     <ClCompile Include="..\..\source\gfx\graphics.cpp">
       <Filter>source\gfx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\core\window.cpp">
+      <Filter>source\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\core\input.cpp">
+      <Filter>source\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\core\console.cpp">
+      <Filter>source\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\sfx\audio.cpp">
+      <Filter>source\sfx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\core\profiler.cpp">
+      <Filter>source\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\core\scripts.cpp">
+      <Filter>source\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\core\array.cpp">
+      <Filter>source\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\core\engine.cpp">
+      <Filter>source\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\core\filesystem.cpp">
+      <Filter>source\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\gfx\shape.cpp">
+      <Filter>source\gfx\portable</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\core\debug.cpp">
+      <Filter>source\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\core\util.cpp">
+      <Filter>source\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\core\timer.cpp">
+      <Filter>source\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\core\assetloader.cpp">
+      <Filter>source\core</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

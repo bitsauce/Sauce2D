@@ -4,12 +4,6 @@
     <ClCompile Include="source\gfx\opengl\gltexture.cpp">
       <Filter>source\gfx\opengl</Filter>
     </ClCompile>
-    <ClCompile Include="openal.cpp">
-      <Filter>source\sfx</Filter>
-    </ClCompile>
-    <ClCompile Include="winapp.cpp">
-      <Filter>source\app</Filter>
-    </ClCompile>
     <ClCompile Include="winassetloader.cpp">
       <Filter>source\app</Filter>
     </ClCompile>
@@ -25,18 +19,30 @@
     <ClCompile Include="source\gfx\opengl\glshader.cpp">
       <Filter>source\gfx\opengl</Filter>
     </ClCompile>
+    <ClCompile Include="source\sfx\openal\alaudio.cpp">
+      <Filter>source\sfx\openal</Filter>
+    </ClCompile>
+    <ClCompile Include="console.cpp">
+      <Filter>source\core</Filter>
+    </ClCompile>
+    <ClCompile Include="fileSystem.cpp">
+      <Filter>source\core</Filter>
+    </ClCompile>
+    <ClCompile Include="input.cpp">
+      <Filter>source\core</Filter>
+    </ClCompile>
+    <ClCompile Include="timer.cpp">
+      <Filter>source\core</Filter>
+    </ClCompile>
+    <ClCompile Include="window.cpp">
+      <Filter>source\core</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\gfx\opengl\gltexture.h">
       <Filter>source\gfx\opengl</Filter>
     </ClInclude>
-    <ClInclude Include="openal.h">
-      <Filter>source\sfx</Filter>
-    </ClInclude>
     <ClInclude Include="windebug.h">
-      <Filter>source\app</Filter>
-    </ClInclude>
-    <ClInclude Include="winapp.h">
       <Filter>source\app</Filter>
     </ClInclude>
     <ClInclude Include="winassetloader.h">
@@ -47,6 +53,24 @@
     </ClInclude>
     <ClInclude Include="source\gfx\opengl\glshader.h">
       <Filter>source\gfx\opengl</Filter>
+    </ClInclude>
+    <ClInclude Include="source\sfx\openal\alaudio.h">
+      <Filter>source\sfx\openal</Filter>
+    </ClInclude>
+    <ClInclude Include="console.h">
+      <Filter>source\core</Filter>
+    </ClInclude>
+    <ClInclude Include="fileSystem.h">
+      <Filter>source\core</Filter>
+    </ClInclude>
+    <ClInclude Include="input.h">
+      <Filter>source\core</Filter>
+    </ClInclude>
+    <ClInclude Include="timer.h">
+      <Filter>source\core</Filter>
+    </ClInclude>
+    <ClInclude Include="window.h">
+      <Filter>source\core</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -67,6 +91,12 @@
     </Filter>
     <Filter Include="source\app">
       <UniqueIdentifier>{5b6e9077-38fb-4f33-915f-83551baa960a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source\sfx\openal">
+      <UniqueIdentifier>{947acc0d-9bde-4624-ba3b-5357982ddbb9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source\core">
+      <UniqueIdentifier>{ccb8b04d-88e0-4933-8cd9-220e5ae31f73}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

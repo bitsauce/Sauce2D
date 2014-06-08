@@ -1,6 +1,6 @@
 #include "shader.h"
 
-AS_REGISTER_REF(Shader)
+AS_REG_REF(Shader)
 
 int Shader::Register(asIScriptEngine *scriptEngine)
 {

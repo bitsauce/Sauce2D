@@ -1,9 +1,9 @@
 #ifndef ASSET_LOADER
 #define ASSET_LOADER
 
-#include "x2d/assetloader.h"
+/*#include "x2d/assetloader.h"
 
-class AssetLoader : public X2DAssetLoader
+class AssetLoader : public xdAssetLoader
 {
 public:
 	AssetLoader(const string &assetDir);
@@ -15,6 +15,6 @@ public:
 
 private:
 	string m_assetDir;
-};
+};*/
 
 #endif  // ASSET_LOADER

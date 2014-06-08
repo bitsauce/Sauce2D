@@ -3,10 +3,12 @@
 // \ \/ / __) | | | | | |  _ / _  |  _   _ \ / _ \ |  _| |  _ \ / _  | |  _ \ / _ \
 //  >  < / __/| |_| | | |_| | (_| | | | | | |  __/ | |___| | | | (_| | | | | |  __/
 // /_/\_\_____|____/   \____|\__ _|_| |_| |_|\___| |_____|_| |_|\__, |_|_| |_|\___|
-//                                                              |___/              
-//		Macro#byte (C)
+//                                                              |___/     
+//				Originally written by Marcus Loo Vergara (aka. Bitsauce)
+//									2011-2014 (C)
 
 #include "winassetloader.h"
+#include <x2d/util.h>
 
 #include <fstream>
 #include <sstream>
@@ -15,7 +17,7 @@
 typedef void (*PLUGIN_FACTORY)();
 typedef void (*PLUGIN_CLEANUP)();
 vector<HMODULE> plugins;
-
+/*
 AssetLoader::AssetLoader(const string &assetDir)
 {
 	// If a working directory isn't specified, assing one
@@ -136,4 +138,4 @@ void AssetLoader::loadPlugins()
 		// Go for the next DLL
 		f_ok = FindNextFile(h_find, &find_data);
 	}
-}
+}*/

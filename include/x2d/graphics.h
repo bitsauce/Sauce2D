@@ -1,36 +1,78 @@
 #ifndef X2D_GRAPHICS_H
 #define X2D_GRAPHICS_H
 
-#include "platform.h"
+#include <x2d/config.h>
+#include <x2d/base.h>
+#include <x2d/util.h>
+#include <x2d/console.h>
 
 class Pixmap;
 class Texture;
 class Shader;
 class Batch;
+class Sprite;
+class TextureRegion;
+class Vector2;
 
 /*********************************************************************
 **	Abstract Graphics Layer											**
 **********************************************************************/
 
-class X2DAPI Graphics
+class XDAPI xdGraphics
 {
+	friend class xdEngine;
+	friend class Batch;
 public:
+	AS_DECL_SINGLETON
+
+	xdGraphics();
+
 	// Global factory
 	static Texture *CreateTexture(const Pixmap &pixmap);
 	static Texture *CreateTexture(const string &filePath);
 	static Texture *CreateTexture(const int width, const int height);
 	static Texture *CreateTexture(const Texture &texture);
-	static Shader *CreateShader(const string &vertFilePath, const string &fragFilePath); 
+	static Shader *CreateShader(const string &vertFilePath, const string &fragFilePath);
+	static Sprite *CreateSprite(const TextureRegion *, const bool);
+	static TextureRegion *CreateTextureRegion(const Texture *texture);
+	static TextureRegion *CreateTextureRegion(const Texture *texture, const Vector2 &uv0, const Vector2 &uv1);
+	static TextureRegion *CreateTextureRegion(const Texture *texture, const float u0, const float v0, const float u1, const float v1);
+	
+	// Refresh rate
+	void setRefreshRate(const int hz);
+	int getRefreshRate() const;
+
+	// Vsync
+	virtual void enableVsync()										{ NOT_IMPLEMENTED(enableVsync) }
+	virtual void disableVsync()										{ NOT_IMPLEMENTED(disableVsync) }
+
+	//
+	float getTimeStep() const;
+	float getFPS() const;
+
+	// Swap buffers
+	virtual void swapBuffers() = 0;
 
 private:
+	float m_framesPerSecond;
+	int m_refreshRate;
+	float m_timeStep;
+
 	virtual void renderBatch(const Batch &batch) = 0;
 	virtual Texture *createTexture(const Pixmap &pixmap) = 0;
 	virtual Shader *createShader(const string &vertFilePath, const string &fragFilePath) = 0;
-	static Graphics *gfx;
+	static xdGraphics *s_this;
 };
 
 
-/*class X2DAPI Graphicsx
+/*
+// gfx.h
+unsigned int rgb(unsigned char r, unsigned char g, unsigned char b, unsigned char a)
+{
+	return r + (g << 8) + (b << 16) + (a << 24);
+}
+
+class XDAPI Graphicsx
 {
 	// Texture struct
 	struct Texture {
@@ -49,7 +91,7 @@ private:
 			
 		// NOTE TO SELF: DO NOT ALTER ORDER OF DEFINITION
 		Vector2 position;
-		vec4 color;
+		Vector4 color;
 		Vector2 texCoord;
 	};
 
@@ -211,7 +253,7 @@ private:
 			float m[16];
 			glGetFloatv(GL_MODELVIEW_MATRIX, m);
 			Matrix4 modelView(m);
-			vec4 newpos = vec4(v0.position.x, v0.position.y, 0.0f, 1.0f)*modelView; // TDOD: Speed up by using my own vec4
+			Vector4 newpos = Vector4(v0.position.x, v0.position.y, 0.0f, 1.0f)*modelView; // TDOD: Speed up by using my own Vector4
 			v0.position.set(newpos.x, newpos.y); 
 
 			vertices.push_back(v0);
@@ -312,7 +354,7 @@ private:
 	vector<Matrix4> m_matrixStack;
 
 	// Engine handle
-	X2DEngine *m_engine;
+	xdEngine *m_engine;
 
 	// Asset loader
 	AssetLoader *m_assetLoader;
@@ -371,6 +413,6 @@ enum X2DStateBit
 };
 */
 
-//X2DAPI uint rgb(uchar r, uchar g, uchar b, uchar a = 255);
+//XDAPI uint rgb(uchar r, uchar g, uchar b, uchar a = 255);
 
 #endif // X2D_GRAPHICS_H

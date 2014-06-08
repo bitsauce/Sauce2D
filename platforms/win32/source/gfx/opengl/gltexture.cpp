@@ -74,7 +74,7 @@ void GLtexture::setFiltering(const xdTextureFilter filter)
 Pixmap GLtexture::getPixmap() const
 {
 	// Get texture data
-	Color *data = new Color[m_width*m_height];
+	Vector4 *data = new Vector4[m_width*m_height];
 	glBindTexture(GL_TEXTURE_2D, m_id);
 	glGetTexImage(GL_TEXTURE_2D, 0, GL_RGBA, GL_UNSIGNED_BYTE, (GLvoid*)data);
 	glBindTexture(GL_TEXTURE_2D, 0);
@@ -93,7 +93,7 @@ void GLtexture::updatePixmap(const Pixmap &pixmap)
 
 	// Set default filtering
 	glBindTexture(GL_TEXTURE_2D, m_id);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, (GLsizei)m_width, (GLsizei)m_height, 0, GL_RGBA, GL_UNSIGNED_BYTE, (const GLvoid*)pixmap.getData());
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, (GLsizei)m_width, (GLsizei)m_height, 0, GL_RGBA, GL_FLOAT, (const GLvoid*)pixmap.getData());
 	glBindTexture(GL_TEXTURE_2D, 0);
 
 	// Regenerate mipmaps
@@ -108,7 +108,7 @@ void GLtexture::updatePixmap(const int x, const int y, const Pixmap &pixmap)
 {
 	// Set default filtering
 	glBindTexture(GL_TEXTURE_2D, m_id);
-	glTexSubImage2D(GL_TEXTURE_2D, 0, (GLint)x, (GLint)y, (GLsizei)pixmap.getWidth(), (GLsizei)pixmap.getHeight(), GL_RGBA, GL_UNSIGNED_BYTE, (const GLvoid*)pixmap.getData());
+	glTexSubImage2D(GL_TEXTURE_2D, 0, (GLint)x, (GLint)y, (GLsizei)pixmap.getWidth(), (GLsizei)pixmap.getHeight(), GL_RGBA, GL_FLOAT, (const GLvoid*)pixmap.getData());
 	glBindTexture(GL_TEXTURE_2D, 0);
 
 	// Regenerate mipmaps

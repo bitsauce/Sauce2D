@@ -2,6 +2,7 @@
 #define GFX_GLSHADER_H
 
 #include "glgraphics.h"
+#include <x2d/util.h>
 
 #include "../source/gfx/shader.h"
 

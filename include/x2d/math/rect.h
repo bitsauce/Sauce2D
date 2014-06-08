@@ -1,7 +1,7 @@
-#ifndef MATH_RECT_H
-#define MATH_RECT_H
+#ifndef X2D_RECT_H
+#define X2D_RECT_H
 
-#include "x2d/platform.h"
+#include <x2d/config.h>
 #include "vector.h"
 
 /** \brief A class which holds a 2 dimentional Rect
@@ -14,9 +14,11 @@
 void RegisterRect();
 class Recti;
 
-class X2DAPI Rect
+class XDAPI Rect
 {
 public:
+	AS_DECL_VALUE
+
 	Rect();
 	Rect(const Recti &r);
 	Rect(Vector2 pos, Vector2 size);
@@ -56,17 +58,14 @@ public:
 
 	// AngelScript
 	static void DefaultConstructor(Rect *self);
-	static void CopyConstructor(const Rect &other, Rect *self);
+	static void CopyConstructor1(const Rect &other, Rect *self);
 	static void CopyConstructor2(const Recti &other, Rect *self);
-	static void InitConstructor(const float x, const float y, const float width, const float height, Rect *self);
+	static void InitConstructor1(const float x, const float y, const float width, const float height, Rect *self);
 	static void InitConstructor2(const Vector2 &pos, const Vector2 &size, Rect *self);
 
 public:
 	Vector2 position;
 	Vector2 size;
-	
-	// Type id
-	static int TypeId;
 };
 
 #define TUPLE_CMP(a, b) \
@@ -77,9 +76,11 @@ public:
 	if(a < b) return false; \
 	if(a > b) return true;
 
-class X2DAPI Recti
+class XDAPI Recti
 {
 public:
+	AS_DECL_VALUE
+
 	Recti();
 	Recti(const Rect &r);
 	Recti(Vector2i pos, Vector2i size);
@@ -133,17 +134,14 @@ public:
 
 	// AngelScript
 	static void DefaultConstructor(Recti *self);
-	static void CopyConstructor(const Recti &other, Recti *self);
+	static void CopyConstructor1(const Recti &other, Recti *self);
 	static void CopyConstructor2(const Rect &other, Recti *self);
-	static void InitConstructor(const int x, const int y, const int width, const int height, Recti *self);
+	static void InitConstructor1(const int x, const int y, const int width, const int height, Recti *self);
 	static void InitConstructor2(const Vector2i &pos, const Vector2i &size, Recti *self);
 
 public:
 	Vector2i position;
 	Vector2i size;
-	
-	// Type id
-	static int TypeId;
 };
 
-#endif // MATH_RECT_H
+#endif // X2D_RECT_H

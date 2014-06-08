@@ -7,93 +7,100 @@
 //				Originally written by Marcus Loo Vergara (aka. Bitsauce)
 //									2011-2014 (C)
 
-#include <x2d/math.h>
+#include <x2d/math/rect.h>
+#include <x2d/math/vector.h>
 #include <x2d/scripts.h>
 
-void RegisterRect()
+AS_REG_VALUE(Rect)
+
+int Rect::Register(asIScriptEngine *scriptEngine)
 {
-	int r;
-
-	// Register the value type
-	AS_REGISTER_VALUE(Rect)
-	Rect::TypeId = r;
+	// Rect
+	int r = 0;
 
 	// Register the object properties
-	AS_VALUE_PROPERTY(Rect, "Vector2 pos", position)
-	AS_VALUE_PROPERTY(Rect, "Vector2 size", size)
+	r = scriptEngine->RegisterObjectProperty("Rect", "Vector2 position", offsetof(Rect, position)); AS_ASSERT
+	r = scriptEngine->RegisterObjectProperty("Rect", "Vector2 size", offsetof(Rect, size)); AS_ASSERT
 
 	// Register the constructors
-	AS_VALUE_BEHAVIOURO(Rect, "void f()", asBEHAVE_CONSTRUCT, DefaultConstructor)
-	AS_VALUE_BEHAVIOURO(Rect, "void f(const Rect &in rect)", asBEHAVE_CONSTRUCT, CopyConstructor)
-	AS_VALUE_BEHAVIOURO(Rect, "void f(const float x, const float y, const float width, const float height)", asBEHAVE_CONSTRUCT, InitConstructor)
-	AS_VALUE_BEHAVIOURO(Rect, "void f(const Vector2 &in pos, const Vector2 &in size)", asBEHAVE_CONSTRUCT, InitConstructor2)
+	r = scriptEngine->RegisterObjectBehaviour("Rect", asBEHAVE_CONSTRUCT, "void f()", asFUNCTION(DefaultConstructor), asCALL_CDECL_OBJLAST); AS_ASSERT
+	r = scriptEngine->RegisterObjectBehaviour("Rect", asBEHAVE_CONSTRUCT, "void f(const Rect &in)", asFUNCTION(CopyConstructor1), asCALL_CDECL_OBJLAST); AS_ASSERT
+	r = scriptEngine->RegisterObjectBehaviour("Rect", asBEHAVE_CONSTRUCT, "void f(const Recti &in)", asFUNCTION(CopyConstructor2), asCALL_CDECL_OBJLAST); AS_ASSERT
+	r = scriptEngine->RegisterObjectBehaviour("Rect", asBEHAVE_CONSTRUCT, "void f(const float, const float, const float, const float)", asFUNCTION(InitConstructor1), asCALL_CDECL_OBJLAST); AS_ASSERT
+	r = scriptEngine->RegisterObjectBehaviour("Rect", asBEHAVE_CONSTRUCT, "void f(const Vector2 &in, const Vector2 &in)", asFUNCTION(InitConstructor2), asCALL_CDECL_OBJLAST); AS_ASSERT
 
 	// Register the methods
-	AS_VALUE_METHODPR(Rect, "bool contains(const Vector2 &in pos) const", contains, (const Vector2&) const, bool)
-	AS_VALUE_METHODPR(Rect, "bool contains(const Rect &in pos) const", contains, (const Rect&) const, bool)
+	r = scriptEngine->RegisterObjectMethod("Rect", "bool contains(const Vector2 &in pos) const", asMETHODPR(Rect, contains, (const Vector2&) const, bool), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("Rect", "bool contains(const Rect &in pos) const", asMETHODPR(Rect, contains, (const Rect&) const, bool), asCALL_THISCALL); AS_ASSERT
 
 	// Register property accessors
-	AS_VALUE_METHODPR(Rect, "void set(const Vector2 &in, const Vector2 &in)", set, (const Vector2&, const Vector2&), void)
-	AS_VALUE_METHODPR(Rect, "void set(const float, const float, const float, const float)", set, (const float, const float, const float, const float), void)
-	AS_VALUE_METHOD(Rect, "void set_x(const float x)", setX)
-	AS_VALUE_METHOD(Rect, "float get_x() const", getX)
-	AS_VALUE_METHOD(Rect, "void set_y(const float y)", setY)
-	AS_VALUE_METHOD(Rect, "float get_y() const", getY)
-	AS_VALUE_METHOD(Rect, "float get_width() const", getWidth)
-	AS_VALUE_METHOD(Rect, "void set_width(const float width)", setWidth)
-	AS_VALUE_METHOD(Rect, "float get_height() const", getHeight)
-	AS_VALUE_METHOD(Rect, "void set_height(const float height)", setHeight)
-	AS_VALUE_METHOD(Rect, "Vector2 get_center() const", getCenter)
-	AS_VALUE_METHOD(Rect, "float get_right() const", getRight)
-	AS_VALUE_METHOD(Rect, "float get_bottom() const", getBottom)
-	AS_VALUE_METHOD(Rect, "float get_left() const", getLeft)
-	AS_VALUE_METHOD(Rect, "float get_top() const", getTop)
-	AS_VALUE_METHOD(Rect, "float get_area() const", getArea)
-	
-	// Register the value type
-	AS_REGISTER_VALUE(Recti)
-	Recti::TypeId = r;
+	r = scriptEngine->RegisterObjectMethod("Rect", "void set(const Vector2 &in, const Vector2 &in)", asMETHODPR(Rect, set, (const Vector2&, const Vector2&), void), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("Rect", "void set(const float, const float, const float, const float)", asMETHODPR(Rect, set, (const float, const float, const float, const float), void), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("Rect", "void set_x(const float x)", asMETHOD(Rect, setX), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("Rect", "float get_x() const", asMETHOD(Rect, getX), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("Rect", "void set_y(const float y)", asMETHOD(Rect, setY), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("Rect", "float get_y() const", asMETHOD(Rect, getY), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("Rect", "float get_width() const", asMETHOD(Rect, getWidth), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("Rect", "void set_width(const float width)", asMETHOD(Rect, setWidth), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("Rect", "float get_height() const", asMETHOD(Rect, getHeight), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("Rect", "void set_height(const float height)", asMETHOD(Rect, setHeight), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("Rect", "Vector2 get_center() const", asMETHOD(Rect, getCenter), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("Rect", "float get_right() const", asMETHOD(Rect, getRight), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("Rect", "float get_bottom() const", asMETHOD(Rect, getBottom), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("Rect", "float get_left() const", asMETHOD(Rect, getLeft), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("Rect", "float get_top() const", asMETHOD(Rect, getTop), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("Rect", "float get_area() const", asMETHOD(Rect, getArea), asCALL_THISCALL); AS_ASSERT
+
+	return r;
+}
+
+AS_REG_VALUE(Recti)
+
+int Recti::Register(asIScriptEngine *scriptEngine)
+{
+	// Recti
+	int r = 0;
 
 	// Register the object properties
-	AS_VALUE_PROPERTY(Recti, "Vector2i pos", position)
-	AS_VALUE_PROPERTY(Recti, "Vector2i size", size)
+	r = scriptEngine->RegisterObjectProperty("Recti", "Vector2i position", offsetof(Recti, position)); AS_ASSERT
+	r = scriptEngine->RegisterObjectProperty("Recti", "Vector2i size", offsetof(Recti, size)); AS_ASSERT
 
 	// Register the constructors
-	AS_VALUE_BEHAVIOURO(Recti, "void f()", asBEHAVE_CONSTRUCT, DefaultConstructor)
-	AS_VALUE_BEHAVIOURO(Recti, "void f(const Recti &in rect)", asBEHAVE_CONSTRUCT, CopyConstructor)
-	AS_VALUE_BEHAVIOURO(Recti, "void f(const Rect &in rect)", asBEHAVE_CONSTRUCT, CopyConstructor2)
-	AS_VALUE_BEHAVIOURO(Rect, "void f(const Recti &in rect)", asBEHAVE_CONSTRUCT, CopyConstructor2) // Rect to Recti
-	AS_VALUE_BEHAVIOURO(Recti, "void f(const int x, const int y, const int width, const int height)", asBEHAVE_CONSTRUCT, InitConstructor)
-	AS_VALUE_BEHAVIOURO(Recti, "void f(const Vector2i &in pos, const Vector2i &in size)", asBEHAVE_CONSTRUCT, InitConstructor2)
+	r = scriptEngine->RegisterObjectBehaviour("Recti", asBEHAVE_CONSTRUCT, "void f()", asFUNCTION(DefaultConstructor), asCALL_CDECL_OBJLAST); AS_ASSERT
+	r = scriptEngine->RegisterObjectBehaviour("Recti", asBEHAVE_CONSTRUCT, "void f(const Recti &in)", asFUNCTION(CopyConstructor1), asCALL_CDECL_OBJLAST); AS_ASSERT
+	r = scriptEngine->RegisterObjectBehaviour("Recti", asBEHAVE_CONSTRUCT, "void f(const Rect &in)", asFUNCTION(CopyConstructor2), asCALL_CDECL_OBJLAST); AS_ASSERT
+	r = scriptEngine->RegisterObjectBehaviour("Recti", asBEHAVE_CONSTRUCT, "void f(const int, const int, const int, const int)", asFUNCTION(InitConstructor1), asCALL_CDECL_OBJLAST); AS_ASSERT
+	r = scriptEngine->RegisterObjectBehaviour("Recti", asBEHAVE_CONSTRUCT, "void f(const Vector2i &in, const Vector2i &in)", asFUNCTION(InitConstructor2), asCALL_CDECL_OBJLAST); AS_ASSERT
 
 	// Register the methods
-	AS_VALUE_METHODPR(Recti, "bool contains(const Vector2i &in pos) const", contains, (const Vector2i&) const, bool)
-	AS_VALUE_METHODPR(Recti, "bool contains(const Recti &in pos) const", contains, (const Recti&) const, bool)
+	r = scriptEngine->RegisterObjectMethod("Recti", "bool contains(const Vector2i &in pos) const", asMETHODPR(Recti, contains, (const Vector2i&) const, bool), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("Recti", "bool contains(const Recti &in pos) const", asMETHODPR(Recti, contains, (const Recti&) const, bool), asCALL_THISCALL); AS_ASSERT
 
 	// Register property accessors
-	AS_VALUE_METHODPR(Recti, "void set(const Vector2i &in, const Vector2i &in)", set, (const Vector2i&, const Vector2i&), void)
-	AS_VALUE_METHODPR(Recti, "void set(const int, const int, const int, const int)", set, (const int, const int, const int, const int), void)
-	AS_VALUE_METHOD(Recti, "void set_x(const int x)", setX)
-	AS_VALUE_METHOD(Recti, "int get_x() const", getX)
-	AS_VALUE_METHOD(Recti, "void set_y(const int y)", setY)
-	AS_VALUE_METHOD(Recti, "int get_y() const", getY)
-	AS_VALUE_METHOD(Recti, "int get_width() const", getWidth)
-	AS_VALUE_METHOD(Recti, "void set_width(const int width)", setWidth)
-	AS_VALUE_METHOD(Recti, "int get_height() const", getHeight)
-	AS_VALUE_METHOD(Recti, "void set_height(const int height)", setHeight)
-	AS_VALUE_METHOD(Recti, "Vector2 get_center() const", getCenter)
-	AS_VALUE_METHOD(Recti, "int get_right() const", getRight)
-	AS_VALUE_METHOD(Recti, "int get_bottom() const", getBottom)
-	AS_VALUE_METHOD(Recti, "int get_left() const", getLeft)
-	AS_VALUE_METHOD(Recti, "int get_top() const", getTop)
-	AS_VALUE_METHOD(Recti, "int get_area() const", getArea)
+	r = scriptEngine->RegisterObjectMethod("Recti", "void set(const Vector2i &in, const Vector2i &in)", asMETHODPR(Recti, set, (const Vector2i&, const Vector2i&), void), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("Recti", "void set(const int, const int, const int, const int)", asMETHODPR(Recti, set, (const int, const int, const int, const int), void), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("Recti", "void set_x(const int x)", asMETHOD(Recti, setX), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("Recti", "int get_x() const", asMETHOD(Recti, getX), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("Recti", "void set_y(const int y)", asMETHOD(Recti, setY), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("Recti", "int get_y() const", asMETHOD(Recti, getY), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("Recti", "int get_width() const", asMETHOD(Recti, getWidth), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("Recti", "void set_width(const int width)", asMETHOD(Recti, setWidth), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("Recti", "int get_height() const", asMETHOD(Recti, getHeight), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("Recti", "void set_height(const int height)", asMETHOD(Recti, setHeight), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("Recti", "Vector2 get_center() const", asMETHOD(Recti, getCenter), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("Recti", "int get_right() const", asMETHOD(Recti, getRight), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("Recti", "int get_bottom() const", asMETHOD(Recti, getBottom), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("Recti", "int get_left() const", asMETHOD(Recti, getLeft), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("Recti", "int get_top() const", asMETHOD(Recti, getTop), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("Recti", "int get_area() const", asMETHOD(Recti, getArea), asCALL_THISCALL); AS_ASSERT
+
+	return r;
 }
 
 //---------------------------------------------------------------------
 // Rect - 2D Rects
 //---------------------------------------------------------------------
 
-int Rect::TypeId;
 Rect::Rect() :
 	position(0, 0),
 	size(0, 0)
@@ -258,7 +265,6 @@ float Rect::getArea() const
 // Recti - 2D Rects (int)
 //---------------------------------------------------------------------
 
-int Recti::TypeId;
 Recti::Recti() :
 	position(0, 0),
 	size(0, 0)
@@ -428,7 +434,7 @@ void Rect::DefaultConstructor(Rect *self)
 	new(self) Rect();
 }
 
-void Rect::CopyConstructor(const Rect &other, Rect *self)
+void Rect::CopyConstructor1(const Rect &other, Rect *self)
 {
 	new(self) Rect(other);
 }
@@ -438,7 +444,7 @@ void Rect::CopyConstructor2(const Recti &other, Rect *self)
 	new(self) Rect(other);
 }
 
-void Rect::InitConstructor(const float x, const float y, const float width, const float height, Rect *self)
+void Rect::InitConstructor1(const float x, const float y, const float width, const float height, Rect *self)
 {
 	new(self) Rect(x, y, width, height);
 }
@@ -453,7 +459,7 @@ void Recti::DefaultConstructor(Recti *self)
 	new(self) Recti();
 }
 
-void Recti::CopyConstructor(const Recti &other, Recti *self)
+void Recti::CopyConstructor1(const Recti &other, Recti *self)
 {
 	new(self) Recti(other);
 }
@@ -463,7 +469,7 @@ void Recti::CopyConstructor2(const Rect &other, Recti *self)
 	new(self) Recti(other);
 }
 
-void Recti::InitConstructor(const int x, const int y, const int width, const int height, Recti *self)
+void Recti::InitConstructor1(const int x, const int y, const int width, const int height, Recti *self)
 {
 	new(self) Recti(x, y, width, height);
 }

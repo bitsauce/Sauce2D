@@ -8,6 +8,7 @@
 //									2011-2014 (C)
 
 #include "glshader.h"
+#include <x2d/console.h>
 
 GLshader::GLshader(const string &vertFilePath, const string &fragFilePath)
 {
@@ -26,7 +27,7 @@ GLshader::GLshader(const string &vertFilePath, const string &fragFilePath)
     int logLength;
 
     // Compile vertex shader
-	iosystem::print("Compiling vertex shader: %s", vertFilePath.c_str());
+	LOG("Compiling vertex shader: %s", vertFilePath.c_str());
 	glShaderSource(vertShader, 1, &vertShaderBuffer, (int*)&vertBufferLen);
     glCompileShader(vertShader);
 	delete[] vertShaderBuffer;
@@ -41,10 +42,10 @@ GLshader::GLshader(const string &vertFilePath, const string &fragFilePath)
 
 	// Print shader error to console
 	if(logLength > 1)
-		iosystem::print("\tCompile error: %s", compileLog);
+		LOG("\tCompile error: %s", compileLog);
 
     // Compile fragment shader
-    iosystem::print("Compiling fragment shader: %s", fragFilePath.c_str());
+    LOG("Compiling fragment shader: %s", fragFilePath.c_str());
     glShaderSource(fragShader, 1, &fragShaderBuffer, (int*)&fragBufferLen);
     glCompileShader(fragShader);
 	delete[] fragShaderBuffer;
@@ -58,7 +59,7 @@ GLshader::GLshader(const string &vertFilePath, const string &fragFilePath)
 
 	// Print shader error to console
 	if(logLength > 1)
-		iosystem::print("\tCompile error: %s", compileLog);
+		LOG("\tCompile error: %s", compileLog);
 
     // Create shader program
     GLuint program = glCreateProgram();
@@ -75,7 +76,7 @@ GLshader::GLshader(const string &vertFilePath, const string &fragFilePath)
 
 	// Print program error to console
 	if(logLength > 1)
-		iosystem::print("\tCompile error: %s", compileLog);
+		LOG("\tCompile error: %s", compileLog);
 
 	// Delete shader buffers as they are loaded into the shader program
     glDeleteShader(vertShader);

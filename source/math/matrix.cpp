@@ -368,7 +368,7 @@ float Matrix4::getCofactor(float m0, float m1, float m2,
 ///////////////////////////////////////////////////////////////////////////////
 // translate this matrix by (x, y, z)
 ///////////////////////////////////////////////////////////////////////////////
-Matrix4& Matrix4::translate(const vec3& v)
+Matrix4& Matrix4::translate(const Vector3& v)
 {
     return translate(v.x, v.y, v.z);
 }
@@ -401,7 +401,7 @@ Matrix4& Matrix4::scale(float x, float y, float z)
 // build a rotation matrix with given angle(degree) and rotation axis, then
 // multiply it with this object
 ///////////////////////////////////////////////////////////////////////////////
-Matrix4& Matrix4::rotate(float angle, const vec3& axis)
+Matrix4& Matrix4::rotate(float angle, const Vector3& axis)
 {
     return rotate(angle, axis.x, axis.y, axis.z);
 }

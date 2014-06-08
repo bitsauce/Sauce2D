@@ -1,9 +1,9 @@
 #ifndef CORE_INI_H
 #define CORE_INI_H
 
-#include "x2d/platform.h"
+#include "x2d/config.h"
 
-class X2DAPI X2DSettingsFile
+class XDAPI X2DSettingsFile
 {
 public:
 

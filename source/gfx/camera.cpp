@@ -9,11 +9,13 @@
 
 #include "camera.h"
 
-Camera::Camera()
+Camera::Camera() :
+	m_position(0.0f),
+	m_size(0.0f)
 {
 }
 
 Matrix4 Camera::getProjectionMatix()
 {
-	return m_projMatrix;
+	return Matrix4();
 }

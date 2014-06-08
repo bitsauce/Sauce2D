@@ -1,9 +1,9 @@
 #ifndef WIN_IO
 #define WIN_IO
 
-#include "x2d/debug.h"
+#include <x2d/debug.h>
 
-class WinDebug : public X2DDebug
+class WinDebug : public xdDebug
 {
 public:
 	WinDebug();

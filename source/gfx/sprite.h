@@ -5,14 +5,14 @@
 #include <x2d/math.h>
 
 class TextureRegion;
-class Batch;
 class Animation;
+class Batch;
+class Shape;
 
 class Sprite
 {
 public:
-	AS_REF_CLASS(Sprite)
-	AS_FACTORY_ARG2(Sprite, const TextureRegion *, const bool)
+	AS_DECL_REF
 
 	/**
 	  * Constructor taking a texture for the sprite to use.
@@ -31,7 +31,7 @@ public:
 	void rotate(const float ang);
 	void scale(const Vector2 &scl);
 	
-	Rect getRect() const;
+	Shape getAABB() const;
 	Vector2 getPosition() const;
 	Vector2 getSize() const;
 	Vector2 getScale() const;
@@ -39,12 +39,14 @@ public:
 	Vector2 getCenter() const;
 	float getRotation() const;
 
-	void draw(const Batch *batch) const;
-
+	void draw(Batch &batch) const;
 
 private:
+	AS_FACTORY_ARG2(Sprite, const TextureRegion*, const bool)
+
 	const TextureRegion *m_textureRegion;
-	Rect m_rectangle;
+	Vector2 m_position;
+	Vector2 m_size;
 	Vector2 m_scale;
 	Vector2 m_origin;
 	float m_angle;

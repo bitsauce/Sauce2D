@@ -19,32 +19,37 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\include\x2d\app.h" />
     <ClInclude Include="..\..\include\x2d\assetloader.h" />
+    <ClInclude Include="..\..\include\x2d\base.h" />
+    <ClInclude Include="..\..\include\x2d\config.h" />
+    <ClInclude Include="..\..\include\x2d\console.h" />
+    <ClInclude Include="..\..\include\x2d\eventhandler.h" />
+    <ClInclude Include="..\..\include\x2d\exception.h" />
+    <ClInclude Include="..\..\include\x2d\input.h" />
+    <ClInclude Include="..\..\include\x2d\filesystem.h" />
     <ClInclude Include="..\..\include\x2d\debug.h" />
     <ClInclude Include="..\..\include\x2d\engine.h" />
     <ClInclude Include="..\..\include\x2d\graphics.h" />
-    <ClInclude Include="..\..\include\x2d\iosystem.h" />
     <ClInclude Include="..\..\include\x2d\math.h" />
     <ClInclude Include="..\..\include\x2d\math\array.h" />
     <ClInclude Include="..\..\include\x2d\math\matrix.h" />
-    <ClInclude Include="..\..\include\x2d\math\profiler.h" />
     <ClInclude Include="..\..\include\x2d\math\rect.h" />
     <ClInclude Include="..\..\include\x2d\math\rectPacker.h" />
     <ClInclude Include="..\..\include\x2d\math\vector.h" />
-    <ClInclude Include="..\..\include\x2d\platform.h" />
+    <ClInclude Include="..\..\include\x2d\profiler.h" />
     <ClInclude Include="..\..\include\x2d\scripts.h" />
-    <ClInclude Include="..\..\include\x2d\sfx.h" />
-    <ClInclude Include="..\..\source\core\base.h" />
+    <ClInclude Include="..\..\include\x2d\audio.h" />
+    <ClInclude Include="..\..\include\x2d\timer.h" />
+    <ClInclude Include="..\..\include\x2d\util.h" />
+    <ClInclude Include="..\..\include\x2d\window.h" />
     <ClInclude Include="..\..\source\gfx\animation.h" />
     <ClInclude Include="..\..\source\gfx\batch.h" />
     <ClInclude Include="..\..\source\gfx\camera.h" />
-    <ClInclude Include="..\..\source\gfx\color.h" />
     <ClInclude Include="..\..\source\gfx\font.h" />
     <ClInclude Include="..\..\source\gfx\frameBuffer.h" />
     <ClInclude Include="..\..\source\gfx\pixmap.h" />
     <ClInclude Include="..\..\source\gfx\shader.h" />
-    <ClInclude Include="..\..\source\gfx\shapeDrawer.h" />
+    <ClInclude Include="..\..\source\gfx\shape.h" />
     <ClInclude Include="..\..\source\gfx\sprite.h" />
     <ClInclude Include="..\..\source\gfx\texture.h" />
     <ClInclude Include="..\..\source\gfx\textureRegion.h" />
@@ -52,44 +57,47 @@
     <ClInclude Include="..\..\source\gfx\viewport.h" />
     <ClInclude Include="..\..\source\scripts\scriptarray.h" />
     <ClInclude Include="..\..\source\scripts\scriptbuilder.h" />
-    <ClInclude Include="..\..\source\scripts\scriptgrid.h" />
     <ClInclude Include="..\..\source\scripts\scripthelper.h" />
     <ClInclude Include="..\..\source\scripts\scriptstdstring.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\source\array.cpp" />
-    <ClCompile Include="..\..\source\assetloader.cpp" />
-    <ClCompile Include="..\..\source\engine.cpp" />
+    <ClCompile Include="..\..\source\core\array.cpp" />
+    <ClCompile Include="..\..\source\core\assetloader.cpp" />
+    <ClCompile Include="..\..\source\core\console.cpp" />
+    <ClCompile Include="..\..\source\core\debug.cpp" />
+    <ClCompile Include="..\..\source\core\engine.cpp" />
+    <ClCompile Include="..\..\source\core\input.cpp" />
+    <ClCompile Include="..\..\source\core\filesystem.cpp" />
+    <ClCompile Include="..\..\source\core\profiler.cpp" />
+    <ClCompile Include="..\..\source\core\scripts.cpp" />
+    <ClCompile Include="..\..\source\core\timer.cpp" />
+    <ClCompile Include="..\..\source\core\util.cpp" />
+    <ClCompile Include="..\..\source\core\window.cpp" />
     <ClCompile Include="..\..\source\gfx\animation.cpp" />
     <ClCompile Include="..\..\source\gfx\batch.cpp" />
     <ClCompile Include="..\..\source\gfx\camera.cpp" />
-    <ClCompile Include="..\..\source\gfx\color.cpp" />
     <ClCompile Include="..\..\source\gfx\font.cpp" />
     <ClCompile Include="..\..\source\gfx\frameBuffer.cpp" />
     <ClCompile Include="..\..\source\gfx\graphics.cpp" />
     <ClCompile Include="..\..\source\gfx\pixmap.cpp" />
     <ClCompile Include="..\..\source\gfx\shader.cpp" />
-    <ClCompile Include="..\..\source\gfx\shapeDrawer.cpp" />
+    <ClCompile Include="..\..\source\gfx\shape.cpp" />
     <ClCompile Include="..\..\source\gfx\sprite.cpp" />
     <ClCompile Include="..\..\source\gfx\texture.cpp" />
     <ClCompile Include="..\..\source\gfx\textureRegion.cpp" />
     <ClCompile Include="..\..\source\gfx\vertexBuffer.cpp" />
     <ClCompile Include="..\..\source\gfx\viewport.cpp" />
-    <ClCompile Include="..\..\source\iosystem.cpp" />
     <ClCompile Include="..\..\source\math\math.cpp" />
     <ClCompile Include="..\..\source\math\matrix.cpp" />
     <ClCompile Include="..\..\source\math\rect.cpp" />
     <ClCompile Include="..\..\source\math\rectPacker.cpp" />
     <ClCompile Include="..\..\source\math\vector.cpp" />
-    <ClCompile Include="..\..\source\profiler.cpp" />
-    <ClCompile Include="..\..\source\scripts.cpp" />
     <ClCompile Include="..\..\source\scripts\scriptarray.cpp" />
     <ClCompile Include="..\..\source\scripts\scriptbuilder.cpp" />
-    <ClCompile Include="..\..\source\scripts\scriptgrid.cpp" />
     <ClCompile Include="..\..\source\scripts\scripthelper.cpp" />
     <ClCompile Include="..\..\source\scripts\scriptstdstring.cpp" />
     <ClCompile Include="..\..\source\scripts\scriptstdstring_utils.cpp" />
-    <ClCompile Include="..\..\source\x2d\debug.cpp" />
+    <ClCompile Include="..\..\source\sfx\audio.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{F3F25B49-2C6B-4FF0-98FB-47695DF70B8A}</ProjectGuid>
@@ -102,7 +110,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <CharacterSet>NotSet</CharacterSet>
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
     <PlatformToolset>v110</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Android'" Label="Configuration">
@@ -177,7 +185,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
-      <AdditionalIncludeDirectories>..\..\include;..\..\source;..\..\3rdparty\angelscript\sdk\angelscript\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\include;..\..\source;..\..\3rdparty\angelscript\sdk\angelscript\include;..\..\3rdparty\freeimage\source;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Android'">
@@ -199,8 +207,8 @@
       <ExceptionHandling>Sync</ExceptionHandling>
     </ClCompile>
     <Link>
-      <AdditionalLibraryDirectories>..\..\3rdparty\vld\lib;..\..\3rdparty\glew\lib;..\..\3rdparty\openal\libs;..\..\3rdparty\freetype\lib;..\..\3rdparty\freeimage\lib;..\..\3rdparty\openal\libs\Win32;..\..\3rdparty\angelscript\sdk\angelscript\lib</AdditionalLibraryDirectories>
-      <AdditionalDependencies>ws2_32.lib;iphlpapi.lib;angelscriptd.lib;freeimaged.lib;freetyped.lib;glewd.lib;vld.lib;openal32.lib;opengl32.lib;glu32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>..\..\3rdparty\angelscript\sdk\angelscript\lib;..\..\3rdparty\freeimage\lib</AdditionalLibraryDirectories>
+      <AdditionalDependencies>angelscriptd.lib;freeimaged.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
