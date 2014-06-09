@@ -1,28 +1,37 @@
+//       ____  ____     ____                        _____             _            
+// __  _|___ \|  _ \   / ___| __ _ _ __ ___   ___  | ____|_ __   __ _(_)_ __   ___ 
+// \ \/ / __) | | | | | |  _ / _  |  _   _ \ / _ \ |  _| |  _ \ / _  | |  _ \ / _ \
+//  >  < / __/| |_| | | |_| | (_| | | | | | |  __/ | |___| | | | (_| | | | | |  __/
+// /_/\_\_____|____/   \____|\__ _|_| |_| |_|\___| |_____|_| |_|\__, |_|_| |_|\___|
+//                                                              |___/     
+//				Originally written by Marcus Loo Vergara (aka. Bitsauce)
+//									2011-2014 (C)
 
-/*void Window::cursorPos(int &x, int &y) const
+#include "input.h"
+
+Vector2i Input::getCursorPos() const
 {
 	POINT p;
 	GetCursorPos(&p);
-	x = p.x;
-	y = p.y;
+	return Vector2i(p.x, p.y);
 }
 
-void Window::setCursorPos(const int x, const int y)
+void Input::setCursorPos(const Vector2i &pos)
 {
-	SetCursorPos(x, y);
+	SetCursorPos(pos.x, pos.y);
 }
 
-void Window::setCursorLimits(const int x, const int y, const int w, const int h)
+void Input::setCursorLimits(const Recti &area)
 {
 	RECT rect;
-	rect.top    = (long)(y);
-	rect.bottom	= (long)(y+h);
-	rect.left   = (long)(x);
-	rect.right  = (long)(x+w);
+	rect.top    = (long)(area.getY());
+	rect.bottom	= (long)(area.getY()+area.getHeight());
+	rect.left   = (long)(area.getX());
+	rect.right  = (long)(area.getX()+area.getHeight());
 	ClipCursor(&rect);
 }
 
-bool Window::getKeyState(const xdVirtualKey key)
+bool Input::getKeyState(const xdVirtualKey key) const
 {
 	int vk = 0;
 	switch(key)
@@ -118,6 +127,6 @@ bool Window::getKeyState(const xdVirtualKey key)
 	case X2D_KeyGreater: vk = ; break;
 	case X2D_KeyLess: vk = ; break;
 	case X2D_KeyEquals: vk = VK_; break;*/
-	/*}
-	return Window::hasFocus() && (GetKeyState(vk) & 0x80) != 0;
-}*/
+	}
+	return /*Window::hasFocus() &&*/ (GetKeyState(vk) & 0x80) != 0;
+}

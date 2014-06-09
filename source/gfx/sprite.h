@@ -5,9 +5,11 @@
 #include <x2d/math.h>
 
 class TextureRegion;
+class Texture;
 class Animation;
 class Batch;
 class Shape;
+class Vertex;
 
 class Sprite
 {
@@ -17,24 +19,22 @@ public:
 	/**
 	  * Constructor taking a texture for the sprite to use.
 	  */
-	Sprite(const TextureRegion *region, const bool center = false);
+	Sprite(const TextureRegion *region);
 	//Sprite(const TextureRegion &region, const Vector2 &size, const Vector2 &origin);
 	
 	void setPosition(const Vector2 &pos);
 	void setSize(const Vector2 &size);
-	void setScale(const Vector2 &scl);
 	void setOrigin(const Vector2 &origin);
 	void setRotation(const float ang);
 	void setAnimation(const Animation *anim);
 
 	void move(const Vector2 &dt);
 	void rotate(const float ang);
-	void scale(const Vector2 &scl);
+	void scale(const float);
 	
-	Shape getAABB() const;
+	Shape *getAABB() const;
 	Vector2 getPosition() const;
 	Vector2 getSize() const;
-	Vector2 getScale() const;
 	Vector2 getOrigin() const;
 	Vector2 getCenter() const;
 	float getRotation() const;
@@ -42,14 +42,17 @@ public:
 	void draw(Batch &batch) const;
 
 private:
-	AS_FACTORY_ARG2(Sprite, const TextureRegion*, const bool)
-
 	const TextureRegion *m_textureRegion;
 	Vector2 m_position;
 	Vector2 m_size;
-	Vector2 m_scale;
 	Vector2 m_origin;
 	float m_angle;
+
+	// Returns the transformed vertices
+	void getVertices(Vertex *vertices) const;
+
+	static Sprite *Factory(const TextureRegion *region) { return new Sprite(region); }
+	static Sprite *Factory(Texture *texture);
 };
 
 #endif // GFX_SPRITE_H

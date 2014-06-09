@@ -16,11 +16,13 @@ int Shape::Register(asIScriptEngine *scriptEngine)
 	int r = 0;
 	
 	r = scriptEngine->RegisterObjectBehaviour("Shape", asBEHAVE_FACTORY, "Shape @f()", asFUNCTIONPR(Factory, (), Shape*), asCALL_CDECL); AS_ASSERT
-	r = scriptEngine->RegisterObjectBehaviour("Shape", asBEHAVE_FACTORY, "Shape @f(const Recti &in)", asFUNCTIONPR(Factory, (const Recti&), Shape*), asCALL_CDECL); AS_ASSERT
+	r = scriptEngine->RegisterObjectBehaviour("Shape", asBEHAVE_FACTORY, "Shape @f(const Rect &in)", asFUNCTIONPR(Factory, (const Rect&), Shape*), asCALL_CDECL); AS_ASSERT
 	r = scriptEngine->RegisterObjectBehaviour("Shape", asBEHAVE_FACTORY, "Shape @f(const Vector2 &in, const float, const int)", asFUNCTIONPR(Factory, (const Vector2&, const float, const int), Shape*), asCALL_CDECL); AS_ASSERT
 	r = scriptEngine->RegisterObjectBehaviour("Shape", asBEHAVE_FACTORY, "Shape @f(const array<Vector2> &in)", asFUNCTIONPR(Factory, (const Array&), Shape*), asCALL_CDECL); AS_ASSERT
 	
+	r = scriptEngine->RegisterObjectMethod("Shape", "void setFillColor(const Vector4 &in)", asMETHOD(Shape, setFillColor), asCALL_THISCALL); AS_ASSERT
 	r = scriptEngine->RegisterObjectMethod("Shape", "void setFillTexture(Texture @texture)", asMETHOD(Shape, setFillTexture), asCALL_THISCALL); AS_ASSERT
+
 	r = scriptEngine->RegisterObjectMethod("Shape", "void draw(Batch @batch)", asMETHOD(Shape, draw), asCALL_THISCALL); AS_ASSERT
 
 	return r;
@@ -114,17 +116,16 @@ Shape::Shape(const vector<Vertex> &vertices) :
 	m_penSize(1.0f),
 	m_index(0)
 {
-	addVertices(vertices);
+	//addVertices(vertices);
 }
 
-void Shape::addVertex(const Vertex &vertex)
+/*void Shape::addVertex(const Vertex &vertex)
 {
 	m_vertices.push_back(vertex);
-	if(++m_index % 3 == 0)
-	{
+	if(++m_index > 2) {
 		m_indices.push_back(m_index-3);
 		m_indices.push_back(m_index-2);
-		m_indices.push_back(m_index-1);
+		m_indices.push_back(m_index);
 	}
 }
 
@@ -135,7 +136,7 @@ void Shape::addVertices(const vector<Vertex> &vertices)
 	for(uint i = 0; i < vertices.size(); i++) {
 		addVertex(vertices[i]);
 	}
-}
+}*/
 
 void Shape::setFillColor(const Vector4 &color)
 {
@@ -161,10 +162,15 @@ void Shape::draw(Batch &batch)
 {
 	if(!validate())
 		return;
+
+	for(int i = 0; i < m_vertices.size(); i++)
+		m_vertices[i].color = m_fillColor;
 	
+	//batch.setColor(m_fillColor);
 	batch.setTexture(m_fillTexture);
 	batch.addVertices(m_vertices.data(), m_vertices.size(), m_indices.data(), m_indices.size());
 	batch.setTexture(0);
+	//batch.setColor(Vector4(1.0f));
 }
 
 bool Shape::validate()

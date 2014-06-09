@@ -8,12 +8,12 @@ class Input : public xdInput
 public:
 
 	// Cursor functions
-	void cursorPos(int &x, int &y) const;
-	void setCursorPos(const int x, const int y);
-	void setCursorLimits(const int x, const int y, const int w, const int h);
+	void setCursorPos(const Vector2i &pos);
+	Vector2i getCursorPos() const;
+	void setCursorLimits(const Recti &area);
 
 	// Keyboard
-	bool getKeyState(const xdVirtualKey key);
+	bool getKeyState(const xdVirtualKey key) const;
 };
 
 #endif // WIN_INPUT_H

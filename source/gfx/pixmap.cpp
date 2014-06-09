@@ -46,7 +46,6 @@ Pixmap::Pixmap(const int width, const int height, const Vector4 *pixels) :
 		//error("Pixmaps cannot have width or height less than 0!");
 		return;
 	}
-	printContent(*this);
 }
 
 Pixmap::Pixmap(const int width, const int height, const Array &pixels) :

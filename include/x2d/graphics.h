@@ -14,6 +14,10 @@ class Sprite;
 class TextureRegion;
 class Vector2;
 
+extern uint QUAD_INDICES[6];
+extern Vector4 QUAD_VERTICES[4];
+extern Vector2 QUAD_TEXCOORD[4];
+
 /*********************************************************************
 **	Abstract Graphics Layer											**
 **********************************************************************/
@@ -34,9 +38,9 @@ public:
 	static Texture *CreateTexture(const Texture &texture);
 	static Shader *CreateShader(const string &vertFilePath, const string &fragFilePath);
 	static Sprite *CreateSprite(const TextureRegion *, const bool);
-	static TextureRegion *CreateTextureRegion(const Texture *texture);
-	static TextureRegion *CreateTextureRegion(const Texture *texture, const Vector2 &uv0, const Vector2 &uv1);
-	static TextureRegion *CreateTextureRegion(const Texture *texture, const float u0, const float v0, const float u1, const float v1);
+	static TextureRegion *CreateTextureRegion(Texture *texture);
+	static TextureRegion *CreateTextureRegion(Texture *texture, const Vector2 &uv0, const Vector2 &uv1);
+	static TextureRegion *CreateTextureRegion(Texture *texture, const float u0, const float v0, const float u1, const float v1);
 	
 	// Refresh rate
 	void setRefreshRate(const int hz);

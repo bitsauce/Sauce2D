@@ -51,13 +51,13 @@
       <WarningLevel>Level4</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>..\..\include;..\..\3rdparty\vld\include;..\..\3rdparty\openal\include;..\..\3rdparty\glew\include;..\..\3rdparty\freetype\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\include;..\..\3rdparty\vld\include;..\..\3rdparty\openal\include;..\..\3rdparty\glew\include</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>X2D_DEBUG;X2D_IMPORT;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>..\..\build\$(Platform)\$(Configuration)\;..\..\3rdparty\vld\lib;..\..\3rdparty\glew\lib;..\..\3rdparty\openal\libs;..\..\3rdparty\freetype\lib;..\..\3rdparty\freeimage\lib;..\..\3rdparty\openal\libs\Win32</AdditionalLibraryDirectories>
-      <AdditionalDependencies>ws2_32.lib;iphlpapi.lib;x2dd.lib;openal32.lib;opengl32.lib;glewd.lib;glu32.lib;freetyped.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>..\..\build\$(Platform)\$(Configuration)\;..\..\3rdparty\vld\lib;..\..\3rdparty\glew\lib;..\..\3rdparty\openal\libs;..\..\3rdparty\openal\libs\Win32</AdditionalLibraryDirectories>
+      <AdditionalDependencies>ws2_32.lib;iphlpapi.lib;x2dd.lib;openal32.lib;opengl32.lib;glewd.lib;glu32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
     </Link>
   </ItemDefinitionGroup>

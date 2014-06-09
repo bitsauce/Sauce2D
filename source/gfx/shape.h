@@ -10,6 +10,7 @@
 
 class Shape
 {
+	friend class Sprite;
 public:
 	AS_DECL_REF
 
@@ -18,8 +19,8 @@ public:
 	Shape(const Vector2 &center, const float radius, const int vertCount = -1);
 	Shape(const vector<Vertex> &vertices);
 
-	void addVertex(const Vertex &vertex);
-	void addVertices(const vector<Vertex> &vertices);
+	//void addVertex(const Vertex &vertex);
+	//void addVertices(const vector<Vertex> &vertices);
 
 	void setFillColor(const Vector4 &color);
 	void setFillTexture(Texture* texture);
@@ -44,7 +45,7 @@ private:
 	int m_index;
 	
 	static Shape *Factory() { return new Shape(); }
-	static Shape *Factory(const Recti& rect) { return new Shape(rect); }
+	static Shape *Factory(const Rect& rect) { return new Shape(rect); }
 	static Shape *Factory(const Vector2& center, const float radius, const int vertCount) { return new Shape(center, radius, vertCount); }
 	static Shape *Factory(const Array& arr) {
 

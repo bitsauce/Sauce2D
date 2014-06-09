@@ -12,7 +12,7 @@ class Font
 public:
 	AS_DECL_REF
 
-	Font(const string &fontNameOrFile);
+	Font(const string &fontNameOrFile, const uint size);
 
 	float getStringWidth(const string &str);
 	float getStringHeight(const string &str);
@@ -38,12 +38,14 @@ public:
 	};
 
 private:
-	AS_FACTORY_ARG1(Font, const string&)
+	void load(const string &fontFile, const uint size);
 
 	Vector4 m_color;
 	Texture *m_texture;
 	int m_size;
 	vector<Char> m_chars;
+
+	static Font *Factory(const string &fontNameOrFile, const uint size) { return new Font(fontNameOrFile, size); }
 };
 
 #endif // GFX_FONT_H

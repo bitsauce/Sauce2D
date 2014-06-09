@@ -54,6 +54,7 @@ void OpenGL::init(Window *window)
 
 	// Enable blend
 	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 	// Set OpenGL hints
 	glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
@@ -164,16 +165,17 @@ void OpenGL::renderBatch(const Batch &batch)
 	glEnableClientState(GL_COLOR_ARRAY);
 	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 
-	map<Texture*, Batch::Buffer> buffers = batch.m_buffers;
-	for(map<Texture*, Batch::Buffer>::iterator itr = buffers.begin(); itr != buffers.end(); ++itr)
+	map<Batch::State, Batch::Buffer> buffers = batch.m_buffers;
+	for(map<Batch::State, Batch::Buffer>::iterator itr = buffers.begin(); itr != buffers.end(); ++itr)
 	{
+		const Batch::State &state = itr->first;
 		glActiveTexture(GL_TEXTURE0);
-		if(itr->first) {
-			glBindTexture(GL_TEXTURE_2D, ((GLtexture*)itr->first)->m_id);
+		if(state.texture) {
+			glBindTexture(GL_TEXTURE_2D, ((GLtexture*)state.texture)->m_id);
 		}else{
 			glBindTexture(GL_TEXTURE_2D, 0);
 		}
-		
+
 		// Get vertices and vertex data
 		float *vertexData = (float*)itr->second.vertices.data();
 		uint *indexData = (uint*)itr->second.indices.data();
@@ -183,7 +185,7 @@ void OpenGL::renderBatch(const Batch &batch)
 		glColorPointer(4, GL_FLOAT, 8*floatSize, vertexData + 2);
 		glTexCoordPointer(2, GL_FLOAT, 8*floatSize, vertexData + 6);
 
-		glDrawElements(GL_TRIANGLES, itr->second.indices.size(), GL_UNSIGNED_INT, indexData);
+		glDrawElements(GL_TRIANGLES, itr->second.indices.size(), GL_UNSIGNED_INT, indexData); // Note to self: Might want to use GL_UNSIGNED_BYTE to minimize upload bandwidth
 	}
 
 	// Disable client state

@@ -21,29 +21,42 @@ int Sprite::Register(asIScriptEngine *scriptEngine)
 {
 	int r = 0;
 	
-	r = scriptEngine->RegisterObjectBehaviour("Sprite", asBEHAVE_FACTORY, "Sprite @f(const TextureRegion @, const bool center = false)", asFUNCTIONPR(Sprite::Factory, (const TextureRegion*, const bool), Sprite*), asCALL_CDECL); AS_ASSERT
+	r = scriptEngine->RegisterObjectBehaviour("Sprite", asBEHAVE_FACTORY, "Sprite @f(const TextureRegion @)", asFUNCTIONPR(Factory, (const TextureRegion*), Sprite*), asCALL_CDECL); AS_ASSERT
+	r = scriptEngine->RegisterObjectBehaviour("Sprite", asBEHAVE_FACTORY, "Sprite @f(Texture @)", asFUNCTIONPR(Factory, (Texture*), Sprite*), asCALL_CDECL); AS_ASSERT
 	
-	r = scriptEngine->RegisterObjectMethod("Sprite", "void setPosition(const Vector2 &in)", asMETHODPR(Sprite, setPosition, (const Vector2 &), void), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("Sprite", "void setOrigin(const Vector2 &in)", asMETHODPR(Sprite, setOrigin, (const Vector2 &), void), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("Sprite", "void setRotation(const float)", asMETHODPR(Sprite, setRotation, (const float), void), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("Sprite", "void setScale(const Vector2 &in)", asMETHODPR(Sprite, setScale, (const Vector2 &), void), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("Sprite", "void setPosition(const Vector2 &in)", asMETHOD(Sprite, setPosition), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("Sprite", "void setSize(const Vector2 &in)", asMETHOD(Sprite, setSize), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("Sprite", "void setOrigin(const Vector2 &in)", asMETHOD(Sprite, setOrigin), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("Sprite", "void setRotation(const float)", asMETHOD(Sprite, setRotation), asCALL_THISCALL); AS_ASSERT
+	
+	r = scriptEngine->RegisterObjectMethod("Sprite", "Shape @getAABB() const", asMETHOD(Sprite, getAABB), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("Sprite", "Vector2 getPosition() const", asMETHOD(Sprite, getPosition), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("Sprite", "Vector2 getSize() const", asMETHOD(Sprite, getSize), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("Sprite", "Vector2 getOrigin() const", asMETHOD(Sprite, getOrigin), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("Sprite", "Vector2 getCenter() const", asMETHOD(Sprite, getCenter), asCALL_THISCALL); AS_ASSERT
+
+	r = scriptEngine->RegisterObjectMethod("Sprite", "void move(const Vector2 &in)", asMETHOD(Sprite, move), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("Sprite", "void rotate(const float)", asMETHOD(Sprite, rotate), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("Sprite", "void scale(const float)", asMETHOD(Sprite, scale), asCALL_THISCALL); AS_ASSERT
+	
+	r = scriptEngine->RegisterObjectMethod("Sprite", "void draw(Batch @batch)", asMETHOD(Sprite, draw), asCALL_THISCALL); AS_ASSERT
 
 	return r;
 }
 
-Sprite::Sprite(const TextureRegion *region, const bool center) :
+Sprite *Sprite::Factory(Texture *texture)
+{
+	return new Sprite(new TextureRegion(texture, Vector2(0.0f), Vector2(1.0f)));
+}
+
+Sprite::Sprite(const TextureRegion *region) :
 	refCounter(this),
 	m_textureRegion(region),
-	m_position(0.0f, 0.0f),
-	m_size(0.0f, 0.0f),
-	m_scale(0.0f, 0.0f),
-	m_origin(0.0f, 0.0f),
+	m_position(0.0f),
+	m_size(region->getSize()),
+	m_origin(0.0f),
 	m_angle(0.0f)
 {
-	m_size = m_textureRegion->getSize();
-	if(center) {
-		m_origin = getCenter();
-	}
 }
 
 void Sprite::setPosition(const Vector2 &pos)
@@ -54,11 +67,6 @@ void Sprite::setPosition(const Vector2 &pos)
 void Sprite::setSize(const Vector2 &size)
 {
 	m_size = size;
-}
-
-void Sprite::setScale(const Vector2 &scale)
-{
-	m_scale = scale;
 }
 
 void Sprite::setOrigin(const Vector2 &origin)
@@ -81,14 +89,21 @@ void Sprite::rotate(const float ang)
 	m_angle += ang;
 }
 
-void Sprite::scale(const Vector2 &scl)
+void Sprite::scale(const float scl)
 {
-	m_scale += scl;
+	m_size *= scl;
 }
 
-Shape Sprite::getAABB() const
+Shape *Sprite::getAABB() const
 {
-	return Shape(Rect(m_position, m_size)); // TODO: Fix me!
+	Vertex vertices[4];
+	getVertices(vertices);
+
+	Shape *shape = new Shape();
+	shape->m_vertices.assign(vertices, vertices + 4);
+	shape->m_indices.assign(QUAD_INDICES, QUAD_INDICES + 6);
+
+	return shape;
 }
 
 Vector2 Sprite::getPosition() const
@@ -99,11 +114,6 @@ Vector2 Sprite::getPosition() const
 Vector2 Sprite::getSize() const
 {
 	return m_size;
-}
-
-Vector2 Sprite::getScale() const
-{
-	return m_scale;
 }
 
 Vector2 Sprite::getOrigin() const
@@ -121,21 +131,27 @@ float Sprite::getRotation() const
 	return m_angle;
 }
 
-int QUAD_INDICES[6] = { 0, 1, 3, 1, 2, 3 };
-float QUAD_VERTICES[4][2] = { { 0.0f, 0.0f }, { 0.0f, 1.0f }, { 1.0f, 1.0f }, { 1.0f, 0.0f } };
-Matrix4 QUAD = Matrix4(	0.0f, 0.0f, 0.0f, 0.0f,
-						0.0f, 1.0f, 0.0f, 0.0f,
-						1.0f, 1.0f, 0.0f, 0.0f,
-						1.0f, 0.0f, 0.0f, 0.0f	);
-
 void Sprite::draw(Batch &batch) const
 {
+	Vertex vertices[4];
+	getVertices(vertices);
+	batch.setTexture(m_textureRegion->getTexture());
+	batch.addVertices(vertices, 4, QUAD_INDICES, 6);
+	batch.setTexture(0);
+}
+
+void Sprite::getVertices(Vertex *vertices) const
+{
 	Matrix4 mat;
-	mat.translate(m_position.x, m_position.y, 0);
-	mat.rotate(m_angle, 0.0f, 0.0f, 1.0f);
 	mat.scale(m_size.x, m_size.y, 1.0f);
+	mat.translate(-m_origin.x, -m_origin.y, 0.0f);
+	mat.rotateZ(m_angle);
+	mat.translate(m_position.x+m_origin.x, m_position.y+m_origin.y, 0.0f);
 
-	Matrix4 mat2 = mat * QUAD;
-
-	//batch->addVertices(vertices, QUAD_INDICES, 4);
+	for(int i = 0; i < 4; i++)
+	{
+		vertices[i].position = mat * QUAD_VERTICES[i];
+		vertices[i].texCoord = QUAD_TEXCOORD[i];
+		vertices[i].color.set(1.0f, 1.0f, 1.0f, 1.0f);
+	}
 }

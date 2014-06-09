@@ -15,6 +15,20 @@
 
 xdGraphics *xdGraphics::s_this = 0;
 
+uint QUAD_INDICES[6] = { 0, 1, 3, 1, 3, 2 };
+Vector4 QUAD_VERTICES[4] = {
+	Vector4(0.0f, 0.0f, 0.0f, 1.0f),
+	Vector4(1.0f, 0.0f, 0.0f, 1.0f),
+	Vector4(1.0f, 1.0f, 0.0f, 1.0f),
+	Vector4(0.0f, 1.0f, 0.0f, 1.0f)
+};
+Vector2 QUAD_TEXCOORD[4] = {
+	Vector2(0.0f, 1.0f),
+	Vector2(1.0f, 1.0f),
+	Vector2(1.0f, 0.0f),
+	Vector2(0.0f, 0.0f)
+};
+
 AS_REG_SINGLETON(xdGraphics, "ScriptGraphics")
 
 int xdGraphics::Register(asIScriptEngine *scriptEngine)
@@ -248,16 +262,16 @@ Shader* xdGraphics::CreateShader(const string &vertFilePath, const string &fragF
 
 #include "gfx/textureRegion.h"
 
-TextureRegion *xdGraphics::CreateTextureRegion(const Texture *texture)
+TextureRegion *xdGraphics::CreateTextureRegion(Texture *texture)
 {
 	return new TextureRegion(texture, Vector2(0.0f), Vector2(1.0f));
 }
 
-TextureRegion *xdGraphics::CreateTextureRegion(const Texture *texture, const Vector2 &uv0, const Vector2 &uv1)
+TextureRegion *xdGraphics::CreateTextureRegion(Texture *texture, const Vector2 &uv0, const Vector2 &uv1)
 {
 	return new TextureRegion(texture, uv0, uv1);
 }
-TextureRegion *xdGraphics::CreateTextureRegion(const Texture *texture, const float u0, const float v0, const float u1, const float v1)
+TextureRegion *xdGraphics::CreateTextureRegion(Texture *texture, const float u0, const float v0, const float u1, const float v1)
 {
 	return new TextureRegion(texture, Vector2(u0, v0), Vector2(u1, v1));
 }

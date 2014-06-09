@@ -135,7 +135,7 @@ public:
     const float* getTranspose();                        // return transposed matrix
     float        getDeterminant();
 
-	/*Vector4 getRow(const int row) const
+	Vector4 getRow(const int row) const
 	{
 		return Vector4(&m[row*4]);
 	}
@@ -143,7 +143,7 @@ public:
 	Vector4 getColumn(const int col) const
 	{
 		return Vector4(m[col], m[3+col], m[7+col], m[11+col]);
-	}*/
+	}
 
     Matrix4&    identity();
     Matrix4&    transpose();                            // transpose itself and return reference
@@ -333,14 +333,12 @@ inline Vector2 operator*(const Vector2& v, const Matrix2& rhs)
     return Vector2(v.x*rhs[0] + v.y*rhs[2],  v.x*rhs[1] + v.y*rhs[3]);
 }
 
-#ifdef DEPRICATED
 inline std::ostream& operator<<(std::ostream& os, const Matrix2& m)
 {
     os << "(" << m[0] << ",\t" << m[1] << ")\n"
        << "(" << m[2] << ",\t" << m[3] << ")\n";
     return os;
 }
-#endif
 
 ///////////////////////////////////////////////////////////////////////////
 // inline functions for mat3
@@ -502,7 +500,7 @@ inline Vector3 operator*(const Vector3& v, const mat3& m)
     return Vector3(v.x*m[0] + v.y*m[3] + v.z*m[6],  v.x*m[1] + v.y*m[4] + v.z*m[7],  v.x*m[2] + v.y*m[5] + v.z*m[8]);
 }
 
-#ifdef DEPRICATED
+
 inline std::ostream& operator<<(std::ostream& os, const mat3& m)
 {
     os << "(" << m[0] << ",\t" << m[1] << ",\t" << m[2] << ")\n"
@@ -510,7 +508,7 @@ inline std::ostream& operator<<(std::ostream& os, const mat3& m)
        << "(" << m[6] << ",\t" << m[7] << ",\t" << m[8] << ")\n";
     return os;
 }
-#endif
+
 
 ///////////////////////////////////////////////////////////////////////////
 // inline functions for Matrix4
@@ -711,6 +709,15 @@ inline Vector4 operator*(const Vector4& v, const Matrix4& m)
 inline Vector3 operator*(const Vector3& v, const Matrix4& m)
 {
     return Vector3(v.x*m[0] + v.y*m[4] + v.z*m[8],  v.x*m[1] + v.y*m[5] + v.z*m[9],  v.x*m[2] + v.y*m[6] + v.z*m[10]);
+}
+
+inline std::ostream& operator<<(std::ostream& os, const Matrix4& m)
+{
+    os << "(" << m[0]  << ",\t" << m[1]  << ",\t" << m[2]  <<  ",\t" << m[3] << ")\n"
+       << "(" << m[4]  << ",\t" << m[5]  << ",\t" << m[6]  <<  ",\t" << m[7] << ")\n"
+       << "(" << m[8]  << ",\t" << m[9]  << ",\t" << m[10] <<  ",\t" << m[11] << ")\n"
+       << "(" << m[12] << ",\t" << m[13] << ",\t" << m[14] <<  ",\t" << m[15] << ")\n";
+    return os;
 }
 
 #endif // X2D_MATRICES_H

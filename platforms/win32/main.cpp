@@ -71,6 +71,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, INT)
 		return -1;
 
 	graphics->init(window);
+	window->initEvents();
 
 	return engine->run();
 }

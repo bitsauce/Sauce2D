@@ -31,12 +31,12 @@ int xdMath::Register(asIScriptEngine *scriptEngine)
 	// Supplementary math funcs
 	/*r = scriptEngine->RegisterObjectMethod("ScriptMath", "string tolower(string &in, const int begin = 0, const int end = 0)", asMETHOD(xdMath, toLower), asCALL_THISCALL); AS_ASSERT
 	r = scriptEngine->RegisterObjectMethod("ScriptMath", "string toupper(string &in, const int begin = 0, const int end = 0)", asMETHOD(xdMath, toUpper), asCALL_THISCALL); AS_ASSERT*/
-	r = scriptEngine->RegisterObjectMethod("ScriptMath", "int round(const float)", asMETHOD(xdMath, round), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("ScriptMath", "int ceil(const float)", asMETHOD(xdMath, ceil), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("ScriptMath", "int floor(const float)", asMETHOD(xdMath, floor), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("ScriptMath", "int clamp(const float)", asMETHOD(xdMath, clamp), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("ScriptMath", "int max(const float)", asMETHOD(xdMath, maximum), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("ScriptMath", "int min(const float)", asMETHOD(xdMath, minimum), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("ScriptMath", "float round(const float)", asMETHOD(xdMath, round), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("ScriptMath", "float ceil(const float)", asMETHOD(xdMath, ceil), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("ScriptMath", "float floor(const float)", asMETHOD(xdMath, floor), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("ScriptMath", "float clamp(const float, const float, const float)", asMETHOD(xdMath, clamp), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("ScriptMath", "float max(const float, const float)", asMETHOD(xdMath, maximum), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("ScriptMath", "float min(const float, const float)", asMETHOD(xdMath, minimum), asCALL_THISCALL); AS_ASSERT
 	r = scriptEngine->RegisterObjectMethod("ScriptMath", "float abs(const float)", asMETHOD(xdMath, abs), asCALL_THISCALL); AS_ASSERT
 	r = scriptEngine->RegisterObjectMethod("ScriptMath", "float sqrt(const float)", asMETHOD(xdMath, sqrt), asCALL_THISCALL); AS_ASSERT
 	r = scriptEngine->RegisterObjectMethod("ScriptMath", "float pow(const float, const float)", asMETHOD(xdMath, pow), asCALL_THISCALL); AS_ASSERT

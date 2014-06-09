@@ -5,6 +5,10 @@
 #include <vector>
 using namespace std;
 
+#define TUPLE_CMP(a, b) \
+	if(a < b) return true; \
+	if(a > b) return false;
+
 // Vertex struct
 struct Vertex
 {
@@ -29,11 +33,12 @@ public:
 
 	Batch();
 
-	//void addVertex(Vertex vertex, int index);
 	void addVertices(Vertex *vertices, int vertcount, uint *indices, int icount);
-	//void addVertices(const float *vertices, int *indices, int count);
 	void setProjectionMatrix();
+
+	void setShader(class Shader *shader);
 	void setTexture(class Texture *texture);
+
 	Texture *renderToTexture() {
 		/*gfx->bindFrameBuffer(m_frameBuffer);
 		gfx->renderBatch(this);
@@ -50,8 +55,24 @@ private:
 		vector<uint> indices;
 	};
 
-	Texture *m_texture;
-	map<Texture*, Buffer> m_buffers;
+	struct State {
+		State() :
+			texture(0)
+		{
+		}
+		
+		bool operator<(const State& other) const
+		{
+			// NOTE: The map is sorted by the order of compares
+			TUPLE_CMP(this->texture, other.texture)
+			return false;
+		}
+
+		Texture *texture;
+	} m_state;
+
+	map<State, Buffer> m_buffers;
+	Shader *m_shader;
 
 	static Batch *Factory() { return new Batch(); }
 };

@@ -17,22 +17,22 @@ int TextureRegion::Register(asIScriptEngine *scriptEngine)
 {
 	int r = 0;
 	
-	r = scriptEngine->RegisterObjectBehaviour("TextureRegion", asBEHAVE_FACTORY, "TextureRegion @f(const Texture @)", asFUNCTIONPR(Factory, (const Texture*), TextureRegion*), asCALL_CDECL); AS_ASSERT
-	r = scriptEngine->RegisterObjectBehaviour("TextureRegion", asBEHAVE_FACTORY, "TextureRegion @f(const Texture @, const Vector2 &in, const Vector2 &in)", asFUNCTIONPR(Factory, (const Texture*, const Vector2&, const Vector2&), TextureRegion*), asCALL_CDECL); AS_ASSERT
-	r = scriptEngine->RegisterObjectBehaviour("TextureRegion", asBEHAVE_FACTORY, "TextureRegion @f(const Texture @, const float, const float, const float, const float)", asFUNCTIONPR(Factory, (const Texture*, const float, const float, const float, const float), TextureRegion*), asCALL_CDECL); AS_ASSERT
+	r = scriptEngine->RegisterObjectBehaviour("TextureRegion", asBEHAVE_FACTORY, "TextureRegion @f(Texture @)", asFUNCTIONPR(Factory, (Texture*), TextureRegion*), asCALL_CDECL); AS_ASSERT
+	r = scriptEngine->RegisterObjectBehaviour("TextureRegion", asBEHAVE_FACTORY, "TextureRegion @f(Texture @, const Vector2 &in, const Vector2 &in)", asFUNCTIONPR(Factory, (Texture*, const Vector2&, const Vector2&), TextureRegion*), asCALL_CDECL); AS_ASSERT
+	r = scriptEngine->RegisterObjectBehaviour("TextureRegion", asBEHAVE_FACTORY, "TextureRegion @f(Texture @, const float, const float, const float, const float)", asFUNCTIONPR(Factory, (Texture*, const float, const float, const float, const float), TextureRegion*), asCALL_CDECL); AS_ASSERT
 	
 	r = scriptEngine->RegisterObjectProperty("TextureRegion", "Vector2 uv0", offsetof(TextureRegion, uv0)); AS_ASSERT
 	r = scriptEngine->RegisterObjectProperty("TextureRegion", "Vector2 uv1", offsetof(TextureRegion, uv1)); AS_ASSERT
 
 	r = scriptEngine->RegisterObjectMethod("TextureRegion", "void setRegion(const Vector2 &in, const Vector2 &in)", asMETHODPR(TextureRegion, setRegion, (const Vector2&, const Vector2&), void), asCALL_THISCALL); AS_ASSERT
 	r = scriptEngine->RegisterObjectMethod("TextureRegion", "void setRegion(const float, const float, const float, const float)", asMETHODPR(TextureRegion, setRegion, (const float, const float, const float, const float), void), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("TextureRegion", "const Texture @getTexture() const", asMETHODPR(TextureRegion, getTexture, () const, const Texture*), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("TextureRegion", "void setTexture(const Texture @)", asMETHODPR(TextureRegion, setTexture, (const Texture*), void), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("TextureRegion", "Texture @getTexture() const", asMETHODPR(TextureRegion, getTexture, () const, Texture*), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("TextureRegion", "void setTexture(Texture @)", asMETHODPR(TextureRegion, setTexture, (Texture*), void), asCALL_THISCALL); AS_ASSERT
 
 	return r;
 }
 
-TextureRegion::TextureRegion(const Texture *texture, const Vector2 &uv0, const Vector2 &uv1) :
+TextureRegion::TextureRegion(Texture *texture, const Vector2 &uv0, const Vector2 &uv1) :
 	refCounter(this),
 	uv0(uv0),
 	uv1(uv1),
@@ -40,12 +40,12 @@ TextureRegion::TextureRegion(const Texture *texture, const Vector2 &uv0, const V
 {
 }
 
-void TextureRegion::setTexture(const Texture *texture)
+void TextureRegion::setTexture(Texture *texture)
 {
 	this->texture = texture;
 }
 
-const Texture *TextureRegion::getTexture() const
+Texture *TextureRegion::getTexture() const
 {
 	return texture;
 }

@@ -20,20 +20,26 @@ int Batch::Register(asIScriptEngine *scriptEngine)
 
 	r = scriptEngine->RegisterObjectBehaviour("Batch", asBEHAVE_FACTORY, "Batch @f()", asFUNCTIONPR(Factory, (), Batch*), asCALL_CDECL); AS_ASSERT
 
+	r = scriptEngine->RegisterObjectMethod("Batch", "void setShader(Shader @shader)", asMETHOD(Batch, setShader), asCALL_THISCALL); AS_ASSERT
+
 	r = scriptEngine->RegisterObjectMethod("Batch", "void draw()", asMETHOD(Batch, draw), asCALL_THISCALL); AS_ASSERT
 
 	return r;
 }
 
 Batch::Batch() :
-	refCounter(this),
-	m_texture(0)
+	refCounter(this)
 {
 }
 
-void Batch::setTexture(class Texture *texture)
+void Batch::setShader(Shader *shader)
 {
-	m_texture = texture;
+	m_shader = shader;
+}
+
+void Batch::setTexture(Texture *texture)
+{
+	m_state.texture = texture;
 }
 
 //void Batch::addVertex(Vertex vertex, int index)
@@ -44,7 +50,7 @@ void Batch::setTexture(class Texture *texture)
 
 void Batch::addVertices(Vertex *vertices, int vertcount, uint *indices, int icount)
 {
-	Buffer &buffer = m_buffers[m_texture];
+	Buffer &buffer = m_buffers[m_state];
 	int ioffset = buffer.vertices.size();
 	
 	for(int i = 0; i < vertcount; i++) {
