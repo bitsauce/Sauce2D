@@ -19,22 +19,42 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\include\x2d\app.h" />
     <ClInclude Include="..\..\include\x2d\assetloader.h" />
+    <ClInclude Include="..\..\include\x2d\base.h" />
+    <ClInclude Include="..\..\include\x2d\config.h" />
+    <ClInclude Include="..\..\include\x2d\console.h" />
+    <ClInclude Include="..\..\include\x2d\eventhandler.h" />
+    <ClInclude Include="..\..\include\x2d\exception.h" />
+    <ClInclude Include="..\..\include\x2d\input.h" />
+    <ClInclude Include="..\..\include\x2d\filesystem.h" />
     <ClInclude Include="..\..\include\x2d\debug.h" />
     <ClInclude Include="..\..\include\x2d\engine.h" />
-    <ClInclude Include="..\..\include\x2d\gfx.h" />
-    <ClInclude Include="..\..\include\x2d\iosystem.h" />
+    <ClInclude Include="..\..\include\x2d\graphics.h" />
     <ClInclude Include="..\..\include\x2d\math.h" />
     <ClInclude Include="..\..\include\x2d\math\array.h" />
     <ClInclude Include="..\..\include\x2d\math\matrix.h" />
-    <ClInclude Include="..\..\include\x2d\math\profiler.h" />
     <ClInclude Include="..\..\include\x2d\math\rect.h" />
     <ClInclude Include="..\..\include\x2d\math\rectPacker.h" />
     <ClInclude Include="..\..\include\x2d\math\vector.h" />
-    <ClInclude Include="..\..\include\x2d\platform.h" />
+    <ClInclude Include="..\..\include\x2d\profiler.h" />
     <ClInclude Include="..\..\include\x2d\scripts.h" />
-    <ClInclude Include="..\..\include\x2d\sfx.h" />
+    <ClInclude Include="..\..\include\x2d\audio.h" />
+    <ClInclude Include="..\..\include\x2d\timer.h" />
+    <ClInclude Include="..\..\include\x2d\util.h" />
+    <ClInclude Include="..\..\include\x2d\window.h" />
+    <ClInclude Include="..\..\source\gfx\animation.h" />
+    <ClInclude Include="..\..\source\gfx\batch.h" />
+    <ClInclude Include="..\..\source\gfx\camera.h" />
+    <ClInclude Include="..\..\source\gfx\font.h" />
+    <ClInclude Include="..\..\source\gfx\frameBuffer.h" />
+    <ClInclude Include="..\..\source\gfx\pixmap.h" />
+    <ClInclude Include="..\..\source\gfx\shader.h" />
+    <ClInclude Include="..\..\source\gfx\shape.h" />
+    <ClInclude Include="..\..\source\gfx\sprite.h" />
+    <ClInclude Include="..\..\source\gfx\texture.h" />
+    <ClInclude Include="..\..\source\gfx\textureRegion.h" />
+    <ClInclude Include="..\..\source\gfx\vertexbufferobject.h" />
+    <ClInclude Include="..\..\source\gfx\viewport.h" />
     <ClInclude Include="..\..\source\scripts\scriptarray.h" />
     <ClInclude Include="..\..\source\scripts\scriptbuilder.h" />
     <ClInclude Include="..\..\source\scripts\scriptgrid.h" />
@@ -42,24 +62,43 @@
     <ClInclude Include="..\..\source\scripts\scriptstdstring.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\source\array.cpp" />
-    <ClCompile Include="..\..\source\assetloader.cpp" />
-    <ClCompile Include="..\..\source\engine.cpp" />
-    <ClCompile Include="..\..\source\iosystem.cpp" />
+    <ClCompile Include="..\..\source\core\array.cpp" />
+    <ClCompile Include="..\..\source\core\assetloader.cpp" />
+    <ClCompile Include="..\..\source\core\console.cpp" />
+    <ClCompile Include="..\..\source\core\debug.cpp" />
+    <ClCompile Include="..\..\source\core\engine.cpp" />
+    <ClCompile Include="..\..\source\core\input.cpp" />
+    <ClCompile Include="..\..\source\core\filesystem.cpp" />
+    <ClCompile Include="..\..\source\core\profiler.cpp" />
+    <ClCompile Include="..\..\source\core\scripts.cpp" />
+    <ClCompile Include="..\..\source\core\timer.cpp" />
+    <ClCompile Include="..\..\source\core\util.cpp" />
+    <ClCompile Include="..\..\source\core\window.cpp" />
+    <ClCompile Include="..\..\source\gfx\animation.cpp" />
+    <ClCompile Include="..\..\source\gfx\batch.cpp" />
+    <ClCompile Include="..\..\source\gfx\camera.cpp" />
+    <ClCompile Include="..\..\source\gfx\font.cpp" />
+    <ClCompile Include="..\..\source\gfx\frameBuffer.cpp" />
+    <ClCompile Include="..\..\source\gfx\graphics.cpp" />
+    <ClCompile Include="..\..\source\gfx\pixmap.cpp" />
+    <ClCompile Include="..\..\source\gfx\shader.cpp" />
+    <ClCompile Include="..\..\source\gfx\shape.cpp" />
+    <ClCompile Include="..\..\source\gfx\sprite.cpp" />
+    <ClCompile Include="..\..\source\gfx\texture.cpp" />
+    <ClCompile Include="..\..\source\gfx\textureRegion.cpp" />
+    <ClCompile Include="..\..\source\gfx\viewport.cpp" />
     <ClCompile Include="..\..\source\math\math.cpp" />
     <ClCompile Include="..\..\source\math\matrix.cpp" />
     <ClCompile Include="..\..\source\math\rect.cpp" />
     <ClCompile Include="..\..\source\math\rectPacker.cpp" />
     <ClCompile Include="..\..\source\math\vector.cpp" />
-    <ClCompile Include="..\..\source\profiler.cpp" />
-    <ClCompile Include="..\..\source\scripts.cpp" />
     <ClCompile Include="..\..\source\scripts\scriptarray.cpp" />
     <ClCompile Include="..\..\source\scripts\scriptbuilder.cpp" />
     <ClCompile Include="..\..\source\scripts\scriptgrid.cpp" />
     <ClCompile Include="..\..\source\scripts\scripthelper.cpp" />
     <ClCompile Include="..\..\source\scripts\scriptstdstring.cpp" />
     <ClCompile Include="..\..\source\scripts\scriptstdstring_utils.cpp" />
-    <ClCompile Include="..\..\source\x2d\debug.cpp" />
+    <ClCompile Include="..\..\source\sfx\audio.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{F3F25B49-2C6B-4FF0-98FB-47695DF70B8A}</ProjectGuid>
@@ -102,13 +141,13 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <OutDir>$(SolutionDir)..\..\build\$(Platform)\$(Configuration)\</OutDir>
+    <OutDir>..\..\build\$(Platform)\$(Configuration)\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Android'">
     <OutDir>$(SolutionDir)..\..\build\$(Platform)\$(Configuration)\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <TargetName>$(ProjectName)_d</TargetName>
+    <TargetName>$(ProjectName)d</TargetName>
     <LinkIncremental>true</LinkIncremental>
     <IntDir>$(Configuration)\</IntDir>
   </PropertyGroup>
@@ -117,7 +156,7 @@
     <LinkIncremental>true</LinkIncremental>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <OutDir>$(SolutionDir)..\..\build\$(Platform)\$(Configuration)\</OutDir>
+    <OutDir>..\..\build\$(Platform)\$(Configuration)\</OutDir>
     <LinkIncremental>false</LinkIncremental>
     <IntDir>$(Configuration)\</IntDir>
   </PropertyGroup>
@@ -147,7 +186,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
-      <AdditionalIncludeDirectories>$(SolutionDir)..\..\include;$(SolutionDir)..\..\source;$(SolutionDir)..\..\lib\angelscript\sdk\angelscript\include;$(SolutionDir)..\..\lib\lpng154;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\include;..\..\source;..\..\3rdparty\angelscript\sdk\angelscript\include;..\..\3rdparty\freeimage\source;..\..\3rdparty\freetype\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Android'">
@@ -160,7 +199,7 @@
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <WarningLevel>Level4</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>USING_AS;X2D_EXPORT</PreprocessorDefinitions>
+      <PreprocessorDefinitions>USING_AS;X2D_EXPORT;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -169,8 +208,8 @@
       <ExceptionHandling>Sync</ExceptionHandling>
     </ClCompile>
     <Link>
-      <AdditionalLibraryDirectories>$(SolutionDir)..\..\lib\angelscript\sdk\angelscript\lib;$(SolutionDir)..\..\lib\zlib-1.2.5\lib;$(SolutionDir)..\..\lib\lpng154\lib</AdditionalLibraryDirectories>
-      <AdditionalDependencies>ws2_32.lib;angelscriptd.lib;iphlpapi.lib;libpng15_d.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>..\..\3rdparty\angelscript\sdk\angelscript\lib;..\..\3rdparty\freeimage\lib;..\..\3rdparty\freetype\lib</AdditionalLibraryDirectories>
+      <AdditionalDependencies>angelscriptd.lib;freeimaged.lib;freetyped.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
@@ -208,7 +247,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
-      <AdditionalIncludeDirectories>$(SolutionDir)..\..\include;$(SolutionDir)..\..\source;$(SolutionDir)..\..\lib\angelscript\sdk\angelscript\include;$(SolutionDir)..\..\lib\lpng154;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\include;..\..\source;..\..\3rdparty\angelscript\sdk\angelscript\include;..\..\3rdparty\freeimage\source;..\..\3rdparty\freetype\include;..\..\3rdparty\glew\include;..\..\3rdparty\openal\include;..\..\3rdparty\vld\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Android'">
@@ -220,7 +259,7 @@
     <ClCompile>
       <WarningLevel>Level4</WarningLevel>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>USING_AS;X2D_EXPORT</PreprocessorDefinitions>
+      <PreprocessorDefinitions>USING_AS;X2D_EXPORT;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <Optimization>Full</Optimization>

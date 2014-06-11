@@ -7,7 +7,7 @@ const float DEG2RAD = 3.141593f / 180;
 ///////////////////////////////////////////////////////////////////////////////
 // return the determinant of 2x2 matrix
 ///////////////////////////////////////////////////////////////////////////////
-float mat2::getDeterminant()
+float Matrix2::getDeterminant()
 {
     return m[0] * m[3] - m[1] * m[2];
 }
@@ -16,7 +16,7 @@ float mat2::getDeterminant()
 // inverse of 2x2 matrix
 // If cannot find inverse, set identity matrix
 ///////////////////////////////////////////////////////////////////////////////
-mat2& mat2::invert()
+Matrix2& Matrix2::invert()
 {
     float determinant = m[0] * m[3] - m[1] * m[2];
     if(fabs(determinant) <= 0.00001f)
@@ -88,7 +88,7 @@ mat3& mat3::invert()
 ///////////////////////////////////////////////////////////////////////////////
 // transpose 4x4 matrix
 ///////////////////////////////////////////////////////////////////////////////
-mat4& mat4::transpose()
+Matrix4& Matrix4::transpose()
 {
     std::swap(m[1],  m[4]);
     std::swap(m[2],  m[8]);
@@ -103,7 +103,7 @@ mat4& mat4::transpose()
 ///////////////////////////////////////////////////////////////////////////////
 // inverse 4x4 matrix
 ///////////////////////////////////////////////////////////////////////////////
-mat4& mat4::invert()
+Matrix4& Matrix4::invert()
 {
     // If the 4th row is [0,0,0,1] then it is affine matrix and
     // it has no projective transformation.
@@ -144,7 +144,7 @@ mat4& mat4::invert()
 //  [ --+-- ]   =  [ ----+--------- ]    (T denotes 1x3 translation)
 //  [ 0 | 1 ]      [  0  |     1    ]    (R^T denotes R-transpose)
 ///////////////////////////////////////////////////////////////////////////////
-mat4& mat4::invertEuclidean()
+Matrix4& Matrix4::invertEuclidean()
 {
     // transpose 3x3 rotation matrix part
     // | R^T | 0 |
@@ -187,7 +187,7 @@ mat4& mat4::invertEuclidean()
 //  [ --+-- ]   = [ -----+---------- ]
 //  [ 0 | 1 ]     [  0   +     1     ]
 ///////////////////////////////////////////////////////////////////////////////
-mat4& mat4::invertAffine()
+Matrix4& Matrix4::invertAffine()
 {
     // R^-1
     mat3 r(m[0],m[1],m[2], m[4],m[5],m[6], m[8],m[9],m[10]);
@@ -229,20 +229,20 @@ mat4& mat4::invertAffine()
 //       The matrix is invertable even if det(A)=0, so must check det(A) before
 //       calling this function, and use invertGeneric() instead.
 ///////////////////////////////////////////////////////////////////////////////
-mat4& mat4::invertProjective()
+Matrix4& Matrix4::invertProjective()
 {
     // partition
-    mat2 a(m[0], m[1], m[4], m[5]);
-    mat2 b(m[2], m[3], m[6], m[7]);
-    mat2 c(m[8], m[9], m[12], m[13]);
-    mat2 d(m[10], m[11], m[14], m[15]);
+    Matrix2 a(m[0], m[1], m[4], m[5]);
+    Matrix2 b(m[2], m[3], m[6], m[7]);
+    Matrix2 c(m[8], m[9], m[12], m[13]);
+    Matrix2 d(m[10], m[11], m[14], m[15]);
 
     // pre-compute repeated parts
     a.invert();             // A^-1
-    mat2 ab = a * b;     // A^-1 * B
-    mat2 ca = c * a;     // C * A^-1
-    mat2 cab = ca * b;   // C * A^-1 * B
-    mat2 dcab = d - cab; // D - C * A^-1 * B
+    Matrix2 ab = a * b;     // A^-1 * B
+    Matrix2 ca = c * a;     // C * A^-1
+    Matrix2 cab = ca * b;   // C * A^-1 * B
+    Matrix2 dcab = d - cab; // D - C * A^-1 * B
 
     // check determinant if |D - C * A^-1 * B| = 0
     //NOTE: this function assumes det(A) is already checked. if |A|=0 then,
@@ -254,18 +254,18 @@ mat4& mat4::invertProjective()
     }
 
     // compute D' and -D'
-    mat2 d1 = dcab;      //  (D - C * A^-1 * B)
+    Matrix2 d1 = dcab;      //  (D - C * A^-1 * B)
     d1.invert();            //  (D - C * A^-1 * B)^-1
-    mat2 d2 = -d1;       // -(D - C * A^-1 * B)^-1
+    Matrix2 d2 = -d1;       // -(D - C * A^-1 * B)^-1
 
     // compute C'
-    mat2 c1 = d2 * ca;   // -D' * (C * A^-1)
+    Matrix2 c1 = d2 * ca;   // -D' * (C * A^-1)
 
     // compute B'
-    mat2 b1 = ab * d2;   // (A^-1 * B) * -D'
+    Matrix2 b1 = ab * d2;   // (A^-1 * B) * -D'
 
     // compute A'
-    mat2 a1 = a - (ab * c1); // A^-1 - (A^-1 * B) * C'
+    Matrix2 a1 = a - (ab * c1); // A^-1 - (A^-1 * B) * C'
 
     // assemble inverse matrix
     m[0] = a1[0];  m[1] = a1[1];  m[2] = b1[0];  m[3] = b1[1];
@@ -281,7 +281,7 @@ mat4& mat4::invertProjective()
 // If cannot find inverse, return indentity matrix
 // M^-1 = adj(M) / det(M)
 ///////////////////////////////////////////////////////////////////////////////
-mat4& mat4::invertGeneral()
+Matrix4& Matrix4::invertGeneral()
 {
     // get cofactors of minor matrices
     float cofactor0 = getCofactor(m[5],m[6],m[7], m[9],m[10],m[11], m[13],m[14],m[15]);
@@ -341,7 +341,7 @@ mat4& mat4::invertGeneral()
 ///////////////////////////////////////////////////////////////////////////////
 // return determinant of 4x4 matrix
 ///////////////////////////////////////////////////////////////////////////////
-float mat4::getDeterminant()
+float Matrix4::getDeterminant()
 {
     return m[0] * getCofactor(m[5],m[6],m[7], m[9],m[10],m[11], m[13],m[14],m[15]) -
            m[1] * getCofactor(m[4],m[6],m[7], m[8],m[10],m[11], m[12],m[14],m[15]) +
@@ -356,7 +356,7 @@ float mat4::getDeterminant()
 // input params are 9 elements of the minor matrix
 // NOTE: The caller must know its sign.
 ///////////////////////////////////////////////////////////////////////////////
-float mat4::getCofactor(float m0, float m1, float m2,
+float Matrix4::getCofactor(float m0, float m1, float m2,
                            float m3, float m4, float m5,
                            float m6, float m7, float m8)
 {
@@ -368,12 +368,12 @@ float mat4::getCofactor(float m0, float m1, float m2,
 ///////////////////////////////////////////////////////////////////////////////
 // translate this matrix by (x, y, z)
 ///////////////////////////////////////////////////////////////////////////////
-mat4& mat4::translate(const vec3& v)
+Matrix4& Matrix4::translate(const Vector3& v)
 {
     return translate(v.x, v.y, v.z);
 }
 
-mat4& mat4::translate(float x, float y, float z)
+Matrix4& Matrix4::translate(float x, float y, float z)
 {
     m[0] += m[12]*x;   m[1] += m[13]*x;   m[2] += m[14]*x;   m[3] += m[15]*x;
     m[4] += m[12]*y;   m[5] += m[13]*y;   m[6] += m[14]*y;   m[7] += m[15]*y;
@@ -384,12 +384,12 @@ mat4& mat4::translate(float x, float y, float z)
 ///////////////////////////////////////////////////////////////////////////////
 // uniform scale
 ///////////////////////////////////////////////////////////////////////////////
-mat4& mat4::scale(float s)
+Matrix4& Matrix4::scale(float s)
 {
     return scale(s, s, s);
 }
 
-mat4& mat4::scale(float x, float y, float z)
+Matrix4& Matrix4::scale(float x, float y, float z)
 {
     m[0] = m[0]*x;   m[1] = m[1]*x;   m[2] = m[2]*x;   m[3] = m[3]*x;
     m[4] = m[4]*y;   m[5] = m[5]*y;   m[6] = m[6]*y;   m[7] = m[7]*y;
@@ -401,12 +401,12 @@ mat4& mat4::scale(float x, float y, float z)
 // build a rotation matrix with given angle(degree) and rotation axis, then
 // multiply it with this object
 ///////////////////////////////////////////////////////////////////////////////
-mat4& mat4::rotate(float angle, const vec3& axis)
+Matrix4& Matrix4::rotate(float angle, const Vector3& axis)
 {
     return rotate(angle, axis.x, axis.y, axis.z);
 }
 
-mat4& mat4::rotate(float angle, float x, float y, float z)
+Matrix4& Matrix4::rotate(float angle, float x, float y, float z)
 {
     float c = cosf(angle * DEG2RAD);    // cosine
     float s = sinf(angle * DEG2RAD);    // sine
@@ -418,7 +418,7 @@ mat4& mat4::rotate(float angle, float x, float y, float z)
     float zz = z * z;
 
     // build rotation matrix
-    mat4 m;
+    Matrix4 m;
     m[0] = xx * (1 - c) + c;
     m[1] = xy * (1 - c) - z * s;
     m[2] = xz * (1 - c) + y * s;
@@ -442,7 +442,7 @@ mat4& mat4::rotate(float angle, float x, float y, float z)
     return *this;
 }
 
-mat4& mat4::rotateX(float angle)
+Matrix4& Matrix4::rotateX(float angle)
 {
     float c = cosf(angle * DEG2RAD);
     float s = sinf(angle * DEG2RAD);
@@ -461,7 +461,7 @@ mat4& mat4::rotateX(float angle)
     return *this;
 }
 
-mat4& mat4::rotateY(float angle)
+Matrix4& Matrix4::rotateY(float angle)
 {
     float c = cosf(angle * DEG2RAD);
     float s = sinf(angle * DEG2RAD);
@@ -480,7 +480,7 @@ mat4& mat4::rotateY(float angle)
     return *this;
 }
 
-mat4& mat4::rotateZ(float angle)
+Matrix4& Matrix4::rotateZ(float angle)
 {
     float c = cosf(angle * DEG2RAD);
     float s = sinf(angle * DEG2RAD);

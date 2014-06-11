@@ -3,11 +3,11 @@
 // \ \/ / __) | | | | | |  _ / _  |  _   _ \ / _ \ |  _| |  _ \ / _  | |  _ \ / _ \
 //  >  < / __/| |_| | | |_| | (_| | | | | | |  __/ | |___| | | | (_| | | | | |  __/
 // /_/\_\_____|____/   \____|\__ _|_| |_| |_|\___| |_____|_| |_|\__, |_|_| |_|\___|
-//                                                              |___/              
-//		MixedGraphics (C)
+//                                                              |___/     
+//				Originally written by Marcus Loo Vergara (aka. Bitsauce)
+//									2011-2014 (C)
 
 #include "x2d/math/rectPacker.h"
-#include "x2d/gfx.h"
 
 bool heightSort(RectPacker::Rect i, RectPacker::Rect j)
 {
@@ -36,8 +36,8 @@ RectPacker::Result RectPacker::pack()
 
 	// Setup loop vars
 	int canvasWidth = 8192, canvasHeight = maxHeight;
-	vector<rect2i> cells;
-	cells.push_back(rect2i(0, 0, canvasWidth, canvasHeight));
+	vector<Recti> cells;
+	cells.push_back(Recti(0, 0, canvasWidth, canvasHeight));
 	Result bestResult;
 	Result result;
 
@@ -52,7 +52,7 @@ RectPacker::Result RectPacker::pack()
 		int bestCellIdx = -1;
 		for(uint i = 0; i < cells.size(); i++)
 		{
-			rect2i *cell = &cells[i];
+			Recti *cell = &cells[i];
 			if(cell->getWidth() >= rect.getWidth() && cell->getHeight() >= rect.getHeight())
 			{
 				if(bestCellIdx < 0 || cell->getArea() < cells[bestCellIdx].getArea())
@@ -64,12 +64,12 @@ RectPacker::Result RectPacker::pack()
 		{
 			// If no cell was found, add more to the height and retry
 			cells.clear();
-			cells.push_back(rect2i(0, 0, canvasWidth, ++canvasHeight));
+			cells.push_back(Recti(0, 0, canvasWidth, ++canvasHeight));
 			result.clear();
 			idx = rightMost = 0;
 		}else{
 			// Store cell and remove
-			rect2i cell = cells[bestCellIdx];
+			Recti cell = cells[bestCellIdx];
 			cells.erase(cells.begin() + bestCellIdx);
 			
 			// Place rectangle into results
@@ -79,8 +79,8 @@ RectPacker::Result RectPacker::pack()
 				rightMost = rect.getRight();
 				
 			// Split the cell into 2 smaller cells
-			rect2i c1(cell.getX() + rect.getWidth(), cell.getY(), cell.getWidth() - rect.getWidth(), rect.getHeight());   // +1 for padding pixel
-			rect2i c2(cell.getX(), cell.getY() + rect.getHeight(), cell.getWidth(), cell.getHeight() - rect.getHeight()); // +1 for padding pixel
+			Recti c1(cell.getX() + rect.getWidth(), cell.getY(), cell.getWidth() - rect.getWidth(), rect.getHeight());   // +1 for padding pixel
+			Recti c2(cell.getX(), cell.getY() + rect.getHeight(), cell.getWidth(), cell.getHeight() - rect.getHeight()); // +1 for padding pixel
 				
 			if(c1.getArea() > 0) cells.push_back(c1);
 			if(c2.getArea() > 0) cells.push_back(c2);
@@ -104,7 +104,7 @@ RectPacker::Result RectPacker::pack()
 					
 				// Retry with different dimentions
 				cells.clear();
-				cells.push_back(rect2i(0, 0, --canvasWidth, canvasHeight));
+				cells.push_back(Recti(0, 0, --canvasWidth, canvasHeight));
 				result.clear();
 				idx = rightMost = 0;
 			}

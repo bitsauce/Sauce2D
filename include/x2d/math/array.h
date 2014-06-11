@@ -1,11 +1,12 @@
 #ifndef X2D_ARRAY_H
 #define X2D_ARRAY_H
 
-#include "x2d/platform.h"
+#include <x2d/config.h>
+#include <x2d/util.h>
 
 // TODO: This should probably not be here...
 
-class X2DAPI Array
+class XDAPI Array
 {
 public:
 
@@ -20,8 +21,8 @@ public:
 	virtual void  SetValue(unsigned int index, void *value) = 0;
 };
 
-X2DAPI Array *CreateArray(const string &type, const uint size);
+XDAPI Array *CreateArray(const string &type, const uint size);
 
-#define NOT_IMPLEMENTED_ARR(func, type) Array *arr = CreateArray(type, 0); iosystem::print("%s does not have a implementation.", #func); return arr;
+#define NOT_IMPLEMENTED_ARR(func, type) Array *arr = CreateArray(type, 0); LOG("%s does not have a implementation.", #func); return arr;
 
 #endif // X2D_ARRAY_H

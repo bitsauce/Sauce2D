@@ -1,13 +1,13 @@
 #ifndef GFX_TEXTURE_PACKER_H
 #define GFX_TEXTURE_PACKER_H
 
-#include "x2d/platform.h"
+#include <x2d/config.h>
 #include "x2d/math.h"
 
-class X2DAPI RectPacker
+class XDAPI RectPacker
 {
 public:
-	class X2DAPI Rect : public rect2i
+	class XDAPI Rect : public Recti
 	{
 	public:
 		Rect(void *data) :
@@ -24,7 +24,7 @@ public:
 		void *data;
 	};
 
-	struct X2DAPI Result
+	struct XDAPI Result
 	{
 		Result() :
 			valid(false),
@@ -43,7 +43,7 @@ public:
 		}
 
 		bool valid;
-		vec2i canvas;
+		Vector2i canvas;
 		int area;
 		float efficiency;
 		vector<Rect> rectList;

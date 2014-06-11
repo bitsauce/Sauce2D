@@ -1,23 +1,41 @@
-#ifndef CORE_CONSOLE_H
-#define CORE_CONSOLE_H
+#ifndef X2D_CONSOLE_H
+#define X2D_CONSOLE_H
 
-#include "x2d/platform.h"
+#include <x2d/config.h>
+#include <x2d/math.h>
+#include <x2d/base.h>
+#include <x2d/engine.h>
 
-class X2DAPI X2DConsole
+#define LOG(str, ...) xdEngine::GetConsole()->log(str, __VA_ARGS__)
+#define ERR(str, ...) xdEngine::GetConsole()->log(str, __VA_ARGS__)
+
+class xdDebug;
+class xdFileSystem;
+
+class XDAPI xdConsole
 {
+	friend class xdEngine;
 public:
+	AS_DECL_SINGLETON
 
-	virtual void append(const string &msg) = 0;
-	virtual string log() const = 0;
-	virtual void clearLog() = 0;
-	virtual void exportLog(const string &filePath) = 0;
+	xdConsole();
 
-	virtual void setExportFlag(const bool val) = 0;
-	virtual bool exportFlag() const = 0;
+	virtual void log(const string &msg);
+	void log(const char*, ...);
+	string getLog() const;
 
-	virtual string readBuffer() = 0;
-	virtual int bufferSize() const = 0;
-	virtual void clearBuffer() = 0;
+	void clear();
+	void exportFile() const;
+
+	string readBuffer();
+	bool hasBuffer() const;
+	void clearBuffer();
+
+private:
+	string m_log;
+	string m_buffer;
+	xdDebug *m_debugger;
+	xdFileSystem *m_fileSystem;
 };
 
-#endif // CORE_CONSOLE_H
+#endif // X2D_CONSOLE_H

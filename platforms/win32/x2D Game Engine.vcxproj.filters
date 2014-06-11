@@ -1,0 +1,102 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="source\gfx\opengl\gltexture.cpp">
+      <Filter>source\gfx\opengl</Filter>
+    </ClCompile>
+    <ClCompile Include="winassetloader.cpp">
+      <Filter>source\app</Filter>
+    </ClCompile>
+    <ClCompile Include="windebug.cpp">
+      <Filter>source\app</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\gfx\opengl\glgraphics.cpp">
+      <Filter>source\gfx\opengl</Filter>
+    </ClCompile>
+    <ClCompile Include="source\gfx\opengl\glshader.cpp">
+      <Filter>source\gfx\opengl</Filter>
+    </ClCompile>
+    <ClCompile Include="source\sfx\openal\alaudio.cpp">
+      <Filter>source\sfx\openal</Filter>
+    </ClCompile>
+    <ClCompile Include="console.cpp">
+      <Filter>source\core</Filter>
+    </ClCompile>
+    <ClCompile Include="fileSystem.cpp">
+      <Filter>source\core</Filter>
+    </ClCompile>
+    <ClCompile Include="input.cpp">
+      <Filter>source\core</Filter>
+    </ClCompile>
+    <ClCompile Include="timer.cpp">
+      <Filter>source\core</Filter>
+    </ClCompile>
+    <ClCompile Include="window.cpp">
+      <Filter>source\core</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="source\gfx\opengl\gltexture.h">
+      <Filter>source\gfx\opengl</Filter>
+    </ClInclude>
+    <ClInclude Include="windebug.h">
+      <Filter>source\app</Filter>
+    </ClInclude>
+    <ClInclude Include="winassetloader.h">
+      <Filter>source\app</Filter>
+    </ClInclude>
+    <ClInclude Include="source\gfx\opengl\glgraphics.h">
+      <Filter>source\gfx\opengl</Filter>
+    </ClInclude>
+    <ClInclude Include="source\gfx\opengl\glshader.h">
+      <Filter>source\gfx\opengl</Filter>
+    </ClInclude>
+    <ClInclude Include="source\sfx\openal\alaudio.h">
+      <Filter>source\sfx\openal</Filter>
+    </ClInclude>
+    <ClInclude Include="console.h">
+      <Filter>source\core</Filter>
+    </ClInclude>
+    <ClInclude Include="fileSystem.h">
+      <Filter>source\core</Filter>
+    </ClInclude>
+    <ClInclude Include="input.h">
+      <Filter>source\core</Filter>
+    </ClInclude>
+    <ClInclude Include="timer.h">
+      <Filter>source\core</Filter>
+    </ClInclude>
+    <ClInclude Include="window.h">
+      <Filter>source\core</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="resources.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="source">
+      <UniqueIdentifier>{b3c95390-4192-4e8a-8916-a28c5eb294b1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source\gfx">
+      <UniqueIdentifier>{aa8584c8-c503-4a3c-be00-b8c16c86756b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source\gfx\opengl">
+      <UniqueIdentifier>{f921ce0a-bdfb-4878-b709-16aef6b420c6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source\sfx">
+      <UniqueIdentifier>{d1f1b68b-d0be-4bce-83ac-1a69f7902e5a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source\app">
+      <UniqueIdentifier>{5b6e9077-38fb-4f33-915f-83551baa960a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source\sfx\openal">
+      <UniqueIdentifier>{947acc0d-9bde-4624-ba3b-5357982ddbb9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source\core">
+      <UniqueIdentifier>{ccb8b04d-88e0-4933-8cd9-220e5ae31f73}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

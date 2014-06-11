@@ -1,12 +1,13 @@
 #ifndef X2D_ASSETLOADER_H
 #define X2D_ASSETLOADER_H
 
-#include "x2d/platform.h"
+#include <x2d/config.h>
+#include <x2d/util.h>
 
 /*********************************************************************
 **	Asset loader image formats										**
 **********************************************************************/
-enum X2DImageFormat
+enum xdImageFormat
 {
 	UnknownImage,
 	PngImage,
@@ -20,7 +21,7 @@ enum X2DImageFormat
 /*********************************************************************
 **	Asset loader sound formats										**
 **********************************************************************/
-enum X2DSoundFormat
+enum xdSoundFormat
 {
 	UnknownSound,
 	WavSound,
@@ -31,37 +32,25 @@ enum X2DSoundFormat
 /*********************************************************************
 **	Abstract Asset Loader											**
 **********************************************************************/
-class X2DAPI X2DAssetLoader
+
+class xdFileSystem;
+
+class XDAPI xdAssetLoader
 {
+	friend class xdEngine;
+	friend class xdGraphics;
 public:
+	xdAssetLoader(xdFileSystem *fileSystem);
 
-	/** Loads a asset file
-	  * IMPLEMENTATION: Required
-	  * INPUT: This function takes a asset relative path [assetPath]
-	  * OUTPUT: The asset file data output as [data], and the length of this data as [len]
-	  */
-	virtual int loadAsset(const char* assetPath, const char** data, long* len = 0) = 0;
-	virtual void loadPlugins() = 0;
-	virtual int transformFilePath(string &assetPath) = 0;
+private:
+	int loadImage(string filePath, uchar** data, uint &width, uint &height, const xdImageFormat format = UnknownImage);
+	int saveImage(string filePath, uchar *data, const uint width, const uint height, const xdImageFormat format = UnknownImage);
 
-public:
-
-	/** Loads a asset file as a image using thirdparty libraries
-	  * IMPLEMENTATION: Implement if you perfer other means of loading image files
-	  * INPUT: The asset directory relative path [assetPath], and the image format as [format].
-	  * OUTPUT: The image [data] rgba encoded as unsigned integers, and the [width] and [height] of the image
-	  */
-	int loadAssetAsImage(const char* assetPath, uint** data, uint &width, uint &height, const X2DImageFormat format = UnknownImage);
-	int loadAssetAsSound(const char* assetPath, uint** data/*, int &frequency*/, const X2DSoundFormat format = UnknownSound);
+	int loadSound(string filePath, uchar** data, int &width, int &height, const xdSoundFormat format = UnknownSound);
+	int saveSound(string filePath, uchar *data, const uint width, const uint height, const xdSoundFormat format = UnknownSound);
 	
-	int loadImage(const char* filePath, uint** data, int &width, int &height, const X2DImageFormat format = UnknownImage);
-	int saveImage(const char* filePath, uint *data, const uint width, const uint height, const X2DImageFormat format = UnknownImage);
-
-	int loadSound(const char* filePath, uint** data, int &width, int &height, const X2DSoundFormat format = UnknownSound);
-	int saveSound(const char* filePath, uint *data, const uint width, const uint height, const X2DSoundFormat format = UnknownSound);
-
-	// TODO: Add settings file reading/writing (.ini/.cfg)
-
+	xdFileSystem *m_fileSystem;
+	static xdAssetLoader *s_this;
 };
 
 #endif // X2D_ASSETLOADER_H
