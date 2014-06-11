@@ -14,8 +14,10 @@ SRCNAMES = \
   bstr.cpp \
   main.cpp \
   test_2func.cpp \
+  test_addon_contextmgr.cpp \
   test_addon_scriptarray.cpp \
   test_addon_scriptbuilder.cpp \
+  test_addon_scriptgrid.cpp \
   test_addon_scripthandle.cpp \
   test_addon_scriptmath.cpp \
   test_addon_serializer.cpp \
@@ -46,6 +48,7 @@ SRCNAMES = \
   test_custommem.cpp \
   test_debug.cpp \
   test_defaultarg.cpp \
+  test_namedargs.cpp \
   test_destructor.cpp \
   test_dict.cpp \
   test_discard.cpp \
@@ -65,6 +68,7 @@ SRCNAMES = \
   test_getset.cpp \
   test_implicitcast.cpp \
   test_implicithandle.cpp \
+  test_auto.cpp \
   test_import.cpp \
   test_import2.cpp \
   test_inheritance.cpp \
@@ -87,6 +91,7 @@ SRCNAMES = \
   test_parser.cpp \
   test_pointer.cpp \
   test_postprocess.cpp \
+  test_pow.cpp \
   test_refargument.cpp \
   test_refcast.cpp \
   test_returnstring.cpp \
@@ -108,6 +113,8 @@ SRCNAMES = \
   test_template.cpp \
   test_thiscall_asglobal.cpp \
   test_thiscall_class.cpp \
+  test_thiscall_as_method.cpp \
+  test_thiscall_as_method_config.cpp \
   test_typedef.cpp \
   test_unsaferef.cpp \
   test_vartype.cpp \
@@ -163,6 +170,7 @@ SRCNAMES = \
 
 OBJ = $(addprefix $(OBJDIR)/, $(notdir $(SRCNAMES:.cpp=.o))) \
   obj/scriptarray.o \
+  obj/scriptgrid.o \
   obj/scripthandle.o \
   obj/scripthelper.o \
   obj/scriptstdstring.o \
@@ -176,6 +184,7 @@ OBJ = $(addprefix $(OBJDIR)/, $(notdir $(SRCNAMES:.cpp=.o))) \
   obj/serializer.o \
   obj/debugger.o \
   obj/weakref.o \
+  obj/contextmgr.o \
 
 
 BIN = ../../bin/testgnuc
@@ -194,9 +203,12 @@ $(OBJDIR)/%.o: $(SRCDIR)/%.cpp
 obj/scriptarray.o: ../../../../add_on/scriptarray/scriptarray.cpp
 	$(CXX) $(CXXFLAGS) -o $@ -c $<
 
+obj/scriptgrid.o: ../../../../add_on/scriptgrid/scriptgrid.cpp
+	$(CXX) $(CXXFLAGS) -o $@ -c $<
+
 obj/scripthandle.o: ../../../../add_on/scripthandle/scripthandle.cpp
 	$(CXX) $(CXXFLAGS) -o $@ -c $<
-	
+
 obj/scripthelper.o: ../../../../add_on/scripthelper/scripthelper.cpp
 	$(CXX) $(CXXFLAGS) -o $@ -c $<
 
@@ -231,6 +243,9 @@ obj/debugger.o: ../../../../add_on/debugger/debugger.cpp
 	$(CXX) $(CXXFLAGS) -o $@ -c $<
 
 obj/weakref.o: ../../../../add_on/weakref/weakref.cpp
+	$(CXX) $(CXXFLAGS) -o $@ -c $<
+
+obj/contextmgr.o: ../../../../add_on/contextmgr/contextmgr.cpp
 	$(CXX) $(CXXFLAGS) -o $@ -c $<
 
 clean:

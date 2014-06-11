@@ -27,7 +27,7 @@ void FuncVoid()
 {
 }
 
-void FuncInt(int v)
+void FuncInt(int)
 {
 }
 
@@ -35,11 +35,8 @@ bool Test2();
 
 bool TestFuncOverload()
 {
-	if( strstr(asGetLibraryOptions(), "AS_MAX_PORTABILITY") )
-	{
-		printf("%s: Skipped due to AS_MAX_PORTABILITY\n", TESTNAME);
-		return false;
-	}
+	RET_ON_MAX_PORT
+
 
 	bool fail = Test2();
 	COutStream out;
@@ -77,7 +74,7 @@ bool TestFuncOverload()
 	if( bout.buffer != "TestFuncOverload (1, 1) : Info    : Compiling void ScriptFunc(void)\n"
                        "TestFuncOverload (1, 1) : Error   : Parameter type can't be 'void', because the type cannot be instanciated.\n" )
 	{
-		printf("%s", bout.buffer.c_str());
+		PRINTF("%s", bout.buffer.c_str());
 		TEST_FAILED;
 	}
 

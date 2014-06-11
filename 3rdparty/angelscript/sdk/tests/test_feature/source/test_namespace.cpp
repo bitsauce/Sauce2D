@@ -11,6 +11,24 @@ bool Test()
 	COutStream out;
 	CBufferedOutStream bout;
 
+	// The compiler should search parent namespaces for inherited classes
+	{
+		engine = asCreateScriptEngine(ANGELSCRIPT_VERSION);
+		engine->SetMessageCallback(asMETHOD(COutStream, Callback), &out, asCALL_THISCALL);
+
+		asIScriptModule *mod = engine->GetModule("test", asGM_ALWAYS_CREATE);
+		mod->AddScriptSection("test",
+			"class Parent {} \n"
+			"namespace child { \n"
+			"   class Child : Parent {} \n"
+			"} \n");
+		r = mod->Build();
+		if( r < 0 )
+			TEST_FAILED;
+
+		engine->Release();
+	}
+
 	// The compiler should search parent namespaces for matching global functions
 	{
 		engine = asCreateScriptEngine(ANGELSCRIPT_VERSION);
@@ -347,7 +365,7 @@ bool Test()
 			TEST_FAILED;
 		if( bout.buffer != "" )
 		{
-			printf("%s", bout.buffer.c_str());
+			PRINTF("%s", bout.buffer.c_str());
 			TEST_FAILED;
 		}
 
@@ -365,7 +383,7 @@ bool Test()
 			TEST_FAILED;
 		if( bout.buffer != "" )
 		{
-			printf("%s", bout.buffer.c_str());
+			PRINTF("%s", bout.buffer.c_str());
 			TEST_FAILED;
 		}
 
@@ -426,7 +444,7 @@ bool Test()
 		if( bout.buffer != "ExecuteString (1, 9) : Error   : 'A::VALUE' is not declared\n"
 		                   "ExecuteString (1, 28) : Warning : 'a' is not initialized.\n" )
 		{
-			printf("%s", bout.buffer.c_str());
+			PRINTF("%s", bout.buffer.c_str());
 			TEST_FAILED;
 		}
 
@@ -723,7 +741,7 @@ bool Test()
 		if( bout.buffer != "test (3, 1) : Info    : Compiling void test()\n"
 						   "test (8, 11) : Error   : 'foo2' is not declared\n" )
 		{
-			printf("%s", bout.buffer.c_str());
+			PRINTF("%s", bout.buffer.c_str());
 			TEST_FAILED;
 		}
 
@@ -758,7 +776,7 @@ bool Test()
 		if( bout.buffer != "test (3, 1) : Info    : Compiling void test()\n"
 						   "test (8, 11) : Error   : 'foo2' is not declared\n" )
 		{
-			printf("%s", bout.buffer.c_str());
+			PRINTF("%s", bout.buffer.c_str());
 			TEST_FAILED;
 		}
 
@@ -791,7 +809,7 @@ bool Test()
 
 		if( bout.buffer != "" )
 		{
-			printf("%s", bout.buffer.c_str());
+			PRINTF("%s", bout.buffer.c_str());
 			TEST_FAILED;
 		}
 

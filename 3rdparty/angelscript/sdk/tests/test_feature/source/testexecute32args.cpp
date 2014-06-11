@@ -250,20 +250,20 @@ bool TestExecute32Args()
 	if( !called ) 
 	{
 		// failure
-		printf("\n%s: cfunction not called from script\n\n", TESTNAME);
+		PRINTF("\n%s: cfunction not called from script\n\n", TESTNAME);
 		TEST_FAILED;
 	} 
 	else if( !testVal ) 
 	{
 		// failure
-		printf("\n%s: testVal is not of expected value. Got:\n\n", TESTNAME);
+		PRINTF("\n%s: testVal is not of expected value. Got:\n\n", TESTNAME);
 		for (int i = 0; i < 32; i++) 
-			printf("value %d: %d\n", i, values[i]);
+			PRINTF("value %d: %d\n", i, values[i]);
 		
 		TEST_FAILED;
 	}
 	
-	if( !strstr(asGetLibraryOptions(), "AS_MAX_PORTABILITY") )
+	SKIP_ON_MAX_PORT
 	{
 		called = false;
 		testVal = false;
@@ -280,15 +280,15 @@ bool TestExecute32Args()
 		if( !called ) 
 		{
 			// failure
-			printf("\n%s: cfunction not called from script\n\n", TESTNAME);
+			PRINTF("\n%s: cfunction not called from script\n\n", TESTNAME);
 			TEST_FAILED;
 		} 
 		else if( !testVal ) 
 		{
 			// failure
-			printf("\n%s: testVal is not of expected value. Got:\n\n", TESTNAME);
+			PRINTF("\n%s: testVal is not of expected value. Got:\n\n", TESTNAME);
 			for (int i = 0; i < 32; i++) 
-				printf("value %d: %f\n", i, fvalues[i]);
+				PRINTF("value %d: %f\n", i, fvalues[i]);
 		
 			TEST_FAILED;
 		}
@@ -308,15 +308,15 @@ bool TestExecute32Args()
 		if( !called ) 
 		{
 			// failure
-			printf("\n%s: cfunction not called from script\n\n", TESTNAME);
+			PRINTF("\n%s: cfunction not called from script\n\n", TESTNAME);
 			TEST_FAILED;
 		} 
 		else if( !testVal ) 
 		{
 			// failure
-			printf("\n%s: testVal is not of expected value. Got:\n\n", TESTNAME);
+			PRINTF("\n%s: testVal is not of expected value. Got:\n\n", TESTNAME);
 			for (int i = 0; i < 32; i++) 
-				printf("value %d: %f\n", i, dvalues[i]);
+				PRINTF("value %d: %f\n", i, dvalues[i]);
 		
 			TEST_FAILED;
 		}

@@ -22,7 +22,7 @@ public:
 	void AddRef() {refCount++;}
 	void Release() {refCount--; if( refCount == 0 ) delete this;}
 
-	void SetName(const std::string &text) {}
+	void SetName(const std::string &) {}
 
 	int refCount;
 };
@@ -54,12 +54,12 @@ void CVector2_Construct(int a, int b, CVector2 *o)
 
 int GUI;
 CGuiButton button;
-CGuiButton* Gui_AddButton(const std::string& text, const CVector2& pos, const CVector2& size, int *GUI)
+CGuiButton* Gui_AddButton(const std::string& , const CVector2& , const CVector2& , int *)
 {
 	return &button;
 }
 
-CGuiButton* Gui_GetButton(const std::string& text)
+CGuiButton* Gui_GetButton(const std::string& )
 {
 	return &button;
 }
@@ -67,11 +67,8 @@ CGuiButton* Gui_GetButton(const std::string& text)
 
 bool Test()
 {
-	if( strstr(asGetLibraryOptions(), "AS_MAX_PORTABILITY") )
-	{
-		printf("%s: Skipped due to AS_MAX_PORTABILITY\n", TESTNAME);
-		return false;
-	}
+	RET_ON_MAX_PORT
+
 	bool fail = false;
 	int r;
 	COutStream out;
@@ -102,7 +99,7 @@ bool Test()
 	if( r < 0 )
 	{
 		TEST_FAILED;
-		printf("%s: Failed to compile the script\n", TESTNAME);
+		PRINTF("%s: Failed to compile the script\n", TESTNAME);
 	}
 
 	r = ExecuteString(engine, "TestObject2()", mod);

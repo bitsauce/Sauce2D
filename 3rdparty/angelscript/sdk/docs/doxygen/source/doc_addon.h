@@ -26,6 +26,7 @@ This page gives a brief description of the add-ons that you'll find in the /sdk/
  - \subpage doc_addon_dict
  - \subpage doc_addon_file
  - \subpage doc_addon_math
+ - \subpage doc_addon_grid
 
 
  
@@ -166,8 +167,9 @@ user, but this can be easily overloaded by deriving from the <code>CDebugger</co
 the methods <code>TakeCommands</code> and <code>Output</code>. With this it is possible to implement a graphical 
 interface, or even remote debugging for an application.
 
-The application developer may also be interested in overriding the default <code>ToString</code> method
-to implement ways to visualize application registered types in an easier way.
+The application developer may also be interested in registering to-string callbacks for registered types
+with calls to <code>RegisterToStringCallback</code>. Optionally the <code>ToString</code> method in the 
+debugger can be overridden to implement custom to-string logic.
 
 \see The sample \ref doc_samples_asrun for a complete example of how to use the debugger
 
@@ -180,6 +182,10 @@ public:
   CDebugger();
   virtual ~CDebugger();
 
+  // Register callbacks to handle to-string conversions of application types
+  typedef std::string (*ToStringCallback)(void *obj, bool expandMembers, CDebugger *dbg);
+  virtual void RegisterToStringCallback(const asIObjectType *ot, ToStringCallback callback);
+  
   // User interaction
   virtual void TakeCommands(asIScriptContext *ctx);
   virtual void Output(const std::string &str);
@@ -213,7 +219,7 @@ CDebugger dbg;
 int ExecuteWithDebug(asIScriptContext *ctx)
 {
   // Tell the context to invoke the debugger's line callback
-  ctx->SetLineCallback(asMETHOD(CDebugger, LineCallback), dbg, asCALL_THISCALL);
+  ctx->SetLineCallback(asMETHOD(CDebugger, LineCallback), &dbg, asCALL_THISCALL);
 
   // Allow the user to initialize the debugging before moving on
   dbg.TakeCommands(ctx);
@@ -234,16 +240,17 @@ int ExecuteWithDebug(asIScriptContext *ctx)
 <b>Path:</b> /sdk/add_on/contextmgr/
 
 The <code>CContextMgr</code> is a class designed to aid the management of multiple simultaneous 
-scripts executing in parallel. It supports both \ref doc_adv_concurrent "concurrent script threads" and \ref doc_adv_coroutine "co-routines". 
+scripts executing in parallel. It supports both \ref doc_adv_concurrent "concurrent script threads" 
+and \ref doc_adv_coroutine "co-routines". 
 
 If the application doesn't need multiple contexts, i.e. all scripts that are executed 
 always complete before the next script is executed, then this class is not necessary.
 
 Multiple context managers can be used, for example when you have a group of scripts controlling 
-ingame objects, and another group of scripts controlling GUI elements, then each of these groups
+in-game objects, and another group of scripts controlling GUI elements, then each of these groups
 may be managed by different context managers.
 
-Observe, that the context manager class hasn't been designed for multithreading, so you need to
+Observe that the context manager class hasn't been designed for multi-threading, so you need to
 be careful if your application needs to execute scripts from multiple threads.
 
 \see The samples \ref doc_samples_concurrent and \ref doc_samples_corout for uses
@@ -260,16 +267,17 @@ public:
   // Set the function that the manager will use to obtain the time in milliseconds.
   void SetGetTimeCallback(TIMEFUNC_t func);
 
-  // Registers the script function
+  // Registers the following:
   //
   //  void sleep(uint milliseconds)
   //
   // The application must set the get time callback for this to work
   void RegisterThreadSupport(asIScriptEngine *engine);
 
-  // Registers the script functions
+  // Registers the following:
   //
-  //  void createCoRoutine(const string &in functionName, any @arg)
+  //  funcdef void coroutine(dictionary@)
+  //  void createCoRoutine(coroutine @func, dictionary @args)
   //  void yield()
   void RegisterCoRoutineSupport(asIScriptEngine *engine);
 
@@ -332,11 +340,14 @@ so a port from script to C++ and vice versa might be easier if STL names are use
 class CScriptArray
 {
 public:
-  // Constructor
-  CScriptArray(const CScriptArray &other);
-  CScriptArray(asUINT length, asIObjectType *ot);
-  CscriptArray(asUINT length, void *defaultValue, asIObjectType *ot);
-  virtual ~CScriptArray();
+  // Set the memory functions that should be used by all CScriptArrays
+  static void SetMemoryFunctions(asALLOCFUNC_t allocFunc, asFREEFUNC_t freeFunc);
+
+  // Factory functions
+  static CScriptArray *Create(asIObjectType *ot);
+  static CScriptArray *Create(asIObjectType *ot, asUINT length);
+  static CScriptArray *Create(asIObjectType *ot, asUINT length, void *defaultValue);
+  static CScriptArray *Create(asIObjectType *ot, void *listBuffer);
 
   // Memory management
   void AddRef() const;
@@ -363,8 +374,10 @@ public:
   void       *At(asUINT index);
   const void *At(asUINT index) const;
 
-  // Set value of an element. The value arg should be a pointer
-  // to the value that will be copied to the element
+  // Set value of an element. 
+  // The value arg should be a pointer to the value that will be copied to the element.
+  // Remember, if the array holds handles the value parameter should be the 
+  // address of the handle. The refCount of the object will also be incremented
   void  SetValue(asUINT index, void *value);
 
   // Copy the contents of one array to another (only if the types are the same)
@@ -379,12 +392,15 @@ public:
   void InsertLast(void *value);
   void RemoveLast();
   void SortAsc();
-  void SortAsc(asUINT index, asUINT count);
+  void SortAsc(asUINT startAt, asUINT count);
   void SortDesc();
-  void SortDesc(asUINT index, asUINT count);
+  void SortDesc(asUINT startAt, asUINT count);
+  void Sort(asUINT startAt, asUINT count, bool asc);
   void Reverse();
   int  Find(void *value) const;
-  int  Find(asUINT index, void *value) const;
+  int  Find(asUINT startAt, void *value) const;
+  int  FindByRef(void *ref) const;
+  int  FindByRef(asUINT startAt, void *ref) const;
 };
 \endcode
 
@@ -414,7 +430,7 @@ CScriptArray *CreateArrayOfStrings()
     asIObjectType* t = engine->GetObjectTypeById(engine->GetTypeIdByDecl("array<string>"));
 
     // Create an array with the initial size of 3 elements
-    CScriptArray* arr = new CScriptArray(3, t);
+    CScriptArray* arr = CScriptArray::Create(t, 3);
     for( asUINT i = 0; i < arr->GetSize(); i++ )
     {
       // Set the value of each element
@@ -428,6 +444,118 @@ CScriptArray *CreateArrayOfStrings()
   return 0;
 }
 \endcode
+
+
+
+
+
+
+
+
+
+
+
+
+\page doc_addon_grid grid template object
+
+<b>Path:</b> /sdk/add_on/scriptgrid/
+
+The <code>grid</code> type is a \ref doc_adv_template "template object" that allow the scripts to declare 2D grids of any type.
+In many ways it is similar to the \ref doc_addon_array, but it is specialized for use with areas.
+
+The type is registered with <code>RegisterScriptGrid(asIScriptEngine *engine)</code>. 
+
+\section doc_addon_grid_1 Public C++ interface
+
+\code
+class CScriptGrid
+{
+public:
+  // Set the memory functions that should be used by all CScriptGrids
+  static void SetMemoryFunctions(asALLOCFUNC_t allocFunc, asFREEFUNC_t freeFunc);
+
+  // Factory functions
+  static CScriptGrid *Create(asIObjectType *ot);
+  static CScriptGrid *Create(asIObjectType *ot, asUINT width, asUINT height);
+  static CScriptGrid *Create(asIObjectType *ot, asUINT width, asUINT height, void *defaultValue);
+  static CScriptGrid *Create(asIObjectType *ot, void *listBuffer);
+
+  // Memory management
+  void AddRef() const;
+  void Release() const;
+
+  // Type information
+  asIObjectType *GetGridObjectType() const;
+  int            GetGridTypeId() const;
+  int            GetElementTypeId() const;
+
+  // Size
+  asUINT GetWidth() const;
+  asUINT GetHeight() const;
+  void   Resize(asUINT width, asUINT height);
+  
+  // Get a pointer to an element. Returns 0 if out of bounds
+  void       *At(asUINT x, asUINT y);
+  const void *At(asUINT x, asUINT y) const;
+
+  // Set value of an element. 
+  // The value arg should be a pointer to the value that will be copied to the element.
+  // Remember, if the grid holds handles the value parameter should be the 
+  // address of the handle. The refCount of the object will also be incremented
+  void  SetValue(asUINT x, asUINT y, void *value);
+};
+\endcode
+
+\section doc_addon_grid_2 Public script interface
+
+<pre>
+  class grid<T>
+  {
+    grid();
+    grid(uint width, uint height);
+    grid(uint width, uint height, const T &in fillValue);
+  
+    uint width() const;
+    uint height() const;
+    void resize(uint w, uint h);
+    
+    T &opIndex(uint, uint);
+    const T &opIndex(uint, uint) const;
+  }
+</pre>
+
+\section doc_addon_grid_3 Example usage in script
+
+<pre>
+  // Initialize a 5x5 map
+  grid<int> map = {{1,0,1,1,1},
+                   {0,0,1,0,0},
+                   {0,1,1,0,1},
+                   {0,1,1,0,1},
+                   {0,0,0,0,1}};
+   
+  // A function to verify if the next area is walkable
+  bool canWalk(uint x, uint y)
+  {
+    // If the map in the destination is 
+    // clear, it is possible to wark there
+    return map[x,y] == 0;
+  }
+</pre>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -560,7 +688,7 @@ public:
   CScriptHandle &operator=(const CScriptHandle &other);
   
   // Set the reference
-  void Set(void *ref, int typeId);
+  void Set(void *ref, asIObjectType *type);
 
   // Compare equalness
   bool operator==(const CScriptHandle &o) const;
@@ -571,32 +699,14 @@ public:
   void Cast(void **outRef, int typeId);
 
   // Returns the type of the reference held
-  asIObjectType *GetType();
+  asIObjectType *GetType() const;
+  int            GetTypeId() const;
 };
 \endcode
 
-\section doc_addon_handle_3 Example usage in script
+\section doc_addon_handle_3 Public script interface
 
-In the scripts it can be used as follows:
-
-<pre>
-  ref\@ unknown;
-
-  // Store a handle in the ref variable
-  object obj;
-  \@unknown = \@obj;
-
-  // Compare equalness
-  if( unknown != null ) 
-  {
-    // Dynamically cast the handle to wanted type
-    object \@obj2 = cast<object>(unknown);
-    if( obj2 != null )
-    {
-      ...
-    }
-  }
-</pre>
+\see \ref doc_datatypes_ref "ref in the script language"
 
 \section doc_addon_handle_4 Example usage from C++
 
@@ -619,6 +729,18 @@ void Register(asIScriptEngine *engine)
   r = engine->RegisterGlobalFunction("void Function(ref @)", asFUNCTION(Function), asCALL_CDECL); assert( r >= 0 );
 }
 \endcode
+
+To set an object pointer in the handle from the application, you'll use the 
+Set() method passing a pointer to the object and the type of the object.
+
+To retrieve an object pointer from the application you'll use the Cast() method
+passing in a pointer to the pointer and the wanted type id. If the type id given
+doesn't match the stored handle the returned pointer will be null.
+
+To retrieve an object of an unknown type use the GetType() or GetTypeId() to
+determine the type stored in the handle, then use the Cast() method.
+
+
 
 
 
@@ -764,29 +886,34 @@ so a port from script to C++ and vice versa might be easier if STL names are use
 class CScriptDictionary
 {
 public:
-  // Memory management
-  CScriptDictionary(asIScriptEngine *engine);
+  // Factory functions
+  static CScriptDictionary *Create(asIScriptEngine *engine);
+
+  // Reference counting
   void AddRef() const;
   void Release() const;
 
   // Perform a shallow copy of the other dictionary
   CScriptDictionary &operator=(const CScriptDictionary &other);
 
-  // Sets/Gets a variable type value for a key
+  // Sets a key/value pair
   void Set(const std::string &key, void *value, int typeId);
-  bool Get(const std::string &key, void *value, int typeId) const;
-
-  // Sets/Gets an integer number value for a key
   void Set(const std::string &key, asINT64 &value);
-  bool Get(const std::string &key, asINT64 &value) const;
-
-  // Sets/Gets a real number value for a key
   void Set(const std::string &key, double &value);
+
+  // Gets the stored value. Returns false if the value isn't compatible with informed type  
+  bool Get(const std::string &key, void *value, int typeId) const;
+  bool Get(const std::string &key, asINT64 &value) const;
   bool Get(const std::string &key, double &value) const;
 
-  // Get an array of all keys
-  CScriptArray *GetKeys() const;
+  // Index accessors. If the dictionary is not const it inserts the value if it doesn't already exist
+  // If the dictionary is const then a script exception is set if it doesn't exist and a null pointer is returned
+  CScriptDictValue *operator[](const std::string &key);
+  const CScriptDictValue *operator[](const std::string &key) const;
   
+  // Returns the type id of the stored value, or negative if it doesn't exist
+  int  GetTypeId(const std::string &key) const;
+
   // Returns true if the key is set
   bool Exists(const std::string &key) const;
   
@@ -801,55 +928,38 @@ public:
   
   // Deletes all keys
   void DeleteAll();
+
+  // Get an array of all keys
+  CScriptArray *GetKeys() const;
+
+  // STL style iterator
+  class CIterator
+  {
+  public:
+    void operator++();    // Pre-increment
+    void operator++(int); // Post-increment
+
+    bool operator==(const CIterator &other) const;
+    bool operator!=(const CIterator &other) const;
+
+    // Accessors
+    const std::string &GetKey() const;
+    int                GetTypeId() const;
+    bool               GetValue(asINT64 &value) const;
+    bool               GetValue(double &value) const;
+    bool               GetValue(void *value, int typeId) const;
+  };
+  
+  CIterator begin() const;
+  CIterator end() const;
 };
 \endcode
 
 \section doc_addon_dict_2 Public script interface
 
-<pre>
-  class dictionary
-  {
-    dictionary &opAssign(const dictionary &in other);
+\see \ref doc_datatypes_dictionary "Dictionaries in the script language"
 
-    void set(const string &in key, ? &in value);
-    bool get(const string &in key, ? &out value) const;
-    
-    void set(const string &in key, int64 &in value);
-    bool get(const string &in key, int64 &out value) const;
-    
-    void set(const string &in key, double &in value);
-    bool get(const string &in key, double &out value) const;
 
-    array<string> \@getKeys() const;    
-
-    bool exists(const string &in key) const;
-    void delete(const string &in key);
-    void deleteAll();
-    bool isEmpty() const;
-    uint getSize() const;
-  }
-</pre>
-
-\section doc_addon_dict_3 Script example
-
-<pre>
-  obj object;
-  obj \@handle;
-  dictionary dict = ({'one', 1}, {'object', object}, {'handle', \@handle}};
-  
-  if( dict.exists('one') )
-  {
-    bool found = dict.get('handle', \@handle);
-    if( found )
-    {
-      dict.delete('object');
-    }
-  }
-  
-  dict.set('newvalue', 42);
-  
-  dict.deleteAll();
-</pre>
 
 
 
@@ -1027,6 +1137,10 @@ represents a complex number, i.e. a number with real and imaginary parts.
   
   // Returns the fraction
   float fraction(float val);
+
+  // Approximate float comparison, to deal with numeric imprecision
+  bool closeTo(float a, float b, float epsilon = 0.00001f);
+  bool closeTo(double a, double b, double epsilon = 0.0000000001);
   
   // Conversion between floating point and IEEE 754 representations
   float  fpFromIEEE(uint raw); 
@@ -1386,6 +1500,8 @@ int ExecuteString(asIScriptEngine *engine, const char *code, void *ret, int retT
 // application interface has been fully registered. This way you will not have to create the configuration
 // file manually.
 int WriteConfigToFile(asIScriptEngine *engine, const char *filename);
+
+\todo WriteConfigToStream, ConfigEngineFromStream
 
 // Print information on script exception to the standard output.
 // Whenever the asIScriptContext::Execute method returns asEXECUTION_EXCEPTION, the application 

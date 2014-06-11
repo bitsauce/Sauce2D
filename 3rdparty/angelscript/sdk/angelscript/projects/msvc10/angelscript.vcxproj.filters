@@ -129,9 +129,6 @@
     <ClCompile Include="..\..\source\as_callfunc_xenon.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\source\as_callfunc_arm_android.S">
-      <Filter>Source Files</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\include\angelscript.h">

@@ -82,11 +82,7 @@ static const char *script =
 
 bool Test()
 {
-	if( strstr(asGetLibraryOptions(), "AS_MAX_PORTABILITY") )
-	{
-		printf("%s: This test has not been adapted for AS_MAX_PORTABILITY\n", TESTNAME);
-		return false;
-	}
+	RET_ON_MAX_PORT
 
 	bool fail = false;
 	int r;
@@ -109,7 +105,7 @@ bool Test()
 	r = mod->Build();
 	if( r < 0 )
 	{
-		printf("%s: Failed to build\n", TESTNAME);
+		PRINTF("%s: Failed to build\n", TESTNAME);
 		TEST_FAILED;
 	}
 	else

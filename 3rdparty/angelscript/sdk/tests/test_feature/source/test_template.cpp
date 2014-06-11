@@ -54,12 +54,12 @@ public:
 		return name;
 	}
 
-	MyTmpl &Assign(const MyTmpl &other)
+	MyTmpl &Assign(const MyTmpl &)
 	{
 		return *this;
 	}
 
-	void SetVal(void *val)
+	void SetVal(void *)
 	{
 	}
 
@@ -109,12 +109,12 @@ public:
 		return "MyTmpl<float>";
 	}
 
-	MyTmpl_float &Assign(const MyTmpl_float &other)
+	MyTmpl_float &Assign(const MyTmpl_float &)
 	{
 		return *this;
 	}
 
-	void SetVal(float &val)
+	void SetVal(float &)
 	{
 	}
 
@@ -166,11 +166,7 @@ MyDualTmpl *MyDualTmpl_factory(asIObjectType *type)
 
 bool Test()
 {
-	if( strstr(asGetLibraryOptions(), "AS_MAX_PORTABILITY") )
-	{
-		printf("Skipped due to max portability\n");
-		return false;
-	}
+	RET_ON_MAX_PORT
 
 	bool fail = false;
 	int r;
@@ -190,7 +186,7 @@ bool Test()
 		if( bout.buffer != " (0, 0) : Error   : First parameter to template factory must be a reference. This will be used to pass the object type of the template\n"
 						   " (0, 0) : Error   : Failed in call to function 'RegisterObjectBehaviour' with 'Tmpl1' and 'Tmpl1<T> @f()' (Code: -10)\n" )
 		{
-			printf("%s", bout.buffer.c_str());
+			PRINTF("%s", bout.buffer.c_str());
 			TEST_FAILED;
 		}
 
@@ -222,7 +218,7 @@ bool Test()
 		if( bout.buffer != "test (2, 1) : Info    : Compiling void func()\n"
 		                   "test (3, 10) : Error   : Template subtype must not be read-only\n" )
 		{
-			printf("%s", bout.buffer.c_str());
+			PRINTF("%s", bout.buffer.c_str());
 			TEST_FAILED;
 		}
 
@@ -329,7 +325,7 @@ bool Test()
 
 		if( bout.buffer != "" )
 		{
-			printf("%s", bout.buffer.c_str());
+			PRINTF("%s", bout.buffer.c_str());
 			TEST_FAILED;
 		}
 
@@ -341,7 +337,7 @@ bool Test()
 
 		if( bout.buffer != "" )
 		{
-			printf("%s", bout.buffer.c_str());
+			PRINTF("%s", bout.buffer.c_str());
 			TEST_FAILED;
 		}
 
@@ -357,8 +353,11 @@ bool Test()
 		asIScriptFunction *func = type->GetMethodByName("func");
 		if( func->GetReturnTypeId() != asTYPEID_FLOAT )
 			TEST_FAILED;
-		if( func->GetParamTypeId(0) != asTYPEID_BOOL ||
-			func->GetParamTypeId(1) != asTYPEID_INT32 )
+		int t0, t1;
+		func->GetParam(0, &t0);
+		func->GetParam(1, &t1);
+		if( t0 != asTYPEID_BOOL ||
+			t1 != asTYPEID_INT32 )
 			TEST_FAILED;
 
 		engine->Release();
@@ -377,7 +376,7 @@ bool Test()
 
 		if( bout.buffer != "" )
 		{
-			printf("%s", bout.buffer.c_str());
+			PRINTF("%s", bout.buffer.c_str());
 			TEST_FAILED;
 		}
 
@@ -401,7 +400,7 @@ bool Test()
 		if( bout.buffer != "test (1, 1) : Error   : Template 'tmpl' expects 1 sub type(s)\n"
 		                   "test (2, 1) : Error   : Template 'tmpl' expects 1 sub type(s)\n" )
 		{
-			printf("%s", bout.buffer.c_str());
+			PRINTF("%s", bout.buffer.c_str());
 			TEST_FAILED;
 		}
 
@@ -434,7 +433,7 @@ bool Test()
 
 		if( bout.buffer != "" )
 		{
-			printf("%s", bout.buffer.c_str());
+			PRINTF("%s", bout.buffer.c_str());
 			TEST_FAILED;
 		}
 
@@ -472,7 +471,7 @@ bool Test()
 						   "test (6, 4) : Error   : Type 'int' doesn't support the indexing operator\n"
 						   "test (8, 8) : Error   : Reference is read-only\n" )
 		{
-			printf("%s", bout.buffer.c_str());
+			PRINTF("%s", bout.buffer.c_str());
 			TEST_FAILED;
 		}
 
@@ -488,7 +487,7 @@ bool Test()
 	r = engine->RegisterObjectType("MyTmpl<class T>", 0, asOBJ_REF | asOBJ_TEMPLATE);
 	if( r == asNOT_SUPPORTED )
 	{
-		printf("Skipping template test because it is not yet supported\n");
+		PRINTF("Skipping template test because it is not yet supported\n");
 		engine->Release();
 		return false;	
 	}
@@ -616,37 +615,37 @@ bool Test()
 
 		if( bout.buffer != "ExecuteString (1, 8) : Error   : Can't instanciate template 'MyTmpl' with subtype 'int'\n" )
 		{
-			printf("%s", bout.buffer.c_str());
+			PRINTF("%s", bout.buffer.c_str());
 			TEST_FAILED;
 		}
 
 		engine->Release();
 	}
 
-	// Test that a template registered to take subtype by value cannot be instanciated for reference types
+	// Test that a template registered to take subtype by value isn't supported
 	{
 		bout.buffer = "";
 		engine = asCreateScriptEngine(ANGELSCRIPT_VERSION);
 		engine->SetMessageCallback(asMETHOD(CBufferedOutStream,Callback), &bout, asCALL_THISCALL);
-		RegisterScriptString(engine);
 
 		r = engine->RegisterObjectType("MyTmpl<class T>", 0, asOBJ_REF | asOBJ_TEMPLATE); assert( r >= 0 );
 		r = engine->RegisterObjectBehaviour("MyTmpl<T>", asBEHAVE_FACTORY, "MyTmpl<T> @f(int &in)", asFUNCTIONPR(MyTmpl_factory, (asIObjectType*), MyTmpl*), asCALL_CDECL); assert( r >= 0 );
 		r = engine->RegisterObjectBehaviour("MyTmpl<T>", asBEHAVE_ADDREF, "void f()", asMETHOD(MyTmpl, AddRef), asCALL_THISCALL); assert( r >= 0 );
 		r = engine->RegisterObjectBehaviour("MyTmpl<T>", asBEHAVE_RELEASE, "void f()", asMETHOD(MyTmpl, Release), asCALL_THISCALL); assert( r >= 0 );
 
-		// This method makes it impossible to instanciate the template for reference types
-		r = engine->RegisterObjectMethod("MyTmpl<T>", "void SetVal(T)", asFUNCTION(0), asCALL_GENERIC); assert( r >= 0 );
-		
-		r = ExecuteString(engine, "MyTmpl<string> t;");
+		// This method is not supported. The subtype must not be passed by value since it would impact the ABI
+		r = engine->RegisterObjectMethod("MyTmpl<T>", "void SetVal(T)", asFUNCTION(0), asCALL_GENERIC);
 		if( r >= 0 )
-		{
 			TEST_FAILED;
-		}
+		
+		r = engine->RegisterObjectMethod("MyTmpl<T>", "T GetVal()", asFUNCTION(0), asCALL_GENERIC);
+		if( r >= 0 )
+			TEST_FAILED;
 
-		if( bout.buffer != "ExecuteString (1, 8) : Error   : Can't instanciate template 'MyTmpl' with subtype 'string'\n" )
+		if( bout.buffer != " (0, 0) : Error   : Failed in call to function 'RegisterObjectMethod' with 'MyTmpl' and 'void SetVal(T)' (Code: -7)\n"
+		                   " (0, 0) : Error   : Failed in call to function 'RegisterObjectMethod' with 'MyTmpl' and 'T GetVal()' (Code: -7)\n" )
 		{
-			printf("%s", bout.buffer.c_str());
+			PRINTF("%s", bout.buffer.c_str());
 			TEST_FAILED;
 		}
 
@@ -713,10 +712,10 @@ bool Test()
 		if( bout.buffer != "mod (1, 7) : Info    : Compiling T::T()\n"
 		                   "mod (1, 23) : Error   : No default constructor for object of type 'MyTmpl'.\n"
 						   "mod (2, 26) : Info    : Compiling S::S()\n"
-		                   "mod (2, 34) : Error   : There is no copy operator for the type 'MyTmpl' available.\n"
+		                   "mod (2, 34) : Error   : No appropriate opAssign method found in 'MyTmpl'\n"
 						   "mod (2, 23) : Error   : No default constructor for object of type 'MyTmpl'.\n" )
 		{
-			printf("%s", bout.buffer.c_str());
+			PRINTF("%s", bout.buffer.c_str());
 			TEST_FAILED;
 		}
 
@@ -726,7 +725,7 @@ bool Test()
 			TEST_FAILED;
 		if( bout.buffer != "ExecuteString (1, 13) : Error   : No default constructor for object of type 'MyTmpl'.\n" )
 		{
-			printf("%s", bout.buffer.c_str());
+			PRINTF("%s", bout.buffer.c_str());
 			TEST_FAILED;
 		}
 

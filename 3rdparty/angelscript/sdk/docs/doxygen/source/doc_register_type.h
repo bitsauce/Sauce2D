@@ -46,7 +46,7 @@ r = engine->RegisterObjectType("ref", 0, asOBJ_REF); assert( r >= 0 );
 
 \section doc_reg_basicref_1 Factory function
 
-The factory function is the one that AngelScript will use to instanciate
+The factory function is the one that AngelScript will use to instantiate
 objects of this type when a variable is declared. It is responsible for
 allocating and initializing the object memory.
 
@@ -123,13 +123,13 @@ Without the addref and release behaviours the application must be careful to not
 objects that may potentially still be referenced by the script engine, e.g. in a global variable,
 or other location.
 
-Unless the objects are guaranteed to stay alive as long as the script engine is instanciated, you
+Unless the objects are guaranteed to stay alive as long as the script engine is instantiated, you
 may want to consider disabling global variables with engine property \ref asEP_DISALLOW_GLOBAL_VARS. 
 This will make it much easier for the application to know where references to the objects are kept.
 An alternative to disabling all global variables, is to selectively disallow only the global variables,
 that can eventually store a reference to the object type. This can be done by 
 \ref asIScriptModule::GetGlobalVarCount "enumerating the compiled global variables" after script has
-been built and giving an error to the user incase he includes a variable he shouldn't. 
+been built and giving an error to the user in case he includes a variable he shouldn't. 
 
 
 
@@ -144,12 +144,13 @@ to create and initialize the object.
 
 In order for the script engine to know what information must be placed in the buffer the
 application must provide the list pattern when registering the list factory. The list pattern
-is declared with a special syntax involving datatypes and the following tokens: {, }, ?, and repeat.
+is declared with a special syntax involving datatypes and the following tokens: {, }, ?, repeat, and repeat_same.
 
 The tokens { } are used to declare that the list pattern expects a list of values or a sublist of values. 
-The repeat token is used to signal that the next type or sub list can be repeated 0 or more times. Any
-data type can be used in the list pattern, as long as it can be passed by value. When a variable type
-is desired the token ? can be used.
+The repeat token is used to signal that the next type or sub list can be repeated 0 or more times. 
+The repeat_same token is similar to repeat except that it also tells the compiler that every time the same
+list is repeated it should have the same length. Any data type can be used in the list pattern, as long 
+as it can be passed by value. When a variable type is desired the token ? can be used.
 
 Here's a couple of examples for registering list factories with list patterns:
 
@@ -161,6 +162,10 @@ engine->RegisterObjectBehaviour("intarray", asBEHAVE_LIST_FACTORY,
 // The dictionary type can be initialized with: dictionary d = {{'a',1}, {'b',2}, {'c',3}};
 engine->RegisterObjectBehaviour("dictionary", asBEHAVE_LIST_FACTORY, 
   "dictionary @f(int &in) {repeat {string, ?}}", ...);
+  
+// The grid type can be initialized with: grid a = {{1,2},{3,4}};
+engine->RgisterObjectBehaviour("grid", asBEHAVE_LIST_FACTORY,
+  "grid @f(int &in) {repeat {repeat_same int}}", ...);
 \endcode
 
 The list buffer passed to the factory function will be populated using the following rules:
@@ -181,9 +186,9 @@ The list buffer passed to the factory function will be populated using the follo
 
 
 
-\section doc_reg_noinst Registering an uninstanciable reference type
+\section doc_reg_noinst Registering an uninstantiable reference type
 
-Sometimes it may be useful to register types that cannot be instanciated by
+Sometimes it may be useful to register types that cannot be instantiated by
 the scripts, yet can be interacted with. You can do this by registering the
 type as a normal reference type, but omit the registration of the factory
 behaviour. You can later register global properties, or functions that allow the
@@ -264,7 +269,7 @@ the wrapper with AngelScript, which is sure to result in unexpected behaviours.
 Note that you may need to include the &lt;new&gt; header to declare the placement new operator that is used 
 to initialize a preallocated memory block.
 
-See also \ref doc_reg_val_3.
+\see \ref doc_reg_val_3.
 
 
 
@@ -285,6 +290,7 @@ There are a few different flags:
 <tr><td>\ref asOBJ_APP_CLASS_COPY_CONSTRUCTOR &nbsp; </td><td>The C++ type has a copy constructor</td></tr>
 <tr><td>\ref asOBJ_APP_PRIMITIVE              &nbsp; </td><td>The C++ type is a C++ primitive, but not a float or double</td></tr>
 <tr><td>\ref asOBJ_APP_FLOAT                  &nbsp; </td><td>The C++ type is a float or double</td></tr>
+<tr><td>\ref asOBJ_APP_ARRAY                  &nbsp; </td><td>The C++ type is an array</td></tr>
 </table>
 
 Note that these don't represent how the type will behave in the script language, only what the real type is in the host 
@@ -331,7 +337,7 @@ if all members are integers, or it should be treated as if all members are float
 <tr><td>\ref asOBJ_APP_CLASS_ALIGN8    &nbsp; </td><td>The C++ class contains members that may require 8byte alignment, e.g. a double.</td></tr>
 </table>
 
-It is difficult to explain when one or the other should be used as it requires indepth knowledge of the ABI for the 
+It is difficult to explain when one or the other should be used as it requires in-depth knowledge of the ABI for the 
 respective system, so if you find that you really need to use these flags, make sure you perform adequate testing 
 to guarantee that your functions are called correctly by the script engine. If neither of these flags work, and you're 
 not able to change the class to work without them, then the only other option is to use the generic calling convention,
@@ -366,7 +372,7 @@ engine->RegisterObjectBehaviour("vector3", asBEHAVE_LIST_CONSTRUCT, "void f(int 
 In order for AngelScript to know how to work with the application registered types, it is 
 necessary to register some behaviours, for example for memory management.
 
-The memory management behaviours are described with the registeration of registering 
+The memory management behaviours are described with the registration of 
 \ref doc_reg_basicref "reference types" and \ref doc_register_val_type "value types".
 
 Other advanced behaviours are described with the \ref doc_advanced_api "advanced types".
@@ -435,6 +441,10 @@ returns a reference or an object handle make sure it points to a new value and n
 The object constructors and factories also serve as alternative explicit value cast operators, so if a constructor or factory is already available
 then there is no need to register the explicit value cast operator. 
 
+The value cast behaviour can also be registered with the generic form "void f(?&out)" to support casts to any
+type. This is most useful for generic containers, e.g. variants or the dictionary.
+
+\see \ref doc_addon_dict
 
 
 

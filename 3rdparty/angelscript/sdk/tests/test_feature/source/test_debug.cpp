@@ -112,7 +112,7 @@ void print(const char *format, ...)
 
 void PrintVariables(asIScriptContext *ctx, asUINT stackLevel);
 
-void LineCallback(asIScriptContext *ctx, void *param)
+void LineCallback(asIScriptContext *ctx, void * /*param*/)
 {
 	if( ctx->GetState() != asEXECUTION_ACTIVE )
 		return;
@@ -165,9 +165,8 @@ void PrintVariables(asIScriptContext *ctx, asUINT stackLevel)
 	}
 }
 
-void ExceptionCallback(asIScriptContext *ctx, void *param)
+void ExceptionCallback(asIScriptContext *ctx, void * /*param*/)
 {
-	asIScriptEngine *engine = ctx->GetEngine();
 	const asIScriptFunction *function = ctx->GetExceptionFunction();
 	print("--- exception ---\n");
 	print("desc: %s\n", ctx->GetExceptionString());
@@ -200,7 +199,7 @@ void *TestLineNumber()
 {
     asIScriptContext *ctx = asGetActiveContext();
     const char *script_section;
-    int line = ctx->GetLineNumber(0, 0, &script_section);
+    /*int line =*/ ctx->GetLineNumber(0, 0, &script_section);
 	assert( std::string(script_section) == "a" );
     return 0;
 }
@@ -231,7 +230,7 @@ bool Test()
 
 		if( bout.buffer != "" )
 		{
-			printf("%s", bout.buffer.c_str());
+			PRINTF("%s", bout.buffer.c_str());
 			TEST_FAILED;
 		}
 
@@ -317,9 +316,9 @@ bool Test()
 		engine->Release();
 	}
 
-#ifndef AS_MAX_PORTABILITY
     // Test crash in GetLineNumber
     // http://www.gamedev.net/topic/638656-crash-in-ctx-getlinenumber/
+	SKIP_ON_MAX_PORT
     {
         asIScriptEngine *engine = asCreateScriptEngine(ANGELSCRIPT_VERSION);
         engine->RegisterInterface("foo");
@@ -355,7 +354,6 @@ bool Test()
 
         engine->Release();
     }
-#endif
 
 	int number = 0;
 
@@ -406,7 +404,7 @@ bool Test()
 	if( printBuffer != correct )
 	{
 		TEST_FAILED;
-		printf("%s", printBuffer.c_str());
+		PRINTF("%s", printBuffer.c_str());
 	}
 
 	// Success
@@ -437,8 +435,7 @@ void DebugCall()
 
 bool Test2()
 {
-	if( strstr(asGetLibraryOptions(), "AS_MAX_PORTABILITY") )
-		return false;
+	RET_ON_MAX_PORT
 
 	bool fail = false;
 	COutStream out;

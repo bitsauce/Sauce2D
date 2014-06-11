@@ -12,12 +12,12 @@ static const char * const TESTNAME = "TestStdVector";
 
 static void print(std::string &str)
 {
-	printf("%s", str.c_str());
+	PRINTF("%s", str.c_str());
 }
 
 static void print(int num)
 {
-	printf("%d", num);
+	PRINTF("%d", num);
 }
 
 static const char *script1 =
@@ -127,11 +127,7 @@ void MyClass_Destruct(MyClass *o)
 
 bool Test()
 {
-	if( strstr(asGetLibraryOptions(), "AS_MAX_PORTABILITY") )
-	{
-		printf("%s: Skipped due to AS_MAX_PORTABILITY\n", TESTNAME);
-		return false;
-	}
+	RET_ON_MAX_PORT
 
 	CBufferedOutStream bout;
 	bool fail = false;
@@ -149,7 +145,7 @@ bool Test()
 #else
 	// There is something going wrong when registering the following.
 	// It looks like it is a linker problem, but I can't be sure.
-	printf("%s: MSVC6 can't register vector< vector<int> >\n", TESTNAME);
+	PRINTF("%s: MSVC6 can't register vector< vector<int> >\n", TESTNAME);
 
 	// It seems that MSVC isn't able to differ between the template instances,
 	// when registering the different array overloads, all function pointers 
@@ -195,7 +191,7 @@ bool Test()
 
 		if( bout.buffer != "" )
 		{
-			printf("%s", bout.buffer.c_str());
+			PRINTF("%s", bout.buffer.c_str());
 			TEST_FAILED;
 		}
 	}
@@ -206,14 +202,14 @@ bool Test()
 	if( r < 0 )
 	{
 		TEST_FAILED;
-		printf("%s: Failed to compile the script\n", TESTNAME);
+		PRINTF("%s: Failed to compile the script\n", TESTNAME);
 	}
 
 	asIScriptContext *ctx = engine->CreateContext();
 	r = ExecuteString(engine, "Test()", mod, ctx);
 	if( r != asEXECUTION_FINISHED )
 	{
-		printf("%s: Failed to execute script\n", TESTNAME);
+		PRINTF("%s: Failed to execute script\n", TESTNAME);
 
 		if( r == asEXECUTION_EXCEPTION )
 			PrintException(ctx);
@@ -229,14 +225,14 @@ bool Test()
 	if( r < 0 )
 	{
 		TEST_FAILED;
-		printf("%s: Failed to compile the script\n", TESTNAME);
+		PRINTF("%s: Failed to compile the script\n", TESTNAME);
 	}
 
 	ctx = engine->CreateContext();
 	r = ExecuteString(engine, "Test()", mod, ctx);
 	if( r != asEXECUTION_FINISHED )
 	{
-		printf("%s: Failed to execute script\n", TESTNAME);
+		PRINTF("%s: Failed to execute script\n", TESTNAME);
 
 		if( r == asEXECUTION_EXCEPTION )
 			PrintException(ctx);
@@ -252,7 +248,7 @@ bool Test()
 	if( r < 0 )
 	{
 		TEST_FAILED;
-		printf("%s: Failed to compile the script\n", TESTNAME);
+		PRINTF("%s: Failed to compile the script\n", TESTNAME);
 	}
 
 	ctx = engine->CreateContext();

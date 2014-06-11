@@ -57,6 +57,7 @@
     <ClInclude Include="..\..\source\gfx\viewport.h" />
     <ClInclude Include="..\..\source\scripts\scriptarray.h" />
     <ClInclude Include="..\..\source\scripts\scriptbuilder.h" />
+    <ClInclude Include="..\..\source\scripts\scriptgrid.h" />
     <ClInclude Include="..\..\source\scripts\scripthelper.h" />
     <ClInclude Include="..\..\source\scripts\scriptstdstring.h" />
   </ItemGroup>
@@ -93,6 +94,7 @@
     <ClCompile Include="..\..\source\math\vector.cpp" />
     <ClCompile Include="..\..\source\scripts\scriptarray.cpp" />
     <ClCompile Include="..\..\source\scripts\scriptbuilder.cpp" />
+    <ClCompile Include="..\..\source\scripts\scriptgrid.cpp" />
     <ClCompile Include="..\..\source\scripts\scripthelper.cpp" />
     <ClCompile Include="..\..\source\scripts\scriptstdstring.cpp" />
     <ClCompile Include="..\..\source\scripts\scriptstdstring_utils.cpp" />

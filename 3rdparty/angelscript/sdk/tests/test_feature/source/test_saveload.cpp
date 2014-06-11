@@ -227,7 +227,7 @@ void TestScripts(asIScriptEngine *engine)
 	asIScriptFunction *func = mod->GetFunctionByDecl("void TestHandle(A @)");
 	if( func == 0 ) 
 	{
-		printf("%s: Failed to identify function with handle\n", TESTNAME);
+		PRINTF("%s: Failed to identify function with handle\n", TESTNAME);
 		TEST_FAILED;
 	}
 
@@ -235,7 +235,7 @@ void TestScripts(asIScriptEngine *engine)
 
 	if( number != 1234567890 )
 	{
-		printf("%s: Failed to set the number as expected\n", TESTNAME);
+		PRINTF("%s: Failed to set the number as expected\n", TESTNAME);
 		TEST_FAILED;
 	}
 
@@ -262,7 +262,7 @@ void TestScripts(asIScriptEngine *engine)
 
 	if( number != 1241 )
 	{
-		printf("%s: Interface method failed\n", TESTNAME);
+		PRINTF("%s: Interface method failed\n", TESTNAME);
 		TEST_FAILED;
 	}
 }
@@ -306,7 +306,7 @@ void DummyRelease(asIScriptGeneric *gen)
 		delete object;
 }
 
-void Dummy(asIScriptGeneric *gen)
+void Dummy(asIScriptGeneric *)
 {
 }
 
@@ -326,7 +326,7 @@ public:
 	void AddRef() {refCount++;}
 	void Release() {if( --refCount == 0 ) delete this;}
 	static Tmpl *TmplFactory(asIObjectType*) {return new Tmpl;}
-	static bool TmplCallback(asIObjectType *ot, bool &dontGC) {return false;}
+	static bool TmplCallback(asIObjectType * /*ot*/, bool & /*dontGC*/) {return false;}
 	int refCount;
 };
 
@@ -338,7 +338,178 @@ bool Test()
 	COutStream out;
 	asIScriptEngine* engine;
 	asIScriptModule* mod;
-	
+
+	// Test saving and loading script with string literal
+	{
+		// Write the configuration to stream
+		asIScriptEngine *engine = asCreateScriptEngine(ANGELSCRIPT_VERSION);
+		engine->SetMessageCallback(asMETHOD(COutStream, Callback), &out, asCALL_THISCALL);
+		RegisterStdString(engine);
+		stringstream strm;
+		WriteConfigToStream(engine, strm);
+		engine->Release();
+
+		// Configure engine from stream and compile the script to bytecode
+		strm.seekp(0);
+		engine = asCreateScriptEngine(ANGELSCRIPT_VERSION);
+		engine->SetMessageCallback(asMETHOD(COutStream, Callback), &out, asCALL_THISCALL);
+		ConfigEngineFromStream(engine, strm);
+
+		const char *script = 
+			"void func() { \n"
+			"  'test'; \n"
+			"  return; \n"
+			"} \n";
+
+		mod = engine->GetModule("mod", asGM_ALWAYS_CREATE);
+		mod->AddScriptSection("test", script);
+		r = mod->Build();
+		if( r < 0 )
+			TEST_FAILED;
+
+		CBytecodeStream stream(__FILE__"1");
+		r = mod->SaveByteCode(&stream);
+		if( r < 0 )
+			TEST_FAILED;
+		engine->Release();
+
+		// Load the bytecode
+		engine = asCreateScriptEngine(ANGELSCRIPT_VERSION);
+		engine->SetMessageCallback(asMETHOD(COutStream, Callback), &out, asCALL_THISCALL);
+		RegisterStdString(engine);
+
+		mod = engine->GetModule("mod", asGM_ALWAYS_CREATE);
+		if( mod->LoadByteCode(&stream) != 0 )
+			TEST_FAILED;
+
+		engine->Release();
+	}
+
+	// Test saving and loading script with array of classes initialized from initialization list
+	if( !strstr(asGetLibraryOptions(), "AS_NO_MEMBER_INIT") )
+	{
+		asIScriptEngine *engine = asCreateScriptEngine(ANGELSCRIPT_VERSION);
+		engine->SetMessageCallback(asMETHOD(COutStream,Callback), &out, asCALL_THISCALL);
+		RegisterScriptArray(engine, true);
+
+		const char *script = 
+			"array<A@> g_a = {A()}; \n"
+			"class A {}             \n";
+
+		mod = engine->GetModule(0, asGM_ALWAYS_CREATE);
+		mod->AddScriptSection(":1", script);
+		r = mod->Build();
+		if( r < 0 )
+			TEST_FAILED;
+
+		CBytecodeStream stream(__FILE__"1");
+		mod->SaveByteCode(&stream);
+
+		if( mod->LoadByteCode(&stream) != 0 )
+			TEST_FAILED;
+
+		// The garbage collector must not complain about not being able to release objects
+		engine->Release();
+	}
+
+	// Test repeated save/loads with shared interfaces and funcdefs
+	// http://www.gamedev.net/topic/656784-wrong-bytecode-with-funcdef-in-shared-interface/
+	{
+		CBytecodeStream stream1(__FILE__"shared1");
+		CBytecodeStream stream2(__FILE__"shared2");
+		CBytecodeStream stream3(__FILE__"shared1");
+		CBytecodeStream stream4(__FILE__"shared2");
+
+		{
+			engine = asCreateScriptEngine(ANGELSCRIPT_VERSION);
+			engine->SetMessageCallback(asMETHOD(COutStream, Callback), &out, asCALL_THISCALL);
+
+			asIScriptModule *mod1 = engine->GetModule("1", asGM_ALWAYS_CREATE);
+			mod1->AddScriptSection("test",
+				"funcdef void CALLBACK(); \n");
+			r = mod1->Build();
+			if( r < 0 )
+				TEST_FAILED;
+
+			asIScriptModule *mod2 = engine->GetModule("2", asGM_ALWAYS_CREATE);
+			mod2->AddScriptSection("test",
+				"funcdef void CALLBACK(); \n"
+				"void Foo1(CALLBACK@){} \n"
+				"void Foo2(){Foo1(null);} \n");
+			r = mod2->Build();
+			if( r < 0 )
+				TEST_FAILED;
+
+			r = mod1->SaveByteCode(&stream1);
+			if( r < 0 )
+				TEST_FAILED;
+
+			r = mod2->SaveByteCode(&stream2);
+			if( r < 0 )
+				TEST_FAILED;
+
+			engine->Release();
+		}
+
+		asDWORD crc1 = ComputeCRC32(&stream2.buffer[0], asUINT(stream2.buffer.size()));
+
+		{
+			engine = asCreateScriptEngine(ANGELSCRIPT_VERSION);
+			engine->SetMessageCallback(asMETHOD(COutStream, Callback), &out, asCALL_THISCALL);
+
+			asIScriptModule *mod1 = engine->GetModule("1", asGM_ALWAYS_CREATE);
+			r = mod1->LoadByteCode(&stream1);
+			if( r < 0 )
+				TEST_FAILED;
+
+			asIScriptModule *mod2 = engine->GetModule("2", asGM_ALWAYS_CREATE);
+			r = mod2->LoadByteCode(&stream2);
+			if( r < 0 )
+				TEST_FAILED;
+
+			r = mod1->SaveByteCode(&stream3);
+			if( r < 0 )
+				TEST_FAILED;
+
+			r = mod2->SaveByteCode(&stream4);
+			if( r < 0 )
+				TEST_FAILED;
+
+			engine->Release();
+		}
+
+		asDWORD crc2 = ComputeCRC32(&stream4.buffer[0], asUINT(stream4.buffer.size()));
+
+		if( crc1 != crc2 )
+			TEST_FAILED;
+
+		if( stream4.buffer.size() == stream2.buffer.size() )
+		{
+			for( size_t b = 0; b < stream4.buffer.size(); ++b )
+				if( stream4.buffer[b] != stream2.buffer[b] )
+					PRINTF("streams differ on byte %d\n", b);
+		}
+		else
+			PRINTF("streams differ in size\n");
+
+		{
+			engine = asCreateScriptEngine(ANGELSCRIPT_VERSION);
+			engine->SetMessageCallback(asMETHOD(COutStream, Callback), &out, asCALL_THISCALL);
+
+			asIScriptModule *mod1 = engine->GetModule("1", asGM_ALWAYS_CREATE);
+			r = mod1->LoadByteCode(&stream3);
+			if( r < 0 )
+				TEST_FAILED;
+
+			asIScriptModule *mod2 = engine->GetModule("2", asGM_ALWAYS_CREATE);
+			r = mod2->LoadByteCode(&stream4);
+			if( r < 0 )
+				TEST_FAILED;
+
+			engine->Release();
+		}
+	}
+
 	// Test multiple modules with shared enums and shared classes
 	// http://www.gamedev.net/topic/632922-huge-problems-with-precompilde-byte-code/
 	{
@@ -550,24 +721,24 @@ bool Test()
 		mod->SaveByteCode(&stream2, true);
 
 #ifndef STREAM_TO_FILE
-		if( stream.buffer.size() != 2645 )
-			printf("The saved byte code is not of the expected size. It is %d bytes\n", stream.buffer.size());
+		if( stream.buffer.size() != 2445 )
+			PRINTF("The saved byte code is not of the expected size. It is %d bytes\n", stream.buffer.size());
 		asUINT zeroes = stream.CountZeroes();
-		if( zeroes != 724 )
+		if( zeroes != 532 )
 		{
-			printf("The saved byte code contains a different amount of zeroes than the expected. Counted %d\n", zeroes);
+			PRINTF("The saved byte code contains a different amount of zeroes than the expected. Counted %d\n", zeroes);
 			// Mac OS X PPC has more zeroes, probably due to the bool type being 4 bytes
 		}
 		asDWORD crc32 = ComputeCRC32(&stream.buffer[0], asUINT(stream.buffer.size()));
-		if( crc32 != 0x37BE1048 )
-			printf("The saved byte code has different checksum than the expected. Got 0x%X\n", crc32);
+		if( crc32 != 0xF97C86D7 )
+			PRINTF("The saved byte code has different checksum than the expected. Got 0x%X\n", crc32);
 
 		// Without debug info
-		if( stream2.buffer.size() != 2248 )
-			printf("The saved byte code without debug info is not of the expected size. It is %d bytes\n", stream2.buffer.size());
+		if( stream2.buffer.size() != 2046 )
+			PRINTF("The saved byte code without debug info is not of the expected size. It is %d bytes\n", stream2.buffer.size());
 		zeroes = stream2.CountZeroes();
-		if( zeroes != 600 )
-			printf("The saved byte code without debug info contains a different amount of zeroes than the expected. Counted %d\n", zeroes);
+		if( zeroes != 421 )
+			PRINTF("The saved byte code without debug info contains a different amount of zeroes than the expected. Counted %d\n", zeroes);
 #endif
 		// Test loading without releasing the engine first
 		if( mod->LoadByteCode(&stream) != 0 )
@@ -576,6 +747,12 @@ bool Test()
 		if( mod->GetFunctionCount() != 6 )
 			TEST_FAILED;
 		else if( string(mod->GetFunctionByIndex(0)->GetScriptSectionName()) != ":1" )
+			TEST_FAILED;
+
+		// Make sure the parameter names were loaded
+		const char *paramName;
+		mod->GetFunctionByName("func")->GetParam(1, 0, 0, &paramName);
+		if( paramName == 0 || string(paramName) != "f" )
 			TEST_FAILED;
 
 		mod = engine->GetModule("DynamicModule", asGM_ALWAYS_CREATE);
@@ -596,6 +773,11 @@ bool Test()
 		mod->LoadByteCode(&stream2);
 
 		if( mod->GetFunctionCount() != 6 )
+			TEST_FAILED;
+
+		// Make sure the parameter names were not loaded
+		mod->GetFunctionByName("func")->GetParam(1, 0, 0, &paramName);
+		if( paramName != 0 )
 			TEST_FAILED;
 
 		mod = engine->GetModule("DynamicModule", asGM_ALWAYS_CREATE);
@@ -625,7 +807,7 @@ bool Test()
 		mod->SaveByteCode(&streamTiny, true);
 		engine->Release();
 
-		asBYTE expected[] = {0x01,0x00,0x00,0x00,0x00,0x00,0x01,0x66,0x6E,0x01,0x66,0x40,0x4E,0x00,0x00,0x00,0x00,0x01,0x00,0x00,0x00,0x02,0x3F,0x0A,0x00,0x00,0x00,0x00,0x00,0x00,0x01,0x72,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00};
+		asBYTE expected[] = {0x01,0x00,0x00,0x00,0x00,0x00,0x01,0x66,0x6E,0x01,0x66,0x00,0x40,0x50,0x00,0x00,0x00,0x01,0x00,0x00,0x00,0x02,0x3F,0x0A,0x00,0x00,0x00,0x00,0x00,0x01,0x72,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00};
 		bool match = true;
 		for( asUINT n = 0; n < streamTiny.buffer.size(); n++ )
 			if( streamTiny.buffer[n] != expected[n] )
@@ -635,22 +817,22 @@ bool Test()
 			}
 		if( !match )
 		{
-			printf("Tiny module gave a different result than expected:\n");
-			printf("got     : ");
+			PRINTF("Tiny module gave a different result than expected:\n");
+			PRINTF("got     : ");
 			for( asUINT n = 0; n < streamTiny.buffer.size(); n++ )
-				printf("%0.2X", streamTiny.buffer[n]);
-			printf("\n");
-			printf("expected: ");
+				PRINTF("%0.2X", streamTiny.buffer[n]);
+			PRINTF("\n");
+			PRINTF("expected: ");
 			for( asUINT m = 0; m < sizeof(expected); m++ )
-				printf("%0.2X", expected[m]);
-			printf("\n");
+				PRINTF("%0.2X", expected[m]);
+			PRINTF("\n");
 		}
 #endif
 	}
 
-#ifndef AS_MAX_PORTABILITY
 	// Test saving/loading global variable of registered value type
 	// http://www.gamedev.net/topic/638529-wrong-function-called-on-bytecode-restoration/
+	SKIP_ON_MAX_PORT
 	{
 		struct A
 		{
@@ -705,24 +887,20 @@ bool Test()
 
 		engine->Release();
 	}
-#endif
 
 	//-----------------------------------------
-	// A different case
+	// Saving bytecode for a module that failed to compile shouldn't be allowed
 	{
 		engine = asCreateScriptEngine(ANGELSCRIPT_VERSION);
 		mod = engine->GetModule(0, asGM_ALWAYS_CREATE);
 		mod->AddScriptSection("script3", script3, strlen(script3));
-		mod->Build();
+		r = mod->Build();
+		if( r >= 0 )
+			TEST_FAILED;
 		CBytecodeStream stream2(__FILE__"2");
-		mod->SaveByteCode(&stream2);
-
-		engine->Release();
-		engine = asCreateScriptEngine(ANGELSCRIPT_VERSION);
-
-		mod = engine->GetModule(0, asGM_ALWAYS_CREATE);
-		mod->LoadByteCode(&stream2);
-		ExecuteString(engine, "Test(3)", mod);
+		r = mod->SaveByteCode(&stream2);
+		if( r >= 0 )
+			TEST_FAILED;
 
 		engine->Release();
 	}
@@ -1465,9 +1643,10 @@ bool Test()
 		if( r >= 0 )
 			TEST_FAILED;
 
-		if( bout.buffer != " (0, 0) : Error   : Attempting to instanciate invalid template type 'tmpl<int>'\n" )
+		if( bout.buffer != " (0, 0) : Error   : Attempting to instanciate invalid template type 'tmpl<int>'\n"
+			               " (0, 0) : Error   : LoadByteCode failed. The bytecode is invalid. Number of bytes read from stream: 120\n" )
 		{
-			printf("%s", bout.buffer.c_str());
+			PRINTF("%s", bout.buffer.c_str());
 			TEST_FAILED;
 		}
 
@@ -1695,7 +1874,7 @@ bool Test2()
 
 
 
-const char *APStringFactory(int length, const char *s)
+const char *APStringFactory(int /*length*/, const char *s)
 {
 	return s;
 }
@@ -1763,9 +1942,10 @@ bool TestAndrewPrice()
 		if( r >= 0 )
 			TEST_FAILED;
 
-		if( bout.buffer != " (0, 0) : Error   : Template type 'array' doesn't exist\n" )
+		if( bout.buffer != " (0, 0) : Error   : Template type 'array' doesn't exist\n"
+			               " (0, 0) : Error   : LoadByteCode failed. The bytecode is invalid. Number of bytes read from stream: 14\n" )
 		{
-			printf("%s", bout.buffer.c_str());
+			PRINTF("%s", bout.buffer.c_str());
 			TEST_FAILED;
 		}
 
@@ -1776,9 +1956,10 @@ bool TestAndrewPrice()
 		if( r >= 0 )
 			TEST_FAILED;
 
-		if( bout.buffer != " (0, 0) : Error   : Object type 'char_ptr' doesn't exist\n" )
+		if( bout.buffer != " (0, 0) : Error   : Object type 'char_ptr' doesn't exist\n"
+						   " (0, 0) : Error   : LoadByteCode failed. The bytecode is invalid. Number of bytes read from stream: 22\n" )
 		{
-			printf("%s", bout.buffer.c_str());
+			PRINTF("%s", bout.buffer.c_str());
 			TEST_FAILED;
 		}
 

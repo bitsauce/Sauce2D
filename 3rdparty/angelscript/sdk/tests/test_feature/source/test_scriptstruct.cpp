@@ -62,7 +62,7 @@ void destruct(T* memory){
         memory->~T();
 }
 
-void PrintNumber(int x)
+void PrintNumber(int /*x*/)
 {
 //        cout << x << "\n";
 }
@@ -71,6 +71,8 @@ int init();
 
 bool Test_main()
 {
+	RET_ON_MAX_PORT
+
 	bool fail = false;
 	int r;
 	CBufferedOutStream bout;
@@ -110,7 +112,7 @@ bool Test_main()
 
 	if( bout.buffer != " (0, 0) : Error   : The script object of type 'Bar' is being resurrected illegally during destruction\n" )
 	{
-		printf("%s", bout.buffer.c_str());
+		PRINTF("%s", bout.buffer.c_str());
 		TEST_FAILED;
 	}
 
@@ -344,12 +346,12 @@ static const char *script14 =
 
 bool Test2();
 
-void TraceExec(asIScriptContext *ctx, void *)
+void TraceExec(asIScriptContext * /*ctx*/, void *)
 {
 //	for( asUINT n = 0; n < ctx->GetCallstackSize(); n++ )
-//		printf(" ");
-//	printf("%s", ctx->GetFunction()->GetDeclaration());
-//	printf("    Line: %d\n", ctx->GetLineNumber());
+//		PRINTF(" ");
+//	PRINTF("%s", ctx->GetFunction()->GetDeclaration());
+//	PRINTF("    Line: %d\n", ctx->GetLineNumber());
 }
 
 bool Test()
@@ -405,7 +407,7 @@ bool Test()
 						   "test (14, 12) : Error   : No default constructor for object of type 'ssNode'.\n"
 						   "test (14, 12) : Error   : Previous error occurred while attempting to create a temporary copy of object\n" )
 		{
-			printf("%s", bout.buffer.c_str());
+			PRINTF("%s", bout.buffer.c_str());
 			TEST_FAILED;
 		}
 
@@ -435,7 +437,7 @@ bool Test()
 
 		if( bout.buffer != "" )
 		{
-			printf("%s", bout.buffer.c_str());
+			PRINTF("%s", bout.buffer.c_str());
 			TEST_FAILED;
 		}
 
@@ -461,7 +463,7 @@ bool Test()
 
 		if( bout.buffer != " (0, 0) : Error   : Failed in call to function 'CreateScriptObject' (Code: -6)\n" )
 		{
-			printf("%s", bout.buffer.c_str());
+			PRINTF("%s", bout.buffer.c_str());
 			TEST_FAILED;
 		}
 
@@ -496,7 +498,7 @@ bool Test()
 		if( bout.buffer != "test (8, 7) : Info    : Compiling B::B()\n"
                            "test (10, 26) : Error   : 'en_B' is not declared\n" )
 		{
-			printf("%s", bout.buffer.c_str());
+			PRINTF("%s", bout.buffer.c_str());
 			TEST_FAILED;
 		}
 
@@ -686,14 +688,14 @@ bool Test()
 						   "test (15, 3) : Info    : Compiling Bar2::Bar2()\n"
 						   "test (15, 10) : Error   : Base class doesn't have default constructor. Make explicit call to base constructor\n" )
 		{
-			printf("%s", bout.buffer.c_str());
+			PRINTF("%s", bout.buffer.c_str());
 			TEST_FAILED;
 		}
 
 		engine->Release();
 	}
 
-#ifndef AS_MAX_PORTABILITY
+	SKIP_ON_MAX_PORT
 	if( !strstr(asGetLibraryOptions(), "AS_NO_MEMBER_INIT") )
 	{
 		engine = asCreateScriptEngine(ANGELSCRIPT_VERSION);
@@ -719,23 +721,34 @@ bool Test()
 
 		asIScriptObject *obj = (asIScriptObject*)engine->CreateScriptObject(mod->GetObjectTypeByName("T"));
 		if( obj != 0 )
+		{
 			TEST_FAILED;
+			obj->Release();
+		}
 
 		asIScriptContext *ctx = engine->CreateContext();
 		r = ExecuteString(engine, "T t;", mod, ctx);
 		if( r != asEXECUTION_EXCEPTION )
 			TEST_FAILED;
-		if( r == asEXECUTION_EXCEPTION && std::string(ctx->GetExceptionString()) != "Null pointer access" )
+		if( r == asEXECUTION_EXCEPTION ) 
 		{
-			printf("%s\n", ctx->GetExceptionString());
-			TEST_FAILED;
+			if( std::string(ctx->GetExceptionString()) != "Null pointer access" )
+			{
+				PRINTF("%s\n", ctx->GetExceptionString());
+				TEST_FAILED;
+			}
+			if( std::string(ctx->GetExceptionFunction()->GetName()) != "Func" )
+				TEST_FAILED;
 		}
-		if( std::string(ctx->GetExceptionFunction()->GetName()) != "Func" )
+		if( ctx->GetCallstackSize() == 3 )
 			TEST_FAILED;
-		if( std::string(ctx->GetFunction(1)->GetName()) != "T" )
-			TEST_FAILED;
-		if( ctx->GetLineNumber(1) != 3 )
-			TEST_FAILED;
+		else
+		{
+			if( std::string(ctx->GetFunction(1)->GetName()) != "T" )
+				TEST_FAILED;
+			if( ctx->GetLineNumber(1) != 3 )
+				TEST_FAILED;
+		}
 		ctx->Release();
 		
 		// Default initialization of object members without initialization expression
@@ -894,7 +907,7 @@ bool Test()
 			TEST_FAILED;
 		if( bout.buffer != "" )
 		{
-			printf("%s", bout.buffer.c_str());
+			PRINTF("%s", bout.buffer.c_str());
 			TEST_FAILED;
 		}
 
@@ -909,7 +922,7 @@ bool Test()
 			TEST_FAILED;
 		if( bout.buffer != "" )
 		{
-			printf("%s", bout.buffer.c_str());
+			PRINTF("%s", bout.buffer.c_str());
 			TEST_FAILED;
 		}
 
@@ -940,7 +953,7 @@ bool Test()
 		if( bout.buffer != "test2 (1, 7) : Info    : Compiling T::T()\n"
 		                   "test (2, 11) : Error   : No matching signatures to 'func()'\n" )
 		{
-			printf("%s", bout.buffer.c_str());
+			PRINTF("%s", bout.buffer.c_str());
 			TEST_FAILED;
 		}
 		engine->SetMessageCallback(asMETHOD(COutStream,Callback), &out, asCALL_THISCALL);
@@ -1053,7 +1066,7 @@ bool Test()
 		if( bout.buffer != "test (3, 3) : Info    : Compiling T::T()\n"
 		                   "test (2, 12) : Error   : Divide by zero\n" )
 		{
-			printf("%s", bout.buffer.c_str());
+			PRINTF("%s", bout.buffer.c_str());
 			TEST_FAILED;
 		}
 
@@ -1113,7 +1126,6 @@ bool Test()
 
 		engine->Release();
 	}
-#endif
 
 	{
 		engine = asCreateScriptEngine(ANGELSCRIPT_VERSION);
@@ -1204,7 +1216,7 @@ bool Test()
 		{
 			if( r == asEXECUTION_EXCEPTION )
 			{
-				printf("%s\n", ctx->GetExceptionString());
+				PRINTF("%s\n", ctx->GetExceptionString());
 			}
 			TEST_FAILED;
 		}
@@ -1296,7 +1308,7 @@ bool Test()
 
 		if( bout.buffer != "" )
 		{
-			printf("%s", bout.buffer.c_str());
+			PRINTF("%s", bout.buffer.c_str());
 			TEST_FAILED;
 		}
 
@@ -1332,7 +1344,7 @@ bool Test()
 		if( bout.buffer != "s (4, 1) : Info    : Compiling void main()\n"
 		                   "s (4, 21) : Error   : Illegal access to private property 'a'\n" )
 		{
-			printf("%s", bout.buffer.c_str());
+			PRINTF("%s", bout.buffer.c_str());
 			TEST_FAILED;
 		}
 
@@ -1359,7 +1371,7 @@ bool Test()
 		if( bout.buffer != "s (4, 1) : Info    : Compiling void main()\n"
 		                   "s (4, 20) : Error   : Illegal call to private method 'void C::func()'\n" )
 		{
-			printf("%s", bout.buffer.c_str());
+			PRINTF("%s", bout.buffer.c_str());
 			TEST_FAILED;
 		}
 
@@ -1391,7 +1403,7 @@ bool Test()
 
 		if( bout.buffer != "" )
 		{
-			printf("%s", bout.buffer.c_str());
+			PRINTF("%s", bout.buffer.c_str());
 			TEST_FAILED;
 		}
 
@@ -1481,13 +1493,13 @@ bool Test()
 		if( bout.buffer != "script (5, 1) : Info    : Compiling void func()\n"
 						   "script (7, 8) : Error   : No default constructor for object of type 'CBar'.\n"
 						   "script (9, 8) : Error   : No default constructor for object of type 'CBar'.\n"
-						   "script (9, 8) : Error   : There is no copy operator for the type 'CBar' available.\n"
-						   "script (10, 5) : Error   : There is no copy operator for the type 'CBar' available.\n"
+						   "script (9, 8) : Error   : No appropriate opAssign method found in 'CBar'\n"
+						   "script (10, 5) : Error   : No appropriate opAssign method found in 'CBar'\n"
 						   "script (11, 10) : Error   : No matching signatures to 'CBar()'\n"
 						   "script (11, 10) : Info    : Candidates are:\n"
-						   "script (11, 10) : Info    : CBar@ CBar(int)\n" )
+						   "script (11, 10) : Info    : CBar@ CBar(int a)\n" )
 		{
-			printf("%s", bout.buffer.c_str());
+			PRINTF("%s", bout.buffer.c_str());
 			TEST_FAILED;
 		}
  

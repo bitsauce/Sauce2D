@@ -27,14 +27,9 @@ static const char *script =
 
 bool Test()
 {
+	RET_ON_MAX_PORT
+
 	bool fail = false;
-
-	if( strstr(asGetLibraryOptions(), "AS_MAX_PORTABILITY") )
-	{
-		printf("Skipped due to max portability\n");
-		return fail;
-	}
-
 	COutStream out;
 	CBufferedOutStream bout;
 	int r;
@@ -52,6 +47,18 @@ bool Test()
 	if( r != asEXECUTION_FINISHED )
 		TEST_FAILED;
 	r = ExecuteString(engine, "uint64 a = 0x3ff0000000000000; double b = fpFromIEEE(a); assert( b == 1.0 );");
+	if( r != asEXECUTION_FINISHED )
+		TEST_FAILED;
+
+	// Test closeTo
+	r = ExecuteString(engine, "float a = 0; for( int i = 0; i < 100; i++ ) a += 3.14f; \n"
+		                      "assert( a != 314.0f ); \n"
+							  "assert( closeTo(a, 314.0f) );");
+	if( r != asEXECUTION_FINISHED )
+		TEST_FAILED;
+
+	r = ExecuteString(engine, "assert( closeTo(67329.242f, 67329.234f) ); \n"
+	                          "assert( !closeTo(67329.f, 67331.f) ); \n");
 	if( r != asEXECUTION_FINISHED )
 		TEST_FAILED;
 
@@ -102,7 +109,7 @@ bool Test()
 	r = mod->Build();
 	if( r < 0 )
 	{
-		printf("%s: Failed to build\n", TESTNAME);
+		PRINTF("%s: Failed to build\n", TESTNAME);
 		TEST_FAILED;
 	}
 	else
@@ -111,12 +118,12 @@ bool Test()
 		r = ExecuteString(engine, "v = TestComplex();", mod);
 		if( r < 0 )
 		{
-			printf("%s: ExecuteString() failed %d\n", TESTNAME, r);
+			PRINTF("%s: ExecuteString() failed %d\n", TESTNAME, r);
 			TEST_FAILED;
 		}
 		if( v.r != 1 || v.i != 2 )
 		{
-			printf("%s: Failed to assign correct Complex\n", TESTNAME);
+			PRINTF("%s: Failed to assign correct Complex\n", TESTNAME);
 			TEST_FAILED;
 		}
 
@@ -130,7 +137,7 @@ bool Test()
 		Complex *ret = (Complex*)ctx->GetReturnObject();
 		if( ret->r != 1 || ret->i != 2 )
 		{
-			printf("%s: Failed to assign correct Complex\n", TESTNAME);
+			PRINTF("%s: Failed to assign correct Complex\n", TESTNAME);
 			TEST_FAILED;
 		}
 
@@ -141,7 +148,7 @@ bool Test()
 		ret = (Complex*)ctx->GetReturnObject();
 		if( ret->r != 3 || ret->i != 2 )
 		{
-			printf("%s: Failed to pass Complex by val\n", TESTNAME);
+			PRINTF("%s: Failed to pass Complex by val\n", TESTNAME);
 			TEST_FAILED;
 		}
 
@@ -150,7 +157,7 @@ bool Test()
 		ctx->Execute();
 		if( v.r != 1 || v.i != 2 )
 		{
-			printf("%s: Failed to pass Complex by ref\n", TESTNAME);
+			PRINTF("%s: Failed to pass Complex by ref\n", TESTNAME);
 			TEST_FAILED;
 		}
 
@@ -220,7 +227,7 @@ bool Test()
 					   "ExecuteString (1, 13) : Info    : complex::complex(float)\n"
 					   "ExecuteString (1, 13) : Info    : complex::complex(float, float)\n" )
 	{
-		printf("%s", bout.buffer.c_str());
+		PRINTF("%s", bout.buffer.c_str());
 		TEST_FAILED;
 	}
 

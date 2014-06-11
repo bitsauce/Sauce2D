@@ -176,6 +176,16 @@ instead.
 
 
 
+\section doc_debug_4 Debugging internally executed scripts
+
+Some script execution is not initiated by the application, e.g. the initialization of global variables or 
+the call to the script class destructor when destroying objects from the garbage collector. If these
+executions should be debugged, the application must set the context callback functions with a call to
+\ref asIScriptEngine::SetContextCallbacks. The engine will invoke these callbacks to request a context
+from the application when it will execute a script internally. The application can then  
+attach the debugger to the context it provides to the engine.
+
+
 
 
 

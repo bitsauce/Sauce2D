@@ -42,7 +42,7 @@ bool Test()
 	engine->RegisterGlobalFunction("void func(int &in)", asFUNCTION(0), asCALL_GENERIC);
 
 	engine->BeginConfigGroup("test");
-	engine->RegisterGlobalFunction("void func2()", asFUNCTION(0), asCALL_GENERIC);
+	engine->RegisterGlobalFunction("void func2(const string &in = \"\")", asFUNCTION(0), asCALL_GENERIC);
 	engine->EndConfigGroup();
 
 	engine->RegisterEnum("myEnum");
@@ -81,8 +81,6 @@ bool Test()
 
 void DumpObjectType(stringstream &s, asIObjectType *objType)
 {
-	asIScriptEngine *engine = objType->GetEngine();
-
 	if( objType->GetFlags() & asOBJ_SCRIPT_OBJECT )
 	{
 		if( objType->GetSize() ) 
@@ -322,7 +320,7 @@ void DumpModule(asIScriptModule *mod)
 		"reg func: int64 parseInt(const string&in, uint = 10, uint&out = 0) group: <null>\n"
 		"reg func: double parseFloat(const string&in, uint&out = 0) group: <null>\n"
 		"reg func: void func(int&in) group: <null>\n"
-		"reg func: void func2() group: test\n"
+		"reg func: void func2(const string&in = \"\") group: test\n"
 		"reg enum: myEnum\n"
 		" value1 = 1\n"
 		" value2 = 2\n"
@@ -358,6 +356,8 @@ void DumpModule(asIScriptModule *mod)
 		" void reverse()\n"
 		" int find(const T&in) const\n"
 		" int find(uint, const T&in) const\n"
+		" int findByRef(const T&in) const\n"
+		" int findByRef(uint, const T&in) const\n"
 		" bool opEquals(const T[]&in) const\n"
 		" bool isEmpty() const\n"
 		" uint get_length() const\n"

@@ -1,6 +1,6 @@
 /*
    AngelCode Scripting Library
-   Copyright (c) 2003-2013 Andreas Jonsson
+   Copyright (c) 2003-2014 Andreas Jonsson
 
    This software is provided 'as-is', without any express or implied
    warranty. In no event will the authors be held liable for any
@@ -63,9 +63,9 @@ BEGIN_AS_NAMESPACE
 
 // AngelScript version
 
-//! Version 2.27.8
-#define ANGELSCRIPT_VERSION        22800
-#define ANGELSCRIPT_VERSION_STRING "2.28.0"
+//! Version 2.29.0
+#define ANGELSCRIPT_VERSION        22900
+#define ANGELSCRIPT_VERSION_STRING "2.29.0"
 
 // Data types
 
@@ -82,208 +82,6 @@ class asIThreadManager;
 class asILockableSharedBool;
 
 // Enumerations and constants
-
-// Engine properties
-//! Engine properties
-enum asEEngineProp
-{
-	//! Allow unsafe references. Default: false.
-	asEP_ALLOW_UNSAFE_REFERENCES            = 1,
-	//! Optimize byte code. Default: true.
-	asEP_OPTIMIZE_BYTECODE                  = 2,
-	//! Copy script section memory. Default: true.
-	asEP_COPY_SCRIPT_SECTIONS               = 3,
-	//! Maximum stack size in bytes for script contexts. Default: 0 (no limit).
-	asEP_MAX_STACK_SIZE                     = 4,
-	//! Interpret single quoted strings as character literals. Default: false.
-	asEP_USE_CHARACTER_LITERALS             = 5,
-	//! Allow linebreaks in string constants. Default: false.
-	asEP_ALLOW_MULTILINE_STRINGS            = 6,
-	//! Allow script to declare implicit handle types. Default: false.
-	asEP_ALLOW_IMPLICIT_HANDLE_TYPES        = 7,
-	//! Remove SUSPEND instructions between each statement. Default: false.
-	asEP_BUILD_WITHOUT_LINE_CUES            = 8,
-	//! Initialize global variables after a build. Default: true.
-	asEP_INIT_GLOBAL_VARS_AFTER_BUILD       = 9,
-	//! When set the enum values must be prefixed with the enum type. Default: false.
-	asEP_REQUIRE_ENUM_SCOPE                 = 10,
-	//! Select scanning method: 0 - ASCII, 1 - UTF8. Default: 1 (UTF8).
-	asEP_SCRIPT_SCANNER                     = 11,
-	//! When set extra bytecode instructions needed for JIT compiled funcions will be included. Default: false.
-	asEP_INCLUDE_JIT_INSTRUCTIONS           = 12,
-	//! Select string encoding for literals: 0 - UTF8/ASCII, 1 - UTF16. Default: 0 (UTF8)
-	asEP_STRING_ENCODING                    = 13,
-	//! Enable or disable property accessors: 0 - no accessors, 1 - app registered accessors, 2 - app and script created accessors
-	asEP_PROPERTY_ACCESSOR_MODE             = 14,
-	//! Format default array in template form in messages and declarations. Default: false
-	asEP_EXPAND_DEF_ARRAY_TO_TMPL           = 15,
-	//! Enable or disable automatic garbage collection. Default: true
-	asEP_AUTO_GARBAGE_COLLECT               = 16,
-	//! Disallow the use of global variables in the script. Default: false
-	asEP_DISALLOW_GLOBAL_VARS               = 17,
-	//! When true, the compiler will always provide a default constructor for script classes. Default: false
-	asEP_ALWAYS_IMPL_DEFAULT_CONSTRUCT      = 18,
-	//! Set how warnings should be treated: 0 - dismiss, 1 - emit, 2 - treat as error
-	asEP_COMPILER_WARNINGS                  = 19,
-	//! Disallow value assignment for reference types to avoid ambiguity. Default: false
-	asEP_DISALLOW_VALUE_ASSIGN_FOR_REF_TYPE = 20
-};
-
-// Calling conventions
-//! Calling conventions
-enum asECallConvTypes
-{
-	//! A cdecl function.
-	asCALL_CDECL             = 0,
-	//! A stdcall function.
-	asCALL_STDCALL           = 1,
-	//! A thiscall class method registered as a global function.
-	asCALL_THISCALL_ASGLOBAL = 2,
-	//! A thiscall class method.
-	asCALL_THISCALL          = 3,
-	//! A cdecl function that takes the object pointer as the last parameter.
-	asCALL_CDECL_OBJLAST     = 4,
-	//! A cdecl function that takes the object pointer as the first parameter.
-	asCALL_CDECL_OBJFIRST    = 5,
-	//! A function using the generic calling convention.
-	asCALL_GENERIC           = 6
-};
-
-// Object type flags
-//! Object type flags
-enum asEObjTypeFlags
-{
-	//! A reference type.
-	asOBJ_REF                        = 0x01,
-	//! A value type.
-	asOBJ_VALUE                      = 0x02,
-	//! A garbage collected type. Only valid for reference types.
-	asOBJ_GC                         = 0x04,
-	//! A plain-old-data type. Only valid for value types.
-	asOBJ_POD                        = 0x08,
-	//! This reference type doesn't allow handles to be held. Only valid for reference types.
-	asOBJ_NOHANDLE                   = 0x10,
-	//! The life time of objects of this type are controlled by the scope of the variable. Only valid for reference types.
-	asOBJ_SCOPED                     = 0x20,
-	//! A template type.
-	asOBJ_TEMPLATE                   = 0x40,
-	//! The value type should be treated as a handle.
-	asOBJ_ASHANDLE                   = 0x80,
-	//! The C++ type is a class type. Only valid for value types.
-	asOBJ_APP_CLASS                  = 0x100,
-	//! The C++ class has an explicit constructor. Only valid for value types.
-	asOBJ_APP_CLASS_CONSTRUCTOR      = 0x200,
-	//! The C++ class has an explicit destructor. Only valid for value types.
-	asOBJ_APP_CLASS_DESTRUCTOR       = 0x400,
-	//! The C++ class has an explicit assignment operator. Only valid for value types.
-	asOBJ_APP_CLASS_ASSIGNMENT       = 0x800,
-	//! The C++ class has an explicit copy constructor. Only valid for value types.
-	asOBJ_APP_CLASS_COPY_CONSTRUCTOR = 0x1000,
-	//! The C++ type is a class with a constructor.
-	asOBJ_APP_CLASS_C                = (asOBJ_APP_CLASS + asOBJ_APP_CLASS_CONSTRUCTOR),
-	//! The C++ type is a class with a constructor and destructor.
-	asOBJ_APP_CLASS_CD               = (asOBJ_APP_CLASS + asOBJ_APP_CLASS_CONSTRUCTOR + asOBJ_APP_CLASS_DESTRUCTOR),
-	//! The C++ type is a class with a constructor and assignment operator.
-	asOBJ_APP_CLASS_CA               = (asOBJ_APP_CLASS + asOBJ_APP_CLASS_CONSTRUCTOR + asOBJ_APP_CLASS_ASSIGNMENT),
-	//! The C++ type is a class with a constructor and copy constructor.
-	asOBJ_APP_CLASS_CK               = (asOBJ_APP_CLASS + asOBJ_APP_CLASS_CONSTRUCTOR + asOBJ_APP_CLASS_COPY_CONSTRUCTOR),
-	//! The C++ type is a class with a constructor, destructor, and assignment operator.
-	asOBJ_APP_CLASS_CDA              = (asOBJ_APP_CLASS + asOBJ_APP_CLASS_CONSTRUCTOR + asOBJ_APP_CLASS_DESTRUCTOR + asOBJ_APP_CLASS_ASSIGNMENT),
-	//! The C++ type is a class with a constructor, destructor, and copy constructor.
-	asOBJ_APP_CLASS_CDK              = (asOBJ_APP_CLASS + asOBJ_APP_CLASS_CONSTRUCTOR + asOBJ_APP_CLASS_DESTRUCTOR + asOBJ_APP_CLASS_COPY_CONSTRUCTOR),
-	//! The C++ type is a class with a constructor, assignment operator, and copy constructor.
-	asOBJ_APP_CLASS_CAK              = (asOBJ_APP_CLASS + asOBJ_APP_CLASS_CONSTRUCTOR + asOBJ_APP_CLASS_ASSIGNMENT + asOBJ_APP_CLASS_COPY_CONSTRUCTOR),
-	//! The C++ type is a class with a constructor, destructor, assignment operator, and copy constructor.
-	asOBJ_APP_CLASS_CDAK             = (asOBJ_APP_CLASS + asOBJ_APP_CLASS_CONSTRUCTOR + asOBJ_APP_CLASS_DESTRUCTOR + asOBJ_APP_CLASS_ASSIGNMENT + asOBJ_APP_CLASS_COPY_CONSTRUCTOR),
-	//! The C++ type is a class with a destructor.
-	asOBJ_APP_CLASS_D                = (asOBJ_APP_CLASS + asOBJ_APP_CLASS_DESTRUCTOR),
-	//! The C++ type is a class with a destructor and assignment operator.
-	asOBJ_APP_CLASS_DA               = (asOBJ_APP_CLASS + asOBJ_APP_CLASS_DESTRUCTOR + asOBJ_APP_CLASS_ASSIGNMENT),
-	//! The C++ type is a class with a destructor and copy constructor.
-	asOBJ_APP_CLASS_DK               = (asOBJ_APP_CLASS + asOBJ_APP_CLASS_DESTRUCTOR + asOBJ_APP_CLASS_COPY_CONSTRUCTOR),
-	//! The C++ type is a class with a destructor, assignment operator, and copy constructor.
-	asOBJ_APP_CLASS_DAK              = (asOBJ_APP_CLASS + asOBJ_APP_CLASS_DESTRUCTOR + asOBJ_APP_CLASS_ASSIGNMENT + asOBJ_APP_CLASS_COPY_CONSTRUCTOR),
-	//! The C++ type is a class with an assignment operator.
-	asOBJ_APP_CLASS_A                = (asOBJ_APP_CLASS + asOBJ_APP_CLASS_ASSIGNMENT),
-	//! The C++ type is a class with an assignment operator and copy constructor.
-	asOBJ_APP_CLASS_AK               = (asOBJ_APP_CLASS + asOBJ_APP_CLASS_ASSIGNMENT + asOBJ_APP_CLASS_COPY_CONSTRUCTOR),
-	//! The C++ type is a class with a copy constructor.
-	asOBJ_APP_CLASS_K                = (asOBJ_APP_CLASS + asOBJ_APP_CLASS_COPY_CONSTRUCTOR),
-	//! The C++ type is a primitive type. Only valid for value types.
-	asOBJ_APP_PRIMITIVE              = 0x2000,
-	//! The C++ type is a float or double. Only valid for value types.
-	asOBJ_APP_FLOAT                  = 0x4000,
-	//! The C++ class can be treated as if all its members are integers.
-	asOBJ_APP_CLASS_ALLINTS          = 0x8000,
-	//! The C++ class can be treated as if all its members are floats or doubles.
-	asOBJ_APP_CLASS_ALLFLOATS        = 0x10000,
-	//! The type doesn't use reference counting. Only valid for reference types.
-	asOBJ_NOCOUNT                    = 0x20000,
-	//! The C++ class contains types that may require 8byte alignment. Only valid for value types.
-	asOBJ_APP_CLASS_ALIGN8           = 0x40000,
-	asOBJ_MASK_VALID_FLAGS           = 0x7FFFF,
-	//! The object is a script class or an interface.
-	asOBJ_SCRIPT_OBJECT              = 0x80000,
-	//! Type object type is shared between modules.
-	asOBJ_SHARED                     = 0x100000,
-	//! The object type is marked as final and cannot be inherited.
-	asOBJ_NOINHERIT                  = 0x200000,
-	//! The object type is a script function
-	asOBJ_SCRIPT_FUNCTION            = 0x400000
-};
-
-// Behaviours
-//! Behaviours
-enum asEBehaviours
-{
-	// Value object memory management
-	//! \brief Constructor
-	asBEHAVE_CONSTRUCT,
-	//! \brief Constructor used exclusively for initialization lists
-	asBEHAVE_LIST_CONSTRUCT,
-	//! \brief Destructor
-	asBEHAVE_DESTRUCT,
-
-	// Reference object memory management
-	//! \brief Factory
-	asBEHAVE_FACTORY,
-	//! \brief Factory used exclusively for initialization lists
-	asBEHAVE_LIST_FACTORY,
-	//! \brief AddRef
-	asBEHAVE_ADDREF,
-	//! \brief Release
-	asBEHAVE_RELEASE,
-	//! \brief Obtain weak ref flag
-	asBEHAVE_GET_WEAKREF_FLAG,
-
-	// Object operators
-	//! \brief Explicit value cast operator
-	asBEHAVE_VALUE_CAST,
-	//! \brief Implicit value cast operator
-	asBEHAVE_IMPLICIT_VALUE_CAST,
-	//! \brief Explicit reference cast operator
-	asBEHAVE_REF_CAST,
-	//! \brief Implicit reference cast operator
-	asBEHAVE_IMPLICIT_REF_CAST,
-	//! \brief Callback for validating template instances
-	asBEHAVE_TEMPLATE_CALLBACK,
-
-	// Garbage collection behaviours
-	asBEHAVE_FIRST_GC,
-	//! \brief (GC) Get reference count
-	 asBEHAVE_GETREFCOUNT = asBEHAVE_FIRST_GC,
-	 //! \brief (GC) Set GC flag
-	 asBEHAVE_SETGCFLAG,
-	 //! \brief (GC) Get GC flag
-	 asBEHAVE_GETGCFLAG,
-	 //! \brief (GC) Enumerate held references
-	 asBEHAVE_ENUMREFS,
-	 //! \brief (GC) Release all references
-	 asBEHAVE_RELEASEREFS,
-	asBEHAVE_LAST_GC = asBEHAVE_RELEASEREFS,
-
-	asBEHAVE_MAX
-};
 
 // Return codes
 //! Return codes
@@ -347,8 +145,224 @@ enum asERetCodes
 	asOUT_OF_MEMORY                        = -27
 };
 
-// Context states
+// Engine properties
+//! Engine properties
+enum asEEngineProp
+{
+	//! Allow unsafe references. Default: false.
+	asEP_ALLOW_UNSAFE_REFERENCES            = 1,
+	//! Optimize byte code. Default: true.
+	asEP_OPTIMIZE_BYTECODE                  = 2,
+	//! Copy script section memory. Default: true.
+	asEP_COPY_SCRIPT_SECTIONS               = 3,
+	//! Maximum stack size in bytes for script contexts. Default: 0 (no limit).
+	asEP_MAX_STACK_SIZE                     = 4,
+	//! Interpret single quoted strings as character literals. Default: false.
+	asEP_USE_CHARACTER_LITERALS             = 5,
+	//! Allow linebreaks in string constants. Default: false.
+	asEP_ALLOW_MULTILINE_STRINGS            = 6,
+	//! Allow script to declare implicit handle types. Default: false.
+	asEP_ALLOW_IMPLICIT_HANDLE_TYPES        = 7,
+	//! Remove SUSPEND instructions between each statement. Default: false.
+	asEP_BUILD_WITHOUT_LINE_CUES            = 8,
+	//! Initialize global variables after a build. Default: true.
+	asEP_INIT_GLOBAL_VARS_AFTER_BUILD       = 9,
+	//! When set the enum values must be prefixed with the enum type. Default: false.
+	asEP_REQUIRE_ENUM_SCOPE                 = 10,
+	//! Select scanning method: 0 - ASCII, 1 - UTF8. Default: 1 (UTF8).
+	asEP_SCRIPT_SCANNER                     = 11,
+	//! When set extra bytecode instructions needed for JIT compiled funcions will be included. Default: false.
+	asEP_INCLUDE_JIT_INSTRUCTIONS           = 12,
+	//! Select string encoding for literals: 0 - UTF8/ASCII, 1 - UTF16. Default: 0 (UTF8)
+	asEP_STRING_ENCODING                    = 13,
+	//! Enable or disable property accessors: 0 - no accessors, 1 - app registered accessors, 2 - app and script created accessors
+	asEP_PROPERTY_ACCESSOR_MODE             = 14,
+	//! Format default array in template form in messages and declarations. Default: false
+	asEP_EXPAND_DEF_ARRAY_TO_TMPL           = 15,
+	//! Enable or disable automatic garbage collection. Default: true
+	asEP_AUTO_GARBAGE_COLLECT               = 16,
+	//! Disallow the use of global variables in the script. Default: false
+	asEP_DISALLOW_GLOBAL_VARS               = 17,
+	//! When true, the compiler will always provide a default constructor for script classes. Default: false
+	asEP_ALWAYS_IMPL_DEFAULT_CONSTRUCT      = 18,
+	//! Set how warnings should be treated: 0 - dismiss, 1 - emit, 2 - treat as error
+	asEP_COMPILER_WARNINGS                  = 19,
+	//! Disallow value assignment for reference types to avoid ambiguity. Default: false
+	asEP_DISALLOW_VALUE_ASSIGN_FOR_REF_TYPE = 20,
 
+	asEP_LAST_PROPERTY
+};
+
+// Calling conventions
+//! Calling conventions
+enum asECallConvTypes
+{
+	//! A cdecl function.
+	asCALL_CDECL             = 0,
+	//! A stdcall function.
+	asCALL_STDCALL           = 1,
+	//! A thiscall class method registered as a global function.
+	asCALL_THISCALL_ASGLOBAL = 2,
+	//! A thiscall class method.
+	asCALL_THISCALL          = 3,
+	//! A cdecl function that takes the object pointer as the last parameter.
+	asCALL_CDECL_OBJLAST     = 4,
+	//! A cdecl function that takes the object pointer as the first parameter.
+	asCALL_CDECL_OBJFIRST    = 5,
+	//! A function using the generic calling convention.
+	asCALL_GENERIC           = 6,
+	//! A thiscall class method registered as a functor object.
+	asCALL_THISCALL_OBJLAST  = 7,
+	//! A thiscall class method registered as a functor object.
+	asCALL_THISCALL_OBJFIRST = 8
+};
+
+// Object type flags
+//! Object type flags
+enum asEObjTypeFlags
+{
+	//! A reference type.
+	asOBJ_REF                        = (1<<0),
+	//! A value type.
+	asOBJ_VALUE                      = (1<<1),
+	//! A garbage collected type. Only valid for reference types.
+	asOBJ_GC                         = (1<<2),
+	//! A plain-old-data type. Only valid for value types.
+	asOBJ_POD                        = (1<<3),
+	//! This reference type doesn't allow handles to be held. Only valid for reference types.
+	asOBJ_NOHANDLE                   = (1<<4),
+	//! The life time of objects of this type are controlled by the scope of the variable. Only valid for reference types.
+	asOBJ_SCOPED                     = (1<<5),
+	//! A template type.
+	asOBJ_TEMPLATE                   = (1<<6),
+	//! The value type should be treated as a handle.
+	asOBJ_ASHANDLE                   = (1<<7),
+	//! The C++ type is a class type. Only valid for value types.
+	asOBJ_APP_CLASS                  = (1<<8),
+	//! The C++ class has an explicit constructor. Only valid for value types.
+	asOBJ_APP_CLASS_CONSTRUCTOR      = (1<<9),
+	//! The C++ class has an explicit destructor. Only valid for value types.
+	asOBJ_APP_CLASS_DESTRUCTOR       = (1<<10),
+	//! The C++ class has an explicit assignment operator. Only valid for value types.
+	asOBJ_APP_CLASS_ASSIGNMENT       = (1<<11),
+	//! The C++ class has an explicit copy constructor. Only valid for value types.
+	asOBJ_APP_CLASS_COPY_CONSTRUCTOR = (1<<12),
+	//! The C++ type is a class with a constructor.
+	asOBJ_APP_CLASS_C                = (asOBJ_APP_CLASS + asOBJ_APP_CLASS_CONSTRUCTOR),
+	//! The C++ type is a class with a constructor and destructor.
+	asOBJ_APP_CLASS_CD               = (asOBJ_APP_CLASS + asOBJ_APP_CLASS_CONSTRUCTOR + asOBJ_APP_CLASS_DESTRUCTOR),
+	//! The C++ type is a class with a constructor and assignment operator.
+	asOBJ_APP_CLASS_CA               = (asOBJ_APP_CLASS + asOBJ_APP_CLASS_CONSTRUCTOR + asOBJ_APP_CLASS_ASSIGNMENT),
+	//! The C++ type is a class with a constructor and copy constructor.
+	asOBJ_APP_CLASS_CK               = (asOBJ_APP_CLASS + asOBJ_APP_CLASS_CONSTRUCTOR + asOBJ_APP_CLASS_COPY_CONSTRUCTOR),
+	//! The C++ type is a class with a constructor, destructor, and assignment operator.
+	asOBJ_APP_CLASS_CDA              = (asOBJ_APP_CLASS + asOBJ_APP_CLASS_CONSTRUCTOR + asOBJ_APP_CLASS_DESTRUCTOR + asOBJ_APP_CLASS_ASSIGNMENT),
+	//! The C++ type is a class with a constructor, destructor, and copy constructor.
+	asOBJ_APP_CLASS_CDK              = (asOBJ_APP_CLASS + asOBJ_APP_CLASS_CONSTRUCTOR + asOBJ_APP_CLASS_DESTRUCTOR + asOBJ_APP_CLASS_COPY_CONSTRUCTOR),
+	//! The C++ type is a class with a constructor, assignment operator, and copy constructor.
+	asOBJ_APP_CLASS_CAK              = (asOBJ_APP_CLASS + asOBJ_APP_CLASS_CONSTRUCTOR + asOBJ_APP_CLASS_ASSIGNMENT + asOBJ_APP_CLASS_COPY_CONSTRUCTOR),
+	//! The C++ type is a class with a constructor, destructor, assignment operator, and copy constructor.
+	asOBJ_APP_CLASS_CDAK             = (asOBJ_APP_CLASS + asOBJ_APP_CLASS_CONSTRUCTOR + asOBJ_APP_CLASS_DESTRUCTOR + asOBJ_APP_CLASS_ASSIGNMENT + asOBJ_APP_CLASS_COPY_CONSTRUCTOR),
+	//! The C++ type is a class with a destructor.
+	asOBJ_APP_CLASS_D                = (asOBJ_APP_CLASS + asOBJ_APP_CLASS_DESTRUCTOR),
+	//! The C++ type is a class with a destructor and assignment operator.
+	asOBJ_APP_CLASS_DA               = (asOBJ_APP_CLASS + asOBJ_APP_CLASS_DESTRUCTOR + asOBJ_APP_CLASS_ASSIGNMENT),
+	//! The C++ type is a class with a destructor and copy constructor.
+	asOBJ_APP_CLASS_DK               = (asOBJ_APP_CLASS + asOBJ_APP_CLASS_DESTRUCTOR + asOBJ_APP_CLASS_COPY_CONSTRUCTOR),
+	//! The C++ type is a class with a destructor, assignment operator, and copy constructor.
+	asOBJ_APP_CLASS_DAK              = (asOBJ_APP_CLASS + asOBJ_APP_CLASS_DESTRUCTOR + asOBJ_APP_CLASS_ASSIGNMENT + asOBJ_APP_CLASS_COPY_CONSTRUCTOR),
+	//! The C++ type is a class with an assignment operator.
+	asOBJ_APP_CLASS_A                = (asOBJ_APP_CLASS + asOBJ_APP_CLASS_ASSIGNMENT),
+	//! The C++ type is a class with an assignment operator and copy constructor.
+	asOBJ_APP_CLASS_AK               = (asOBJ_APP_CLASS + asOBJ_APP_CLASS_ASSIGNMENT + asOBJ_APP_CLASS_COPY_CONSTRUCTOR),
+	//! The C++ type is a class with a copy constructor.
+	asOBJ_APP_CLASS_K                = (asOBJ_APP_CLASS + asOBJ_APP_CLASS_COPY_CONSTRUCTOR),
+	//! The C++ type is a primitive type. Only valid for value types.
+	asOBJ_APP_PRIMITIVE              = (1<<13),
+	//! The C++ type is a float or double. Only valid for value types.
+	asOBJ_APP_FLOAT                  = (1<<14),
+	//! The C++ type is a static array. Only valid for value types.
+	asOBJ_APP_ARRAY                  = (1<<15),
+	//! The C++ class can be treated as if all its members are integers.
+	asOBJ_APP_CLASS_ALLINTS          = (1<<16),
+	//! The C++ class can be treated as if all its members are floats or doubles.
+	asOBJ_APP_CLASS_ALLFLOATS        = (1<<17),
+	//! The type doesn't use reference counting. Only valid for reference types.
+	asOBJ_NOCOUNT                    = (1<<18),
+	//! The C++ class contains types that may require 8byte alignment. Only valid for value types.
+	asOBJ_APP_CLASS_ALIGN8           = (1<<19),
+	asOBJ_MASK_VALID_FLAGS           = 0x0FFFFF,
+	// Internal flags
+	//! The object is a script class or an interface.
+	asOBJ_SCRIPT_OBJECT              = (1<<20),
+	//! Type object type is shared between modules.
+	asOBJ_SHARED                     = (1<<21),
+	//! The object type is marked as final and cannot be inherited.
+	asOBJ_NOINHERIT                  = (1<<22),
+	//! The object type is a script function
+	asOBJ_SCRIPT_FUNCTION            = (1<<23),
+	//! The object is declared for implicit handle
+	asOBJ_IMPLICIT_HANDLE            = (1<<24),
+	asOBJ_LIST_PATTERN               = (1<<25),
+	asOBJ_ENUM                       = (1<<26),
+	asOBJ_TEMPLATE_SUBTYPE           = (1<<27),
+	asOBJ_TYPEDEF                    = (1<<28)
+};
+
+// Behaviours
+//! Behaviours
+enum asEBehaviours
+{
+	// Value object memory management
+	//! \brief Constructor
+	asBEHAVE_CONSTRUCT,
+	//! \brief Constructor used exclusively for initialization lists
+	asBEHAVE_LIST_CONSTRUCT,
+	//! \brief Destructor
+	asBEHAVE_DESTRUCT,
+
+	// Reference object memory management
+	//! \brief Factory
+	asBEHAVE_FACTORY,
+	//! \brief Factory used exclusively for initialization lists
+	asBEHAVE_LIST_FACTORY,
+	//! \brief AddRef
+	asBEHAVE_ADDREF,
+	//! \brief Release
+	asBEHAVE_RELEASE,
+	//! \brief Obtain weak ref flag
+	asBEHAVE_GET_WEAKREF_FLAG,
+
+	// Object operators
+	//! \brief Explicit value cast operator
+	asBEHAVE_VALUE_CAST,
+	//! \brief Implicit value cast operator
+	asBEHAVE_IMPLICIT_VALUE_CAST,
+	//! \brief Explicit reference cast operator
+	asBEHAVE_REF_CAST,
+	//! \brief Implicit reference cast operator
+	asBEHAVE_IMPLICIT_REF_CAST,
+	//! \brief Callback for validating template instances
+	asBEHAVE_TEMPLATE_CALLBACK,
+
+	// Garbage collection behaviours
+	asBEHAVE_FIRST_GC,
+	//! \brief (GC) Get reference count
+	 asBEHAVE_GETREFCOUNT = asBEHAVE_FIRST_GC,
+	 //! \brief (GC) Set GC flag
+	 asBEHAVE_SETGCFLAG,
+	 //! \brief (GC) Get GC flag
+	 asBEHAVE_GETGCFLAG,
+	 //! \brief (GC) Enumerate held references
+	 asBEHAVE_ENUMREFS,
+	 //! \brief (GC) Release all references
+	 asBEHAVE_RELEASEREFS,
+	asBEHAVE_LAST_GC = asBEHAVE_RELEASEREFS,
+
+	asBEHAVE_MAX
+};
+
+// Context states
 //! \brief Context states.
 enum asEContextState
 {
@@ -371,7 +385,6 @@ enum asEContextState
 };
 
 // Message types
-
 //! \brief Compiler message types.
 enum asEMsgType
 {
@@ -384,7 +397,6 @@ enum asEMsgType
 };
 
 // Garbage collector flags
-
 //! \brief Garbage collector flags.
 enum asEGCFlags
 {
@@ -564,7 +576,7 @@ typedef unsigned int   asUINT;
     typedef long asINT64;
 #else
     typedef unsigned long asDWORD;
-  #if defined(__GNUC__) || defined(__MWERKS__)
+  #if defined(__GNUC__) || defined(__MWERKS__) || defined(__SUNPRO_CC)
     typedef uint64_t asQWORD;
     typedef int64_t asINT64;
   #else
@@ -597,6 +609,21 @@ typedef void (*asCLEANCONTEXTFUNC_t)(asIScriptContext *);
 typedef void (*asCLEANFUNCTIONFUNC_t)(asIScriptFunction *);
 //! The function signature for the object type cleanup callback function
 typedef void (*asCLEANOBJECTTYPEFUNC_t)(asIObjectType *);
+//! The function signature for the request context callback
+typedef asIScriptContext *(*asREQUESTCONTEXTFUNC_t)(asIScriptEngine *, void *);
+//! The function signature for the return context callback
+typedef void (*asRETURNCONTEXTFUNC_t)(asIScriptEngine *, asIScriptContext *, void *);
+
+// Check if the compiler can use C++11 features
+#if !defined(_MSC_VER) || _MSC_VER >= 1700   // MSVC 2012
+#if !defined(__GNUC__) || __GNUC__ > 4 || (__GNUC__ == 4 && __GNUC_MINOR__ >= 7)  // gnuc 4.7
+#if !(defined(__GNUC__) && defined(__cplusplus) && __cplusplus < 201103L) // g++ -std=c++11
+#if !defined(__SUNPRO_CC)
+#define AS_CAN_USE_CPP11 1
+#endif
+#endif
+#endif
+#endif
 
 // This macro does basically the same thing as offsetof defined in stddef.h, but
 // GNUC should not complain about the usage as I'm not using 0 as the base pointer.
@@ -627,7 +654,7 @@ typedef void (asCUnknownClass::*asMETHOD_t)();
 //! \brief Represents a function or method pointer.
 struct asSFuncPtr
 {
-	asSFuncPtr(asBYTE f)
+	asSFuncPtr(asBYTE f = 0)
 	{
 		for( size_t n = 0; n < sizeof(ptr.dummy); n++ )
 			ptr.dummy[n] = 0;
@@ -862,12 +889,19 @@ extern "C"
 	//!
 	//! If not called, AngelScript will use the malloc and free functions from the
 	//! standard C library.
-	AS_API int asSetGlobalMemoryFunctions(asALLOCFUNC_t allocFunc, asFREEFUNC_t freeFunc);
+	AS_API int   asSetGlobalMemoryFunctions(asALLOCFUNC_t allocFunc, asFREEFUNC_t freeFunc);
 	//! \brief Remove previously registered memory management functions.
 	//! \return A negative value on error.
 	//!
 	//! Call this method to restore the default memory management functions.
-	AS_API int asResetGlobalMemoryFunctions();
+	AS_API int   asResetGlobalMemoryFunctions();
+	//! \brief Allocate memory using the memory function registered with AngelScript
+	//! \param[in] size The size of the buffer to allocate
+	//! \return A pointer to the allocated buffer, or null on error.
+	AS_API void *asAllocMem(size_t size);
+	//! \brief Deallocates memory using the memory function registered with AngelScript
+	//! \param[in] mem A pointer to the buffer to deallocate
+	AS_API void  asFreeMem(void *mem);
 
 	// Auxiliary
 	//! \brief Create a lockable shared boolean
@@ -885,6 +919,14 @@ extern "C"
 // Interface declarations
 
 //! \brief The engine interface
+//!
+//! The engine is the central object. It is where the application 
+//! \ref doc_register_api_topic "registers the application interface"
+//! that the scripts should be able to use, and it is where the application can 
+//! \ref doc_compile_script "request modules to build scripts" and 
+//! \ref doc_call_script_func "contexts to execute them".
+//!
+//! The engine instance is created with a call to \ref asCreateScriptEngine. 
 //!
 //! It is allowed to have multiple instances of script engines, but there is rarely a need for it.
 //! Even if the application needs to expose different interfaces to different types of scripts
@@ -1007,6 +1049,7 @@ public:
 	//! \retval asINVALID_DECLARATION The function declaration is invalid.
 	//! \retval asNAME_TAKEN The function name is already used elsewhere.
 	//! \retval asALREADY_REGISTERED The function has already been registered with the same parameter list.
+	//! \retval asINVALID_ARG The \a objForThiscall pointer wasn't set according to calling convention.
 	//!
 	//! This method registers system functions that the scripts may use to communicate with the host application.
 	//!
@@ -1123,6 +1166,7 @@ public:
 	//! \param[in] declaration The declaration of the method in script syntax.
 	//! \param[in] funcPointer The method or function pointer.
 	//! \param[in] callConv The calling convention for the method or function.
+	//! \param[in] objForThiscall A pointer to the functor object for use with \ref asCALL_THISCALL_OBJFIRST and \ref asCALL_THISCALL_OBJLAST
 	//! \return A negative value on error, or the function id if successful.
 	//! \retval asWRONG_CONFIG_GROUP The object type was registered in a different configuration group.
 	//! \retval asNOT_SUPPORTED The calling convention is not supported.
@@ -1131,6 +1175,7 @@ public:
 	//! \retval asNAME_TAKEN The name conflicts with other members.
 	//! \retval asWRONG_CALLING_CONV The function's calling convention isn't compatible with \a callConv.
 	//! \retval asALREADY_REGISTERED The method has already been registered with the same parameter list.
+	//! \retval asINVALID_ARG The \a objForThiscall pointer wasn't set according to calling convention.
 	//!
 	//! Use this method to register a member method for the type. The method
 	//! that is registered may be an actual class method, or a global function
@@ -1138,14 +1183,14 @@ public:
 	//! it may be a global function implemented with the generic calling convention.
 	//!
 	//! \see \ref doc_register_func
-	virtual int            RegisterObjectMethod(const char *obj, const char *declaration, const asSFuncPtr &funcPointer, asDWORD callConv) = 0;
+	virtual int            RegisterObjectMethod(const char *obj, const char *declaration, const asSFuncPtr &funcPointer, asDWORD callConv, void *objForThiscall = 0) = 0;
 	//! \brief Registers a behaviour for the object type.
 	//! \param[in] obj The name of the type.
 	//! \param[in] behaviour One of the object behaviours from \ref asEBehaviours.
 	//! \param[in] declaration The declaration of the method in script syntax.
 	//! \param[in] funcPointer The method or function pointer.
 	//! \param[in] callConv The calling convention for the method or function.
-	//! \param[in] objForThiscall The object pointer used for \ref asCALL_THISCALL_ASGLOBAL.
+	//! \param[in] objForThiscall The object pointer used for \ref asCALL_THISCALL_ASGLOBAL, \ref asCALL_THISCALL_OBJFIRST, and \ref asCALL_THISCALL_OBJLAST
 	//! \return A negative value on error, or the function id is successful.
 	//! \retval asWRONG_CONFIG_GROUP The object type was registered in a different configuration group.
 	//! \retval asINVALID_ARG \a obj is not set, or a global behaviour is given in \a behaviour.
@@ -1155,6 +1200,7 @@ public:
 	//! \retval asINVALID_DECLARATION The \a declaration is invalid.
 	//! \retval asILLEGAL_BEHAVIOUR_FOR_TYPE The \a behaviour is not allowed for this type.
 	//! \retval asALREADY_REGISTERED The behaviour is already registered with the same signature.
+	//! \retval asINVALID_ARG The \a objForThiscall pointer wasn't set according to calling convention.
 	//!
 	//! Use this method to register behaviour functions that will be called by
 	//! the virtual machine to perform certain operations, such as memory management,
@@ -1166,7 +1212,7 @@ public:
 	//!
 	//! \see \ref doc_register_func, \ref doc_reg_opbeh
 	virtual int            RegisterObjectBehaviour(const char *obj, asEBehaviours behaviour, const char *declaration, const asSFuncPtr &funcPointer, asDWORD callConv, void *objForThiscall = 0) = 0;
-	//! \brief Registers an interface.
+	//! \brief Registers a script interface.
 	//! \param[in] name The name of the interface.
 	//! \return A negative value on error.
 	//! \retval asINVALID_NAME The \a name is null, or a reserved keyword.
@@ -1177,8 +1223,10 @@ public:
 	//! This registers an interface that script classes can implement. By doing this the application 
 	//! can register functions and methods that receives an \ref asIScriptObject and still be sure that the 
 	//! class implements certain methods needed by the application. 
+	//!
+	//! \see \ref doc_use_script_class_3
 	virtual int            RegisterInterface(const char *name) = 0;
-	//! \brief Registers an interface method.
+	//! \brief Registers a script interface method.
 	//! \param[in] intf The name of the interface.
 	//! \param[in] declaration The method declaration.
 	//! \return A negative value on error.
@@ -1187,7 +1235,7 @@ public:
 	//! \retval asINVALID_DECLARATION The \a declaration is invalid.
 	//! \retval asNAME_TAKEN The method name is already taken.
 	//!
-	//! This registers a method that the class that implements the interface must have.
+	//! This registers a method that the class that implements the script interface must have.
 	virtual int            RegisterInterfaceMethod(const char *intf, const char *declaration) = 0;
 	//! \brief Returns the number of registered object types.
 	//! \return The number of object types registered by the application.
@@ -1200,6 +1248,16 @@ public:
 	//! \param[in] name The name of the type.
 	//! \return The object type or null if no match is found.
 	virtual asIObjectType *GetObjectTypeByName(const char *name) const = 0;
+	//! \brief Returns an object type by declaration.
+	//! \param[in] decl The declaration of the type.
+	//! \return The object type or null on error.
+	//!
+	//! Translates a type declaration into the object type. The returned object type is valid for as 
+	//! long as the type is valid, so you can safely store it for later use to avoid potential overhead from 
+	//! calling this function each time. Just remember to update the object type, any time the type is 
+	//! changed within the engine, e.g. when recompiling script declared classes, or changing the 
+	//! engine configuration.
+	virtual asIObjectType *GetObjectTypeByDecl(const char *decl) const = 0;
 	//! \}
 
 	// String factory
@@ -1237,8 +1295,9 @@ public:
 	virtual int RegisterStringFactory(const char *datatype, const asSFuncPtr &factoryFunc, asDWORD callConv, void *objForThiscall = 0) = 0;
 	//! \brief Returns the type id of the type that the string factory returns.
 	//! \return The type id of the type that the string type returns, or a negative value on error.
+	//! \param[out] flags The \ref asETypeModifiers "type modifiers" for the return type
 	//! \retval asNO_FUNCTION The string factory has not been registered.
-	virtual int GetStringFactoryReturnTypeId() const = 0;
+	virtual int GetStringFactoryReturnTypeId(asDWORD *flags = 0) const = 0;
 	//! \}
 
 	// Default array type
@@ -1471,7 +1530,7 @@ public:
 	//! \return A pointer to the function description interface, or null if not found.
 	//!
 	//! This does not increment the reference count of the returned function interface.
-    virtual asIScriptFunction *GetFuncDefFromTypeId(int typeId) const = 0;
+	virtual asIScriptFunction *GetFuncDefFromTypeId(int typeId) const = 0;
 	//! \}
 
 	// Type identification
@@ -1514,7 +1573,10 @@ public:
 	virtual const char    *GetTypeDeclaration(int typeId, bool includeNamespace = false) const = 0;
 	//! \brief Returns the size of a primitive type.
 	//! \param[in] typeId The type id of the type.
-	//! \return The size of the type in bytes.
+	//! \return The size of the type in bytes, or zero if it is not a primitive type.
+	//!
+	//! This method can be used to return the size of any built-in primitive type,
+	//! and also for script declared or application registered enums.
 	virtual int            GetSizeOfPrimitiveType(int typeId) const = 0;
 	//! \}
 
@@ -1527,34 +1589,25 @@ public:
 	//!
 	//! This method creates a context that will be used to execute the script functions. 
 	//! The context interface created will have its reference counter already increased.
+	//!
+	//! \see \ref RequestContext
 	virtual asIScriptContext      *CreateContext() = 0;
-#ifdef AS_DEPRECATED
-	// Deprecated since 2.27.0, 2013-07-18
-	//! \deprecated Since 2.27.0. Use \ref asIScriptEngine::CreateScriptObject(const asIObjectType *) instead
-	virtual void                  *CreateScriptObject(int typeId) = 0;
-	//! \deprecated Since 2.27.0. Use \ref asIScriptEngine::CreateScriptObjectCopy(void *, const asIObjectType *) instead
-	virtual void                  *CreateScriptObjectCopy(void *obj, int typeId) = 0;
-	//! \deprecated Since 2.27.0. Use \ref asIScriptEngine::CreateUninitializedScriptObject(const asIObjectType *) instead
-	virtual void                  *CreateUninitializedScriptObject(int typeId) = 0;
-	//! \deprecated Since 2.27.0. Use \ref asIScriptEngine::AssignScriptObject(void *, void *, const asIObjectType *) instead
-	virtual void                   AssignScriptObject(void *dstObj, void *srcObj, int typeId) = 0;
-	//! \deprecated Since 2.27.0. Use \ref asIScriptEngine::ReleaseScriptObject(void *, const asIObjectType *) instead
-	virtual void                   ReleaseScriptObject(void *obj, int typeId) = 0;
-	//! \deprecated Since 2.27.0. Use \ref asIScriptEngine::AddRefScriptObject(void *, const asIObjectType *) instead
-	virtual void                   AddRefScriptObject(void *obj, int typeId) = 0;
-#endif
-	//! \brief Creates a script object defined by its type id.
+	//! \brief Creates an object defined by its type.
 	//! \param[in] type The type of the object to create.
 	//! \return A pointer to the new object if successful, or null if not.
 	//!
-	//! This method is used to create a script object based on it's type id. The method will 
+	//! This method is used to create an object based on it's type. The method will 
 	//! call the object type's default factory. If the object type doesn't have a default 
 	//! factory the call will fail and no object will be created.
 	//!
 	//! Created objects will have their reference counter set to 1 so the application 
 	//! needs to release the pointer when it will no longer use it.
 	//!
-	//! This only works for objects, for primitive types and object handles the method 
+	//! If the type is a registered value type, then the memory for the object will be 
+	//! allocated using the \ref asSetGlobalMemoryFunctions "default memory routine". To 
+	//! destroy and and deallocate the object it is best to use \ref ReleaseScriptObject.
+	//!
+	//! The method only works for objects, for primitive types and object handles the method 
 	//! doesn't do anything and returns a null pointer.
 	virtual void                  *CreateScriptObject(const asIObjectType *type) = 0;
 	//! \brief Creates a copy of a script object.
@@ -1567,7 +1620,7 @@ public:
 	//! This only works for objects, for primitive types and object handles the method 
 	//! doesn't do anything and returns a null pointer.
 	virtual void                  *CreateScriptObjectCopy(void *obj, const asIObjectType *type) = 0;
-	//! \brief Creates an uninitialized script object defined by its type id.
+	//! \brief Creates an uninitialized script object defined by its type.
 	//! \param[in] type The type of the object to create.
 	//! \return A pointer to the new object if successful, or null if not.
 	//!
@@ -1597,11 +1650,14 @@ public:
 	//!
 	//! This only works for objects.
 	virtual void                   AssignScriptObject(void *dstObj, void *srcObj, const asIObjectType *type) = 0;
-	//! \brief Release the script object pointer.
+	//! \brief Release the object pointer.
 	//! \param[in] obj A pointer to the object.
 	//! \param[in] type The type of the object.
 	//!
 	//! This calls the release method of the object to release the reference.
+	//!
+	//! If the type is a value type, the method will destroy the object and deallocate
+	//! the memory using the \ref asSetGlobalMemoryFunctions "default memory routine".
 	virtual void                   ReleaseScriptObject(void *obj, const asIObjectType *type) = 0;
 	//! \brief Increase the reference counter for the script object.
 	//! \param[in] obj A pointer to the object.
@@ -1629,6 +1685,40 @@ public:
 	virtual asILockableSharedBool *GetWeakRefFlagOfScriptObject(void *obj, const asIObjectType *type) const = 0;
 	//! \}
 
+	// Context pooling
+	//! \name Context pooling
+	//! \{
+
+	//! \brief Request a context
+	//! \return An unprepared context
+	//!
+	//! This method will invoke the registered request context callback
+	//! and return an available context in an unprepared state.
+	//! 
+	//! Contexts obtained through this method shouldn't be released, instead
+	//! they should be returned to the origin with a call to \ref ReturnContext.
+	//!
+	//! \see \ref CreateContext
+	virtual asIScriptContext      *RequestContext() = 0;
+	//! \brief Return a context when it won't be used anymore
+	//! \param[in] ctx The context that should be returned to the origin
+	virtual void                   ReturnContext(asIScriptContext *ctx) = 0;
+	//! \brief Register context callbacks for pooling
+	//! \param[in] requestCtx The request context callback function
+	//! \param[in] returnCtx The return context callback function
+	//! \param[in] param An optional parameter that will be passed to the callback
+	//! \return A negative value on error
+	//! \retval asINVALID_ARG One or both of the context functions are null
+	//!
+	//! This method can be used by the application to implement a context pool, 
+	//! or to perform custom configuration on the contexts that the engine uses internally.
+	//!
+	//! This can for example be used to debug calls to initialize global variables
+	//! when building modules, or to detect script exceptions that may occur in 
+	//! script class destructors when called from the garbage collector.
+	virtual int                    SetContextCallbacks(asREQUESTCONTEXTFUNC_t requestCtx, asRETURNCONTEXTFUNC_t returnCtx, void *param = 0) = 0;
+	//! \}
+
 	// String interpretation
 	//! \name String interpretation
 	//! \{
@@ -1651,6 +1741,7 @@ public:
 
 	//! \brief Perform garbage collection.
 	//! \param[in] flags Set to a combination of the \ref asEGCFlags.
+	//! \param[in] numIterations The number of iterations to perform when not doing a full cycle
 	//! \return 1 if the cycle wasn't completed, 0 if it was.
 	//!
 	//! This method will free script objects that can no longer be reached. When the engine 
@@ -1665,7 +1756,7 @@ public:
 	//! of the application.
 	//!
 	//! \see \ref doc_gc
-	virtual int  GarbageCollect(asDWORD flags = asGC_FULL_CYCLE) = 0;
+	virtual int  GarbageCollect(asDWORD flags = asGC_FULL_CYCLE, asUINT numIterations = 1) = 0;
 	//! \brief Obtain statistics from the garbage collector.
 	//! \param[out] currentSize The current number of objects known to the garbage collector.
 	//! \param[out] totalDestroyed The total number of objects destroyed by the garbage collector.
@@ -1740,31 +1831,34 @@ public:
 	virtual void  SetEngineUserDataCleanupCallback(asCLEANENGINEFUNC_t callback, asPWORD type = 0) = 0;
 	//! \brief Set the function that should be called when the module is destroyed
 	//! \param[in] callback A pointer to the function
+	//! \param[in] type An identifier specifying which user data the callback is to be used with.
 	//!
 	//! The function given with this call will be invoked when the module
 	//! is destroyed if any \ref asIScriptModule::SetUserData "user data" has been registered with the module.
 	//!
 	//! The function is called from within the module destructor, so the callback
 	//! should not be used for anything but cleaning up the user data itself.
-	virtual void  SetModuleUserDataCleanupCallback(asCLEANMODULEFUNC_t callback) = 0;
+	virtual void  SetModuleUserDataCleanupCallback(asCLEANMODULEFUNC_t callback, asPWORD type = 0) = 0;
 	//! \brief Set the function that should be called when a context is destroyed
 	//! \param[in] callback A pointer to the function
+	//! \param[in] type An identifier specifying which user data the callback is to be used with.
 	//!
 	//! The function given with this call will be invoked when a context
 	//! is destroyed if any \ref asIScriptContext::SetUserData "user data" has been registered with the context.
 	//!
 	//! The function is called from within the context destructor, so the callback
 	//! should not be used for anything but cleaning up the user data itself.
-	virtual void  SetContextUserDataCleanupCallback(asCLEANCONTEXTFUNC_t callback) = 0;
+	virtual void  SetContextUserDataCleanupCallback(asCLEANCONTEXTFUNC_t callback, asPWORD type = 0) = 0;
 	//! \brief Set the function that should be called when a function is destroyed
 	//! \param[in] callback A pointer to the function
+	//! \param[in] type An identifier specifying which user data the callback is to be used with.
 	//!
 	//! The function given with this call will be invoked when a function
 	//! is destroyed if any \ref asIScriptFunction::SetUserData "user data" has been registered with the function.
 	//!
 	//! The function is called from within the function destructor, so the callback
 	//! should not be used for anything but cleaning up the user data itself.
-	virtual void  SetFunctionUserDataCleanupCallback(asCLEANFUNCTIONFUNC_t callback) = 0;
+	virtual void  SetFunctionUserDataCleanupCallback(asCLEANFUNCTIONFUNC_t callback, asPWORD type = 0) = 0;
 	//! \brief Set the function that should be called when an object type is destroyed
 	//! \param[in] callback A pointer to the function
 	//! \param[in] type An identifier specifying which user data the callback is to be used with.
@@ -1844,8 +1938,13 @@ public:
 	//! \retval asINVALID_ARG The \a code argument is null.
 	//! \retval asNOT_SUPPORTED Compiler support is disabled in the engine.
 	//!
-	//! This adds a script section to the module. All sections added will be treated as if one 
-	//! large script. Errors reported will give the name of the corresponding section.
+	//! This adds a script section to the module. The script section isn't processed with this
+	//! call. Only when \ref Build is called will the script be parsed and compiled into 
+	//! executable byte code.
+	//!
+	//! Error messages from the compiler will refer to the name of the script section and the position
+	//! within it. Normally each section is the content of a source file, so it is recommended to name
+	//! the script sections as the name of the source file.
 	//!
 	//! The code added is copied by the engine, so there is no need to keep the original buffer after the call.
 	//! Note that this can be changed by setting the engine property \ref asEP_COPY_SCRIPT_SECTIONS
@@ -1859,17 +1958,22 @@ public:
 	//! \retval asINIT_GLOBAL_VARS_FAILED It was not possible to initialize at least one of the global variables.
 	//! \retval asNOT_SUPPORTED Compiler support is disabled in the engine.
 	//!
-	//! Builds the script based on the added sections, and registered types and functions. After the
-	//! build is complete the script sections are removed to free memory. If the script module needs 
-	//! to be rebuilt all of the script sections needs to be added again.
+	//! Builds the script based on the previously \ref AddScriptSection "added sections", \ref doc_register_api "registered types and functions". 
+	//! After the build is complete the script sections are removed to free memory. 
+	//!
+	//! Before starting the build the \ref Build method removes any previously compiled script content, including the
+	//! dynamically added content from \ref CompileFunction and \ref CompileGlobalVar. If the script 
+	//! module needs to be rebuilt all of the script sections needs to be added again.
 	//!
 	//! Compiler messages are sent to the message callback function set with \ref asIScriptEngine::SetMessageCallback. 
 	//! If there are no errors or warnings, no messages will be sent to the callback function.
 	//!
 	//! Any global variables found in the script will be initialized by the
 	//! compiler if the engine property \ref asEP_INIT_GLOBAL_VARS_AFTER_BUILD is set. If you get the error
-	//! asINIT_GLOBAL_VARS_FAILED, then it is probable that one of the global variables during the initialization 
+	//! \ref asINIT_GLOBAL_VARS_FAILED, then it is probable that one of the global variables during the initialization 
 	//! is trying to access another global variable before it has been initialized. 
+	//!
+	//! \see \ref doc_compile_script
 	virtual int         Build() = 0;
 	//! \brief Compile a single function.
 	//! \param[in] sectionName The name of the script section
@@ -1884,9 +1988,13 @@ public:
 	//! \retval asERROR The compilation failed.
 	//! \retval asNOT_SUPPORTED Compiler support is disabled in the engine.
 	//!
-	//! Use this to compile a single function. The function can be optionally added to the scope of the module, in which case
-	//! it will be available for subsequent compilations. If not added to the module, the function can still be returned in the
-	//! output parameter, which will allow the application to execute it, and then discard it when it is no longer needed.
+	//! Use this to compile a single function. Any existing compiled code in the module can be used
+	//! by the function. 
+	//!
+	//! The newly compiled function can be optionally added to the scope of the module where it can later
+	//! be referred to by the application or used in subsequent compilations. If not added to the module 
+	//! the function can still be returned in the output parameter, which will allow the application 
+	//! to execute it and then discard it when it is no longer needed.
 	//!
 	//! If the output function parameter is set, remember to release the function object when you're done with it.
 	virtual int         CompileFunction(const char *sectionName, const char *code, int lineOffset, asDWORD compileFlags, asIScriptFunction **outFunc) = 0;
@@ -1907,6 +2015,8 @@ public:
 	//!
 	//! The script code may contain an initialization expression, which will be executed by the
 	//! compiler if the engine property \ref asEP_INIT_GLOBAL_VARS_AFTER_BUILD is set.
+	//!
+	//! Any existing compiled code in the module can be used in the initialization expression.
 	virtual int         CompileGlobalVar(const char *sectionName, const char *code, int lineOffset) = 0;
 	//! \brief Sets the access mask that should be used during the compilation.
 	//! \param[in] accessMask The access bit mask
@@ -2058,13 +2168,23 @@ public:
 	//!
 	//! This does not increase the reference count of the returned object.
 	virtual asIObjectType *GetObjectTypeByName(const char *name) const = 0;
+	//! \brief Returns a type by declaration.
+	//! \param[in] decl The declaration of the type.
+	//! \return The object type or null on error.
+	//!
+	//! Translates a type declaration into the object type. The returned object type is valid for as 
+	//! long as the type is valid, so you can safely store it for later use to avoid potential overhead from 
+	//! calling this function each time. Just remember to update the object type, any time the type is 
+	//! changed within the engine, e.g. when recompiling script declared classes, or changing the 
+	//! engine configuration.
+	virtual asIObjectType *GetObjectTypeByDecl(const char *decl) const = 0;
 	//! \brief Returns a type id by declaration.
 	//! \param[in] decl The declaration of the type.
 	//! \return A negative value on error, or the type id of the type.
 	//! \retval asINVALID_TYPE \a decl is not a valid type.
 	//!
 	//! Translates a type declaration into a type id. The returned type id is valid for as long as
-	//! the type is valid, so you can safely store it for later use to avoid potential overhead by 
+	//! the type is valid, so you can safely store it for later use to avoid potential overhead from 
 	//! calling this function each time. Just remember to update the type id, any time the type is 
 	//! changed within the engine, e.g. when recompiling script declared classes, or changing the 
 	//! engine configuration.
@@ -2197,6 +2317,7 @@ public:
 	//! \return A negative value on error.
 	//! \retval asINVALID_ARG The stream object wasn't specified.
 	//! \retval asNOT_SUPPORTED Compiler support is disabled in the engine.
+	//! \retval asERROR Nothing has been compiled in the module.
 	//!
 	//! This method is used to save pre-compiled byte code to disk or memory, for a later restoral.
 	//! The application must implement an object that inherits from \ref asIBinaryStream to provide
@@ -2230,15 +2351,19 @@ public:
 
 	//! \brief Register the memory address of some user data.
 	//! \param[in] data A pointer to the user data.
+	//! \param[in] type An identifier specifying the user data to set.
 	//! \return The previous pointer stored in the module
 	//!
 	//! This method allows the application to associate a value, e.g. a pointer, with the module instance.
 	//!
+	//! The type values 1000 through 1999 are reserved for use by the official add-ons.
+	//!
 	//! Optionally, a callback function can be \ref asIScriptEngine::SetModuleUserDataCleanupCallback "registered" to clean up the user data when the module is destroyed.
-	virtual void *SetUserData(void *data) = 0;
+	virtual void *SetUserData(void *data, asPWORD type = 0) = 0;
 	//! \brief Returns the address of the previously registered user data.
+	//! \param[in] type An identifier specifying the user data to set.
 	//! \return The pointer to the user data.
-	virtual void *GetUserData() const = 0;
+	virtual void *GetUserData(asPWORD type = 0) const = 0;
 	//! \}
 
 protected:
@@ -2717,17 +2842,21 @@ public:
 
 	//! \brief Register the memory address of some user data.
 	//! \param[in] data A pointer to the user data.
+	//! \param[in] type An identifier specifying the user data to set.
 	//! \return The previous pointer stored in the context.
 	//!
 	//! This method allows the application to associate a value, e.g. a pointer, with the context instance.
 	//!
+	//! The type values 1000 through 1999 are reserved for use by the official add-ons.
+	//!
 	//! Optionally, a callback function can be \ref asIScriptEngine::SetContextUserDataCleanupCallback "registered" 
 	//! to clean up the user data when the context is destroyed. As the callback is registered with the engine, it is
 	//! only necessary to do it once, even if more than one context is used.
-	virtual void *SetUserData(void *data) = 0;
+	virtual void *SetUserData(void *data, asPWORD type = 0) = 0;
 	//! \brief Returns the address of the previously registered user data.
+	//! \param[in] type An identifier specifying the user data to set.
 	//! \return The pointer to the user data.
-	virtual void *GetUserData() const = 0;
+	virtual void *GetUserData(asPWORD type = 0) const = 0;
 	//! \}
 
 protected:
@@ -3288,8 +3417,9 @@ public:
 	//! \brief Returns the function declaration
 	//! \param[in] includeObjectName Indicate whether the object name should be prepended to the function name
 	//! \param[in] includeNamespace Indicates whether the namespace should be prepended to the function name
+	//! \param[in] includeParamNames Indicates whether parameter names should be added to the declaration
 	//! \return A null terminated string with the function declaration.
-	virtual const char      *GetDeclaration(bool includeObjectName = true, bool includeNamespace = false) const = 0;
+	virtual const char      *GetDeclaration(bool includeObjectName = true, bool includeNamespace = false, bool includeParamNames = false) const = 0;
 	//! \brief Returns true if the class method is read-only
 	//! \return True if the class method is read-only
 	virtual bool             IsReadOnly() const = 0;
@@ -3310,10 +3440,18 @@ public:
 	virtual asUINT           GetParamCount() const = 0;
 	//! \brief Returns the type id of the specified parameter.
 	//! \param[in] index The zero based parameter index.
+	//! \param[out] typeId The typeId of the parameter.
 	//! \param[out] flags A combination of \ref asETypeModifiers.
-	//! \return A negative value on error, or the type id of the specified parameter.
+	//! \param[out] name The name of the parameter (or null if not defined).
+	//! \param[out] defaultArg The default argument expression (or null if not defined).
+	//! \return A negative value on error.
 	//! \retval asINVALID_ARG The index is out of bounds.
+	virtual int              GetParam(asUINT index, int *typeId, asDWORD *flags = 0, const char **name = 0, const char **defaultArg = 0) const = 0;
+#ifdef AS_DEPRECATED
+	// Deprecated since 2.29.0, 2014-04-06
+	//! \deprecated Since 2.29.0. Use \ref asIScriptFunction::GetParam instead.
 	virtual int              GetParamTypeId(asUINT index, asDWORD *flags = 0) const = 0;
+#endif
 	//! \brief Returns the type id of the return type.
 	//! \param[out] flags A combination of \ref asETypeModifiers.
 	//! \return The type id of the return type.
@@ -3392,17 +3530,21 @@ public:
 
 	//! \brief Register the memory address of some user data.
 	//! \param[in] userData A pointer to the user data.
+	//! \param[in] type An identifier specifying the user data to set.
 	//! \return The previous pointer stored in the context.
 	//!
 	//! This method allows the application to associate a value, e.g. a pointer, with the context instance.
 	//!
+	//! The type values 1000 through 1999 are reserved for use by the official add-ons.
+	//!
 	//! Optionally, a callback function can be \ref asIScriptEngine::SetFunctionUserDataCleanupCallback "registered" 
 	//! to clean up the user data when the function is destroyed. As the callback is registered with the engine, it is
 	//! only necessary to do it once.
-	virtual void            *SetUserData(void *userData) = 0;
+	virtual void            *SetUserData(void *userData, asPWORD type = 0) = 0;
 	//! \brief Returns the address of the previously registered user data.
+	//! \param[in] type An identifier specifying the user data to set.
 	//! \return The pointer to the user data.
-	virtual void            *GetUserData() const = 0;
+	virtual void            *GetUserData(asPWORD type = 0) const = 0;
 	//! \}
 
 protected:
@@ -4093,8 +4235,22 @@ enum asEBCInstr
 	asBC_PshListElmnt	= 191,
 	//! \brief Sets the type of the next element in the list buffer
 	asBC_SetListType	= 192,
+	//! \brief Computes the power of for two int values
+	asBC_POWi			= 193,
+	//! \brief Computes the power of for two uint values
+	asBC_POWu			= 194,
+	//! \brief Computes the power of for two float values
+	asBC_POWf			= 195,
+	//! \brief Computes the power of for two double values
+	asBC_POWd			= 196,
+	//! \brief Computes the power of where base is a double and exponent is an int value
+	asBC_POWdi			= 197,
+	//! \brief Computes the power of for two int64 values
+	asBC_POWi64			= 198,
+	//! \brief Computes the power of for two uint64 values
+	asBC_POWu64			= 199,
 
-	asBC_MAXBYTECODE	= 193,
+	asBC_MAXBYTECODE	= 200,
 
 	// Temporary tokens. Can't be output to the final program
 	asBC_VarDecl		= 251,
@@ -4417,14 +4573,14 @@ const asSBCInfo asBCInfo[256] =
 	asBCINFO(SetListSize, rW_DW_DW_ARG,	0),
 	asBCINFO(PshListElmnt, rW_DW_ARG,	AS_PTR_SIZE),
 	asBCINFO(SetListType, rW_DW_DW_ARG,	0),
+	asBCINFO(POWi,		wW_rW_rW_ARG,	0),
+	asBCINFO(POWu,		wW_rW_rW_ARG,	0),
+	asBCINFO(POWf,		wW_rW_rW_ARG,	0),
+	asBCINFO(POWd,		wW_rW_rW_ARG,	0),
+	asBCINFO(POWdi,		wW_rW_rW_ARG,	0),
+	asBCINFO(POWi64,	wW_rW_rW_ARG,	0),
+	asBCINFO(POWu64,	wW_rW_rW_ARG,	0),
 
-	asBCINFO_DUMMY(193),
-	asBCINFO_DUMMY(194),
-	asBCINFO_DUMMY(195),
-	asBCINFO_DUMMY(196),
-	asBCINFO_DUMMY(197),
-	asBCINFO_DUMMY(198),
-	asBCINFO_DUMMY(199),
 	asBCINFO_DUMMY(200),
 	asBCINFO_DUMMY(201),
 	asBCINFO_DUMMY(202),

@@ -154,7 +154,7 @@ class tst
 {
 public:
 
-  int test_f(unsigned int param)
+  int test_f(unsigned int /*param*/)
   {
 	if( sizeof(bool) == 1 )
 	{
@@ -169,11 +169,11 @@ public:
 };
 
 
-void CFunc(float f, int a, int b, const std::string &name)
+void CFunc(float /*f*/, int a, int b, const std::string & /*name*/)
 {
 	if( (a & 0xFFFFFF00) || (b & 0xFFFFFF00) )
 	{
-		printf("Receiving boolean value with scrap in higher bytes. Not sure this is an error.\n");
+		PRINTF("Receiving boolean value with scrap in higher bytes. Not sure this is an error.\n");
 	}
 }
 
@@ -199,16 +199,12 @@ std::string buf;
 void Print(std::string &str)
 {
 	buf += str + "\n";
-//	printf("%s\n", str.c_str());
+//	PRINTF("%s\n", str.c_str());
 }
 
 bool Test()
 {
-	if( strstr(asGetLibraryOptions(), "AS_MAX_PORTABILITY") )
-	{
-		printf("%s: Skipped due to AS_MAX_PORTABILITY\n", TESTNAME);
-		return false;
-	}
+	RET_ON_MAX_PORT
 
 	bool fail = false;
 	int r;

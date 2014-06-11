@@ -10,6 +10,7 @@ may reserve additional keywords that are specific to that application.
 <tr>
 <td width=100 valign=top><code>
 and<br>
+auto<br>
 bool<br>
 break<br>
 case<br>
@@ -83,7 +84,8 @@ These are the non-alphabetical tokens that are also used in the language syntax.
 <table cellspacing=0 cellpadding=0 border=0>
 <tr>
 <td width=100 valign=top><code>
-%*<br>
+\*<br>
+\**<br>
 /<br>
 %<br>
 +<br>
@@ -102,12 +104,13 @@ These are the non-alphabetical tokens that are also used in the language syntax.
 =<br>
 +=<br>
 -=<br>
-*=<br>
+\*=<br>
 /=<br>
-</code></td><td width=100 valign=top><code>
 %=<br>
+</code></td><td width=100 valign=top><code>
+\**=<br>
 ++<br>
---<br>
+\--<br>
 &<br>
 ,<br>
 {<br>

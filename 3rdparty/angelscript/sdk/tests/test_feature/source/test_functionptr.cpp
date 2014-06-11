@@ -17,11 +17,7 @@ void ReceiveFuncPtr(asIScriptFunction *funcPtr)
 
 bool Test()
 {
-	if( strstr(asGetLibraryOptions(), "AS_MAX_PORTABILITY") )
-	{
-		printf("Skipped due to AS_MAX_PORTABILITY\n");
-		return false;
-	}
+	RET_ON_MAX_PORT
 
 	bool fail = false;
 	int r;
@@ -31,6 +27,94 @@ bool Test()
 	asIScriptContext *ctx;
 	CBufferedOutStream bout;
 	const char *script;
+
+	// Test invalid use of function pointer
+	{
+		engine = asCreateScriptEngine(ANGELSCRIPT_VERSION);
+		engine->SetMessageCallback(asMETHOD(CBufferedOutStream, Callback), &bout, asCALL_THISCALL);
+
+		bout.buffer = "";
+		mod = engine->GetModule("mod", asGM_ALWAYS_CREATE);
+		mod->AddScriptSection("test",
+			"void func2() { \n"
+			"  func; \n"
+			"} \n"
+			"void func() {} \n");
+		r = mod->Build();
+		if( r >= 0 )
+			TEST_FAILED;
+
+		if( bout.buffer != "test (1, 1) : Info    : Compiling void func2()\n"
+						   "test (2, 3) : Error   : Invalid expression: ambiguous name\n" )
+		{
+			PRINTF("%s", bout.buffer.c_str());
+			TEST_FAILED;
+		}
+
+		engine->Release();
+	}
+
+	// Test value comparison for function pointers
+/*
+	{
+		engine = asCreateScriptEngine(ANGELSCRIPT_VERSION);
+		engine->SetMessageCallback(asMETHOD(COutStream, Callback), &out, asCALL_THISCALL);
+
+		engine->RegisterGlobalFunction("void assert(bool)", asFUNCTION(Assert), asCALL_GENERIC);
+
+		mod = engine->GetModule("mod", asGM_ALWAYS_CREATE);
+		mod->AddScriptSection("test",
+			"funcdef void CALLBACK(); \n"
+			"void func1() {} \n"
+			"void func2() {} \n");
+		r = mod->Build();
+		if( r < 0 )
+			TEST_FAILED;
+
+		r = ExecuteString(engine, "CALLBACK@ c1 = func1, c2 = func1; \n"
+								  "assert( c1 == c2 ); \n", mod);
+		if( r != asEXECUTION_FINISHED )
+			TEST_FAILED;
+
+		// TODO: Test that two different function pointers give false
+		// TODO: Test for delegate objects
+
+		engine->Release();
+	}
+*/
+
+	// Proper error message when trying to pass class method as function pointer directly
+	// http://www.gamedev.net/topic/655390-is-there-a-bug-with-function-callbacks/
+	{
+		engine = asCreateScriptEngine(ANGELSCRIPT_VERSION);
+		engine->SetMessageCallback(asMETHOD(CBufferedOutStream, Callback), &bout, asCALL_THISCALL);
+		
+		bout.buffer = "";
+
+		mod = engine->GetModule("mod", asGM_ALWAYS_CREATE);
+		mod->AddScriptSection("test",
+			"funcdef void CALLBACK(int); \n"
+			"class Test { \n"
+			"  void Init() { \n"
+			"    SetCallback(MyCallback); \n" // This should fail, since delegate is necessary
+			"  } \n"
+			"  void MyCallback(int) {} \n"
+			"} \n"
+			"void SetCallback(CALLBACK @) {} \n");
+		r = mod->Build();
+		if( r >= 0 )
+			TEST_FAILED;
+
+		if( bout.buffer != "test (3, 3) : Info    : Compiling void Test::Init()\n"
+						   "test (4, 5) : Error   : No matching signatures to 'SetCallback(Test::MyCallback)'\n"
+						   "test (4, 5) : Error   : Can't pass class method as arg directly. Use a delegate object instead\n" )
+		{
+			PRINTF("%s", bout.buffer.c_str());
+			TEST_FAILED;
+		}
+
+		engine->Release();
+	}
 
 	// opEquals with funcdef
 	// http://www.gamedev.net/topic/647797-difference-between-xopequalsy-and-xy-with-funcdefs/
@@ -249,7 +333,7 @@ bool Test()
 
 		if( bout.buffer != "" )
 		{
-			printf("%s", bout.buffer.c_str());
+			PRINTF("%s", bout.buffer.c_str());
 			TEST_FAILED;
 		}
 
@@ -291,7 +375,7 @@ bool Test()
 
 		if( bout.buffer != "" )
 		{
-			printf("%s", bout.buffer.c_str());
+			PRINTF("%s", bout.buffer.c_str());
 			TEST_FAILED;
 		}
 
@@ -300,6 +384,7 @@ bool Test()
 			TEST_FAILED;
 
 		// A delegate to own method held as member of class must be properly resolved by gc
+		bout.buffer = "";
 		mod->AddScriptSection("test",
 			"funcdef void CALL(); \n"
 			"class Test { \n"
@@ -308,11 +393,16 @@ bool Test()
 			"} \n"
 			"void main() { \n"
 			"  Test t; \n"
-			"  t.c = CALL(t.call); \n"
+			"  @t.c = CALL(t.call); \n"
 			"} \n");
 		r = mod->Build();
 		if( r < 0 )
 			TEST_FAILED;
+		if( bout.buffer != "" )
+		{
+			PRINTF("%s", bout.buffer.c_str());
+			TEST_FAILED;
+		}
 
 		engine->GarbageCollect();
 
@@ -414,7 +504,7 @@ bool Test()
 		if( bout.buffer != "test (5, 1) : Info    : Compiling void main()\n"
 		                   "test (7, 9) : Error   : No matching signatures to 'void F()'\n" )
 		{
-			printf("%s", bout.buffer.c_str());
+			PRINTF("%s", bout.buffer.c_str());
 			TEST_FAILED;
 		}
 
@@ -428,10 +518,10 @@ bool Test()
 		if( r >= 0 )
 			TEST_FAILED;
 
-		if( bout.buffer != "test (3, 8) : Info    : Compiling CB@ cb\n"
+		if( bout.buffer != "test (3, 5) : Info    : Compiling CB@ cb\n"
 		                   "test (3, 10) : Error   : Can't create delegate for types that do not support handles\n" )
 		{
-			printf("%s", bout.buffer.c_str());
+			PRINTF("%s", bout.buffer.c_str());
 			TEST_FAILED;
 		}
 
@@ -530,9 +620,10 @@ bool Test()
 		if( r >= 0 )
 			TEST_FAILED;
 		if( bout.buffer != "script (2, 1) : Error   : Data type can't be 'functype'\n"
+						   "script (2, 10) : Info    : Compiling functype myFunc\n"
 						   "script (2, 10) : Error   : No default constructor for object of type 'functype'.\n" )
 		{
-			printf("%s", bout.buffer.c_str());
+			PRINTF("%s", bout.buffer.c_str());
 			TEST_FAILED;
 		}
 
@@ -547,7 +638,7 @@ bool Test()
 		if( bout.buffer != "script (2, 1) : Info    : Compiling void func()\n"
 						   "script (2, 15) : Error   : No matching signatures to 'functype()'\n" )
 		{
-			printf("%s", bout.buffer.c_str());
+			PRINTF("%s", bout.buffer.c_str());
 			TEST_FAILED;
 		}
 
@@ -561,7 +652,7 @@ bool Test()
 			TEST_FAILED;
 		if( bout.buffer != "script (2, 5) : Error   : Name conflict. 'test' is a funcdef.\n" )
 		{
-			printf("%s", bout.buffer.c_str());
+			PRINTF("%s", bout.buffer.c_str());
 			TEST_FAILED;
 		}
 
@@ -571,7 +662,7 @@ bool Test()
 			"funcdef void F(); \n"
 		    "class t { \n"
 			"  void func() { \n"
-			"    @func; \n" // TODO: Should warn about expression that doesn't do anything
+			"    @func; \n"
 			"    F @f = @func; \n"
             "    } \n"
 			"} \n";
@@ -581,9 +672,10 @@ bool Test()
 			TEST_FAILED;
 		// TODO: The error message should be better
 		if( bout.buffer != "script (3, 3) : Info    : Compiling void t::func()\n"
+			               "script (4, 5) : Error   : Invalid expression: ambiguous name\n"
 		                   "script (5, 12) : Error   : Can't implicitly convert from 't' to 'F@&'.\n" )
 		{
-			printf("%s", bout.buffer.c_str());
+			PRINTF("%s", bout.buffer.c_str());
 			TEST_FAILED;
 		}
 
@@ -612,7 +704,7 @@ bool Test()
 			TEST_FAILED;
 		if( bout.buffer != "" )
 		{
-			printf("%s", bout.buffer.c_str());
+			PRINTF("%s", bout.buffer.c_str());
 			TEST_FAILED;
 		}
 		r = ExecuteString(engine, "main()", mod);
@@ -645,7 +737,7 @@ bool Test()
 			TEST_FAILED;
 		if( bout.buffer != "" )
 		{
-			printf("%s", bout.buffer.c_str());
+			PRINTF("%s", bout.buffer.c_str());
 			TEST_FAILED;
 		}
 
@@ -683,7 +775,7 @@ bool Test()
 			TEST_FAILED;
 		if( bout.buffer != "" )
 		{
-			printf("%s", bout.buffer.c_str());
+			PRINTF("%s", bout.buffer.c_str());
 			TEST_FAILED;
 		}
 		r = ExecuteString(engine, "fp(); assert( called );", mod);
@@ -757,7 +849,7 @@ bool Test()
 			"    void set_events( ifuncdef1_2@ events ) { @this._events_ = events; } \n"
 			"    void crashme() \n"
 			"    { \n"
-			"         if( @this._events_ != null && @this._events_.f != null ) \n"
+			"         if( this._events_ !is null && this._events_.f !is null ) \n"
 			"         { \n"
 			"            this.events.f( this ); \n"
 //			"            this.get_events().get_f()( this ); \n" // This should produce the same bytecode as the above
@@ -774,7 +866,7 @@ bool Test()
 			"void start() \n"
 			"{ \n"
 			"    ifuncdef1_1@ i = cfuncdef1_1(); \n"
-			"    i.events.f = end; \n" // TODO: Shouldn't this give an error? It's attempting to do an value assignment to a function pointer
+			"    @i.events.f = end; \n" // TODO: Shouldn't this give an error? It's attempting to do an value assignment to a function pointer
 			"    i.crashme(); \n"
 			"} \n"
 			"bool called = false; \n"

@@ -21,6 +21,30 @@
 #include "../../../add_on/autowrapper/aswrappedcall.h"
 #endif
 
+// Conditional define to call platform output.
+// In all cases this macro use the same rules of standard printf
+// PRINTF macro provided by Jordi Oliveras 
+#if defined(ANDROID) || defined(__ANDROID__)
+	#include <android/log.h>
+
+	#define  LOG_TAG    "AS_ANDROID"
+	#define IS_ANDROID
+	#define  PRINTF(...)  __android_log_print(ANDROID_LOG_INFO, LOG_TAG, __VA_ARGS__)
+#elif defined(__APPLE__)
+    #include <TargetConditionals.h>
+    // Is this a Mac or an IPhone (or other iOS device)?
+    #if defined(TARGET_OS_IPHONE) && TARGET_OS_IPHONE == 1
+		// ios
+        #include "xcodeLog.h"
+		#define IS_IOS
+        #define PRINTF printfXcode
+    #else
+        #define PRINTF printf
+    #endif
+#else
+	#define PRINTF printf
+#endif
+
 #ifdef __BORLANDC__
 // C++Builder doesn't define most of the non-standard float-specific math functions with
 // "*f" suffix; instead it provides overloads for the standard math functions which take
@@ -54,7 +78,7 @@ public:
 		if( msg->type == 1 ) msgType = "Warning";
 		if( msg->type == 2 ) msgType = "Info   ";
 
-		printf("%s (%d, %d) : %s : %s\n", msg->section, msg->row, msg->col, msgType, msg->message);
+		PRINTF("%s (%d, %d) : %s : %s\n", msg->section, msg->row, msg->col, msgType, msg->message);
 	}
 };
 
@@ -104,6 +128,7 @@ public:
 			isReading = false;
 		} 
 		fwrite(ptr, size, 1, f); 
+		fflush(f);
 	}
 	void Read(void *ptr, asUINT size) 
 	{ 
@@ -117,7 +142,7 @@ public:
 		} 
 		fread(ptr, size, 1, f); 
 	}
-	void Restart() {if( f ) fseek(f, 0, SEEK_SET);}
+	void Restart() {if( f ) { fclose(f); f = 0; }}
 
 protected:
 	std::string name;
@@ -128,7 +153,7 @@ protected:
 class CBytecodeStream : public asIBinaryStream
 {
 public:
-	CBytecodeStream(const char *name) {wpointer = 0;rpointer = 0;}
+	CBytecodeStream(const char * /*name*/) {wpointer = 0;rpointer = 0;}
 
 	void Write(const void *ptr, asUINT size) 
 	{
@@ -199,5 +224,12 @@ asDWORD ComputeCRC32(const asBYTE *buf, asUINT length);
 
 #define UNUSED_VAR(x) ((void)(x))
 
-#define TEST_FAILED do { fail = true; printf("Failed on line %d in %s\n", __LINE__, __FILE__); } while(0)
+#define TEST_FAILED do { fail = true; PRINTF("Failed on line %d in %s\n", __LINE__, __FILE__); } while(!fail)
+
+#define RET_ON_MAX_PORT if( strstr(asGetLibraryOptions(), "AS_MAX_PORTABILITY") ) { PRINTF("Test on line %d in %s skipped\n", __LINE__, __FILE__); return false; }
+
+#define SKIP_ON_MAX_PORT if( strstr(asGetLibraryOptions(), "AS_MAX_PORTABILITY") ) { PRINTF("Test on line %d in %s skipped\n", __LINE__, __FILE__); } else
+
+
+
 

@@ -141,7 +141,7 @@ std::string outbuffer;
 void print(asIScriptGeneric *gen)
 {
 	std::string s = ((CScriptString*)gen->GetArgAddress(0))->buffer;
-//	printf("%s\n", s.c_str());
+//	PRINTF("%s\n", s.c_str());
 	outbuffer += s + "\n";
 }
 
@@ -195,7 +195,7 @@ bool Test()
 	if( r >= 0 ) TEST_FAILED;
 	if( bout.buffer != "TestScriptClassMethod (1, 10) : Error   : The name of constructors and destructors must be the same as the class\n" ) 
 	{
-		printf("%s", bout.buffer.c_str());
+		PRINTF("%s", bout.buffer.c_str());
 		TEST_FAILED;
 	}
 
@@ -353,7 +353,7 @@ bool Test()
 	}
 	if( outbuffer != "Test::Set\nTest::Set\nSet::Set\n" )
 	{
-		printf("%s", outbuffer.c_str());
+		PRINTF("%s", outbuffer.c_str());
 		TEST_FAILED;
 	}
 
@@ -408,9 +408,56 @@ bool Test()
 			TEST_FAILED;
 		if( bout.buffer != "script (2, 3) : Error   : The method cannot be named with the class name\n" )
 		{
-			printf("%s", bout.buffer.c_str());
+			PRINTF("%s", bout.buffer.c_str());
 			TEST_FAILED;
 		}
+		engine->Release();
+	}
+
+	// Test calling a virtual method on a class without setting the object
+	// http://www.gamedev.net/topic/650268-getting-assert-upon-calling-script-function/
+	{
+		engine = asCreateScriptEngine(ANGELSCRIPT_VERSION);
+		engine->SetMessageCallback(asMETHOD(CBufferedOutStream, Callback), &bout, asCALL_THISCALL);
+		bout.buffer = "";
+
+		mod = engine->GetModule(0, asGM_ALWAYS_CREATE);
+		const char *script = 
+			"class A { \n"
+			"  void Test() {} \n"
+			"} \n";
+		mod->AddScriptSection("script", script);
+		r = mod->Build();
+		if( r < 0 )
+			TEST_FAILED;
+
+		asIScriptObject *obj = (asIScriptObject*)engine->CreateScriptObject(mod->GetObjectTypeByName("A"));
+		if( obj == 0 )
+			TEST_FAILED;
+
+		asIScriptContext *ctx = engine->CreateContext();
+		ctx->Prepare(obj->GetObjectType()->GetMethodByName("Test"));
+		// "Forget" to call SetObject
+		r = ctx->Execute();
+		if( r == asEXECUTION_EXCEPTION )
+		{
+			if( strcmp(ctx->GetExceptionString(), "Null pointer access") != 0 )
+			{
+				PRINTF("%s", ctx->GetExceptionString());
+				TEST_FAILED;
+			}
+		}
+		else
+			TEST_FAILED;
+
+		if( bout.buffer != "" )
+		{
+			PRINTF("%s", bout.buffer.c_str());
+			TEST_FAILED;
+		}
+
+		ctx->Release();
+		obj->Release();
 		engine->Release();
 	}
 

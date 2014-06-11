@@ -22,11 +22,11 @@ public:
 	CDict() {}
 	~CDict() {}
 
-	CDict &operator=(const CDict &other) { return *this; }
+	CDict &operator=(const CDict &) { return *this; }
 
 	CDict &operator[](string s) 
 	{ 
-//		printf(s.c_str()); 
+//		PRINTF(s.c_str()); 
 		return *this;
 	}
 };
@@ -43,11 +43,8 @@ void Destruct(CDict *o)
 
 bool Test()
 {
-	if( strstr(asGetLibraryOptions(), "AS_MAX_PORTABILITY") )
-	{
-		printf("%s: Skipped due to AS_MAX_PORTABILITY\n", TESTNAME);
-		return false;
-	}
+	RET_ON_MAX_PORT
+
 	bool fail = false;
 	int r;
 
@@ -72,7 +69,7 @@ bool Test()
 	if( r < 0 )
 	{
 		TEST_FAILED;
-		printf("%s: Failed to compile the script\n", TESTNAME);
+		PRINTF("%s: Failed to compile the script\n", TESTNAME);
 	}
 
 	asIScriptContext *ctx = engine->CreateContext();
@@ -82,7 +79,7 @@ bool Test()
 		if( r == asEXECUTION_EXCEPTION )
 			PrintException(ctx);
 
-		printf("%s: Failed to execute script\n", TESTNAME);
+		PRINTF("%s: Failed to execute script\n", TESTNAME);
 		TEST_FAILED;
 	}
 	if( ctx ) ctx->Release();

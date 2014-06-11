@@ -19,6 +19,8 @@ void testFuncI(asIScriptGeneric *gen)
 		assert(((CScriptString*)ref)->buffer == "test");
 	else if( typeId == gen->GetEngine()->GetTypeIdByDecl("string@") )
 		assert((*(CScriptString**)ref)->buffer == "test");
+	else if( typeId == 0 )
+		assert( *(void**)ref == 0 );
 	else
 		assert(false);
 }
@@ -44,6 +46,8 @@ void testFuncO(asIScriptGeneric *gen)
 		((CScriptString*)ref)->buffer = "test";
 	else if( typeId == gen->GetEngine()->GetTypeIdByDecl("string@") )
 		*(CScriptString**)ref = new CScriptString("test");
+	else if( typeId == 0 )
+		assert( *(void**)ref == 0 );
 	else
 		assert(false);
 }
@@ -76,7 +80,7 @@ void testFuncIS_generic(asIScriptGeneric *gen)
 
 // AngelScript syntax: void testFuncSI(const string &in, ?& in)
 // C++ syntax: void testFuncSI(CScriptString &, void *ref, int typeId)
-void testFuncSI(CScriptString &str, void *ref, int typeId)
+void testFuncSI(CScriptString &str, void *ref, int /*typeId*/)
 {
 	assert(str.buffer == "test");
 	assert(*(int*)ref == 42);
@@ -95,6 +99,8 @@ void testFuncSI_generic(asIScriptGeneric *gen)
 
 bool Test()
 {
+	RET_ON_MAX_PORT
+
 	bool fail = false;
 	int r;
 	COutStream out;
@@ -195,9 +201,10 @@ bool Test()
 	r = mod->Build();
 	if( r >= 0 ) TEST_FAILED;
 	if( bout.buffer != "script (1, 1) : Info    : Compiling void func()\n"
-                       "script (1, 14) : Error   : Expected expression value\n" )
+                       "script (1, 14) : Error   : Expected expression value\n"
+					   "script (1, 14) : Error   : Instead found '?'\n" )
 	{
-		printf("%s", bout.buffer.c_str());
+		PRINTF("%s", bout.buffer.c_str());
 		TEST_FAILED;
 	}
 	bout.buffer = "";
@@ -206,9 +213,10 @@ bool Test()
 	r = engine->RegisterGlobalProperty("? prop", (void*)1);
 	if( r >= 0 ) TEST_FAILED;
 	if( bout.buffer != "Property (1, 1) : Error   : Expected data type\n"
+		               "Property (1, 1) : Error   : Instead found '?'\n"
 	                   " (0, 0) : Error   : Failed in call to function 'RegisterGlobalProperty' with '? prop' (Code: -10)\n" ) 
 	{
-		printf("%s", bout.buffer.c_str());
+		PRINTF("%s", bout.buffer.c_str());
 		TEST_FAILED;
 	}
 	bout.buffer = "";
@@ -221,9 +229,10 @@ bool Test()
 	r = engine->RegisterObjectProperty("test", "? prop", 0);
 	if( r >= 0 ) TEST_FAILED;
 	if( bout.buffer != "Property (1, 1) : Error   : Expected data type\n"
+		               "Property (1, 1) : Error   : Instead found '?'\n"
 		               " (0, 0) : Error   : Failed in call to function 'RegisterObjectProperty' with 'test' and '? prop' (Code: -10)\n" )
 	{
-		printf("%s", bout.buffer.c_str());
+		PRINTF("%s", bout.buffer.c_str());
 		TEST_FAILED;
 	}
 	bout.buffer = "";
@@ -238,9 +247,10 @@ bool Test()
 	r = mod->Build();
 	if( r >= 0 ) TEST_FAILED;
 	if( bout.buffer != "script (1, 10) : Error   : Expected method or property\n"
+		               "script (1, 10) : Error   : Instead found '?'\n"
 		               "script (1, 19) : Error   : Unexpected token '}'\n" )
 	{
-		printf("%s", bout.buffer.c_str());
+		PRINTF("%s", bout.buffer.c_str());
 		TEST_FAILED;
 	}
 	bout.buffer = "";
@@ -250,9 +260,10 @@ bool Test()
 	mod->AddScriptSection("script", script4);
 	r = mod->Build();
 	if( r >= 0 ) TEST_FAILED;
-	if( bout.buffer != "script (1, 11) : Error   : Expected data type\n" )
+	if( bout.buffer != "script (1, 11) : Error   : Expected data type\n"
+		               "script (1, 11) : Error   : Instead found '?'\n")
 	{
-		printf("%s", bout.buffer.c_str());
+		PRINTF("%s", bout.buffer.c_str());
 		TEST_FAILED;
 	}
 	bout.buffer = "";
@@ -271,8 +282,12 @@ bool Test()
 	r = mod->Build();
 	if( r >= 0 ) TEST_FAILED;
 	if( bout.buffer != "script (1, 22) : Error   : Expected data type\n" 
-		               "script (1, 22) : Error   : Expected method or property\n" 
-					   "script (1, 33) : Error   : Unexpected token '}'\n" ) TEST_FAILED;
+		               "script (1, 22) : Error   : Instead found '?'\n"
+					   "script (1, 33) : Error   : Unexpected token '}'\n" ) 
+	{
+		PRINTF("%s", bout.buffer.c_str());
+		TEST_FAILED;
+	}
 	bout.buffer = "";
 
 	// It must not be possible to declare script class methods that return the var type ?
@@ -281,7 +296,12 @@ bool Test()
 	r = mod->Build();
 	if( r >= 0 ) TEST_FAILED;
 	if( bout.buffer != "script (1, 10) : Error   : Expected method or property\n"
-		               "script (1, 23) : Error   : Unexpected token '}'\n" ) TEST_FAILED;
+		               "script (1, 10) : Error   : Instead found '?'\n"
+		               "script (1, 23) : Error   : Unexpected token '}'\n" )
+	{
+		PRINTF("%s", bout.buffer.c_str());
+		TEST_FAILED;
+	}
 	bout.buffer = "";
 
 	// It must not be possible to declare arrays of the var type ?
@@ -290,7 +310,12 @@ bool Test()
 	r = mod->Build();
 	if( r >= 0 ) TEST_FAILED;
 	if( bout.buffer != "script (1, 1) : Info    : Compiling void func()\n"
-		               "script (1, 15) : Error   : Expected expression value\n" ) TEST_FAILED;
+		               "script (1, 15) : Error   : Expected expression value\n"
+					   "script (1, 15) : Error   : Instead found '?'\n" )
+	{
+		PRINTF("%s", bout.buffer.c_str());
+		TEST_FAILED;
+	}
 	bout.buffer = "";
 
 	// It must not be possible to declare handles of the var type ?
@@ -299,16 +324,22 @@ bool Test()
 	r = mod->Build();
 	if( r >= 0 ) TEST_FAILED;
 	if( bout.buffer != "script (1, 1) : Info    : Compiling void func()\n"
-		               "script (1, 15) : Error   : Expected expression value\n" ) TEST_FAILED;
+		               "script (1, 15) : Error   : Expected expression value\n"
+					   "script (1, 15) : Error   : Instead found '?'\n" )
+	{
+		PRINTF("%s", bout.buffer.c_str());
+		TEST_FAILED;
+	}
 	bout.buffer = "";
 
 	// It must not be possible to register functions that return the var type ?
 	r = engine->RegisterGlobalFunction("? testFunc()", asFUNCTION(testFuncI), asCALL_GENERIC);
 	if( r >= 0 ) TEST_FAILED;
 	if( bout.buffer != "System function (1, 1) : Error   : Expected data type\n"
+					   "System function (1, 1) : Error   : Instead found '?'\n"
 		               " (0, 0) : Error   : Failed in call to function 'RegisterGlobalFunction' with '? testFunc()' (Code: -10)\n" )
 	{
-		printf("%s", bout.buffer.c_str());
+		PRINTF("%s", bout.buffer.c_str());
 		TEST_FAILED;
 	}
 	bout.buffer = "";
@@ -318,6 +349,10 @@ bool Test()
 	// Only when the expression is explicitly sent as @ should the type id be @
 	// const ? & in
 	// ? & in
+	// TODO: 2.29.0: Should have syntax to inform that only handle or only non-handle can be informed
+	//               Maybe 'const ? @ & in' for only handle 
+	//                     '? @- & in' for only non-handle
+	//                     '? @+ & in' for only handle with auto-handle
 	engine = asCreateScriptEngine(ANGELSCRIPT_VERSION);
 	engine->SetMessageCallback(asMETHOD(COutStream,Callback), &out, asCALL_THISCALL);
 	RegisterScriptString(engine);
@@ -335,6 +370,8 @@ bool Test()
 	if( r != asEXECUTION_FINISHED ) TEST_FAILED;
 	r = ExecuteString(engine, "string @a = @\"test\"; testFuncI(@a);");
 	if( r != asEXECUTION_FINISHED ) TEST_FAILED;
+	r = ExecuteString(engine, "testFuncI(null);");
+	if( r != asEXECUTION_FINISHED ) TEST_FAILED;
 
 	// Both functions should receive the string by reference
 	r = ExecuteString(engine, "string a = 'test'; testFuncI(a); testFuncS(a);");
@@ -342,9 +379,19 @@ bool Test()
 
 	// It must be possible to register with 'out' references
 	// ? & out
+	// TODO: 2.29.0: Should have syntax to inform that only handle or only non-handle can be informed
+	//               Maybe '? @ & out' for only handle
+	//                     '? @- & out' for non-handle
+	//                     '? @+ & out' for auto handle
 	r = engine->RegisterGlobalFunction("void testFuncO(?&out)", asFUNCTION(testFuncO), asCALL_GENERIC);
 	if( r < 0 ) TEST_FAILED;
 
+	r = ExecuteString(engine, "testFuncO(0)"); // skip out value
+	if( r != asEXECUTION_FINISHED ) TEST_FAILED;
+	r = ExecuteString(engine, "testFuncO(void)"); // skip out value
+	if( r != asEXECUTION_FINISHED ) TEST_FAILED;
+	r = ExecuteString(engine, "testFuncO(null)"); // skip out value
+	if( r != asEXECUTION_FINISHED ) TEST_FAILED;
 	r = ExecuteString(engine, "int a; testFuncO(a); assert(a == 42);");
 	if( r != asEXECUTION_FINISHED ) TEST_FAILED;
 	r = ExecuteString(engine, "string a; testFuncO(a); assert(a == \"test\");");
@@ -370,7 +417,7 @@ bool Test()
 
 
 	// It must be possible to use native functions
-	if( !strstr(asGetLibraryOptions(), "AS_MAX_PORTABILITY") )
+	SKIP_ON_MAX_PORT
 	{
 		r = engine->RegisterGlobalFunction("void _testFuncIS(?& in, const string &in)", asFUNCTION(testFuncIS), asCALL_CDECL);
 		if( r < 0 ) TEST_FAILED;

@@ -15,11 +15,7 @@ bool TestModule(const char *module, asIScriptEngine *engine);
 
 bool Test()
 {
-	if( strstr(asGetLibraryOptions(), "AS_MAX_PORTABILITY") )
-	{
-		printf("%s: Skipped due to AS_MAX_PORTABILITY\n", "TestInheritance");
-		return false;
-	}
+	RET_ON_MAX_PORT
 
 	bool fail = false;
 	int r;
@@ -28,6 +24,41 @@ bool Test()
 	COutStream out;
 	CBufferedOutStream bout;
  	asIScriptEngine *engine = 0;
+
+	// Value assignment on the base class where the operands are two different derived classes
+	// Reported by Philip Bennefall
+	{
+		engine = asCreateScriptEngine(ANGELSCRIPT_VERSION);
+		engine->SetMessageCallback(asMETHOD(COutStream, Callback), &out, asCALL_THISCALL);
+
+		RegisterStdString(engine);
+
+		mod = engine->GetModule("Test", asGM_ALWAYS_CREATE);
+		mod->AddScriptSection("test",
+			"class Base {} \n"
+			"class Derived1 : Base { string a; } \n"
+			"class Derived2 : Base { double a; } \n"
+			"void main() \n"
+			"{ \n"
+			"  Derived1 d1; \n"
+			"  Derived2 d2; \n"
+			"  Base@ b1 = d1, b2 = d2; \n"
+			"  b1 = b2; \n" // must not crash application. should raise script exception
+			"} \n");
+		r = mod->Build();
+		if( r < 0 )
+			TEST_FAILED;
+
+		asIScriptContext *ctx = engine->CreateContext();
+		r = ExecuteString(engine, "main()", mod, ctx);
+		if( r != asEXECUTION_EXCEPTION )
+			TEST_FAILED;
+		if( std::string(ctx->GetExceptionString()) != "Mismatching types in value assignment" )
+			TEST_FAILED;
+		ctx->Release();
+
+		engine->Release();
+	}
 
 	// A derived class must not be allowed to implement a function with the same 
 	// name and parameter list as parent class, but with a different return type.
@@ -51,7 +82,7 @@ bool Test()
 
 		if( bout.buffer != "test (4, 7) : Error   : The method in the derived class must have the same return type as in the base class: 'int P::MyFunc(float)'\n" )
 		{
-			printf("%s", bout.buffer.c_str());
+			PRINTF("%s", bout.buffer.c_str());
 			TEST_FAILED;
 		}
 
@@ -194,17 +225,17 @@ bool Test()
 				TEST_FAILED;
 
 				asUINT n;
-				printf("First module's functions\n");
+				PRINTF("First module's functions\n");
 				for( n = 0; n < (asUINT)mod->GetFunctionCount(); n++ )
 				{
 					asIScriptFunction *f = mod->GetFunctionByIndex(n);
-					printf("%s\n", f->GetDeclaration());
+					PRINTF("%s\n", f->GetDeclaration());
 				}
-				printf("\nSecond module's functions\n");
+				PRINTF("\nSecond module's functions\n");
 				for( n = 0; n < (asUINT)mod2->GetFunctionCount(); n++ )
 				{
 					asIScriptFunction *f = mod2->GetFunctionByIndex(n);
-					printf("%s\n", f->GetDeclaration());
+					PRINTF("%s\n", f->GetDeclaration());
 				}
 			}
 
@@ -250,7 +281,7 @@ bool Test()
 						   "test (9, 7) : Error   : Method 'void CBase::finalFunc()' declared as final and cannot be overridden\n"
 						   "test (9, 7) : Error   : Method 'void CD2::overrideFunc(int)' marked as override but does not replace any base class or interface method\n" )
 		{
-			printf("%s", bout.buffer.c_str());
+			PRINTF("%s", bout.buffer.c_str());
 			TEST_FAILED;
 		}
 
@@ -306,7 +337,7 @@ bool TestModule(const char *module, asIScriptEngine *engine)
 	if( bout.buffer != "ExecuteString (1, 22) : Error   : Can't implicitly convert from 'Base@&' to 'Derived@&'.\n" )
 	{
 		TEST_FAILED;
-		printf("%s", bout.buffer.c_str());
+		PRINTF("%s", bout.buffer.c_str());
 	}
 
 	// Test that it is possible to explicitly cast to derived class
@@ -442,7 +473,7 @@ bool TestModule(const char *module, asIScriptEngine *engine)
 	}
 	if( printResult != "C2:Fun" )
 	{
-		printf("%s\n", printResult.c_str());
+		PRINTF("%s\n", printResult.c_str());
 		TEST_FAILED;
 	}
 
@@ -477,7 +508,7 @@ bool Test2()
 		TEST_FAILED;
 	if( bout.buffer != "script (1, 11) : Error   : Can't inherit from class 'string' marked as final\n" )
 	{
-		printf("%s", bout.buffer.c_str());
+		PRINTF("%s", bout.buffer.c_str());
 		TEST_FAILED;
 	}
 
@@ -492,7 +523,7 @@ bool Test2()
 	if( bout.buffer != "script (1, 47) : Error   : Can't inherit from multiple classes\n" )
 	{
 		TEST_FAILED;
-		printf("%s", bout.buffer.c_str());
+		PRINTF("%s", bout.buffer.c_str());
 	}
 
 	// Test that it is not possible to inherit from a class that in turn inherits from this class
@@ -506,7 +537,7 @@ bool Test2()
 	if( bout.buffer != "script (1, 41) : Error   : Can't inherit from itself, or another class that inherits from this class\n" )
 	{
 		TEST_FAILED;
-		printf("%s", bout.buffer.c_str());
+		PRINTF("%s", bout.buffer.c_str());
 	}
 
 	// Test that it is not possible to inherit from self
@@ -520,7 +551,7 @@ bool Test2()
 	if( bout.buffer != "script (1, 11) : Error   : Can't inherit from itself, or another class that inherits from this class\n" )
 	{
 		TEST_FAILED;
-		printf("%s", bout.buffer.c_str());
+		PRINTF("%s", bout.buffer.c_str());
 	}
 
 	// Test that derived classes can't overload properties
@@ -536,7 +567,7 @@ bool Test2()
 	if( bout.buffer != "script (1, 41) : Error   : Name conflict. 'a' is an object property.\n" )
 	{
 		TEST_FAILED;
-		printf("%s", bout.buffer.c_str());
+		PRINTF("%s", bout.buffer.c_str());
 	}
 
 	// Test that it is not possible to call super() when not deriving from any class
@@ -553,7 +584,7 @@ bool Test2()
 					   "script (1, 17) : Error   : No matching signatures to 'super()'\n" )
 	{
 		TEST_FAILED;
-		printf("%s", bout.buffer.c_str());
+		PRINTF("%s", bout.buffer.c_str());
 	}
 
 	// Test that it is not possible to call super() multiple times within the constructor
@@ -568,7 +599,7 @@ bool Test2()
 					   "script (1, 41) : Error   : Can't call a constructor multiple times\n" )
 	{
 		TEST_FAILED;
-		printf("%s", bout.buffer.c_str());
+		PRINTF("%s", bout.buffer.c_str());
 	}
 
 	// Test that it is not possible to call super() in a loop
@@ -583,7 +614,7 @@ bool Test2()
 					   "script (1, 46) : Error   : Can't call a constructor in loops\n" )
 	{
 		TEST_FAILED;
-		printf("%s", bout.buffer.c_str());
+		PRINTF("%s", bout.buffer.c_str());
 	}
 
 	// Test that it is not possible to call super() in a switch
@@ -599,7 +630,7 @@ bool Test2()
 					   "script (1, 52) : Error   : Can't call a constructor in switch\n" )
 	{
 		TEST_FAILED;
-		printf("%s", bout.buffer.c_str());
+		PRINTF("%s", bout.buffer.c_str());
 	}
 
 	// Test that all (or none) control paths must call super()
@@ -618,7 +649,7 @@ bool Test2()
 				   	   "script (3, 12) : Error   : Both conditions must call constructor\n" )
 	{
 		TEST_FAILED;
-		printf("%s", bout.buffer.c_str());
+		PRINTF("%s", bout.buffer.c_str());
 	}
 
 	// Test that it is not possible to call super() outside of the constructor
@@ -633,7 +664,7 @@ bool Test2()
 					   "script (1, 40) : Error   : No matching signatures to 'super()'\n" )
 	{
 		TEST_FAILED;
-		printf("%s", bout.buffer.c_str());
+		PRINTF("%s", bout.buffer.c_str());
 	}
 
 	// Test that a base class can't have a derived class as member (except as handle)
@@ -647,7 +678,7 @@ bool Test2()
 	if( bout.buffer != "script (1, 24) : Error   : Illegal member type\n" )
 	{
 		TEST_FAILED;
-		printf("%s", bout.buffer.c_str());
+		PRINTF("%s", bout.buffer.c_str());
 	}
 
 	// Test that it is not possible to call super with any scope prefix
@@ -661,7 +692,7 @@ bool Test2()
 					   "script (1, 33) : Error   : No matching signatures to '::super()'\n" )
 	{
 		TEST_FAILED;
-		printf("%s", bout.buffer.c_str());
+		PRINTF("%s", bout.buffer.c_str());
 	}
 
 	// Test that the error message for calling missing method with scope is correct
@@ -682,7 +713,7 @@ bool Test2()
 					   "script (1, 79) : Error   : Namespace 'B::A' doesn't exist.\n" )
 	{
 		TEST_FAILED;
-		printf("%s", bout.buffer.c_str());
+		PRINTF("%s", bout.buffer.c_str());
 	}
 
 	// Test that calling the constructor from within the constructor 
@@ -696,7 +727,7 @@ bool Test2()
 	if( bout.buffer != "" )
 	{
 		TEST_FAILED;
-		printf("%s", bout.buffer.c_str());
+		PRINTF("%s", bout.buffer.c_str());
 	}
 	r = ExecuteString(engine, "A a; assert( a1 !is a2 ); assert( a1 !is null ); assert( a2 !is null );", mod);
 	if( r != asEXECUTION_FINISHED )

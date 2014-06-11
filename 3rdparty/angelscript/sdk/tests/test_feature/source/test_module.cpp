@@ -8,6 +8,7 @@ bool Test()
 	bool fail = false;
 	int r;
 	CBufferedOutStream bout;
+	COutStream out;
 	asIScriptContext *ctx;
 
  	asIScriptEngine *engine = asCreateScriptEngine(ANGELSCRIPT_VERSION);
@@ -55,10 +56,11 @@ bool Test()
 	if( r >= 0 )
 		TEST_FAILED;
 	if( bout.buffer != "two funcs (0, 0) : Error   : The code must contain one and only one function\n"
+					   "no code (1, 1) : Warning : The script section is empty\n"
 					   "no code (0, 0) : Error   : The code must contain one and only one function\n"
 					   "var (0, 0) : Error   : The code must contain one and only one function\n" )
 	{
-		printf("%s", bout.buffer.c_str());
+		PRINTF("%s", bout.buffer.c_str());
 		TEST_FAILED;
 	}
 
@@ -81,7 +83,7 @@ bool Test()
 		TEST_FAILED;
 	if( bout.buffer != " (1, 2) : Error   : No matching signatures to 'func()'\n" )
 	{
-		printf("%s", bout.buffer.c_str());
+		PRINTF("%s", bout.buffer.c_str());
 		TEST_FAILED;
 	}
 
@@ -139,7 +141,7 @@ bool Test()
 		TEST_FAILED;
 	if( bout.buffer != " (1, 1) : Error   : Name conflict. 'g_var' is a global property.\n" )
 	{
-		printf("%s", bout.buffer.c_str());
+		PRINTF("%s", bout.buffer.c_str());
 		TEST_FAILED;
 	}
 
@@ -177,10 +179,44 @@ bool Test()
 		TEST_FAILED;
 	if( bout.buffer != "" )
 	{
-		printf("%s", bout.buffer.c_str());
+		PRINTF("%s", bout.buffer.c_str());
 		TEST_FAILED;
 	}
 	engine->Release();
+
+	// GetObjectTypeById must not crash even though the object type has already been removed
+	{
+		engine = asCreateScriptEngine(ANGELSCRIPT_VERSION);
+		engine->SetMessageCallback(asMETHOD(COutStream, Callback), &out, asCALL_THISCALL);
+
+		RegisterScriptArray(engine, false);
+
+		asIScriptModule *mod = engine->GetModule("mod", asGM_ALWAYS_CREATE);
+		mod->AddScriptSection("test", "class A {}");
+		r = mod->Build();
+		if( r < 0 )
+			TEST_FAILED;
+
+		int typeId = mod->GetTypeIdByDecl("array<A@>");
+		if( typeId < 0 )
+			TEST_FAILED;
+
+		asIObjectType *type = engine->GetObjectTypeById(typeId);
+		if( type == 0 || std::string(type->GetName()) != "array" )
+			TEST_FAILED;
+
+		if( type != mod->GetObjectTypeByDecl("array<A@>") )
+			TEST_FAILED;
+
+		mod->Discard();
+		engine->GarbageCollect();
+
+		type = engine->GetObjectTypeById(typeId);
+		if( type != 0 )
+			TEST_FAILED;
+
+		engine->Release();
+	}
 
 	// Recompiling the same module over and over again without 
 	// discarding shouldn't increase memory consumption
@@ -213,7 +249,7 @@ bool Test()
 
 			if( bout.buffer != "" )
 			{
-				printf("%s", bout.buffer.c_str());
+				PRINTF("%s", bout.buffer.c_str());
 				TEST_FAILED;
 			}
 
@@ -227,9 +263,10 @@ bool Test()
 				TEST_FAILED;
 
 			if( bout.buffer != "error (1, 1) : Info    : Compiling void func2()\n"
-							   "error (1, 23) : Error   : Expected ';'\n" )
+							   "error (1, 23) : Error   : Expected ';'\n"
+							   "error (1, 23) : Error   : Instead found '}'\n" )
 			{
-				printf("%s", bout.buffer.c_str());
+				PRINTF("%s", bout.buffer.c_str());
 				TEST_FAILED;
 			}
 
@@ -296,12 +333,12 @@ bool Test()
 				if( strcmp(type->GetName(), "_builtin_function_") == 0 )
 				{
 					asIScriptFunction *func = (asIScriptFunction*)obj;
-					printf("func: %s\n", func->GetDeclaration());
+					PRINTF("func: %s\n", func->GetDeclaration());
 				}
 				else
 				{
 					asIObjectType *ot = (asIObjectType*)obj;
-					printf("type: %s\n", ot->GetName());
+					PRINTF("type: %s\n", ot->GetName());
 				}
 			}*/
 
@@ -312,7 +349,7 @@ bool Test()
 
 			if( bout.buffer != "" )
 			{
-				printf("%s", bout.buffer.c_str());
+				PRINTF("%s", bout.buffer.c_str());
 				TEST_FAILED;
 			}
 

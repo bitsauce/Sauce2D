@@ -66,20 +66,20 @@ public:
 		val = ('C' | ('O'<<8) | ('b'<<16) | ('j'<<24)); 
 		mem = new int[1]; 
 		*mem = ('M' | ('e'<<8) | ('m'<<16) | (' '<<24)); 
-		//printf("C: %x\n", this);
+		//PRINTF("C: %x\n", this);
 		CObject_constructCount++;
 	}
 	~CObject() 
 	{
 		delete[] mem; 
-		//printf("D: %x\n", this);
+		//PRINTF("D: %x\n", this);
 		CObject_destructCount++;
 	}
 	int val;
 	int *mem;
 };
 
-void Assign_gen(asIScriptGeneric *gen)
+void Assign_gen(asIScriptGeneric *)
 {
 	// Don't do anything
 }
@@ -131,7 +131,7 @@ void Construct_gen(asIScriptGeneric *gen)
 	new(o) CObject();
 }
 
-void Construct2(asIScriptGeneric *gen)
+void Construct2(asIScriptGeneric *)
 {
 	asIScriptContext *ctx = asGetActiveContext();
 	if( ctx ) ctx->SetException("application exception");
@@ -204,18 +204,41 @@ void ExceptionHandle_gen(asIScriptGeneric *gen)
 	gen->SetReturnObject(0);
 }
 
+std::string ReturnStringButException()
+{
+	throw std::exception(); // random exception. AngelScript will catch all the same way
+	return ""; // This is never returned so AngelScript has to properly handle the situation
+}
+
 bool Test()
 {
-	if( strstr(asGetLibraryOptions(), "AS_MAX_PORTABILITY") )
-	{
-		// Skipping this due to not supporting native calling conventions
-		printf("Skipped due to AS_MAX_PORTABILITY\n");
-		return false;
-	}
+	RET_ON_MAX_PORT
 
 	bool fail = false;
 	int r;
 	int suspendId, exceptionId;
+
+	// Test calling a function that throws an exception
+	{
+		asIScriptEngine *engine = asCreateScriptEngine(ANGELSCRIPT_VERSION);
+
+		RegisterStdString(engine);
+		engine->RegisterGlobalFunction("string RetStrButExcept()", asFUNCTION(ReturnStringButException), asCALL_CDECL);
+
+		asIScriptContext *ctx = engine->CreateContext();
+		r = ExecuteString(engine, "string str = RetStrButExcept()", 0, ctx);
+		if( r != asEXECUTION_EXCEPTION )
+			TEST_FAILED;
+		else if( std::string(ctx->GetExceptionString()) != "Caught an exception from the application" )
+		{
+			PRINTF("Got exception : %s\n", ctx->GetExceptionString());
+			TEST_FAILED;
+		}
+	
+		ctx->Release();
+		engine->Release();
+	}
+	
 
  	asIScriptEngine *engine = asCreateScriptEngine(ANGELSCRIPT_VERSION);
 
@@ -262,14 +285,14 @@ bool Test()
 	if( r < 0 )
 	{
 		TEST_FAILED;
-		printf("%s: Failed to compile the script\n", TESTNAME);
+		PRINTF("%s: Failed to compile the script\n", TESTNAME);
 	}
 
 	// The object has been initialized
 	r = ExecuteString(engine, "Test1()", mod);
 	if( r != asEXECUTION_EXCEPTION )
 	{
-		printf("%s: Failed\n", TESTNAME);
+		PRINTF("%s: Failed\n", TESTNAME);
 		TEST_FAILED;
 	}
 
@@ -277,7 +300,7 @@ bool Test()
 	r = ExecuteString(engine, "Test2()", mod);
 	if( r != asEXECUTION_EXCEPTION )
 	{
-		printf("%s: Failed\n", TESTNAME);
+		PRINTF("%s: Failed\n", TESTNAME);
 		TEST_FAILED;
 	}
 
@@ -285,7 +308,7 @@ bool Test()
 	r = ExecuteString(engine, "Test3()", mod);
 	if( r != asEXECUTION_EXCEPTION )
 	{
-		printf("%s: Failed\n", TESTNAME);
+		PRINTF("%s: Failed\n", TESTNAME);
 		TEST_FAILED;
 	}
 
@@ -295,7 +318,7 @@ bool Test()
 	r = ExecuteString(engine, "Test3()", mod);
 	if( r != asEXECUTION_EXCEPTION )
 	{
-		printf("%s: Failed\n", TESTNAME);
+		PRINTF("%s: Failed\n", TESTNAME);
 		TEST_FAILED;
 	}
 
@@ -307,7 +330,7 @@ bool Test()
 	r = ExecuteString(engine, "Test4()", mod, ctx);
 	if( r != asEXECUTION_SUSPENDED )
 	{
-		printf("%s: Failed\n", TESTNAME);
+		PRINTF("%s: Failed\n", TESTNAME);
 		TEST_FAILED;
 	}
 	ctx->Abort();
@@ -319,7 +342,7 @@ bool Test()
 	r = ExecuteString(engine, "Test5()", mod);
 	if( r != asEXECUTION_EXCEPTION )
 	{
-		printf("%s: Failed\n", TESTNAME);
+		PRINTF("%s: Failed\n", TESTNAME);
 		TEST_FAILED;
 	}
 
@@ -327,7 +350,7 @@ bool Test()
 	r = ExecuteString(engine, "Test6()", mod);
 	if( r != asEXECUTION_EXCEPTION )
 	{
-		printf("%s: Failed\n", TESTNAME);
+		PRINTF("%s: Failed\n", TESTNAME);
 		TEST_FAILED;
 	}
 
@@ -335,7 +358,7 @@ bool Test()
 	r = ExecuteString(engine, "Test7()", mod);
 	if( r != asEXECUTION_EXCEPTION )
 	{
-		printf("%s: Failed\n", TESTNAME);
+		PRINTF("%s: Failed\n", TESTNAME);
 		TEST_FAILED;
 	}
 
@@ -346,7 +369,7 @@ bool Test()
 	r = ExecuteString(engine, "calc()", mod);
 	if( r != asEXECUTION_EXCEPTION )
 	{
-		printf("%s: Failed\n", TESTNAME);
+		PRINTF("%s: Failed\n", TESTNAME);
 		TEST_FAILED;
 	}
 
@@ -523,7 +546,7 @@ bool Test()
 		r = ExecuteString(engine, "main()", mod);
 		if( r != asEXECUTION_EXCEPTION )
 		{
-			printf("Return code is %d\n", r);
+			PRINTF("Return code is %d\n", r);
 			TEST_FAILED;
 		}
 

@@ -1,3 +1,5 @@
+#include <sstream>
+
 #include "utils.h"
 
 namespace TestImplicitCast
@@ -19,6 +21,20 @@ void Type_castInt(asIScriptGeneric *gen)
 {
 	int *a = (int*)gen->GetObject();
 	*(int*)gen->GetAddressOfReturnLocation() = *a;
+}
+
+void Type_castVar(void *ptr, int typeId, int *obj)
+{
+	asIScriptContext *ctx = asGetActiveContext();
+	asIScriptEngine *engine = ctx->GetEngine();
+
+	asIObjectType *type = engine->GetObjectTypeById(typeId);
+	if( std::string(type->GetName()) == "string" )
+	{
+		std::stringstream strm;
+		strm << *obj;
+		*(std::string*)ptr = strm.str();
+	}
 }
 
 bool Type_equal(int &a, int &b)
@@ -49,7 +65,7 @@ public:
 		if( refCount == 0 ) 
 			delete this;
 	}
-	virtual A& assign(const A &other)
+	virtual A& assign(const A &)
 	{
 		return *this;
 	}
@@ -110,27 +126,62 @@ double myFunction(const double d) {
 	return d;
 }
 
+struct Value
+{
+	double castToDouble() { return dbl; }
+	int castToInt() { return int(dbl); }
+	double dbl;
+};
+
 static bool Test2();
 static bool Test3();
 static bool Test4();
+static bool Test5();
 
 bool Test()
 {
-	if( strstr(asGetLibraryOptions(), "AS_MAX_PORTABILITY") )
-	{
-		printf("Skipped due to AS_MAX_PORTABILITY\n");
-		return false;
-	}
+	RET_ON_MAX_PORT
 
 
-	bool fail = Test2();
-	fail = Test3() || fail;
-	fail = Test4() || fail;
+	bool fail = false;
 	int r;
 	asIScriptEngine *engine;
 
 	CBufferedOutStream bout;
 	COutStream out;
+
+	// Test problem reported by Amer Koleci
+	// It was causing assert failure as the compiler tried to release the same temporary variable twice
+	{
+		engine = asCreateScriptEngine(ANGELSCRIPT_VERSION);
+		engine->SetMessageCallback(asMETHOD(COutStream,Callback), &out, asCALL_THISCALL);
+
+		engine->RegisterObjectType("String", 4, asOBJ_VALUE | asOBJ_POD | asOBJ_APP_CLASS);
+		engine->RegisterObjectBehaviour("String", asBEHAVE_CONSTRUCT, "void f(uint)", asFUNCTION(0), asCALL_GENERIC);
+
+		engine->RegisterObjectType("Texture2D", 0, asOBJ_REF | asOBJ_NOCOUNT);
+		engine->RegisterObjectMethod("Texture2D", "uint get_width() const", asFUNCTION(0), asCALL_GENERIC);
+
+		engine->RegisterGlobalFunction("void Print(const String &in)", asFUNCTION(0), asCALL_GENERIC);
+
+		asIScriptModule *mod = engine->GetModule("test", asGM_ALWAYS_CREATE);
+		mod->AddScriptSection("test",
+			"void main() { \n"
+			" Texture2D@ texture; \n"
+			" Print(texture.width); \n"
+			"} \n");
+
+		r = mod->Build();
+		if( r < 0 )
+			TEST_FAILED;
+
+		engine->Release();
+	}
+
+	fail = Test2() || fail;
+	fail = Test3() || fail;
+	fail = Test4() || fail;
+	fail = Test5() || fail;
 
 	// Two forms of casts: value cast and ref cast
 	// A value cast actually constructs a new object
@@ -200,7 +251,7 @@ bool Test()
 	if( r >= 0 ) TEST_FAILED;
 	if( bout.buffer != "ExecuteString (1, 14) : Error   : Illegal operation on 'type'\n" )
 	{
-		printf("%s", bout.buffer.c_str());
+		PRINTF("%s", bout.buffer.c_str());
 		TEST_FAILED;
 	}
 
@@ -209,7 +260,7 @@ bool Test()
 	if( r >= 0 ) TEST_FAILED;
 	if( bout.buffer != "ExecuteString (1, 14) : Error   : No matching operator that takes the types 'type' and 'type' found\n" )
 	{
-		printf("%s", bout.buffer.c_str());
+		PRINTF("%s", bout.buffer.c_str());
 		TEST_FAILED;
 	}
 
@@ -218,7 +269,7 @@ bool Test()
 	if( r >= 0 ) TEST_FAILED;
 	if( bout.buffer != "ExecuteString (1, 14) : Error   : No matching operator that takes the types 'type' and 'type' found\n" )
 	{
-		printf("%s", bout.buffer.c_str());
+		PRINTF("%s", bout.buffer.c_str());
 		TEST_FAILED;
 	}
 
@@ -245,7 +296,7 @@ bool Test()
 	}
 	if( bout.buffer != " (0, 0) : Error   : Failed in call to function 'RegisterObjectBehaviour' with 'type' and 'bool f()' (Code: -7)\n" )
 	{
-		printf("%s", bout.buffer.c_str());
+		PRINTF("%s", bout.buffer.c_str());
 		TEST_FAILED;
 	}
 
@@ -253,8 +304,7 @@ bool Test()
 
 	// Test5
 	// Exclicit value cast
-	// TODO: This should work for MAX_PORTABILITY as well
-	if( !strstr(asGetLibraryOptions(), "AS_MAX_PORTABILITY") )
+	SKIP_ON_MAX_PORT
 	{
 		engine = asCreateScriptEngine(ANGELSCRIPT_VERSION);
 		engine->SetMessageCallback(asMETHOD(COutStream,Callback), &out, asCALL_THISCALL);
@@ -286,7 +336,7 @@ bool Test()
 			TEST_FAILED;
 		if( bout.buffer != "ExecuteString (1, 17) : Error   : Can't implicitly convert from 'type' to 'int'.\n" )
 		{
-			printf("%s", bout.buffer.c_str());
+			PRINTF("%s", bout.buffer.c_str());
 			TEST_FAILED;
 		}
 
@@ -310,6 +360,15 @@ bool Test()
 			TEST_FAILED;
 
 		r = ExecuteString(engine, "func(5); assert( funcCalled );", mod);
+		if( r != asEXECUTION_FINISHED )
+			TEST_FAILED;
+
+		// Test generic value cast
+		RegisterStdString(engine);
+		r = engine->RegisterObjectBehaviour("type", asBEHAVE_VALUE_CAST, "void f(?&out)", asFUNCTION(Type_castVar), asCALL_CDECL_OBJLAST); assert( r >= 0 );
+
+		// TODO: runtime optimize: This code produces a lot of unecessary bytecode
+		r = ExecuteString(engine, "type t; t.v = 5; string s = string(t); assert( s == '5' );");
 		if( r != asEXECUTION_FINISHED )
 			TEST_FAILED;
 
@@ -393,8 +452,30 @@ bool Test()
 	//-----------------------------------------------------------------
 	// REFERENCE_CAST
 
-	// TODO: This should work for MAX_PORTABILITY as well
-	if( !strstr(asGetLibraryOptions(), "AS_MAX_PORTABILITY") )
+	// Test comparison of objects at different hierarchy levels
+	{
+		asIScriptEngine *engine = asCreateScriptEngine(ANGELSCRIPT_VERSION);
+		COutStream out;
+		engine->SetMessageCallback(asMETHOD(COutStream, Callback), &out, asCALL_THISCALL);
+
+		asIScriptModule *mod = engine->GetModule("test", asGM_ALWAYS_CREATE);
+		mod->AddScriptSection("test",
+			"class P {} \n"
+			"class C : P {} \n"
+			"void main() { \n"
+			"  P @p; \n"
+			"  C @c; \n"
+			"  if( p is c ) {} \n"
+			"  if( c is p ) {} \n"
+			"} \n");
+		r = mod->Build();
+		if( r < 0 )
+			TEST_FAILED;
+
+		engine->Release();
+	}
+
+	SKIP_ON_MAX_PORT
 	{
 
 		// It must be possible to cast an object handle to another object handle, without 
@@ -584,6 +665,98 @@ bool Test()
 		if( r != asEXECUTION_FINISHED )
 			TEST_FAILED;
 
+		// Test crash while returning from global handle
+		// http://www.gamedev.net/topic/653857-implicit-value-cast-from-global-handle/
+		mod->AddScriptSection("test",
+			"Pdouble @dbl; \n"
+			"double func1() { \n"
+			"  @dbl = Pdouble(3.14); \n"
+			"  return dbl; \n"
+			"} \n"
+			"double func2() { \n"
+			"  Pdouble d(3.14); \n"
+			"  return d; \n"
+			"} \n");
+		r = mod->Build();
+		if( r < 0 )
+			TEST_FAILED;
+
+		r = ExecuteString(engine, "assert( func1() == 3.14 ); \n"
+								  "assert( func2() == 3.14 ); \n", mod);
+		if( r != asEXECUTION_FINISHED )
+			TEST_FAILED;
+
+		engine->Release();
+	}
+
+	// Test implicit cast while assigning to global var
+	// http://www.gamedev.net/topic/652108-implicit-value-cast-assigned-to-global-variable/
+	{
+		engine = asCreateScriptEngine(ANGELSCRIPT_VERSION);
+
+		engine->SetMessageCallback(asMETHOD(COutStream, Callback), &out, asCALL_THISCALL);
+
+		engine->RegisterObjectType("type", sizeof(Value), asOBJ_VALUE|asOBJ_POD);
+		engine->RegisterObjectProperty("type", "double dbl", asOFFSET(Value, dbl));
+		engine->RegisterObjectBehaviour("type", asBEHAVE_IMPLICIT_VALUE_CAST, "double f()", asMETHOD(Value, castToDouble), asCALL_THISCALL);
+		
+		engine->RegisterGlobalFunction("void assert(bool)", asFUNCTION(Assert), asCALL_GENERIC);
+
+		asIScriptModule *mod = engine->GetModule("test", asGM_ALWAYS_CREATE);
+		mod->AddScriptSection("test",
+			"double g_Value; \n"
+			"void main() \n"
+			"{ \n"
+			"    type x; \n"
+			"    x.dbl = 42.2; \n"
+			"    double Value; \n"
+			"    Value = x; \n"
+			"    g_Value = x; \n"
+			"    assert( g_Value == 42.2 ); \n"
+			"    assert( Value == 42.2 ); \n"
+			"} \n");
+		r = mod->Build();
+		if( r < 0 )
+			TEST_FAILED;
+
+		r = ExecuteString(engine, "main()", mod);
+		if( r != asEXECUTION_FINISHED ) 
+			TEST_FAILED;
+
+		engine->Release();
+	}
+
+	// Test math operator with primitive and object type with implicit cast to primitive
+	// http://www.gamedev.net/topic/653484-compile-math-operator-first-attempts-casting/
+	{
+		engine = asCreateScriptEngine(ANGELSCRIPT_VERSION);
+
+		engine->SetMessageCallback(asMETHOD(COutStream, Callback), &out, asCALL_THISCALL);
+
+		engine->RegisterObjectType("type", sizeof(Value), asOBJ_VALUE|asOBJ_POD);
+		engine->RegisterObjectProperty("type", "double dbl", asOFFSET(Value, dbl));
+		engine->RegisterObjectBehaviour("type", asBEHAVE_IMPLICIT_VALUE_CAST, "int f()", asMETHOD(Value, castToInt), asCALL_THISCALL);
+		engine->RegisterObjectBehaviour("type", asBEHAVE_IMPLICIT_VALUE_CAST, "double f()", asMETHOD(Value, castToDouble), asCALL_THISCALL);
+		
+		engine->RegisterGlobalFunction("void assert(bool)", asFUNCTION(Assert), asCALL_GENERIC);
+
+		asIScriptModule *mod = engine->GetModule("test", asGM_ALWAYS_CREATE);
+		mod->AddScriptSection("test",
+			"void main() \n"
+			"{ \n"
+			"  type x; \n"
+			"  x.dbl = 3.5; \n"
+			"  double y = x * 2; \n" // the implicit cast should choose double, since it has better precision
+			"  assert( y == 7 ); \n"
+			"} \n");
+		r = mod->Build();
+		if( r < 0 )
+			TEST_FAILED;
+
+		r = ExecuteString(engine, "main()", mod);
+		if( r != asEXECUTION_FINISHED ) 
+			TEST_FAILED;
+
 		engine->Release();
 	}
 
@@ -597,7 +770,7 @@ struct Simple {
 struct Complex {
 };
 
-void implicit(asIScriptGeneric * gen) {
+void implicit(asIScriptGeneric *) {
 }
 
 static bool Test2()
@@ -766,7 +939,7 @@ struct Castee{
 
 	static void Construct(void *mem) { new(mem) Castee(); }
 	static void Construct2(void *mem, const Castee &v) { new(mem) Castee(v); }
-	static void Destruct(void *mem) {}
+	static void Destruct(void * /*mem*/) {}
 };
 struct Caster{ 
 	Caster() {}
@@ -776,7 +949,7 @@ struct Caster{
 
 	static void Construct(void *mem) { new(mem) Caster(); }
 	static void Construct2(void *mem, int v) { new(mem) Caster(v); }
-	static void Destruct(void *mem) {}
+	static void Destruct(void * /*mem*/) {}
 }; 
 
 static bool Test4()
@@ -853,6 +1026,111 @@ static bool Test4()
 
 	return fail;
 }
+
+//----------------------------------------------------------------------------------
+// http://www.gamedev.net/topic/654193-implicit-reference-cast-in-function-argument/
+
+class RefTest5
+{
+public:
+	RefTest5() : Refs(1) {}
+	virtual ~RefTest5() {}
+	virtual void AddRef() const
+	{
+		++Refs;
+	}
+	virtual void Release() const
+	{
+		if (--Refs == 0) delete this;
+	}
+
+	mutable int Refs;
+};
+
+class ATest5
+{
+public:
+	virtual int GetValue() const=0;
+};
+
+class BTest5 : public RefTest5, public ATest5
+{
+public:
+	static BTest5* Factory() { return new BTest5; }
+
+	virtual int GetValue() const 
+	{
+		return 7;
+	}
+
+	ATest5* RefCastA() { return static_cast<ATest5*>(this); }
+};
+
+class CTest5
+{
+public:
+	CTest5& opShl(const ATest5& x)
+	{
+		Value = x.GetValue();
+		return *this;
+	}
+
+	int Value;
+};
+
+static const char* script =
+"void main()                      \n"
+"{                                \n"
+"    B x;                         \n"
+"    C y;                         \n"
+"    y << x;                      \n"
+"    assert( y.Value == 7 );      \n"
+"}                                \n";
+
+
+bool Test5()
+{
+	bool fail = false;
+	int r;
+	asIScriptEngine* engine = asCreateScriptEngine(ANGELSCRIPT_VERSION);
+	COutStream out;
+	engine->SetMessageCallback(asMETHOD(COutStream, Callback), &out, asCALL_THISCALL);
+
+	engine->RegisterGlobalFunction("void assert(bool)", asFUNCTION(Assert), asCALL_GENERIC);
+
+	engine->RegisterObjectType("A", 0, asOBJ_REF | asOBJ_NOCOUNT);
+	
+	engine->RegisterObjectType("B", 0, asOBJ_REF);
+	engine->RegisterObjectBehaviour("B", asBEHAVE_FACTORY,
+	"B@ f()", asFUNCTION(BTest5::Factory), asCALL_CDECL);
+	engine->RegisterObjectBehaviour("B", asBEHAVE_ADDREF,
+	"void AddRef() const", asMETHODPR(BTest5, AddRef, () const, void), asCALL_THISCALL);
+	engine->RegisterObjectBehaviour("B", asBEHAVE_RELEASE,
+	"void Release() const", asMETHODPR(BTest5, Release, () const, void), asCALL_THISCALL);
+	engine->RegisterObjectBehaviour("B", asBEHAVE_IMPLICIT_REF_CAST,
+	"A@ f()", asMETHOD(BTest5, RefCastA), asCALL_THISCALL);
+
+	engine->RegisterObjectType("C", sizeof(CTest5), asOBJ_VALUE | asOBJ_POD);
+	engine->RegisterObjectMethod("C", "C& opShl(const A&)",
+	asMETHOD(CTest5, opShl), asCALL_THISCALL);
+	engine->RegisterObjectProperty("C", "int Value", offsetof(CTest5, Value));
+
+	asIScriptModule* mod = engine->GetModule(0, asGM_ALWAYS_CREATE);
+	mod->AddScriptSection("Script", script);
+
+	//engine->SetEngineProperty(asEP_OPTIMIZE_BYTECODE, false);
+	mod->Build();
+
+	asIScriptContext* ctx = engine->CreateContext();
+	r = ExecuteString(engine, "main()", mod, ctx);
+	if (r != asEXECUTION_FINISHED) TEST_FAILED;
+
+	ctx->Release();
+	engine->Release();
+
+	return fail;
+}
+
 
 } // namespace
 

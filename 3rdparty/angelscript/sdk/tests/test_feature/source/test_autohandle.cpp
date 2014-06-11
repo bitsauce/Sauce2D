@@ -6,7 +6,7 @@ using std::string;
 
 static const char * const TESTNAME = "TestAutoHandle";
 
-void TestConstructor(string &arg1, CScriptString *arg2, double d, string &arg3, void *obj)
+void TestConstructor(string &arg1, CScriptString *arg2, double /*d*/, string &arg3, void * /*obj*/)
 {
 	assert(arg1 == "1");
 	assert(arg2->buffer == "2");
@@ -15,7 +15,7 @@ void TestConstructor(string &arg1, CScriptString *arg2, double d, string &arg3, 
 	arg2->Release();
 }
 
-void TestFunc(string &arg1, CScriptString *arg2, double d, string &arg3)
+void TestFunc(string &arg1, CScriptString *arg2, double /*d*/, string &arg3)
 {
 	assert(arg1 == "1");
 	assert(arg2->buffer == "2");
@@ -58,11 +58,7 @@ public:
 
 bool Test()
 {
-	if( strstr(asGetLibraryOptions(),"AS_MAX_PORTABILITY") )
-	{
-		printf("%s: Skipped due to AS_MAX_PORTABILITY\n", TESTNAME);
-		return false;
-	}
+	RET_ON_MAX_PORT
 
 
 	bool fail = false;

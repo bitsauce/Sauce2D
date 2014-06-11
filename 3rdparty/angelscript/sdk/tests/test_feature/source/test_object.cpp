@@ -76,8 +76,8 @@ static const char *script1 =
 class CObject
 {
 public:
-	CObject() {val = 0;/*printf("C:%x\n",this);*/}
-	~CObject() {/*printf("D:%x\n", this);*/}
+	CObject() {val = 0;/*PRINTF("C:%x\n",this);*/}
+	~CObject() {/*PRINTF("D:%x\n", this);*/}
 	void Set(int v) {val = v;}
 	int Get() {return val;}
 	int &GetRef() {return val;}
@@ -140,11 +140,8 @@ bool Test2();
 
 bool Test()
 {
-	if( strstr(asGetLibraryOptions(), "AS_MAX_PORTABILITY") )
-	{
-		printf("%s: Skipped due to AS_MAX_PORTABILITY\n", TESTNAME);
-		return false;
-	}
+	RET_ON_MAX_PORT
+
 	bool fail = Test2();
 	int r;
 	int funcId;
@@ -185,7 +182,7 @@ bool Test()
 	if( r < 0 )
 	{
 		TEST_FAILED;
-		printf("%s: Failed to compile the script\n", TESTNAME);
+		PRINTF("%s: Failed to compile the script\n", TESTNAME);
 	}
 
 	asIScriptContext *ctx = engine->CreateContext();
@@ -195,7 +192,7 @@ bool Test()
 		if( r == asEXECUTION_EXCEPTION )
 			PrintException(ctx);
 
-		printf("%s: Failed to execute script\n", TESTNAME);
+		PRINTF("%s: Failed to execute script\n", TESTNAME);
 		TEST_FAILED;
 	}
 	if( ctx ) ctx->Release();
@@ -204,7 +201,7 @@ bool Test()
 	if( r != 0 )
 	{
 		TEST_FAILED;
-		printf("%s: Failed\n", TESTNAME);
+		PRINTF("%s: Failed\n", TESTNAME);
 	}
 
 	CBufferedOutStream bout;
@@ -212,8 +209,8 @@ bool Test()
 	r = ExecuteString(engine, "Object obj; float r = 0; obj = r;");
 	if( r >= 0 || bout.buffer != "ExecuteString (1, 32) : Error   : Can't implicitly convert from 'float' to 'const Object&'.\n" )
 	{
-		printf("%s: Didn't fail to compile as expected\n", TESTNAME);
-		printf("%s", bout.buffer.c_str());
+		PRINTF("%s: Didn't fail to compile as expected\n", TESTNAME);
+		PRINTF("%s", bout.buffer.c_str());
 		TEST_FAILED;
 	}
 
@@ -270,7 +267,7 @@ bool Test()
 	}
 	if( bout.buffer != "" )
 	{
-		printf("%s", bout.buffer.c_str());
+		PRINTF("%s", bout.buffer.c_str());
 		TEST_FAILED;
 	}
 
@@ -314,7 +311,7 @@ bool Test2()
 	if( bout.buffer != "script (1, 17) : Error   : Object handle is not supported for this type\n" )
 	{
 		TEST_FAILED;
-		printf("%s", bout.buffer.c_str());
+		PRINTF("%s", bout.buffer.c_str());
 	}
 
 	engine->Release();

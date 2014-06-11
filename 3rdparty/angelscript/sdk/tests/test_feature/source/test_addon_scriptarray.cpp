@@ -143,14 +143,25 @@ static const char *script7 =
 
 bool Test2();
 
+class ClassExceptionInConstructor
+{
+public:
+	ClassExceptionInConstructor() { throw std::exception(); }
+	~ClassExceptionInConstructor() {}
+	ClassExceptionInConstructor &operator=(const ClassExceptionInConstructor &) { return *this; }
+
+	static void Construct(void *mem) { new(mem) ClassExceptionInConstructor(); }
+	static void Destruct(ClassExceptionInConstructor *mem) { mem->~ClassExceptionInConstructor(); }
+};
+
 CScriptArray *CreateArrayOfStrings()
 {
 	asIScriptContext *ctx = asGetActiveContext();
 	if( ctx )
 	{
 		asIScriptEngine* engine = ctx->GetEngine();
-		asIObjectType* t = engine->GetObjectTypeById(engine->GetTypeIdByDecl("array<string@>"));
-		CScriptArray* arr = new CScriptArray(3, t);
+		asIObjectType* t = engine->GetObjectTypeByDecl("array<string@>");
+		CScriptArray* arr = CScriptArray::Create(t, 3);
 		for( asUINT i = 0; i < arr->GetSize(); i++ )
 		{
 			CScriptString** p = static_cast<CScriptString**>(arr->At(i));
@@ -170,22 +181,80 @@ bool Test()
 	CBufferedOutStream bout;
 	asIScriptContext *ctx;
 	asIScriptEngine *engine;
-	
-	// Compile array with default value in list
+
+	// TODO: 2.29.0: Test releasing the script engine while a script array is still alive
+	//               It must be gracefully handled, preferrably with an appropriate error message
+
+	// Test exception in constructor of value type
+	SKIP_ON_MAX_PORT
+	{
+		engine = asCreateScriptEngine(ANGELSCRIPT_VERSION);
+		engine->SetMessageCallback(asMETHOD(COutStream, Callback), &out, asCALL_THISCALL);
+
+		RegisterScriptArray(engine, false);
+
+		engine->RegisterObjectType("Except", sizeof(ClassExceptionInConstructor), asOBJ_VALUE | asOBJ_APP_CLASS_CDA);
+		engine->RegisterObjectBehaviour("Except", asBEHAVE_CONSTRUCT, "void f()", asFUNCTION(ClassExceptionInConstructor::Construct), asCALL_CDECL_OBJLAST);
+		engine->RegisterObjectBehaviour("Except", asBEHAVE_DESTRUCT, "void f()", asFUNCTION(ClassExceptionInConstructor::Destruct), asCALL_CDECL_OBJLAST);
+		engine->RegisterObjectMethod("Except", "Except &opAssign(const Except &in)", asMETHOD(ClassExceptionInConstructor, operator=), asCALL_THISCALL);
+
+		asIScriptContext *ctx = engine->CreateContext();
+		r = ExecuteString(engine, "array<Except> arr(2);", 0, ctx);
+		if( r != asEXECUTION_EXCEPTION )
+			TEST_FAILED;
+		else if( std::string(ctx->GetExceptionString()) != "Caught an exception from the application" )
+		{
+			PRINTF("Got exception : %s\n", ctx->GetExceptionString());
+			TEST_FAILED;
+		}
+		ctx->Release();
+
+		engine->Release();
+	}
+
+	// Test initializing an array with string registered as reference
+	// type, and skipping values in initialization list
+	// http://www.gamedev.net/topic/653233-array-with-object-reference/
 	{
 		engine = asCreateScriptEngine(ANGELSCRIPT_VERSION);
 		engine->SetMessageCallback(asMETHOD(COutStream,Callback), &out, asCALL_THISCALL);
 		RegisterScriptString(engine); // ref type
-		RegisterScriptArray(engine, false);
+		RegisterScriptArray(engine, true);
 		engine->RegisterGlobalFunction("void assert(bool)", asFUNCTION(Assert), asCALL_GENERIC);
 
-		r = ExecuteString(engine, "array<string> a = {'a', , 'c', , 'e'}; assert( a[1] == '' );");
+		asIScriptModule *mod = engine->GetModule("test", asGM_ALWAYS_CREATE);
+		mod->AddScriptSection("test",
+			"void main() { \n"
+			"  string@[] a = {'a', , 'c', , 'e'}; assert( a[1] is null ); assert( a[2] == 'c' ); \n"
+			"  string[] b = {'a', , 'c', , 'e'}; assert( b[1] == '' ); assert( b[2] == 'c' ); \n"
+			"  int[] c = {1, , 3, , 5}; assert( c[1] == 0 ); assert( c[4] == 5 ); \n"
+			"  const uint8[] d = {1,2,3,4,5}; assert( d[4] == 5 ); \n"
+			"} \n");
+		r = mod->Build();
+		if( r < 0 )
+			TEST_FAILED;
+
+		r = ExecuteString(engine, "main()", mod);
+		if( r != asEXECUTION_FINISHED )
+			TEST_FAILED;
+
+		CBytecodeStream stream("TestArray");
+		r = mod->SaveByteCode(&stream);
+		if( r < 0 )
+			TEST_FAILED;
+
+		mod = engine->GetModule("test", asGM_ALWAYS_CREATE);
+		r = mod->LoadByteCode(&stream);
+		if( r < 0 )
+			TEST_FAILED;
+
+		r = ExecuteString(engine, "main()", mod);
 		if( r != asEXECUTION_FINISHED )
 			TEST_FAILED;
 
 		engine->Release();
 	}
-
+	
 	// Compile array with default value in list
 	{
 		engine = asCreateScriptEngine(ANGELSCRIPT_VERSION);
@@ -302,7 +371,7 @@ bool Test()
 		if( r < 0 )
 		{
 			TEST_FAILED;
-			printf("%s: Failed to compile the script\n", TESTNAME);
+			PRINTF("%s: Failed to compile the script\n", TESTNAME);
 		}
 
 		ctx = engine->CreateContext();
@@ -312,7 +381,7 @@ bool Test()
 			if( r == asEXECUTION_EXCEPTION )
 				PrintException(ctx);
 
-			printf("%s: Failed to execute script\n", TESTNAME);
+			PRINTF("%s: Failed to execute script\n", TESTNAME);
 			TEST_FAILED;
 		}
 		if( ctx ) ctx->Release();
@@ -323,13 +392,13 @@ bool Test()
 		if( r < 0 )
 		{
 			TEST_FAILED;
-			printf("%s: Failed to compile the script\n", TESTNAME);
+			PRINTF("%s: Failed to compile the script\n", TESTNAME);
 		}
 
 		r = ExecuteString(engine, "TestArrayException()", mod);
 		if( r != asEXECUTION_EXCEPTION )
 		{
-			printf("%s: No exception\n", TESTNAME);
+			PRINTF("%s: No exception\n", TESTNAME);
 			TEST_FAILED;
 		}
 
@@ -340,14 +409,14 @@ bool Test()
 		if( r < 0 )
 		{
 			TEST_FAILED;
-			printf("%s: Failed to compile the script\n", TESTNAME);
+			PRINTF("%s: Failed to compile the script\n", TESTNAME);
 		}
 
 		ctx = engine->CreateContext();
 		r = ExecuteString(engine, "TestArrayMulti()", mod, ctx);
 		if( r != asEXECUTION_FINISHED )
 		{
-			printf("%s: Failure\n", TESTNAME);
+			PRINTF("%s: Failure\n", TESTNAME);
 			TEST_FAILED;
 		}
 		if( r == asEXECUTION_EXCEPTION )
@@ -364,13 +433,13 @@ bool Test()
 		if( r < 0 )
 		{
 			TEST_FAILED;
-			printf("%s: Failed to compile the script\n", TESTNAME);
+			PRINTF("%s: Failed to compile the script\n", TESTNAME);
 		}
 		ctx = engine->CreateContext();
 		r = ExecuteString(engine, "TestArrayChar()", mod, ctx);
 		if( r != asEXECUTION_FINISHED )
 		{
-			printf("%s: Failure\n", TESTNAME);
+			PRINTF("%s: Failure\n", TESTNAME);
 			TEST_FAILED;
 		}
 		if( r == asEXECUTION_EXCEPTION )
@@ -394,6 +463,7 @@ bool Test()
 		if( ctx ) ctx->Release();
 
 		engine->SetMessageCallback(asMETHOD(CBufferedOutStream,Callback), &bout, asCALL_THISCALL);
+		bout.buffer = "";
 		mod = engine->GetModule(0, asGM_ALWAYS_CREATE);
 		mod->AddScriptSection(TESTNAME, script6, strlen(script6), 0);
 		r = mod->Build();
@@ -402,7 +472,7 @@ bool Test()
 						   "Test_Addon_ScriptArray (3, 20) : Error   : Initialization lists cannot be used with 'array<int>@'\n"
 						   "Test_Addon_ScriptArray (4, 21) : Error   : Initialization lists cannot be used with 'int'\n" )
 		{
-			printf("%s", bout.buffer.c_str());
+			PRINTF("%s", bout.buffer.c_str());
 			TEST_FAILED;
 		}
 
@@ -469,9 +539,10 @@ bool Test()
 		r = ExecuteString(engine, "array<single> a;");
 		if( r >= 0 )
 			TEST_FAILED;
-		if( bout.buffer != "ExecuteString (1, 7) : Error   : Can't instanciate template 'array' with subtype 'single'\n" )
+		if( bout.buffer != "array (0, 0) : Error   : The subtype has no default factory\n"
+						   "ExecuteString (1, 7) : Error   : Can't instanciate template 'array' with subtype 'single'\n" )
 		{
-			printf("%s", bout.buffer.c_str());
+			PRINTF("%s", bout.buffer.c_str());
 			TEST_FAILED;
 		}
 
@@ -596,11 +667,7 @@ bool Test()
 
 	// Test creating script array from application
 	{
-		if( strstr(asGetLibraryOptions(), "AS_MAX_PORTABILITY") )
-		{
-			printf("Subtest: Skipped due to AS_MAX_PORTABILITY\n");
-		}
-		else
+		SKIP_ON_MAX_PORT
 		{
 			asIScriptEngine *engine = asCreateScriptEngine(ANGELSCRIPT_VERSION);
 			RegisterScriptArray(engine, false);
@@ -883,9 +950,10 @@ bool Test()
 		r = mod->Build();
 		if( r > 0 ) 
 			TEST_FAILED;
-		if( bout.buffer != "script (5, 7) : Error   : Can't instanciate template 'array' with subtype 'CTest'\n" )
+		if( bout.buffer != "array (0, 0) : Error   : The subtype has no default factory\n"
+						   "script (5, 7) : Error   : Can't instanciate template 'array' with subtype 'CTest'\n" )
 		{
-			printf("%s", bout.buffer.c_str());
+			PRINTF("%s", bout.buffer.c_str());
 			TEST_FAILED;
 		}
 
@@ -909,7 +977,7 @@ bool Test()
 			TEST_FAILED;
 		if( bout.buffer != "" )
 		{
-			printf("%s", bout.buffer.c_str());
+			PRINTF("%s", bout.buffer.c_str());
 			TEST_FAILED;
 		}
 		r = ExecuteString(engine, "array<T> arr(1); \n", mod);
@@ -949,7 +1017,7 @@ bool Test()
 			TEST_FAILED;
 		if( bout.buffer != "" )
 		{
-			printf("%s", bout.buffer.c_str());
+			PRINTF("%s", bout.buffer.c_str());
 			TEST_FAILED;
 		}
 		r = ExecuteString(engine, "main()", mod);
@@ -988,7 +1056,7 @@ bool Test()
 			TEST_FAILED;
 		if( bout.buffer != "" )
 		{
-			printf("%s", bout.buffer.c_str());
+			PRINTF("%s", bout.buffer.c_str());
 			TEST_FAILED;
 		}
 		r = ExecuteString(engine, "main()", mod);
@@ -1032,7 +1100,7 @@ bool Test()
 			TEST_FAILED;
 		if( bout.buffer != "" )
 		{
-			printf("%s", bout.buffer.c_str());
+			PRINTF("%s", bout.buffer.c_str());
 			TEST_FAILED;
 		}
 		r = ExecuteString(engine, "main()", mod);
@@ -1061,6 +1129,43 @@ bool Test()
 		r = ExecuteString(engine, script);
 		if( r != asEXECUTION_FINISHED )
 			TEST_FAILED;
+		
+		engine->Release();
+	}
+
+	// Test findByRef
+	{
+		const char *script =
+			"class Obj {} \n"
+			"array<int> ia = {1,2,3}; \n"
+			"array<Obj> oa = {Obj(), Obj()}; \n"
+			"array<Obj@> ha = {Obj(), Obj()}; \n";
+
+		asIScriptEngine *engine = asCreateScriptEngine(ANGELSCRIPT_VERSION);
+		engine->SetMessageCallback(asMETHOD(COutStream, Callback), &out, asCALL_THISCALL);
+		RegisterScriptArray(engine, true);
+		engine->RegisterGlobalFunction("void assert(bool)", asFUNCTION(Assert), asCALL_GENERIC);
+
+		asIScriptModule *mod = engine->GetModule("mod", asGM_ALWAYS_CREATE);
+		mod->AddScriptSection("test", script);
+		r = mod->Build();
+		if( r < 0 )
+			TEST_FAILED;
+
+		asIScriptContext *ctx = engine->CreateContext();
+		r = ExecuteString(engine, "assert( ia.findByRef(ia[1]) == -1 ); \n"
+								  "Obj @obj = oa[1]; \n"
+								  "assert( oa.findByRef(obj) == 1 ); \n"
+								  "@obj = ha[1]; \n"
+								  "assert( ha.findByRef(obj) == 1 ); \n"
+								  "ha.insertLast(null); \n"
+								  "assert( ha.findByRef(null) == 2 ); \n", mod, ctx);
+		if( r != asEXECUTION_FINISHED )
+			TEST_FAILED;
+		if( r == asEXECUTION_EXCEPTION )
+			PrintException(ctx);
+
+		ctx->Release();
 		
 		engine->Release();
 	}

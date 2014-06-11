@@ -50,11 +50,8 @@ bool TestMultipleInheritance2();
 
 bool TestMultipleInheritance()
 {
-	if( strstr(asGetLibraryOptions(), "AS_MAX_PORTABILITY") )
-	{
-		printf("%s: Skipped due to AS_MAX_PORTABILITY\n", TESTNAME);
-		return false;
-	}
+	RET_ON_MAX_PORT
+
 	bool fail = TestMultipleInheritance2();
 	int r;
 
@@ -74,7 +71,7 @@ bool TestMultipleInheritance()
 
 	if( output2 != "CBase1: CBase1::CallMe1()\nCBase2: CBase2::CallMe2()\n" )
 	{
-		printf("%s: Method calls failed.\n%s", TESTNAME, output2.c_str());
+		PRINTF("%s: Method calls failed.\n%s", TESTNAME, output2.c_str());
 		TEST_FAILED;
 	}
 
@@ -116,12 +113,12 @@ public:
 
 	virtual short health() const
 	{
-//		printf("Creep::health()\n");
-		return h;
+//		PRINTF("Creep::health()\n");
+		return short(h);
 	}
-	virtual void health(short h)
+	virtual void health(short /*h*/)
 	{
-//		printf("Creep::health(%d)\n", h);
+//		PRINTF("Creep::health(%d)\n", h);
 	}
 };
 
@@ -134,12 +131,12 @@ public:
 
 	short health() const
 	{
-//		printf("CreepClient::health()\n");
-		return h;
+//		PRINTF("CreepClient::health()\n");
+		return short(h);
 	}
-	void health(short h)
+	void health(short /*h*/)
 	{
-//		printf("CreepClient::health(%d)\n", h);
+//		PRINTF("CreepClient::health(%d)\n", h);
 	}
 };
 

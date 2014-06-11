@@ -17,13 +17,13 @@ struct Foo
 };
 
 //THIS CRASHES.
-std::string foo_member_fun_one(const std::string& in, Foo* thisp)
+std::string foo_member_fun_one(const std::string& in, Foo*)
 {
 	assert(in == "foo");
 	return in;
 }
 
-void foo_member_fun_two(const std::string& in, Foo* thisp)
+void foo_member_fun_two(const std::string& in, Foo*)
 {
 	assert(in == "foo");
 }
@@ -58,11 +58,7 @@ std::string StringFactory(unsigned int length, const char *s)
 
 bool Test()
 {
-	if( strstr(asGetLibraryOptions(), "AS_MAX_PORTABILITY") )
-	{
-		printf("%s: Skipped due to AS_MAX_PORTABILITY\n", TESTNAME);
-		return false;
-	}
+	RET_ON_MAX_PORT
 
 	asIScriptEngine* engine = asCreateScriptEngine(ANGELSCRIPT_VERSION);
 	engine->SetEngineProperty(asEP_ALLOW_UNSAFE_REFERENCES, 1);

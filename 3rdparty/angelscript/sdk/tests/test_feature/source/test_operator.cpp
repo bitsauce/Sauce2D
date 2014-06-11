@@ -32,9 +32,213 @@ bool Test()
 {
 	bool fail = false;
 	CBufferedOutStream bout;
+	COutStream out;
 	int r;
 	asIScriptEngine *engine = 0;
 	asIScriptModule *mod = 0;
+
+	// opCall for global variable
+	{
+		engine = asCreateScriptEngine(ANGELSCRIPT_VERSION);
+		engine->SetMessageCallback(asMETHOD(COutStream, Callback), &out, asCALL_THISCALL);
+
+		mod = engine->GetModule(0, asGM_ALWAYS_CREATE);
+		mod->AddScriptSection("test",
+			"void global()\n"
+			"{\n"
+			"    bool ok=globalF(0);\n"
+			"}\n"
+			"class Functor\n"
+			"{\n"
+			"    bool opCall(double d)\n"
+			"    {\n"
+			"        return d!=0;\n"
+			"    }\n"
+			"};\n"
+			"Functor globalF;\n");
+		r = mod->Build();
+		if( r < 0 )
+			TEST_FAILED;
+
+		engine->Release();
+	}
+
+	// opCall on property accessor
+	{
+		engine = asCreateScriptEngine(ANGELSCRIPT_VERSION);
+		engine->SetMessageCallback(asMETHOD(COutStream, Callback), &out, asCALL_THISCALL);
+
+		mod = engine->GetModule(0, asGM_ALWAYS_CREATE);
+		mod->AddScriptSection("test",
+			"int i=0;\n"
+			"class Functor\n"
+			"{\n"
+			"    void opCall()\n"
+			"    {\n"
+		//	"        print('opCall'+i+'\n');\n"
+			"        i++;\n"
+			"    }\n"
+			"    void callThis()\n"
+			"    {\n"
+			"        this();\n"
+			"    }\n"
+			"};\n"
+			"class Hybrid\n"
+			"{\n"
+			"    Functor f;\n"
+			"    Functor g\n"
+			"    {\n"
+			"        get const\n"
+			"        {\n"
+			"            return f;\n"
+			"        }\n"
+			"    }\n"
+			"    void callMember()\n"
+			"    {\n"
+			"        f();\n"
+			"    }\n"
+			"    void callMemberProp()\n"
+			"    {\n"
+			"        g();\n"
+			"    }\n"
+			"}\n"
+			"Hybrid glob;\n"
+			"void member()\n"
+			"{\n"
+			"    Hybrid local;\n"
+			"    local.f();\n"
+			"    local.callMember();\n"
+			"    local.g();\n"
+			"    local.callMemberProp();\n"
+			"    glob.f();\n"
+			"    glob.get_g()();\n"
+			"    glob.g();\n"
+			"    glob.callMember();\n"
+			"    glob.callMemberProp();\n"
+			"    Functor@ fPtr=glob.g;\n"
+			"    fPtr();\n"
+			"}\n");
+		r = mod->Build();
+		if( r < 0 )
+			TEST_FAILED;
+
+		r = ExecuteString(engine, "member()", mod);
+		if( r != asEXECUTION_FINISHED )
+			TEST_FAILED;
+
+		engine->Release();
+	}
+
+	// opCall
+	{
+		engine = asCreateScriptEngine(ANGELSCRIPT_VERSION);
+		engine->SetMessageCallback(asMETHOD(COutStream, Callback), &out, asCALL_THISCALL);
+
+		engine->RegisterGlobalFunction("void assert(bool)", asFUNCTION(Assert), asCALL_GENERIC);
+		RegisterStdString(engine);
+
+		mod = engine->GetModule(0, asGM_ALWAYS_CREATE);
+		mod->AddScriptSection("Test",
+			"class C {\n"
+			"  int opCall(int a, int b) { return a + b; } \n"
+			"  int test() { return this(2,3); } \n"
+			"} \n"
+			"class D {\n"
+			"  string &opCall(const string &in a, const string &in b, const string &in c = 'hello') { val = a + b + c; return val; } \n"
+			"  string val; \n"
+			"} \n"
+			"class E {\n"
+			"  int opCall() { return 42; } \n"
+			"} \n"
+			"class F { \n"
+			"  C c; \n"
+			"  int func() { return c(2,3); } \n"
+			"  C @get_Functor() { return c; } \n"
+			"} \n");
+		
+		r = mod->Build();
+		if( r < 0 )
+			TEST_FAILED;
+
+		// Test opIndex with multiple args
+		r = ExecuteString(engine, "C c; assert( c(2,3) == 5 ); assert( c.opCall(2,3) == 5 ); \n", mod);
+		if( r != asEXECUTION_FINISHED )
+			TEST_FAILED;
+
+		// Test with objects as arguments, and returning references too
+		// Test with default arguments
+		r = ExecuteString(engine, "D d; assert( d('a', 'b') == 'abhello' ); assert( d.opCall('a', 'b') == 'abhello' ); \n", mod);
+		if( r != asEXECUTION_FINISHED )
+			TEST_FAILED;
+
+		// Test calling as member method, i.e. assert( f.c(2,3) == 5 );
+		r = ExecuteString(engine, "F f; assert( f.c(2,3) == 5 ); assert( f.c.opCall(2,3) == 5 ); \n", mod);
+		if( r != asEXECUTION_FINISHED )
+			TEST_FAILED;
+
+		// Test calling as member from within class method, i.e. f::func() { return c(2,3); }
+		r = ExecuteString(engine, "F f; assert( f.func() == 5 );", mod);
+		if( r != asEXECUTION_FINISHED )
+			TEST_FAILED;
+
+		// Test calling it as post op, i.e. assert( getFunctor()(2,3) == 5 ); 
+		r = ExecuteString(engine, "F f; \n"
+								  "assert( f.Functor(2,3) == 5 ); \n"
+			                      "assert( f.get_Functor()(2,3) == 5 ); \n"
+								  "assert( f.get_Functor().opCall(2,3) == 5 ); \n", mod);
+		if( r != asEXECUTION_FINISHED )
+			TEST_FAILED;
+
+		// Test calling the opCall with this()
+		r = ExecuteString(engine, "C c; assert( c.test() == 5 ); \n", mod);
+		if( r != asEXECUTION_FINISHED )
+			TEST_FAILED;
+
+		engine->Release();
+	}
+
+	// opIndex with multiple values
+	{
+		engine = asCreateScriptEngine(ANGELSCRIPT_VERSION);
+		engine->SetMessageCallback(asMETHOD(COutStream, Callback), &out, asCALL_THISCALL);
+
+		engine->RegisterGlobalFunction("void assert(bool)", asFUNCTION(Assert), asCALL_GENERIC);
+		RegisterStdString(engine);
+
+		mod = engine->GetModule(0, asGM_ALWAYS_CREATE);
+		mod->AddScriptSection("Test",
+			"class C {\n"
+			"  int opIndex(int a, int b) { return a + b; } \n"
+			"} \n"
+			"class D {\n"
+			"  string &opIndex(const string &in a, const string &in b, const string &in c = 'hello') { val = a + b + c; return val; } \n"
+			"  string val; \n"
+			"} \n"
+			"class E {\n"
+			"  int opIndex() { return 42; } \n"
+			"} \n");
+		r = mod->Build();
+		if( r < 0 )
+			TEST_FAILED;
+
+		// Test opIndex with multiple args
+		r = ExecuteString(engine, "C c; assert( c[2,3] == 5 ); \n", mod);
+		if( r != asEXECUTION_FINISHED )
+			TEST_FAILED;
+
+		// Test with objects as arguments, and returning references too
+		// Test with default arguments
+		r = ExecuteString(engine, "D d; assert( d['a', 'b'] == 'abhello' ); \n", mod);
+		if( r != asEXECUTION_FINISHED )
+			TEST_FAILED;
+
+		// Test with zero arguments
+		r = ExecuteString(engine, "E e; assert( e[] == 42 ); \n", mod);
+		if( r != asEXECUTION_FINISHED )
+			TEST_FAILED;
+
+		engine->Release();
+	}
 
 	// Operator overloads
 	{
@@ -98,7 +302,7 @@ bool Test()
 		                   "test (34, 15) : Info    : int C::opCmp(const C&in)\n"
 		                   "test (34, 15) : Info    : int C::opCmp(const C@)\n" )
 		{
-			printf("%s", bout.buffer.c_str());
+			PRINTF("%s", bout.buffer.c_str());
 			TEST_FAILED;
 		}
 
@@ -177,7 +381,7 @@ bool Test()
 		if( bout.buffer != "script (29, 1) : Info    : Compiling void main()\n"
 		                   "script (39, 16) : Warning : Implicit conversion of value is not exact\n" )
 		{
-			printf("%s", bout.buffer.c_str());
+			PRINTF("%s", bout.buffer.c_str());
 			TEST_FAILED;
 		}
 		
@@ -194,7 +398,7 @@ bool Test()
 		}
 		if( bout.buffer != "ExecuteString (1, 38) : Error   : No conversion from 'const Test@&' to 'int' available.\n" )
 		{
-			printf("%s", bout.buffer.c_str());
+			PRINTF("%s", bout.buffer.c_str());
 		}
 
 		engine->Release();
@@ -203,7 +407,7 @@ bool Test()
 	//--------------------------------------------
 	// opEquals for application classes
 	//
-	if( strstr(asGetLibraryOptions(), "AS_MAX_PORTABILITY") == 0 )
+	SKIP_ON_MAX_PORT
 	{
 		engine = asCreateScriptEngine(ANGELSCRIPT_VERSION);
 
@@ -247,7 +451,7 @@ bool Test()
 		}
 		if( bout.buffer != "" )
 		{
-			printf("%s", bout.buffer.c_str());
+			PRINTF("%s", bout.buffer.c_str());
 		}
 
 		r = ExecuteString(engine, "main()", mod);
@@ -348,7 +552,7 @@ bool Test()
 		}
 		if( bout.buffer != "ExecuteString (1, 38) : Error   : No conversion from 'const Test@&' to 'int' available.\n" )
 		{
-			printf("%s", bout.buffer.c_str());
+			PRINTF("%s", bout.buffer.c_str());
 		}
 
 		engine->Release();
@@ -408,7 +612,7 @@ bool Test()
 		}
 		if( bout.buffer != "" )
 		{
-			printf("%s", bout.buffer.c_str());
+			PRINTF("%s", bout.buffer.c_str());
 			TEST_FAILED;
 		}
 		
@@ -468,7 +672,7 @@ bool Test()
 		}
 		if( bout.buffer != "" )
 		{
-			printf("%s", bout.buffer.c_str());
+			PRINTF("%s", bout.buffer.c_str());
 			TEST_FAILED;
 		}
 		
@@ -538,7 +742,7 @@ bool Test()
 		}
 		if( bout.buffer != "" )
 		{
-			printf("%s", bout.buffer.c_str());
+			PRINTF("%s", bout.buffer.c_str());
 		}
 		
 		r = ExecuteString(engine, "main()", mod);
@@ -558,7 +762,7 @@ bool Test()
 			               "ExecuteString (1, 57) : Error   : Function 'opPostInc() const' not found\n"
 		                   "ExecuteString (1, 61) : Error   : Function 'opPreDec() const' not found\n" )
 		{
-			printf("%s", bout.buffer.c_str());
+			PRINTF("%s", bout.buffer.c_str());
 		}
 
 		engine->Release();

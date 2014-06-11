@@ -60,11 +60,7 @@ static const char *script2 =
 
 bool Test()
 {
-	if( strstr(asGetLibraryOptions(), "AS_MAX_PORTABILITY") )
-	{
-		printf("%s: Skipped due to AS_MAX_PORTABILITY\n", TESTNAME);
-		return false;
-	}
+	RET_ON_MAX_PORT
 
 	bool fail = false;
 	int r;
@@ -93,7 +89,7 @@ bool Test()
 
 	if( !out.buffer.empty() )
 	{
-		printf("%s: Failed to pass argument as 'const type &in'\n%s", TESTNAME, out.buffer.c_str());
+		PRINTF("%s: Failed to pass argument as 'const type &in'\n%s", TESTNAME, out.buffer.c_str());
 		TEST_FAILED;
 	}
 
@@ -127,7 +123,7 @@ bool Test()
 	if( out.buffer != "TestConstProperty (3, 1) : Info    : Compiling void Init()\n"
 		              "TestConstProperty (5, 11) : Error   : Reference is read-only\n" )
 	{
-		printf("%s: Failed to detect all properties as constant\n%s", TESTNAME, out.buffer.c_str());
+		PRINTF("%s: Failed to detect all properties as constant\n%s", TESTNAME, out.buffer.c_str());
 		TEST_FAILED;
 	}
 

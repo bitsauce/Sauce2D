@@ -74,11 +74,8 @@ const char *script1 =
 
 bool Test()
 {
-	if( strstr(asGetLibraryOptions(), "AS_MAX_PORTABILITY") )
-	{
-		printf("%s: Skipped due to AS_MAX_PORTABILITY\n", TESTNAME);
-		return false;
-	}
+	RET_ON_MAX_PORT
+
 	bool fail = false;
 
 	asIScriptEngine *engine;
@@ -109,7 +106,7 @@ bool Test()
 	if( r < 0 )
 	{
 		TEST_FAILED;
-		printf("%s: Failed to compile\n", TESTNAME);
+		PRINTF("%s: Failed to compile\n", TESTNAME);
 	}
 
 	r = ExecuteString(engine, "{ MyClass test; test.Test(); }", mod);

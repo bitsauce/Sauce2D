@@ -19,6 +19,7 @@
  - \ref handle
  - \ref parenthesis
  - \ref scope
+ - \ref anonobj
 
 
 \section assignment Assignments
@@ -44,7 +45,7 @@ A compound assignment is a combination of an operator followed by the assignment
 above means practically the same thing. Except that first one is more efficient in that the lvalue is
 only evaluated once, which can make a difference if the lvalue is complex expression in itself.
 
-Available operators: <code>+= -= *= /= %= &= |= ^= &lt;&lt;= &gt;&gt;= &gt;&gt;&gt;=</code>
+Available operators: <code>+= -= *= /= %= **= &= |= ^= &lt;&lt;= &gt;&gt;= &gt;&gt;&gt;=</code>
 
 
 
@@ -79,6 +80,18 @@ the additional output value won't be used use the special argument 'void' to tel
   // Call the function with 'void' argument to ignore the output value
   func(void);
 </pre>
+
+Arguments can also be named and passed to a specific argument independent of the order the parameters were
+declared in. No positional arguments may follow any named arguments.
+
+<pre>
+  void func(int flagA = false, int flagB = false, int flagC = false) {}
+  
+  // Call the function, setting only a subset of its parameters
+  func(flagC = true);
+  func(flagB = true, flagA = true);
+</pre>
+
 
 
 
@@ -137,6 +150,7 @@ as the compiler is usually able to do an implicit cast to the correct type.
 <tr><td width=70 valign=top><code>*</code></td> <td width=100 valign=top>multiplication</td>    <td width=80 valign=top><i>NUM</i></td>      <td width=80 valign=top><i>NUM</i></td>       <td width=80 valign=top><i>NUM</i></td></tr>
 <tr><td width=70 valign=top><code>/</code></td> <td width=100 valign=top>division</td>          <td width=80 valign=top><i>NUM</i></td>      <td width=80 valign=top><i>NUM</i></td>       <td width=80 valign=top><i>NUM</i></td></tr>
 <tr><td width=70 valign=top><code>%</code></td> <td width=100 valign=top>modulos</td>           <td width=80 valign=top><i>NUM</i></td>      <td width=80 valign=top><i>NUM</i></td>       <td width=80 valign=top><i>NUM</i></td></tr>
+<td><td width=70 valign=top><code>**</code></td> <td width=100 valign=top>exponent</td>         <td width=80 valign=top><i>NUM</i></td>      <td width=80 valign=top><i>NUM</i></td>       <td width=80 valign=top><i>NUM</i></td></tr>
 </table>
 
 Plus and minus can be used as unary operators as well. NUM can be exchanged 
@@ -155,20 +169,21 @@ negative which is not available for <code>uint</code>.
 </pre>
 
 <table cellspacing=0 cellpadding=0 border=0>
-<tr><td width=70 valign=top><b>operator</b></td>          <td width=130 valign=top><b>description</b></td>    <td width=80 valign=top><b>left hand</b></td>                         <td width=80 valign=top><b>right hand</b></td>                        <td width=80 valign=top><b>result</b></td></tr>
-<tr><td width=70 valign=top><code>~</code></td>           <td width=130 valign=top>bitwise complement</td>    <td width=80 valign=top>&nbsp;</td>                                   <td width=80 valign=top><i>NUM</i></td><td width=80 valign=top><i>NUM</i></td></tr>
-<tr><td width=70 valign=top><code>&</code></td>           <td width=130 valign=top>bitwise and</td>           <td width=80 valign=top><i>NUM</i></td><td width=80 valign=top><i>NUM</i></td><td width=80 valign=top><i>NUM</i></td></tr>
-<tr><td width=70 valign=top><code>|</code></td>           <td width=130 valign=top>bitwise or</td>            <td width=80 valign=top><i>NUM</i></td><td width=80 valign=top><i>NUM</i></td><td width=80 valign=top><i>NUM</i></td></tr>
-<tr><td width=70 valign=top><code>^</code></td>           <td width=130 valign=top>bitwise xor</td>           <td width=80 valign=top><i>NUM</i></td><td width=80 valign=top><i>NUM</i></td><td width=80 valign=top><i>NUM</i></td></tr>
-<tr><td width=70 valign=top><code>&lt;&lt;</code></td>    <td width=130 valign=top>left shift</td>            <td width=80 valign=top><i>NUM</i></td><td width=80 valign=top><i>NUM</i></td><td width=80 valign=top><i>NUM</i></td></tr>
-<tr><td width=70 valign=top><code>&gt;&gt;</code></td>    <td width=130 valign=top>right shift</td>           <td width=80 valign=top><i>NUM</i></td><td width=80 valign=top><i>NUM</i></td><td width=80 valign=top><i>NUM</i></td></tr>
-<tr><td width=70 valign=top><code>&gt;&gt;&gt;</code></td><td width=130 valign=top>arithmetic right shift</td><td width=80 valign=top><i>NUM</i></td><td width=80 valign=top><i>NUM</i></td><td width=80 valign=top><i>NUM</i></td></tr>
+<tr><td width=70 valign=top><b>operator</b></td>          <td width=130 valign=top><b>description</b></td>    <td width=80 valign=top><b>left hand</b></td><td width=80 valign=top><b>right hand</b></td><td width=80 valign=top><b>result</b></td></tr>
+<tr><td width=70 valign=top><code>~</code></td>           <td width=130 valign=top>bitwise complement</td>    <td width=80 valign=top>&nbsp;</td>          <td width=80 valign=top><i>NUM</i></td>       <td width=80 valign=top><i>NUM</i></td></tr>
+<tr><td width=70 valign=top><code>&</code></td>           <td width=130 valign=top>bitwise and</td>           <td width=80 valign=top><i>NUM</i></td>      <td width=80 valign=top><i>NUM</i></td>       <td width=80 valign=top><i>NUM</i></td></tr>
+<tr><td width=70 valign=top><code>|</code></td>           <td width=130 valign=top>bitwise or</td>            <td width=80 valign=top><i>NUM</i></td>      <td width=80 valign=top><i>NUM</i></td>       <td width=80 valign=top><i>NUM</i></td></tr>
+<tr><td width=70 valign=top><code>^</code></td>           <td width=130 valign=top>bitwise xor</td>           <td width=80 valign=top><i>NUM</i></td>      <td width=80 valign=top><i>NUM</i></td>       <td width=80 valign=top><i>NUM</i></td></tr>
+<tr><td width=70 valign=top><code>&lt;&lt;</code></td>    <td width=130 valign=top>left shift</td>            <td width=80 valign=top><i>NUM</i></td>      <td width=80 valign=top><i>NUM</i></td>       <td width=80 valign=top><i>NUM</i></td></tr>
+<tr><td width=70 valign=top><code>&gt;&gt;</code></td>    <td width=130 valign=top>right shift</td>           <td width=80 valign=top><i>NUM</i></td>      <td width=80 valign=top><i>NUM</i></td>       <td width=80 valign=top><i>NUM</i></td></tr>
+<tr><td width=70 valign=top><code>&gt;&gt;&gt;</code></td><td width=130 valign=top>arithmetic right shift</td><td width=80 valign=top><i>NUM</i></td>      <td width=80 valign=top><i>NUM</i></td>       <td width=80 valign=top><i>NUM</i></td></tr>
 </table>
 
 
 All except <code>~</code> are dual operators.
 
-
+Both operands will be converted to integers while keeping the sign of the original
+type before the operation. The resulting type will be the same as the left hand operand.
 
 
 
@@ -182,8 +197,8 @@ All except <code>~</code> are dual operators.
 </pre>
 
 <table cellspacing=0 cellpadding=0 border=0>
-<tr><td width=70 valign=top><b>operator</b></td>                         <td width=130 valign=top><b>description</b></td>  <td width=80 valign=top><b>left hand</b></td>                         <td width=80 valign=top><b>right hand</b></td>                        <td width=80 valign=top><b>result</b></td></tr>
-<tr><td width=70 valign=top><code>not</code></td><td width=130 valign=top>logical not</td>         <td width=80 valign=top>&nbsp;</td>                                   <td width=80 valign=top><code>bool</code></td><td width=80 valign=top><code>bool</code></td></tr>
+<tr><td width=70 valign=top><b>operator</b></td> <td width=130 valign=top><b>description</b></td>  <td width=80 valign=top><b>left hand</b></td> <td width=80 valign=top><b>right hand</b></td><td width=80 valign=top><b>result</b></td></tr>
+<tr><td width=70 valign=top><code>not</code></td><td width=130 valign=top>logical not</td>         <td width=80 valign=top>&nbsp;</td>           <td width=80 valign=top><code>bool</code></td><td width=80 valign=top><code>bool</code></td></tr>
 <tr><td width=70 valign=top><code>and</code></td><td width=130 valign=top>logical and</td>         <td width=80 valign=top><code>bool</code></td><td width=80 valign=top><code>bool</code></td><td width=80 valign=top><code>bool</code></td></tr>
 <tr><td width=70 valign=top><code>or</code></td> <td width=130 valign=top>logical or</td>          <td width=80 valign=top><code>bool</code></td><td width=80 valign=top><code>bool</code></td><td width=80 valign=top><code>bool</code></td></tr>
 <tr><td width=70 valign=top><code>xor</code></td><td width=130 valign=top>logical exclusive or</td><td width=80 valign=top><code>bool</code></td><td width=80 valign=top><code>bool</code></td><td width=80 valign=top><code>bool</code></td></tr>
@@ -383,4 +398,26 @@ the name is overloaded by a local variable or function. Write the scope name on 
 and the name of the variable/function on the right.
 
 \see \ref doc_global_namespace
+
+
+
+
+\section anonobj Anonymous objects
+
+Anonymous objects, i.e. objects that are created without being declared as variables, can be instantiated in expressions 
+by calling invoking the object's constructor as if it was a function. Both reference types and value types can be created
+like this.
+
+<pre>
+  // Call the function with a new object of the type MyClass
+  func(MyClass(1,2,3));
+</pre>
+
+For types that support it, the anonymous objects can also be initialized with initialization lists.
+
+<pre>
+  // Call the function with a dictionary
+  func(dictionary = {{'banana',1}, {'apple',2}, {'orange',3}});
+</pre>
+
 */

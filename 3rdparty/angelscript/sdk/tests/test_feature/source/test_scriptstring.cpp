@@ -161,6 +161,62 @@ bool Test()
 	asIScriptModule *mod = 0;
 	int r;
 
+	// Test copy constructor for reference types
+	// Problem reported by Wracky of piko3d fame
+	{
+		engine = asCreateScriptEngine(ANGELSCRIPT_VERSION);
+		engine->SetMessageCallback(asMETHOD(COutStream,Callback), &out, asCALL_THISCALL);
+		RegisterScriptString(engine);
+
+		engine->RegisterGlobalFunction("void assert(bool)", asFUNCTION(Assert), asCALL_GENERIC);
+
+		mod = engine->GetModule("test", asGM_ALWAYS_CREATE);
+		mod->AddScriptSection("test", 
+			"void func() { \n"
+			"  string test = 'hello';\n"
+			"  string copy(test); \n"
+			"  assert( copy == test ); \n"
+			"  assert( copy !is test ); \n"
+			"  string @hndl = copy; \n"
+			"  assert( hndl == test ); \n"
+			"  assert( hndl is copy ); \n"
+			"  string @copy2 = string(test); \n"
+			"  assert( copy2 == test ); \n"
+			"  assert( copy2 !is test ); \n"
+			"} \n");
+		r = mod->Build();
+		if( r < 0 )
+			TEST_FAILED;
+
+		r = ExecuteString(engine, "func()", mod);
+		if( r != asEXECUTION_FINISHED )
+			TEST_FAILED;
+
+		mod->AddScriptSection("test",
+			"class C { \n"
+			"  string @get_member() { \n"
+			"    return test; \n"
+			"  } \n"
+			"  string test = 'hello'; \n"
+			"} \n"
+			"void func2() { \n"
+			"  C obj; \n"
+			"  string@ copy = string(obj.member); \n"
+			"  assert( copy == obj.test ); \n"
+			"  assert( copy !is obj.test ); \n"
+			"} \n");
+		r = mod->Build();
+		if( r < 0 )
+			TEST_FAILED;
+
+		r = ExecuteString(engine, "func2()", mod);
+		if( r != asEXECUTION_FINISHED )
+			TEST_FAILED;
+
+		engine->Release();
+	}
+
+
 	fail = Test2() || fail;
 	fail = TestUTF16() || fail;
 
@@ -190,7 +246,7 @@ bool Test()
 		TEST_FAILED;
 	if( bout.buffer != "" )
 	{
-		printf("%s", bout.buffer.c_str());
+		PRINTF("%s", bout.buffer.c_str());
 		TEST_FAILED;
 	}
 
@@ -216,7 +272,7 @@ bool Test()
 	if( printOutput != "hello Ida" )
 	{
 		TEST_FAILED;
-		printf("%s: Failed to print the correct string\n", "TestScriptString");
+		PRINTF("%s: Failed to print the correct string\n", "TestScriptString");
 	}
 
 	ExecuteString(engine, "string s = \"test\\\\test\\\\\"");
@@ -250,7 +306,7 @@ bool Test()
 	ExecuteString(engine, "print(1.2 + \"a\")");
 	if( printOutput != "1.2a")
 	{
-		printf("Get '%s'\n", printOutput.c_str());
+		PRINTF("Get '%s'\n", printOutput.c_str());
 		TEST_FAILED;
 	}
 
@@ -297,7 +353,7 @@ bool Test()
 	if( r != asEXECUTION_FINISHED )
 	{
 		TEST_FAILED;
-		printf("%s: ExecuteString() failed\n", "TestScriptString");
+		PRINTF("%s: ExecuteString() failed\n", "TestScriptString");
 	}
 	a->Release();
 
@@ -561,7 +617,7 @@ bool Test()
 			TEST_FAILED;
 		if( bout.buffer != "ExecuteString (1, 9) : Warning : Invalid unicode code point\n" )
 		{
-			printf("%s", bout.buffer.c_str());
+			PRINTF("%s", bout.buffer.c_str());
 			TEST_FAILED;
 		}
 
@@ -572,7 +628,7 @@ bool Test()
 			TEST_FAILED;
 		if( bout.buffer != "ExecuteString (1, 9) : Warning : Invalid unicode code point\n" )
 		{
-			printf("%s", bout.buffer.c_str());
+			PRINTF("%s", bout.buffer.c_str());
 			TEST_FAILED;
 		}
 
@@ -583,7 +639,7 @@ bool Test()
 			TEST_FAILED;
 		if( bout.buffer != "ExecuteString (1, 9) : Warning : Invalid unicode escape sequence, expected 4 hex digits\n" )
 		{
-			printf("%s", bout.buffer.c_str());
+			PRINTF("%s", bout.buffer.c_str());
 			TEST_FAILED;
 		}
 
@@ -594,7 +650,7 @@ bool Test()
 			TEST_FAILED;
 		if( bout.buffer != "ExecuteString (1, 9) : Warning : Invalid unicode escape sequence, expected 8 hex digits\n" )
 		{
-			printf("%s", bout.buffer.c_str());
+			PRINTF("%s", bout.buffer.c_str());
 			TEST_FAILED;
 		}
 
@@ -659,7 +715,7 @@ bool Test()
 			TEST_FAILED;
 		if( bout.buffer != "" )
 		{
-			printf("%s", bout.buffer.c_str());
+			PRINTF("%s", bout.buffer.c_str());
 			TEST_FAILED;
 		}
 
@@ -735,8 +791,7 @@ void StringDestructUTF16(vector<asWORD> *o)
 
 bool TestUTF16()
 {
-	if( strstr(asGetLibraryOptions(), "AS_MAX_PORTABILITY") )
-		return false;
+	RET_ON_MAX_PORT
 
 	bool fail = false;
 	CBufferedOutStream bout;
@@ -819,7 +874,7 @@ bool TestUTF16()
 	if( str.size() != 1 || str[0] != 0xFF )
 		TEST_FAILED;
 	if( bout.buffer != "ExecuteString (1, 5) : Warning : Invalid unicode sequence in source\n" )
-		printf("%s", bout.buffer.c_str());
+		PRINTF("%s", bout.buffer.c_str());
 
 	// Test heredoc strings
 	r = ExecuteString(engine, "s = \"\"\"\xC2\x80\"\"\"");

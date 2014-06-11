@@ -60,11 +60,8 @@ public:
 
 bool TestVirtualMethod()
 {
-	if( strstr(asGetLibraryOptions(), "AS_MAX_PORTABILITY") )
-	{
-		printf("%s: Skipped due to AS_MAX_PORTABILITY\n", TESTNAME);
-		return false;
-	}
+	RET_ON_MAX_PORT
+
 	bool fail = false;
 	int r;
 	
@@ -86,7 +83,7 @@ bool TestVirtualMethod()
 		
 		if( output1 != "CBase: CBase::CallMe()\nCDerived: CDerived::CallMe()\n" )
 		{
-			printf("%s: Virtual method calls failed.\n%s", TESTNAME, output1.c_str());
+			PRINTF("%s: Virtual method calls failed.\n%s", TESTNAME, output1.c_str());
 			TEST_FAILED;
 		}
 	

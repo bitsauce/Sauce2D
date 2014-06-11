@@ -76,12 +76,7 @@ public:
 
 static bool TestEnum()
 {
-	if( strstr(asGetLibraryOptions(), "AS_MAX_PORTABILITY") )
-	{
-		// Skipping this due to not supporting native calling conventions
-		printf("Skipped due to AS_MAX_PORTABILITY\n");
-		return false;
-	}
+	RET_ON_MAX_PORT
 
 	asIScriptEngine   *engine;
 	CBufferedOutStream bout;
@@ -135,7 +130,7 @@ static bool TestEnum()
 	if( buffer != "-1\n1\n2\n1200\n1201\n1202\n1203\n1205\n0\n1\n2\n" )
 	{
 		TEST_FAILED;
-		printf("%s", buffer.c_str());
+		PRINTF("%s", buffer.c_str());
 	}
 
 	// Registered enums are literal constants
@@ -159,17 +154,40 @@ static bool TestEnum()
 	mod->AddScriptSection(NULL, 
 		"enum ENUMA { VALUE = 1 } \n"
 		"enum ENUMB { VALUE = 2 } \n"
+		"enum ENUMC { VAL = 3 } \n"
 		"int a = VALUE; \n" // fails with ambiguity
 		"int b = ENUMA::VALUE; \n" // ok
-		"int c = ENUMB::VALUE; \n"); // ok
+		"int c = ENUMB::VALUE; \n" // ok
+		"ENUMC d = VALUE; \n"); // fails with ambiguity
 	bout.buffer = "";
 	r = mod->Build();
 	if( r >= 0 )
 		TEST_FAILED;
-	if( bout.buffer != " (3, 7) : Info    : Compiling int a\n"
-	                   " (3, 9) : Error   : Found multiple matching enum values\n" )
+	if( bout.buffer != " (4, 5) : Info    : Compiling int a\n"
+	                   " (4, 9) : Error   : Found multiple matching enum values\n"
+					   " (7, 7) : Info    : Compiling ENUMC d\n"
+					   " (7, 11) : Error   : Found multiple matching enum values\n"
+					   " (7, 11) : Error   : Can't implicitly convert from 'int' to 'ENUMC&'.\n" )
 	{
-		printf("%s", bout.buffer.c_str());
+		PRINTF("%s", bout.buffer.c_str());
+		TEST_FAILED;
+	}
+
+	// Automatically resolving ambiguous enums if possible
+	bout.buffer = "";
+	mod->AddScriptSection(NULL, 
+		"enum ENUMA { VALUE = 1 } \n"
+		"enum ENUMB { VALUE = 2 } \n");
+	r = mod->Build();
+	if( r < 0 )
+		TEST_FAILED;
+	r = ExecuteString(engine, "ENUMA a = VALUE; assert( a == 1 );\n"
+							  "ENUMB b = VALUE; assert( b == 2 );\n", mod);
+	if( r != asEXECUTION_FINISHED )
+		TEST_FAILED;
+	if( bout.buffer != "" )
+	{
+		PRINTF("%s", bout.buffer.c_str());
 		TEST_FAILED;
 	}
 
@@ -182,12 +200,12 @@ static bool TestEnum()
 	r = mod->Build();
 	if( r >= 0 )
 		TEST_FAILED;
-	if( bout.buffer != "error (1, 22) : Info    : Compiling TEST_ERR ERR1\n"
+	if( bout.buffer != "error (1, 17) : Info    : Compiling TEST_ERR ERR1\n"
 					   "error (1, 24) : Error   : 'ERR2' is not declared\n"
-					   "error (1, 1) : Info    : Compiling TEST_ERR ERR2\n"
-                       "error (1, 1) : Error   : Use of uninitialized global variable 'ERR1'.\n" )
+					   "error (1, 30) : Info    : Compiling TEST_ERR ERR2\n"
+                       "error (1, 30) : Error   : Use of uninitialized global variable 'ERR1'.\n" )
 	{
-		printf("%s", bout.buffer.c_str());
+		PRINTF("%s", bout.buffer.c_str());
 		TEST_FAILED;
 	}
 
@@ -198,7 +216,7 @@ static bool TestEnum()
 		TEST_FAILED;
 	if( bout.buffer != "ExecuteString (1, 5) : Error   : Illegal variable name 'TEST_ENUM'.\n" )
 	{
-		printf("%s", bout.buffer.c_str());
+		PRINTF("%s", bout.buffer.c_str());
 		TEST_FAILED;
 	}
 	r = engine->SetMessageCallback(asMETHOD(CBufferedOutStream,Callback), &bout, asCALL_THISCALL);
@@ -223,7 +241,7 @@ static bool TestEnum()
 	if( bout.buffer != "ExecuteString (1, 17) : Error   : Can't implicitly convert from 'int' to 'TEST_ENUM'.\n"
                        "ExecuteString (1, 33) : Error   : Can't implicitly convert from 'float' to 'TEST_ENUM'.\n" )
 	{
-		printf("%s", bout.buffer.c_str());
+		PRINTF("%s", bout.buffer.c_str());
 		TEST_FAILED;
 	}
 	r = engine->SetMessageCallback(asMETHOD(CBufferedOutStream,Callback), &bout, asCALL_THISCALL);
@@ -337,7 +355,7 @@ static bool TestEnum()
 		TEST_FAILED;
 	if( bout.buffer != "ExecuteString (1, 25) : Warning : Implicit conversion changed sign of value\n" )
 	{
-		printf("%s", bout.buffer.c_str());
+		PRINTF("%s", bout.buffer.c_str());
 		TEST_FAILED;
 	}
 
@@ -353,7 +371,7 @@ static bool TestEnum()
 	if( bout.buffer != "error (1, 1) : Info    : Compiling void f()\n"
                        "error (1, 18) : Error   : Unknown scope 'UNKNOWN_ENUM'\n")
 	{
-		printf("%s", bout.buffer.c_str());
+		PRINTF("%s", bout.buffer.c_str());
 		TEST_FAILED;
 	}
 
@@ -374,7 +392,7 @@ static bool TestEnum()
 	if( bout.buffer != "error (5, 1) : Info    : Compiling void f()\n"
 		               "error (5, 18) : Error   : 'SomeClass::SOMEVALUE' is not declared\n")
 	{
-		printf("%s", bout.buffer.c_str());
+		PRINTF("%s", bout.buffer.c_str());
 		TEST_FAILED;
 	}
 
@@ -394,7 +412,7 @@ static bool TestEnum()
 	if( bout.buffer != "error (1, 1) : Info    : Compiling void f()\n"
 		               "error (1, 18) : Error   : 'ENUM1' is not declared\n")
 	{
-		printf("%s", bout.buffer.c_str());
+		PRINTF("%s", bout.buffer.c_str());
 		TEST_FAILED;
 	}
 
@@ -422,7 +440,7 @@ static bool TestEnum()
 		TEST_FAILED;
 	if( bout.buffer != "" )
 	{
-		printf("%s", bout.buffer.c_str());
+		PRINTF("%s", bout.buffer.c_str());
 		TEST_FAILED;
 	}
 	if( obj.val != ENUM2 )
@@ -437,7 +455,7 @@ static bool TestEnum()
 		TEST_FAILED;
 	if( bout.buffer != "test (1, 22) : Error   : Name conflict. 'inf' is already used.\n" )
 	{
-		printf("%s", bout.buffer.c_str());
+		PRINTF("%s", bout.buffer.c_str());
 		TEST_FAILED;
 	}
 
@@ -551,10 +569,10 @@ static bool TestEnum()
 		r = mod->Build();
 		if( r >= 0 )
 			TEST_FAILED;
-		if( bout.buffer != "script (6, 13) : Info    : Compiling ENUM_1 g_e2\n"
+		if( bout.buffer != "script (6, 8) : Info    : Compiling ENUM_1 g_e2\n"
 		                   "script (6, 15) : Error   : 'E2_VAL1' is not declared\n" )
 		{
-			printf("%s", bout.buffer.c_str());
+			PRINTF("%s", bout.buffer.c_str());
 			TEST_FAILED;
 		}
 
@@ -593,7 +611,7 @@ static bool TestEnum()
 			TEST_FAILED;
 		if( bout.buffer != "" )
 		{
-			printf("%s", bout.buffer.c_str());
+			PRINTF("%s", bout.buffer.c_str());
 			TEST_FAILED;
 		}
 	
@@ -638,7 +656,7 @@ static bool TestEnum()
 		if( bout.buffer != "script (2, 1) : Info    : Compiling void Update()\n"
 		                   "script (8, 30) : Error   : Both operands must be handles when comparing identity\n" )
 		{
-			printf("%s", bout.buffer.c_str());
+			PRINTF("%s", bout.buffer.c_str());
 			TEST_FAILED;
 		}
 		engine->Release();
@@ -662,12 +680,12 @@ static bool TestEnum()
 		r = mod->Build();
 		if( r >= 0 )
 			TEST_FAILED;
-		if( bout.buffer != "script (3, 10) : Info    : Compiling E VALUE1\n"
+		if( bout.buffer != "script (3, 3) : Info    : Compiling E VALUE1\n"
 						   "script (3, 14) : Error   : Unexpected token '<identifier>'\n"
-						   "script (4, 10) : Info    : Compiling E VALUE2\n"
+						   "script (4, 3) : Info    : Compiling E VALUE2\n"
 						   "script (4, 14) : Error   : Unexpected token '<identifier>'\n" )
 		{
-			printf("%s", bout.buffer.c_str());
+			PRINTF("%s", bout.buffer.c_str());
 			TEST_FAILED;
 		}
 		engine->Release();
@@ -706,7 +724,7 @@ bool TestEnum2(int e)
 	return false;
 }
 
-void print(const string& log)
+void print(const string& /*log*/)
 {
 //	cout << log << endl;
 }
@@ -732,11 +750,7 @@ string script =
 
 int TestNalin()
 {
-	if( strstr(asGetLibraryOptions(), "AS_MAX_PORTABILITY") )
-	{
-		printf("Skipped due to AS_MAX_PORTABILITY\n");
-		return false;
-	}
+	RET_ON_MAX_PORT
 
 	asIScriptEngine   *engine;
 	int r;

@@ -72,6 +72,7 @@ for optimization reasons.
 <tr><td>*=</td>            <td>opMulAssign</td> </tr>
 <tr><td>/=</td>            <td>opDivAssign</td> </tr>
 <tr><td>\%=</td>           <td>opModAssign</td> </tr>
+<tr><td>**=</td>           <td>opPowAssign</td> </tr>
 <tr><td>&amp;=</td>        <td>opAndAssign</td> </tr>
 <tr><td>|=</td>            <td>opOrAssign</td>  </tr>
 <tr><td>^=</td>            <td>opXorAssign</td> </tr>
@@ -108,6 +109,7 @@ so if that is all you want to do, then there is no need to implement this method
 <tr><td>*</td>             <td>opMul</td>        <td>opMul_r</td></tr>
 <tr><td>/</td>             <td>opDiv</td>        <td>opDiv_r</td></tr>
 <tr><td>%</td>             <td>opMod</td>        <td>opMod_r</td></tr>
+<tr><td>**</td>            <td>opPow</td>        <td>opPow_r</td></tr>
 <tr><td>&amp;</td>         <td>opAnd</td>        <td>opAnd_r</td></tr>
 <tr><td>|</td>             <td>opOr</td>         <td>opOr_r</td></tr>
 <tr><td>^</td>             <td>opXor</td>        <td>opXor_r</td></tr>
@@ -125,10 +127,11 @@ and <tt>b.<i>opfunc_r</i>(a)</tt> and then the best match will be used.
 
 <table cellspacing=0 cellpadding=0 border=0>
 <tr><td width=80><b>op</b></td><td width=120><b>opfunc</b></td></tr>
-<tr><td>[]</td>             <td>opIndex</td>
+<tr><td>[]</td>             <td>opIndex</td></tr>
 </table>
 
-When the expression <tt>a[i]</tt> is compiled, the compiler will rewrite it as <tt>a.opIndex(i)</tt> and compile that instead.
+When the expression <tt>a[i]</tt> is compiled, the compiler will rewrite it as <tt>a.opIndex(i)</tt> and compile that instead. 
+Multiple arguments between the brackets is also supported.
 
 The index operator can also be formed similarly to \ref doc_script_class_prop "property accessors". The get accessor should then be 
 named <tt>get_opIndex</tt> and have one parameter for the indexing. The set accessor should be named <tt>set_opIndex</tt> and have two
@@ -144,6 +147,18 @@ parameters, the first is for the indexing, and the second for the new value.
 
 When the expression <tt>a[i]</tt> is used to retrieve the value, the compiler will rewrite it as <tt>a.get_opIndex(i)</tt>. When 
 the expression is used to set the value, the compiler will rewrite it as <tt>a.set_opIndex(i, expr)</tt>.
+
+
+\section doc_script_class_call Functor operator
+
+<table cellspacing=0 cellpadding=0 border=0>
+<tr><td width=80><b>op</b></td><td width=120><b>opfunc</b></td></tr>
+<tr><td>()</td>                <td>opCall</td></tr>
+</table>
+
+When the expression <tt>expr(arglist)</tt> is compiled and expr evaluates to an object, the compiler will rewrite it 
+as <tt>expr.opCall(arglist)</tt> and compile that instead.
+
 
 
 

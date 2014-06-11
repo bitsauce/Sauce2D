@@ -41,7 +41,7 @@ public:
 	static void StringConstruct(Str *p) { new(p) Str(); }
 	static void StringCopyConstruct(const Str &o, Str *p) { new(p) Str(o); }
 	static void StringDestruct(Str *p) { p->~Str(); }
-	static Str StringFactory(unsigned int length, const char *s) { Str str; str.str = s; return str; }
+	static Str StringFactory(unsigned int /*length*/, const char *s) { Str str; str.str = s; return str; }
 	bool opEquals(const Str &o) { return str == o.str; }
 	Str &opAssign(const Str &o) { str = o.str; return *this; }
 
@@ -70,14 +70,14 @@ bool Test()
 	if( r < 0 )
 	{
 		TEST_FAILED;
-		printf("%s: Failed to compile the script\n", TESTNAME);
+		PRINTF("%s: Failed to compile the script\n", TESTNAME);
 	}
 	asIScriptContext *ctx = engine->CreateContext();
 	r = ExecuteString(engine, "Test()", mod, ctx);
 	if( r != asEXECUTION_FINISHED )
 	{
 		TEST_FAILED;
-		printf("%s: Execution failed: %d\n", TESTNAME, r);
+		PRINTF("%s: Execution failed: %d\n", TESTNAME, r);
 	}
 
 	if( ctx ) ctx->Release();
@@ -154,9 +154,9 @@ bool Test()
 		if( bout.buffer != "TestUnsafeRef (1, 1) : Info    : Compiling void func()\n"
 		                   "TestUnsafeRef (5, 3) : Error   : No matching signatures to 'funcA(int, float, uint8)'\n"
 		                   "TestUnsafeRef (5, 3) : Info    : Candidates are:\n"
-		                   "TestUnsafeRef (5, 3) : Info    : void funcA(float&inout, uint8&inout, int&inout)\n" )
+		                   "TestUnsafeRef (5, 3) : Info    : void funcA(float&inout a, uint8&inout b, int&inout c)\n" )
 		{
-			printf("%s", bout.buffer.c_str());
+			PRINTF("%s", bout.buffer.c_str());
 			TEST_FAILED;
 		}
 
@@ -187,7 +187,7 @@ bool Test()
 
 		if( bout.buffer != "" )
 		{
-			printf("%s", bout.buffer.c_str());
+			PRINTF("%s", bout.buffer.c_str());
 			TEST_FAILED;
 		}
 
@@ -228,9 +228,9 @@ bool Test()
 		if( bout.buffer != "TestUnsafeRef (7, 1) : Info    : Compiling void func()\n"
 						   "TestUnsafeRef (8, 3) : Error   : No matching signatures to 'f(T)'\n"
 						   "TestUnsafeRef (8, 3) : Info    : Candidates are:\n"
-						   "TestUnsafeRef (8, 3) : Info    : void f(T@&inout)\n" )
+						   "TestUnsafeRef (8, 3) : Info    : void f(T@&inout t)\n" )
 		{
-			printf("%s", bout.buffer.c_str());
+			PRINTF("%s", bout.buffer.c_str());
 			TEST_FAILED;
 		}
 
@@ -264,7 +264,7 @@ bool Test()
 
 		if( bout.buffer != "" )
 		{
-			printf("%s", bout.buffer.c_str());
+			PRINTF("%s", bout.buffer.c_str());
 			TEST_FAILED;
 		}
 
@@ -309,16 +309,47 @@ bool Test()
 
 		if( bout.buffer != "" )
 		{
-			printf("%s", bout.buffer.c_str());
+			PRINTF("%s", bout.buffer.c_str());
 			TEST_FAILED;
 		}
 
 		engine->Release();		
 	}
 
-#ifndef AS_MAX_PORTABILITY
+	// Test passing literal constant to parameter reference
+	// http://www.gamedev.net/topic/653394-global-references/
+	{
+		bout.buffer = "";
+		asIScriptEngine *engine = asCreateScriptEngine(ANGELSCRIPT_VERSION);
+		engine->SetEngineProperty(asEP_ALLOW_UNSAFE_REFERENCES, 1);
+		engine->SetMessageCallback(asMETHOD(CBufferedOutStream,Callback), &bout, asCALL_THISCALL);
+		engine->RegisterGlobalFunction("void assert(bool)", asFUNCTION(Assert), asCALL_GENERIC);
+
+		engine->RegisterGlobalFunction("void func(const int &)", asFUNCTION(0), asCALL_GENERIC);
+
+		asIScriptModule *mod = engine->GetModule(0, asGM_ALWAYS_CREATE);
+		mod->AddScriptSection(TESTNAME, 
+			"const int value = 42; \n"
+			"void main() { \n"
+			"    func(value); \n"
+			"} \n");
+
+		r = mod->Build();
+		if( r < 0 )
+			TEST_FAILED;
+
+		if( bout.buffer != "" )
+		{
+			PRINTF("%s", bout.buffer.c_str());
+			TEST_FAILED;
+		}
+
+		engine->Release();
+	}
+
 	// Test with copy constructor that takes unsafe reference
 	// http://www.gamedev.net/topic/638613-asassert-in-file-as-compillercpp-line-675/
+	SKIP_ON_MAX_PORT
 	{
 		bout.buffer = "";
 		asIScriptEngine *engine = asCreateScriptEngine(ANGELSCRIPT_VERSION);
@@ -349,7 +380,7 @@ bool Test()
 
 		if( bout.buffer != "" )
 		{
-			printf("%s", bout.buffer.c_str());
+			PRINTF("%s", bout.buffer.c_str());
 			TEST_FAILED;
 		}
 
@@ -359,10 +390,9 @@ bool Test()
 
 		engine->Release();
 	}
-#endif
 
-#ifndef AS_MAX_PORTABILITY
 	// Test with assignment operator that takes unsafe reference
+	SKIP_ON_MAX_PORT
 	{
 		bout.buffer = "";
 		asIScriptEngine *engine = asCreateScriptEngine(ANGELSCRIPT_VERSION);
@@ -393,7 +423,7 @@ bool Test()
 
 		if( bout.buffer != "" )
 		{
-			printf("%s", bout.buffer.c_str());
+			PRINTF("%s", bout.buffer.c_str());
 			TEST_FAILED;
 		}
 
@@ -403,7 +433,6 @@ bool Test()
 
 		engine->Release();
 	}
-#endif
 
 	// Success
 	return fail;

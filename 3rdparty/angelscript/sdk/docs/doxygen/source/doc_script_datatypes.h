@@ -4,17 +4,37 @@
 
 Note that the host application may add types specific to that application, refer to the application's manual for more information.
 
+ - \subpage doc_builtin_types
+ - \subpage doc_addon_types
+
+
+
+\page doc_builtin_types Built-in types
+
  - \subpage doc_datatypes_primitives 
  - \subpage doc_datatypes_obj
- - \subpage doc_datatypes_arrays
- - \subpage doc_datatypes_strings
  - \subpage doc_datatypes_funcptr
+ - \subpage doc_datatypes_auto
 
+ 
+ 
+\page doc_addon_types Add-on types
+ 
+ - \subpage doc_datatypes_strings
+ - \subpage doc_datatypes_arrays
+ - \subpage doc_datatypes_dictionary
+ - \subpage doc_datatypes_ref
+
+\todo weakref
+
+ 
+ 
 \page doc_datatypes_primitives Primitives
 
 \section void void
 
 <code>void</code> is not really a data type, more like lack of data type. It can only be used to tell the compiler that a function doesn't return any data.
+
 
 
 \section bool bool
@@ -83,9 +103,11 @@ Example:
 
 <pre>
   array<int> a, b, c;
+  array<Foo\@> d;
 </pre>
 
-<code>a</code>, <code>b</code>, and <code>c</code> are now arrays of integers.
+<code>a</code>, <code>b</code>, and <code>c</code> are now arrays of integers, and <code>d</code>
+is an array of handles to objects of the Foo type.
 
 When declaring arrays it is possible to define the initial size of the array by passing the length as
 a parameter to the constructor. The elements can also be individually initialized by specifying an 
@@ -107,12 +129,24 @@ Multidimensional arrays are supported as arrays of arrays, for example:
   array<array<int>> c(10, array<int>(10)); // A 10 by 10 array of integers with uninitialized values
 </pre>
 
-Each element in the array is accessed with the indexing operator. The indices are zero based, i.e the
+Each element in the array is accessed with the indexing operator. The indices are zero based, i.e. the
 range of valid indices are from 0 to length - 1.
 
 <pre>
   a[0] = some_value;
 </pre>
+
+When the array stores \ref doc_script_handle "handles" the elements are assigned using the \ref handle "handle assignment".
+
+<pre>
+  // Declare an array with initial length 1
+  array<Foo\@> arr(1);
+  
+  // Set the first element to point to a new instance of Foo
+  \@arr[0] = Foo();
+</pre>
+
+
 
 \section doc_datatypes_arrays_addon Supporting array object and functions
 
@@ -121,27 +155,29 @@ The array object supports a number of operators and has several class methods to
 The array object is a \ref doc_datatypes_obj "reference type" even if the elements are not, so it's possible
 to use handles to the array object when passing it around to avoid costly copies.
 
-\subsection doc_datatypes_strings_addon_ops Operators
+\subsection doc_datatypes_array_addon_ops Operators
 
  - =       assignment
  - []      index operator
  - ==, !=  equality
 
-\subsection doc_datatypes_strings_addon_mthd Methods
+\subsection doc_datatypes_array_addon_mthd Methods
 
-  - uint length() const;
-  - void resize(uint);
-  - void reverse();
-  - void insertAt(uint index, const T& in);
-  - void insertLast(const T& in);
-  - void removeAt(uint index);
-  - void removeLast();
-  - void sortAsc();
-  - void sortAsc(uint index, uint count);
-  - void sortDesc();
-  - void sortDesc(uint index, uint count);
-  - int  find(const T& in);
-  - int  find(uint index, const T& in);
+  - uint length() const
+  - void resize(uint)
+  - void reverse()
+  - void insertAt(uint index, const T& in)
+  - void insertLast(const T& in)
+  - void removeAt(uint index)
+  - void removeLast()
+  - void sortAsc()
+  - void sortAsc(uint startAt, uint count)
+  - void sortDesc()
+  - void sortDesc(uint startAt, uint count)
+  - int  find(const T& in)
+  - int  find(uint startAt, const T& in)
+  - int  findByRef(const T& in)
+  - int  findByRef(uint startAt, const T& in)
 
 The T represents the type of the array elements.
   
@@ -169,7 +205,75 @@ Script example:
 
 
 
+\page doc_datatypes_dictionary dictionary
 
+<b>Observe:</b> Dictionaries are only available in the scripts if the application registers the support for them. The syntax
+for using dictionaries may differ for the application you're working with so consult the application's manual
+for more details.
+
+\see \ref doc_addon_dict
+
+The dictionary stores key-value pairs, where the key is a string, and the value can be of any type. Key-value
+pairs can be added or removed dynamically, making the dictionary a good general purpose container object.
+
+<pre>
+  obj object;
+  obj \@handle;
+  
+  // Initialize with a list
+  dictionary dict = {{'one', 1}, {'object', object}, {'handle', \@handle}};
+  
+  // Examine and access the values through get or set methods ...
+  if( dict.exists('one') )
+  {
+    bool found = dict.get('handle', \@handle);
+    if( found )
+    {
+      dict.delete('object');
+      dict.set('value', 1);
+    }
+  }
+  
+  // ... or through index operators
+  int val = int(dict['value']);
+  dict['value'] = val + 1;
+  \@handle = cast<obj>(dict['handle']);
+  if( handle is null )
+    \@dict['handle'] = object;
+  
+  // Delete everything with a single call
+  dict.deleteAll();
+</pre>
+
+\section doc_datatypes_dictionary_addon Supporting dictionary object and functions
+
+The dictionary object is a \ref doc_datatypes_obj "reference type", so it's possible
+to use handles to the dictionary object when passing it around to avoid costly copies.
+
+\subsection doc_datatypes_dictionary_addon_ops Operators
+
+ - =       assignment
+ - []      index operator
+ 
+The assignment operator performs a shallow copy of the content.
+
+The index operator takes a string for the key, and returns a reference to the value.
+If the key/value pair doesn't exist, it will be inserted with a null value.
+
+\subsection doc_datatypes_dictionary_addon_mthd Methods
+
+ - void set(const string &in key, ? &in value)
+ - void set(const string &in key, int64 &in value)
+ - void set(const string &in key, double &in value)
+ - bool get(const string &in key, ? &out value) const
+ - bool get(const string &in key, int64 &out value) const
+ - bool get(const string &in key, double &out value) const
+ - array<string> \@getKeys() const
+ - bool exists(const string &in key) const
+ - void delete(const string &in key)
+ - void deleteAll()
+ - bool isEmpty() const
+ - uint getSize() const
 
 
 
@@ -351,21 +455,21 @@ a default transformation of the primitive to a string.
  
 \subsection doc_datatypes_strings_addon_mthd Methods
 
- - uint           length() const;
- - void           resize(uint);
- - bool           isEmpty() const;
- - string         substr(uint start = 0, int count = -1) const;
- - int            findFirst(const string &in str, uint start = 0) const;
- - int            findLast(const string &in str, int start = -1) const;
- - array<string>@ split(const string &in delimiter) const;  
+ - uint           length() const
+ - void           resize(uint)
+ - bool           isEmpty() const
+ - string         substr(uint start = 0, int count = -1) const
+ - int            findFirst(const string &in str, uint start = 0) const
+ - int            findLast(const string &in str, int start = -1) const
+ - array<string>@ split(const string &in delimiter) const
 
 \subsection doc_datatypes_strings_addon_funcs Functions
 
- - string join(const array<string> &in arr, const string &in delimiter);
- - int64  parseInt(const string &in, uint base = 10, uint &out byteCount = 0);
- - double parseFloat(const string &in, uint &out byteCount = 0);
- - string formatInt(int64 val, const string &in options, uint width = 0);
- - string formatFloat(double val, const string &in options, uint width = 0, uint precision = 0);
+ - string join(const array<string> &in arr, const string &in delimiter)
+ - int64  parseInt(const string &in, uint base = 10, uint &out byteCount = 0)
+ - double parseFloat(const string &in, uint &out byteCount = 0)
+ - string formatInt(int64 val, const string &in options, uint width = 0)
+ - string formatFloat(double val, const string &in options, uint width = 0, uint precision = 0)
 
 The format functions takes a string that defines how the number should be formatted. The string
 is a combination of the following characters:
@@ -391,6 +495,62 @@ Examples:
   // Right justified, padded with zeroes and two digits after decimal separator
   string num = formatFloat(number, '0', 8, 2);
 </pre>
+
+
+
+
+
+
+\page doc_datatypes_ref ref
+
+<b>Observe:</b> ref is only available in the scripts if the application registers the support for it. 
+
+\see \ref doc_addon_handle
+
+The ref type works like a generic object handle. Normally a \ref handles "handle" can only refer to 
+objects of a specific type or those related to it, however not all object types are related, and this is
+where ref comes in. Being completely generic it can refer to any object type (as long as it is a \ref doc_datatypes_obj "reference type").
+
+<pre>
+  // Two unrelated types
+  class car {}
+  class banana {}
+
+  // A function that take the ref type as argument can work on both types
+  void func(ref \@handle)
+  {
+    // Cast the handle to the expected type and check which cast work
+    car \@c = cast<car>(handle);
+    banana \@b = cast<banana>(handle);
+    if( c !is null )
+      print('The handle refers to a car\\n');
+    else if( b !is null )
+      print('The handle refers to a banana\\n');
+    else if( handle !is null )
+      print('The handle refers to a different object\\n');
+    else
+      print('The handle is null\\n');
+  }
+
+  void main()
+  {
+    // Assigning a ref handle works the same way as ordinary handles
+    ref \@r = car();
+    func(r);
+    \@r = banana();
+    func(r);
+  }
+</pre>
+
+\section doc_datatypes_ref_addon Supporting ref object
+
+The ref object supports only a few operators as it is just a place holder for handles.
+
+\subsection doc_datatypes_ref_addon_ops Operators
+
+ - \@=          handle assignment
+ - is, !is      identity operator
+ - cast<type>   cast operator
 
 
 
@@ -484,5 +644,57 @@ passing the class method as the argument.
     printf("The number of comparisons performed is "+a.count+"\n");
   }
 </pre>
+
+
+
+
+
+
+
+
+
+\page doc_datatypes_auto Auto declarations
+
+It is possible to use 'auto' as the data type of an assignment-style variable declaration.
+
+The appropriate type for the variable(s) will be automatically determined.
+
+<pre>
+auto i = 18;         // i will be an integer
+auto f = 18 + 5.f;   // the type of f resolves to float
+auto anObject = getLongObjectTypeNameById(id); // avoids redundancy for long type names
+</pre>
+
+Auto can be qualified with const to force a constant value:
+
+<pre>
+const auto i = 2;  // i will be typed as 'const int'
+</pre>
+
+
+If receiving object references or objects by value, auto will make
+a local object copy by default. To force a handle type, add '@'.
+
+<pre>
+obj getObject() {
+    return obj();
+}
+
+auto value = getObject();    // auto is typed 'obj', and makes a local copy
+auto@ handle = getObject();  // auto is typed 'obj@', and refers to the returned obj
+</pre>
+
+The '@' specifier is not necessary if the value already resolves to a handle:
+
+<pre>
+obj@ getObject() {
+    return obj();
+}
+
+auto value = getObject();   // auto is already typed 'obj@', because of the return type of getObject()
+auto@ value = getObject();  // this is still allowed if you want to be more explicit, but not needed
+</pre>
+
+Auto handles can not be used to declare class members, since their resolution is dependent on the constructor.
 
 */

@@ -27,6 +27,7 @@
 #include "scripts/scriptbuilder.h"
 #include "scripts/scripthelper.h"
 #include "scripts/scriptarray.h"
+#include "scripts/scriptgrid.h"
 
 #ifdef X2D_LINUX
 #define MAX_PATH 256
@@ -219,6 +220,7 @@ xdRetCode xdEngine::init(const xdConfig &config)
 	RegisterStdString(scriptEngine);
 	RegisterScriptArray(scriptEngine, true);
 	RegisterStdStringUtils(scriptEngine);
+	RegisterScriptGrid(scriptEngine);
 
 	// This will register all game objects
 	Base::Register(scriptEngine);

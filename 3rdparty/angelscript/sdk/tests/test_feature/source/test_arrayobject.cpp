@@ -202,11 +202,8 @@ bool Test2();
 
 bool Test()
 {
-	if( strstr(asGetLibraryOptions(), "AS_MAX_PORTABILITY") )
-	{
-		printf("%s: Skipped due to AS_MAX_PORTABILITY\n", TESTNAME);
-		return false;
-	}
+	RET_ON_MAX_PORT
+
 	bool fail = Test2();
 	int r;
 
@@ -262,7 +259,7 @@ bool Test()
 	if( r < 0 )
 	{
 		TEST_FAILED;
-		printf("%s: Failed to compile the script\n", TESTNAME);
+		PRINTF("%s: Failed to compile the script\n", TESTNAME);
 	}
 
 
@@ -270,7 +267,7 @@ bool Test()
 	r = ExecuteString(engine, "Test()", mod, ctx);
 	if( r != asEXECUTION_FINISHED )
 	{
-		printf("%s: Failed to execute script\n", TESTNAME);
+		PRINTF("%s: Failed to execute script\n", TESTNAME);
 
 		if( r == asEXECUTION_EXCEPTION )
 			PrintException(ctx);
@@ -291,7 +288,7 @@ bool Test()
 	}
 	if( bout.buffer != "ExecuteString (1, 15) : Error   : Type 'int&' doesn't support the indexing operator\n" )
 	{
-		printf("%s", bout.buffer.c_str());
+		PRINTF("%s", bout.buffer.c_str());
 		TEST_FAILED;
 	}
 	
@@ -318,7 +315,7 @@ class A {
 public:
 	A() {}
 	A(const A &) {}
-	Value &operator[] (int n) {
+	Value &operator[] (int ) {
 		return v_static;
 	}
 };
@@ -326,7 +323,7 @@ class AArray {
 public:
 	AArray() {}
 	AArray(const AArray &) {}
-	A operator[] (int n) {
+	A operator[] (int ) {
 		return A();
 	}
 };
@@ -334,7 +331,7 @@ class AArrayArray {
 public:
 	AArrayArray() {}
 	AArrayArray(const AArrayArray &) {}
-	AArray operator[] (int n) {
+	AArray operator[] (int ) {
 		return AArray();
 	}
 };

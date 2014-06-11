@@ -53,28 +53,28 @@ public:
 	{
 		id = 0xdeadc0de;
 //		asIScriptContext *ctx = asGetActiveContext(); 
-//		printf("ln:%d ", ctx->GetCurrentLineNumber()); 
-//		printf("Construct(%X)\n",this); 
+//		PRINTF("ln:%d ", ctx->GetCurrentLineNumber()); 
+//		PRINTF("Construct(%X)\n",this); 
 		refCount = 1;
 	}
 	~CRefClass() 
 	{
 //		asIScriptContext *ctx = asGetActiveContext(); 
-//		printf("ln:%d ", ctx->GetCurrentLineNumber()); 
-//		printf("Destruct(%X)\n",this);
+//		PRINTF("ln:%d ", ctx->GetCurrentLineNumber()); 
+//		PRINTF("Destruct(%X)\n",this);
 	}
 	int AddRef() 
 	{
 //		asIScriptContext *ctx = asGetActiveContext(); 
-//		printf("ln:%d ", ctx->GetCurrentLineNumber()); 
-//		printf("AddRef(%X)\n",this); 
+//		PRINTF("ln:%d ", ctx->GetCurrentLineNumber()); 
+//		PRINTF("AddRef(%X)\n",this); 
 		return ++refCount;
 	}
 	int Release() 
 	{
 //		asIScriptContext *ctx = asGetActiveContext(); 
-//		printf("ln:%d ", ctx->GetCurrentLineNumber()); 
-//		printf("Release(%X)\n",this); 
+//		PRINTF("ln:%d ", ctx->GetCurrentLineNumber()); 
+//		PRINTF("Release(%X)\n",this); 
 		int r = --refCount; 
 		if( refCount == 0 ) delete this; 
 		return r;
@@ -83,7 +83,7 @@ public:
 	{
 		// Some method
 	}
-	CRefClass &operator=(const CRefClass &o) {return *this;}
+	CRefClass &operator=(const CRefClass & /*o*/) {return *this;}
 	int refCount;
 	int id;
 };
@@ -92,8 +92,8 @@ CRefClass c;
 CRefClass *getRefClass() 
 {
 //	asIScriptContext *ctx = asGetActiveContext(); 
-//	printf("ln:%d ", ctx->GetCurrentLineNumber()); 
-//	printf("getRefClass() = %X\n", &c); 
+//	PRINTF("ln:%d ", ctx->GetCurrentLineNumber()); 
+//	PRINTF("getRefClass() = %X\n", &c); 
 
 	// Must add the reference before returning it
 	c.AddRef();
@@ -110,11 +110,8 @@ bool TestHandleMemberCalling(void);
 
 bool Test()
 {
-	if( strstr(asGetLibraryOptions(), "AS_MAX_PORTABILITY") )
-	{
-		printf("%s: Skipped due to AS_MAX_PORTABILITY\n", TESTNAME);
-		return false;
-	}
+	RET_ON_MAX_PORT
+
 	bool fail = false;
 	int r;
 
@@ -147,7 +144,7 @@ bool Test()
 	if( r < 0 )
 	{
 		TEST_FAILED;
-		printf("%s: Failed to compile the script\n", TESTNAME);
+		PRINTF("%s: Failed to compile the script\n", TESTNAME);
 	}
 	asIScriptContext *ctx = engine->CreateContext();
 	r = ExecuteString(engine, "TestObjHandle()", mod, ctx);
@@ -158,13 +155,13 @@ bool Test()
 		{
 			int c;
 			int row = ctx->GetExceptionLineNumber(&c);
-			printf("Exception\n");
-			printf("line: %d, %d\n", row, c);
-			printf("desc: %s\n", ctx->GetExceptionString());
+			PRINTF("Exception\n");
+			PRINTF("line: %d, %d\n", row, c);
+			PRINTF("desc: %s\n", ctx->GetExceptionString());
 		}
 
 		TEST_FAILED;
-		printf("%s: Execution failed\n", TESTNAME);
+		PRINTF("%s: Execution failed\n", TESTNAME);
 	}
 	if( ctx ) ctx->Release();
 
@@ -172,13 +169,11 @@ bool Test()
 	CBufferedOutStream bout;
 	engine->SetMessageCallback(asMETHOD(CBufferedOutStream,Callback), &bout, asCALL_THISCALL);
 	r = ExecuteString(engine, "refclass @a; a = @a;");
-	if( r >= 0 || bout.buffer != "ExecuteString (1, 18) : Error   : Can't implicitly convert from 'refclass@const&' to 'const refclass&'.\n"
-							     // TODO: This second error message doesn't make sense. Why is the compiler trying to instanciate a new refclass?
-		                         "ExecuteString (1, 18) : Error   : No default constructor for object of type 'refclass'.\n" ) 
+	if( r >= 0 || bout.buffer != "ExecuteString (1, 18) : Error   : Can't implicitly convert from 'refclass@' to 'const refclass&'.\n" ) 
 	{
 		TEST_FAILED;
-		printf("%s", bout.buffer.c_str());
-		printf("%s: failure\n", TESTNAME);
+		PRINTF("%s", bout.buffer.c_str());
+		PRINTF("%s: failure\n", TESTNAME);
 	}
 
 	ctx = engine->CreateContext();
@@ -186,7 +181,7 @@ bool Test()
 	if( r != asEXECUTION_EXCEPTION )
 	{
 		TEST_FAILED;
-		printf("%s: No exception\n", TESTNAME);
+		PRINTF("%s: No exception\n", TESTNAME);
 	}
 	if( ctx ) ctx->Release();
 
@@ -210,7 +205,7 @@ bool Test()
 	if( bout.buffer != "TestObjHandle2 (3, 1) : Info    : Compiling void Test()\n"
                        "TestObjHandle2 (6, 3) : Error   : Expression is not an l-value\n" )
 	{
-		printf("%s", bout.buffer.c_str());
+		PRINTF("%s", bout.buffer.c_str());
 		TEST_FAILED;
 	}
 	engine->Release();
@@ -353,7 +348,7 @@ public:
 		return new CallerClass();
 	}
 
-	void DoSomething(const ArgClass &arg, Point &pos )
+	void DoSomething(const ArgClass &arg, Point &)
 	{
 		float weight = arg.GetWeight();
 		if( (weight > 2.9f) && (weight < 3.1f) )
@@ -423,11 +418,11 @@ bool TestHandleMemberCalling(void)
 		{
 			int c;
 			int row = ctx->GetExceptionLineNumber(&c);
-			printf("Exception\n");
-			printf("line: %d, %d\n", row, c);
-			printf("desc: %s\n", ctx->GetExceptionString());
+			PRINTF("Exception\n");
+			PRINTF("line: %d, %d\n", row, c);
+			PRINTF("desc: %s\n", ctx->GetExceptionString());
 		}		
-		printf("%s: Execution failed\n", TESTNAME);
+		PRINTF("%s: Execution failed\n", TESTNAME);
 		return false;
 	}
 

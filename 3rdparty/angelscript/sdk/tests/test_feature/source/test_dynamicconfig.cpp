@@ -161,9 +161,9 @@ bool Test()
 
 		// The engine will warn about the callback not being released before the engine
 		if( bout.buffer != " (0, 0) : Error   : Object {0}. GC cannot destroy an object of type '_builtin_function_' as it can't see all references. Current ref count is 1.\n"
-		                   " (0, 0) : Info    : The builtin type in previous message is named 'func'\n" )
+		                   " (0, 0) : Info    : The function in previous message is named 'func'. The func type is 1\n" )
 		{
-			printf("%s", bout.buffer.c_str());
+			PRINTF("%s", bout.buffer.c_str());
 			TEST_FAILED;
 		}
 	}
@@ -237,7 +237,7 @@ bool Test()
 	if( r >= 0 || bout.buffer != "TestDynamicConfig (1, 1) : Info    : Compiling void Test()\n"
                                  "TestDynamicConfig (3, 3) : Error   : 'global' is not declared\n" )
 	{
-		printf("%s", bout.buffer.c_str());
+		PRINTF("%s", bout.buffer.c_str());
 		TEST_FAILED;
 	}
 
@@ -280,7 +280,7 @@ bool Test()
 	if( r >= 0 || bout.buffer != "TestDynamicConfig (1, 1) : Info    : Compiling void Test()\n"
                                  "TestDynamicConfig (3, 3) : Error   : Identifier 'mytype' is not a data type\n" )
 	{
-		printf("%s", bout.buffer.c_str());
+		PRINTF("%s", bout.buffer.c_str());
 		TEST_FAILED;
 	}
 
@@ -326,7 +326,7 @@ bool Test()
 	if( r >= 0 || bout.buffer != "TestDynamicConfig (1, 1) : Info    : Compiling void Test()\n"
                                  "TestDynamicConfig (5, 9) : Error   : No matching operator that takes the types 'string&' and 'mytype' found\n" )
 	{
-		printf("%s", bout.buffer.c_str());
+		PRINTF("%s", bout.buffer.c_str());
 		TEST_FAILED;
 	}
 
@@ -392,6 +392,10 @@ bool Test()
 	r = engine->BeginConfigGroup("group1"); assert( r >= 0 );
 	r = engine->RegisterObjectType("int[]", sizeof(int), asOBJ_VALUE | asOBJ_POD | asOBJ_APP_PRIMITIVE);
 	r = engine->EndConfigGroup(); assert( r >= 0 );
+
+	asIObjectType *ot = engine->GetObjectTypeByDecl("int[]");
+	if( ot->GetSubTypeId() != asTYPEID_INT32 )
+		TEST_FAILED;
 
 	mod = engine->GetModule(0, asGM_ALWAYS_CREATE);
 	mod->AddScriptSection(TESTNAME, script6, strlen(script6), 0);
@@ -478,7 +482,7 @@ bool Test()
 	r = mod->Build();
 	if( r >= 0 || bout.buffer != "TestDynamicConfig (1, 11) : Error   : Identifier 'mytype' is not a data type\n" )
 	{
-		printf("%s", bout.buffer.c_str());
+		PRINTF("%s", bout.buffer.c_str());
 		TEST_FAILED;
 	}
 
@@ -517,7 +521,7 @@ bool Test()
 	if( r >= 0 || bout.buffer != "TestDynamicConfig (1, 1) : Info    : Compiling void Test()\n"
                                  "TestDynamicConfig (3, 4) : Error   : Identifier 'mytype' is not a data type\n" )
 	{
-		printf("%s", bout.buffer.c_str());
+		PRINTF("%s", bout.buffer.c_str());
 		TEST_FAILED;
 	}
 

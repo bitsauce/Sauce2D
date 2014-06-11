@@ -88,8 +88,8 @@ generic calling convention that can be used for example when native calling conv
 All functions and behaviours must be registered with the \ref asCALL_CDECL, \ref asCALL_STDCALL, \ref asCALL_THISCALL, or 
 \ref asCALL_GENERIC flags to tell AngelScript which calling convention the application function uses. The special conventions 
 \ref asCALL_CDECL_OBJLAST and \ref asCALL_CDECL_OBJFIRST can also be used wherever asCALL_THISCALL is accepted, in order to 
-simulate a class method through a global function. The convention \ref asCALL_THISCALL_ASGLOBAL can be used to register a class 
-method as if it was a global function. 
+simulate a class method through a global function. Functor objects can also be used to emulate global functions with the 
+convention \ref asCALL_THISCALL_ASGLOBAL, or class methods with the conventions \ref asCALL_THISCALL_OBJFIRST and \ref asCALL_THISCALL_OBJLAST.
 
 If the incorrect calling convention is given on the registration you'll very likely see the application crash with 
 a stack corruption whenever the script engine calls the function. cdecl is the default calling convention for all global 

@@ -11,7 +11,7 @@ void PrintString_Generic(asIScriptGeneric *gen)
 	std::string *str = (std::string*)gen->GetArgAddress(0);
 	UNUSED_VAR(str);
 	buf += *str;
-//	printf("%s",str->c_str());
+//	PRINTF("%s",str->c_str());
 	called++;
 }
 
@@ -90,7 +90,7 @@ bool Test()
     for( asUINT n = 0; n < 3; n++ )
     {
         // Execute
-        //printf("----- execute\n");
+        //PRINTF("----- execute\n");
         ctx->Prepare(mod->GetFunctionByDecl("void main()"));
         ctx->Execute();
  
@@ -111,7 +111,7 @@ bool Test()
 				totalDestroyed != n+1 ||
 				totalDetected  != 0 )
 				TEST_FAILED;
-            //printf("(%lu,%lu,%lu)\n" , currentSize , totalDestroyed , totalDetected );
+            //PRINTF("(%lu,%lu,%lu)\n" , currentSize , totalDestroyed , totalDetected );
         }
     }
 
@@ -193,7 +193,7 @@ bool Test()
 			TEST_FAILED;
 
 		// As the subtype holds handles and can form circular references it is possible for the array to form circular references too
-		asIObjectType *type = engine->GetObjectTypeById(mod->GetTypeIdByDecl("array<F>"));
+		asIObjectType *type = mod->GetObjectTypeByDecl("array<F>");
 		if( type == 0 || (type->GetFlags() & asOBJ_GC) == 0 )
 			TEST_FAILED;
 		
@@ -429,7 +429,7 @@ bool Test()
 		if( buf != "Big instance being destroyed\n"
 		           "Before attempting access to global var\n" )
 		{
-			printf("%s", buf.c_str());
+			PRINTF("%s", buf.c_str());
 			TEST_FAILED;
 		}
 	}
@@ -570,8 +570,54 @@ bool Test()
 	}
 
 /*
+	// This test leaks, as it is not possible to release the delegate after the engine
+
+	// Test garbage collector message when holding on to a delegate
+	{
+		CBufferedOutStream bout;
+		int r;
+
+		engine = asCreateScriptEngine(ANGELSCRIPT_VERSION);
+		engine->SetMessageCallback(asMETHOD(CBufferedOutStream, Callback), &bout, asCALL_THISCALL);
+
+		asIScriptModule *mod = engine->GetModule("test", asGM_ALWAYS_CREATE);
+		mod->AddScriptSection("test",
+			"class A { void func() {} } \n"
+			"funcdef void func(); \n"
+			"A @a = A(); \n"
+			"func @f = func(a.func); \n");
+		r = mod->Build();
+		if( r < 0 )
+			TEST_FAILED;
+
+		r = mod->GetGlobalVarIndexByName("f");
+		asIScriptFunction *func = *(asIScriptFunction**)mod->GetAddressOfGlobalVar(r);
+		if( func == 0 || func->GetFuncType() != asFUNC_DELEGATE )
+			TEST_FAILED;
+
+		func->AddRef();
+
+		engine->Release();
+
+		if( bout.buffer != " (0, 0) : Error   : Object {0}. GC cannot destroy an object of type '_builtin_function_' as it can't see all references. Current ref count is 1.\n"
+						   " (0, 0) : Info    : The function in previous message is named ''. The func type is 6\n"
+						   " (0, 0) : Error   : Object {8}. GC cannot destroy an object of type '_builtin_objecttype_' as it can't see all references. Current ref count is 1.\n"
+						   " (0, 0) : Info    : The builtin type in previous message is named 'A'\n" )
+		{
+			PRINTF("%s", bout.buffer.c_str());
+			TEST_FAILED;
+		}
+
+		// We can't release the function after the engine, because it will attempt to access the engine
+		// TODO: Can we use the custom memory manager to force the memory cleanup so we can enable this test?
+		//func->Release();
+	}
+*/
+
+/*
 	{
 		// This test forces a memory leak due to not registering the GC behaviours for the CFoo class
+		// TODO: Can we use the custom memory manager to force the memory cleanup so we can enable this test?
 		COutStream out;
 		int r;
 

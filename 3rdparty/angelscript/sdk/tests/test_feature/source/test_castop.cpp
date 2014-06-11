@@ -116,18 +116,18 @@ template<class A, class B> B* ASRefCast(A* a)
 			// Since the cast was made, we need to increase the ref counter for the returned handle
 			b->AddRef();
 	}
-//	printf("ASRefCast: returning %p\n", b);
+//	PRINTF("ASRefCast: returning %p\n", b);
 	return b;
 }
 
-void addListener(EventSource* source, int mask) 
+void addListener(EventSource* source, int /*mask*/) 
 {
 	if( source != c )
 		g_fail = true;
 
-//    printf("addListener: source = %p\n", source);
-//    printf("addListener: source.value = %d\n", (int)source->value);
-//	printf("\n");
+//    PRINTF("addListener: source = %p\n", source);
+//    PRINTF("addListener: source.value = %d\n", (int)source->value);
+//	PRINTF("\n");
 }
 
 bool Test()
@@ -139,8 +139,8 @@ bool Test()
 	CBufferedOutStream bout;
 	COutStream out;
 
-#ifndef AS_MAX_PORTABILITY
 	// http://www.gamedev.net/topic/636163-segfault-when-casting-directly/
+	SKIP_ON_MAX_PORT
 	{
 		c = new ASConsole();
 
@@ -195,7 +195,6 @@ bool Test()
 
 		engine->Release();
 	}
-#endif
 
   	engine = asCreateScriptEngine(ANGELSCRIPT_VERSION);
 	engine->SetMessageCallback(asMETHOD(COutStream,Callback), &out, asCALL_THISCALL);
@@ -240,7 +239,7 @@ bool Test()
 					   "ExecuteString (1, 40) : Error   : Illegal operation on 'const int'\n" )
 	{
 		TEST_FAILED;
-		printf("%s", bout.buffer.c_str());
+		PRINTF("%s", bout.buffer.c_str());
 	}
 
 	// It should be allowed to cast null to an interface
@@ -251,7 +250,7 @@ bool Test()
 	if( bout.buffer != "" )
 	{
 		TEST_FAILED;
-		printf("%s", bout.buffer.c_str());
+		PRINTF("%s", bout.buffer.c_str());
 	}
 
 	//--------------
@@ -292,7 +291,7 @@ bool Test()
 		TEST_FAILED;
 	if( bout.buffer != "ExecuteString (1, 24) : Error   : No matching operator that takes the types 'string@&' and 'type' found\n" )
 	{
-		printf("%s", bout.buffer.c_str());
+		PRINTF("%s", bout.buffer.c_str());
 		TEST_FAILED;
 	}
 
@@ -314,7 +313,7 @@ bool Test()
 		TEST_FAILED;
 	if( bout.buffer != "ExecuteString (1, 24) : Error   : A cast operator has one argument\n" )
 	{
-		printf("%s", bout.buffer.c_str());
+		PRINTF("%s", bout.buffer.c_str());
 		TEST_FAILED;
 	}
 
