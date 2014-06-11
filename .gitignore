@@ -6,7 +6,7 @@
 *.obj
 *.o
 *.exe
-*.dll
+#*.dll
 
 # Exclude Visual Studio files
 *.sbr
