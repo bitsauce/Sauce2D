@@ -6,6 +6,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "x2d", "x2d.vcxproj", "{F3F2
 		{55AE3D72-7DE6-F19F-AEF2-9AE8CA26CF3D} = {55AE3D72-7DE6-F19F-AEF2-9AE8CA26CF3D}
 		{39E6AF97-6BA3-4A72-8C61-BCEBF214EBFD} = {39E6AF97-6BA3-4A72-8C61-BCEBF214EBFD}
 		{B39ED2B3-D53A-4077-B957-930979A3577D} = {B39ED2B3-D53A-4077-B957-930979A3577D}
+		{39E6AF97-6BA3-4A72-8C61-BCEBF214EBFD} = {39E6AF97-6BA3-4A72-8C61-BCEBF214EBFD}
 		{78B079BD-9FC7-4B9E-B4A6-96DA0F00248B} = {78B079BD-9FC7-4B9E-B4A6-96DA0F00248B}
 		{0D30FFCB-45DA-4D2B-8E3C-81BC145BF2DE} = {0D30FFCB-45DA-4D2B-8E3C-81BC145BF2DE}
 	EndProjectSection
@@ -18,6 +19,7 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "angelscript", "..\..\3rdparty\angelscript\sdk\angelscript\projects\msvc11\angelscript.vcxproj", "{39E6AF97-6BA3-4A72-8C61-BCEBF214EBFD}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "freetype", "..\..\3rdparty\freetype\projects\msvc11\freetype.vcxproj", "{78B079BD-9FC7-4B9E-B4A6-96DA0F00248B}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "vld", "..\..\lib\vld-2.2.3\src\vld.vcxproj", "{0D30FFCB-45DA-4D2B-8E3C-81BC145BF2DE}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "glew", "..\..\3rdparty\glew\projects\msvc11\glew.vcxproj", "{55AE3D72-7DE6-F19F-AEF2-9AE8CA26CF3D}"
 EndProject
@@ -38,6 +40,14 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "OpenEXR", "..\..\3rdparty\freeimage\source\OpenEXR\OpenEXR.2008.vcxproj", "{17A4874B-0606-4687-90B6-F91F8CB3B8AF}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ZLib", "..\..\3rdparty\freeimage\source\ZLib\ZLib.2008.vcxproj", "{33134F61-C1AD-4B6F-9CEA-503A9F140C52}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "x2D Game Engine", "x2D Game Engine.vcxproj", "{B781FFBE-67AB-4B3D-92D7-9C9D89A36CC0}"
+	ProjectSection(ProjectDependencies) = postProject
+		{F3F25B49-2C6B-4FF0-98FB-47695DF70B8A} = {F3F25B49-2C6B-4FF0-98FB-47695DF70B8A}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "angelscript", "..\..\lib\angelscript\sdk\angelscript\projects\msvc11\angelscript.vcxproj", "{39E6AF97-6BA3-4A72-8C61-BCEBF214EBFD}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "glfw", "..\..\lib\glfw\projects\msvc11\glfw.vcxproj", "{328A2140-F80B-4E3A-80C4-BF23189528C7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -57,6 +67,28 @@ Global
 		{F3F25B49-2C6B-4FF0-98FB-47695DF70B8A}.Release|Win32.ActiveCfg = Release|Win32
 		{F3F25B49-2C6B-4FF0-98FB-47695DF70B8A}.Release|Win32.Build.0 = Release|Win32
 		{F3F25B49-2C6B-4FF0-98FB-47695DF70B8A}.Release|x64.ActiveCfg = Release|Win32
+		{F3F25B49-2C6B-4FF0-98FB-47695DF70B8A}.Release|Android.ActiveCfg = Release|Android
+		{F3F25B49-2C6B-4FF0-98FB-47695DF70B8A}.Release|Android.Build.0 = Release|Android
+		{F3F25B49-2C6B-4FF0-98FB-47695DF70B8A}.Release|Win32.ActiveCfg = Release|Win32
+		{F3F25B49-2C6B-4FF0-98FB-47695DF70B8A}.Release|Win32.Build.0 = Release|Win32
+		{F3F25B49-2C6B-4FF0-98FB-47695DF70B8A}.Release|x64.ActiveCfg = Release|Win32
+		{0D30FFCB-45DA-4D2B-8E3C-81BC145BF2DE}.Debug|Android.ActiveCfg = Debug|Win32
+		{0D30FFCB-45DA-4D2B-8E3C-81BC145BF2DE}.Debug|Win32.ActiveCfg = Debug|Win32
+		{0D30FFCB-45DA-4D2B-8E3C-81BC145BF2DE}.Debug|Win32.Build.0 = Debug|Win32
+		{0D30FFCB-45DA-4D2B-8E3C-81BC145BF2DE}.Debug|x64.ActiveCfg = Debug|x64
+		{0D30FFCB-45DA-4D2B-8E3C-81BC145BF2DE}.Debug|x64.Build.0 = Debug|x64
+		{0D30FFCB-45DA-4D2B-8E3C-81BC145BF2DE}.Release|Android.ActiveCfg = Debug|Win32
+		{0D30FFCB-45DA-4D2B-8E3C-81BC145BF2DE}.Release|Win32.ActiveCfg = Debug|Win32
+		{0D30FFCB-45DA-4D2B-8E3C-81BC145BF2DE}.Release|x64.ActiveCfg = Debug|x64
+		{0D30FFCB-45DA-4D2B-8E3C-81BC145BF2DE}.Release|x64.Build.0 = Debug|x64
+		{78B079BD-9FC7-4B9E-B4A6-96DA0F00248B}.Debug|Android.ActiveCfg = Debug|Win32
+		{78B079BD-9FC7-4B9E-B4A6-96DA0F00248B}.Debug|Win32.ActiveCfg = Debug|Win32
+		{78B079BD-9FC7-4B9E-B4A6-96DA0F00248B}.Debug|Win32.Build.0 = Debug|Win32
+		{78B079BD-9FC7-4B9E-B4A6-96DA0F00248B}.Debug|x64.ActiveCfg = Debug|Win32
+		{78B079BD-9FC7-4B9E-B4A6-96DA0F00248B}.Release|Android.ActiveCfg = Release|Win32
+		{78B079BD-9FC7-4B9E-B4A6-96DA0F00248B}.Release|Win32.ActiveCfg = Release|Win32
+		{78B079BD-9FC7-4B9E-B4A6-96DA0F00248B}.Release|Win32.Build.0 = Release|Win32
+		{78B079BD-9FC7-4B9E-B4A6-96DA0F00248B}.Release|x64.ActiveCfg = Release|Win32
 		{B781FFBE-67AB-4B3D-92D7-9C9D89A36CC0}.Debug|Android.ActiveCfg = Debug|Win32
 		{B781FFBE-67AB-4B3D-92D7-9C9D89A36CC0}.Debug|Win32.ActiveCfg = Debug|Win32
 		{B781FFBE-67AB-4B3D-92D7-9C9D89A36CC0}.Debug|Win32.Build.0 = Debug|Win32
@@ -184,6 +216,14 @@ Global
 		{33134F61-C1AD-4B6F-9CEA-503A9F140C52}.Release|Win32.Build.0 = Release|Win32
 		{33134F61-C1AD-4B6F-9CEA-503A9F140C52}.Release|x64.ActiveCfg = Release|x64
 		{33134F61-C1AD-4B6F-9CEA-503A9F140C52}.Release|x64.Build.0 = Release|x64
+		{328A2140-F80B-4E3A-80C4-BF23189528C7}.Debug|Android.ActiveCfg = Debug|Win32
+		{328A2140-F80B-4E3A-80C4-BF23189528C7}.Debug|Win32.ActiveCfg = Debug|Win32
+		{328A2140-F80B-4E3A-80C4-BF23189528C7}.Debug|Win32.Build.0 = Debug|Win32
+		{328A2140-F80B-4E3A-80C4-BF23189528C7}.Debug|x64.ActiveCfg = Debug|Win32
+		{328A2140-F80B-4E3A-80C4-BF23189528C7}.Release|Android.ActiveCfg = Release|Win32
+		{328A2140-F80B-4E3A-80C4-BF23189528C7}.Release|Win32.ActiveCfg = Release|Win32
+		{328A2140-F80B-4E3A-80C4-BF23189528C7}.Release|Win32.Build.0 = Release|Win32
+		{328A2140-F80B-4E3A-80C4-BF23189528C7}.Release|x64.ActiveCfg = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
