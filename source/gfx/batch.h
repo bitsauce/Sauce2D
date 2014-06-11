@@ -2,16 +2,17 @@
 #define GFX_BATCH_H
 
 #include <x2d/math.h>
-#include <vector>
-using namespace std;
+#include <x2d/util.h>
 
-#define TUPLE_CMP(a, b) \
-	if(a < b) return true; \
-	if(a > b) return false;
+class Texture;
+class Shader;
+class VertexBufferObject;
 
 // Vertex struct
-struct Vertex
+struct XDAPI Vertex
 {
+	AS_DECL_VALUE
+
 	Vertex() :
 		position(0.0f),
 		color(1.0f),
@@ -25,54 +26,62 @@ struct Vertex
 	Vector2 texCoord;
 };
 
-class Batch
+struct XDAPI VertexBuffer {
+	vector<Vertex> vertices;
+	vector<uint> indices;
+	VertexBufferObject *vbo;
+};
+
+typedef map<Texture*, VertexBuffer> TextureVertexMap;
+
+class XDAPI Batch
 {
 	friend class OpenGL;
 public:
 	AS_DECL_REF
 
 	Batch();
+	~Batch();
+	
+	// Batch projection matrix
+	void setProjectionMatrix(const Matrix4 &projmat);
+	Matrix4 getProjectionMatrix() const;
 
+	// Add vertices and indices to the batch
 	void addVertices(Vertex *vertices, int vertcount, uint *indices, int icount);
-	void setProjectionMatrix();
+	void modifyVertex(int index, Vertex vertex);
 
-	void setShader(class Shader *shader);
-	void setTexture(class Texture *texture);
+	// Get vertex/vertex count
+	Vertex getVertex(int index);
+	int getVertexCount();
 
-	Texture *renderToTexture() {
-		/*gfx->bindFrameBuffer(m_frameBuffer);
-		gfx->renderBatch(this);
-		gfx->bindFrameBuffer(0);*/
-		return 0;
-	}
+	// Get/set shader
+	void setShader(Shader *shader);
+	Shader *getShader() const;
 
+	// Get/set texture
+	void setTexture(Texture *texture);
+	Texture *getTexture() const;
+
+	// Render-to-texture
+	Texture *renderToTexture();
+
+	// Draw/upload/clear
 	void draw();
+	void clear();
+
+	// Makes the batch static for increased performance (by using VBOs)
+	// Note: While its called static, modifyVertex can still be accessed
+	void makeStatic();
+	bool isStatic() const;
 
 private:
 
-	struct Buffer {
-		vector<Vertex> vertices;
-		vector<uint> indices;
-	};
-
-	struct State {
-		State() :
-			texture(0)
-		{
-		}
-		
-		bool operator<(const State& other) const
-		{
-			// NOTE: The map is sorted by the order of compares
-			TUPLE_CMP(this->texture, other.texture)
-			return false;
-		}
-
-		Texture *texture;
-	} m_state;
-
-	map<State, Buffer> m_buffers;
+	TextureVertexMap m_buffers;
+	Texture *m_texture;
 	Shader *m_shader;
+	bool m_static;
+	Matrix4 m_projMatrix;
 
 	static Batch *Factory() { return new Batch(); }
 };

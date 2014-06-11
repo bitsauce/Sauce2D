@@ -33,20 +33,30 @@ int TextureRegion::Register(asIScriptEngine *scriptEngine)
 }
 
 TextureRegion::TextureRegion(Texture *texture, const Vector2 &uv0, const Vector2 &uv1) :
-	refCounter(this),
 	uv0(uv0),
 	uv1(uv1),
 	texture(texture)
 {
 }
 
+TextureRegion::~TextureRegion()
+{
+	if(texture) {
+		texture->release();
+	}
+}
+
 void TextureRegion::setTexture(Texture *texture)
 {
+	if(this->texture) {
+		this->texture->release();
+	}
 	this->texture = texture;
 }
 
 Texture *TextureRegion::getTexture() const
 {
+	texture->addRef();
 	return texture;
 }
 

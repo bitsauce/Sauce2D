@@ -89,15 +89,13 @@ private:
 class RefCounter
 {
 public:
-	RefCounter(void *owner) :
-		refCount(1),
-		owner(owner)
+	RefCounter() :
+		refCount(1)
 	{
 	}
 	
 	RefCounter(const RefCounter &other) :
-		refCount(1),
-		owner(other.owner)
+		refCount(1)
 	{
 	}
 
@@ -106,15 +104,13 @@ public:
 		refCount++;
 	}
 
-	void release()
+	int release()
 	{
-		if(--refCount == 0)
-			delete owner;
+		return --refCount;
 	}
 
 private:
 	int refCount;
-	void *owner;
 };
 
 //-----------------------------------------------------------------------
@@ -136,11 +132,11 @@ private:
 	private:																			\
 	RefCounter refCounter;																\
 	static Base::Registerer s_basereg;													\
-	void addRef() { refCounter.add(); }													\
-	void release() { refCounter.release(); }											\
 	static int Declare(asIScriptEngine *scriptEngine);									\
 	static int Register(asIScriptEngine *scriptEngine);									\
-	public:
+	public:																				\
+	void addRef() { refCounter.add(); }													\
+	void release() { if(refCounter.release() == 0) delete this; }
 
 #define AS_DECL_VALUE																	\
 	private:																			\

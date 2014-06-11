@@ -18,6 +18,7 @@ public:
 	Shape(const Rect &rect);
 	Shape(const Vector2 &center, const float radius, const int vertCount = -1);
 	Shape(const vector<Vertex> &vertices);
+	~Shape();
 
 	//void addVertex(const Vertex &vertex);
 	//void addVertices(const vector<Vertex> &vertices);
@@ -27,7 +28,7 @@ public:
 	void setPenColor(const Vector4 &color);
 	void setPenSize(const float size);
 
-	void draw(Batch &batch);
+	void draw(Batch *batch);
 
 	Shape merge(const Shape &shape); // union
 	Shape subtract(const Shape &shape);

@@ -12,6 +12,45 @@
 #include "glshader.h"
 #include "../../../window.h"
 
+#include "../source/gfx/vertexbufferobject.h"
+#include "../source/gfx/batch.h"
+
+class GLvertexbuffer : public VertexBufferObject
+{
+	friend class OpenGL;
+public:
+	GLvertexbuffer() {
+		glGenBuffers(1, &m_vboId);
+		glGenBuffers(1, &m_iboId);
+	}
+
+	~GLvertexbuffer() {
+		glDeleteBuffers(1, &m_vboId);
+		glDeleteBuffers(1, &m_iboId);
+	}
+
+	void upload(const VertexBuffer &buffer)
+	{
+		glBindBuffer(GL_ARRAY_BUFFER, m_vboId);
+		glBufferData(GL_ARRAY_BUFFER, buffer.vertices.size()*sizeof(Vertex), buffer.vertices.data(), GL_DYNAMIC_DRAW);
+		glBindBuffer(GL_ARRAY_BUFFER, 0);
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_iboId);
+		glBufferData(GL_ELEMENT_ARRAY_BUFFER, buffer.indices.size()*sizeof(uint), buffer.indices.data(), GL_DYNAMIC_DRAW);
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+	}
+
+	void uploadSub(int offset, Vertex *vertices, int count)
+	{
+		glBindBuffer(GL_ARRAY_BUFFER, m_vboId);
+		glBufferSubData(GL_ARRAY_BUFFER, offset*sizeof(Vertex), count*sizeof(Vertex), vertices);
+		glBindBuffer(GL_ARRAY_BUFFER, 0);
+	}
+
+private:
+	GLuint m_vboId;
+	GLuint m_iboId;
+};
+
 void OpenGL::init(Window *window)
 {
 	// Init glew
@@ -154,9 +193,7 @@ void OpenGL::getOrthoProjection(float &l, float &r, float &b, float &t, float &n
 	f = m_currentOrtho[5];
 }
 
-#include "../source/gfx/batch.h"
-
-const int floatSize = sizeof(float);
+const int FLOAT_SIZE = sizeof(float);
 
 void OpenGL::renderBatch(const Batch &batch)
 {
@@ -164,28 +201,58 @@ void OpenGL::renderBatch(const Batch &batch)
 	glEnableClientState(GL_VERTEX_ARRAY);
 	glEnableClientState(GL_COLOR_ARRAY);
 	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-
-	map<Batch::State, Batch::Buffer> buffers = batch.m_buffers;
-	for(map<Batch::State, Batch::Buffer>::iterator itr = buffers.begin(); itr != buffers.end(); ++itr)
+	
+	TextureVertexMap buffers = batch.m_buffers;
+	if(!batch.isStatic())
 	{
-		const Batch::State &state = itr->first;
-		glActiveTexture(GL_TEXTURE0);
-		if(state.texture) {
-			glBindTexture(GL_TEXTURE_2D, ((GLtexture*)state.texture)->m_id);
-		}else{
-			glBindTexture(GL_TEXTURE_2D, 0);
+		for(TextureVertexMap::iterator itr = buffers.begin(); itr != buffers.end(); ++itr)
+		{
+			const Texture *texture = itr->first;
+			glActiveTexture(GL_TEXTURE0);
+			if(texture) {
+				glBindTexture(GL_TEXTURE_2D, ((GLtexture*)texture)->m_id);
+			}else{
+				glBindTexture(GL_TEXTURE_2D, 0);
+			}
+
+			// Get vertices and vertex data
+			float *vertexData = (float*)itr->second.vertices.data();
+			uint *indexData = (uint*)itr->second.indices.data();
+
+			// Draw arrays
+			glVertexPointer(2, GL_FLOAT, 8*FLOAT_SIZE, vertexData);
+			glColorPointer(4, GL_FLOAT, 8*FLOAT_SIZE, vertexData + 2);
+			glTexCoordPointer(2, GL_FLOAT, 8*FLOAT_SIZE, vertexData + 6);
+
+			glDrawElements(GL_TRIANGLES, itr->second.indices.size(), GL_UNSIGNED_INT, indexData); // Note to self: Might want to use GL_UNSIGNED_BYTE to minimize upload bandwidth
 		}
+	}else{
+		for(TextureVertexMap::iterator itr = buffers.begin(); itr != buffers.end(); ++itr)
+		{
+			const Texture *texture = itr->first;
+			glActiveTexture(GL_TEXTURE0);
+			if(texture) {
+				glBindTexture(GL_TEXTURE_2D, ((GLtexture*)texture)->m_id);
+			}else{
+				glBindTexture(GL_TEXTURE_2D, 0);
+			}
 
-		// Get vertices and vertex data
-		float *vertexData = (float*)itr->second.vertices.data();
-		uint *indexData = (uint*)itr->second.indices.data();
+			//glLoadMatrixf(vbo->transform);
 
-		// Draw arrays
-		glVertexPointer(2, GL_FLOAT, 8*floatSize, vertexData);
-		glColorPointer(4, GL_FLOAT, 8*floatSize, vertexData + 2);
-		glTexCoordPointer(2, GL_FLOAT, 8*floatSize, vertexData + 6);
+			glBindBuffer(GL_ARRAY_BUFFER_ARB, ((GLvertexbuffer*)itr->second.vbo)->m_vboId);
+			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ((GLvertexbuffer*)itr->second.vbo)->m_iboId);
 
-		glDrawElements(GL_TRIANGLES, itr->second.indices.size(), GL_UNSIGNED_INT, indexData); // Note to self: Might want to use GL_UNSIGNED_BYTE to minimize upload bandwidth
+			glVertexPointer(2, GL_FLOAT, 8*FLOAT_SIZE, (void*)(0*FLOAT_SIZE));
+			glColorPointer(4, GL_FLOAT, 8*FLOAT_SIZE, (void*)(2*FLOAT_SIZE));
+			glTexCoordPointer(2, GL_FLOAT, 8*FLOAT_SIZE, (void*)(6*FLOAT_SIZE));
+
+			glDrawElements(GL_TRIANGLES, itr->second.indices.size(), GL_UNSIGNED_INT, 0);
+
+			glBindBuffer(GL_ARRAY_BUFFER_ARB, 0);
+			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+
+			//glLoadIdentity();
+		}
 	}
 
 	// Disable client state
@@ -300,6 +367,11 @@ Texture *OpenGL::createTexture(const Pixmap &pixmap)
 Shader *OpenGL::createShader(const string &vertFilePath, const string &fragFilePath)
 {
 	return new GLshader(vertFilePath, fragFilePath);
+}
+
+VertexBufferObject *OpenGL::createVertexBufferObject()
+{
+	return new GLvertexbuffer();
 }
 
 // Vsync

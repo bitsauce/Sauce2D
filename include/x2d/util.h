@@ -132,4 +132,8 @@ namespace util
 	string boolToStr(const bool b)		{ return math::boolToStr(b); }
 	string asciiToStr(const uchar c)	{ return math::asciiToStr(c); }*/
 
+#define TUPLE_CMP(a, b) \
+	if(a < b) return true; \
+	if(a > b) return false;
+
 #endif // X2D_UTIL_H

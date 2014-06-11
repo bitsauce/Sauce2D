@@ -17,7 +17,7 @@ public:
 	float getStringWidth(const string &str);
 	float getStringHeight(const string &str);
 	void setColor(const Vector4 &color);
-	void draw(Batch &batch, const Vector2 &pos, const string &str);
+	void draw(Batch *batch, const Vector2 &pos, const string &str);
 
 	struct Char
 	{

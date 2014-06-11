@@ -8,6 +8,7 @@
 #include <x2d/math.h>
 
 class OpenGL;
+class Input;
 class xdEngine;
 
 // The window class:
@@ -16,7 +17,8 @@ class xdEngine;
 class Window : public xdWindow
 {
 public:
-	Window(xdEngine *engine, OpenGL *graphics);
+	Window(xdEngine *engine, Input *input, OpenGL *graphics);
+	~Window();
 	
 	// Application config
 	struct Config
@@ -103,6 +105,7 @@ private:
 
 	// Gfx handle
 	OpenGL *m_graphics;
+	Input *m_input;
 	
 	// The window handle
 	HWND m_window;

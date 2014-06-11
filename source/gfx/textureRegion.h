@@ -12,6 +12,7 @@ public:
 	AS_DECL_REF
 	
 	TextureRegion(Texture *texture, const Vector2 &uv0, const Vector2 &uv1);
+	~TextureRegion();
 
 	void setTexture(Texture *texture);
 	Texture *getTexture() const;

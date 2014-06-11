@@ -271,7 +271,13 @@ TextureRegion *xdGraphics::CreateTextureRegion(Texture *texture, const Vector2 &
 {
 	return new TextureRegion(texture, uv0, uv1);
 }
+
 TextureRegion *xdGraphics::CreateTextureRegion(Texture *texture, const float u0, const float v0, const float u1, const float v1)
 {
 	return new TextureRegion(texture, Vector2(u0, v0), Vector2(u1, v1));
+}
+
+VertexBufferObject *xdGraphics::CreateVertexBufferObject()
+{
+	return s_this->createVertexBufferObject();
 }

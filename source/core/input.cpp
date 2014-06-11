@@ -128,7 +128,7 @@ int xdInput::Register(asIScriptEngine *scriptEngine)
 	r = scriptEngine->RegisterObjectMethod("ScriptInput", "void bind(const VirtualKey key, Callback @callback)", asMETHOD(xdInput, bind), asCALL_THISCALL); AS_ASSERT
 
 	// General
-	r = scriptEngine->RegisterObjectMethod("ScriptInput", "Vector2 getPosition() const", asMETHOD(xdInput, getPosition), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("ScriptInput", "Vector2 get_position() const", asMETHOD(xdInput, getPosition), asCALL_THISCALL); AS_ASSERT
 
 	return r;
 }

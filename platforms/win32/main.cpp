@@ -23,7 +23,7 @@
 
 // Visual Leak Detector
 #if defined(X2D_WINDOWS) && defined(X2D_DEBUG)
-//#include <vld.h>
+#include <vld.h>
 #endif
 
 int loadPlugins()
@@ -42,36 +42,35 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, INT)
 		else if(strcmp(__argv[i], "-v") == 0)
 			flags |= XD_EXPORT_LOG;
 	}
-	
-	string assetDir;
-#ifdef X2D_DEBUG
-	assetDir = "C:/Users/Marcus/Dropbox/Random Projects/ScriptDebug/";
-	//assetDir = "C:/Users/Marcus/Documents/GitHub/ctw/";
-	flags |= XD_DEBUG;
-#endif
 
 	xdEngine *engine = CreateEngine();
 
 	xdConfig config;
 	config.loadPluginsFunc = &loadPlugins;
 	config.platform = "windows";
-	config.workDir = "C:/Users/Marcus/Dropbox/Random Projects/ScriptDebug/";
+#ifdef X2D_DEBUG
+	config.workDir = "C:/Users/Marcus/Documents/GitHub/Overworld/";
+	flags |= XD_DEBUG;
+#endif
 	config.flags = flags;
 	config.timer = new Timer;
 	config.fileSystem = new FileSystem;
 	config.console = new Console;
 	config.audio = new OpenAL;
-	config.input = new Input;
+	Input *input = new Input;
+	config.input = input;
 	OpenGL *graphics = new OpenGL;
 	config.graphics = graphics;
-	Window *window = new Window(engine, graphics);
+	Window *window = new Window(engine, input, graphics);
 	config.window = window;
+	graphics->init(window);
 
 	if(engine->init(config) != XD_OK)
 		return -1;
 
-	graphics->init(window);
 	window->initEvents();
 
-	return engine->run();
+	int r = engine->run();
+	delete engine;
+	return r;
 }

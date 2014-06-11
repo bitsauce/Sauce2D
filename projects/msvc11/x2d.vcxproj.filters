@@ -150,11 +150,11 @@
     <ClInclude Include="..\..\source\gfx\viewport.h">
       <Filter>include\gfx</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\source\gfx\vertexBuffer.h">
-      <Filter>include\gfx</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\include\x2d\assetloader.h">
       <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\gfx\vertexbufferobject.h">
+      <Filter>include\gfx</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -195,9 +195,6 @@
       <Filter>source\gfx\abstract</Filter>
     </ClCompile>
     <ClCompile Include="..\..\source\gfx\texture.cpp">
-      <Filter>source\gfx\abstract</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\gfx\vertexBuffer.cpp">
       <Filter>source\gfx\abstract</Filter>
     </ClCompile>
     <ClCompile Include="..\..\source\gfx\viewport.cpp">

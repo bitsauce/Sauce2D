@@ -6,7 +6,6 @@
 
 class TextureRegion;
 class Texture;
-class Animation;
 class Batch;
 class Shape;
 class Vertex;
@@ -19,14 +18,15 @@ public:
 	/**
 	  * Constructor taking a texture for the sprite to use.
 	  */
-	Sprite(const TextureRegion *region);
+	Sprite(TextureRegion *region);
 	//Sprite(const TextureRegion &region, const Vector2 &size, const Vector2 &origin);
+	~Sprite();
 	
 	void setPosition(const Vector2 &pos);
 	void setSize(const Vector2 &size);
 	void setOrigin(const Vector2 &origin);
 	void setRotation(const float ang);
-	void setAnimation(const Animation *anim);
+	void setRegion(TextureRegion *region);
 
 	void move(const Vector2 &dt);
 	void rotate(const float ang);
@@ -39,10 +39,10 @@ public:
 	Vector2 getCenter() const;
 	float getRotation() const;
 
-	void draw(Batch &batch) const;
+	void draw(Batch *batch) const;
 
 private:
-	const TextureRegion *m_textureRegion;
+	TextureRegion *m_textureRegion;
 	Vector2 m_position;
 	Vector2 m_size;
 	Vector2 m_origin;
@@ -51,7 +51,7 @@ private:
 	// Returns the transformed vertices
 	void getVertices(Vertex *vertices) const;
 
-	static Sprite *Factory(const TextureRegion *region) { return new Sprite(region); }
+	static Sprite *Factory(TextureRegion *region) { return new Sprite(region); }
 	static Sprite *Factory(Texture *texture);
 };
 

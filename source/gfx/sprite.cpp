@@ -21,13 +21,14 @@ int Sprite::Register(asIScriptEngine *scriptEngine)
 {
 	int r = 0;
 	
-	r = scriptEngine->RegisterObjectBehaviour("Sprite", asBEHAVE_FACTORY, "Sprite @f(const TextureRegion @)", asFUNCTIONPR(Factory, (const TextureRegion*), Sprite*), asCALL_CDECL); AS_ASSERT
+	r = scriptEngine->RegisterObjectBehaviour("Sprite", asBEHAVE_FACTORY, "Sprite @f(const TextureRegion @)", asFUNCTIONPR(Factory, (TextureRegion*), Sprite*), asCALL_CDECL); AS_ASSERT
 	r = scriptEngine->RegisterObjectBehaviour("Sprite", asBEHAVE_FACTORY, "Sprite @f(Texture @)", asFUNCTIONPR(Factory, (Texture*), Sprite*), asCALL_CDECL); AS_ASSERT
 	
 	r = scriptEngine->RegisterObjectMethod("Sprite", "void setPosition(const Vector2 &in)", asMETHOD(Sprite, setPosition), asCALL_THISCALL); AS_ASSERT
 	r = scriptEngine->RegisterObjectMethod("Sprite", "void setSize(const Vector2 &in)", asMETHOD(Sprite, setSize), asCALL_THISCALL); AS_ASSERT
 	r = scriptEngine->RegisterObjectMethod("Sprite", "void setOrigin(const Vector2 &in)", asMETHOD(Sprite, setOrigin), asCALL_THISCALL); AS_ASSERT
 	r = scriptEngine->RegisterObjectMethod("Sprite", "void setRotation(const float)", asMETHOD(Sprite, setRotation), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("Sprite", "void setRegion(TextureRegion @region)", asMETHOD(Sprite, setRegion), asCALL_THISCALL); AS_ASSERT
 	
 	r = scriptEngine->RegisterObjectMethod("Sprite", "Shape @getAABB() const", asMETHOD(Sprite, getAABB), asCALL_THISCALL); AS_ASSERT
 	r = scriptEngine->RegisterObjectMethod("Sprite", "Vector2 getPosition() const", asMETHOD(Sprite, getPosition), asCALL_THISCALL); AS_ASSERT
@@ -49,14 +50,20 @@ Sprite *Sprite::Factory(Texture *texture)
 	return new Sprite(new TextureRegion(texture, Vector2(0.0f), Vector2(1.0f)));
 }
 
-Sprite::Sprite(const TextureRegion *region) :
-	refCounter(this),
+Sprite::Sprite(TextureRegion *region) :
 	m_textureRegion(region),
 	m_position(0.0f),
 	m_size(region->getSize()),
 	m_origin(0.0f),
 	m_angle(0.0f)
 {
+}
+
+Sprite::~Sprite()
+{
+	if(m_textureRegion) {
+		m_textureRegion->release();
+	}
 }
 
 void Sprite::setPosition(const Vector2 &pos)
@@ -77,6 +84,14 @@ void Sprite::setOrigin(const Vector2 &origin)
 void Sprite::setRotation(const float ang)
 {
 	m_angle = ang;
+}
+
+void Sprite::setRegion(TextureRegion *textureRegion)
+{
+	if(m_textureRegion) {
+		m_textureRegion->release();
+	}
+	m_textureRegion = textureRegion;
 }
 
 void Sprite::move(const Vector2 &dt)
@@ -131,13 +146,15 @@ float Sprite::getRotation() const
 	return m_angle;
 }
 
-void Sprite::draw(Batch &batch) const
+void Sprite::draw(Batch *batch) const
 {
 	Vertex vertices[4];
 	getVertices(vertices);
-	batch.setTexture(m_textureRegion->getTexture());
-	batch.addVertices(vertices, 4, QUAD_INDICES, 6);
-	batch.setTexture(0);
+
+	batch->setTexture(m_textureRegion->getTexture());
+	batch->addVertices(vertices, 4, QUAD_INDICES, 6);
+	batch->setTexture(0);
+	batch->release();
 }
 
 void Sprite::getVertices(Vertex *vertices) const
@@ -151,7 +168,11 @@ void Sprite::getVertices(Vertex *vertices) const
 	for(int i = 0; i < 4; i++)
 	{
 		vertices[i].position = mat * QUAD_VERTICES[i];
-		vertices[i].texCoord = QUAD_TEXCOORD[i];
 		vertices[i].color.set(1.0f, 1.0f, 1.0f, 1.0f);
 	}
+
+	vertices[0].texCoord.set(m_textureRegion->uv0.x, m_textureRegion->uv1.y);
+	vertices[1].texCoord.set(m_textureRegion->uv1.x, m_textureRegion->uv1.y);
+	vertices[2].texCoord.set(m_textureRegion->uv1.x, m_textureRegion->uv0.y);
+	vertices[3].texCoord.set(m_textureRegion->uv0.x, m_textureRegion->uv0.y);
 }

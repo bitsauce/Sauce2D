@@ -102,7 +102,6 @@ inline int next_p2(int a)
 }
 
 Font::Font(const string &filePathOrFontName, const uint size) :
-	refCounter(this),
 	m_color(1.0f)
 {
 	// Check if we can find the file in the local directories
@@ -269,14 +268,14 @@ void Font::setColor(const Vector4 &color)
 	m_color = color;
 }
 
-void Font::draw(Batch &batch, const Vector2 &pos, const string &str)
+void Font::draw(Batch *batch, const Vector2 &pos, const string &str)
 {
 	// Add space between lines
 	float h = m_size/0.63f;
 	float yOffset = 0.0f;
 	float xOffset = 0.0f;
 
-	batch.setTexture(m_texture);
+	batch->setTexture(m_texture);
 
 	// Split string lines
 	string line;
@@ -315,10 +314,11 @@ void Font::draw(Batch &batch, const Vector2 &pos, const string &str)
 		vertices[3].color = m_color;
 		vertices[3].texCoord.set(c.texCoord0.x, c.texCoord0.y);
 		
-		batch.addVertices(vertices, 4, QUAD_INDICES, 6);
+		batch->addVertices(vertices, 4, QUAD_INDICES, 6);
 
 		// Apply advance
 		xOffset += c.advance;
 	}
-	batch.setTexture(0);
+	batch->setTexture(0);
+	batch->release();
 }

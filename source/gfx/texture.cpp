@@ -34,7 +34,6 @@ int Texture::Register(asIScriptEngine *scriptEngine)
 	r = scriptEngine->RegisterObjectMethod("Texture", "void update(const Pixmap &in)", asMETHODPR(Texture, updatePixmap, (const Pixmap &), void), asCALL_THISCALL); AS_ASSERT
 	r = scriptEngine->RegisterObjectMethod("Texture", "void updateSection(const int, const int, const Pixmap &in)", asMETHODPR(Texture, updatePixmap, (const int, const int, const Pixmap &), void), asCALL_THISCALL); AS_ASSERT
 	r = scriptEngine->RegisterObjectMethod("Texture", "void clear()", asMETHODPR(Texture, clear, (), void), asCALL_THISCALL); AS_ASSERT
-
 	
 	r = scriptEngine->RegisterObjectMethod("Texture", "int getWidth() const", asMETHOD(Texture, getWidth), asCALL_THISCALL); AS_ASSERT
 	r = scriptEngine->RegisterObjectMethod("Texture", "int getHeight() const", asMETHOD(Texture, getHeight), asCALL_THISCALL); AS_ASSERT
@@ -42,7 +41,6 @@ int Texture::Register(asIScriptEngine *scriptEngine)
 	return r;
 }
 
-Texture::Texture() :
-	refCounter(this)
+Texture::Texture()
 {
 }

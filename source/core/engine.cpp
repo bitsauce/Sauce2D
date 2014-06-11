@@ -126,6 +126,8 @@ string xdEngine::getWorkingDirectory() const
 	return m_workDir;
 }
 
+#include <ctime>
+
 //------------------------------------------------------------------------
 // Run
 //------------------------------------------------------------------------
@@ -237,6 +239,8 @@ xdRetCode xdEngine::init(const xdConfig &config)
 	//initSockets();
 	//gameClient = new Client();
 	//gameServer = new Server();
+
+	srand(time(0));
 
 	// Load plugins
 	if(config.loadPluginsFunc != 0 && config.loadPluginsFunc() < 0) {

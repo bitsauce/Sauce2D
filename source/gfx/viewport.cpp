@@ -23,13 +23,11 @@ int Viewport::Register(asIScriptEngine *scriptEngine)
 	return r;
 }
 
-Viewport::Viewport(const Recti &view) :
-	refCounter(this)
+Viewport::Viewport(const Recti &view)
 {
 }
 
-Viewport::Viewport(const int x, const int y, const int w, const int h) :
-	refCounter(this)
+Viewport::Viewport(const int x, const int y, const int w, const int h)
 {
 }
 

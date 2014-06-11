@@ -21,7 +21,6 @@ int Shader::Register(asIScriptEngine *scriptEngine)
 	return r;
 }
 
-Shader::Shader() :
-	refCounter(this)
+Shader::Shader()
 {
 }

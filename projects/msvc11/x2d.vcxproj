@@ -53,7 +53,7 @@
     <ClInclude Include="..\..\source\gfx\sprite.h" />
     <ClInclude Include="..\..\source\gfx\texture.h" />
     <ClInclude Include="..\..\source\gfx\textureRegion.h" />
-    <ClInclude Include="..\..\source\gfx\vertexBuffer.h" />
+    <ClInclude Include="..\..\source\gfx\vertexbufferobject.h" />
     <ClInclude Include="..\..\source\gfx\viewport.h" />
     <ClInclude Include="..\..\source\scripts\scriptarray.h" />
     <ClInclude Include="..\..\source\scripts\scriptbuilder.h" />
@@ -85,7 +85,6 @@
     <ClCompile Include="..\..\source\gfx\sprite.cpp" />
     <ClCompile Include="..\..\source\gfx\texture.cpp" />
     <ClCompile Include="..\..\source\gfx\textureRegion.cpp" />
-    <ClCompile Include="..\..\source\gfx\vertexBuffer.cpp" />
     <ClCompile Include="..\..\source\gfx\viewport.cpp" />
     <ClCompile Include="..\..\source\math\math.cpp" />
     <ClCompile Include="..\..\source\math\matrix.cpp" />

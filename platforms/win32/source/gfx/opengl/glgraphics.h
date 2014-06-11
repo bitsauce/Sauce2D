@@ -34,6 +34,7 @@ private:
 	void renderBatch(const Batch &batch);
 	Texture *createTexture(const Pixmap &pixmap);
 	Shader *createShader(const string &vertFilePath, const string &fragFilePath);
+	VertexBufferObject *createVertexBufferObject();
 
 	HGLRC m_openGLContext;
 	HDC m_deviceContext;

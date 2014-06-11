@@ -50,8 +50,12 @@ bool xdFileSystem::readFile(string filePath, string &content) const
 	{
 		content = fileReader->readAll();
 		fileReader->close();
+
+		delete fileReader;
 		return true;
 	}
+
+	delete fileReader;
 	return false;
 }
 
@@ -64,8 +68,12 @@ bool xdFileSystem::writeFile(string filePath, string content) const
 	{
 		fileWriter->append(content);
 		fileWriter->close();
+
+		delete fileWriter;
 		return true;
 	}
+	
+	delete fileWriter;
 	return false;
 }
 

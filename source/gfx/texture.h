@@ -18,6 +18,7 @@ public:
 	AS_DECL_REF
 
 	Texture();
+	virtual ~Texture() {}
 
 	// Mipmapping
 	virtual void enableMipmaps() = 0;

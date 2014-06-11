@@ -12,6 +12,8 @@ class XDAPI xdWindow
 public:
 	AS_DECL_SINGLETON
 
+	virtual ~xdWindow() {}
+
 	virtual void processEvents() { NOT_IMPLEMENTED(processEvents) }
 
 	// Virtual window functions

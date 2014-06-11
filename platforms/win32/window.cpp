@@ -8,6 +8,7 @@
 //									2011-2014 (C)
 
 #include "window.h"
+#include "input.h"
 #include <x2d/config.h>
 #include <x2d/engine.h>
 #include <x2d/math.h>
@@ -33,9 +34,10 @@ int stringTypeId = -1;
 // Window
 //--------------------------------------------------------------------
 
-Window::Window(xdEngine *engine, OpenGL *gfx) :
+Window::Window(xdEngine *engine, Input *input, OpenGL *gfx) :
 	m_engine(engine),
 	m_graphics(gfx),
+	m_input(input),
 	m_size(0),
 	m_initEventsDone(false),
 	m_fullscreen(false)
@@ -45,6 +47,10 @@ Window::Window(xdEngine *engine, OpenGL *gfx) :
 
 	// Show the window
 	showWindow();
+}
+
+Window::~Window()
+{
 }
 
 //--------------------------------------------------------------------
@@ -548,6 +554,9 @@ void Window::processEvents(UINT Message, WPARAM wParam, LPARAM lParam)
 				addScriptFuncArg(&m_size.y, 4);
 				endScriptFuncCall();
 			}
+
+			m_graphics->setOrthoProjection(0.0f, m_size.x, m_size.y, 0.0f, -1.0f, 1.0f);
+			m_graphics->setViewport(Recti(0, 0, m_size.x, m_size.y));
 		}
 		break;
 
@@ -628,14 +637,15 @@ void Window::processEvents(UINT Message, WPARAM wParam, LPARAM lParam)
 		case WM_MOUSEMOVE:
 		{
 			// Set cursor pos
+			int x = GET_X_LPARAM(lParam);
+			int y = GET_Y_LPARAM(lParam);
 			if(m_mouseMoveFunc) {
-				int x = GET_X_LPARAM(lParam);
-				int y = GET_Y_LPARAM(lParam);
 				startScriptFuncCall(m_mouseMoveFunc);
 				addScriptFuncArg(&x, 4);
 				addScriptFuncArg(&y, 4);
 				endScriptFuncCall();
 			}
+			m_input->m_position.set(x, y);
 		}
 		break;
 

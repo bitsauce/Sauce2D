@@ -9,6 +9,11 @@
 
 #include "input.h"
 
+Input::Input() :
+	m_position(0.0f)
+{
+}
+
 Vector2i Input::getCursorPos() const
 {
 	POINT p;
@@ -29,6 +34,11 @@ void Input::setCursorLimits(const Recti &area)
 	rect.left   = (long)(area.getX());
 	rect.right  = (long)(area.getX()+area.getHeight());
 	ClipCursor(&rect);
+}
+
+Vector2 Input::getPosition() const
+{
+	return m_position;
 }
 
 bool Input::getKeyState(const xdVirtualKey key) const

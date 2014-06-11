@@ -1,4 +1,0 @@
-#ifndef GFX_VERTEXBUFFER_H
-#define GFX_VERTEXBUFFER_H
-
-#endif // GFX_VERTEXBUFFER_H

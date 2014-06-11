@@ -29,7 +29,6 @@ int Shape::Register(asIScriptEngine *scriptEngine)
 }
 
 Shape::Shape() :
-	refCounter(this),
 	m_fillColor(1.0f),
 	m_fillTexture(0),
 	m_penColor(1.0f),
@@ -39,7 +38,6 @@ Shape::Shape() :
 }
 
 Shape::Shape(const Rect &rect) :
-	refCounter(this),
 	m_fillColor(1.0f),
 	m_fillTexture(0),
 	m_penColor(1.0f),
@@ -77,7 +75,6 @@ Shape::Shape(const Rect &rect) :
 }
 
 Shape::Shape(const Vector2 &center, const float radius, const int vertCount) :
-	refCounter(this),
 	m_fillColor(1.0f),
 	m_fillTexture(0),
 	m_penColor(1.0f),
@@ -109,7 +106,6 @@ Shape::Shape(const Vector2 &center, const float radius, const int vertCount) :
 }
 
 Shape::Shape(const vector<Vertex> &vertices) :
-	refCounter(this),
 	m_fillColor(1.0f),
 	m_fillTexture(0),
 	m_penColor(1.0f),
@@ -117,6 +113,13 @@ Shape::Shape(const vector<Vertex> &vertices) :
 	m_index(0)
 {
 	//addVertices(vertices);
+}
+
+Shape::~Shape()
+{
+	if(m_fillTexture) {
+		m_fillTexture->release();
+	}
 }
 
 /*void Shape::addVertex(const Vertex &vertex)
@@ -145,6 +148,9 @@ void Shape::setFillColor(const Vector4 &color)
 
 void Shape::setFillTexture(Texture* texture)
 {
+	if(m_fillTexture) {
+		m_fillTexture->release();
+	}
 	m_fillTexture = texture;
 }
 
@@ -158,19 +164,25 @@ void Shape::setPenSize(const float size)
 	m_penSize = size;
 }
 
-void Shape::draw(Batch &batch)
+void Shape::draw(Batch *batch)
 {
 	if(!validate())
 		return;
+
+	if(!batch) {
+		LOG("Shape.draw: Can not draw to a 'null' batch");
+		return;
+	}
 
 	for(int i = 0; i < m_vertices.size(); i++)
 		m_vertices[i].color = m_fillColor;
 	
 	//batch.setColor(m_fillColor);
-	batch.setTexture(m_fillTexture);
-	batch.addVertices(m_vertices.data(), m_vertices.size(), m_indices.data(), m_indices.size());
-	batch.setTexture(0);
+	batch->setTexture(m_fillTexture);
+	batch->addVertices(m_vertices.data(), m_vertices.size(), m_indices.data(), m_indices.size());
+	batch->setTexture(0);
 	//batch.setColor(Vector4(1.0f));
+	batch->release();
 }
 
 bool Shape::validate()
