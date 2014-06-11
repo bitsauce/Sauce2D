@@ -4,13 +4,9 @@
 #include <x2d/config.h>
 #include <x2d/util.h>
 
-<<<<<<< HEAD
 // TODO: This should probably not be here...
 
 class XDAPI Array
-=======
-class X2DAPI Array
->>>>>>> 921b7a2dd31431c1cbba191b016c637db357952a
 {
 public:
 
