@@ -805,7 +805,7 @@ public:
 
 	static Body *Factory(const b2BodyDef *def)
 	{
-		new Body(b2d->getWorld()->CreateBody(def));
+		return new Body(b2d->getWorld()->CreateBody(def));
 	}
 
 private:
@@ -918,6 +918,8 @@ int CreatePlugin(xdScriptEngine *scriptEngine)
 	registerGlobalFunction("void b2dDisableRevoluteJointMotor(int jointId)", asFUNCTION(disableRevoluteJointMotor));
 	registerGlobalFunction("float b2dGetRevoluteJointAngle(int jointId)", asFUNCTION(getRevoluteJointAngle));
 #endif
+
+	return r;
 }
 
 void ReleasePlugin()

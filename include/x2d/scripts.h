@@ -27,7 +27,7 @@ struct ScriptArgument
 };
 
 // A asIScriptEngine wrapper (mainly used by external plugins)
-class xdScriptEngine
+class XDAPI xdScriptEngine
 {
 	friend class xdEngine;
 public:
