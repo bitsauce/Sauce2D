@@ -97,6 +97,7 @@ struct XDAPI xdConfig
 **********************************************************************/
 class XDAPI xdEngine
 {
+	friend class OpenGL;
 public:
 	AS_DECL_SINGLETON
 
@@ -104,10 +105,10 @@ public:
 	~xdEngine();
 
 	// Initialize the engine
-	xdRetCode init(const xdConfig &config);
+	int init(const xdConfig &config);
 
 	// Run game
-	xdRetCode run();
+	int run();
 	
 	// Exit game
 	void exit();
@@ -120,6 +121,11 @@ public:
 
 	// Working directory
 	string getWorkingDirectory() const;
+
+	// Profiler
+	void toggleProfiler();
+	void pushProfile(const string &profile);
+	void popProfile();
 
 	// Profiler
 	void setProfiler(xdProfiler *profiler) { m_profiler = profiler; }

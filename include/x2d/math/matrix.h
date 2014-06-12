@@ -111,6 +111,8 @@ private:
 class Matrix4
 {
 public:
+	AS_DECL_VALUE
+
     // constructors
     Matrix4();  // init with identity
     Matrix4(const float src[16]);
@@ -146,6 +148,7 @@ public:
 	}
 
     Matrix4&    identity();
+	void		identityAS() { identity(); }
     Matrix4&    transpose();                            // transpose itself and return reference
     Matrix4&    invert();                               // check best inverse method before inverse
     Matrix4&    invertEuclidean();                      // inverse of Euclidean transform matrix
@@ -155,6 +158,7 @@ public:
 
     // transform matrix
     Matrix4&    translate(float x, float y, float z);   // translation by (x,y,z)
+	void translateAS(float x, float y, float z) { translate(x, y, z); }
     Matrix4&    translate(const Vector3& v);            //
     Matrix4&    rotate(float angle, const Vector3& axis); // rotate angle(degree) along the given axix
     Matrix4&    rotate(float angle, float x, float y, float z);
@@ -194,6 +198,8 @@ private:
     float m[16];
     float tm[16];                                       // transpose m
 
+	static void Factory(Matrix4 *self);
+	//static void Factory(class Array *arr, Matrix4 *self);
 };
 
 ///////////////////////////////////////////////////////////////////////////

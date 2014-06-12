@@ -203,6 +203,8 @@ void OpenGL::renderBatch(const Batch &batch)
 	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 	
 	TextureVertexMap buffers = batch.m_buffers;
+	Matrix4 mat = batch.m_projMatrix;
+	glLoadMatrixf(mat.getTranspose());
 	if(!batch.isStatic())
 	{
 		for(TextureVertexMap::iterator itr = buffers.begin(); itr != buffers.end(); ++itr)
@@ -237,8 +239,6 @@ void OpenGL::renderBatch(const Batch &batch)
 				glBindTexture(GL_TEXTURE_2D, 0);
 			}
 
-			//glLoadMatrixf(vbo->transform);
-
 			glBindBuffer(GL_ARRAY_BUFFER_ARB, ((GLvertexbuffer*)itr->second.vbo)->m_vboId);
 			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ((GLvertexbuffer*)itr->second.vbo)->m_iboId);
 
@@ -250,10 +250,9 @@ void OpenGL::renderBatch(const Batch &batch)
 
 			glBindBuffer(GL_ARRAY_BUFFER_ARB, 0);
 			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-
-			//glLoadIdentity();
 		}
 	}
+	glLoadIdentity();
 
 	// Disable client state
 	glDisableClientState(GL_TEXTURE_COORD_ARRAY);

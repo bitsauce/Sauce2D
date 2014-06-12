@@ -26,7 +26,13 @@ struct XDAPI Vertex
 	Vector2 texCoord;
 };
 
-struct XDAPI VertexBuffer {
+struct XDAPI VertexBuffer
+{
+	VertexBuffer() :
+		vbo(0)
+	{
+	}
+
 	vector<Vertex> vertices;
 	vector<uint> indices;
 	VertexBufferObject *vbo;
@@ -76,6 +82,7 @@ public:
 	bool isStatic() const;
 
 private:
+	void addVerticesAS(Array *vertices, Array *indices);
 
 	TextureVertexMap m_buffers;
 	Texture *m_texture;

@@ -13,6 +13,7 @@ public:
 	AS_DECL_REF
 
 	Font(const string &fontNameOrFile, const uint size);
+	~Font();
 
 	float getStringWidth(const string &str);
 	float getStringHeight(const string &str);

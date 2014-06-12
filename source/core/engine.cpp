@@ -70,6 +70,10 @@ int xdEngine::Register(asIScriptEngine *scriptEngine)
 	r = scriptEngine->RegisterObjectMethod("ScriptEngine", "void exit()", asMETHOD(xdEngine, exit), asCALL_THISCALL); AS_ASSERT
 	r = scriptEngine->RegisterObjectMethod("ScriptEngine", "string get_platform() const", asMETHOD(xdEngine, getPlatformString), asCALL_THISCALL); AS_ASSERT
 	r = scriptEngine->RegisterObjectMethod("ScriptEngine", "string get_workDir() const", asMETHOD(xdEngine, getWorkingDirectory), asCALL_THISCALL); AS_ASSERT
+	
+	r = scriptEngine->RegisterObjectMethod("ScriptEngine", "void toggleProfiler()", asMETHOD(xdEngine, toggleProfiler), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("ScriptEngine", "void pushProfile(const string &in)", asMETHOD(xdEngine, pushProfile), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("ScriptEngine", "void popProfile()", asMETHOD(xdEngine, popProfile), asCALL_THISCALL); AS_ASSERT
 
 	return r;
 }
@@ -127,12 +131,27 @@ string xdEngine::getWorkingDirectory() const
 	return m_workDir;
 }
 
+void xdEngine::toggleProfiler()
+{
+	m_toggleProfiler = true;
+}
+
+void xdEngine::pushProfile(const string &profile)
+{
+	m_profiler->pushProfile(profile);
+}
+
+void xdEngine::popProfile()
+{
+	m_profiler->popProfile();
+}
+
 #include <ctime>
 
 //------------------------------------------------------------------------
 // Run
 //------------------------------------------------------------------------
-xdRetCode xdEngine::init(const xdConfig &config)
+int xdEngine::init(const xdConfig &config)
 {
 	if(!config.isValid()) {
 		return XD_INVALID_CONFIG;
@@ -142,7 +161,14 @@ xdRetCode xdEngine::init(const xdConfig &config)
 	//applyConfig(config);
 	m_flags = config.flags;
 	m_platformString = config.platform;
+
+
 	m_workDir = config.workDir;
+	replace(m_workDir.begin(), m_workDir.end(), '\\', '/');
+	if(m_workDir.back() != '/') {
+		m_workDir += "/";
+	}
+
 	m_timer = config.timer;
 	m_fileSystem = config.fileSystem;
 	m_graphics = config.graphics;
@@ -354,7 +380,7 @@ void xdEngine::exit()
 	m_running = false;
 }
 
-xdRetCode xdEngine::run()
+int xdEngine::run()
 {
 	assert(m_initialized);
 
@@ -375,10 +401,12 @@ xdRetCode xdEngine::run()
     {
 		// Toggle profiler
 		if(m_toggleProfiler) {
-			if(!m_profiler->isActive())
+			if(!m_profiler->isActive()) {
 				m_profiler->start();
-			else
+			}else{
 				m_profiler->stop();
+				m_profiler->printResults();
+			}
 			m_toggleProfiler = false;
 		}
 		m_profiler->pushProfile("Game Loop");

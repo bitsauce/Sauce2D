@@ -26,6 +26,8 @@
 #include <vld.h>
 #endif
 
+#include <direct.h>
+
 int loadPlugins()
 {
 	return 0;
@@ -49,8 +51,10 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, INT)
 	config.loadPluginsFunc = &loadPlugins;
 	config.platform = "windows";
 #ifdef X2D_DEBUG
-	config.workDir = "C:/Users/Marcus/Documents/GitHub/Overworld/";
+	config.workDir = "C:\\Users\\Marcus\\Documents\\GitHub\\Overworld\\";
 	flags |= XD_DEBUG;
+#else
+	config.workDir = _getcwd(0, 0);
 #endif
 	config.flags = flags;
 	config.timer = new Timer;
@@ -65,8 +69,10 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, INT)
 	config.window = window;
 	graphics->init(window);
 
-	if(engine->init(config) != XD_OK)
+	if(engine->init(config) != XD_OK) {
+		delete engine;
 		return -1;
+	}
 
 	window->initEvents();
 

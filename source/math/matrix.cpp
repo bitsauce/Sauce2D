@@ -498,3 +498,32 @@ Matrix4& Matrix4::rotateZ(float angle)
 
     return *this;
 }
+
+AS_REG_VALUE(Matrix4)
+
+int Matrix4::Register(asIScriptEngine *scriptEngine)
+{
+	int r = 0;
+
+	// Register the constructors
+	r = scriptEngine->RegisterObjectBehaviour("Matrix4", asBEHAVE_CONSTRUCT, "void f()", asFUNCTION(Factory), asCALL_CDECL_OBJLAST); AS_ASSERT
+	//r = scriptEngine->RegisterObjectBehaviour("Matrix4", asBEHAVE_CONSTRUCT, "void f(grid<float> @data)", asFUNCTION(Factory), asCALL_CDECL_OBJLAST); AS_ASSERT
+
+	
+	r = scriptEngine->RegisterObjectMethod("Matrix4", "void identity()", asMETHOD(Matrix4, identityAS), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("Matrix4", "void translate(float x, float y, float z)", asMETHODPR(Matrix4, translateAS, (float, float, float), void), asCALL_THISCALL); AS_ASSERT
+
+	return r;
+}
+
+#include <x2d/math/array.h>
+
+void Matrix4::Factory(Matrix4 *self)
+{
+	new (self) Matrix4();
+}
+
+/*void Matrix4::Factory(Array *data, Matrix4 *self)
+{
+	new (self) Matrix4();
+}*/

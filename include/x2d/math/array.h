@@ -9,6 +9,8 @@
 class XDAPI Array
 {
 public:
+	virtual void AddRef() const = 0;
+	virtual void Release() const = 0;
 
 	virtual void Reserve(unsigned int maxElements) = 0;
 	virtual void Resize(unsigned int numElements) = 0;

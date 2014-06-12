@@ -121,6 +121,13 @@ Font::Font(const string &filePathOrFontName, const uint size) :
 	load(filePath, size);
 }
 
+Font::~Font()
+{
+	if(m_texture) {
+		m_texture->release();
+	}
+}
+
 void Font::load(const string &filePath, const uint size)
 {
 	// Create and initialize a FreeType library
@@ -275,6 +282,7 @@ void Font::draw(Batch *batch, const Vector2 &pos, const string &str)
 	float yOffset = 0.0f;
 	float xOffset = 0.0f;
 
+	m_texture->addRef();
 	batch->setTexture(m_texture);
 
 	// Split string lines

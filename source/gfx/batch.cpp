@@ -33,9 +33,11 @@ int Batch::Register(asIScriptEngine *scriptEngine)
 	int r = 0;
 
 	r = scriptEngine->RegisterObjectBehaviour("Batch", asBEHAVE_FACTORY, "Batch @f()", asFUNCTIONPR(Factory, (), Batch*), asCALL_CDECL); AS_ASSERT
-
+		
+		r = scriptEngine->RegisterObjectMethod("Batch", "void setProjectionMatrix(const Matrix4 &in)", asMETHOD(Batch, setProjectionMatrix), asCALL_THISCALL); AS_ASSERT
 	r = scriptEngine->RegisterObjectMethod("Batch", "void setShader(Shader @shader)", asMETHOD(Batch, setShader), asCALL_THISCALL); AS_ASSERT
 	r = scriptEngine->RegisterObjectMethod("Batch", "void setTexture(Texture @texture)", asMETHOD(Batch, setTexture), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("Batch", "void addVertices(array<Vertex> @vertices, array<uint> @indices)", asMETHOD(Batch, addVerticesAS), asCALL_THISCALL); AS_ASSERT
 	r = scriptEngine->RegisterObjectMethod("Batch", "Vertex getVertex(int index)", asMETHOD(Batch, getVertex), asCALL_THISCALL); AS_ASSERT
 	r = scriptEngine->RegisterObjectMethod("Batch", "void modifyVertex(int index, Vertex vertex)", asMETHOD(Batch, modifyVertex), asCALL_THISCALL); AS_ASSERT
 
@@ -48,7 +50,8 @@ int Batch::Register(asIScriptEngine *scriptEngine)
 
 Batch::Batch() :
 	m_static(false),
-	m_texture(0)
+	m_texture(0),
+	m_shader(0)
 {
 }
 
@@ -102,6 +105,28 @@ void Batch::addVertices(Vertex *vertices, int vertcount, uint *indices, int icou
 	for(int i = 0; i < icount; i++) {
 		buffer.indices.push_back(indices[i] + ioffset);
 	}
+}
+
+void Batch::addVerticesAS(Array *vertices, Array *indices)
+{
+	if(m_static) {
+		LOG("Cannot add vertices to a static Batch.");
+		return;
+	}
+
+	VertexBuffer &buffer = m_buffers[m_texture];
+	int ioffset = buffer.vertices.size();
+	
+	for(int i = 0; i < vertices->GetSize(); i++) {
+		buffer.vertices.push_back(*(Vertex*)vertices->At(i));
+	}
+	
+	for(int i = 0; i < indices->GetSize(); i++) {
+		buffer.indices.push_back(*(uint*)indices->At(i) + ioffset);
+	}
+
+	vertices->Release();
+	indices->Release();
 }
 
 void Batch::modifyVertex(int index, Vertex vertex)

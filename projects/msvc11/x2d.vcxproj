@@ -247,7 +247,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
-      <AdditionalIncludeDirectories>..\..\include;..\..\source;..\..\3rdparty\angelscript\sdk\angelscript\include;..\..\3rdparty\freeimage\source;..\..\3rdparty\freetype\include;..\..\3rdparty\glew\include;..\..\3rdparty\openal\include;..\..\3rdparty\vld\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\include;..\..\source;..\..\3rdparty\angelscript\sdk\angelscript\include;..\..\3rdparty\freeimage\source;..\..\3rdparty\freetype\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Android'">
@@ -268,8 +268,8 @@
       <WholeProgramOptimization>true</WholeProgramOptimization>
     </ClCompile>
     <Link>
-      <AdditionalLibraryDirectories>$(SolutionDir)..\..\lib\angelscript\sdk\angelscript\lib;$(SolutionDir)..\..\lib\zlib-1.2.5\lib;$(SolutionDir)..\..\lib\lpng154\lib</AdditionalLibraryDirectories>
-      <AdditionalDependencies>angelscript.lib;iphlpapi.lib;libpng15.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>..\..\3rdparty\angelscript\sdk\angelscript\lib;..\..\3rdparty\freeimage\lib;..\..\3rdparty\freetype\lib</AdditionalLibraryDirectories>
+      <AdditionalDependencies>angelscript.lib;freetype.lib;freeimage.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <GenerateDebugInformation>
       </GenerateDebugInformation>
     </Link>

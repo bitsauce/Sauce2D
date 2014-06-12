@@ -108,10 +108,10 @@
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <OmitFramePointers>true</OmitFramePointers>
       <WholeProgramOptimization>true</WholeProgramOptimization>
-      <AdditionalIncludeDirectories>Source;..\..\Source\ZLib;..\..\Source\DeprecationManager;..\..\Source\OpenEXR\Half;..\..\Source\OpenEXR\Iex;..\..\Source\OpenEXR\IlmImf;..\..\Source\OpenEXR\Imath;..\..\Source\OpenEXR\IlmThread;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\Source;..\..\Source\ZLib;..\..\Source\DeprecationManager;..\..\Source\OpenEXR\Half;..\..\Source\OpenEXR\Iex;..\..\Source\OpenEXR\IlmImf;..\..\Source\OpenEXR\Imath;..\..\Source\OpenEXR\IlmThread;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;OPJ_STATIC;FREEIMAGE_EXPORTS;_CRT_SECURE_NO_DEPRECATE;LIBRAW_NODLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
-      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <BufferSecurityCheck>false</BufferSecurityCheck>
       <PrecompiledHeaderOutputFile>.\Release/FreeImage.pch</PrecompiledHeaderOutputFile>
       <AssemblerListingLocation>.\Release/</AssemblerListingLocation>
@@ -132,15 +132,13 @@
       <LinkTimeCodeGeneration>UseLinkTimeCodeGeneration</LinkTimeCodeGeneration>
       <RandomizedBaseAddress>false</RandomizedBaseAddress>
       <DataExecutionPrevention />
-      <ImportLibrary>.\Release/FreeImage.lib</ImportLibrary>
+      <ImportLibrary>$(OutDir)$(TargetName).lib</ImportLibrary>
       <TargetMachine>MachineX86</TargetMachine>
       <Profile>true</Profile>
     </Link>
     <PostBuildEvent>
-      <Command>copy Release\FreeImage.dll Dist
-copy Release\FreeImage.lib Dist
-copy ..\..\Source\FreeImage.h Dist
-</Command>
+      <Command>
+      </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
