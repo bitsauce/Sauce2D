@@ -239,7 +239,7 @@ void Window::showWindow()
 void Window::initEvents()
 {
 	// Set optional event functions
-	m_focusLostFunc			= getScriptFuncHandle("void focusLost()");
+	/*m_focusLostFunc			= getScriptFuncHandle("void focusLost()");
 	m_focusGainedFunc		= getScriptFuncHandle("void focusGained()");
 	m_windowResizedFunc		= getScriptFuncHandle("void windowResized(int width, int height)");
 	m_leftMouseDownFunc		= getScriptFuncHandle("void leftMouseDown()");
@@ -253,7 +253,7 @@ void Window::initEvents()
 	m_inputCharFunc			= getScriptFuncHandle("void inputText(string key)");
 
 	integerTypeId = getObjectTypeId("int"); 
-	stringTypeId = getObjectTypeId("string");
+	stringTypeId = getObjectTypeId("string");*/
 
 	m_initEventsDone = true;
 }
@@ -549,10 +549,10 @@ void Window::processEvents(UINT Message, WPARAM wParam, LPARAM lParam)
 			// Resize viewport
 			m_size.set(LOWORD(lParam), HIWORD(lParam));
 			if(m_windowResizedFunc) {
-				startScriptFuncCall(m_windowResizedFunc);
-				addScriptFuncArg(&m_size.x, 4);
-				addScriptFuncArg(&m_size.y, 4);
-				endScriptFuncCall();
+				//startScriptFuncCall(m_windowResizedFunc);
+				//addScriptFuncArg(&m_size.x, 4);
+				//addScriptFuncArg(&m_size.y, 4);
+				//endScriptFuncCall();
 			}
 
 			m_graphics->setOrthoProjection(0.0f, m_size.x, m_size.y, 0.0f, -1.0f, 1.0f);
@@ -564,8 +564,8 @@ void Window::processEvents(UINT Message, WPARAM wParam, LPARAM lParam)
 		{
 			m_focus = true;
 			if(m_focusGainedFunc) {
-				startScriptFuncCall(m_focusGainedFunc);
-				endScriptFuncCall();
+				//startScriptFuncCall(m_focusGainedFunc);
+				//endScriptFuncCall();
 			}
 		}
 		break;
@@ -574,8 +574,8 @@ void Window::processEvents(UINT Message, WPARAM wParam, LPARAM lParam)
 		{
 			m_focus = false;
 			if(m_focusLostFunc) {
-				startScriptFuncCall(m_focusLostFunc);
-				endScriptFuncCall();
+				//startScriptFuncCall(m_focusLostFunc);
+				//endScriptFuncCall();
 			}
 		}
 		break;
@@ -583,8 +583,8 @@ void Window::processEvents(UINT Message, WPARAM wParam, LPARAM lParam)
 		case WM_LBUTTONDOWN:
 		{
 			if(m_leftMouseDownFunc) {
-				startScriptFuncCall(m_leftMouseDownFunc);
-				endScriptFuncCall();
+				//startScriptFuncCall(m_leftMouseDownFunc);
+				//endScriptFuncCall();
 			}
 		}
 		break;
@@ -592,8 +592,8 @@ void Window::processEvents(UINT Message, WPARAM wParam, LPARAM lParam)
 		case WM_LBUTTONUP:
 		{
 			if(m_leftMouseUpFunc) {
-				startScriptFuncCall(m_leftMouseUpFunc);
-				endScriptFuncCall();
+				//startScriptFuncCall(m_leftMouseUpFunc);
+				//endScriptFuncCall();
 			}
 		}
 		break;
@@ -601,8 +601,8 @@ void Window::processEvents(UINT Message, WPARAM wParam, LPARAM lParam)
 		case WM_RBUTTONDOWN:
 		{
 			if(m_rightMouseDownFunc) {
-				startScriptFuncCall(m_rightMouseDownFunc);
-				endScriptFuncCall();
+				//startScriptFuncCall(m_rightMouseDownFunc);
+				//endScriptFuncCall();
 			}
 		}
 		break;
@@ -610,8 +610,8 @@ void Window::processEvents(UINT Message, WPARAM wParam, LPARAM lParam)
 		case WM_RBUTTONUP:
 		{
 			if(m_rightMouseUpFunc) {
-				startScriptFuncCall(m_rightMouseUpFunc);
-				endScriptFuncCall();
+				//startScriptFuncCall(m_rightMouseUpFunc);
+				//endScriptFuncCall();
 			}
 		}
 		break;
@@ -619,8 +619,8 @@ void Window::processEvents(UINT Message, WPARAM wParam, LPARAM lParam)
 		case WM_MBUTTONDOWN:
 		{
 			if(m_middleMouseDownFunc) {
-				startScriptFuncCall(m_middleMouseDownFunc);
-				endScriptFuncCall();
+				//startScriptFuncCall(m_middleMouseDownFunc);
+				//endScriptFuncCall();
 			}
 		}
 		break;
@@ -628,8 +628,8 @@ void Window::processEvents(UINT Message, WPARAM wParam, LPARAM lParam)
 		case WM_MBUTTONUP:
 		{
 			if(m_middleMouseUpFunc) {
-				startScriptFuncCall(m_middleMouseUpFunc);
-				endScriptFuncCall();
+				//startScriptFuncCall(m_middleMouseUpFunc);
+				//endScriptFuncCall();
 			}
 		}
 		break;
@@ -640,10 +640,10 @@ void Window::processEvents(UINT Message, WPARAM wParam, LPARAM lParam)
 			int x = GET_X_LPARAM(lParam);
 			int y = GET_Y_LPARAM(lParam);
 			if(m_mouseMoveFunc) {
-				startScriptFuncCall(m_mouseMoveFunc);
-				addScriptFuncArg(&x, 4);
-				addScriptFuncArg(&y, 4);
-				endScriptFuncCall();
+				//startScriptFuncCall(m_mouseMoveFunc);
+				//addScriptFuncArg(&x, 4);
+				//addScriptFuncArg(&y, 4);
+				//endScriptFuncCall();
 			}
 			m_input->m_position.set(x, y);
 		}
@@ -653,9 +653,9 @@ void Window::processEvents(UINT Message, WPARAM wParam, LPARAM lParam)
 		{
 			if(m_mouseWheelFunc) {
 				int scrollDelta = (short)HIWORD(wParam);
-				startScriptFuncCall(m_mouseWheelFunc);
-				addScriptFuncArg(&scrollDelta, 4);
-				endScriptFuncCall();
+				//startScriptFuncCall(m_mouseWheelFunc);
+				//addScriptFuncArg(&scrollDelta, 4);
+				//endScriptFuncCall();
 			}
 		}
 		break;
@@ -666,9 +666,9 @@ void Window::processEvents(UINT Message, WPARAM wParam, LPARAM lParam)
 				string key;
 				key += (char)wParam;
 				
-				startScriptFuncCall(m_inputCharFunc);
-				addScriptFuncArg(&key, stringTypeId);
-				endScriptFuncCall();
+				//startScriptFuncCall(m_inputCharFunc);
+				//addScriptFuncArg(&key, stringTypeId);
+				//endScriptFuncCall();
 			}
 		}
 		break;

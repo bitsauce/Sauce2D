@@ -56,7 +56,45 @@ int registerGlobalFunction(const char *funcDef, const asSFuncPtr &funcPointer)
 	return r;
 }
 
-int registerFunctionDef(const char *decl)
+int xdScriptEngine::registerSingletonType(const char *obj)
+{
+	return scriptEngine->RegisterObjectType(obj, 0, asOBJ_REF | asOBJ_NOHANDLE);
+}
+
+int xdScriptEngine::registerRefType(const char *obj, const asSFuncPtr &addRef, const asSFuncPtr &release)
+{
+	int r = scriptEngine->RegisterObjectType(obj, 0, asOBJ_REF); AS_ASSERT
+	r = scriptEngine->RegisterObjectBehaviour(obj, asBEHAVE_ADDREF, "void f()", addRef, asCALL_THISCALL); AS_ASSERT		
+	r = scriptEngine->RegisterObjectBehaviour(obj, asBEHAVE_RELEASE, "void f()", release, asCALL_THISCALL); AS_ASSERT		
+	return r;
+}
+
+int xdScriptEngine::registerObjectFactory(const char *obj, const char *decl, const asSFuncPtr &func)
+{
+	return scriptEngine->RegisterObjectBehaviour(obj, asBEHAVE_FACTORY, decl, func, asCALL_CDECL);
+}
+
+int xdScriptEngine::registerObjectMethod(const char *obj, const char *decl, const asSFuncPtr &funcPointer)
+{
+	return scriptEngine->RegisterObjectMethod(obj, decl, funcPointer, asCALL_THISCALL);
+}
+
+int xdScriptEngine::registerGlobalProperty(const char *decl, void *pointer)
+{
+	return scriptEngine->RegisterGlobalProperty(decl, pointer);
+}
+
+int xdScriptEngine::registerEnum(const char* name)
+{
+	return scriptEngine->RegisterEnum(name);
+}
+
+int xdScriptEngine::registerEnumValue(const char *enumname, const char *valuename, int value)
+{
+	return scriptEngine->RegisterEnumValue(enumname, valuename, value);
+}
+
+int xdScriptEngine::registerFuncdef(const char *decl)
 {
 	int r = scriptEngine->RegisterFuncdef(decl);
 	if(r < 0)
@@ -163,66 +201,44 @@ int endScriptFuncCall()
 	return r;
 }
 
-int registerEnum(const char* name)
-{
-	int r = scriptEngine->RegisterEnum(name);
-	if(r < 0)
-	{
-		ERR("registerEnum failed with the error code %i", r);
-		assert(false);
-	}
-	return r;
-}
-
-int registerEnumValue(const char *enumname, const char *valuename, int value)
-{
-	int r = scriptEngine->RegisterEnumValue(enumname, valuename, value);
-	if(r < 0)
-	{
-		ERR("registerEnumValue failed with the error code %i", r);
-		assert(false);
-	}
-	return r;
-}
-
 void *getScriptFuncHandle(const char *decl)
 {
 	return 0;//xdEngine::GetScripts()->getModule()->GetFunctionByDecl(decl);
 }
 
-AS_REG_SINGLETON(xdScripts, "ScriptManager")
+AS_REG_SINGLETON(xdScriptEngine, "ScriptManager")
 
-int xdScripts::Register(asIScriptEngine *scriptEngine)
+int xdScriptEngine::Register(asIScriptEngine *scriptEngine)
 {
 	int r;
 
 	// Scirpt classes
-	r = scriptEngine->RegisterObjectMethod("ScriptManager", "uint getClassCount() const", asMETHOD(xdScripts, classCount), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("ScriptManager", "int getClassIdByName(const string)", asMETHOD(xdScripts, classIdByName), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("ScriptManager", "string getClassNameById(const uint)", asMETHOD(xdScripts, classNameById), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("ScriptManager", "bool classExists(const string)", asMETHOD(xdScripts, isClassName), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("ScriptManager", "bool classDerivesFromName(const string, const string)", asMETHOD(xdScripts, classDerivesFromName), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("ScriptManager", "bool classDerivesFromId(const uint, const uint)", asMETHOD(xdScripts, classDerivesFromId), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("ScriptManager", "uint getClassCount() const", asMETHOD(xdScriptEngine, classCount), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("ScriptManager", "int getClassIdByName(const string)", asMETHOD(xdScriptEngine, classIdByName), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("ScriptManager", "string getClassNameById(const uint)", asMETHOD(xdScriptEngine, classNameById), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("ScriptManager", "bool classExists(const string)", asMETHOD(xdScriptEngine, isClassName), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("ScriptManager", "bool classDerivesFromName(const string, const string)", asMETHOD(xdScriptEngine, classDerivesFromName), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("ScriptManager", "bool classDerivesFromId(const uint, const uint)", asMETHOD(xdScriptEngine, classDerivesFromId), asCALL_THISCALL); AS_ASSERT
 
 	// Script object // TODO: Transplant to MetaObject class
-	/*r = scriptEngine->RegisterObjectMethod("ScriptManager", "void srcSetCreateArg(const uint, ?&in)", asMETHOD(xdScripts, setCreateArg), asCALL_THISCALL);
-	r = scriptEngine->RegisterObjectMethod("ScriptManager", "void srcResizeCreateArgs(const uint)", asMETHOD(xdScripts, resizeCreateArgs), asCALL_THISCALL);
-	r = scriptEngine->RegisterObjectMethod("ScriptManager", "void srcSetCreateObjectByName(const string)", asMETHOD(xdScripts, setCreateObjectByName), asCALL_THISCALL);
-	r = scriptEngine->RegisterObjectMethod("ScriptManager", "void srcSetCreateObjectById(const uint)", asMETHOD(xdScripts, setCreateObjectById), asCALL_THISCALL);
-	r = scriptEngine->RegisterObjectMethod("ScriptManager", "void srcCreateObject(?&out, const string s = \"\")", asMETHOD(xdScripts, createObject), asCALL_THISCALL);
-	r = scriptEngine->RegisterObjectMethod("ScriptManager", "string srcGetObjectClassName(?&in)", asMETHOD(xdScripts, objectClassName), asCALL_THISCALL);*/
+	/*r = scriptEngine->RegisterObjectMethod("ScriptManager", "void srcSetCreateArg(const uint, ?&in)", asMETHOD(xdScriptEngine, setCreateArg), asCALL_THISCALL);
+	r = scriptEngine->RegisterObjectMethod("ScriptManager", "void srcResizeCreateArgs(const uint)", asMETHOD(xdScriptEngine, resizeCreateArgs), asCALL_THISCALL);
+	r = scriptEngine->RegisterObjectMethod("ScriptManager", "void srcSetCreateObjectByName(const string)", asMETHOD(xdScriptEngine, setCreateObjectByName), asCALL_THISCALL);
+	r = scriptEngine->RegisterObjectMethod("ScriptManager", "void srcSetCreateObjectById(const uint)", asMETHOD(xdScriptEngine, setCreateObjectById), asCALL_THISCALL);
+	r = scriptEngine->RegisterObjectMethod("ScriptManager", "void srcCreateObject(?&out, const string s = \"\")", asMETHOD(xdScriptEngine, createObject), asCALL_THISCALL);
+	r = scriptEngine->RegisterObjectMethod("ScriptManager", "string srcGetObjectClassName(?&in)", asMETHOD(xdScriptEngine, objectClassName), asCALL_THISCALL);*/
 
 	return r;
 }
 
-xdScripts::xdScripts(asIScriptEngine *scriptEngine, xdDebug *debugger) :
+xdScriptEngine::xdScriptEngine(asIScriptEngine *scriptEngine, xdDebug *debugger) :
 	m_module(0), // Set later by the engine
 	m_debugger(debugger)
 {
 	::scriptEngine = scriptEngine;
 }
 
-xdScripts::~xdScripts()
+xdScriptEngine::~xdScriptEngine()
 {
 	m_createArgs.clear();
 	
@@ -232,7 +248,7 @@ xdScripts::~xdScripts()
 	if(scriptEngine) assert(scriptEngine->Release() == 0);
 }
 
-asIScriptContext *xdScripts::createContext() const
+asIScriptContext *xdScriptEngine::createContext() const
 {
 	asIScriptContext *ctx = scriptEngine->CreateContext();
 	if(xdEngine::IsEnabled(XD_DEBUG))
@@ -240,17 +256,17 @@ asIScriptContext *xdScripts::createContext() const
 	return ctx;
 }
 
-asIScriptModule *xdScripts::getModule() const
+asIScriptModule *xdScriptEngine::getModule() const
 {
 	return m_module;
 }
 
-uint xdScripts::classCount() const
+uint xdScriptEngine::classCount() const
 {
 	return m_module->GetObjectTypeCount();
 }
 
-int xdScripts::classIdByName(const string name) const
+int xdScriptEngine::classIdByName(const string name) const
 {
 	for(uint i = 0; i < m_module->GetObjectTypeCount(); i++) {
 		if(name == string(m_module->GetObjectTypeByIndex(i)->GetName()))
@@ -259,14 +275,14 @@ int xdScripts::classIdByName(const string name) const
 	return -1;
 }
 
-string xdScripts::classNameById(const uint id) const
+string xdScriptEngine::classNameById(const uint id) const
 {
 	asIObjectType *objType = m_module->GetObjectTypeByIndex(id);
 	if(!objType) return ""; // Invalid id
 	return objType->GetName();
 }
 
-bool xdScripts::isClassName(const string name) const
+bool xdScriptEngine::isClassName(const string name) const
 {
 	for(uint i = 0; i < m_module->GetObjectTypeCount(); i++) {
 		if(name == string(m_module->GetObjectTypeByIndex(i)->GetName()))
@@ -275,7 +291,7 @@ bool xdScripts::isClassName(const string name) const
 	return false;
 }
 
-bool xdScripts::classDerivesFromName(const string name1, const string name2) const
+bool xdScriptEngine::classDerivesFromName(const string name1, const string name2) const
 {
 	int id1 = classIdByName(name1);
 	if(id1 < 0) return false;
@@ -284,40 +300,40 @@ bool xdScripts::classDerivesFromName(const string name1, const string name2) con
 	return classDerivesFromId(id1, id2);
 }
 
-bool xdScripts::classDerivesFromId(const uint id1, const uint id2) const
+bool xdScriptEngine::classDerivesFromId(const uint id1, const uint id2) const
 {
 	asIObjectType *objType = m_module->GetObjectTypeByIndex(id1);
 	if(objType->DerivesFrom(m_module->GetObjectTypeByIndex(id2)) && id1 != id2) return true;
 	return false;
 }
 
-void xdScripts::setCreateArg(const uint idx, void *value, int typeId)
+void xdScriptEngine::setCreateArg(const uint idx, void *value, int typeId)
 {
 	// Check for valid index
 	if(m_createArgs.size() <= idx) return;
 	m_createArgs[idx].set(value, typeId);
 }
 
-void xdScripts::resizeCreateArgs(const uint size)
+void xdScriptEngine::resizeCreateArgs(const uint size)
 {
 	m_createArgs.resize(size);
 }
 
-void xdScripts::setCreateObjectByName(const string name)
+void xdScriptEngine::setCreateObjectByName(const string name)
 {
 	m_createObjectType = m_module->GetObjectTypeByName(name.c_str());
 }
 
-void xdScripts::setCreateObjectById(const uint id)
+void xdScriptEngine::setCreateObjectById(const uint id)
 {
 	m_createObjectType = scriptEngine->GetObjectTypeByIndex(id);
 }
 
-void xdScripts::createObject(void *object, int typeId, const string decl) const
+void xdScriptEngine::createObject(void *object, int typeId, const string decl) const
 {
 	// Make sure we have an object
 	if(!m_createObjectType) {
-		ERR("xdScripts::createObject() No object was defined!");
+		ERR("xdScriptEngine::createObject() No object was defined!");
 		return;
 	}
 
@@ -325,7 +341,7 @@ void xdScripts::createObject(void *object, int typeId, const string decl) const
 	string className = m_createObjectType->GetName();
 	asIScriptFunction *func = m_createObjectType->GetFactoryByDecl(string(className+"@ "+className+"(" + decl.c_str() + ")").c_str());
 	if(func->GetParamCount() != m_createArgs.size()) {
-		ERR("xdScripts::createObject() Invalid number of arguments (got %i, expected %i)!", m_createArgs.size(), func->GetParamCount());
+		ERR("xdScriptEngine::createObject() Invalid number of arguments (got %i, expected %i)!", m_createArgs.size(), func->GetParamCount());
 		return;
 	}
 	
@@ -380,7 +396,7 @@ void xdScripts::createObject(void *object, int typeId, const string decl) const
 	ctx->Release();
 }
 
-string xdScripts::objectClassName(void *obj, int typeId) const
+string xdScriptEngine::objectClassName(void *obj, int typeId) const
 {
 	// Check if the provied object
 	// is a script object
@@ -388,7 +404,7 @@ string xdScripts::objectClassName(void *obj, int typeId) const
 		asIScriptContext *ctx = asGetActiveContext();
 		if(ctx) {
 			// Set a script exception
-			ctx->SetException("xdScripts::objectClassName() should only be called on a script object!");
+			ctx->SetException("xdScriptEngine::objectClassName() should only be called on a script object!");
 		}
 		return "";
 	}
@@ -546,7 +562,7 @@ int asCompileModule(const string &name, xdFileSystem *fileSystem)
 }
 
 // Execute string
-void xdScripts::executeString(const string &str) const
+void xdScriptEngine::executeString(const string &str) const
 {
 	ExecuteString(scriptEngine, str.c_str(), scriptEngine->GetModule("GameModule"));
 }

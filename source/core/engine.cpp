@@ -237,7 +237,7 @@ int xdEngine::init(const xdConfig &config)
 	scriptEngine->SetEngineProperty(asEP_COMPILER_WARNINGS, 0);
 	
 	// Create script manager
-	m_scripts = new xdScripts(scriptEngine, m_debugger);
+	m_scripts = new xdScriptEngine(scriptEngine, m_debugger);
 
 	// Set the message callback to receive information on errors in human readable form.
 	int r = scriptEngine->SetMessageCallback(asFUNCTION(asMessageCallback), 0, asCALL_CDECL); assert( r >= 0 );
@@ -271,7 +271,7 @@ int xdEngine::init(const xdConfig &config)
 	srand(time(0));
 
 	// Load plugins
-	if(config.loadPluginsFunc != 0 && config.loadPluginsFunc() < 0) {
+	if(config.loadPluginsFunc != 0 && config.loadPluginsFunc(m_scripts) < 0) {
 		return XD_PLUGIN_LOAD_ERROR;
 	}
 

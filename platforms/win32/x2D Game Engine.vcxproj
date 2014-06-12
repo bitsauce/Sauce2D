@@ -85,12 +85,12 @@
   <ItemGroup>
     <ClCompile Include="fileSystem.cpp" />
     <ClCompile Include="input.cpp" />
+    <ClCompile Include="plugins.cpp" />
     <ClCompile Include="source\gfx\opengl\glshader.cpp" />
     <ClCompile Include="source\gfx\opengl\gltexture.cpp" />
     <ClCompile Include="source\gfx\opengl\glgraphics.cpp" />
     <ClCompile Include="source\sfx\openal\alaudio.cpp" />
     <ClCompile Include="timer.cpp" />
-    <ClCompile Include="winassetloader.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="window.cpp" />
     <ClCompile Include="console.cpp" />
@@ -102,12 +102,12 @@
   <ItemGroup>
     <ClInclude Include="fileSystem.h" />
     <ClInclude Include="input.h" />
+    <ClInclude Include="plugins.h" />
     <ClInclude Include="source\gfx\opengl\glshader.h" />
     <ClInclude Include="source\gfx\opengl\gltexture.h" />
     <ClInclude Include="source\gfx\opengl\glgraphics.h" />
     <ClInclude Include="source\sfx\openal\alaudio.h" />
     <ClInclude Include="timer.h" />
-    <ClInclude Include="winassetloader.h" />
     <ClInclude Include="window.h" />
     <ClInclude Include="console.h" />
     <ClInclude Include="windebug.h" />

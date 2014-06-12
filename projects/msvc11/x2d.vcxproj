@@ -25,6 +25,7 @@
     <ClInclude Include="..\..\include\x2d\console.h" />
     <ClInclude Include="..\..\include\x2d\eventhandler.h" />
     <ClInclude Include="..\..\include\x2d\exception.h" />
+    <ClInclude Include="..\..\include\x2d\faux_angelscript.h" />
     <ClInclude Include="..\..\include\x2d\input.h" />
     <ClInclude Include="..\..\include\x2d\filesystem.h" />
     <ClInclude Include="..\..\include\x2d\debug.h" />

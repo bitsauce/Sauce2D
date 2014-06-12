@@ -10,7 +10,7 @@ class xdWindow;
 class xdMath;
 class xdInput;
 class xdFileSystem;
-class xdScripts;
+class xdScriptEngine;
 class xdGraphics;
 class xdAudio;
 class xdConsole;
@@ -20,8 +20,15 @@ class xdAssetLoader;
 enum xdRetCode;
 enum xdEngineFlag;
 enum xdState;
+struct xdConfig;
 
-typedef int (*LoadPluginsFunc)();
+#ifdef USING_AS
+class asIScriptFunction;
+#else
+typedef void asIScriptFunction;
+#endif
+
+typedef int (*LoadPluginsFunc)(xdScriptEngine*);
 typedef void (*ProcessEventsFunc)();
 
 struct XDAPI xdConfig
@@ -154,7 +161,7 @@ private:
 	xdProfiler *m_profiler;
 	xdDebug *m_debugger;
 	xdTimer *m_timer;
-	xdScripts *m_scripts;
+	xdScriptEngine *m_scripts;
 	xdConsole *m_console;
 	xdWindow *m_window;
 	xdMath *m_math;
@@ -175,8 +182,8 @@ private:
 	bool m_toggleProfiler;
 
 	// Event functions
-	class asIScriptFunction *m_updateFunc;
-	class asIScriptFunction *m_drawFunc;
+	asIScriptFunction *m_updateFunc;
+	asIScriptFunction *m_drawFunc;
 
 	bool m_initialized;
 

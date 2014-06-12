@@ -5,12 +5,16 @@
 #include <x2d/util.h>
 #include <x2d/base.h>
 
+// Include AngelScript header
 #ifdef USING_AS
-
-// AngelScript header
 #include <angelscript.h>
+#else
+#include "faux_angelscript.h"
+#endif // USING_AS
 
-struct ScriptArgument {
+// Script func-call argument
+struct ScriptArgument
+{
 	ScriptArgument();
 	~ScriptArgument();
 
@@ -22,14 +26,15 @@ struct ScriptArgument {
 	void *value;
 };
 
-class xdScripts
+// A asIScriptEngine wrapper (mainly used by external plugins)
+class xdScriptEngine
 {
 	friend class xdEngine;
 public:
 	AS_DECL_SINGLETON
 
-	xdScripts(asIScriptEngine *scriptEngine, class xdDebug *debugger);
-	~xdScripts();
+	xdScriptEngine(asIScriptEngine *scriptEngine, class xdDebug *debugger);
+	~xdScriptEngine();
 
 	// Script module
 	asIScriptModule *getModule() const;
@@ -56,6 +61,17 @@ public:
 	// 
 	void executeString(const string &str) const;
 
+	// Registers
+	int registerSingletonType(const char *obj);
+	int registerRefType(const char *obj, const asSFuncPtr &addRef, const asSFuncPtr &release);
+	int registerValueType(const char *obj);
+	int registerObjectFactory(const char *obj, const char *decl, const asSFuncPtr &func);
+	int registerObjectMethod(const char *obj, const char *decl, const asSFuncPtr &funcPointer); 
+	int registerGlobalProperty(const char *decl, void *pointer);
+	int registerEnum(const char *decl);
+	int registerEnumValue(const char *enumname, const char *valuename, int value);
+	int registerFuncdef(const char *decl);
+
 private:
 	asIScriptModule *m_module;
 	asIObjectType *m_createObjectType;
@@ -63,78 +79,13 @@ private:
 	class xdDebug *m_debugger;
 };
 
+#ifdef USING_AS
+
 // AngelScript functions
 void asMessageCallback(const asSMessageInfo *msg, void *param);
 int  asCompileModule(const string &name, class xdFileSystem *fileSystem);
 
-#else
+#endif // USING_AS
 
-#include <stddef.h>
-
-#define asFUNCTION(f) asFunctionPtr(f)
-
-//-----------------------------------------------------------------
-// Function pointers
-
-class asCUnknownClass;
-typedef void (asCUnknownClass::*asMETHOD_t)();
-typedef void (*asFUNCTION_t)();
-
-struct asSFuncPtr
-{
-	asSFuncPtr(uchar f)
-	{
-		for( size_t n = 0; n < sizeof(ptr.dummy); n++ )
-			ptr.dummy[n] = 0;
-		flag = f;
-	}
-
-	void CopyMethodPtr(const void *mthdPtr, size_t size)
-	{
-		for( size_t n = 0; n < size; n++ )
-			ptr.dummy[n] = reinterpret_cast<const char *>(mthdPtr)[n];
-	}
-
-	union
-	{
-		// The largest known method point is 20 bytes (MSVC 64bit),
-		// but with 8byte alignment this becomes 24 bytes. So we need
-		// to be able to store at least that much.
-		char dummy[25]; 
-		struct {asMETHOD_t   mthd; char dummy[25-sizeof(asMETHOD_t)];} m;
-		struct {asFUNCTION_t func; char dummy[25-sizeof(asFUNCTION_t)];} f;
-	} ptr;
-	uchar flag; // 1 = generic, 2 = global func, 3 = method
-};
-
-// Template function to capture all global functions,
-// except the ones using the generic calling convention
-template <class T>
-inline asSFuncPtr asFunctionPtr(T func)
-{
-	// Mark this as a global function
-	asSFuncPtr p(2);
-
-	// MSVC6 doesn't like the size_t cast above so I
-	// solved this with a separate code for 32bit.
-	p.ptr.f.func = reinterpret_cast<asFUNCTION_t>(func);
-
-	return p;
-}
-
-#endif
-
-// Global registering
-XDAPI int getObjectTypeId(const char *objectName);
-XDAPI int registerGlobalFunction(const char *funcDef, const asSFuncPtr &funcPointer);
-XDAPI int registerFunctionDef(const char *decl);
-XDAPI int releaseScriptObject(void *obj);
-XDAPI int releaseScriptFunc(void *func);
-XDAPI int startScriptFuncCall(void *func);
-XDAPI int addScriptFuncArg(void *value, int typeId);
-XDAPI int endScriptFuncCall();
-XDAPI int registerEnum(const char *name);
-XDAPI int registerEnumValue(const char *enumname, const char *valuename, int value);
-XDAPI void *getScriptFuncHandle(const char *decl);
 
 #endif // X2D_SCRIPTS_H

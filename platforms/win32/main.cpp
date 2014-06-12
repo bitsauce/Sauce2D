@@ -10,7 +10,6 @@
 
 // Windows application
 #include "windebug.h"
-#include "winassetloader.h"
 
 #include "source/gfx/opengl/glgraphics.h"
 #include "source/sfx/openal/alaudio.h"
@@ -20,6 +19,7 @@
 #include "filesystem.h"
 #include "timer.h"
 #include "console.h"
+#include "plugins.h"
 
 // Visual Leak Detector
 #if defined(X2D_WINDOWS) && defined(X2D_DEBUG)
@@ -27,11 +27,6 @@
 #endif
 
 #include <direct.h>
-
-int loadPlugins()
-{
-	return 0;
-}
 
 // Win32 entry point
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, INT)
@@ -77,6 +72,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, INT)
 	window->initEvents();
 
 	int r = engine->run();
+	clearPlugins();
 	delete engine;
 	return r;
 }

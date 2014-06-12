@@ -139,7 +139,7 @@ public:
 	virtual Vector2 getPosition() const 						{ NOT_IMPLEMENTED_RET(getPosition, Vector2(0.0f)) }
 
 	// Key binding
-	virtual void bind(const xdVirtualKey key, class asIScriptFunction *func) {}
+	void bind(const xdVirtualKey key, asIScriptFunction *func) {}
 	
 	// Overloads
 	void setCursorPos(const int x, const int y) { setCursorPos(Vector2i(x, y)); }

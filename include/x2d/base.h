@@ -12,7 +12,11 @@ using namespace std;
 #include <unordered_map>
 #include <string>
 
+#ifdef USING_AS
 class asIScriptEngine;
+#else
+typedef void asIScriptEngine;
+#endif
 
 //-----------------------------------------------------------------------
 // Script object base class

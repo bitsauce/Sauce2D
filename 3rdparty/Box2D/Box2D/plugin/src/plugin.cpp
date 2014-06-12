@@ -2,20 +2,16 @@
 #include <Box2D/Box2D.h>
 #include <Box2D/Common/b2Settings.h>
 
-#include "x2d/platform.h"
-#include "x2d/engine.h"
-#include "x2d/scripts.h"
-#include "x2d/math.h"
+#include <x2d/config.h>
+#include <x2d/engine.h>
+#include <x2d/scripts.h>
+#include <x2d/math.h>
 
 #include <gl/GL.h>
 #include <gl/GLU.h>
 
 
-// World global
-b2World *world = 0;
-float worldScale = 1.0f;
-
-
+#ifdef OLD
 //--------------------------------------------------------------
 // Box2D Contact
 // NOTE: There is HUGE potential for improvements to this class
@@ -48,7 +44,7 @@ class ContactListener : public b2ContactListener
 			addScriptFuncArg(contact->GetFixtureA()->GetUserData(), 4); // 4 = int32 typeId
 			endScriptFuncCall();
 		}
-		
+
 		// Check for body callback
 		int bodyId = *(int*)contact->GetFixtureA()->GetBody()->GetUserData();
 		if(bbccbs.find(bodyId) != bbccbs.end()) {
@@ -66,7 +62,7 @@ class ContactListener : public b2ContactListener
 		currentContact = 0;
 	}
 
-    void EndContact(b2Contact* contact)
+	void EndContact(b2Contact* contact)
 	{
 		currentContact = contact;
 
@@ -78,7 +74,7 @@ class ContactListener : public b2ContactListener
 			addScriptFuncArg(contact->GetFixtureB()->GetUserData(), 4); // 4 = int32 typeId
 			endScriptFuncCall();
 		}
-		
+
 		// Check for body callback
 		int bodyId = *(int*)contact->GetFixtureA()->GetBody()->GetUserData();
 		if(beccbs.find(bodyId) != beccbs.end())
@@ -99,18 +95,18 @@ class ContactListener : public b2ContactListener
 		int fixtureId = *(int*)contact->GetFixtureA()->GetUserData();
 		if(fpscbs.find(fixtureId) != fpscbs.end())
 		{
-			startScriptFuncCall(fpscbs[fixtureId]);
-			addScriptFuncArg(contact->GetFixtureB()->GetUserData(), 4); // 4 = int32 typeId
-			endScriptFuncCall();
+		startScriptFuncCall(fpscbs[fixtureId]);
+		addScriptFuncArg(contact->GetFixtureB()->GetUserData(), 4); // 4 = int32 typeId
+		endScriptFuncCall();
 		}
-		
+
 		// Check for body callback
 		int bodyId = *(int*)contact->GetFixtureA()->GetBody()->GetUserData();
 		if(bpscbs.find(bodyId) != bpscbs.end())
 		{
-			startScriptFuncCall(bpscbs[bodyId]);
-			addScriptFuncArg(contact->GetFixtureB()->GetBody()->GetUserData(), 4); // 4 = int32 typeId
-			endScriptFuncCall();
+		startScriptFuncCall(bpscbs[bodyId]);
+		addScriptFuncArg(contact->GetFixtureB()->GetBody()->GetUserData(), 4); // 4 = int32 typeId
+		endScriptFuncCall();
 		}
 
 		currentImpulse = 0;*/
@@ -237,7 +233,7 @@ public:
 		glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
 	}
 
-    void DrawPoint(const b2Vec2& p, float32 size, const b2Color& color)
+	void DrawPoint(const b2Vec2& p, float32 size, const b2Color& color)
 	{
 		glPointSize(size);
 		glBegin(GL_POINTS);
@@ -248,11 +244,11 @@ public:
 		glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
 	}
 
-    void DrawString(int x, int y, const char* string, ...)
+	void DrawString(int x, int y, const char* string, ...)
 	{
 	}
 
-    void DrawAABB(b2AABB* aabb, const b2Color& color)
+	void DrawAABB(b2AABB* aabb, const b2Color& color)
 	{
 		glColor3f(color.r, color.g, color.b);
 		glBegin(GL_LINE_LOOP);
@@ -267,7 +263,6 @@ public:
 
 // Debug draw global
 DebugDraw *debugDraw = 0;
-uint drawFlags = b2Draw::e_shapeBit | b2Draw::e_jointBit | b2Draw::e_aabbBit | b2Draw::e_pairBit | b2Draw::e_centerOfMassBit;
 
 // Mapping
 map<int, b2Body*> bodies;
@@ -292,45 +287,6 @@ int *getUserDataIdPtr(int id)
 // Box2D Main
 //--------------------------------------------------------------
 
-void init()
-{
-	world = new b2World(b2Vec2(0.0f, 10.0f));
-	//world->SetAllowSleeping(true);
-
-	iosystem::print("** Init Box2D %i.%i.%i **", b2_version.major, b2_version.minor, b2_version.revision);
-
-	debugDraw = new DebugDraw;
-	debugDraw->SetFlags(drawFlags);
-	world->SetDebugDraw(debugDraw);
-
-	contactListener = new ContactListener;
-	world->SetContactListener(contactListener);
-}
-
-void step(float timeStep)
-{
-	world->Step(timeStep, 8, 3);
-}
-
-void draw()
-{
-	world->DrawDebugData();
-}
-
-void setDebugDrawFlags(int flags)
-{
-	debugDraw->SetFlags(flags);
-}
-
-void setWorldScale(float scale)
-{
-	worldScale = scale;
-}
-
-float getWorldScale()
-{
-	return worldScale;
-}
 
 //--------------------------------------------------------------
 // Box2D Body
@@ -483,11 +439,11 @@ void getBodyType(int bodyId, int &type)
 
 /*Array *getBodyFixtures(int bodyId)
 {
-    // Create the array object
-	asIObjectType *arrayType = scriptEngine->GetObjectTypeById(scriptEngine->GetTypeIdByDecl("array<int>"));
-    CScriptArray *arr = new CScriptArray(m_boundTexture->width*m_boundTexture->height, arrayType);
+// Create the array object
+asIObjectType *arrayType = scriptEngine->GetObjectTypeById(scriptEngine->GetTypeIdByDecl("array<int>"));
+CScriptArray *arr = new CScriptArray(m_boundTexture->width*m_boundTexture->height, arrayType);
 
-	if(bodies.find(bodyId) == bodies.end()) return;
+if(bodies.find(bodyId) == bodies.end()) return;
 }*/
 
 
@@ -524,7 +480,7 @@ int createFixture(int bodyId, Array &vertices, int vertCount, float density)
 {
 	if(bodies.find(bodyId) == bodies.end() || vertCount <= 0 || vertCount > b2_maxPolygonVertices)
 		return -1;
-	
+
 	// Set vertex count
 	b2Vec2 *verts = new b2Vec2[vertCount];
 	for(int i = 0; i < vertCount; i++)
@@ -744,10 +700,146 @@ void getContactNormalVector(float &x, float &y)
 	normal *= currentContact->GetManifold()->points[0].normalImpulse;
 	x = normal.x*worldScale;
 	y = normal.y*worldScale;
-}
+}  
+#endif // OLD
 
-void CreatePlugin()
+#include <x2d/console.h>
+
+class Box2D
 {
+public:
+	Box2D()
+	{
+		m_world = new b2World(b2Vec2(0.0f, 10.0f));
+		m_world->SetAllowSleeping(true);
+
+		LOG("** Init Box2D %i.%i.%i **", b2_version.major, b2_version.minor, b2_version.revision);
+		
+		uint drawFlags = b2Draw::e_shapeBit | b2Draw::e_jointBit | b2Draw::e_aabbBit | b2Draw::e_pairBit | b2Draw::e_centerOfMassBit;
+		
+#ifdef OLD
+		m_debugDraw = new DebugDraw;
+		m_debugDraw->SetFlags(drawFlags);
+		m_world->SetDebugDraw(m_debugDraw);
+
+		contactListener = new ContactListener;
+		m_world->SetContactListener(contactListener);
+#endif
+	}
+
+	~Box2D()
+	{
+		delete m_world;
+		delete m_debugDraw;
+		//delete m_contactListener;
+	}
+
+	void step(float timeStep)
+	{
+		m_world->Step(timeStep, 8, 3);
+	}
+
+	void draw()
+	{
+		m_world->DrawDebugData();
+	}
+
+	void setDrawFlags(int flags)
+	{
+		m_debugDraw->SetFlags(flags);
+	}
+
+	void setScale(float scale)
+	{
+		m_scale = scale;
+	}
+
+	float getScale() const
+	{
+		return m_scale;
+	}
+
+	b2World *getWorld() const
+	{
+		return m_world;
+	}
+
+private:
+	float m_scale;
+	b2World *m_world;
+	b2Draw *m_debugDraw;
+};
+
+Box2D *b2d = 0;
+
+class Body
+{
+public:
+	Body(b2Body *body) :
+		m_body(body)
+	{
+	}
+
+	~Body()
+	{
+		b2d->getWorld()->DestroyBody(m_body);
+	}
+
+	RefCounter refCounter;
+
+	void addRef()
+	{
+		refCounter.add();
+	}
+
+	void release()
+	{
+		if(refCounter.release() == 0)
+			delete this;
+	}
+
+	void setTransform(const Vector2 &pos, float angle)
+	{
+		m_body->SetTransform(b2Vec2(pos.x, pos.y), angle);
+	}
+
+	static Body *Factory(const b2BodyDef *def)
+	{
+		new Body(b2d->getWorld()->CreateBody(def));
+	}
+
+private:
+	b2Body *m_body;
+};
+
+#include <x2d/scripts.h>
+
+int CreatePlugin(xdScriptEngine *scriptEngine)
+{
+	int r = 0;
+	r = scriptEngine->registerFuncdef("void ContactCallback(int)"); AS_ASSERT
+
+	r = scriptEngine->registerEnum("BodyType"); AS_ASSERT
+	r = scriptEngine->registerEnumValue("BodyType", "B2_STATIC_BODY", b2_staticBody); AS_ASSERT
+	r = scriptEngine->registerEnumValue("BodyType", "B2_KINEMATIC_BODY", b2_kinematicBody); AS_ASSERT
+	r = scriptEngine->registerEnumValue("BodyType", "B2_DYNAMIC_BODY", b2_dynamicBody); AS_ASSERT
+	r = scriptEngine->registerEnumValue("BodyType", "B2_BULLET_BODY", 3);  
+
+	r = scriptEngine->registerSingletonType("ScriptBox2D");
+	r = scriptEngine->registerObjectMethod("ScriptBox2D", "void step(float)", asMETHOD(Box2D, step)); AS_ASSERT
+	r = scriptEngine->registerObjectMethod("ScriptBox2D", "void draw()", asMETHOD(Box2D, draw)); AS_ASSERT AS_ASSERT
+	r = scriptEngine->registerObjectMethod("ScriptBox2D", "void setDrawFlags(int)", asMETHOD(Box2D, setDrawFlags)); AS_ASSERT
+	r = scriptEngine->registerObjectMethod("ScriptBox2D", "void set_scale(float)", asMETHOD(Box2D, setScale)); AS_ASSERT
+	r = scriptEngine->registerObjectMethod("ScriptBox2D", "float get_scale() const", asMETHOD(Box2D, getScale)); AS_ASSERT
+	
+	r = scriptEngine->registerRefType("b2Body", asMETHOD(Body, addRef), asMETHOD(Body, release));
+	r = scriptEngine->registerObjectFactory("b2Body", "b2Body @f(const b2BodyDef &in)", asFUNCTION(Body::Factory));
+	r = scriptEngine->registerObjectMethod("b2Body", "void setTransform(const Vector2 &in, float)", asMETHOD(Body, setTransform));
+
+	b2d = new Box2D;
+	r = scriptEngine->registerGlobalProperty("ScriptBox2D Box2D", b2d);
+	
+#ifdef OLD
 	// Register function defs
 	registerFunctionDef("void ContactCallback(int)");
 
@@ -825,17 +917,19 @@ void CreatePlugin()
 	registerGlobalFunction("void b2dEnableRevoluteJointMotor(int jointId)", asFUNCTION(enableRevoluteJointMotor));
 	registerGlobalFunction("void b2dDisableRevoluteJointMotor(int jointId)", asFUNCTION(disableRevoluteJointMotor));
 	registerGlobalFunction("float b2dGetRevoluteJointAngle(int jointId)", asFUNCTION(getRevoluteJointAngle));
+#endif
 }
 
 void ReleasePlugin()
 {
-	delete world;
-	delete debugDraw;
-	delete contactListener;
-	for(uint i = 0; i < userData.size(); i++)
-		delete userData[i];
-	for(map<int, void*>::iterator itr = bbccbs.begin(); itr != bbccbs.end(); ++itr)
-		releaseScriptFunc(itr->second);
-	for(map<int, void*>::iterator itr = fbccbs.begin(); itr != fbccbs.end(); ++itr)
-		releaseScriptFunc(itr->second);
+	delete b2d;
+	//delete world;
+	//delete debugDraw;
+	//delete contactListener;
+	//for(uint i = 0; i < userData.size(); i++)
+	//	delete userData[i];
+	//for(map<int, void*>::iterator itr = bbccbs.begin(); itr != bbccbs.end(); ++itr)
+	//	releaseScriptFunc(itr->second);
+	//for(map<int, void*>::iterator itr = fbccbs.begin(); itr != fbccbs.end(); ++itr)
+	//	releaseScriptFunc(itr->second);
 }
