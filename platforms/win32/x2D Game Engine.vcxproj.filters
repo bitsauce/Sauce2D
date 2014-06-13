@@ -35,7 +35,7 @@
       <Filter>source\core</Filter>
     </ClCompile>
     <ClCompile Include="plugins.cpp">
-      <Filter>source</Filter>
+      <Filter>source\app</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -70,7 +70,7 @@
       <Filter>source\core</Filter>
     </ClInclude>
     <ClInclude Include="plugins.h">
-      <Filter>source</Filter>
+      <Filter>source\app</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

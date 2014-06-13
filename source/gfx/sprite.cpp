@@ -21,8 +21,8 @@ int Sprite::Register(asIScriptEngine *scriptEngine)
 {
 	int r = 0;
 	
-	r = scriptEngine->RegisterObjectBehaviour("Sprite", asBEHAVE_FACTORY, "Sprite @f(const TextureRegion @)", asFUNCTIONPR(Factory, (TextureRegion*), Sprite*), asCALL_CDECL); AS_ASSERT
-	r = scriptEngine->RegisterObjectBehaviour("Sprite", asBEHAVE_FACTORY, "Sprite @f(Texture @)", asFUNCTIONPR(Factory, (Texture*), Sprite*), asCALL_CDECL); AS_ASSERT
+	r = scriptEngine->RegisterObjectBehaviour("Sprite", asBEHAVE_FACTORY, "Sprite @f(TextureRegion@)", asFUNCTIONPR(Factory, (TextureRegion*), Sprite*), asCALL_CDECL); AS_ASSERT
+	r = scriptEngine->RegisterObjectBehaviour("Sprite", asBEHAVE_FACTORY, "Sprite @f(Texture@)", asFUNCTIONPR(Factory, (Texture*), Sprite*), asCALL_CDECL); AS_ASSERT
 	
 	r = scriptEngine->RegisterObjectMethod("Sprite", "void setPosition(const Vector2 &in)", asMETHOD(Sprite, setPosition), asCALL_THISCALL); AS_ASSERT
 	r = scriptEngine->RegisterObjectMethod("Sprite", "void setSize(const Vector2 &in)", asMETHOD(Sprite, setSize), asCALL_THISCALL); AS_ASSERT
