@@ -15,9 +15,9 @@ int loadPlugins(xdScriptEngine *scriptEngine)
 	char search_parms[MAX_PATH];
 	strcpy_s(search_parms, MAX_PATH, pluginDir.c_str());
 #ifdef _DEBUG
-	strcat_s(search_parms, MAX_PATH, "plugins/*.dll.debug");
+	strcat_s(search_parms, MAX_PATH, "*.dll.debug");
 #else
-	strcat_s(search_parms, MAX_PATH, "plugins/*.dll");
+	strcat_s(search_parms, MAX_PATH, "*.dll");
 #endif
 	
 	WIN32_FIND_DATA find_data;
@@ -29,7 +29,7 @@ int loadPlugins(xdScriptEngine *scriptEngine)
 		// the functions we care about
 		char plugin_full_name [MAX_PATH];
 		strcpy_s(plugin_full_name, MAX_PATH, pluginDir.c_str());
-		strcat_s(plugin_full_name, MAX_PATH, "plugins/");
+		strcat_s(plugin_full_name, MAX_PATH, "");
 		strcat_s(plugin_full_name, MAX_PATH, find_data.cFileName);
 		
 		HMODULE h_mod = LoadLibrary(plugin_full_name);
@@ -54,7 +54,7 @@ int loadPlugins(xdScriptEngine *scriptEngine)
 	return 0;
 }
 
-void clearPlugins()
+void cleanPlugins()
 {
 	// Clean up plugins
 	for(uint i = 0; i < plugins.size(); i++)

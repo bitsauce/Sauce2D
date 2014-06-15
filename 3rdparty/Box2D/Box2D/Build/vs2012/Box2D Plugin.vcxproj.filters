@@ -2,8 +2,14 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClCompile Include="..\..\plugin\src\plugin.cpp" />
+    <ClCompile Include="..\..\plugin\src\box2d.cpp" />
+    <ClCompile Include="..\..\plugin\src\debugdraw.cpp" />
+    <ClCompile Include="..\..\plugin\src\contactlistener.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\plugin\src\plugin.h" />
+    <ClInclude Include="..\..\plugin\src\box2d.h" />
+    <ClInclude Include="..\..\plugin\src\debugdraw.h" />
+    <ClInclude Include="..\..\plugin\src\contactlistener.h" />
   </ItemGroup>
 </Project>

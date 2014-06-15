@@ -69,14 +69,29 @@ int xdScriptEngine::registerRefType(const char *obj, const asSFuncPtr &addRef, c
 	return r;
 }
 
+int xdScriptEngine::registerValueType(const char *obj, const int size)
+{
+	return scriptEngine->RegisterObjectType(obj, size, asOBJ_VALUE | asOBJ_POD | asOBJ_APP_CLASS_CAK);;
+}
+
 int xdScriptEngine::registerObjectFactory(const char *obj, const char *decl, const asSFuncPtr &func)
 {
 	return scriptEngine->RegisterObjectBehaviour(obj, asBEHAVE_FACTORY, decl, func, asCALL_CDECL);
 }
 
+int xdScriptEngine::registerObjectConstructor(const char *obj, const char *decl, const asSFuncPtr &func)
+{
+	return scriptEngine->RegisterObjectBehaviour(obj, asBEHAVE_CONSTRUCT, decl, func, asCALL_CDECL_OBJLAST);
+}
+
 int xdScriptEngine::registerObjectMethod(const char *obj, const char *decl, const asSFuncPtr &funcPointer)
 {
 	return scriptEngine->RegisterObjectMethod(obj, decl, funcPointer, asCALL_THISCALL);
+}
+
+int xdScriptEngine::registerObjectProperty(const char *obj, const char *decl, const int offset)
+{
+	return scriptEngine->RegisterObjectProperty(obj, decl, offset);
 }
 
 int xdScriptEngine::registerGlobalProperty(const char *decl, void *pointer)

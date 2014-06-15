@@ -72,7 +72,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, INT)
 	window->initEvents();
 
 	int r = engine->run();
-	clearPlugins();
 	delete engine;
+	cleanPlugins();
 	return r;
 }

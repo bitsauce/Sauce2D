@@ -2,6 +2,6 @@
 #define WIN_PLUGINS_H
 
 extern int loadPlugins(class xdScriptEngine*);
-extern void clearPlugins();
+extern void cleanPlugins();
 
 #endif // WIN_PLUGINS_H

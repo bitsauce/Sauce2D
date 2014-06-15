@@ -1,8 +1,3 @@
-
-
-
-
-
 // Default plugin definition
 extern "C"
 {

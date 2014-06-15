@@ -58,25 +58,26 @@ void OpenGL::init(Window *window)
 	if(glewInit() != GLEW_OK)
 		assert("GLEW did not initialize!");
 
+	// TODO: Do better extention handling. LOG will crash because xdEngine isn't initialized
 	// Check if non-power of two textures are supported
-	if(!GLEW_ARB_texture_non_power_of_two)
-		LOG("WARNING: NPOT is not supported on this card!");
+	//if(!GLEW_ARB_texture_non_power_of_two)
+	//	LOG("WARNING: NPOT is not supported on this card!");
 
 	// Check if FBOs are supported
-	if(!GLEW_EXT_framebuffer_object)
-		LOG("WARNING: FBO is not supported on this card!");
+	//if(!GLEW_EXT_framebuffer_object)
+	//	LOG("WARNING: FBO is not supported on this card!");
 
 	// Check if VBOs are supported
-	if(!GLEW_ARB_vertex_buffer_object)
-		LOG("WARNING: VBO is not supported on this card!");
+	//if(!GLEW_ARB_vertex_buffer_object)
+	//	LOG("WARNING: VBO is not supported on this card!");
 
 	// Check if PBOs are supported
-	if(!GLEW_EXT_pixel_buffer_object)
-		LOG("WARNING: PBO is not supported on this card!");
+	//if(!GLEW_EXT_pixel_buffer_object)
+	//	LOG("WARNING: PBO is not supported on this card!");
 
 	// Check if (changing) v-sync (state) is supported
-	if(!WGLEW_EXT_swap_control)
-		LOG("WARNING: VSYNC is not supported on this card!");
+	//if(!WGLEW_EXT_swap_control)
+	//	LOG("WARNING: VSYNC is not supported on this card!");
 
 	Vector2i size = window->getSize();
 	setOrthoProjection(0.0f, (float)size.x, (float)size.y, 0.0f, -1.0f, 1.0f);

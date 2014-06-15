@@ -162,7 +162,6 @@ int xdEngine::init(const xdConfig &config)
 	m_flags = config.flags;
 	m_platformString = config.platform;
 
-
 	m_workDir = config.workDir;
 	replace(m_workDir.begin(), m_workDir.end(), '\\', '/');
 	if(m_workDir.back() != '/') {

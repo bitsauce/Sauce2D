@@ -96,6 +96,7 @@
     </Lib>
     <Link>
       <LinkTimeCodeGeneration />
+      <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">

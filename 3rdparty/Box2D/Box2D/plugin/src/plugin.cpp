@@ -6,9 +6,8 @@
 #include <x2d/engine.h>
 #include <x2d/scripts.h>
 #include <x2d/math.h>
-
-#include <gl/GL.h>
-#include <gl/GLU.h>
+#include <x2d/math/array.h>
+#include <x2d/scripts.h>
 
 
 #ifdef OLD
@@ -25,244 +24,6 @@ map<int, void*> bpscbs; // Body post solve callbacks
 map<int, void*> fpscbs; // Fixture post solve callbacks
 const b2ContactImpulse *currentImpulse = 0;
 b2Contact *currentContact = 0;
-class ContactListener : public b2ContactListener
-{
-	void BeginContact(b2Contact* contact)
-	{
-		currentContact = contact;
-
-		// Check for fixture callback
-		int fixtureId = *(int*)contact->GetFixtureA()->GetUserData();
-		if(fbccbs.find(fixtureId) != fbccbs.end()) {
-			startScriptFuncCall(fbccbs[fixtureId]);
-			addScriptFuncArg(contact->GetFixtureB()->GetUserData(), 4); // 4 = int32 typeId
-			endScriptFuncCall();
-		}
-		fixtureId = *(int*)contact->GetFixtureB()->GetUserData();
-		if(fbccbs.find(fixtureId) != fbccbs.end()) {
-			startScriptFuncCall(fbccbs[fixtureId]);
-			addScriptFuncArg(contact->GetFixtureA()->GetUserData(), 4); // 4 = int32 typeId
-			endScriptFuncCall();
-		}
-
-		// Check for body callback
-		int bodyId = *(int*)contact->GetFixtureA()->GetBody()->GetUserData();
-		if(bbccbs.find(bodyId) != bbccbs.end()) {
-			startScriptFuncCall(bbccbs[bodyId]);
-			addScriptFuncArg(contact->GetFixtureB()->GetBody()->GetUserData(), 4); // 4 = int32 typeId
-			endScriptFuncCall();
-		}
-		bodyId = *(int*)contact->GetFixtureB()->GetBody()->GetUserData();
-		if(bbccbs.find(bodyId) != bbccbs.end()) {
-			startScriptFuncCall(bbccbs[bodyId]);
-			addScriptFuncArg(contact->GetFixtureA()->GetBody()->GetUserData(), 4); // 4 = int32 typeId
-			endScriptFuncCall();
-		}
-
-		currentContact = 0;
-	}
-
-	void EndContact(b2Contact* contact)
-	{
-		currentContact = contact;
-
-		// Check for fixture callback
-		int fixtureId = *(int*)contact->GetFixtureA()->GetUserData();
-		if(feccbs.find(fixtureId) != feccbs.end())
-		{
-			startScriptFuncCall(feccbs[fixtureId]);
-			addScriptFuncArg(contact->GetFixtureB()->GetUserData(), 4); // 4 = int32 typeId
-			endScriptFuncCall();
-		}
-
-		// Check for body callback
-		int bodyId = *(int*)contact->GetFixtureA()->GetBody()->GetUserData();
-		if(beccbs.find(bodyId) != beccbs.end())
-		{
-			startScriptFuncCall(beccbs[bodyId]);
-			addScriptFuncArg(contact->GetFixtureB()->GetBody()->GetUserData(), 4); // 4 = int32 typeId
-			endScriptFuncCall();
-		}
-
-		currentContact = 0;
-	}
-
-	void PostSolve(b2Contact* contact, const b2ContactImpulse* impulse)
-	{
-		/*currentImpulse = impulse;
-
-		// Check for fixture callback
-		int fixtureId = *(int*)contact->GetFixtureA()->GetUserData();
-		if(fpscbs.find(fixtureId) != fpscbs.end())
-		{
-		startScriptFuncCall(fpscbs[fixtureId]);
-		addScriptFuncArg(contact->GetFixtureB()->GetUserData(), 4); // 4 = int32 typeId
-		endScriptFuncCall();
-		}
-
-		// Check for body callback
-		int bodyId = *(int*)contact->GetFixtureA()->GetBody()->GetUserData();
-		if(bpscbs.find(bodyId) != bpscbs.end())
-		{
-		startScriptFuncCall(bpscbs[bodyId]);
-		addScriptFuncArg(contact->GetFixtureB()->GetBody()->GetUserData(), 4); // 4 = int32 typeId
-		endScriptFuncCall();
-		}
-
-		currentImpulse = 0;*/
-	}
-};
-ContactListener *contactListener = 0;
-
-// Debug draw class
-// TODO: All the gl commands should be replaced with x2d's rendering commands
-class DebugDraw : public b2Draw
-{
-public:
-	void DrawPolygon(const b2Vec2* vertices, int32 vertexCount, const b2Color& color)
-	{
-		glColor3f(color.r, color.g, color.b);
-		glBegin(GL_LINE_LOOP);
-		for(int i = 0; i < vertexCount; ++i)
-		{
-			glVertex2f(vertices[i].x*worldScale, vertices[i].y*worldScale);
-		}
-		glEnd();
-		glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
-	}
-
-	void DrawSolidPolygon(const b2Vec2* vertices, int32 vertexCount, const b2Color& color)
-	{
-		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-		glColor4f(0.5f * color.r, 0.5f * color.g, 0.5f * color.b, 0.5f);
-		glBegin(GL_TRIANGLE_FAN);
-		for(int i = 0; i < vertexCount; ++i)
-		{
-			glVertex2f(vertices[i].x*worldScale, vertices[i].y*worldScale);
-		}
-		glEnd();
-
-		glColor4f(color.r, color.g, color.b, 1.0f);
-		glBegin(GL_LINE_LOOP);
-		for(int i = 0; i < vertexCount; ++i)
-		{
-			glVertex2f(vertices[i].x*worldScale, vertices[i].y*worldScale);
-		}
-		glEnd();
-		glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
-	}
-
-	void DrawCircle(const b2Vec2& center, float32 radius, const b2Color& color)
-	{
-		const float32 k_segments = 16.0f;
-		const float32 k_increment = 2.0f * b2_pi / k_segments;
-		float32 theta = 0.0f;
-		glColor3f(color.r, color.g, color.b);
-		glBegin(GL_LINE_LOOP);
-		for(int i = 0; i < k_segments; ++i)
-		{
-			b2Vec2 v = center + radius * b2Vec2(cosf(theta), sinf(theta));
-			glVertex2f(v.x*worldScale, v.y*worldScale);
-			theta += k_increment;
-		}
-		glEnd();
-		glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
-	}
-
-	void DrawSolidCircle(const b2Vec2& center, float32 radius, const b2Vec2& axis, const b2Color& color)
-	{
-		const float32 k_segments = 16.0f;
-		const float32 k_increment = 2.0f * b2_pi / k_segments;
-		float32 theta = 0.0f;
-		glColor4f(0.5f * color.r, 0.5f * color.g, 0.5f * color.b, 0.5f);
-		glBegin(GL_TRIANGLE_FAN);
-		for(int i = 0; i < k_segments; ++i)
-		{
-			b2Vec2 v = center + radius * b2Vec2(cosf(theta), sinf(theta));
-			glVertex2f(v.x*worldScale, v.y*worldScale);
-			theta += k_increment;
-		}
-		glEnd();
-
-		theta = 0.0f;
-		glColor4f(color.r, color.g, color.b, 1.0f);
-		glBegin(GL_LINE_LOOP);
-		for (int32 i = 0; i < k_segments; ++i)
-		{
-			b2Vec2 v = center + radius * b2Vec2(cosf(theta), sinf(theta));
-			glVertex2f(v.x*worldScale, v.y*worldScale);
-			theta += k_increment;
-		}
-		glEnd();
-
-		b2Vec2 p = center + radius * axis;
-		glBegin(GL_LINES);
-		glVertex2f(center.x*worldScale, center.y*worldScale);
-		glVertex2f(p.x*worldScale, p.y*worldScale);
-		glEnd();
-		glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
-	}
-
-	void DrawSegment(const b2Vec2& p1, const b2Vec2& p2, const b2Color& color)
-	{
-		glColor3f(color.r, color.g, color.b);
-		glBegin(GL_LINES);
-		glVertex2f(p1.x*worldScale, p1.y*worldScale);
-		glVertex2f(p2.x*worldScale, p2.y*worldScale);
-		glEnd();
-		glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
-	}
-
-	void DrawTransform(const b2Transform& xf)
-	{
-		b2Vec2 p1 = xf.p, p2;
-		const float32 k_axisScale = 0.4f;
-		glBegin(GL_LINES);
-
-		glColor3f(1.0f, 0.0f, 0.0f);
-		glVertex2f(p1.x*worldScale, p1.y*worldScale);
-		p2 = p1 + k_axisScale * xf.q.GetXAxis();
-		glVertex2f(p2.x*worldScale, p2.y*worldScale);
-
-		glColor3f(0.0f, 1.0f, 0.0f);
-		glVertex2f(p1.x*worldScale, p1.y*worldScale);
-		p2 = p1 + k_axisScale * xf.q.GetYAxis();
-		glVertex2f(p2.x*worldScale, p2.y*worldScale);
-
-		glEnd();
-		glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
-	}
-
-	void DrawPoint(const b2Vec2& p, float32 size, const b2Color& color)
-	{
-		glPointSize(size);
-		glBegin(GL_POINTS);
-		glColor3f(color.r, color.g, color.b);
-		glVertex2f(p.x*worldScale, p.y*worldScale);
-		glEnd();
-		glPointSize(1.0f);
-		glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
-	}
-
-	void DrawString(int x, int y, const char* string, ...)
-	{
-	}
-
-	void DrawAABB(b2AABB* aabb, const b2Color& color)
-	{
-		glColor3f(color.r, color.g, color.b);
-		glBegin(GL_LINE_LOOP);
-		glVertex2f(aabb->lowerBound.x*worldScale, aabb->lowerBound.y*worldScale);
-		glVertex2f(aabb->upperBound.x*worldScale, aabb->lowerBound.y*worldScale);
-		glVertex2f(aabb->upperBound.x*worldScale, aabb->upperBound.y*worldScale);
-		glVertex2f(aabb->lowerBound.x*worldScale, aabb->upperBound.y*worldScale);
-		glEnd();
-		glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
-	}
-};
-
-// Debug draw global
-DebugDraw *debugDraw = 0;
 
 // Mapping
 map<int, b2Body*> bodies;
@@ -273,178 +34,6 @@ int currFixtureId = 0;
 
 map<int, b2RevoluteJoint*> revoluteJoints;
 int currRevoluteJointId = 0;
-
-vector<int*> userData;
-int *getUserDataIdPtr(int id)
-{
-	int *idPtr = new int;
-	*idPtr = id;
-	userData.push_back(idPtr);
-	return idPtr;
-}
-
-//--------------------------------------------------------------
-// Box2D Main
-//--------------------------------------------------------------
-
-
-//--------------------------------------------------------------
-// Box2D Body
-//--------------------------------------------------------------
-
-int createBody()
-{
-	// Create body
-	b2BodyDef bd;
-	int id = currBodyId++;
-	bodies[id] = world->CreateBody(&bd);
-	bodies[id]->SetUserData(getUserDataIdPtr(id));
-	return id;
-}
-
-void removeBody(int bodyId)
-{
-	if(bodies.find(bodyId) == bodies.end()) return;
-	world->DestroyBody(bodies[bodyId]);
-	bodies.erase(bodyId);
-}
-
-void setBodyTransform(int bodyId, float x, float y, float ang)
-{
-	if(bodies.find(bodyId) == bodies.end()) return;
-	bodies[bodyId]->SetTransform(b2Vec2(x/worldScale, y/worldScale), ang);
-}
-
-void getBodyTransform(int bodyId, float &x, float &y, float &ang)
-{
-	if(bodies.find(bodyId) == bodies.end()) return;
-	b2Transform trans = bodies[bodyId]->GetTransform();
-	x = trans.p.x*worldScale;
-	y = trans.p.y*worldScale;
-	ang = trans.q.GetAngle();
-}
-
-void setBodyPosition(int bodyId, float x, float y)
-{
-	if(bodies.find(bodyId) == bodies.end()) return;
-	bodies[bodyId]->SetTransform(b2Vec2(x/worldScale, y/worldScale), bodies[bodyId]->GetAngle());
-}
-
-void getBodyPosition(int bodyId, float &x, float &y)
-{
-	if(bodies.find(bodyId) == bodies.end()) return;
-	b2Vec2 pos = bodies[bodyId]->GetPosition();
-	x = pos.x*worldScale;
-	y = pos.y*worldScale;
-}
-
-void setBodyAngle(int bodyId, float ang)
-{
-	if(bodies.find(bodyId) == bodies.end()) return;
-	bodies[bodyId]->SetTransform(bodies[bodyId]->GetPosition(), ang);
-}
-
-void getBodyAngle(int bodyId, float &ang)
-{
-	if(bodies.find(bodyId) == bodies.end()) return;
-	b2Transform trans = bodies[bodyId]->GetTransform();
-	ang = trans.q.GetAngle();
-}
-
-void getBodyCenter(int bodyId, float &x, float &y)
-{
-	if(bodies.find(bodyId) == bodies.end()) return;
-	b2Vec2 pos = bodies[bodyId]->GetWorldCenter();
-	x = pos.x*worldScale;
-	y = pos.y*worldScale;
-}
-
-void setLinearVelocity(int bodyId, float vx, float vy)
-{
-	if(bodies.find(bodyId) == bodies.end()) return;
-	bodies[bodyId]->SetLinearVelocity(b2Vec2(vx/worldScale, vy/worldScale));
-}
-
-void getLinearVelocity(int bodyId, float &vx, float &vy)
-{
-	if(bodies.find(bodyId) == bodies.end()) return;
-	b2Vec2 vel = bodies[bodyId]->GetLinearVelocity();
-	vx = vel.x*worldScale;
-	vy = vel.y*worldScale;
-}
-
-void setAngularVelocity(int bodyId, float v)
-{
-	if(bodies.find(bodyId) == bodies.end()) return;
-	bodies[bodyId]->SetAngularVelocity(v);
-}
-
-void getAngularVelocity(int bodyId, float &v)
-{
-	if(bodies.find(bodyId) == bodies.end()) return;
-	v = bodies[bodyId]->GetAngularVelocity();
-}
-
-enum BodyType
-{
-	StaticBody = 0,
-	KinematicBody,
-	DynamicBody,
-	BulletBody
-};
-
-void setBodyType(int bodyId, BodyType type)
-{
-	if(bodies.find(bodyId) == bodies.end())
-		return;
-
-	if(type == BulletBody)
-	{
-		bodies[bodyId]->SetType(b2BodyType(DynamicBody));
-		bodies[bodyId]->SetBullet(true);
-	}else{
-		bodies[bodyId]->SetType(b2BodyType(type));
-	}
-}
-
-void setAllowSleep(int bodyId, bool val)
-{
-	if(bodies.find(bodyId) == bodies.end()) return;
-	bodies[bodyId]->SetSleepingAllowed(val);
-}
-
-void setFixedRotation(int bodyId, bool val)
-{
-	if(bodies.find(bodyId) == bodies.end()) return;
-	bodies[bodyId]->SetFixedRotation(val);
-}
-
-void setBodyGravityScale(int bodyId, float scale)
-{
-	if(bodies.find(bodyId) == bodies.end()) return;
-	bodies[bodyId]->SetGravityScale(scale);
-}
-
-void bodyApplyImpulse(int bodyId, float vx, float vy, float px, float py)
-{
-	if(bodies.find(bodyId) == bodies.end()) return;
-	bodies[bodyId]->ApplyLinearImpulse(b2Vec2(vx/worldScale, vy/worldScale), b2Vec2(px/worldScale, py/worldScale), true);
-}
-
-void getBodyType(int bodyId, int &type)
-{
-	if(bodies.find(bodyId) == bodies.end()) return;
-	type = bodies[bodyId]->GetType();
-}
-
-/*Array *getBodyFixtures(int bodyId)
-{
-// Create the array object
-asIObjectType *arrayType = scriptEngine->GetObjectTypeById(scriptEngine->GetTypeIdByDecl("array<int>"));
-CScriptArray *arr = new CScriptArray(m_boundTexture->width*m_boundTexture->height, arrayType);
-
-if(bodies.find(bodyId) == bodies.end()) return;
-}*/
 
 
 //--------------------------------------------------------------
@@ -703,75 +292,108 @@ void getContactNormalVector(float &x, float &y)
 }  
 #endif // OLD
 
-#include <x2d/console.h>
+#include "box2d.h"
 
-class Box2D
+enum BodyType
+{
+	StaticBody = b2_staticBody,
+	KinematicBody = b2_kinematicBody,
+	DynamicBody = b2_dynamicBody,
+	BulletBody
+};
+
+class BodyDef
 {
 public:
-	Box2D()
+	BodyDef() :
+		type(StaticBody),
+		position(0.0f),
+		angle(0.0f),
+		linearVelocity(0.0f),
+		angularVelocity(0.0f),
+		linearDamping(0.0f),
+		angularDamping(0.0f),
+		allowSleep(true),
+		awake(true),
+		fixedRotation(false),
+		active(true),
+		gravityScale(1.0f)
 	{
-		m_world = new b2World(b2Vec2(0.0f, 10.0f));
-		m_world->SetAllowSleeping(true);
-
-		LOG("** Init Box2D %i.%i.%i **", b2_version.major, b2_version.minor, b2_version.revision);
-		
-		uint drawFlags = b2Draw::e_shapeBit | b2Draw::e_jointBit | b2Draw::e_aabbBit | b2Draw::e_pairBit | b2Draw::e_centerOfMassBit;
-		
-#ifdef OLD
-		m_debugDraw = new DebugDraw;
-		m_debugDraw->SetFlags(drawFlags);
-		m_world->SetDebugDraw(m_debugDraw);
-
-		contactListener = new ContactListener;
-		m_world->SetContactListener(contactListener);
-#endif
 	}
 
-	~Box2D()
+	b2BodyDef getBodyDef() const
 	{
-		delete m_world;
-		delete m_debugDraw;
-		//delete m_contactListener;
+		b2BodyDef def;
+		def.type = (type != BulletBody ? b2BodyType(type) : b2_dynamicBody);
+		def.position = toB2Vec(position);
+		def.angle = angle;
+		def.linearVelocity = toB2Vec(linearVelocity);
+		def.angularVelocity = angularVelocity;
+		def.linearDamping = linearDamping;
+		def.angularDamping = angularDamping;
+		def.allowSleep = allowSleep;
+		def.awake = awake;
+		def.fixedRotation = fixedRotation;
+		def.bullet = (type == BulletBody);
+		def.active = active;
+		def.gravityScale = gravityScale;
+		return def;
 	}
 
-	void step(float timeStep)
+	BodyType type;
+	Vector2 position;
+	float angle;
+	Vector2 linearVelocity;
+	float angularVelocity;
+	float linearDamping;
+	float angularDamping;
+	bool allowSleep;
+	bool awake;
+	bool fixedRotation;
+	bool active;
+	float gravityScale;
+
+	static void Construct(BodyDef *self) { new (self) BodyDef; }
+};
+
+int fixCount = 0;
+class Fixture
+{
+	friend class Body;
+public:
+	Fixture(b2Fixture *fixture) :
+		m_fixture(fixture)
 	{
-		m_world->Step(timeStep, 8, 3);
 	}
 
-	void draw()
+	RefCounter refCounter;
+	void addRef() { refCounter.add(); }
+	void release() { if(refCounter.release() == 0) delete this; }
+
+	void setDensity(const float density)
 	{
-		m_world->DrawDebugData();
+		m_fixture->SetDensity(density);
 	}
 
-	void setDrawFlags(int flags)
+	void setMaskBits(const uint maskBits)
 	{
-		m_debugDraw->SetFlags(flags);
+		b2Filter data = m_fixture->GetFilterData();
+		data.maskBits = maskBits;
+		m_fixture->SetFilterData(data);
 	}
 
-	void setScale(float scale)
+	void setCategoryBits(const uint categoryBits)
 	{
-		m_scale = scale;
-	}
-
-	float getScale() const
-	{
-		return m_scale;
-	}
-
-	b2World *getWorld() const
-	{
-		return m_world;
+		b2Filter data = m_fixture->GetFilterData();
+		data.categoryBits = categoryBits;
+		m_fixture->SetFilterData(data);
 	}
 
 private:
-	float m_scale;
-	b2World *m_world;
-	b2Draw *m_debugDraw;
+	b2Fixture *m_fixture;
 };
 
-Box2D *b2d = 0;
-
+int bodyCount = 0;
 class Body
 {
 public:
@@ -782,48 +404,106 @@ public:
 
 	~Body()
 	{
+		for(vector<Fixture*>::iterator itr = m_fixtures.begin(); itr != m_fixtures.end(); ++itr) {
+			(*itr)->release();
+		}
 		b2d->getWorld()->DestroyBody(m_body);
 	}
 
 	RefCounter refCounter;
+	void addRef() { refCounter.add(); }
+	void release() { if(refCounter.release() == 0) delete this; }
 
-	void addRef()
+	void setTransform(const Vector2 &position, float angle)
 	{
-		refCounter.add();
+		m_body->SetTransform(toB2Vec(position), angle);
 	}
 
-	void release()
+	Vector2 getPosition() const
 	{
-		if(refCounter.release() == 0)
-			delete this;
+		return toXDVec(m_body->GetPosition());
 	}
 
-	void setTransform(const Vector2 &pos, float angle)
+	float getAngle() const
 	{
-		m_body->SetTransform(b2Vec2(pos.x, pos.y), angle);
+		return m_body->GetAngle();
 	}
 
-	static Body *Factory(const b2BodyDef *def)
+	Fixture *createFixture(const Rect &rect, float density)
 	{
-		return new Body(b2d->getWorld()->CreateBody(def));
+		b2PolygonShape shape;
+		b2Vec2 halfSize = toB2Vec(rect.getSize()/2.0f);
+		shape.SetAsBox(halfSize.x, halfSize.y, toB2Vec(rect.getCenter()), 0.0f);
+		return new Fixture(m_body->CreateFixture(&shape, density));
+	}
+	
+	Fixture *createFixture(const Vector2 &center, const float radius, float density)
+	{
+		b2CircleShape shape;
+		shape.m_p = toB2Vec(center);
+		shape.m_radius = radius/b2d->getScale();
+		return new Fixture(m_body->CreateFixture(&shape, density));
+	}
+	
+	Fixture *createFixture(Array *arr, float density)
+	{
+		if(arr->GetSize() > b2_maxPolygonVertices)
+			return 0;
+
+		// Set vertex count
+		b2Vec2 *verts = new b2Vec2[arr->GetSize()];
+		for(uint i = 0; i < arr->GetSize(); i++) {
+			verts[i] = toB2Vec(*(Vector2*)arr->At(i));
+		}
+
+		// Set shape
+		b2PolygonShape shape;
+		shape.Set(verts, arr->GetSize());
+		delete[] verts;
+
+		// Add fixture
+		return new Fixture(m_body->CreateFixture(&shape, density));
+	}
+
+	void removeFixture(Fixture *fixture)
+	{
+		m_body->DestroyFixture(fixture->m_fixture);
+		vector<Fixture*>::iterator itr;
+		if((itr = find(m_fixtures.begin(), m_fixtures.end(), fixture)) != m_fixtures.end()) {
+			(*itr)->release();
+		}
+	}
+
+	void applyImpulse(const Vector2 &impulse, const Vector2 &position)
+	{
+		m_body->ApplyLinearImpulse(toB2Vec(impulse), toB2Vec(position), true);
+	}
+
+	void setLinearVelocity(const Vector2 &velocity)
+	{
+		m_body->SetLinearVelocity(toB2Vec(velocity));
+	}
+
+	static Body *Factory(const BodyDef &def)
+	{
+		b2BodyDef bodyDef = def.getBodyDef();
+		return new Body(b2d->getWorld()->CreateBody(&bodyDef));
 	}
 
 private:
 	b2Body *m_body;
+	vector<Fixture*> m_fixtures;
 };
-
-#include <x2d/scripts.h>
 
 int CreatePlugin(xdScriptEngine *scriptEngine)
 {
 	int r = 0;
-	r = scriptEngine->registerFuncdef("void ContactCallback(int)"); AS_ASSERT
-
+	
 	r = scriptEngine->registerEnum("BodyType"); AS_ASSERT
-	r = scriptEngine->registerEnumValue("BodyType", "B2_STATIC_BODY", b2_staticBody); AS_ASSERT
-	r = scriptEngine->registerEnumValue("BodyType", "B2_KINEMATIC_BODY", b2_kinematicBody); AS_ASSERT
-	r = scriptEngine->registerEnumValue("BodyType", "B2_DYNAMIC_BODY", b2_dynamicBody); AS_ASSERT
-	r = scriptEngine->registerEnumValue("BodyType", "B2_BULLET_BODY", 3);  
+	r = scriptEngine->registerEnumValue("BodyType", "b2_staticBody", StaticBody); AS_ASSERT
+	r = scriptEngine->registerEnumValue("BodyType", "b2_kinematicBody", KinematicBody); AS_ASSERT
+	r = scriptEngine->registerEnumValue("BodyType", "b2_dynamicBody", DynamicBody); AS_ASSERT
+	r = scriptEngine->registerEnumValue("BodyType", "b2_bulletBody", BulletBody);  AS_ASSERT
 
 	r = scriptEngine->registerSingletonType("ScriptBox2D");
 	r = scriptEngine->registerObjectMethod("ScriptBox2D", "void step(float)", asMETHOD(Box2D, step)); AS_ASSERT
@@ -831,80 +511,45 @@ int CreatePlugin(xdScriptEngine *scriptEngine)
 	r = scriptEngine->registerObjectMethod("ScriptBox2D", "void setDrawFlags(int)", asMETHOD(Box2D, setDrawFlags)); AS_ASSERT
 	r = scriptEngine->registerObjectMethod("ScriptBox2D", "void set_scale(float)", asMETHOD(Box2D, setScale)); AS_ASSERT
 	r = scriptEngine->registerObjectMethod("ScriptBox2D", "float get_scale() const", asMETHOD(Box2D, getScale)); AS_ASSERT
+
+	r = scriptEngine->registerValueType("b2BodyDef", sizeof(BodyDef)); AS_ASSERT
+	r = scriptEngine->registerObjectConstructor("b2BodyDef", "void f()", asFUNCTION(BodyDef::Construct)); AS_ASSERT
+	r = scriptEngine->registerObjectProperty("b2BodyDef", "BodyType type", offsetof(BodyDef, type)); AS_ASSERT
+	r = scriptEngine->registerObjectProperty("b2BodyDef", "Vector2 position", offsetof(BodyDef, position)); AS_ASSERT
+	r = scriptEngine->registerObjectProperty("b2BodyDef", "float angle", offsetof(BodyDef, angle)); AS_ASSERT
+	r = scriptEngine->registerObjectProperty("b2BodyDef", "Vector2 linearVelocity", offsetof(BodyDef, linearVelocity)); AS_ASSERT
+	r = scriptEngine->registerObjectProperty("b2BodyDef", "float angularVelocity", offsetof(BodyDef, angularVelocity)); AS_ASSERT
+	r = scriptEngine->registerObjectProperty("b2BodyDef", "float linearDamping", offsetof(BodyDef, linearDamping)); AS_ASSERT
+	r = scriptEngine->registerObjectProperty("b2BodyDef", "float angularDamping", offsetof(BodyDef, angularDamping)); AS_ASSERT
+	r = scriptEngine->registerObjectProperty("b2BodyDef", "bool allowSleep", offsetof(BodyDef, allowSleep)); AS_ASSERT
+	r = scriptEngine->registerObjectProperty("b2BodyDef", "bool awake", offsetof(BodyDef, awake)); AS_ASSERT
+	r = scriptEngine->registerObjectProperty("b2BodyDef", "bool fixedRotation", offsetof(BodyDef, fixedRotation)); AS_ASSERT
+	r = scriptEngine->registerObjectProperty("b2BodyDef", "bool active", offsetof(BodyDef, active)); AS_ASSERT
+	r = scriptEngine->registerObjectProperty("b2BodyDef", "bool gravityScale", offsetof(BodyDef, gravityScale)); AS_ASSERT
 	
-	r = scriptEngine->registerRefType("b2Body", asMETHOD(Body, addRef), asMETHOD(Body, release));
-	r = scriptEngine->registerObjectFactory("b2Body", "b2Body @f(const b2BodyDef &in)", asFUNCTION(Body::Factory));
-	r = scriptEngine->registerObjectMethod("b2Body", "void setTransform(const Vector2 &in, float)", asMETHOD(Body, setTransform));
+	r = scriptEngine->registerRefType("b2Fixture", asMETHOD(Fixture, addRef), asMETHOD(Fixture, release)); AS_ASSERT
+	r = scriptEngine->registerObjectMethod("b2Fixture", "void setDensity(const float)", asMETHOD(Fixture, setDensity)); AS_ASSERT
+	r = scriptEngine->registerObjectMethod("b2Fixture", "void setMaskBits(const uint)", asMETHOD(Fixture, setMaskBits)); AS_ASSERT
+	r = scriptEngine->registerObjectMethod("b2Fixture", "void setCategoryBits(const uint)", asMETHOD(Fixture, setCategoryBits)); AS_ASSERT
+
+	r = scriptEngine->registerRefType("b2Body", asMETHOD(Body, addRef), asMETHOD(Body, release)); AS_ASSERT
+	r = scriptEngine->registerObjectFactory("b2Body", "b2Body @f(const b2BodyDef &in)", asFUNCTION(Body::Factory)); AS_ASSERT
+	r = scriptEngine->registerObjectMethod("b2Body", "b2Fixture @createFixture(const Rect &in, float)", asMETHODPR(Body, createFixture, (const Rect&, float), Fixture*)); AS_ASSERT
+	r = scriptEngine->registerObjectMethod("b2Body", "b2Fixture @createFixture(const Vector2 &in, const float, float)", asMETHODPR(Body, createFixture, (const Vector2&, const float, float), Fixture*)); AS_ASSERT
+	r = scriptEngine->registerObjectMethod("b2Body", "b2Fixture @createFixture(array<Vector2> &in, float density)", asMETHODPR(Body, createFixture, (Array*, float), Fixture*)); AS_ASSERT
+	r = scriptEngine->registerObjectMethod("b2Body", "void removeFixture(b2Fixture @)", asMETHOD(Body, removeFixture)); AS_ASSERT
+	r = scriptEngine->registerObjectMethod("b2Body", "void setTransform(const Vector2 &in, float)", asMETHOD(Body, setTransform)); AS_ASSERT
+	r = scriptEngine->registerObjectMethod("b2Body", "Vector2 getPosition() const", asMETHOD(Body, getPosition)); AS_ASSERT
+	r = scriptEngine->registerObjectMethod("b2Body", "float getAngle() const", asMETHOD(Body, getAngle)); AS_ASSERT
+	r = scriptEngine->registerObjectMethod("b2Body", "void applyImpulse(const Vector2 &in, const Vector2 &in)", asMETHOD(Body, applyImpulse)); AS_ASSERT
+	r = scriptEngine->registerObjectMethod("b2Body", "void setLinearVelocity(const Vector2 &in)", asMETHOD(Body, setLinearVelocity)); AS_ASSERT
 
 	b2d = new Box2D;
 	r = scriptEngine->registerGlobalProperty("ScriptBox2D Box2D", b2d);
 	
-#ifdef OLD
-	// Register function defs
-	registerFunctionDef("void ContactCallback(int)");
-
-	// Register enums
-	registerEnum("BodyType");
-	registerEnumValue("BodyType", "StaticBody", StaticBody);
-	registerEnumValue("BodyType", "KinematicBody", KinematicBody);
-	registerEnumValue("BodyType", "DynamicBody", DynamicBody);
-	registerEnumValue("BodyType", "BulletBody", BulletBody);
-
-	// Box2D main
-	registerGlobalFunction("void b2dInit()", asFUNCTION(init));
-	registerGlobalFunction("void b2dStep(float timeStep)", asFUNCTION(step));
-	registerGlobalFunction("void b2dDebugDraw()", asFUNCTION(draw));
-	registerGlobalFunction("void b2dSetDebugDrawFlags(int flags)", asFUNCTION(setDebugDrawFlags));
-	registerGlobalFunction("void b2dSetWorldScale(float worldScale)", asFUNCTION(setWorldScale));
-	registerGlobalFunction("float b2dGetWorldScale()", asFUNCTION(getWorldScale));
-
-	// Box2D contact handlers
-	registerGlobalFunction("void b2dAddBodyBeginContactCallback(int, ContactCallback @callback)", asFUNCTION(addBodyBeginContactCallback));
-	registerGlobalFunction("void b2dRemoveBodyBeginContactCallback(int)", asFUNCTION(removeBodyBeginContactCallback));
-	registerGlobalFunction("void b2dAddFixtureBeginContactCallback(int, ContactCallback @callback)", asFUNCTION(addFixtureBeginContactCallback));
-	registerGlobalFunction("void b2dRemoveFixtureBeginContactCallback(int)", asFUNCTION(removeFixtureBeginContactCallback));
-	registerGlobalFunction("void b2dAddBodyEndContactCallback(int, ContactCallback @callback)", asFUNCTION(addBodyEndContactCallback));
-	registerGlobalFunction("void b2dAddFixtureEndContactCallback(int, ContactCallback @callback)", asFUNCTION(addFixtureEndContactCallback));
-	//registerGlobalFunction("void b2dAddBodyPostSolveCallback(int, ContactCallback @callback)", asFUNCTION(addBodyPostSolveCallback));
-	//registerGlobalFunction("void b2dAddFixturePostSolveCallback(int, ContactCallback @callback)", asFUNCTION(addFixturePostSolveCallback));
-	registerGlobalFunction("void b2dGetContactNormalVector(float &out, float &out)", asFUNCTION(getContactNormalVector));
-
-	// Box2D body
-	registerGlobalFunction("int  b2dCreateBody()", asFUNCTION(createBody));
-	registerGlobalFunction("void b2dRemoveBody(int bodyId)", asFUNCTION(removeBody));
-	registerGlobalFunction("void b2dSetBodyType(int bodyId, BodyType type)", asFUNCTION(setBodyType));
-	registerGlobalFunction("void b2dSetBodyAllowSleep(int bodyId, bool sleep)", asFUNCTION(setAllowSleep));
-	registerGlobalFunction("void b2dSetBodyFixedRotation(int bodyId, bool fixed)", asFUNCTION(setFixedRotation));
-	registerGlobalFunction("void b2dSetBodyLinearVelocity(int bodyId, float vx, float vy)", asFUNCTION(setLinearVelocity));
-	registerGlobalFunction("void b2dSetBodyAngularVelocity(int bodyId, float v)", asFUNCTION(setAngularVelocity));
-	registerGlobalFunction("void b2dSetBodyTransform(int bodyId, float x, float y, float ang)", asFUNCTION(setBodyTransform));
-	registerGlobalFunction("void b2dSetBodyPosition(int bodyId, float x, float y)", asFUNCTION(setBodyPosition));
-	registerGlobalFunction("void b2dSetBodyAngle(int bodyId, float ang)", asFUNCTION(setBodyAngle));
-	registerGlobalFunction("void b2dSetBodyGravityScale(int bodyId, float scale)", asFUNCTION(setBodyGravityScale));
-	registerGlobalFunction("void b2dGetBodyType(int bodyId, int &out type)", asFUNCTION(getBodyType));
-	registerGlobalFunction("void b2dGetBodyCenter(int bodyId, float &out x, float &out y)", asFUNCTION(getBodyCenter));
-	registerGlobalFunction("void b2dGetBodyLinearVelocity(int bodyId, float &out x, float &out y)", asFUNCTION(getLinearVelocity));
-	registerGlobalFunction("void b2dGetBodyAngularVelocity(int bodyId, float &out x)", asFUNCTION(getAngularVelocity));
-	//registerGlobalFunction("array<int> @b2dGetBodyFixtures(int bodyId)", asFUNCTION(getBodyFixtures));
-	registerGlobalFunction("void b2dBodyApplyImpulse(int bodyId, float vx, float vy, float px, float py)", asFUNCTION(bodyApplyImpulse));
-	registerGlobalFunction("void b2dGetBodyTransform(int bodyId, float &out x, float &out y, float &out ang)", asFUNCTION(getBodyTransform));
-	registerGlobalFunction("void b2dGetBodyPosition(int bodyId, float &out x, float &out y)", asFUNCTION(getBodyPosition));
-	registerGlobalFunction("void b2dGetBodyAngle(int bodyId, float &out)", asFUNCTION(getBodyAngle));
+	r = scriptEngine->registerFuncdef("void ContactCallback(b2Fixture@)"); AS_ASSERT
 	
-	// b2d fixture
-	registerGlobalFunction("int  b2dCreateFixtureBox(int bodyId, float w, float h, float cx, float cy, float ang, float density)", asFUNCTION(createFixtureBox));
-	registerGlobalFunction("int  b2dCreateFixtureCircle(int bodyId, float r, float cx, float cy, float density)", asFUNCTION(createFixtureCircle));
-	registerGlobalFunction("int  b2dCreateFixture(int bodyId, array<float> &in vertices, int vertCount, float density)", asFUNCTION(createFixture));
-	registerGlobalFunction("void b2dRemoveFixture(int bodyId, int fixtureId)", asFUNCTION(removeFixture));
-	registerGlobalFunction("void b2dSetFixtureDensity(int fixtureId, float density)", asFUNCTION(setFixtureDensity));
-	registerGlobalFunction("void b2dSetFixtureMaskBits(int fixtureId, int bits)", asFUNCTION(setFixtureMaskBits));
-	registerGlobalFunction("void b2dSetFixtureCategoryBits(int fixtureId, int bits)", asFUNCTION(setFixtureCategoryBits));
-	registerGlobalFunction("int  b2dGetFixtureMaskBits(int fixtureId)", asFUNCTION(getFixtureMaskBits));
-	registerGlobalFunction("int  b2dGetFixtureCategoryBits(int fixtureId)", asFUNCTION(getFixtureCategoryBits));
-	registerGlobalFunction("void b2dGetFixtureAABB(int fixtureId, float &out x, float &out y, float &out w, float &out h)", asFUNCTION(getFixtureAABB));
-	registerGlobalFunction("void b2dGetFixtrueType(int fixtureId, int &out type)", asFUNCTION(getFixtrueType));
-	registerGlobalFunction("void b2dGetFixtrueRadius(int fixtureId, float &out r)", asFUNCTION(getFixtrueRadius));
-
+#ifdef OLD
 	// b2d revolute joint
 	registerGlobalFunction("int  b2dCreateRevoluteJoint(int bodyA, int bodyB, float cx, float cy)", asFUNCTION(createRevoluteJoint));
 	registerGlobalFunction("void b2dRemoveRevoluteJoint(int jointId)", asFUNCTION(removeRevoluteJoint));
@@ -925,13 +570,4 @@ int CreatePlugin(xdScriptEngine *scriptEngine)
 void ReleasePlugin()
 {
 	delete b2d;
-	//delete world;
-	//delete debugDraw;
-	//delete contactListener;
-	//for(uint i = 0; i < userData.size(); i++)
-	//	delete userData[i];
-	//for(map<int, void*>::iterator itr = bbccbs.begin(); itr != bbccbs.end(); ++itr)
-	//	releaseScriptFunc(itr->second);
-	//for(map<int, void*>::iterator itr = fbccbs.begin(); itr != fbccbs.end(); ++itr)
-	//	releaseScriptFunc(itr->second);
 }

@@ -64,9 +64,11 @@ public:
 	// Registers
 	int registerSingletonType(const char *obj);
 	int registerRefType(const char *obj, const asSFuncPtr &addRef, const asSFuncPtr &release);
-	int registerValueType(const char *obj);
+	int registerValueType(const char *obj, int size);
 	int registerObjectFactory(const char *obj, const char *decl, const asSFuncPtr &func);
+	int registerObjectConstructor(const char *obj, const char *decl, const asSFuncPtr &func);
 	int registerObjectMethod(const char *obj, const char *decl, const asSFuncPtr &funcPointer); 
+	int registerObjectProperty(const char *obj, const char *decl, const int offset); 
 	int registerGlobalProperty(const char *decl, void *pointer);
 	int registerEnum(const char *decl);
 	int registerEnumValue(const char *enumname, const char *valuename, int value);
