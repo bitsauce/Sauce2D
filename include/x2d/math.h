@@ -7,7 +7,6 @@
 #include "math/vector.h"
 #include "math/rect.h"
 #include "math/matrix.h"
-#include "math/array.h"
 #include "math/rectPacker.h"
 
 #include <cmath>

@@ -38,8 +38,10 @@
     <ClInclude Include="..\..\include\x2d\math\rectPacker.h" />
     <ClInclude Include="..\..\include\x2d\math\vector.h" />
     <ClInclude Include="..\..\include\x2d\profiler.h" />
-    <ClInclude Include="..\..\include\x2d\scripts.h" />
+    <ClInclude Include="..\..\include\x2d\scriptengine.h" />
     <ClInclude Include="..\..\include\x2d\audio.h" />
+    <ClInclude Include="..\..\include\x2d\scripts\anyobject.h" />
+    <ClInclude Include="..\..\include\x2d\scripts\funccall.h" />
     <ClInclude Include="..\..\include\x2d\timer.h" />
     <ClInclude Include="..\..\include\x2d\util.h" />
     <ClInclude Include="..\..\include\x2d\window.h" />
@@ -56,8 +58,10 @@
     <ClInclude Include="..\..\source\gfx\textureRegion.h" />
     <ClInclude Include="..\..\source\gfx\vertexbufferobject.h" />
     <ClInclude Include="..\..\source\gfx\viewport.h" />
+    <ClInclude Include="..\..\source\scripts\scriptany.h" />
     <ClInclude Include="..\..\source\scripts\scriptarray.h" />
     <ClInclude Include="..\..\source\scripts\scriptbuilder.h" />
+    <ClInclude Include="..\..\source\scripts\scriptfunc.h" />
     <ClInclude Include="..\..\source\scripts\scriptgrid.h" />
     <ClInclude Include="..\..\source\scripts\scripthelper.h" />
     <ClInclude Include="..\..\source\scripts\scriptstdstring.h" />
@@ -71,7 +75,7 @@
     <ClCompile Include="..\..\source\core\input.cpp" />
     <ClCompile Include="..\..\source\core\filesystem.cpp" />
     <ClCompile Include="..\..\source\core\profiler.cpp" />
-    <ClCompile Include="..\..\source\core\scripts.cpp" />
+    <ClCompile Include="..\..\source\core\scriptengine.cpp" />
     <ClCompile Include="..\..\source\core\timer.cpp" />
     <ClCompile Include="..\..\source\core\util.cpp" />
     <ClCompile Include="..\..\source\core\window.cpp" />
@@ -93,8 +97,10 @@
     <ClCompile Include="..\..\source\math\rect.cpp" />
     <ClCompile Include="..\..\source\math\rectPacker.cpp" />
     <ClCompile Include="..\..\source\math\vector.cpp" />
+    <ClCompile Include="..\..\source\scripts\scriptany.cpp" />
     <ClCompile Include="..\..\source\scripts\scriptarray.cpp" />
     <ClCompile Include="..\..\source\scripts\scriptbuilder.cpp" />
+    <ClCompile Include="..\..\source\scripts\scriptfunc.cpp" />
     <ClCompile Include="..\..\source\scripts\scriptgrid.cpp" />
     <ClCompile Include="..\..\source\scripts\scripthelper.cpp" />
     <ClCompile Include="..\..\source\scripts\scriptstdstring.cpp" />

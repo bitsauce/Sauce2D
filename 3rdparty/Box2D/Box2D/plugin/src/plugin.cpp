@@ -7,6 +7,7 @@
 #include <x2d/scripts.h>
 #include <x2d/math.h>
 #include <x2d/math/array.h>
+#include <x2d/scripts/anyobject.h>
 #include <x2d/scripts.h>
 
 
@@ -293,261 +294,80 @@ void getContactNormalVector(float &x, float &y)
 #endif // OLD
 
 #include "box2d.h"
+#include "body.h"
+#include "fixture.h"
+#include "contact.h"
 
-enum BodyType
-{
-	StaticBody = b2_staticBody,
-	KinematicBody = b2_kinematicBody,
-	DynamicBody = b2_dynamicBody,
-	BulletBody
-};
-
-class BodyDef
-{
-public:
-	BodyDef() :
-		type(StaticBody),
-		position(0.0f),
-		angle(0.0f),
-		linearVelocity(0.0f),
-		angularVelocity(0.0f),
-		linearDamping(0.0f),
-		angularDamping(0.0f),
-		allowSleep(true),
-		awake(true),
-		fixedRotation(false),
-		active(true),
-		gravityScale(1.0f)
-	{
-	}
-
-	b2BodyDef getBodyDef() const
-	{
-		b2BodyDef def;
-		def.type = (type != BulletBody ? b2BodyType(type) : b2_dynamicBody);
-		def.position = toB2Vec(position);
-		def.angle = angle;
-		def.linearVelocity = toB2Vec(linearVelocity);
-		def.angularVelocity = angularVelocity;
-		def.linearDamping = linearDamping;
-		def.angularDamping = angularDamping;
-		def.allowSleep = allowSleep;
-		def.awake = awake;
-		def.fixedRotation = fixedRotation;
-		def.bullet = (type == BulletBody);
-		def.active = active;
-		def.gravityScale = gravityScale;
-		return def;
-	}
-
-	BodyType type;
-	Vector2 position;
-	float angle;
-	Vector2 linearVelocity;
-	float angularVelocity;
-	float linearDamping;
-	float angularDamping;
-	bool allowSleep;
-	bool awake;
-	bool fixedRotation;
-	bool active;
-	float gravityScale;
-
-	static void Construct(BodyDef *self) { new (self) BodyDef; }
-};
-
-int fixCount = 0;
-class Fixture
-{
-	friend class Body;
-public:
-	Fixture(b2Fixture *fixture) :
-		m_fixture(fixture)
-	{
-	}
-
-	RefCounter refCounter;
-	void addRef() { refCounter.add(); }
-	void release() { if(refCounter.release() == 0) delete this; }
-
-	void setDensity(const float density)
-	{
-		m_fixture->SetDensity(density);
-	}
-
-	void setMaskBits(const uint maskBits)
-	{
-		b2Filter data = m_fixture->GetFilterData();
-		data.maskBits = maskBits;
-		m_fixture->SetFilterData(data);
-	}
-
-	void setCategoryBits(const uint categoryBits)
-	{
-		b2Filter data = m_fixture->GetFilterData();
-		data.categoryBits = categoryBits;
-		m_fixture->SetFilterData(data);
-	}
-
-private:
-	b2Fixture *m_fixture;
-};
-
-int bodyCount = 0;
-class Body
-{
-public:
-	Body(b2Body *body) :
-		m_body(body)
-	{
-	}
-
-	~Body()
-	{
-		for(vector<Fixture*>::iterator itr = m_fixtures.begin(); itr != m_fixtures.end(); ++itr) {
-			(*itr)->release();
-		}
-		b2d->getWorld()->DestroyBody(m_body);
-	}
-
-	RefCounter refCounter;
-	void addRef() { refCounter.add(); }
-	void release() { if(refCounter.release() == 0) delete this; }
-
-	void setTransform(const Vector2 &position, float angle)
-	{
-		m_body->SetTransform(toB2Vec(position), angle);
-	}
-
-	Vector2 getPosition() const
-	{
-		return toXDVec(m_body->GetPosition());
-	}
-
-	float getAngle() const
-	{
-		return m_body->GetAngle();
-	}
-
-	Fixture *createFixture(const Rect &rect, float density)
-	{
-		b2PolygonShape shape;
-		b2Vec2 halfSize = toB2Vec(rect.getSize()/2.0f);
-		shape.SetAsBox(halfSize.x, halfSize.y, toB2Vec(rect.getCenter()), 0.0f);
-		return new Fixture(m_body->CreateFixture(&shape, density));
-	}
-	
-	Fixture *createFixture(const Vector2 &center, const float radius, float density)
-	{
-		b2CircleShape shape;
-		shape.m_p = toB2Vec(center);
-		shape.m_radius = radius/b2d->getScale();
-		return new Fixture(m_body->CreateFixture(&shape, density));
-	}
-	
-	Fixture *createFixture(Array *arr, float density)
-	{
-		if(arr->GetSize() > b2_maxPolygonVertices)
-			return 0;
-
-		// Set vertex count
-		b2Vec2 *verts = new b2Vec2[arr->GetSize()];
-		for(uint i = 0; i < arr->GetSize(); i++) {
-			verts[i] = toB2Vec(*(Vector2*)arr->At(i));
-		}
-
-		// Set shape
-		b2PolygonShape shape;
-		shape.Set(verts, arr->GetSize());
-		delete[] verts;
-
-		// Add fixture
-		return new Fixture(m_body->CreateFixture(&shape, density));
-	}
-
-	void removeFixture(Fixture *fixture)
-	{
-		m_body->DestroyFixture(fixture->m_fixture);
-		vector<Fixture*>::iterator itr;
-		if((itr = find(m_fixtures.begin(), m_fixtures.end(), fixture)) != m_fixtures.end()) {
-			(*itr)->release();
-		}
-	}
-
-	void applyImpulse(const Vector2 &impulse, const Vector2 &position)
-	{
-		m_body->ApplyLinearImpulse(toB2Vec(impulse), toB2Vec(position), true);
-	}
-
-	void setLinearVelocity(const Vector2 &velocity)
-	{
-		m_body->SetLinearVelocity(toB2Vec(velocity));
-	}
-
-	static Body *Factory(const BodyDef &def)
-	{
-		b2BodyDef bodyDef = def.getBodyDef();
-		return new Body(b2d->getWorld()->CreateBody(&bodyDef));
-	}
-
-private:
-	b2Body *m_body;
-	vector<Fixture*> m_fixtures;
-};
+xdScriptEngine *scriptEngine = 0;
 
 int CreatePlugin(xdScriptEngine *scriptEngine)
 {
+	::scriptEngine = scriptEngine;
+
 	int r = 0;
 	
 	r = scriptEngine->registerEnum("BodyType"); AS_ASSERT
+	r = scriptEngine->registerSingletonType("ScriptBox2D");
+	r = scriptEngine->registerValueType("b2BodyDef", sizeof(b2BodyDefWrapper)); AS_ASSERT
+	r = scriptEngine->registerRefType("b2Fixture", asMETHOD(b2FixtureWrapper, addRef), asMETHOD(b2FixtureWrapper, release)); AS_ASSERT
+	r = scriptEngine->registerRefType("b2Body", asMETHOD(b2BodyWrapper, addRef), asMETHOD(b2BodyWrapper, release)); AS_ASSERT
+	r = scriptEngine->registerRefType("b2Contact", asMETHOD(b2ContactWrapper, addRef), asMETHOD(b2ContactWrapper, release)); AS_ASSERT
+	r = scriptEngine->registerFuncdef("void ContactFunc(b2Contact@)"); AS_ASSERT
+
 	r = scriptEngine->registerEnumValue("BodyType", "b2_staticBody", StaticBody); AS_ASSERT
 	r = scriptEngine->registerEnumValue("BodyType", "b2_kinematicBody", KinematicBody); AS_ASSERT
 	r = scriptEngine->registerEnumValue("BodyType", "b2_dynamicBody", DynamicBody); AS_ASSERT
 	r = scriptEngine->registerEnumValue("BodyType", "b2_bulletBody", BulletBody);  AS_ASSERT
 
-	r = scriptEngine->registerSingletonType("ScriptBox2D");
 	r = scriptEngine->registerObjectMethod("ScriptBox2D", "void step(float)", asMETHOD(Box2D, step)); AS_ASSERT
 	r = scriptEngine->registerObjectMethod("ScriptBox2D", "void draw()", asMETHOD(Box2D, draw)); AS_ASSERT AS_ASSERT
 	r = scriptEngine->registerObjectMethod("ScriptBox2D", "void setDrawFlags(int)", asMETHOD(Box2D, setDrawFlags)); AS_ASSERT
 	r = scriptEngine->registerObjectMethod("ScriptBox2D", "void set_scale(float)", asMETHOD(Box2D, setScale)); AS_ASSERT
 	r = scriptEngine->registerObjectMethod("ScriptBox2D", "float get_scale() const", asMETHOD(Box2D, getScale)); AS_ASSERT
 
-	r = scriptEngine->registerValueType("b2BodyDef", sizeof(BodyDef)); AS_ASSERT
-	r = scriptEngine->registerObjectConstructor("b2BodyDef", "void f()", asFUNCTION(BodyDef::Construct)); AS_ASSERT
-	r = scriptEngine->registerObjectProperty("b2BodyDef", "BodyType type", offsetof(BodyDef, type)); AS_ASSERT
-	r = scriptEngine->registerObjectProperty("b2BodyDef", "Vector2 position", offsetof(BodyDef, position)); AS_ASSERT
-	r = scriptEngine->registerObjectProperty("b2BodyDef", "float angle", offsetof(BodyDef, angle)); AS_ASSERT
-	r = scriptEngine->registerObjectProperty("b2BodyDef", "Vector2 linearVelocity", offsetof(BodyDef, linearVelocity)); AS_ASSERT
-	r = scriptEngine->registerObjectProperty("b2BodyDef", "float angularVelocity", offsetof(BodyDef, angularVelocity)); AS_ASSERT
-	r = scriptEngine->registerObjectProperty("b2BodyDef", "float linearDamping", offsetof(BodyDef, linearDamping)); AS_ASSERT
-	r = scriptEngine->registerObjectProperty("b2BodyDef", "float angularDamping", offsetof(BodyDef, angularDamping)); AS_ASSERT
-	r = scriptEngine->registerObjectProperty("b2BodyDef", "bool allowSleep", offsetof(BodyDef, allowSleep)); AS_ASSERT
-	r = scriptEngine->registerObjectProperty("b2BodyDef", "bool awake", offsetof(BodyDef, awake)); AS_ASSERT
-	r = scriptEngine->registerObjectProperty("b2BodyDef", "bool fixedRotation", offsetof(BodyDef, fixedRotation)); AS_ASSERT
-	r = scriptEngine->registerObjectProperty("b2BodyDef", "bool active", offsetof(BodyDef, active)); AS_ASSERT
-	r = scriptEngine->registerObjectProperty("b2BodyDef", "bool gravityScale", offsetof(BodyDef, gravityScale)); AS_ASSERT
+	r = scriptEngine->registerObjectConstructor("b2BodyDef", "void f()", asFUNCTION(b2BodyDefWrapper::Construct)); AS_ASSERT
+	r = scriptEngine->registerObjectProperty("b2BodyDef", "BodyType type", offsetof(b2BodyDefWrapper, type)); AS_ASSERT
+	r = scriptEngine->registerObjectProperty("b2BodyDef", "Vector2 position", offsetof(b2BodyDefWrapper, position)); AS_ASSERT
+	r = scriptEngine->registerObjectProperty("b2BodyDef", "float angle", offsetof(b2BodyDefWrapper, angle)); AS_ASSERT
+	r = scriptEngine->registerObjectProperty("b2BodyDef", "Vector2 linearVelocity", offsetof(b2BodyDefWrapper, linearVelocity)); AS_ASSERT
+	r = scriptEngine->registerObjectProperty("b2BodyDef", "float angularVelocity", offsetof(b2BodyDefWrapper, angularVelocity)); AS_ASSERT
+	r = scriptEngine->registerObjectProperty("b2BodyDef", "float linearDamping", offsetof(b2BodyDefWrapper, linearDamping)); AS_ASSERT
+	r = scriptEngine->registerObjectProperty("b2BodyDef", "float angularDamping", offsetof(b2BodyDefWrapper, angularDamping)); AS_ASSERT
+	r = scriptEngine->registerObjectProperty("b2BodyDef", "bool allowSleep", offsetof(b2BodyDefWrapper, allowSleep)); AS_ASSERT
+	r = scriptEngine->registerObjectProperty("b2BodyDef", "bool awake", offsetof(b2BodyDefWrapper, awake)); AS_ASSERT
+	r = scriptEngine->registerObjectProperty("b2BodyDef", "bool fixedRotation", offsetof(b2BodyDefWrapper, fixedRotation)); AS_ASSERT
+	r = scriptEngine->registerObjectProperty("b2BodyDef", "bool active", offsetof(b2BodyDefWrapper, active)); AS_ASSERT
+	r = scriptEngine->registerObjectProperty("b2BodyDef", "bool gravityScale", offsetof(b2BodyDefWrapper, gravityScale)); AS_ASSERT
 	
-	r = scriptEngine->registerRefType("b2Fixture", asMETHOD(Fixture, addRef), asMETHOD(Fixture, release)); AS_ASSERT
-	r = scriptEngine->registerObjectMethod("b2Fixture", "void setDensity(const float)", asMETHOD(Fixture, setDensity)); AS_ASSERT
-	r = scriptEngine->registerObjectMethod("b2Fixture", "void setMaskBits(const uint)", asMETHOD(Fixture, setMaskBits)); AS_ASSERT
-	r = scriptEngine->registerObjectMethod("b2Fixture", "void setCategoryBits(const uint)", asMETHOD(Fixture, setCategoryBits)); AS_ASSERT
+	r = scriptEngine->registerObjectMethod("b2Fixture", "void setDensity(const float)", asMETHOD(b2FixtureWrapper, setDensity)); AS_ASSERT
+	r = scriptEngine->registerObjectMethod("b2Fixture", "void setMaskBits(const uint)", asMETHOD(b2FixtureWrapper, setMaskBits)); AS_ASSERT
+	r = scriptEngine->registerObjectMethod("b2Fixture", "void setCategoryBits(const uint)", asMETHOD(b2FixtureWrapper, setCategoryBits)); AS_ASSERT
 
-	r = scriptEngine->registerRefType("b2Body", asMETHOD(Body, addRef), asMETHOD(Body, release)); AS_ASSERT
-	r = scriptEngine->registerObjectFactory("b2Body", "b2Body @f(const b2BodyDef &in)", asFUNCTION(Body::Factory)); AS_ASSERT
-	r = scriptEngine->registerObjectMethod("b2Body", "b2Fixture @createFixture(const Rect &in, float)", asMETHODPR(Body, createFixture, (const Rect&, float), Fixture*)); AS_ASSERT
-	r = scriptEngine->registerObjectMethod("b2Body", "b2Fixture @createFixture(const Vector2 &in, const float, float)", asMETHODPR(Body, createFixture, (const Vector2&, const float, float), Fixture*)); AS_ASSERT
-	r = scriptEngine->registerObjectMethod("b2Body", "b2Fixture @createFixture(array<Vector2> &in, float density)", asMETHODPR(Body, createFixture, (Array*, float), Fixture*)); AS_ASSERT
-	r = scriptEngine->registerObjectMethod("b2Body", "void removeFixture(b2Fixture @)", asMETHOD(Body, removeFixture)); AS_ASSERT
-	r = scriptEngine->registerObjectMethod("b2Body", "void setTransform(const Vector2 &in, float)", asMETHOD(Body, setTransform)); AS_ASSERT
-	r = scriptEngine->registerObjectMethod("b2Body", "Vector2 getPosition() const", asMETHOD(Body, getPosition)); AS_ASSERT
-	r = scriptEngine->registerObjectMethod("b2Body", "float getAngle() const", asMETHOD(Body, getAngle)); AS_ASSERT
-	r = scriptEngine->registerObjectMethod("b2Body", "void applyImpulse(const Vector2 &in, const Vector2 &in)", asMETHOD(Body, applyImpulse)); AS_ASSERT
-	r = scriptEngine->registerObjectMethod("b2Body", "void setLinearVelocity(const Vector2 &in)", asMETHOD(Body, setLinearVelocity)); AS_ASSERT
+	r = scriptEngine->registerObjectFactory("b2Body", "b2Body @f(const b2BodyDef &in)", asFUNCTION(b2BodyWrapper::Factory)); AS_ASSERT
+	r = scriptEngine->registerObjectMethod("b2Body", "b2Fixture @createFixture(const Rect &in, float)", asMETHODPR(b2BodyWrapper, createFixture, (const Rect&, float), b2FixtureWrapper*)); AS_ASSERT
+	r = scriptEngine->registerObjectMethod("b2Body", "b2Fixture @createFixture(const Vector2 &in, const float, float)", asMETHODPR(b2BodyWrapper, createFixture, (const Vector2&, const float, float), b2FixtureWrapper*)); AS_ASSERT
+	r = scriptEngine->registerObjectMethod("b2Body", "b2Fixture @createFixture(array<Vector2> &in, float density)", asMETHODPR(b2BodyWrapper, createFixture, (Array*, float), b2FixtureWrapper*)); AS_ASSERT
+	r = scriptEngine->registerObjectMethod("b2Body", "void removeFixture(b2Fixture @)", asMETHOD(b2BodyWrapper, removeFixture)); AS_ASSERT
+	r = scriptEngine->registerObjectMethod("b2Body", "void setTransform(const Vector2 &in, float)", asMETHOD(b2BodyWrapper, setTransform)); AS_ASSERT
+	r = scriptEngine->registerObjectMethod("b2Body", "void setPosition(const Vector2 &in)", asMETHOD(b2BodyWrapper, setPosition)); AS_ASSERT
+	r = scriptEngine->registerObjectMethod("b2Body", "void setAngle(const Vector2 &in)", asMETHOD(b2BodyWrapper, setAngle)); AS_ASSERT
+	r = scriptEngine->registerObjectMethod("b2Body", "void setBeginContactCallback(ContactFunc@)", asMETHOD(b2BodyWrapper, setBeginContactCallback)); AS_ASSERT
+	r = scriptEngine->registerObjectMethod("b2Body", "void setEndContactCallback(ContactFunc@)", asMETHOD(b2BodyWrapper, setEndContactCallback)); AS_ASSERT
+	r = scriptEngine->registerObjectMethod("b2Body", "void setPreSolveCallback(ContactFunc@)", asMETHOD(b2BodyWrapper, setPreSolveCallback)); AS_ASSERT
+	r = scriptEngine->registerObjectMethod("b2Body", "void setPostSolveCallback(ContactFunc@)", asMETHOD(b2BodyWrapper, setPostSolveCallback)); AS_ASSERT
+	//r = scriptEngine->registerObjectMethod("b2Body", "void setObject(?&in)", asMETHOD(b2BodyWrapper, setObject)); AS_ASSERT
+	//r = scriptEngine->registerObjectMethod("b2Body", "bool getObject(?&out)", asMETHOD(b2BodyWrapper, getObject)); AS_ASSERT
+	r = scriptEngine->registerObjectMethod("b2Body", "Vector2 getPosition() const", asMETHOD(b2BodyWrapper, getPosition)); AS_ASSERT
+	r = scriptEngine->registerObjectMethod("b2Body", "float getAngle() const", asMETHOD(b2BodyWrapper, getAngle)); AS_ASSERT
+	r = scriptEngine->registerObjectMethod("b2Body", "void applyImpulse(const Vector2 &in, const Vector2 &in)", asMETHOD(b2BodyWrapper, applyImpulse)); AS_ASSERT
+	r = scriptEngine->registerObjectMethod("b2Body", "void setLinearVelocity(const Vector2 &in)", asMETHOD(b2BodyWrapper, setLinearVelocity)); AS_ASSERT
+
+	r = scriptEngine->registerObjectMethod("b2Contact", "void setEnabled(bool)", asMETHOD(b2ContactWrapper, setEnabled)); AS_ASSERT
+	r = scriptEngine->registerObjectMethod("b2Contact", "b2Body @get_other() const", asMETHOD(b2ContactWrapper, getOtherBody)); AS_ASSERT
+	r = scriptEngine->registerObjectMethod("b2Contact", "b2Body @get_this() const", asMETHOD(b2ContactWrapper, getThisBody)); AS_ASSERT
 
 	b2d = new Box2D;
 	r = scriptEngine->registerGlobalProperty("ScriptBox2D Box2D", b2d);
-	
-	r = scriptEngine->registerFuncdef("void ContactCallback(b2Fixture@)"); AS_ASSERT
 	
 #ifdef OLD
 	// b2d revolute joint

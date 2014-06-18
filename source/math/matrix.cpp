@@ -516,7 +516,7 @@ int Matrix4::Register(asIScriptEngine *scriptEngine)
 	return r;
 }
 
-#include <x2d/math/array.h>
+#include <x2d/scripts/array.h>
 
 void Matrix4::Factory(Matrix4 *self)
 {

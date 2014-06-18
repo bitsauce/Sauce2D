@@ -1,92 +1,44 @@
 #include "contactlistener.h"
+#include "contact.h"
+#include "body.h"
 
-/*void ContactListener::BeginContact(b2Contact* contact)
+void ContactListener::BeginContact(b2Contact* b2c)
 {
-	currentContact = contact;
-
-	// Check for fixture callback
-	int fixtureId = *(int*)contact->GetFixtureA()->GetUserData();
-	if(fbccbs.find(fixtureId) != fbccbs.end())
-	{
-		scriptEngine->prepareFuncCall();
-		startScriptFuncCall(fbccbs[fixtureId]);
-		addScriptFuncArg(contact->GetFixtureB()->GetUserData(), 4); // 4 = int32 typeId
-		endScriptFuncCall();
-	}
-	fixtureId = *(int*)contact->GetFixtureB()->GetUserData();
-	if(fbccbs.find(fixtureId) != fbccbs.end()) {
-		startScriptFuncCall(fbccbs[fixtureId]);
-		addScriptFuncArg(contact->GetFixtureA()->GetUserData(), 4); // 4 = int32 typeId
-		endScriptFuncCall();
-	}
-
-	// Check for body callback
-	int bodyId = *(int*)contact->GetFixtureA()->GetBody()->GetUserData();
-	if(bbccbs.find(bodyId) != bbccbs.end()) {
-		startScriptFuncCall(bbccbs[bodyId]);
-		addScriptFuncArg(contact->GetFixtureB()->GetBody()->GetUserData(), 4); // 4 = int32 typeId
-		endScriptFuncCall();
-	}
-	bodyId = *(int*)contact->GetFixtureB()->GetBody()->GetUserData();
-	if(bbccbs.find(bodyId) != bbccbs.end()) {
-		startScriptFuncCall(bbccbs[bodyId]);
-		addScriptFuncArg(contact->GetFixtureA()->GetBody()->GetUserData(), 4); // 4 = int32 typeId
-		endScriptFuncCall();
-	}
-
-	currentContact = 0;
+	b2ContactWrapper *contact = new b2ContactWrapper(b2c,
+		(b2BodyWrapper*)b2c->GetFixtureA()->GetBody()->GetUserData(),
+		(b2BodyWrapper*)b2c->GetFixtureB()->GetBody()->GetUserData());
+	contact->call(b2ContactWrapper::BeginContact);
+	contact->swapBodies();
+	contact->call(b2ContactWrapper::BeginContact);
+	contact->release();
 }
 
-void ContactListener::EndContact(b2Contact* contact)
+void ContactListener::EndContact(b2Contact* b2c)
 {
-	currentContact = contact;
-
-	// Check for fixture callback
-	int fixtureId = *(int*)contact->GetFixtureA()->GetUserData();
-	if(feccbs.find(fixtureId) != feccbs.end())
-	{
-		startScriptFuncCall(feccbs[fixtureId]);
-		addScriptFuncArg(contact->GetFixtureB()->GetUserData(), 4); // 4 = int32 typeId
-		endScriptFuncCall();
-	}
-
-	// Check for body callback
-	int bodyId = *(int*)contact->GetFixtureA()->GetBody()->GetUserData();
-	if(beccbs.find(bodyId) != beccbs.end())
-	{
-		startScriptFuncCall(beccbs[bodyId]);
-		addScriptFuncArg(contact->GetFixtureB()->GetBody()->GetUserData(), 4); // 4 = int32 typeId
-		endScriptFuncCall();
-	}
-
-	currentContact = 0;
+	/*b2ContactWrapper contact(b2c);
+	contact.m_thisBody = (b2BodyWrapper*)b2c->GetFixtureA()->GetBody()->GetUserData();
+	contact.m_otherBody = (b2BodyWrapper*)b2c->GetFixtureB()->GetBody()->GetUserData();
+	contact.call(b2ContactWrapper::EndContact);
+	contact.swapBodies();
+	contact.call(b2ContactWrapper::EndContact);*/
 }
 
-void ContactListener::PreSolve(b2Contact* contact, const b2Manifold* oldManifold)
+void ContactListener::PreSolve(b2Contact* b2c, const b2Manifold* oldManifold)
 {
+	/*b2ContactWrapper contact(b2c);
+	contact.m_thisBody = (b2BodyWrapper*)b2c->GetFixtureA()->GetBody()->GetUserData();
+	contact.m_otherBody = (b2BodyWrapper*)b2c->GetFixtureB()->GetBody()->GetUserData();
+	contact.call(b2ContactWrapper::PreSolve);
+	contact.swapBodies();
+	contact.call(b2ContactWrapper::PreSolve);*/
 }
 
-void ContactListener::PostSolve(b2Contact* contact, const b2ContactImpulse* impulse)
+void ContactListener::PostSolve(b2Contact* b2c, const b2ContactImpulse* impulse)
 {
-	currentImpulse = impulse;
-
-	// Check for fixture callback
-	int fixtureId = *(int*)contact->GetFixtureA()->GetUserData();
-	if(fpscbs.find(fixtureId) != fpscbs.end())
-	{
-	startScriptFuncCall(fpscbs[fixtureId]);
-	addScriptFuncArg(contact->GetFixtureB()->GetUserData(), 4); // 4 = int32 typeId
-	endScriptFuncCall();
-	}
-
-	// Check for body callback
-	int bodyId = *(int*)contact->GetFixtureA()->GetBody()->GetUserData();
-	if(bpscbs.find(bodyId) != bpscbs.end())
-	{
-	startScriptFuncCall(bpscbs[bodyId]);
-	addScriptFuncArg(contact->GetFixtureB()->GetBody()->GetUserData(), 4); // 4 = int32 typeId
-	endScriptFuncCall();
-	}
-	
-	currentImpulse = 0;
-}*/
+	/*b2ContactWrapper contact(b2c);
+	contact.m_thisBody = (b2BodyWrapper*)b2c->GetFixtureA()->GetBody()->GetUserData();
+	contact.m_otherBody = (b2BodyWrapper*)b2c->GetFixtureB()->GetBody()->GetUserData();
+	contact.call(b2ContactWrapper::PostSolve);
+	contact.swapBodies();
+	contact.call(b2ContactWrapper::PostSolve);*/
+}

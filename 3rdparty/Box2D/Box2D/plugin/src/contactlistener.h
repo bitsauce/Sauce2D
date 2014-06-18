@@ -9,15 +9,10 @@ class xdScriptEngine;
 
 class ContactListener : public b2ContactListener
 {
-	ContactListener();
-
 	void BeginContact(b2Contact* contact);
 	void EndContact(b2Contact* contact);
 	void PreSolve(b2Contact* contact, const b2Manifold* oldManifold);
 	void PostSolve(b2Contact* contact, const b2ContactImpulse* impulse);
-
-private:
-	xdScriptEngine *scriptEngine;
 };
 
 #endif // B2_CONTACTLISTENER_H

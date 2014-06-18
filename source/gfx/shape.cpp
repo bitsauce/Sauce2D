@@ -178,8 +178,12 @@ void Shape::draw(Batch *batch)
 		m_vertices[i].color = m_fillColor;
 	
 	//batch.setColor(m_fillColor);
-	batch->setTexture(m_fillTexture);
+	if(m_fillTexture) {
+		m_fillTexture->addRef();
+		batch->setTexture(m_fillTexture);
+	}
 	batch->addVertices(m_vertices.data(), m_vertices.size(), m_indices.data(), m_indices.size());
+	
 	batch->setTexture(0);
 	//batch.setColor(Vector4(1.0f));
 	batch->release();

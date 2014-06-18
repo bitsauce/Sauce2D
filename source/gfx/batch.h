@@ -3,6 +3,7 @@
 
 #include <x2d/math.h>
 #include <x2d/util.h>
+#include <x2d/scripts/array.h>
 
 class Texture;
 class Shader;

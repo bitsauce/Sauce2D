@@ -7,3 +7,5 @@ extern "C"
        // Plugin cleanup function
        __declspec(dllexport) void ReleasePlugin();
 }
+
+extern xdScriptEngine *scriptEngine;

@@ -3,7 +3,7 @@
 
 #include <x2d/math.h>
 #include <x2d/base.h>
-#include <x2d/math/array.h>
+#include <x2d/scripts/array.h>
 
 class XDAPI Pixmap
 {

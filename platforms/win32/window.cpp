@@ -12,7 +12,7 @@
 #include <x2d/config.h>
 #include <x2d/engine.h>
 #include <x2d/math.h>
-#include <x2d/scripts.h>
+#include <x2d/scriptengine.h>
 #include <x2d/ini.h>
 #include <x2d/graphics.h>
 

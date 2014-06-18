@@ -4,9 +4,6 @@
     <ClCompile Include="source\gfx\opengl\gltexture.cpp">
       <Filter>source\gfx\opengl</Filter>
     </ClCompile>
-    <ClCompile Include="windebug.cpp">
-      <Filter>source\app</Filter>
-    </ClCompile>
     <ClCompile Include="main.cpp">
       <Filter>source</Filter>
     </ClCompile>
@@ -37,13 +34,13 @@
     <ClCompile Include="plugins.cpp">
       <Filter>source\app</Filter>
     </ClCompile>
+    <ClCompile Include="debug.cpp">
+      <Filter>source\app</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\gfx\opengl\gltexture.h">
       <Filter>source\gfx\opengl</Filter>
-    </ClInclude>
-    <ClInclude Include="windebug.h">
-      <Filter>source\app</Filter>
     </ClInclude>
     <ClInclude Include="source\gfx\opengl\glgraphics.h">
       <Filter>source\gfx\opengl</Filter>
@@ -70,6 +67,9 @@
       <Filter>source\core</Filter>
     </ClInclude>
     <ClInclude Include="plugins.h">
+      <Filter>source\app</Filter>
+    </ClInclude>
+    <ClInclude Include="debug.h">
       <Filter>source\app</Filter>
     </ClInclude>
   </ItemGroup>

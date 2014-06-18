@@ -6,7 +6,7 @@
 #include <angelscript.h>
 #endif
 
-#include "x2d/math/array.h"
+#include <x2d/scripts/array.h>
 
 // Sometimes it may be desired to use the same method names as used by C++ STL.
 // This may for example reduce time when converting code from script to C++ or

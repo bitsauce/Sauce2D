@@ -34,12 +34,12 @@
     <Filter Include="include\gfx">
       <UniqueIdentifier>{7165c08c-b771-49f1-87a3-42c5fce47fe9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="include\scripts">
+      <UniqueIdentifier>{25df4107-2711-490e-937d-5df919d502cc}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\include\x2d\engine.h">
-      <Filter>include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\x2d\scripts.h">
       <Filter>include</Filter>
     </ClInclude>
     <ClInclude Include="..\..\include\x2d\math\matrix.h">
@@ -70,9 +70,6 @@
       <Filter>include</Filter>
     </ClInclude>
     <ClInclude Include="..\..\include\x2d\math\rectPacker.h">
-      <Filter>include\math</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\x2d\math\array.h">
       <Filter>include\math</Filter>
     </ClInclude>
     <ClInclude Include="..\..\source\gfx\animation.h">
@@ -162,6 +159,24 @@
     <ClInclude Include="..\..\include\x2d\faux_angelscript.h">
       <Filter>include</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\include\x2d\math\array.h">
+      <Filter>include\scripts</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\x2d\scripts\anyobject.h">
+      <Filter>include\scripts</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\scripts\scriptany.h">
+      <Filter>source\scripts</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\x2d\scripts\funccall.h">
+      <Filter>include\scripts</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\scripts\scriptfunc.h">
+      <Filter>source\scripts</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\x2d\scriptengine.h">
+      <Filter>include</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\source\math\math.cpp">
@@ -245,9 +260,6 @@
     <ClCompile Include="..\..\source\core\profiler.cpp">
       <Filter>source\core</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\source\core\scripts.cpp">
-      <Filter>source\core</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\source\core\array.cpp">
       <Filter>source\core</Filter>
     </ClCompile>
@@ -274,6 +286,15 @@
     </ClCompile>
     <ClCompile Include="..\..\source\scripts\scriptgrid.cpp">
       <Filter>source\scripts</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\scripts\scriptany.cpp">
+      <Filter>source\scripts</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\scripts\scriptfunc.cpp">
+      <Filter>source\scripts</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\core\scriptengine.cpp">
+      <Filter>source\core</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

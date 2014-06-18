@@ -14,7 +14,7 @@
 #include <x2d/window.h>
 #include <x2d/input.h>
 #include <x2d/math.h>
-#include <x2d/scripts.h>
+#include <x2d/scriptengine.h>
 #include <x2d/graphics.h>
 #include <x2d/audio.h>
 #include <x2d/console.h>
@@ -28,6 +28,7 @@
 #include "scripts/scripthelper.h"
 #include "scripts/scriptarray.h"
 #include "scripts/scriptgrid.h"
+#include "scripts/scriptany.h"
 
 #ifdef X2D_LINUX
 #define MAX_PATH 256
@@ -106,19 +107,19 @@ xdEngine::~xdEngine()
 	// Close sockets
 	closeSockets();
 #endif
-
+	
 	delete m_fileSystem;
 	delete m_graphics;
 	delete m_audio;
 	delete m_profiler;
-	delete m_debugger;
 	delete m_timer;
 	delete m_scripts;
-	delete m_console;
 	delete m_window;
 	delete m_math;
 	delete m_input;
 	delete m_assetLoader;
+	delete m_debugger;
+	delete m_console;
 }
 
 string xdEngine::getPlatformString() const
@@ -246,6 +247,7 @@ int xdEngine::init(const xdConfig &config)
 	RegisterScriptArray(scriptEngine, true);
 	RegisterStdStringUtils(scriptEngine);
 	RegisterScriptGrid(scriptEngine);
+	RegisterScriptAny(scriptEngine);
 
 	// This will register all game objects
 	Base::Register(scriptEngine);

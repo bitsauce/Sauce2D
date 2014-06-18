@@ -9,7 +9,7 @@
 
 #include <x2d/math/rect.h>
 #include <x2d/math/vector.h>
-#include <x2d/scripts.h>
+#include <x2d/scriptengine.h>
 
 AS_REG_VALUE(Rect)
 

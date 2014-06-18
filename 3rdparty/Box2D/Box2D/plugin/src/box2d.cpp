@@ -1,5 +1,6 @@
 #include "box2d.h"
 #include "debugdraw.h"
+#include "contactlistener.h"
 
 Box2D *b2d = 0;
 
@@ -25,18 +26,16 @@ Box2D::Box2D() :
 	m_debugDraw = new DebugDraw;
 	m_debugDraw->SetFlags(drawFlags);
 	m_world->SetDebugDraw(m_debugDraw);
-	
-#ifdef OLD
-	contactListener = new ContactListener;
-	m_world->SetContactListener(contactListener);
-#endif
+
+	m_contactListener = new ContactListener;
+	m_world->SetContactListener(m_contactListener);
 }
 
 Box2D::~Box2D()
 {
 	delete m_world;
 	delete m_debugDraw;
-	//delete m_contactListener;
+	delete m_contactListener;
 }
 
 void Box2D::step(float timeStep)

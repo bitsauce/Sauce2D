@@ -24,6 +24,7 @@ private:
 	float m_scale;
 	b2World *m_world;
 	b2Draw *m_debugDraw;
+	b2ContactListener *m_contactListener;
 };
 
 extern Box2D *b2d;
