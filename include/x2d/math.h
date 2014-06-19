@@ -52,6 +52,7 @@ public:
 	float acos(const float value) { return acosf(value); }
 	float asin(const float value) { return asinf(value); }
 	float atan(const float value) { return atanf(value); }
+	float getPI() const { return PI; }
 };
 
 #endif // X2D_MATH_H

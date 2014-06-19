@@ -29,7 +29,7 @@ void printContent(Pixmap &px)
 	for(int y = 0; y < px.getHeight(); y++) {
 		for(int x = 0; x < px.getWidth(); x++) {
 			Vector4 c = px.getColor(x, y);
-			LOG("Pixmap[%i][%i]: (%f,%f,%f,%f)", y, x, c.r(), c.g(), c.b(), c.a());
+			LOG("Pixmap[%i][%i]: (%f,%f,%f,%f)", y, x, c.getR(), c.getG(), c.getB(), c.getA());
 		}
 	}
 }

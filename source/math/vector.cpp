@@ -118,7 +118,15 @@ int Vector3::Register(asIScriptEngine *scriptEngine)
 	r = scriptEngine->RegisterObjectProperty("Vector3", "int x", offsetof(Vector3, x)); AS_ASSERT
 	r = scriptEngine->RegisterObjectProperty("Vector3", "int y", offsetof(Vector3, y)); AS_ASSERT
 	r = scriptEngine->RegisterObjectProperty("Vector3", "int z", offsetof(Vector3, z)); AS_ASSERT
+	
+	r = scriptEngine->RegisterObjectMethod("Vector3", "float get_r() const", asMETHOD(Vector3, getR), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("Vector3", "float get_g() const", asMETHOD(Vector3, getG), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("Vector3", "float get_b() const", asMETHOD(Vector3, getB), asCALL_THISCALL); AS_ASSERT
 
+	r = scriptEngine->RegisterObjectMethod("Vector3", "void set_r(const float)", asMETHOD(Vector3, setR), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("Vector3", "void set_g(const float)", asMETHOD(Vector3, setG), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("Vector3", "void set_b(const float)", asMETHOD(Vector3, setB), asCALL_THISCALL); AS_ASSERT
+	
 	// Register the constructors
 	r = scriptEngine->RegisterObjectBehaviour("Vector3", asBEHAVE_CONSTRUCT, "void f()", asFUNCTION(DefaultConstructor), asCALL_CDECL_OBJLAST); 
 	r = scriptEngine->RegisterObjectBehaviour("Vector3", asBEHAVE_CONSTRUCT, "void f(const Vector3 &in)", asFUNCTION(CopyConstructor), asCALL_CDECL_OBJLAST); AS_ASSERT
@@ -167,15 +175,17 @@ int Vector4::Register(asIScriptEngine *scriptEngine)
 	r = scriptEngine->RegisterObjectProperty("Vector4", "int z", offsetof(Vector4, z)); AS_ASSERT
 	r = scriptEngine->RegisterObjectProperty("Vector4", "int w", offsetof(Vector4, w)); AS_ASSERT
 
-	r = scriptEngine->RegisterObjectMethod("Vector4", "float get_r()", asMETHOD(Vector4, r), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("Vector4", "float get_g()", asMETHOD(Vector4, g), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("Vector4", "float get_b()", asMETHOD(Vector4, b), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("Vector4", "float get_a()", asMETHOD(Vector4, a), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("Vector4", "float get_r() const", asMETHOD(Vector4, getR), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("Vector4", "float get_g() const", asMETHOD(Vector4, getG), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("Vector4", "float get_b() const", asMETHOD(Vector4, getB), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("Vector4", "float get_a() const", asMETHOD(Vector4, getA), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("Vector4", "Vector3 get_rgb() const", asMETHOD(Vector4, getRGB), asCALL_THISCALL); AS_ASSERT
 
 	r = scriptEngine->RegisterObjectMethod("Vector4", "void set_r(const float)", asMETHOD(Vector4, setR), asCALL_THISCALL); AS_ASSERT
 	r = scriptEngine->RegisterObjectMethod("Vector4", "void set_g(const float)", asMETHOD(Vector4, setG), asCALL_THISCALL); AS_ASSERT
 	r = scriptEngine->RegisterObjectMethod("Vector4", "void set_b(const float)", asMETHOD(Vector4, setB), asCALL_THISCALL); AS_ASSERT
 	r = scriptEngine->RegisterObjectMethod("Vector4", "void set_a(const float)", asMETHOD(Vector4, setA), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("Vector4", "void set_rgb(const Vector3 &in)", asMETHOD(Vector4, setRGB), asCALL_THISCALL); AS_ASSERT
 
 	// Register the constructors
 	r = scriptEngine->RegisterObjectBehaviour("Vector4", asBEHAVE_CONSTRUCT, "void f()", asFUNCTION(DefaultConstructor), asCALL_CDECL_OBJLAST); 

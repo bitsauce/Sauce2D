@@ -155,9 +155,17 @@ public:
     Vector3(float xyz);
     Vector3(float x, float y, float z);
     Vector3(const Vector4 &v);
+
+	// Getting
+	float getR() const { return x; }
+	float getG() const { return y; }
+	float getB() const { return z; }
  
 	// Setting
 	void set(const float x, const float y, const float z);
+	void setR(const float r) { x = r; }
+	void setG(const float g) { y = g; }
+	void setB(const float b) { z = b; }
 
 	// Null
     void nullify();
@@ -214,18 +222,20 @@ public:
     Vector4(float x, float y, float z, float w);
     Vector4(const float d[4]);
 
-	// Color
-	float r() { return x; }
-	float g() { return y; }
-	float b() { return z; }
-	float a() { return w; }
+	// Getters
+	float getR() const { return x; }
+	float getG() const { return y; }
+	float getB() const { return z; }
+	float getA() const { return w; }
+	Vector3 getRGB() const { return Vector3(x, y, z); }
+ 
+	// Setting
+	void set(const float x, const float y, const float z, const float w);
 	void setR(const float r) { x = r; }
 	void setG(const float g) { y = g; }
 	void setB(const float b) { z = b; }
 	void setA(const float a) { w = a; }
- 
-	// Setting
-	void set(const float x, const float y, const float z, const float w);
+	void setRGB(const Vector3 &rgb) { x = rgb.x; y = rgb.y; z = rgb.z; }
 
 	// Transform
     void rotate(const float angle);
