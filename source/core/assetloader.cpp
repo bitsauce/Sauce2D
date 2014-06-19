@@ -45,7 +45,6 @@ int xdAssetLoader::loadImage(string filePath, uchar** data, uint &width, uint &h
 		// load an image from the memory stream
 		FIBITMAP *bitmap = FreeImage_LoadFromMemory(fif, hmem, 0);
 		
-		FreeImage_GetColorType;
 		width = FreeImage_GetWidth(bitmap);
 		height = FreeImage_GetHeight(bitmap);
 		*data = new uchar[width*height*4];

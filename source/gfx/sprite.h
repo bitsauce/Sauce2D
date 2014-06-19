@@ -8,7 +8,7 @@ class TextureRegion;
 class Texture;
 class Batch;
 class Shape;
-class Vertex;
+struct Vertex;
 
 class Sprite
 {

@@ -269,7 +269,7 @@ int xdEngine::init(const xdConfig &config)
 	//gameClient = new Client();
 	//gameServer = new Server();
 
-	srand(time(0));
+	srand((uint)time(0));
 
 	// Load plugins
 	if(config.loadPluginsFunc != 0 && config.loadPluginsFunc(m_scripts) < 0) {

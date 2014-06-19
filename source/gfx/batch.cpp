@@ -117,11 +117,11 @@ void Batch::addVerticesAS(Array *vertices, Array *indices)
 	VertexBuffer &buffer = m_buffers[m_texture];
 	int ioffset = buffer.vertices.size();
 	
-	for(int i = 0; i < vertices->GetSize(); i++) {
+	for(uint i = 0; i < vertices->GetSize(); i++) {
 		buffer.vertices.push_back(*(Vertex*)vertices->At(i));
 	}
 	
-	for(int i = 0; i < indices->GetSize(); i++) {
+	for(uint i = 0; i < indices->GetSize(); i++) {
 		buffer.indices.push_back(*(uint*)indices->At(i) + ioffset);
 	}
 
@@ -131,7 +131,7 @@ void Batch::addVerticesAS(Array *vertices, Array *indices)
 
 void Batch::modifyVertex(int index, Vertex vertex)
 {
-	if(index < 0 || index >= m_buffers[m_texture].vertices.size()) {
+	if(index < 0 || index >= (int)m_buffers[m_texture].vertices.size()) {
 		LOG("Batch.modifyVertex: Index out-of-bounds.");
 		return;
 	}
@@ -144,7 +144,7 @@ void Batch::modifyVertex(int index, Vertex vertex)
 
 Vertex Batch::getVertex(int index)
 {
-	if(index < 0 || index >= m_buffers[m_texture].vertices.size()) {
+	if(index < 0 || index >= (int)m_buffers[m_texture].vertices.size()) {
 		LOG("Batch.getVertex: Index out-of-bounds.");
 		return Vertex();
 	}

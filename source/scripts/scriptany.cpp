@@ -414,7 +414,7 @@ void CScriptAny::EnumReferences(asIScriptEngine *engine)
 {
 	// If we're holding a reference, we'll notify the garbage collector of it
 	if( value.valueObj && (value.typeId & asTYPEID_MASK_OBJECT) )
-	{return;
+	{
 		engine->GCEnumCallback(value.valueObj);
 
 		// The object type itself is also garbage collected

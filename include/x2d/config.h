@@ -10,7 +10,7 @@
 	#if _MSC_VER >= 1500
 		#define USE_CTR_SECURE
 	#endif
-	#ifdef _DEBUG
+	#if defined(_DEBUG) && !defined(X2D_DEBUG) 
 		#define X2D_DEBUG
 	#endif
 	#elif __GNUC__

@@ -174,7 +174,7 @@ void Shape::draw(Batch *batch)
 		return;
 	}
 
-	for(int i = 0; i < m_vertices.size(); i++)
+	for(uint i = 0; i < m_vertices.size(); i++)
 		m_vertices[i].color = m_fillColor;
 	
 	//batch.setColor(m_fillColor);

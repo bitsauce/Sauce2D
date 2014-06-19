@@ -30,7 +30,7 @@ Animation::Animation(Texture *texture, const int nRows, const int nColumns)
 
 Animation::~Animation()
 {
-	for(int i = 0; i < m_textureRegions.size(); i++) {
+	for(uint i = 0; i < m_textureRegions.size(); i++) {
 		m_textureRegions[i]->release();
 	}
 }

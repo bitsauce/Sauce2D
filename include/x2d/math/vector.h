@@ -155,6 +155,7 @@ public:
     Vector3(float xyz);
     Vector3(float x, float y, float z);
     Vector3(const Vector4 &v);
+    Vector3(const Vector2 &v);
 
 	// Getting
 	float getR() const { return x; }
@@ -201,7 +202,8 @@ public:
 
 	// AngelScript
 	static void DefaultConstructor(Vector3 *self);
-	static void CopyConstructor(const Vector3 &other, Vector3 *self);
+	static void CopyConstructor1(const Vector3 &other, Vector3 *self);
+	static void CopyConstructor2(const Vector2 &other, Vector3 *self);
 	static void InitConstructor1(float xyz, Vector3 *self);
 	static void InitConstructor2(float x, float y, float z, Vector3 *self);
  

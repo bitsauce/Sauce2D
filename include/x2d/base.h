@@ -98,7 +98,7 @@ public:
 	{
 	}
 	
-	RefCounter(const RefCounter &other) :
+	RefCounter(const RefCounter &) :
 		refCount(1)
 	{
 	}

@@ -25,7 +25,6 @@ int Pixmap::Register(asIScriptEngine *scriptEngine)
 
 void printContent(Pixmap &px)
 {
-	int i = 0;
 	for(int y = 0; y < px.getHeight(); y++) {
 		for(int x = 0; x < px.getWidth(); x++) {
 			Vector4 c = px.getColor(x, y);

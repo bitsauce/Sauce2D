@@ -54,7 +54,7 @@ private:
 		Vertex vert;
 		vert.color.set(1.0f, 1.0f, 1.0f, 1.0f);
 		vert.texCoord.set(0.0f, 0.0f);
-		for(int i = 0; i < arr.GetSize(); i++) {
+		for(uint i = 0; i < arr.GetSize(); i++) {
 			vert.position = *(Vector2*)arr.At(i);
 			vertices.push_back(vert);
 		}

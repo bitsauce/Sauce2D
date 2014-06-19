@@ -129,7 +129,8 @@ int Vector3::Register(asIScriptEngine *scriptEngine)
 	
 	// Register the constructors
 	r = scriptEngine->RegisterObjectBehaviour("Vector3", asBEHAVE_CONSTRUCT, "void f()", asFUNCTION(DefaultConstructor), asCALL_CDECL_OBJLAST); 
-	r = scriptEngine->RegisterObjectBehaviour("Vector3", asBEHAVE_CONSTRUCT, "void f(const Vector3 &in)", asFUNCTION(CopyConstructor), asCALL_CDECL_OBJLAST); AS_ASSERT
+	r = scriptEngine->RegisterObjectBehaviour("Vector3", asBEHAVE_CONSTRUCT, "void f(const Vector3 &in)", asFUNCTION(CopyConstructor1), asCALL_CDECL_OBJLAST); AS_ASSERT
+	r = scriptEngine->RegisterObjectBehaviour("Vector3", asBEHAVE_CONSTRUCT, "void f(const Vector2 &in)", asFUNCTION(CopyConstructor2), asCALL_CDECL_OBJLAST); AS_ASSERT
 	r = scriptEngine->RegisterObjectBehaviour("Vector3", asBEHAVE_CONSTRUCT, "void f(float)", asFUNCTION(InitConstructor1), asCALL_CDECL_OBJLAST); AS_ASSERT
 	r = scriptEngine->RegisterObjectBehaviour("Vector3", asBEHAVE_CONSTRUCT, "void f(float, float, float)", asFUNCTION(InitConstructor2), asCALL_CDECL_OBJLAST); AS_ASSERT
 
@@ -615,6 +616,13 @@ Vector3::Vector3(const Vector4 &v)
 	this->z = v.z;
 }
 
+Vector3::Vector3(const Vector2 &v)
+{
+    this->x = v.x;
+    this->y = v.y;
+	this->z = 0.0f;
+}
+
 //----------------------------------------------------------------------------
 // Functions
 //----------------------------------------------------------------------------
@@ -776,7 +784,12 @@ void Vector3::DefaultConstructor(Vector3 *self)
 	new(self) Vector3(0.0f);
 }
 
-void Vector3::CopyConstructor(const Vector3 &other, Vector3 *self)
+void Vector3::CopyConstructor1(const Vector3 &other, Vector3 *self)
+{
+	new(self) Vector3(other);
+}
+
+void Vector3::CopyConstructor2(const Vector2 &other, Vector3 *self)
 {
 	new(self) Vector3(other);
 }

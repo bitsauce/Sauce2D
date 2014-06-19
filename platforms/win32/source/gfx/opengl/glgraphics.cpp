@@ -98,9 +98,6 @@ void OpenGL::init(Window *window)
 
 	// Set OpenGL hints
 	glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
-
-	// Setup matrix stack
-	//m_matrixStack.resize(1);
 }
 
 void OpenGL::createContext(HWND window)
@@ -195,6 +192,7 @@ void OpenGL::getOrthoProjection(float &l, float &r, float &b, float &t, float &n
 }
 
 const int FLOAT_SIZE = sizeof(float);
+const int VERTEX_SIZE = sizeof(Vertex);
 
 void OpenGL::renderBatch(const Batch &batch)
 {
@@ -223,11 +221,11 @@ void OpenGL::renderBatch(const Batch &batch)
 			uint *indexData = (uint*)itr->second.indices.data();
 
 			// Draw arrays
-			glVertexPointer(2, GL_FLOAT, 8*FLOAT_SIZE, vertexData);
-			glColorPointer(4, GL_FLOAT, 8*FLOAT_SIZE, vertexData + 2);
-			glTexCoordPointer(2, GL_FLOAT, 8*FLOAT_SIZE, vertexData + 6);
+			glVertexPointer(2, GL_FLOAT, VERTEX_SIZE, vertexData);
+			glColorPointer(4, GL_FLOAT, VERTEX_SIZE, vertexData + 2);
+			glTexCoordPointer(2, GL_FLOAT, VERTEX_SIZE, vertexData + 6);
 
-			glDrawElements(GL_TRIANGLES, itr->second.indices.size(), GL_UNSIGNED_INT, indexData); // Note to self: Might want to use GL_UNSIGNED_BYTE to minimize upload bandwidth
+			glDrawElements(GL_TRIANGLES, itr->second.indices.size(), GL_UNSIGNED_INT, indexData);
 		}
 	}else{
 		for(TextureVertexMap::iterator itr = buffers.begin(); itr != buffers.end(); ++itr)
@@ -243,9 +241,9 @@ void OpenGL::renderBatch(const Batch &batch)
 			glBindBuffer(GL_ARRAY_BUFFER_ARB, ((GLvertexbuffer*)itr->second.vbo)->m_vboId);
 			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ((GLvertexbuffer*)itr->second.vbo)->m_iboId);
 
-			glVertexPointer(2, GL_FLOAT, 8*FLOAT_SIZE, (void*)(0*FLOAT_SIZE));
-			glColorPointer(4, GL_FLOAT, 8*FLOAT_SIZE, (void*)(2*FLOAT_SIZE));
-			glTexCoordPointer(2, GL_FLOAT, 8*FLOAT_SIZE, (void*)(6*FLOAT_SIZE));
+			glVertexPointer(2, GL_FLOAT, VERTEX_SIZE, (void*)(0*FLOAT_SIZE));
+			glColorPointer(4, GL_FLOAT, VERTEX_SIZE, (void*)(2*FLOAT_SIZE));
+			glTexCoordPointer(2, GL_FLOAT, VERTEX_SIZE, (void*)(6*FLOAT_SIZE));
 
 			glDrawElements(GL_TRIANGLES, itr->second.indices.size(), GL_UNSIGNED_INT, 0);
 
