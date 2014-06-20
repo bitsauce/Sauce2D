@@ -139,8 +139,8 @@ private:
 	static int Declare(asIScriptEngine *scriptEngine);									\
 	static int Register(asIScriptEngine *scriptEngine);									\
 	public:																				\
-	void addRef() { refCounter.add(); }													\
-	void release() { if(refCounter.release() == 0) delete this; }
+	virtual void addRef() { refCounter.add(); }											\
+	virtual void release() { if(refCounter.release() == 0) delete this; }
 
 #define AS_DECL_VALUE																	\
 	private:																			\

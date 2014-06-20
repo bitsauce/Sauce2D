@@ -12,6 +12,7 @@ struct Vertex;
 
 class Sprite
 {
+	friend class SpriteBatch;
 public:
 	AS_DECL_REF
 
@@ -27,6 +28,7 @@ public:
 	void setOrigin(const Vector2 &origin);
 	void setRotation(const float ang);
 	void setRegion(TextureRegion *region);
+	void setColor(const Vector4 &color);
 
 	void move(const Vector2 &dt);
 	void rotate(const float ang);
@@ -38,6 +40,9 @@ public:
 	Vector2 getOrigin() const;
 	Vector2 getCenter() const;
 	float getRotation() const;
+	Vector4 getColor() const;
+	TextureRegion *getRegion() const;
+	Texture *getTexture() const;
 
 	void draw(Batch *batch) const;
 
@@ -47,6 +52,7 @@ private:
 	Vector2 m_size;
 	Vector2 m_origin;
 	float m_angle;
+	Vector4 m_color;
 
 	// Returns the transformed vertices
 	void getVertices(Vertex *vertices) const;

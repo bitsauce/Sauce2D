@@ -29,13 +29,13 @@ public:
 		glDeleteBuffers(1, &m_iboId);
 	}
 
-	void upload(const VertexBuffer &buffer)
+	void upload(const VertexBuffer *buffer)
 	{
 		glBindBuffer(GL_ARRAY_BUFFER, m_vboId);
-		glBufferData(GL_ARRAY_BUFFER, buffer.vertices.size()*sizeof(Vertex), buffer.vertices.data(), GL_DYNAMIC_DRAW);
+		glBufferData(GL_ARRAY_BUFFER, buffer->vertices.size()*sizeof(Vertex), buffer->vertices.data(), GL_DYNAMIC_DRAW);
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_iboId);
-		glBufferData(GL_ELEMENT_ARRAY_BUFFER, buffer.indices.size()*sizeof(uint), buffer.indices.data(), GL_DYNAMIC_DRAW);
+		glBufferData(GL_ELEMENT_ARRAY_BUFFER, buffer->indices.size()*sizeof(uint), buffer->indices.data(), GL_DYNAMIC_DRAW);
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 	}
 
@@ -217,15 +217,15 @@ void OpenGL::renderBatch(const Batch &batch)
 			}
 
 			// Get vertices and vertex data
-			float *vertexData = (float*)itr->second.vertices.data();
-			uint *indexData = (uint*)itr->second.indices.data();
+			float *vertexData = (float*)itr->second->vertices.data();
+			uint *indexData = (uint*)itr->second->indices.data();
 
 			// Draw arrays
 			glVertexPointer(2, GL_FLOAT, VERTEX_SIZE, vertexData);
 			glColorPointer(4, GL_FLOAT, VERTEX_SIZE, vertexData + 2);
 			glTexCoordPointer(2, GL_FLOAT, VERTEX_SIZE, vertexData + 6);
 
-			glDrawElements(GL_TRIANGLES, itr->second.indices.size(), GL_UNSIGNED_INT, indexData);
+			glDrawElements(GL_TRIANGLES, itr->second->indices.size(), GL_UNSIGNED_INT, indexData);
 		}
 	}else{
 		for(TextureVertexMap::iterator itr = buffers.begin(); itr != buffers.end(); ++itr)
@@ -238,14 +238,14 @@ void OpenGL::renderBatch(const Batch &batch)
 				glBindTexture(GL_TEXTURE_2D, 0);
 			}
 
-			glBindBuffer(GL_ARRAY_BUFFER_ARB, ((GLvertexbuffer*)itr->second.vbo)->m_vboId);
-			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ((GLvertexbuffer*)itr->second.vbo)->m_iboId);
+			glBindBuffer(GL_ARRAY_BUFFER_ARB, ((GLvertexbuffer*)itr->second->vbo)->m_vboId);
+			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ((GLvertexbuffer*)itr->second->vbo)->m_iboId);
 
 			glVertexPointer(2, GL_FLOAT, VERTEX_SIZE, (void*)(0*FLOAT_SIZE));
 			glColorPointer(4, GL_FLOAT, VERTEX_SIZE, (void*)(2*FLOAT_SIZE));
 			glTexCoordPointer(2, GL_FLOAT, VERTEX_SIZE, (void*)(6*FLOAT_SIZE));
 
-			glDrawElements(GL_TRIANGLES, itr->second.indices.size(), GL_UNSIGNED_INT, 0);
+			glDrawElements(GL_TRIANGLES, itr->second->indices.size(), GL_UNSIGNED_INT, 0);
 
 			glBindBuffer(GL_ARRAY_BUFFER_ARB, 0);
 			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
