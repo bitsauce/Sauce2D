@@ -11,6 +11,7 @@
 
 class xdDebug;
 class xdFileSystem;
+class xdFileWriter;
 
 class XDAPI xdConsole
 {
@@ -19,6 +20,7 @@ public:
 	AS_DECL_SINGLETON
 
 	xdConsole();
+	virtual ~xdConsole();
 
 	virtual void log(const string &msg);
 	void log(const char*, ...);
@@ -36,6 +38,7 @@ private:
 	string m_buffer;
 	xdDebug *m_debugger;
 	xdFileSystem *m_fileSystem;
+	xdFileWriter *m_output;
 };
 
 #endif // X2D_CONSOLE_H

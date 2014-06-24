@@ -15,30 +15,33 @@ void ContactListener::BeginContact(b2Contact* b2c)
 
 void ContactListener::EndContact(b2Contact* b2c)
 {
-	/*b2ContactWrapper contact(b2c);
-	contact.m_thisBody = (b2BodyWrapper*)b2c->GetFixtureA()->GetBody()->GetUserData();
-	contact.m_otherBody = (b2BodyWrapper*)b2c->GetFixtureB()->GetBody()->GetUserData();
-	contact.call(b2ContactWrapper::EndContact);
-	contact.swapBodies();
-	contact.call(b2ContactWrapper::EndContact);*/
+	b2ContactWrapper *contact = new b2ContactWrapper(b2c,
+		(b2BodyWrapper*)b2c->GetFixtureA()->GetBody()->GetUserData(),
+		(b2BodyWrapper*)b2c->GetFixtureB()->GetBody()->GetUserData());
+	contact->call(b2ContactWrapper::EndContact);
+	contact->swapBodies();
+	contact->call(b2ContactWrapper::EndContact);
+	contact->release();
 }
 
 void ContactListener::PreSolve(b2Contact* b2c, const b2Manifold* oldManifold)
 {
-	/*b2ContactWrapper contact(b2c);
-	contact.m_thisBody = (b2BodyWrapper*)b2c->GetFixtureA()->GetBody()->GetUserData();
-	contact.m_otherBody = (b2BodyWrapper*)b2c->GetFixtureB()->GetBody()->GetUserData();
-	contact.call(b2ContactWrapper::PreSolve);
-	contact.swapBodies();
-	contact.call(b2ContactWrapper::PreSolve);*/
+	b2ContactWrapper *contact = new b2ContactWrapper(b2c,
+		(b2BodyWrapper*)b2c->GetFixtureA()->GetBody()->GetUserData(),
+		(b2BodyWrapper*)b2c->GetFixtureB()->GetBody()->GetUserData());
+	contact->call(b2ContactWrapper::PreSolve);
+	contact->swapBodies();
+	contact->call(b2ContactWrapper::PreSolve);
+	contact->release();
 }
 
 void ContactListener::PostSolve(b2Contact* b2c, const b2ContactImpulse* impulse)
 {
-	/*b2ContactWrapper contact(b2c);
-	contact.m_thisBody = (b2BodyWrapper*)b2c->GetFixtureA()->GetBody()->GetUserData();
-	contact.m_otherBody = (b2BodyWrapper*)b2c->GetFixtureB()->GetBody()->GetUserData();
-	contact.call(b2ContactWrapper::PostSolve);
-	contact.swapBodies();
-	contact.call(b2ContactWrapper::PostSolve);*/
+	b2ContactWrapper *contact = new b2ContactWrapper(b2c,
+		(b2BodyWrapper*)b2c->GetFixtureA()->GetBody()->GetUserData(),
+		(b2BodyWrapper*)b2c->GetFixtureB()->GetBody()->GetUserData());
+	contact->call(b2ContactWrapper::PostSolve);
+	contact->swapBodies();
+	contact->call(b2ContactWrapper::PostSolve);
+	contact->release();
 }

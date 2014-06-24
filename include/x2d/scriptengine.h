@@ -38,6 +38,9 @@ public:
 
 	// Script module
 	asIScriptModule *getModule() const;
+
+	// Script engine
+	asIScriptEngine *getASEngine() const;
 	
 	// Script context
 	asIScriptContext *createContext() const;

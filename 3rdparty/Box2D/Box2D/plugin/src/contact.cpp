@@ -57,10 +57,12 @@ void b2ContactWrapper::call(ContactType type)
 
 b2BodyWrapper *b2ContactWrapper::getThisBody() const
 {
+	m_thisBody->addRef();
 	return m_thisBody;
 }
 
 b2BodyWrapper *b2ContactWrapper::getOtherBody() const
 {
+	m_otherBody->addRef();
 	return m_otherBody;
 }

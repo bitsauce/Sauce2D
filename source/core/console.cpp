@@ -30,18 +30,30 @@ int xdConsole::Register(asIScriptEngine *scriptEngine)
 
 xdConsole::xdConsole() :
 	m_fileSystem(0), // Set by the engine
-	m_debugger(0) // Set by the engine
+	m_debugger(0), // Set by the engine
+	m_output(0)
 {
+}
+
+xdConsole::~xdConsole()
+{
+	delete m_output;
 }
 
 void xdConsole::log(const string &msg)
 {
+	// Append to file
+	if(xdEngine::IsEnabled(XD_EXPORT_LOG)) {
+		m_output->append(msg + "\n");
+		m_output->flush();
+	}
+
 	// Send to debugger
 	if(m_debugger) {
 		m_debugger->sendPacket(XD_MESSAGE_PACKET, msg.data());
 	}
 
-	// Append to console
+	// Append to console buffer
 	m_log.append(msg);
 	m_buffer.append(msg);
 }

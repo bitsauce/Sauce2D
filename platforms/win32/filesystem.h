@@ -53,6 +53,11 @@ public:
 	{
 	}
 
+	~FileWriter()
+	{
+		close();
+	}
+
 	bool isOpen()
 	{
 		return stream.is_open();
@@ -71,6 +76,11 @@ public:
 	void append(const char* data, const int length)
 	{
 		stream << data;
+	}
+
+	void flush()
+	{
+		stream.flush();
 	}
 
 private:

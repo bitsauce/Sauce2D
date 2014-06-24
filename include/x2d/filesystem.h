@@ -18,15 +18,15 @@ public:
 class XDAPI xdFileWriter
 {
 public:
+	virtual ~xdFileWriter() {}
+
 	virtual bool isOpen() = 0;
 	virtual void close() = 0;
-	
+
 	virtual void clear() = 0;
 	virtual void append(const char* data, const int length) = 0;
-	void append(const string &str)
-	{
-		append(str.data(), str.size());
-	}
+	void append(const string &str) { append(str.data(), str.size()); }
+	virtual void flush() = 0;
 };
 
 class XDAPI xdFileSystem

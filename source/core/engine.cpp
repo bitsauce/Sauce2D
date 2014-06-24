@@ -203,7 +203,7 @@ int xdEngine::init(const xdConfig &config)
 	}
 
 	// Check for debug flag
-	if(m_debugger)
+	if(IsEnabled(XD_DEBUG) && m_debugger)
 	{
 		// Init debugger
 		if(m_debugger->init())
@@ -226,6 +226,9 @@ int xdEngine::init(const xdConfig &config)
 			// Failed to initialize socket
 		}
 		m_console->m_debugger = m_debugger;
+	}
+	if(IsEnabled(XD_EXPORT_LOG)) {
+		m_console->m_output = xdFileSystem::CreateFileWriter(util::getAbsoluteFilePath(":/console.txt"));
 	}
 	
 	// Print application message
@@ -370,6 +373,7 @@ void xdEngine::update()
 		ERR("Run-Time exception '%s' occured in function '%s' in file '%s:%i'",
 			ctx->GetExceptionString(), ctx->GetExceptionFunction()->GetDeclaration(), sectionName, line);
 	}
+	ctx->GetEngine()->GarbageCollect(asGC_ONE_STEP);
 	r = ctx->Release(); assert(r >= 0);
 	
 	m_profiler->popProfile();

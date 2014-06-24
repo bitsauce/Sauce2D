@@ -4,11 +4,10 @@
 
 #include <x2d/config.h>
 #include <x2d/engine.h>
-#include <x2d/scripts.h>
 #include <x2d/math.h>
-#include <x2d/math/array.h>
+#include <x2d/scriptengine.h>
+#include <x2d/scripts/array.h>
 #include <x2d/scripts/anyobject.h>
-#include <x2d/scripts.h>
 
 
 #ifdef OLD
@@ -303,6 +302,7 @@ xdScriptEngine *scriptEngine = 0;
 int CreatePlugin(xdScriptEngine *scriptEngine)
 {
 	::scriptEngine = scriptEngine;
+	asIScriptEngine *asEngine = scriptEngine->getASEngine();
 
 	int r = 0;
 	
@@ -310,7 +310,7 @@ int CreatePlugin(xdScriptEngine *scriptEngine)
 	r = scriptEngine->registerSingletonType("ScriptBox2D");
 	r = scriptEngine->registerValueType("b2BodyDef", sizeof(b2BodyDefWrapper)); AS_ASSERT
 	r = scriptEngine->registerRefType("b2Fixture", asMETHOD(b2FixtureWrapper, addRef), asMETHOD(b2FixtureWrapper, release)); AS_ASSERT
-	r = scriptEngine->registerRefType("b2Body", asMETHOD(b2BodyWrapper, addRef), asMETHOD(b2BodyWrapper, release)); AS_ASSERT
+	r = asEngine->RegisterObjectType("b2Body", 0, asOBJ_REF | asOBJ_GC); AS_ASSERT
 	r = scriptEngine->registerRefType("b2Contact", asMETHOD(b2ContactWrapper, addRef), asMETHOD(b2ContactWrapper, release)); AS_ASSERT
 	r = scriptEngine->registerFuncdef("void ContactFunc(b2Contact@)"); AS_ASSERT
 
@@ -342,8 +342,17 @@ int CreatePlugin(xdScriptEngine *scriptEngine)
 	r = scriptEngine->registerObjectMethod("b2Fixture", "void setDensity(const float)", asMETHOD(b2FixtureWrapper, setDensity)); AS_ASSERT
 	r = scriptEngine->registerObjectMethod("b2Fixture", "void setMaskBits(const uint)", asMETHOD(b2FixtureWrapper, setMaskBits)); AS_ASSERT
 	r = scriptEngine->registerObjectMethod("b2Fixture", "void setCategoryBits(const uint)", asMETHOD(b2FixtureWrapper, setCategoryBits)); AS_ASSERT
+	
+	r = asEngine->RegisterObjectBehaviour("b2Body", asBEHAVE_ADDREF, "void f()", asMETHOD(b2BodyWrapper, addRef), asCALL_THISCALL); AS_ASSERT
+	r = asEngine->RegisterObjectBehaviour("b2Body", asBEHAVE_RELEASE, "void f()", asMETHOD(b2BodyWrapper, release), asCALL_THISCALL); AS_ASSERT
+	r = asEngine->RegisterObjectBehaviour("b2Body", asBEHAVE_SETGCFLAG, "void f()", asMETHOD(b2BodyWrapper, setGCFlag), asCALL_THISCALL); AS_ASSERT
+	r = asEngine->RegisterObjectBehaviour("b2Body", asBEHAVE_GETGCFLAG, "bool f()", asMETHOD(b2BodyWrapper, getGCFlag), asCALL_THISCALL); AS_ASSERT
+	r = asEngine->RegisterObjectBehaviour("b2Body", asBEHAVE_GETREFCOUNT, "int f()", asMETHOD(b2BodyWrapper, getRefCount), asCALL_THISCALL); AS_ASSERT
+	r = asEngine->RegisterObjectBehaviour("b2Body", asBEHAVE_ENUMREFS, "void f(int&in)", asMETHOD(b2BodyWrapper, enumReferences), asCALL_THISCALL); AS_ASSERT
+	r = asEngine->RegisterObjectBehaviour("b2Body", asBEHAVE_RELEASEREFS, "void f(int&in)", asMETHOD(b2BodyWrapper, releaseReferences), asCALL_THISCALL); AS_ASSERT
 
 	r = scriptEngine->registerObjectFactory("b2Body", "b2Body @f(const b2BodyDef &in)", asFUNCTION(b2BodyWrapper::Factory)); AS_ASSERT
+	r = scriptEngine->registerObjectMethod("b2Body", "void destroy()", asMETHOD(b2BodyWrapper, destroy)); AS_ASSERT
 	r = scriptEngine->registerObjectMethod("b2Body", "b2Fixture @createFixture(const Rect &in, float)", asMETHODPR(b2BodyWrapper, createFixture, (const Rect&, float), b2FixtureWrapper*)); AS_ASSERT
 	r = scriptEngine->registerObjectMethod("b2Body", "b2Fixture @createFixture(const Vector2 &in, const float, float)", asMETHODPR(b2BodyWrapper, createFixture, (const Vector2&, const float, float), b2FixtureWrapper*)); AS_ASSERT
 	r = scriptEngine->registerObjectMethod("b2Body", "b2Fixture @createFixture(array<Vector2> &in, float density)", asMETHODPR(b2BodyWrapper, createFixture, (Array*, float), b2FixtureWrapper*)); AS_ASSERT
@@ -355,9 +364,10 @@ int CreatePlugin(xdScriptEngine *scriptEngine)
 	r = scriptEngine->registerObjectMethod("b2Body", "void setEndContactCallback(ContactFunc@)", asMETHOD(b2BodyWrapper, setEndContactCallback)); AS_ASSERT
 	r = scriptEngine->registerObjectMethod("b2Body", "void setPreSolveCallback(ContactFunc@)", asMETHOD(b2BodyWrapper, setPreSolveCallback)); AS_ASSERT
 	r = scriptEngine->registerObjectMethod("b2Body", "void setPostSolveCallback(ContactFunc@)", asMETHOD(b2BodyWrapper, setPostSolveCallback)); AS_ASSERT
-	//r = scriptEngine->registerObjectMethod("b2Body", "void setObject(?&in)", asMETHOD(b2BodyWrapper, setObject)); AS_ASSERT
-	//r = scriptEngine->registerObjectMethod("b2Body", "bool getObject(?&out)", asMETHOD(b2BodyWrapper, getObject)); AS_ASSERT
+	r = scriptEngine->registerObjectMethod("b2Body", "void setObject(?&in)", asMETHOD(b2BodyWrapper, setObject)); AS_ASSERT
+	r = scriptEngine->registerObjectMethod("b2Body", "bool getObject(?&out)", asMETHOD(b2BodyWrapper, getObject)); AS_ASSERT
 	r = scriptEngine->registerObjectMethod("b2Body", "Vector2 getPosition() const", asMETHOD(b2BodyWrapper, getPosition)); AS_ASSERT
+	r = scriptEngine->registerObjectMethod("b2Body", "Vector2 getCenter() const", asMETHOD(b2BodyWrapper, getPosition)); AS_ASSERT
 	r = scriptEngine->registerObjectMethod("b2Body", "float getAngle() const", asMETHOD(b2BodyWrapper, getAngle)); AS_ASSERT
 	r = scriptEngine->registerObjectMethod("b2Body", "void applyImpulse(const Vector2 &in, const Vector2 &in)", asMETHOD(b2BodyWrapper, applyImpulse)); AS_ASSERT
 	r = scriptEngine->registerObjectMethod("b2Body", "void setLinearVelocity(const Vector2 &in)", asMETHOD(b2BodyWrapper, setLinearVelocity)); AS_ASSERT

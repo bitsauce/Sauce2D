@@ -12,6 +12,9 @@ public:
 
 	virtual void Store(void *ref, int refTypeId) = 0;
 	virtual bool Retrieve(void *ref, int refTypeId) const = 0;
+
+	virtual void EnumReferences(asIScriptEngine*) = 0;
+	virtual void ReleaseAllHandles(asIScriptEngine*) = 0;
 };
 
 XDAPI AnyObject *CreateAnyObject();

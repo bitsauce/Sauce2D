@@ -20,11 +20,14 @@ public:
 	float getScale() const;
 	b2World *getWorld() const;
 
+	void destroyBody(b2Body *body);
+
 private:
 	float m_scale;
 	b2World *m_world;
 	b2Draw *m_debugDraw;
 	b2ContactListener *m_contactListener;
+	vector<b2Body*> m_bodiesToDestoy;
 };
 
 extern Box2D *b2d;

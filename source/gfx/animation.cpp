@@ -17,6 +17,7 @@ int Animation::Register(asIScriptEngine *scriptEngine)
 
 Animation::Animation(Texture *texture, const int nRows, const int nColumns)
 {
+	if(texture == 0) return;
 	for(int y = 0; y < nRows; y++) {
 		for(int x = 0; x < nColumns; x++) {
 			texture->addRef();

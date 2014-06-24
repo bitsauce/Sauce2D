@@ -113,6 +113,11 @@ public:
 		return --refCount;
 	}
 
+	int get() const
+	{
+		return refCount;
+	}
+
 private:
 	int refCount;
 };

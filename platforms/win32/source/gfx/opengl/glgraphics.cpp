@@ -88,10 +88,6 @@ void OpenGL::init(Window *window)
 	glShadeModel(GL_SMOOTH);
 	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 
-	// Enable alpha
-	glEnable(GL_ALPHA_TEST);
-	glAlphaFunc(GL_GREATER, 0.0f);
-
 	// Enable blend
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -154,7 +150,7 @@ void OpenGL::destroyContext()
 void OpenGL::swapBuffers()
 {
 	SwapBuffers(m_deviceContext);
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	glClear(GL_COLOR_BUFFER_BIT);
 }
 
 void OpenGL::setViewport(const Recti &rect)

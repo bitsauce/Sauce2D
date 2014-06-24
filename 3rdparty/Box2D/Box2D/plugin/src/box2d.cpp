@@ -40,6 +40,12 @@ Box2D::~Box2D()
 
 void Box2D::step(float timeStep)
 {
+	// Destroy bodies while the world is unlocked
+	for(vector<b2Body*>::iterator itr = m_bodiesToDestoy.begin(); itr != m_bodiesToDestoy.end(); ++itr) {
+		m_world->DestroyBody(*itr);
+	}
+	m_bodiesToDestoy.clear();
+
 	m_world->Step(timeStep, 8, 3);
 }
 
@@ -66,4 +72,9 @@ float Box2D::getScale() const
 b2World *Box2D::getWorld() const
 {
 	return m_world;
+}
+
+void Box2D::destroyBody(b2Body *body)
+{
+	m_bodiesToDestoy.push_back(body);
 }

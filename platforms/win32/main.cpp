@@ -6,11 +6,9 @@
 //                                                              |___/     
 //				Originally written by Marcus Loo Vergara (aka. Bitsauce)
 //									2011-2014 (C)
+
 #include <x2d/engine.h>
-
-
-#include "source/gfx/opengl/glgraphics.h"
-#include "source/sfx/openal/alaudio.h"
+#include <direct.h> // for _getcw()
 
 // Windows application
 #include "window.h"
@@ -21,16 +19,19 @@
 #include "plugins.h"
 #include "debug.h"
 
+// Gfx & sfx
+#include "source/gfx/opengl/glgraphics.h"
+#include "source/sfx/openal/alaudio.h"
+
 // Visual Leak Detector
 #if defined(X2D_WINDOWS) && defined(X2D_DEBUG)
 #include <vld.h>
 #endif
 
-#include <direct.h>
-
 // Win32 entry point
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, INT)
 {
+	try{
 	// Process the command-line
 	int flags = 0;
 	string workDir;
@@ -46,6 +47,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, INT)
 			}
 		}
 	}
+	flags |= XD_EXPORT_LOG; // For now we force this flag
 
 	xdEngine *engine = CreateEngine();
 
@@ -79,9 +81,15 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, INT)
 		return -1;
 	}
 
+
 	window->initEvents();
 	int r = engine->run();
 	delete engine;
 	cleanPlugins();
-	return r;
+	}catch(exception e){
+		ofstream f("C:\\crash.txt");
+		f << "Application died pre-maturely";
+		f.close();
+	}
+	return 0;//r;
 }

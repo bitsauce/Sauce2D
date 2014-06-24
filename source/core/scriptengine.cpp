@@ -86,7 +86,7 @@ int xdScriptEngine::registerRefType(const char *obj, const asSFuncPtr &addRef, c
 
 int xdScriptEngine::registerValueType(const char *obj, const int size)
 {
-	return scriptEngine->RegisterObjectType(obj, size, asOBJ_VALUE | asOBJ_POD | asOBJ_APP_CLASS_CAK);;
+	return scriptEngine->RegisterObjectType(obj, size, asOBJ_VALUE | asOBJ_POD | asOBJ_APP_CLASS_CAK);
 }
 
 int xdScriptEngine::registerObjectFactory(const char *obj, const char *decl, const asSFuncPtr &func)
@@ -212,6 +212,11 @@ asIScriptContext *xdScriptEngine::createContext() const
 asIScriptModule *xdScriptEngine::getModule() const
 {
 	return m_module;
+}
+
+asIScriptEngine *xdScriptEngine::getASEngine() const
+{
+	return scriptEngine;
 }
 
 uint xdScriptEngine::classCount() const
