@@ -228,9 +228,9 @@ Texture *Batch::renderToTexture()
 
 void Batch::makeStatic()
 {
-	if(!xdGraphics::IsSupported(xdGraphics::VertexBufferObjects))
-		throw xdException(XD_FEATURE_NOT_SUPPORTED, "Tried to create a VBO while it is not supported by the GPU!");
-
+	if(!xdGraphics::IsSupported(xdGraphics::VertexBufferObjects)) {
+		AS_THROW("Tried to create a VBO whilst its not supported by the GPU!",);
+	}
 	for(TextureVertexMap::iterator itr = m_buffers.begin(); itr != m_buffers.end(); ++itr) {
 		itr->second->vbo = xdGraphics::CreateVertexBufferObject();
 		itr->second->vbo->upload(itr->second);
@@ -316,8 +316,9 @@ void SpriteBatch::clear()
 
 void SpriteBatch::makeStatic()
 {
-	if(!xdGraphics::IsSupported(xdGraphics::VertexBufferObjects))
-		throw xdException(XD_FEATURE_NOT_SUPPORTED, "Tried to create a VBO while it is not supported by the GPU!");
+	if(!xdGraphics::IsSupported(xdGraphics::VertexBufferObjects)) {
+		AS_THROW("Tried to create a VBO whilst its not supported by the GPU!",);
+	}
 
 	for(uint i = 0; i < m_sprites.size(); i++)
 	{

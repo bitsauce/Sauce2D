@@ -60,8 +60,7 @@ enum xdRetCode
 	XD_RUNTIME_EXCEPTION		= -4,
 	XD_INVALID_CONFIG			= -5,
 	XD_FILE_READ_ERROR			= -6,
-	XD_FEATURE_NOT_SUPPORTED	= -7,
-	XD_UNDEFINED_ERROR			= -8
+	XD_UNKNOWN_EXCEPTION		= -7
 };
 
 /*********************************************************************

@@ -137,6 +137,14 @@ private:
 #define AS_ASSERT if(r < 0) return r;
 #endif
 
+#define AS_THROW(msg, ret)									\
+	asIScriptContext *ctx = asGetActiveContext();		\
+	if(ctx) {											\
+		ctx->SetException(msg);							\
+	}else{												\
+		throw xdException(XD_RUNTIME_EXCEPTION, msg);	\
+	} return ret
+
 #define AS_DECL_REF																		\
 	private:																			\
 	RefCounter refCounter;																\

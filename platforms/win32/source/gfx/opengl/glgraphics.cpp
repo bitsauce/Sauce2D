@@ -369,8 +369,8 @@ bool OpenGL::isSupported(Feature feature)
 {
 	switch(feature)
 	{
-	case VertexBufferObjects: return GLEW_ARB_vertex_buffer_object; break;
-	case FrameBufferObjects: return GLEW_ARB_framebuffer_object; break;
+	case VertexBufferObjects: return GLEW_ARB_vertex_buffer_object == GL_TRUE; break;
+	case FrameBufferObjects: return GLEW_ARB_framebuffer_object == GL_TRUE; break;
 	}
 	return false;
 }

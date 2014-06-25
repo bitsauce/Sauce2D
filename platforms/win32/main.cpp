@@ -31,7 +31,6 @@
 // Win32 entry point
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, INT)
 {
-	try{
 	// Process the command-line
 	int flags = 0;
 	string workDir;
@@ -81,15 +80,9 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, INT)
 		return -1;
 	}
 
-
 	window->initEvents();
 	int r = engine->run();
 	delete engine;
 	cleanPlugins();
-	}catch(exception e){
-		ofstream f("C:\\crash.txt");
-		f << "Application died pre-maturely";
-		f.close();
-	}
-	return 0;//r;
+	return r;
 }
