@@ -85,9 +85,10 @@ public:
 	bool getObject(void *object, int typeId);
 	Vector2 getPosition() const;
 	float getAngle() const;
+	Vector2 getCenter() const;
+	Vector2 getLinearVelocity() const;
 	void applyImpulse(const Vector2 &impulse, const Vector2 &position);
 	void setLinearVelocity(const Vector2 &velocity);
-	Vector2 getCenter() const;
 
 	static b2BodyWrapper *Factory(const b2BodyDefWrapper &def);
 

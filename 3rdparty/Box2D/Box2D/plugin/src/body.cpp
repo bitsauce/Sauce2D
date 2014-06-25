@@ -279,6 +279,12 @@ Vector2 b2BodyWrapper::getCenter() const
 	return toXDVec(m_body->GetWorldCenter());
 }
 
+Vector2 b2BodyWrapper::getLinearVelocity() const
+{
+	if(!isValid()) return Vector2(0.0f);
+	return toXDVec(m_body->GetLinearVelocity());
+}
+
 void b2BodyWrapper::applyImpulse(const Vector2 &impulse, const Vector2 &position)
 {
 	if(!isValid()) return;
