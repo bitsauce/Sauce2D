@@ -4,7 +4,7 @@
 #include <x2d/config.h>
 #include <x2d/util.h>
 
-class xdException : public exception
+class xdException
 {
 public:
 	xdException(xdRetCode code, string msg) :
@@ -13,9 +13,14 @@ public:
 	{
 	}
 
-	const char* what() const throw()
+	xdRetCode errorCode() const
 	{
-		return "My exception happened";
+		return m_errorCode;
+	}
+
+	string message() const
+	{
+		return m_message;
 	}
 
 private:

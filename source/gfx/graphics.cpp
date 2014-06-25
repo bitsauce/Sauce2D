@@ -281,3 +281,8 @@ VertexBufferObject *xdGraphics::CreateVertexBufferObject()
 {
 	return s_this->createVertexBufferObject();
 }
+
+bool xdGraphics::IsSupported(Feature feature)
+{
+	return s_this->isSupported(feature);
+}

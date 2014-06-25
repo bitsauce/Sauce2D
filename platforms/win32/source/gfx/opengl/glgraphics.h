@@ -35,6 +35,7 @@ private:
 	Texture *createTexture(const Pixmap &pixmap);
 	Shader *createShader(const string &vertFilePath, const string &fragFilePath);
 	VertexBufferObject *createVertexBufferObject();
+	bool isSupported(Feature feature);
 
 	HGLRC m_openGLContext;
 	HDC m_deviceContext;

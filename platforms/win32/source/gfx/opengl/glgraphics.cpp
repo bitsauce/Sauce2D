@@ -67,9 +67,6 @@ void OpenGL::init(Window *window)
 	//if(!GLEW_EXT_framebuffer_object)
 	//	LOG("WARNING: FBO is not supported on this card!");
 
-	// Check if VBOs are supported
-	//if(!GLEW_ARB_vertex_buffer_object)
-	//	LOG("WARNING: VBO is not supported on this card!");
 
 	// Check if PBOs are supported
 	//if(!GLEW_EXT_pixel_buffer_object)
@@ -366,6 +363,16 @@ Shader *OpenGL::createShader(const string &vertFilePath, const string &fragFileP
 VertexBufferObject *OpenGL::createVertexBufferObject()
 {
 	return new GLvertexbuffer();
+}
+
+bool OpenGL::isSupported(Feature feature)
+{
+	switch(feature)
+	{
+	case VertexBufferObjects: return GLEW_ARB_vertex_buffer_object; break;
+	case FrameBufferObjects: return GLEW_ARB_framebuffer_object; break;
+	}
+	return false;
 }
 
 // Vsync

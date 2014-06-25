@@ -21,6 +21,7 @@
 #include <x2d/profiler.h>
 #include <x2d/debug.h>
 #include <x2d/assetloader.h>
+#include <x2d/exception.h>
 
 // AngelScript add-ons
 #include "scripts/scriptstdstring.h"
@@ -155,7 +156,7 @@ void xdEngine::popProfile()
 int xdEngine::init(const xdConfig &config)
 {
 	if(!config.isValid()) {
-		return XD_INVALID_CONFIG;
+		throw xdException(XD_INVALID_CONFIG, "The given configuration was not valid! (missing components)");
 	}
 
 	// Set platform string and program dir
@@ -227,12 +228,14 @@ int xdEngine::init(const xdConfig &config)
 		}
 		m_console->m_debugger = m_debugger;
 	}
+
 	if(IsEnabled(XD_EXPORT_LOG)) {
 		m_console->m_output = xdFileSystem::CreateFileWriter(util::getAbsoluteFilePath(":/console.txt"));
 	}
 	
 	// Print application message
 	LOG("** x2D Game Engine **");
+	try {
 	
 	// Create the script engine
 	LOG("Initializing AngelScript (%s)", ANGELSCRIPT_VERSION_STRING);
@@ -328,7 +331,7 @@ int xdEngine::init(const xdConfig &config)
 	}
 	r = ctx->Release(); assert(r >= 0);
 
-	if(m_debugger)
+	if(IsEnabled(XD_DEBUG) && m_debugger)
 	{
 		// Tell the debugger the engine is initialized
 		m_debugger->sendPacket(XD_INITIALIZED_PACKET);
@@ -336,6 +339,21 @@ int xdEngine::init(const xdConfig &config)
 	
 	LOG("x2D Engine Initialized");
 	m_initialized = true;
+	}catch(xdException e){
+		LOG("An exception occured: %s", e.message().c_str());
+	}catch(...){
+		asIScriptContext *ctx = asGetActiveContext();
+		if(ctx) {
+			const char *tmp;
+			int line = ctx->GetLineNumber(0, 0, &tmp);
+			LOG("Unknown exception occured while a script was running.");
+			if(tmp) {
+				LOG("LOC : %s (%i)", line, tmp);
+			}
+		}else{
+			LOG("Unknown exception occured.");
+		}
+	}
 	return XD_OK;
 }
 
@@ -389,6 +407,7 @@ int xdEngine::run()
 {
 	assert(m_initialized);
 
+	try {
 	// Setup game loop
 	m_timer->start();
 	float prevTime = m_timer->getTime();
@@ -455,7 +474,21 @@ int xdEngine::run()
 		
 		m_profiler->popProfile();
 	}
-
+	}catch(xdException e){
+		LOG("An exception occured: %s", e.message());
+	}catch(...){
+		asIScriptContext *ctx = asGetActiveContext();
+		if(ctx) {
+			const char *tmp;
+			int line = ctx->GetLineNumber(0, 0, &tmp);
+			LOG("Unknown exception occured while a script was running.");
+			if(tmp) {
+				LOG("LOC : %s (%i)", line, tmp);
+			}
+		}else{
+			LOG("Unknown exception occured.");
+		}
+	}
 	// Return OK
 	return XD_OK;
 }

@@ -32,7 +32,13 @@ public:
 
 	xdGraphics();
 
-	// Global factory
+	enum Feature
+	{
+		VertexBufferObjects,
+		FrameBufferObjects
+	};
+
+	// Global factories
 	static Texture *CreateTexture(const Pixmap &pixmap);
 	static Texture *CreateTexture(const string &filePath);
 	static Texture *CreateTexture(const int width, const int height);
@@ -43,6 +49,7 @@ public:
 	static TextureRegion *CreateTextureRegion(Texture *texture, const Vector2 &uv0, const Vector2 &uv1);
 	static TextureRegion *CreateTextureRegion(Texture *texture, const float u0, const float v0, const float u1, const float v1);
 	static VertexBufferObject *CreateVertexBufferObject();
+	static bool IsSupported(Feature feature);
 
 	// Refresh rate
 	void setRefreshRate(const int hz);
@@ -52,7 +59,7 @@ public:
 	virtual void enableVsync()										{ NOT_IMPLEMENTED(enableVsync) }
 	virtual void disableVsync()										{ NOT_IMPLEMENTED(disableVsync) }
 
-	//
+	// Time step & fps
 	float getTimeStep() const;
 	float getFPS() const;
 
@@ -68,6 +75,8 @@ private:
 	virtual Texture *createTexture(const Pixmap &pixmap) = 0;
 	virtual Shader *createShader(const string &vertFilePath, const string &fragFilePath) = 0;
 	virtual VertexBufferObject *createVertexBufferObject() = 0;
+	virtual bool isSupported(Feature feature) = 0;
+
 	static xdGraphics *s_this;
 };
 
