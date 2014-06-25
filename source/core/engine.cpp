@@ -156,7 +156,7 @@ void xdEngine::popProfile()
 int xdEngine::init(const xdConfig &config)
 {
 	if(!config.isValid()) {
-		throw xdException(XD_INVALID_CONFIG, "The given configuration was not valid! (missing components)");
+		return XD_INVALID_CONFIG;
 	}
 
 	// Set platform string and program dir
