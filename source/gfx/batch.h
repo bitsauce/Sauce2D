@@ -29,25 +29,19 @@ struct XDAPI Vertex
 
 struct XDAPI VertexBuffer
 {
-	VertexBuffer(int order) :
-		order(order),
+	VertexBuffer(Texture *texture) :
+		texture(texture),
 		vbo(0)
 	{
 	}
-	
-	bool operator<(const VertexBuffer& other) const
-	{
-		TUPLE_CMP(this->order, other.order)
-		return false;
-	}
 
-	int order;
 	vector<Vertex> vertices;
 	vector<uint> indices;
 	VertexBufferObject *vbo;
+	Texture *texture;
 };
 
-typedef map<Texture*, VertexBuffer*> TextureVertexMap;
+typedef map<int, VertexBuffer*> TextureVertexMap;
 
 class XDAPI Batch
 {
@@ -93,6 +87,7 @@ public:
 protected:
 
 	TextureVertexMap m_buffers;
+	map<Texture*, int> m_drawOrderMap;
 	Texture *m_texture;
 	Shader *m_shader;
 	bool m_static;

@@ -136,12 +136,14 @@ void Batch::addVertices(Vertex *vertices, int vcount, uint *indices, int icount)
 	}
 	
 	VertexBuffer *buffer;
-	if(m_buffers.find(m_texture) == m_buffers.end())
+	if(m_drawOrderMap.find(m_texture) == m_drawOrderMap.end())
 	{
 		// Create new vertex buffer for this texture
-		buffer = m_buffers[m_texture] = new VertexBuffer(m_drawOrder++);
+		m_drawOrderMap[m_texture] = m_drawOrder;
+		buffer = m_buffers[m_drawOrder] = new VertexBuffer(m_texture);
+		m_drawOrder++;
 	}else{
-		buffer = m_buffers[m_texture];
+		buffer = m_buffers[m_drawOrderMap[m_texture]];
 	}
 	
 	int ioffset = buffer->vertices.size();
@@ -179,25 +181,27 @@ void Batch::addVerticesAS(Array *asvertices, Array *asindices)
 
 void Batch::modifyVertex(int index, Vertex vertex)
 {
-	if(index < 0 || index >= (int)m_buffers[m_texture]->vertices.size()) {
+	int textureIdx = m_drawOrderMap[m_texture];
+	if(index < 0 || index >= (int)m_buffers[textureIdx]->vertices.size()) {
 		LOG("Batch.modifyVertex: Index out-of-bounds.");
 		return;
 	}
 
-	m_buffers[m_texture]->vertices[index] = vertex;
+	m_buffers[textureIdx]->vertices[index] = vertex;
 	if(m_static) {
-		m_buffers[m_texture]->vbo->uploadSub(index, &vertex, 1);
+		m_buffers[textureIdx]->vbo->uploadSub(index, &vertex, 1);
 	}
 }
 
 Vertex Batch::getVertex(int index)
 {
-	if(index < 0 || index >= (int)m_buffers[m_texture]->vertices.size()) {
+	int textureIdx = m_drawOrderMap[m_texture];
+	if(index < 0 || index >= (int)m_buffers[textureIdx]->vertices.size()) {
 		LOG("Batch.getVertex: Index out-of-bounds.");
 		return Vertex();
 	}
 
-	return m_buffers[m_texture]->vertices[index];
+	return m_buffers[textureIdx]->vertices[index];
 }
 
 void Batch::draw()
@@ -212,6 +216,7 @@ void Batch::clear()
 		delete itr->second;
 	}
 	m_buffers.clear();
+	m_drawOrderMap.clear();
 	m_drawOrder = 0;
 	m_static = false;
 }
@@ -287,7 +292,7 @@ void SpriteBatch::draw()
 
 			// Replace existing vertices
 			Texture *texture = sprite->getTexture();
-			m_buffers[texture]->vbo->uploadSub(m_offsets[sprite], vertices, 4);
+			m_buffers[m_drawOrderMap[m_texture]]->vbo->uploadSub(m_offsets[sprite], vertices, 4);
 			texture->release();
 		}
 		m_returnedSprites.clear();
@@ -326,7 +331,7 @@ void SpriteBatch::makeStatic()
 
 		// Store current vertex offset
 		Texture *texture = sprite->getTexture();
-		m_offsets[sprite] = m_buffers.find(texture) == m_buffers.end() ? 0 : m_buffers[texture]->vertices.size();
+		m_offsets[sprite] = m_drawOrderMap.find(texture) == m_drawOrderMap.end() ? 0 : m_buffers[m_drawOrderMap[texture]]->vertices.size();
 		texture->release();
 
 		// Draw this sprite into the buffer

@@ -201,7 +201,7 @@ void OpenGL::renderBatch(const Batch &batch)
 	{
 		for(TextureVertexMap::iterator itr = buffers.begin(); itr != buffers.end(); ++itr)
 		{
-			const Texture *texture = itr->first;
+			const Texture *texture = itr->second->texture;
 			glActiveTexture(GL_TEXTURE0);
 			if(texture) {
 				glBindTexture(GL_TEXTURE_2D, ((GLtexture*)texture)->m_id);
@@ -223,7 +223,7 @@ void OpenGL::renderBatch(const Batch &batch)
 	}else{
 		for(TextureVertexMap::iterator itr = buffers.begin(); itr != buffers.end(); ++itr)
 		{
-			const Texture *texture = itr->first;
+			const Texture *texture = itr->second->texture;
 			glActiveTexture(GL_TEXTURE0);
 			if(texture) {
 				glBindTexture(GL_TEXTURE_2D, ((GLtexture*)texture)->m_id);
