@@ -93,7 +93,6 @@ public:
 	static b2BodyWrapper *Factory(const b2BodyDefWrapper &def);
 
 private:
-	bool isValid() const;
 	b2Body *m_body;
 	vector<b2FixtureWrapper*> m_fixtures;
 	struct

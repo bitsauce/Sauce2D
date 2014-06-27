@@ -73,7 +73,9 @@ void b2BodyWrapper::destroy()
 
 b2FixtureWrapper *b2BodyWrapper::createFixture(const Rect &rect, float density)
 {
-	if(!isValid()) return 0;
+	if(!m_body || b2d->getWorld()->IsLocked())
+		return 0;
+
 	b2PolygonShape shape;
 	b2Vec2 halfSize = toB2Vec(rect.getSize()/2.0f);
 	shape.SetAsBox(halfSize.x, halfSize.y, toB2Vec(rect.getCenter()), 0.0f);
@@ -82,7 +84,9 @@ b2FixtureWrapper *b2BodyWrapper::createFixture(const Rect &rect, float density)
 	
 b2FixtureWrapper *b2BodyWrapper::createFixture(const Vector2 &center, const float radius, float density)
 {
-	if(!isValid()) return 0;
+	if(!m_body || b2d->getWorld()->IsLocked())
+		return 0;
+
 	b2CircleShape shape;
 	shape.m_p = toB2Vec(center);
 	shape.m_radius = radius/b2d->getScale();
@@ -91,7 +95,9 @@ b2FixtureWrapper *b2BodyWrapper::createFixture(const Vector2 &center, const floa
 	
 b2FixtureWrapper *b2BodyWrapper::createFixture(Array *arr, float density)
 {
-	if(!isValid()) return 0;
+	if(!m_body || b2d->getWorld()->IsLocked())
+		return 0;
+
 	if(arr->GetSize() > b2_maxPolygonVertices)
 		return 0;
 
@@ -112,7 +118,9 @@ b2FixtureWrapper *b2BodyWrapper::createFixture(Array *arr, float density)
 
 void b2BodyWrapper::removeFixture(b2FixtureWrapper *fixture)
 {
-	if(!isValid()) return;
+	if(!m_body || b2d->getWorld()->IsLocked())
+		return;
+
 	m_body->DestroyFixture(fixture->m_fixture);
 	vector<b2FixtureWrapper*>::iterator itr;
 	if((itr = find(m_fixtures.begin(), m_fixtures.end(), fixture)) != m_fixtures.end()) {
@@ -122,19 +130,25 @@ void b2BodyWrapper::removeFixture(b2FixtureWrapper *fixture)
 
 void b2BodyWrapper::setTransform(const Vector2 &position, float angle)
 {
-	if(!isValid()) return;
+	if(!m_body || b2d->getWorld()->IsLocked())
+		return;
+
 	m_body->SetTransform(toB2Vec(position), angle);
 }
 
 void b2BodyWrapper::setPosition(const Vector2 &position)
 {
-	if(!isValid()) return;
+	if(!m_body || b2d->getWorld()->IsLocked())
+		return;
+
 	m_body->SetTransform(toB2Vec(position), m_body->GetAngle());
 }
 
 void b2BodyWrapper::setAngle(float angle)
 {
-	if(!isValid()) return;
+	if(!m_body || b2d->getWorld()->IsLocked())
+		return;
+
 	m_body->SetTransform(m_body->GetPosition(), angle);
 }
 
@@ -263,37 +277,48 @@ void b2BodyWrapper::releaseReferences(asIScriptEngine *engine)
 
 Vector2 b2BodyWrapper::getPosition() const
 {
-	if(!isValid()) return Vector2(0.0f);
+	if(!m_body)
+		return Vector2(0.0f);
+
 	return toXDVec(m_body->GetPosition());
 }
 
 float b2BodyWrapper::getAngle() const
 {
-	if(!isValid()) return 0.0f;
+	if(!m_body)
+		return 0.0f;
 	return m_body->GetAngle();
 }
 
 Vector2 b2BodyWrapper::getCenter() const
 {
-	if(!isValid()) return Vector2(0.0f);
+	if(!m_body)
+		return Vector2(0.0f);
+
 	return toXDVec(m_body->GetWorldCenter());
 }
 
 Vector2 b2BodyWrapper::getLinearVelocity() const
 {
-	if(!isValid()) return Vector2(0.0f);
+	if(!m_body)
+		return Vector2(0.0f);
+
 	return toXDVec(m_body->GetLinearVelocity());
 }
 
 void b2BodyWrapper::applyImpulse(const Vector2 &impulse, const Vector2 &position)
 {
-	if(!isValid()) return;
+	if(!m_body)
+		return;
+
 	m_body->ApplyLinearImpulse(toB2Vec(impulse), toB2Vec(position), true);
 }
 
 void b2BodyWrapper::setLinearVelocity(const Vector2 &velocity)
 {
-	if(!isValid()) return;
+	if(!m_body)
+		return;
+
 	m_body->SetLinearVelocity(toB2Vec(velocity));
 }
 
@@ -304,9 +329,4 @@ b2BodyWrapper *b2BodyWrapper::Factory(const b2BodyDefWrapper &def)
 	asIScriptEngine *engine = scriptEngine->getASEngine();
 	engine->NotifyGarbageCollectorOfNewObject(body, engine->GetObjectTypeByName("b2Body"));
 	return body;
-}
-
-bool b2BodyWrapper::isValid() const
-{
-	return m_body != 0 && !b2d->getWorld()->IsLocked();
 }
