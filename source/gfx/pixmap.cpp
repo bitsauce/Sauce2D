@@ -67,7 +67,9 @@ Pixmap::Pixmap(const int width, const int height, const Array &pixels) :
 	}
 }
 
-Pixmap::Pixmap(const int width, const int height)
+Pixmap::Pixmap(const int width, const int height) :
+	m_width(width),
+	m_height(height)
 {
 	if (width >= 0 && height >= 0) {
 		// Create empty pixmap

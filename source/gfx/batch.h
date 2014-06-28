@@ -8,6 +8,7 @@
 class Texture;
 class Shader;
 class VertexBufferObject;
+class FrameBufferObject;
 
 // Vertex struct
 struct XDAPI Vertex
@@ -73,7 +74,7 @@ public:
 	Texture *getTexture() const;
 
 	// Render-to-texture
-	Texture *renderToTexture();
+	void renderToTexture(Texture *texture);
 
 	// Draw/clear
 	virtual void draw();
@@ -88,6 +89,7 @@ protected:
 
 	TextureVertexMap m_buffers;
 	map<Texture*, int> m_drawOrderMap;
+	FrameBufferObject *m_fbo;
 	Texture *m_texture;
 	Shader *m_shader;
 	bool m_static;

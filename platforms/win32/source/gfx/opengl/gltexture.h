@@ -10,6 +10,8 @@
 class GLtexture : public Texture
 {
 	friend class OpenGL;
+	friend class GLshader;
+	friend class GLframebufferobject;
 public:
 	GLtexture(const Pixmap &pixmap);
 	~GLtexture();

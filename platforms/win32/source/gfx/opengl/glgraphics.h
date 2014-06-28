@@ -7,6 +7,9 @@
 
 class Window;
 
+extern const int INT_SIZE;
+extern const int FLOAT_SIZE;
+
 /**
   *	\brief 
   */
@@ -35,6 +38,7 @@ private:
 	Texture *createTexture(const Pixmap &pixmap);
 	Shader *createShader(const string &vertFilePath, const string &fragFilePath);
 	VertexBufferObject *createVertexBufferObject();
+	FrameBufferObject *createFrameBufferObject();
 	bool isSupported(Feature feature);
 
 	HGLRC m_openGLContext;

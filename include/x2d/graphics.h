@@ -14,6 +14,7 @@ class Sprite;
 class TextureRegion;
 class Vector2;
 class VertexBufferObject;
+class FrameBufferObject;
 
 extern uint QUAD_INDICES[6];
 extern Vector4 QUAD_VERTICES[4];
@@ -49,6 +50,7 @@ public:
 	static TextureRegion *CreateTextureRegion(Texture *texture, const Vector2 &uv0, const Vector2 &uv1);
 	static TextureRegion *CreateTextureRegion(Texture *texture, const float u0, const float v0, const float u1, const float v1);
 	static VertexBufferObject *CreateVertexBufferObject();
+	static FrameBufferObject *CreateFrameBufferObject();
 	static bool IsSupported(Feature feature);
 
 	// Refresh rate
@@ -70,12 +72,13 @@ private:
 	float m_framesPerSecond;
 	int m_refreshRate;
 	float m_timeStep;
-
+	
+	virtual bool isSupported(Feature feature) = 0;
 	virtual void renderBatch(const Batch &batch) = 0;
 	virtual Texture *createTexture(const Pixmap &pixmap) = 0;
 	virtual Shader *createShader(const string &vertFilePath, const string &fragFilePath) = 0;
 	virtual VertexBufferObject *createVertexBufferObject() = 0;
-	virtual bool isSupported(Feature feature) = 0;
+	virtual FrameBufferObject *createFrameBufferObject() = 0;
 
 	static xdGraphics *s_this;
 };

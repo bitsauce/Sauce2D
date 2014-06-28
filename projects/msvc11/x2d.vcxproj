@@ -49,7 +49,7 @@
     <ClInclude Include="..\..\source\gfx\batch.h" />
     <ClInclude Include="..\..\source\gfx\camera.h" />
     <ClInclude Include="..\..\source\gfx\font.h" />
-    <ClInclude Include="..\..\source\gfx\frameBuffer.h" />
+    <ClInclude Include="..\..\source\gfx\framebufferobject.h" />
     <ClInclude Include="..\..\source\gfx\pixmap.h" />
     <ClInclude Include="..\..\source\gfx\shader.h" />
     <ClInclude Include="..\..\source\gfx\shape.h" />
@@ -83,7 +83,6 @@
     <ClCompile Include="..\..\source\gfx\batch.cpp" />
     <ClCompile Include="..\..\source\gfx\camera.cpp" />
     <ClCompile Include="..\..\source\gfx\font.cpp" />
-    <ClCompile Include="..\..\source\gfx\frameBuffer.cpp" />
     <ClCompile Include="..\..\source\gfx\graphics.cpp" />
     <ClCompile Include="..\..\source\gfx\pixmap.cpp" />
     <ClCompile Include="..\..\source\gfx\shader.cpp" />

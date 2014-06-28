@@ -13,6 +13,7 @@
 #include "../../../window.h"
 
 #include "../source/gfx/vertexbufferobject.h"
+#include "../source/gfx/framebufferobject.h"
 #include "../source/gfx/batch.h"
 
 class GLvertexbuffer : public VertexBufferObject
@@ -49,6 +50,39 @@ public:
 private:
 	GLuint m_vboId;
 	GLuint m_iboId;
+};
+
+OpenGL *openGL = 0;
+
+class GLframebufferobject : public FrameBufferObject
+{
+public:
+	GLframebufferobject()
+	{
+		glGenFramebuffers(1, &m_id);
+	}
+
+	void bind(Texture *texture)
+	{
+		glBindFramebuffer(GL_FRAMEBUFFER, m_id);
+		glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, ((GLtexture*)texture)->m_id, 0);
+
+		openGL->getOrthoProjection(m_ortho[0], m_ortho[1], m_ortho[2], m_ortho[3], m_ortho[4], m_ortho[5]);
+		
+		int w = texture->getWidth(), h = texture->getHeight();
+		openGL->setOrthoProjection(0.0f, w, h, 0.0f, m_ortho[4], m_ortho[5]);
+		openGL->setViewport(Recti(0, 0, w, h));
+	}
+
+	void unbind()
+	{
+		glBindFramebuffer(GL_FRAMEBUFFER, 0);
+		openGL->setOrthoProjection(m_ortho[0], m_ortho[1], m_ortho[2], m_ortho[3], m_ortho[4], m_ortho[5]);
+	}
+
+private:
+	GLuint m_id;
+	float m_ortho[6];
 };
 
 void OpenGL::init(Window *window)
@@ -91,6 +125,8 @@ void OpenGL::init(Window *window)
 
 	// Set OpenGL hints
 	glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
+
+	openGL = this;
 }
 
 void OpenGL::createContext(HWND window)
@@ -184,7 +220,8 @@ void OpenGL::getOrthoProjection(float &l, float &r, float &b, float &t, float &n
 	f = m_currentOrtho[5];
 }
 
-const int FLOAT_SIZE = sizeof(float);
+const int INT_SIZE = sizeof(GLint);
+const int FLOAT_SIZE = sizeof(GLfloat);
 const int VERTEX_SIZE = sizeof(Vertex);
 
 void OpenGL::renderBatch(const Batch &batch)
@@ -197,6 +234,41 @@ void OpenGL::renderBatch(const Batch &batch)
 	TextureVertexMap buffers = batch.m_buffers;
 	Matrix4 mat = batch.m_projMatrix;
 	glLoadMatrixf(mat.getTranspose());
+
+	// Bind shader
+	GLshader *shader = (GLshader*)batch.m_shader;
+	if(shader)
+	{
+		glUseProgram(shader->m_id);
+		GLuint target = GL_TEXTURE0;
+
+		// Set all uniforms
+		for(map<string, GLshader::Uniform*>::iterator itr = shader->m_uniforms.begin(); itr != shader->m_uniforms.end(); ++itr)
+		{
+			const GLshader::Uniform *uniform = itr->second;
+			switch(uniform->type)
+			{
+			case GL_INT: glUniform1i(uniform->loc, ((GLint*)uniform->data)[0]); break;
+			case GL_INT_VEC2: glUniform2i(uniform->loc, ((GLint*)uniform->data)[0], ((GLint*)uniform->data)[1]); break;
+			case GL_INT_VEC3: glUniform3i(uniform->loc, ((GLint*)uniform->data)[0], ((GLint*)uniform->data)[1], ((GLint*)uniform->data)[2]); break;
+			case GL_INT_VEC4: glUniform4i(uniform->loc, ((GLint*)uniform->data)[0], ((GLint*)uniform->data)[1], ((GLint*)uniform->data)[2], ((GLint*)uniform->data)[3]); break;
+			case GL_FLOAT: glUniform1f(uniform->loc, ((GLfloat*)uniform->data)[0]); break;
+			case GL_FLOAT_VEC2: glUniform2f(uniform->loc, ((GLfloat*)uniform->data)[0], ((GLfloat*)uniform->data)[1]); break;
+			case GL_FLOAT_VEC3: glUniform3f(uniform->loc, ((GLfloat*)uniform->data)[0], ((GLfloat*)uniform->data)[1], ((GLfloat*)uniform->data)[2]); break;
+			case GL_FLOAT_VEC4: glUniform4f(uniform->loc, ((GLfloat*)uniform->data)[0], ((GLfloat*)uniform->data)[1], ((GLfloat*)uniform->data)[2], ((GLfloat*)uniform->data)[3]); break;
+			case GL_SAMPLER_2D:
+				{
+					glActiveTexture(target++);
+					glBindTexture(GL_TEXTURE_2D, ((GLint*)uniform->data)[0]);
+					glUniform1i(uniform->loc, target);
+				}
+				break;
+			}
+		}
+	}else{
+		glUseProgram(0);
+	}
+
 	if(!batch.isStatic())
 	{
 		for(TextureVertexMap::iterator itr = buffers.begin(); itr != buffers.end(); ++itr)
@@ -363,6 +435,11 @@ Shader *OpenGL::createShader(const string &vertFilePath, const string &fragFileP
 VertexBufferObject *OpenGL::createVertexBufferObject()
 {
 	return new GLvertexbuffer();
+}
+
+FrameBufferObject *OpenGL::createFrameBufferObject()
+{
+	return new GLframebufferobject();
 }
 
 bool OpenGL::isSupported(Feature feature)
@@ -1593,52 +1670,4 @@ void OpenGLRender::clearFrameBuffer()
 	glClear(GL_COLOR_BUFFER_BIT);
 }
 
-int OpenGLRender::createVertexBuffer()
-{
-	GLuint id;
-	glGenBuffersARB(1, &id);
-	VertexBuffers.push_back(id);
-	return id;
-}
-
-void OpenGLRender::bindVertexBuffer(const int vboId)
-{
-	// Bind frame buffer
-	m_currentState.vbo = vboId;
-	glBindBufferARB(GL_ARRAY_BUFFER_ARB, vboId);
-}
-
-void OpenGLRender::setVertexBufferData(const Array &data, const X2DVertexBufferMode mode)
-{
-	glBufferDataARB(GL_ARRAY_BUFFER_ARB, data.GetSize()*sizeof(float), data.At(0), toGLBufferMode(mode));
-}
-
-void OpenGLRender::setVertexBufferSubData(const int offset, const Array &data)
-{
-	glBufferSubDataARB(GL_ARRAY_BUFFER_ARB, offset*sizeof(float), data.GetSize()*sizeof(float), data.At(0));
-}
-
-void OpenGLRender::drawVertexBuffer(const X2DDrawMode drawMode, const int begin, const int count)
-{
-	// Make sure no buffer is already bound
-	if(m_currentBuffer)
-		return;
-
-	float m[16];
-	glGetFloatv(GL_MODELVIEW_MATRIX, m);
-
-	// Allocate static buffer
-	StaticBuffer *buffer = new StaticBuffer;
-	buffer->drawMode = toGLDrawMode(drawMode);
-	buffer->begin = begin;
-	buffer->count = count;
-	memcpy(buffer->transform, m, 16*floatSize);
-	m_batchStack.back().buffers[m_currentState] = buffer;
-}
-
-int OpenGLRender::getDrawCallCount()
-{
-	if(m_batchStack.size() == 0) return 0;
-	return m_batchStack.back().buffers.size();
-}  
 #endif // OLD

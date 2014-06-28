@@ -8,7 +8,9 @@
 //									2011-2014 (C)
 
 #include "glshader.h"
+#include "gltexture.h"
 #include <x2d/console.h>
+#include <x2d/filesystem.h>
 
 GLshader::GLshader(const string &vertFilePath, const string &fragFilePath)
 {
@@ -16,21 +18,31 @@ GLshader::GLshader(const string &vertFilePath, const string &fragFilePath)
     GLuint vertShader = glCreateShader(GL_VERTEX_SHADER);
     GLuint fragShader = glCreateShader(GL_FRAGMENT_SHADER);
 
-    // Read shader files to string
-	const char *vertShaderBuffer, *fragShaderBuffer;
-	long vertBufferLen = 0, fragBufferLen = 0; 
-	//AssetLoader::loadAsBytes(vertFilePath.c_str(), &vertShaderBuffer, &vertBufferLen);
-	//AssetLoader::loadAsBytes(fragFilePath.c_str(), &fragShaderBuffer, &fragBufferLen);
+	xdFileReader *fileReader;
 
-	// Default vars
+	// Read vertex source
+	fileReader = xdFileSystem::CreateFileReader(util::getAbsoluteFilePath(vertFilePath));
+	string vertSource = fileReader->readAll();
+	fileReader->close();
+	delete fileReader;
+	
+	// Read fragment source
+	fileReader = xdFileSystem::CreateFileReader(util::getAbsoluteFilePath(fragFilePath));
+	string fragSource = fileReader->readAll();
+	fileReader->close();
+	delete fileReader;
+
+	// Result variables
     int result = 0;
     int logLength;
 
-    // Compile vertex shader
 	LOG("Compiling vertex shader: %s", vertFilePath.c_str());
-	glShaderSource(vertShader, 1, &vertShaderBuffer, (int*)&vertBufferLen);
+	
+    // Compile vertex shader
+	const char *data = vertSource.c_str();
+	int len = vertSource.length();
+	glShaderSource(vertShader, 1, &data, &len);
     glCompileShader(vertShader);
-	delete[] vertShaderBuffer;
 
     // Validate vertex shader
     glGetShaderiv(vertShader, GL_COMPILE_STATUS, &result);
@@ -41,14 +53,17 @@ GLshader::GLshader(const string &vertFilePath, const string &fragFilePath)
     glGetShaderInfoLog(vertShader, logLength, NULL, compileLog);
 
 	// Print shader error to console
-	if(logLength > 1)
-		LOG("\tCompile error: %s", compileLog);
+	if(logLength > 1) {
+		LOG("\t%s", compileLog);
+	}
+
+    LOG("Compiling fragment shader: %s", fragFilePath.c_str());
 
     // Compile fragment shader
-    LOG("Compiling fragment shader: %s", fragFilePath.c_str());
-    glShaderSource(fragShader, 1, &fragShaderBuffer, (int*)&fragBufferLen);
+	data = fragSource.c_str();
+	len = fragSource.size();
+	glShaderSource(fragShader, 1, &data, &len);
     glCompileShader(fragShader);
-	delete[] fragShaderBuffer;
 
     // Check fragment shader
     glGetShaderiv(fragShader, GL_COMPILE_STATUS, &result);
@@ -58,8 +73,11 @@ GLshader::GLshader(const string &vertFilePath, const string &fragFilePath)
     glGetShaderInfoLog(vertShader, logLength, NULL, compileLog);
 
 	// Print shader error to console
-	if(logLength > 1)
-		LOG("\tCompile error: %s", compileLog);
+	if(logLength > 1) {
+		LOG("\t%s", compileLog);
+	}
+
+    LOG("Linking shader program");
 
     // Create shader program
     GLuint program = glCreateProgram();
@@ -75,8 +93,9 @@ GLshader::GLshader(const string &vertFilePath, const string &fragFilePath)
     glGetProgramInfoLog(program, logLength, NULL, programLog);
 
 	// Print program error to console
-	if(logLength > 1)
-		LOG("\tCompile error: %s", compileLog);
+	if(logLength > 1) {
+		LOG("\t%s", compileLog);
+	}
 
 	// Delete shader buffers as they are loaded into the shader program
     glDeleteShader(vertShader);
@@ -89,7 +108,7 @@ GLshader::GLshader(const string &vertFilePath, const string &fragFilePath)
 	// Return shader program
 	m_id = program;
 
-	// Setup default uniform values
+	// Setup uniform variables
 	GLint count;
 	glGetProgramiv(m_id, GL_ACTIVE_UNIFORMS, &count);
 	GLint length, size;
@@ -98,67 +117,164 @@ GLshader::GLshader(const string &vertFilePath, const string &fragFilePath)
 	for(int i = 0; i < count; i++)
 	{
 		glGetActiveUniform(m_id, i, 256, &length, &size, &type, name);
-		Uniform uniform;
-		uniform.type = type;
-		uniform.loc = i;
-		uniform.data = new char[size];
+
+		if(strncmp(name, "gl_", 3) == 0) // Skip gl_ uniforms
+			continue;
+
+		Uniform *uniform = new Uniform;
+		uniform->type = type;
+		uniform->loc = i;
+
+		int dataSize;
+		switch(type)
+		{
+		case GL_INT: dataSize = INT_SIZE; break;
+		case GL_INT_VEC2: dataSize = INT_SIZE*2; break;
+		case GL_INT_VEC3: dataSize = INT_SIZE*3; break;
+		case GL_INT_VEC4: dataSize = INT_SIZE*4; break;
+		case GL_FLOAT: dataSize = FLOAT_SIZE; break;
+		case GL_FLOAT_VEC2: dataSize = FLOAT_SIZE*2; break;
+		case GL_FLOAT_VEC3: dataSize = FLOAT_SIZE*3; break;
+		case GL_FLOAT_VEC4: dataSize = FLOAT_SIZE*4; break;
+		case GL_SAMPLER_2D: dataSize = INT_SIZE; break;
+		}
+
+		uniform->data = new char[dataSize];
 		m_uniforms[name] = uniform;
 	}
 }
 
+GLshader::~GLshader()
+{
+	for(map<string, Uniform*>::iterator itr = m_uniforms.begin(); itr != m_uniforms.end(); ++itr)
+		delete itr->second;
+}
+
 void GLshader::setUniform1i(const string &name, const int v0)
 {
-	((int*)m_uniforms[name].data)[0] = v0;
+	if(m_uniforms.find(name) != m_uniforms.end())
+	{
+		Uniform *uniform = m_uniforms[name];
+		if(uniform->type == GL_INT) {
+			((GLint*)uniform->data)[0] = v0;
+		}
+	}else{
+		LOG("Uniform '%s' does not exist.", name);
+	}
 }
 
 void GLshader::setUniform2i(const string &name, const int v0, const int v1)
 {
-	((int*)m_uniforms[name].data)[0] = v0;
-	((int*)m_uniforms[name].data)[1] = v1;
+	if(m_uniforms.find(name) != m_uniforms.end())
+	{
+		Uniform *uniform = m_uniforms[name];
+		if(uniform->type == GL_INT_VEC2) {
+			((GLint*)uniform->data)[0] = v0;
+			((GLint*)uniform->data)[1] = v1;
+		}
+	}else{
+		LOG("Uniform '%s' does not exist.", name);
+	}
 }
 
 void GLshader::setUniform3i(const string &name, const int v0, const int v1, const int v2)
 {
-	((int*)m_uniforms[name].data)[0] = v0;
-	((int*)m_uniforms[name].data)[1] = v1;
-	((int*)m_uniforms[name].data)[2] = v2;
+	if(m_uniforms.find(name) != m_uniforms.end())
+	{
+		Uniform *uniform = m_uniforms[name];
+		if(uniform->type == GL_INT_VEC3) {
+			((GLint*)uniform->data)[0] = v0;
+			((GLint*)uniform->data)[1] = v1;
+			((GLint*)uniform->data)[2] = v2;
+		}
+	}else{
+		LOG("Uniform '%s' does not exist.", name);
+	}
 }
 
 void GLshader::setUniform4i(const string &name, const int v0, const int v1, const int v2, const int v3)
 {
-	((int*)m_uniforms[name].data)[0] = v0;
-	((int*)m_uniforms[name].data)[1] = v1;
-	((int*)m_uniforms[name].data)[2] = v2;
-	((int*)m_uniforms[name].data)[3] = v3;
+	if(m_uniforms.find(name) != m_uniforms.end())
+	{
+		Uniform *uniform = m_uniforms[name];
+		if(uniform->type == GL_INT_VEC4) {
+			((GLint*)uniform->data)[0] = v0;
+			((GLint*)uniform->data)[1] = v1;
+			((GLint*)uniform->data)[2] = v2;
+			((GLint*)uniform->data)[3] = v3;
+		}
+	}else{
+		LOG("Uniform '%s' does not exist.", name);
+	}
 }
 
 void GLshader::setUniform1f(const string &name, const float v0)
 {
-	((float*)m_uniforms[name].data)[0] = v0;
+	if(m_uniforms.find(name) != m_uniforms.end())
+	{
+		Uniform *uniform = m_uniforms[name];
+		if(uniform->type == GL_FLOAT) {
+			((GLfloat*)uniform->data)[0] = v0;
+		}
+	}else{
+		LOG("Uniform '%s' does not exist.", name);
+	}
 }
 
 void GLshader::setUniform2f(const string &name, const float v0, const float v1)
 {
-	((float*)m_uniforms[name].data)[0] = v0;
-	((float*)m_uniforms[name].data)[1] = v1;
+	if(m_uniforms.find(name) != m_uniforms.end())
+	{
+		Uniform *uniform = m_uniforms[name];
+		if(uniform->type == GL_FLOAT_VEC2) {
+			((GLfloat*)uniform->data)[0] = v0;
+			((GLfloat*)uniform->data)[1] = v1;
+		}
+	}else{
+		LOG("Uniform '%s' does not exist.", name);
+	}
 }
 
 void GLshader::setUniform3f(const string &name, const float v0, const float v1, const float v2)
 {
-	((float*)m_uniforms[name].data)[0] = v0;
-	((float*)m_uniforms[name].data)[1] = v1;
-	((float*)m_uniforms[name].data)[2] = v2;
+	if(m_uniforms.find(name) != m_uniforms.end())
+	{
+		Uniform *uniform = m_uniforms[name];
+		if(uniform->type == GL_FLOAT_VEC3) {
+			((GLfloat*)uniform->data)[0] = v0;
+			((GLfloat*)uniform->data)[1] = v1;
+			((GLfloat*)uniform->data)[2] = v2;
+		}
+	}else{
+		LOG("Uniform '%s' does not exist.", name);
+	}
 }
 
 void GLshader::setUniform4f(const string &name, const float v0, const float v1, const float v2, const float v3)
 {
-	((float*)m_uniforms[name].data)[0] = v0;
-	((float*)m_uniforms[name].data)[1] = v1;
-	((float*)m_uniforms[name].data)[2] = v2;
-	((float*)m_uniforms[name].data)[3] = v3;
+	if(m_uniforms.find(name) != m_uniforms.end())
+	{
+		Uniform *uniform = m_uniforms[name];
+		if(uniform->type == GL_FLOAT_VEC4) {
+			((GLfloat*)uniform->data)[0] = v0;
+			((GLfloat*)uniform->data)[1] = v1;
+			((GLfloat*)uniform->data)[2] = v2;
+			((GLfloat*)uniform->data)[3] = v3;
+		}
+	}else{
+		LOG("Uniform '%s' does not exist.", name);
+	}
 }
 
-void GLshader::setUniformTexture(const string &name, const int texId)
+void GLshader::setSampler2D(const string &name, const Texture *texture)
 {
-	((int*)m_uniforms[name].data)[0] = texId;
+	if(m_uniforms.find(name) != m_uniforms.end())
+	{
+		Uniform *uniform = m_uniforms[name];
+		if(uniform->type == GL_SAMPLER_2D) {
+			((GLint*)uniform->data)[0] = ((GLtexture*)texture)->m_id;
+		}
+	}else{
+		LOG("Uniform '%s' does not exist.", name);
+	}
 }

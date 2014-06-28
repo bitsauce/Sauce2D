@@ -8,12 +8,14 @@
 	if(a < b) return true; \
 	if(a > b) return false;
 
+class Texture;
+
 class XDAPI Shader
 {
 public:
 	AS_DECL_REF
 
-	Shader();
+	virtual ~Shader() {}
 	
 	virtual void setUniform1i(const string &name, const int v0) = 0;
 	virtual void setUniform2i(const string &name, const int v0, const int v1) = 0;
@@ -23,7 +25,7 @@ public:
 	virtual void setUniform2f(const string &name, const float v0, const float v1) = 0;
 	virtual void setUniform3f(const string &name, const float v0, const float v1, const float v2) = 0;
 	virtual void setUniform4f(const string &name, const float v0, const float v1, const float v2, const float v3) = 0;
-	virtual void setUniformTexture(const string &name, const int texId) = 0;
+	virtual void setSampler2D(const string &name, const Texture *texture) = 0;
 };
 
 #endif // GFX_SHADER_H

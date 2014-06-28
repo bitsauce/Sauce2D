@@ -121,9 +121,8 @@ void GLtexture::updatePixmap(const int x, const int y, const Pixmap &pixmap)
 
 void GLtexture::clear()
 {
-	GLuint clearColor = 0;
 	glBindTexture(GL_TEXTURE_2D, m_id);
-	glClearTexImage(GL_TEXTURE_2D, 0, GL_RGBA, GL_UNSIGNED_BYTE, &clearColor);
+	glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, m_width, m_height, GL_BGRA, GL_UNSIGNED_BYTE, vector<GLubyte>(m_width*m_height*4, 0).data());
 	glBindTexture(GL_TEXTURE_2D, 0);
 }
 

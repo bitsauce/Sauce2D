@@ -135,9 +135,6 @@
     <ClInclude Include="..\..\source\gfx\texture.h">
       <Filter>include\gfx</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\source\gfx\frameBuffer.h">
-      <Filter>include\gfx</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\source\gfx\camera.h">
       <Filter>include\gfx</Filter>
     </ClInclude>
@@ -177,6 +174,9 @@
     <ClInclude Include="..\..\include\x2d\scriptengine.h">
       <Filter>include</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\source\gfx\framebufferobject.h">
+      <Filter>include\gfx</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\source\math\math.cpp">
@@ -208,9 +208,6 @@
     </ClCompile>
     <ClCompile Include="..\..\source\math\rectPacker.cpp">
       <Filter>source\math</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\gfx\frameBuffer.cpp">
-      <Filter>source\gfx\abstract</Filter>
     </ClCompile>
     <ClCompile Include="..\..\source\gfx\shader.cpp">
       <Filter>source\gfx\abstract</Filter>

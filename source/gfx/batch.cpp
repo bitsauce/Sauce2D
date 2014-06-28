@@ -10,6 +10,7 @@
 #include "batch.h"
 #include "texture.h"
 #include "vertexbufferobject.h"
+#include "framebufferobject.h"
 
 #include <x2d/graphics.h>
 
@@ -51,6 +52,7 @@ int Batch::Register(asIScriptEngine *scriptEngine)
 	r = scriptEngine->RegisterObjectMethod("Batch", "void draw()", asMETHOD(Batch, draw), asCALL_THISCALL); AS_ASSERT
 	r = scriptEngine->RegisterObjectMethod("Batch", "void clear()", asMETHOD(Batch, clear), asCALL_THISCALL); AS_ASSERT
 	r = scriptEngine->RegisterObjectMethod("Batch", "void makeStatic()", asMETHOD(Batch, makeStatic), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("Batch", "void renderToTexture(Texture@)", asMETHOD(Batch, renderToTexture), asCALL_THISCALL); AS_ASSERT
 
 	return r;
 }
@@ -83,7 +85,8 @@ Batch::Batch() :
 	m_static(false),
 	m_texture(0),
 	m_shader(0),
-	m_drawOrder(0)
+	m_drawOrder(0),
+	m_fbo(0)
 {
 }
 
@@ -92,6 +95,7 @@ Batch::~Batch()
 	if(m_texture) {
 		m_texture->release();
 	}
+	delete m_fbo;
 	clear();
 }
 
@@ -221,12 +225,20 @@ void Batch::clear()
 	m_static = false;
 }
 
-Texture *Batch::renderToTexture()
+void Batch::renderToTexture(Texture *texture)
 {
-	//m_fbo->bind();
+	if(!texture) {
+		LOG("Batch.renderToTexture: Cannot render to 'null' texture.");
+		return;
+	}
+
+	if(!m_fbo) {
+		m_fbo = xdGraphics::CreateFrameBufferObject();
+	}
+
+	m_fbo->bind(texture);
 	draw();
-	//m_fbo->unbind();
-	return 0;//m_fbo->getTexture();
+	m_fbo->unbind();
 }
 
 #include <x2d/exception.h>

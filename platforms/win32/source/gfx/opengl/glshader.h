@@ -8,8 +8,11 @@
 
 class GLshader : public Shader
 {
+	friend class OpenGL;
+	friend class GLtexture;
 public:
 	GLshader(const string &vertFilePath, const string &fragFilePath);
+	~GLshader();
 	
 	void setUniform1i(const string &name, const int v0);
 	void setUniform2i(const string &name, const int v0, const int v1);
@@ -19,11 +22,7 @@ public:
 	void setUniform2f(const string &name, const float v0, const float v1);
 	void setUniform3f(const string &name, const float v0, const float v1, const float v2);
 	void setUniform4f(const string &name, const float v0, const float v1, const float v2, const float v3);
-	void setUniformTexture(const string &name, const int texId);
-
-protected:
-
-	void load(const string &vertFilePath, const string &fragFilePath);
+	void setSampler2D(const string &name, const Texture *texture);
 
 private:
 	
@@ -42,21 +41,14 @@ private:
 			delete[] data;
 		}
 
-		bool operator<(const Uniform& other) const
-		{
-			TUPLE_CMP(this->type, other.type)
-			TUPLE_CMP(this->loc, other.loc)
-			TUPLE_CMP(this->data, other.data)
-			return false;
-		}
-
 		GLenum type;
 		int loc;
 		void *data;
+		float test;
 	};
 
 	GLint m_id;
-	map<string, Uniform> m_uniforms;
+	map<string, Uniform*> m_uniforms;
 };
 
 #endif // GFX_GLSHADER_H
