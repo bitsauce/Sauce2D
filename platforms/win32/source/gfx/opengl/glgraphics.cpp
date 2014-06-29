@@ -52,12 +52,11 @@ private:
 	GLuint m_iboId;
 };
 
-OpenGL *openGL = 0;
-
 class GLframebufferobject : public FrameBufferObject
 {
 public:
-	GLframebufferobject()
+	GLframebufferobject(OpenGL *gl) :
+		gl(gl)
 	{
 		glGenFramebuffers(1, &m_id);
 	}
@@ -67,22 +66,23 @@ public:
 		glBindFramebuffer(GL_FRAMEBUFFER, m_id);
 		glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, ((GLtexture*)texture)->m_id, 0);
 
-		openGL->getOrthoProjection(m_ortho[0], m_ortho[1], m_ortho[2], m_ortho[3], m_ortho[4], m_ortho[5]);
+		gl->getOrthoProjection(m_ortho[0], m_ortho[1], m_ortho[2], m_ortho[3], m_ortho[4], m_ortho[5]);
 		
 		int w = texture->getWidth(), h = texture->getHeight();
-		openGL->setOrthoProjection(0.0f, w, h, 0.0f, m_ortho[4], m_ortho[5]);
-		openGL->setViewport(Recti(0, 0, w, h));
+		gl->setOrthoProjection(0.0f, w, h, 0.0f, m_ortho[4], m_ortho[5]);
+		gl->setViewport(Recti(0, 0, w, h));
 	}
 
 	void unbind()
 	{
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
-		openGL->setOrthoProjection(m_ortho[0], m_ortho[1], m_ortho[2], m_ortho[3], m_ortho[4], m_ortho[5]);
+		gl->setOrthoProjection(m_ortho[0], m_ortho[1], m_ortho[2], m_ortho[3], m_ortho[4], m_ortho[5]);
 	}
 
 private:
 	GLuint m_id;
 	float m_ortho[6];
+	OpenGL *gl;
 };
 
 void OpenGL::init(Window *window)
@@ -125,8 +125,6 @@ void OpenGL::init(Window *window)
 
 	// Set OpenGL hints
 	glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
-
-	openGL = this;
 }
 
 void OpenGL::createContext(HWND window)
@@ -224,6 +222,24 @@ const int INT_SIZE = sizeof(GLint);
 const int FLOAT_SIZE = sizeof(GLfloat);
 const int VERTEX_SIZE = sizeof(Vertex);
 
+GLenum toGLBlend(const Batch::BlendFunc value)
+{
+	switch(value) {
+	case Batch::BLEND_ZERO:					return GL_ZERO;
+	case Batch::BLEND_ONE:					return GL_ONE;
+	case Batch::BLEND_SRC_COLOR:			return GL_SRC_COLOR;
+	case Batch::BLEND_ONE_MINUS_SRC_COLOR:	return GL_ONE_MINUS_SRC_COLOR;
+	case Batch::BLEND_DST_COLOR:			return GL_DST_COLOR;
+	case Batch::BLEND_ONE_MINUS_DST_COLOR:	return GL_ONE_MINUS_DST_COLOR;
+	case Batch::BLEND_SRC_ALPHA:			return GL_SRC_ALPHA;
+	case Batch::BLEND_ONE_MINUS_SRC_ALPHA:	return GL_ONE_MINUS_SRC_ALPHA;
+	case Batch::BLEND_DST_ALPHA:			return GL_DST_ALPHA;
+	case Batch::BLEND_ONE_MINUS_DST_ALPHA:	return GL_ONE_MINUS_DST_ALPHA;
+	case Batch::BLEND_SRC_ALPHA_SATURATE:	return GL_SRC_ALPHA_SATURATE;
+	}
+	return GL_ZERO;
+}
+
 void OpenGL::renderBatch(const Batch &batch)
 {
 	// Enable client state
@@ -231,87 +247,90 @@ void OpenGL::renderBatch(const Batch &batch)
 	glEnableClientState(GL_COLOR_ARRAY);
 	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 	
-	TextureVertexMap buffers = batch.m_buffers;
+	StateVertexMap buffers = batch.m_buffers;
 	Matrix4 mat = batch.m_projMatrix;
 	glLoadMatrixf(mat.getTranspose());
 
-	// Bind shader
-	GLshader *shader = (GLshader*)batch.m_shader;
-	if(shader)
+	for(StateVertexMap::iterator itr = buffers.begin(); itr != buffers.end(); ++itr)
 	{
-		glUseProgram(shader->m_id);
-		GLuint target = GL_TEXTURE0;
-
-		// Set all uniforms
-		for(map<string, GLshader::Uniform*>::iterator itr = shader->m_uniforms.begin(); itr != shader->m_uniforms.end(); ++itr)
+		const Batch::State &state = itr->first;
+		if(state.shader)
 		{
-			const GLshader::Uniform *uniform = itr->second;
-			switch(uniform->type)
+			// Enable shader
+			GLshader *shader = (GLshader*)state.shader;
+			glUseProgram(shader->m_id);
+			GLuint target = 0;
+
+			// Set all uniforms
+			for(map<string, GLshader::Uniform*>::iterator itr = shader->m_uniforms.begin(); itr != shader->m_uniforms.end(); ++itr)
 			{
-			case GL_INT: glUniform1i(uniform->loc, ((GLint*)uniform->data)[0]); break;
-			case GL_INT_VEC2: glUniform2i(uniform->loc, ((GLint*)uniform->data)[0], ((GLint*)uniform->data)[1]); break;
-			case GL_INT_VEC3: glUniform3i(uniform->loc, ((GLint*)uniform->data)[0], ((GLint*)uniform->data)[1], ((GLint*)uniform->data)[2]); break;
-			case GL_INT_VEC4: glUniform4i(uniform->loc, ((GLint*)uniform->data)[0], ((GLint*)uniform->data)[1], ((GLint*)uniform->data)[2], ((GLint*)uniform->data)[3]); break;
-			case GL_FLOAT: glUniform1f(uniform->loc, ((GLfloat*)uniform->data)[0]); break;
-			case GL_FLOAT_VEC2: glUniform2f(uniform->loc, ((GLfloat*)uniform->data)[0], ((GLfloat*)uniform->data)[1]); break;
-			case GL_FLOAT_VEC3: glUniform3f(uniform->loc, ((GLfloat*)uniform->data)[0], ((GLfloat*)uniform->data)[1], ((GLfloat*)uniform->data)[2]); break;
-			case GL_FLOAT_VEC4: glUniform4f(uniform->loc, ((GLfloat*)uniform->data)[0], ((GLfloat*)uniform->data)[1], ((GLfloat*)uniform->data)[2], ((GLfloat*)uniform->data)[3]); break;
-			case GL_SAMPLER_2D:
+				const GLshader::Uniform *uniform = itr->second;
+				switch(uniform->type)
 				{
-					glActiveTexture(target++);
-					glBindTexture(GL_TEXTURE_2D, ((GLint*)uniform->data)[0]);
-					glUniform1i(uniform->loc, target);
+				case GL_INT: glUniform1i(uniform->loc, ((GLint*)uniform->data)[0]); break;
+				case GL_INT_VEC2: glUniform2i(uniform->loc, ((GLint*)uniform->data)[0], ((GLint*)uniform->data)[1]); break;
+				case GL_INT_VEC3: glUniform3i(uniform->loc, ((GLint*)uniform->data)[0], ((GLint*)uniform->data)[1], ((GLint*)uniform->data)[2]); break;
+				case GL_INT_VEC4: glUniform4i(uniform->loc, ((GLint*)uniform->data)[0], ((GLint*)uniform->data)[1], ((GLint*)uniform->data)[2], ((GLint*)uniform->data)[3]); break;
+				case GL_FLOAT: glUniform1f(uniform->loc, ((GLfloat*)uniform->data)[0]); break;
+				case GL_FLOAT_VEC2: glUniform2f(uniform->loc, ((GLfloat*)uniform->data)[0], ((GLfloat*)uniform->data)[1]); break;
+				case GL_FLOAT_VEC3: glUniform3f(uniform->loc, ((GLfloat*)uniform->data)[0], ((GLfloat*)uniform->data)[1], ((GLfloat*)uniform->data)[2]); break;
+				case GL_FLOAT_VEC4: glUniform4f(uniform->loc, ((GLfloat*)uniform->data)[0], ((GLfloat*)uniform->data)[1], ((GLfloat*)uniform->data)[2], ((GLfloat*)uniform->data)[3]); break;
+				case GL_SAMPLER_2D:
+					{
+						glActiveTexture(GL_TEXTURE0+target);
+						glBindTexture(GL_TEXTURE_2D, ((GLuint*)uniform->data)[0]);
+						glUniform1i(uniform->loc, target++);
+					}
+					break;
 				}
-				break;
 			}
-		}
-	}else{
-		glUseProgram(0);
-	}
+		}else{
+			// Disable shader
+			glUseProgram(0);
 
-	if(!batch.isStatic())
-	{
-		for(TextureVertexMap::iterator itr = buffers.begin(); itr != buffers.end(); ++itr)
-		{
-			const Texture *texture = itr->second->texture;
+			// Set texture unit 0
 			glActiveTexture(GL_TEXTURE0);
-			if(texture) {
-				glBindTexture(GL_TEXTURE_2D, ((GLtexture*)texture)->m_id);
+			if(state.texture) {
+				glBindTexture(GL_TEXTURE_2D, ((GLtexture*)state.texture)->m_id);
 			}else{
 				glBindTexture(GL_TEXTURE_2D, 0);
 			}
 
+			// Set blend func
+			if(state.srcBlendFunc==Batch::BLEND_ZERO)
+				int i=0;
+			//glBlendFuncSeparate(state->srcBlendColor, state->dstBlendColor, state->srcBlendAlpha, state->dstBlendAlpha);
+			glBlendFunc(toGLBlend(state.srcBlendFunc), toGLBlend(state.dstBlendFunc));
+		}
+		
+		if(!batch.isStatic())
+		{
 			// Get vertices and vertex data
 			float *vertexData = (float*)itr->second->vertices.data();
 			uint *indexData = (uint*)itr->second->indices.data();
-
-			// Draw arrays
+			
+			// Set array pointers
 			glVertexPointer(2, GL_FLOAT, VERTEX_SIZE, vertexData);
 			glColorPointer(4, GL_FLOAT, VERTEX_SIZE, vertexData + 2);
 			glTexCoordPointer(2, GL_FLOAT, VERTEX_SIZE, vertexData + 6);
 
+			// Draw batch
 			glDrawElements(GL_TRIANGLES, itr->second->indices.size(), GL_UNSIGNED_INT, indexData);
-		}
-	}else{
-		for(TextureVertexMap::iterator itr = buffers.begin(); itr != buffers.end(); ++itr)
+		}else
 		{
-			const Texture *texture = itr->second->texture;
-			glActiveTexture(GL_TEXTURE0);
-			if(texture) {
-				glBindTexture(GL_TEXTURE_2D, ((GLtexture*)texture)->m_id);
-			}else{
-				glBindTexture(GL_TEXTURE_2D, 0);
-			}
-
+			// Bind vertices and indices array
 			glBindBuffer(GL_ARRAY_BUFFER_ARB, ((GLvertexbuffer*)itr->second->vbo)->m_vboId);
 			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ((GLvertexbuffer*)itr->second->vbo)->m_iboId);
 
+			// Set array pointers
 			glVertexPointer(2, GL_FLOAT, VERTEX_SIZE, (void*)(0*FLOAT_SIZE));
 			glColorPointer(4, GL_FLOAT, VERTEX_SIZE, (void*)(2*FLOAT_SIZE));
 			glTexCoordPointer(2, GL_FLOAT, VERTEX_SIZE, (void*)(6*FLOAT_SIZE));
 
+			// Draw vbo
 			glDrawElements(GL_TRIANGLES, itr->second->indices.size(), GL_UNSIGNED_INT, 0);
 
+			// Reset vbo buffers
 			glBindBuffer(GL_ARRAY_BUFFER_ARB, 0);
 			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 		}
@@ -439,7 +458,7 @@ VertexBufferObject *OpenGL::createVertexBufferObject()
 
 FrameBufferObject *OpenGL::createFrameBufferObject()
 {
-	return new GLframebufferobject();
+	return new GLframebufferobject(this);
 }
 
 bool OpenGL::isSupported(Feature feature)

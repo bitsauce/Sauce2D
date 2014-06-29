@@ -379,23 +379,6 @@ class XDAPI Graphicsx
 	AssetLoader *m_assetLoader;
 };
 
-
-// Blend enum
-enum X2DBlendFunc
-{
-	X2D_ZeroBlend,
-	X2D_OneBlend,
-	X2D_SrcColorBlend,
-	X2D_OneMinusSrcColorBlend,
-	X2D_SrcAlphaBlend,
-	X2D_OneMinusSrcAlphaBlend,
-	X2D_DstAlphaBlend,
-	X2D_OneMinusDstAlphaBlend,
-	X2D_DstColorBlend,
-	X2D_OneMinusDstColorBlend,
-	X2D_SrcAlphaSaturate
-};
-
 // Draw mode enum
 enum X2DDrawMode
 {

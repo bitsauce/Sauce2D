@@ -123,7 +123,7 @@ GLshader::GLshader(const string &vertFilePath, const string &fragFilePath)
 
 		Uniform *uniform = new Uniform;
 		uniform->type = type;
-		uniform->loc = i;
+		uniform->loc = glGetUniformLocation(m_id, name);
 
 		int dataSize;
 		switch(type)
@@ -136,7 +136,7 @@ GLshader::GLshader(const string &vertFilePath, const string &fragFilePath)
 		case GL_FLOAT_VEC2: dataSize = FLOAT_SIZE*2; break;
 		case GL_FLOAT_VEC3: dataSize = FLOAT_SIZE*3; break;
 		case GL_FLOAT_VEC4: dataSize = FLOAT_SIZE*4; break;
-		case GL_SAMPLER_2D: dataSize = INT_SIZE; break;
+		case GL_SAMPLER_2D: dataSize = /*U*/INT_SIZE; break;
 		}
 
 		uniform->data = new char[dataSize];
@@ -272,7 +272,7 @@ void GLshader::setSampler2D(const string &name, const Texture *texture)
 	{
 		Uniform *uniform = m_uniforms[name];
 		if(uniform->type == GL_SAMPLER_2D) {
-			((GLint*)uniform->data)[0] = ((GLtexture*)texture)->m_id;
+			((GLuint*)uniform->data)[0] = ((GLtexture*)texture)->m_id;
 		}
 	}else{
 		LOG("Uniform '%s' does not exist.", name);

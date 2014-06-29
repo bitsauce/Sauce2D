@@ -44,7 +44,6 @@ private:
 		GLenum type;
 		int loc;
 		void *data;
-		float test;
 	};
 
 	GLint m_id;

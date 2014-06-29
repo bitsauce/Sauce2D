@@ -7,12 +7,15 @@
 //				Originally written by Marcus Loo Vergara (aka. Bitsauce)
 //									2011-2014 (C)
 
+#include "sprite.h"
 #include "batch.h"
 #include "texture.h"
+#include "shader.h"
 #include "vertexbufferobject.h"
 #include "framebufferobject.h"
 
 #include <x2d/graphics.h>
+#include <x2d/exception.h>
 
 AS_REG_VALUE(Vertex)
 
@@ -33,12 +36,26 @@ int Batch::Register(asIScriptEngine *scriptEngine)
 {
 	int r = 0;
 
+	r = scriptEngine->RegisterEnum("BlendFunc"); AS_ASSERT
+	r = scriptEngine->RegisterEnumValue("BlendFunc", "BLEND_ZERO", BLEND_ZERO); AS_ASSERT
+	r = scriptEngine->RegisterEnumValue("BlendFunc", "BLEND_ONE", BLEND_ONE); AS_ASSERT
+	r = scriptEngine->RegisterEnumValue("BlendFunc", "BLEND_SRC_COLOR", BLEND_SRC_COLOR); AS_ASSERT
+	r = scriptEngine->RegisterEnumValue("BlendFunc", "BLEND_ONE_MINUS_SRC_COLOR", BLEND_ONE_MINUS_SRC_COLOR); AS_ASSERT
+	r = scriptEngine->RegisterEnumValue("BlendFunc", "BLEND_SRC_ALPHA", BLEND_SRC_ALPHA); AS_ASSERT
+	r = scriptEngine->RegisterEnumValue("BlendFunc", "BLEND_ONE_MINUS_SRC_ALPHA", BLEND_ONE_MINUS_SRC_ALPHA); AS_ASSERT
+	r = scriptEngine->RegisterEnumValue("BlendFunc", "BLEND_DST_COLOR", BLEND_DST_COLOR); AS_ASSERT
+	r = scriptEngine->RegisterEnumValue("BlendFunc", "BLEND_ONE_MINUS_DST_COLOR", BLEND_ONE_MINUS_DST_COLOR); AS_ASSERT
+	r = scriptEngine->RegisterEnumValue("BlendFunc", "BLEND_DST_ALPHA", BLEND_DST_ALPHA); AS_ASSERT
+	r = scriptEngine->RegisterEnumValue("BlendFunc", "BLEND_ONE_MINUS_DST_ALPHA", BLEND_ONE_MINUS_DST_ALPHA); AS_ASSERT
+	r = scriptEngine->RegisterEnumValue("BlendFunc", "BLEND_SRC_ALPHA_SATURATE", BLEND_SRC_ALPHA_SATURATE); AS_ASSERT
+
 	r = scriptEngine->RegisterObjectBehaviour("Batch", asBEHAVE_FACTORY, "Batch @f()", asFUNCTIONPR(Factory, (), Batch*), asCALL_CDECL); AS_ASSERT
 		
 	// Getters/setters
 	r = scriptEngine->RegisterObjectMethod("Batch", "void setProjectionMatrix(const Matrix4 &in)", asMETHOD(Batch, setProjectionMatrix), asCALL_THISCALL); AS_ASSERT
 	r = scriptEngine->RegisterObjectMethod("Batch", "void setShader(Shader @shader)", asMETHOD(Batch, setShader), asCALL_THISCALL); AS_ASSERT
 	r = scriptEngine->RegisterObjectMethod("Batch", "void setTexture(Texture @texture)", asMETHOD(Batch, setTexture), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("Batch", "void setBlendFunc(const BlendFunc, const BlendFunc)", asMETHOD(Batch, setBlendFunc), asCALL_THISCALL); AS_ASSERT
 	r = scriptEngine->RegisterObjectMethod("Batch", "Matrix4 getProjectionMatrix() const", asMETHOD(Batch, getProjectionMatrix), asCALL_THISCALL); AS_ASSERT
 	r = scriptEngine->RegisterObjectMethod("Batch", "Shader @getShader() const", asMETHOD(Batch, getShader), asCALL_THISCALL); AS_ASSERT
 	r = scriptEngine->RegisterObjectMethod("Batch", "Texture @getTexture() const", asMETHOD(Batch, getTexture), asCALL_THISCALL); AS_ASSERT
@@ -83,20 +100,20 @@ int SpriteBatch::Register(asIScriptEngine *scriptEngine)
 
 Batch::Batch() :
 	m_static(false),
-	m_texture(0),
-	m_shader(0),
-	m_drawOrder(0),
 	m_fbo(0)
 {
 }
 
 Batch::~Batch()
 {
-	if(m_texture) {
-		m_texture->release();
-	}
 	delete m_fbo;
 	clear();
+}
+
+void Batch::setBlendFunc(const BlendFunc src, const BlendFunc dst)
+{
+	m_state.srcBlendFunc = src;
+	m_state.dstBlendFunc = dst;
 }
 
 void Batch::setProjectionMatrix(const Matrix4 &projmat)
@@ -111,25 +128,34 @@ Matrix4 Batch::getProjectionMatrix() const
 
 void Batch::setShader(Shader *shader)
 {
-	m_shader = shader;
+	if(m_state.shader) {
+		m_state.shader->release();
+	}
+	m_state.shader = shader;
 }
 
 Shader *Batch::getShader() const
 {
-	return m_shader;
+	if(m_state.shader) {
+		m_state.shader->addRef();
+	}
+	return m_state.shader;
 }
 
 void Batch::setTexture(Texture *texture)
 {
-	if(m_texture) {
-		m_texture->release();
+	if(m_state.texture) {
+		m_state.texture->release();
 	}
-	m_texture = texture;
+	m_state.texture = texture;
 }
 
 Texture *Batch::getTexture() const
 {
-	return m_texture;
+	if(m_state.texture) {
+		m_state.texture->addRef();
+	}
+	return m_state.texture;
 }
 
 void Batch::addVertices(Vertex *vertices, int vcount, uint *indices, int icount)
@@ -140,14 +166,14 @@ void Batch::addVertices(Vertex *vertices, int vcount, uint *indices, int icount)
 	}
 	
 	VertexBuffer *buffer;
-	if(m_drawOrderMap.find(m_texture) == m_drawOrderMap.end())
+	if(m_drawOrderMap.find(m_state.texture) == m_drawOrderMap.end())
 	{
 		// Create new vertex buffer for this texture
-		m_drawOrderMap[m_texture] = m_drawOrder;
-		buffer = m_buffers[m_drawOrder] = new VertexBuffer(m_texture);
-		m_drawOrder++;
+		m_state.drawOrder = m_drawOrderMap[m_state.texture] = m_drawOrderMap.size();
+		buffer = m_buffers[m_state] = new VertexBuffer();
 	}else{
-		buffer = m_buffers[m_drawOrderMap[m_texture]];
+		m_state.drawOrder = m_drawOrderMap[m_state.texture];
+		buffer = m_buffers[m_state];
 	}
 	
 	int ioffset = buffer->vertices.size();
@@ -185,27 +211,25 @@ void Batch::addVerticesAS(Array *asvertices, Array *asindices)
 
 void Batch::modifyVertex(int index, Vertex vertex)
 {
-	int textureIdx = m_drawOrderMap[m_texture];
-	if(index < 0 || index >= (int)m_buffers[textureIdx]->vertices.size()) {
+	if(index < 0 || index >= (int)m_buffers[m_state]->vertices.size()) {
 		LOG("Batch.modifyVertex: Index out-of-bounds.");
 		return;
 	}
 
-	m_buffers[textureIdx]->vertices[index] = vertex;
+	m_buffers[m_state]->vertices[index] = vertex;
 	if(m_static) {
-		m_buffers[textureIdx]->vbo->uploadSub(index, &vertex, 1);
+		m_buffers[m_state]->vbo->uploadSub(index, &vertex, 1);
 	}
 }
 
 Vertex Batch::getVertex(int index)
 {
-	int textureIdx = m_drawOrderMap[m_texture];
-	if(index < 0 || index >= (int)m_buffers[textureIdx]->vertices.size()) {
+	if(index < 0 || index >= (int)m_buffers[m_state]->vertices.size()) {
 		LOG("Batch.getVertex: Index out-of-bounds.");
 		return Vertex();
 	}
 
-	return m_buffers[textureIdx]->vertices[index];
+	return m_buffers[m_state]->vertices[index];
 }
 
 void Batch::draw()
@@ -215,14 +239,16 @@ void Batch::draw()
 
 void Batch::clear()
 {
-	for(TextureVertexMap::iterator itr = m_buffers.begin(); itr != m_buffers.end(); ++itr) {
+	for(StateVertexMap::iterator itr = m_buffers.begin(); itr != m_buffers.end(); ++itr) {
 		delete itr->second->vbo;
 		delete itr->second;
 	}
 	m_buffers.clear();
 	m_drawOrderMap.clear();
-	m_drawOrder = 0;
 	m_static = false;
+	setTexture(0);
+	setShader(0);
+	setBlendFunc(BLEND_SRC_ALPHA, BLEND_ONE_MINUS_SRC_ALPHA);
 }
 
 void Batch::renderToTexture(Texture *texture)
@@ -241,14 +267,12 @@ void Batch::renderToTexture(Texture *texture)
 	m_fbo->unbind();
 }
 
-#include <x2d/exception.h>
-
 void Batch::makeStatic()
 {
 	if(!xdGraphics::IsSupported(xdGraphics::VertexBufferObjects)) {
 		AS_THROW("Tried to create a VBO whilst its not supported by the GPU!",);
 	}
-	for(TextureVertexMap::iterator itr = m_buffers.begin(); itr != m_buffers.end(); ++itr) {
+	for(StateVertexMap::iterator itr = m_buffers.begin(); itr != m_buffers.end(); ++itr) {
 		itr->second->vbo = xdGraphics::CreateVertexBufferObject();
 		itr->second->vbo->upload(itr->second);
 	}
@@ -259,8 +283,6 @@ bool Batch::isStatic() const
 {
 	return m_static;
 }
-
-#include "sprite.h"
 
 SpriteBatch::~SpriteBatch()
 {
@@ -302,9 +324,16 @@ void SpriteBatch::draw()
 			sprite->getVertices(vertices);
 			// m_matrixStack.top() * vertices[i];
 
-			// Replace existing vertices
+			// Set state texture
 			Texture *texture = sprite->getTexture();
-			m_buffers[m_drawOrderMap[m_texture]]->vbo->uploadSub(m_offsets[sprite], vertices, 4);
+			texture->addRef();
+			setTexture(texture);
+
+			// Set correct draw order
+			m_state.drawOrder = m_drawOrderMap[texture];
+
+			// Replace existing vertices
+			m_buffers[m_state]->vbo->uploadSub(m_offsets[sprite], vertices, 4);
 			texture->release();
 		}
 		m_returnedSprites.clear();
@@ -341,16 +370,20 @@ void SpriteBatch::makeStatic()
 	{
 		Sprite *sprite = m_sprites[i];
 
-		// Store current vertex offset
+		// Get sprite texture
 		Texture *texture = sprite->getTexture();
-		m_offsets[sprite] = m_drawOrderMap.find(texture) == m_drawOrderMap.end() ? 0 : m_buffers[m_drawOrderMap[texture]]->vertices.size();
+		texture->addRef();
+		setTexture(texture);
+		
+		// Store current vertex offset
+		m_offsets[sprite] = m_buffers.find(m_state) == m_buffers.end() ? 0 : m_buffers[m_state]->vertices.size();
 		texture->release();
 
 		// Draw this sprite into the buffer
 		this->addRef();
 		sprite->draw(this);
 	}
-	for(TextureVertexMap::iterator itr = m_buffers.begin(); itr != m_buffers.end(); ++itr) {
+	for(StateVertexMap::iterator itr = m_buffers.begin(); itr != m_buffers.end(); ++itr) {
 		itr->second->vbo = xdGraphics::CreateVertexBufferObject();
 		itr->second->vbo->upload(itr->second);
 	}
