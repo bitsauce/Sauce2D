@@ -297,8 +297,6 @@ void OpenGL::renderBatch(const Batch &batch)
 			}
 
 			// Set blend func
-			if(state.srcBlendFunc==Batch::BLEND_ZERO)
-				int i=0;
 			//glBlendFuncSeparate(state->srcBlendColor, state->dstBlendColor, state->srcBlendAlpha, state->dstBlendAlpha);
 			glBlendFunc(toGLBlend(state.srcBlendFunc), toGLBlend(state.dstBlendFunc));
 		}

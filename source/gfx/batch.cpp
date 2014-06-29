@@ -85,6 +85,12 @@ int SpriteBatch::Register(asIScriptEngine *scriptEngine)
 		
 	// Getters/setters
 	r = scriptEngine->RegisterObjectMethod("SpriteBatch", "void setProjectionMatrix(const Matrix4 &in)", asMETHOD(SpriteBatch, setProjectionMatrix), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("SpriteBatch", "void setShader(Shader @shader)", asMETHOD(SpriteBatch, setShader), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("SpriteBatch", "void setTexture(Texture @texture)", asMETHOD(SpriteBatch, setTexture), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("SpriteBatch", "void setBlendFunc(const BlendFunc, const BlendFunc)", asMETHOD(SpriteBatch, setBlendFunc), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("SpriteBatch", "Matrix4 getProjectionMatrix() const", asMETHOD(SpriteBatch, getProjectionMatrix), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("SpriteBatch", "Shader @getShader() const", asMETHOD(SpriteBatch, getShader), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("SpriteBatch", "Texture @getTexture() const", asMETHOD(SpriteBatch, getTexture), asCALL_THISCALL); AS_ASSERT
 
 	r = scriptEngine->RegisterObjectMethod("SpriteBatch", "void add(Sprite @)", asMETHOD(SpriteBatch, add), asCALL_THISCALL); AS_ASSERT
 	r = scriptEngine->RegisterObjectMethod("SpriteBatch", "Sprite @get(int)", asMETHOD(SpriteBatch, get), asCALL_THISCALL); AS_ASSERT
@@ -94,6 +100,7 @@ int SpriteBatch::Register(asIScriptEngine *scriptEngine)
 	r = scriptEngine->RegisterObjectMethod("SpriteBatch", "void draw()", asMETHOD(SpriteBatch, draw), asCALL_THISCALL); AS_ASSERT
 	r = scriptEngine->RegisterObjectMethod("SpriteBatch", "void clear()", asMETHOD(SpriteBatch, clear), asCALL_THISCALL); AS_ASSERT
 	r = scriptEngine->RegisterObjectMethod("SpriteBatch", "void makeStatic()", asMETHOD(SpriteBatch, makeStatic), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("SpriteBatch", "void renderToTexture(Texture@)", asMETHOD(SpriteBatch, renderToTexture), asCALL_THISCALL); AS_ASSERT
 
 	return r;
 }
@@ -165,14 +172,20 @@ void Batch::addVertices(Vertex *vertices, int vcount, uint *indices, int icount)
 		return;
 	}
 	
-	VertexBuffer *buffer;
+	// Get texture draw order
 	if(m_drawOrderMap.find(m_state.texture) == m_drawOrderMap.end())
 	{
-		// Create new vertex buffer for this texture
 		m_state.drawOrder = m_drawOrderMap[m_state.texture] = m_drawOrderMap.size();
-		buffer = m_buffers[m_state] = new VertexBuffer();
 	}else{
 		m_state.drawOrder = m_drawOrderMap[m_state.texture];
+	}
+
+	VertexBuffer *buffer;
+	if(m_buffers.find(m_state) == m_buffers.end())
+	{
+		// Create new vertex buffer for this state
+		buffer = m_buffers[m_state] = new VertexBuffer();
+	}else{
 		buffer = m_buffers[m_state];
 	}
 	
