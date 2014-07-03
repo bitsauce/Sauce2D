@@ -7,8 +7,8 @@
 //				Originally written by Marcus Loo Vergara (aka. Bitsauce)
 //									2011-2014 (C)
 
-#include "texture.h"
-#include "pixmap.h"
+#include <x2d/graphics/texture.h>
+#include <x2d/graphics/pixmap.h>
 
 #include <x2d/graphics.h>
 

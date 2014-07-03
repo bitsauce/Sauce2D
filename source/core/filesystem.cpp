@@ -37,6 +37,11 @@ int xdFileSystem::Register(asIScriptEngine *scriptEngine)
 	return r;
 }
 
+bool xdFileSystem::ReadFile(string path, string &content)
+{
+	return s_this->readFile(path, content);
+}
+
 bool xdFileSystem::fileExists(const string &filePath) const
 {
 	return util::fileExists(filePath);

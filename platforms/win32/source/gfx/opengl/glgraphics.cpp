@@ -12,9 +12,9 @@
 #include "glshader.h"
 #include "../../../window.h"
 
-#include "../source/gfx/vertexbufferobject.h"
-#include "../source/gfx/framebufferobject.h"
-#include "../source/gfx/batch.h"
+#include <x2d/graphics/vertexbufferobject.h>
+#include <x2d/graphics/framebufferobject.h>
+#include <x2d/graphics/batch.h>
 
 class GLvertexbuffer : public VertexBufferObject
 {

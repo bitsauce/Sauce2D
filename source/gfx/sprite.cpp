@@ -8,9 +8,9 @@
 //									2011-2014 (C)
 
 #include "sprite.h"
-#include "texture.h"
-#include "textureRegion.h"
-#include "batch.h"
+#include <x2d/graphics/texture.h>
+#include <x2d/graphics/textureregion.h>
+#include <x2d/graphics/batch.h>
 #include "shape.h"
 
 #include <x2d/graphics.h>

@@ -8,11 +8,12 @@
 //									2011-2014 (C)
 
 #include "sprite.h"
-#include "batch.h"
-#include "texture.h"
 #include "shader.h"
-#include "vertexbufferobject.h"
-#include "framebufferobject.h"
+
+#include <x2d/graphics/batch.h>
+#include <x2d/graphics/texture.h>
+#include <x2d/graphics/vertexbufferobject.h>
+#include <x2d/graphics/framebufferobject.h>
 
 #include <x2d/graphics.h>
 #include <x2d/exception.h>

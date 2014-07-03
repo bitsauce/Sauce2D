@@ -7,7 +7,7 @@
 //				Originally written by Marcus Loo Vergara (aka. Bitsauce)
 //									2011-2014 (C)
 
-#include "pixmap.h"
+#include <x2d/graphics/pixmap.h>
 #include <x2d/console.h>
 
 AS_REG_VALUE(Pixmap)

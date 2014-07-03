@@ -11,7 +11,7 @@
 #include "font.h"
 #include <x2d/console.h>
 #include <x2d/graphics.h>
-#include "pixmap.h"
+#include <x2d/graphics/pixmap.h>
 #include "sprite.h"
 
 // Credits to the FreeType library

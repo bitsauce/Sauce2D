@@ -31,11 +31,11 @@
     <Filter Include="source\sfx">
       <UniqueIdentifier>{43ec08c3-6bf6-475f-8617-ab1188e8c430}</UniqueIdentifier>
     </Filter>
-    <Filter Include="include\gfx">
-      <UniqueIdentifier>{7165c08c-b771-49f1-87a3-42c5fce47fe9}</UniqueIdentifier>
-    </Filter>
     <Filter Include="include\scripts">
       <UniqueIdentifier>{25df4107-2711-490e-937d-5df919d502cc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\graphics">
+      <UniqueIdentifier>{7165c08c-b771-49f1-87a3-42c5fce47fe9}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -75,19 +75,10 @@
     <ClInclude Include="..\..\source\gfx\animation.h">
       <Filter>source\gfx\portable</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\source\gfx\batch.h">
-      <Filter>source\gfx\portable</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\source\gfx\font.h">
       <Filter>source\gfx\portable</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\source\gfx\pixmap.h">
-      <Filter>source\gfx\portable</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\source\gfx\sprite.h">
-      <Filter>source\gfx\portable</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\gfx\textureRegion.h">
       <Filter>source\gfx\portable</Filter>
     </ClInclude>
     <ClInclude Include="..\..\include\x2d\console.h">
@@ -132,23 +123,8 @@
     <ClInclude Include="..\..\include\x2d\timer.h">
       <Filter>include</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\source\gfx\texture.h">
-      <Filter>include\gfx</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\gfx\camera.h">
-      <Filter>include\gfx</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\gfx\shader.h">
-      <Filter>include\gfx</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\gfx\viewport.h">
-      <Filter>include\gfx</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\include\x2d\assetloader.h">
       <Filter>include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\gfx\vertexbufferobject.h">
-      <Filter>include\gfx</Filter>
     </ClInclude>
     <ClInclude Include="..\..\source\scripts\scriptgrid.h">
       <Filter>source\scripts</Filter>
@@ -174,8 +150,23 @@
     <ClInclude Include="..\..\include\x2d\scriptengine.h">
       <Filter>include</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\source\gfx\framebufferobject.h">
-      <Filter>include\gfx</Filter>
+    <ClInclude Include="..\..\include\x2d\graphics\framebufferobject.h">
+      <Filter>include\graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\x2d\graphics\texture.h">
+      <Filter>include\graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\x2d\graphics\textureRegion.h">
+      <Filter>include\graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\x2d\graphics\vertexbufferobject.h">
+      <Filter>include\graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\x2d\graphics\batch.h">
+      <Filter>include\graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\x2d\graphics\pixmap.h">
+      <Filter>include\graphics</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

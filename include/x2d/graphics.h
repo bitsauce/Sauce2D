@@ -16,9 +16,9 @@ class Vector2;
 class VertexBufferObject;
 class FrameBufferObject;
 
-extern uint QUAD_INDICES[6];
-extern Vector4 QUAD_VERTICES[4];
-extern Vector2 QUAD_TEXCOORD[4];
+XDAPI extern uint QUAD_INDICES[6];
+XDAPI extern Vector4 QUAD_VERTICES[4];
+XDAPI extern Vector2 QUAD_TEXCOORD[4];
 
 /*********************************************************************
 **	Abstract Graphics Layer											**

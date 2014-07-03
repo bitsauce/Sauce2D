@@ -3,8 +3,8 @@
 
 #include "glgraphics.h"
 
-#include "../source/gfx/pixmap.h"
-#include "../source/gfx/texture.h"
+#include <x2d/graphics/pixmap.h>
+#include <x2d/graphics/texture.h>
 //#include "../source/gfx/color.h"
 
 class GLtexture : public Texture

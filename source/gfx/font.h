@@ -4,8 +4,8 @@
 #include <x2d/config.h>
 #include <x2d/base.h>
 #include <x2d/math.h>
-#include "batch.h"
-#include "texture.h"
+#include <x2d/graphics/batch.h>
+#include <x2d/graphics/texture.h>
 
 class Font
 {

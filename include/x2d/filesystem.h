@@ -59,6 +59,9 @@ public:
 	static xdFileWriter *CreateFileWriter(const string &filePath) { return s_this->createFileWriter(filePath); }
 	static xdFileReader *CreateFileReader(const string &filePath) { return s_this->createFileReader(filePath); }
 
+	// Static functions
+	static bool ReadFile(string path, string &content);
+
 protected:
 	virtual xdFileWriter *createFileWriter(const string &filePath) = 0;
 	virtual xdFileReader *createFileReader(const string &filePath) = 0;

@@ -10,8 +10,9 @@
 #include <x2d/graphics.h>
 #include <x2d/math.h>
 #include <x2d/assetloader.h>
-#include "texture.h"
-#include "pixmap.h"
+#include <x2d/graphics/texture.h>
+#include <x2d/graphics/textureRegion.h>
+#include <x2d/graphics/pixmap.h>
 
 xdGraphics *xdGraphics::s_this = 0;
 
@@ -259,8 +260,6 @@ Shader* xdGraphics::CreateShader(const string &vertFilePath, const string &fragF
 {
 	return s_this->createShader(vertFilePath, fragFilePath);
 }
-
-#include "gfx/textureRegion.h"
 
 TextureRegion *xdGraphics::CreateTextureRegion(Texture *texture)
 {

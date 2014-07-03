@@ -1,7 +1,7 @@
 #ifndef GFX_VERTEX_BUFFER_OBJECT_H
 #define GFX_VERTEX_BUFFER_OBJECT_H
 
-#include "batch.h"
+#include <x2d/graphics/batch.h>
 
 class XDAPI VertexBufferObject
 {

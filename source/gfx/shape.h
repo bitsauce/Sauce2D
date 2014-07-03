@@ -5,8 +5,8 @@
 #include <x2d/graphics.h>
 #include <x2d/config.h>
 #include <x2d/base.h>
-#include "batch.h"
-#include "texture.h"
+#include <x2d/graphics/batch.h>
+#include <x2d/graphics/texture.h>
 
 class Shape
 {

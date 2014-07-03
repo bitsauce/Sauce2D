@@ -1,0 +1,7 @@
+** x2D Game Engine **
+Initializing AngelScript (2.29.0)
+Compiling scripts...
+spSkeleton.Constructor: Default skin name 'default'
+Running void main()...
+** Spine Example **
+x2D Engine Initialized

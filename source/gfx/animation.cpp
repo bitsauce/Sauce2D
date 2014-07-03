@@ -1,6 +1,6 @@
 #include "animation.h"
-#include "textureRegion.h"
-#include "texture.h"
+#include <x2d/graphics/textureregion.h>
+#include <x2d/graphics/texture.h>
 
 AS_REG_REF(Animation)
 
