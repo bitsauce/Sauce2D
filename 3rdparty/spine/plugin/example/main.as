@@ -15,6 +15,8 @@ void main()
 {
 	Console.log("** Spine Example **");
 }
+
+bool lmb = false;
 
 void update()
 {
@@ -30,6 +32,17 @@ void update()
 		skeleton.setFlipX(true);
 	}else{
 		@currentAnim = @skeleton.findAnimation("idle");
+	}
+	
+	if(Input.getKeyState(KEY_LMB))
+	{
+		if(!lmb) {
+			spAnimation @anim = @skeleton.findAnimation("shoot");
+			anim.setTime(0.0f);
+		}
+		lmb = true;
+	}else /*if(anim.done())*/{
+		lmb = false;
 	}
 	
 	// Update skeleton and animation

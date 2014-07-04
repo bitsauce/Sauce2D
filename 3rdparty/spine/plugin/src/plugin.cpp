@@ -111,6 +111,7 @@ public:
 
 		// Pre-load animation objects
 		for(int i = 0; i < m_skeletonData->animationCount; i++) {
+			spAnimationState_create(spAnimationStateData_create(m_skeletonData));
 			spAnimation *anim = m_skeletonData->animations[i];
 			m_animations[anim->name] = new spAnimationWrapper(m_skeleton, anim);
 		}
@@ -206,9 +207,57 @@ public:
 				batch->setTexture(texture);
 				batch->addVertices(vertices, 4, QUAD_INDICES, 6);
 				batch->setTexture(0);
-			}
-		}
+			} /*else if (attachment->type == ATTACHMENT_MESH) {
+				MeshAttachment* mesh = (MeshAttachment*)attachment;
+				if (mesh->verticesCount > SPINE_MESH_VERTEX_COUNT_MAX) continue;
+				texture = (Texture*)((AtlasRegion*)mesh->rendererObject)->page->rendererObject;
+				MeshAttachment_computeWorldVertices(mesh, slot->skeleton->x, slot->skeleton->y, slot, worldVertices);
 
+				Uint8 r = skeleton->r * slot->r * 255;
+				Uint8 g = skeleton->g * slot->g * 255;
+				Uint8 b = skeleton->b * slot->b * 255;
+				Uint8 a = skeleton->a * slot->a * 255;
+				vertex.color.r = r;
+				vertex.color.g = g;
+				vertex.color.b = b;
+				vertex.color.a = a;
+
+				Vector2u size = texture->getSize();
+				for (int i = 0; i < mesh->trianglesCount; ++i) {
+					int index = mesh->triangles[i] << 1;
+					vertex.position.x = worldVertices[index];
+					vertex.position.y = worldVertices[index + 1];
+					vertex.texCoords.x = mesh->uvs[index] * size.x;
+					vertex.texCoords.y = mesh->uvs[index + 1] * size.y;
+					vertexArray->append(vertex);
+				}
+
+			} else if (attachment->type == ATTACHMENT_SKINNED_MESH) {
+				SkinnedMeshAttachment* mesh = (SkinnedMeshAttachment*)attachment;
+				if (mesh->uvsCount > SPINE_MESH_VERTEX_COUNT_MAX) continue;
+				texture = (Texture*)((AtlasRegion*)mesh->rendererObject)->page->rendererObject;
+				SkinnedMeshAttachment_computeWorldVertices(mesh, slot->skeleton->x, slot->skeleton->y, slot, worldVertices);
+
+				Uint8 r = skeleton->r * slot->r * 255;
+				Uint8 g = skeleton->g * slot->g * 255;
+				Uint8 b = skeleton->b * slot->b * 255;
+				Uint8 a = skeleton->a * slot->a * 255;
+				vertex.color.r = r;
+				vertex.color.g = g;
+				vertex.color.b = b;
+				vertex.color.a = a;
+
+				Vector2u size = texture->getSize();
+				for (int i = 0; i < mesh->trianglesCount; ++i) {
+					int index = mesh->triangles[i] << 1;
+					vertex.position.x = worldVertices[index];
+					vertex.position.y = worldVertices[index + 1];
+					vertex.texCoords.x = mesh->uvs[index] * size.x;
+					vertex.texCoords.y = mesh->uvs[index + 1] * size.y;
+					vertexArray->append(vertex);
+				}
+			}*/
+		}
 	}
 
 	static spSkeletonWrapper *Factory(const string &jsonFile, const string &atlasFile, const float scale)
@@ -241,6 +290,7 @@ int CreatePlugin(xdScriptEngine *scriptEngine)
 	r = scriptEngine->registerObjectMethod("spSkeleton", "void setFlipY(const bool)", asMETHOD(spSkeletonWrapper, setFlipY));
 	r = scriptEngine->registerObjectMethod("spSkeleton", "void draw(Batch@)", asMETHOD(spSkeletonWrapper, draw));
 	
+	r = scriptEngine->registerObjectMethod("spAnimation", "void setTime(const float)", asMETHOD(spAnimationWrapper, setTime));
 	r = scriptEngine->registerObjectMethod("spAnimation", "void setLooping(const bool)", asMETHOD(spAnimationWrapper, setLooping));
 	r = scriptEngine->registerObjectMethod("spAnimation", "void apply(const float)", asMETHOD(spAnimationWrapper, apply));
 	r = scriptEngine->registerObjectMethod("spAnimation", "void mix(const float, const float)", asMETHOD(spAnimationWrapper, mix));
