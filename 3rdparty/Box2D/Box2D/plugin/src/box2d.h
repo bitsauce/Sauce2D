@@ -18,6 +18,8 @@ public:
 	void setDrawFlags(int flags);
 	void setScale(float scale);
 	float getScale() const;
+	void setGravity(const Vector2 &gravity);
+	Vector2 getGravity() const;
 	b2World *getWorld() const;
 
 	void destroyBody(b2Body *body);

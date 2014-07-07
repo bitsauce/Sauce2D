@@ -116,6 +116,16 @@ bool spAnimationStateWrapper::getLooping() const
 	return m_looping;
 }
 
+void spAnimationStateWrapper::setTimeScale(const float timeScale)
+{
+	m_self->timeScale = timeScale;
+}
+
+float spAnimationStateWrapper::getTimeScale() const
+{
+	return m_self->timeScale;
+}
+
 void spAnimationStateWrapper::setAnimation(const string &name)
 {
 	spAnimationState_setAnimationByName(m_self, 0, name.c_str(), m_looping);

@@ -8,9 +8,20 @@ b2FixtureWrapper::b2FixtureWrapper(b2Fixture *fixture) :
 {
 }
 
+void b2FixtureWrapper::setFriction(const float friction)
+{
+	m_fixture->SetFriction(friction);
+}
+
 void b2FixtureWrapper::setDensity(const float density)
 {
 	m_fixture->SetDensity(density);
+	m_fixture->GetBody()->ResetMassData();
+}
+
+void b2FixtureWrapper::setRestitution(const float restitution)
+{
+	m_fixture->SetRestitution(restitution);
 }
 
 void b2FixtureWrapper::setMaskBits(const uint maskBits)

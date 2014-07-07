@@ -121,10 +121,12 @@ int CreatePlugin(xdScriptEngine *scriptEngine)
 	r = scriptEngine->registerEnumValue("BodyType", "b2_bulletBody", BulletBody);  AS_ASSERT
 
 	r = scriptEngine->registerObjectMethod("ScriptBox2D", "void step(float)", asMETHOD(Box2D, step)); AS_ASSERT
-	r = scriptEngine->registerObjectMethod("ScriptBox2D", "void draw()", asMETHOD(Box2D, draw)); AS_ASSERT AS_ASSERT
+	r = scriptEngine->registerObjectMethod("ScriptBox2D", "void draw()", asMETHOD(Box2D, draw)); AS_ASSERT
 	r = scriptEngine->registerObjectMethod("ScriptBox2D", "void setDrawFlags(int)", asMETHOD(Box2D, setDrawFlags)); AS_ASSERT
 	r = scriptEngine->registerObjectMethod("ScriptBox2D", "void set_scale(float)", asMETHOD(Box2D, setScale)); AS_ASSERT
 	r = scriptEngine->registerObjectMethod("ScriptBox2D", "float get_scale() const", asMETHOD(Box2D, getScale)); AS_ASSERT
+	r = scriptEngine->registerObjectMethod("ScriptBox2D", "void set_gravity(const Vector2 &in)", asMETHOD(Box2D, setGravity)); AS_ASSERT
+	r = scriptEngine->registerObjectMethod("ScriptBox2D", "Vector2 get_gravity() const", asMETHOD(Box2D, getGravity)); AS_ASSERT
 
 	r = scriptEngine->registerObjectConstructor("b2BodyDef", "void f()", asFUNCTION(b2BodyDefWrapper::Construct)); AS_ASSERT
 	r = scriptEngine->registerObjectProperty("b2BodyDef", "BodyType type", offsetof(b2BodyDefWrapper, type)); AS_ASSERT
@@ -138,9 +140,11 @@ int CreatePlugin(xdScriptEngine *scriptEngine)
 	r = scriptEngine->registerObjectProperty("b2BodyDef", "bool awake", offsetof(b2BodyDefWrapper, awake)); AS_ASSERT
 	r = scriptEngine->registerObjectProperty("b2BodyDef", "bool fixedRotation", offsetof(b2BodyDefWrapper, fixedRotation)); AS_ASSERT
 	r = scriptEngine->registerObjectProperty("b2BodyDef", "bool active", offsetof(b2BodyDefWrapper, active)); AS_ASSERT
-	r = scriptEngine->registerObjectProperty("b2BodyDef", "bool gravityScale", offsetof(b2BodyDefWrapper, gravityScale)); AS_ASSERT
+	r = scriptEngine->registerObjectProperty("b2BodyDef", "float gravityScale", offsetof(b2BodyDefWrapper, gravityScale)); AS_ASSERT
 	
 	r = scriptEngine->registerObjectMethod("b2Fixture", "void setDensity(const float)", asMETHOD(b2FixtureWrapper, setDensity)); AS_ASSERT
+	r = scriptEngine->registerObjectMethod("b2Fixture", "void setFriction(const float)", asMETHOD(b2FixtureWrapper, setFriction)); AS_ASSERT
+	r = scriptEngine->registerObjectMethod("b2Fixture", "void setRestitution(const float)", asMETHOD(b2FixtureWrapper, setRestitution)); AS_ASSERT
 	r = scriptEngine->registerObjectMethod("b2Fixture", "void setMaskBits(const uint)", asMETHOD(b2FixtureWrapper, setMaskBits)); AS_ASSERT
 	r = scriptEngine->registerObjectMethod("b2Fixture", "void setCategoryBits(const uint)", asMETHOD(b2FixtureWrapper, setCategoryBits)); AS_ASSERT
 	
@@ -170,6 +174,7 @@ int CreatePlugin(xdScriptEngine *scriptEngine)
 	r = scriptEngine->registerObjectMethod("b2Body", "Vector2 getPosition() const", asMETHOD(b2BodyWrapper, getPosition)); AS_ASSERT
 	r = scriptEngine->registerObjectMethod("b2Body", "Vector2 getCenter() const", asMETHOD(b2BodyWrapper, getPosition)); AS_ASSERT
 	r = scriptEngine->registerObjectMethod("b2Body", "Vector2 getLinearVelocity() const", asMETHOD(b2BodyWrapper, getLinearVelocity)); AS_ASSERT
+	r = scriptEngine->registerObjectMethod("b2Body", "float getMass() const", asMETHOD(b2BodyWrapper, getMass)); AS_ASSERT
 	r = scriptEngine->registerObjectMethod("b2Body", "float getAngle() const", asMETHOD(b2BodyWrapper, getAngle)); AS_ASSERT
 	r = scriptEngine->registerObjectMethod("b2Body", "void applyImpulse(const Vector2 &in, const Vector2 &in)", asMETHOD(b2BodyWrapper, applyImpulse)); AS_ASSERT
 	r = scriptEngine->registerObjectMethod("b2Body", "void setLinearVelocity(const Vector2 &in)", asMETHOD(b2BodyWrapper, setLinearVelocity)); AS_ASSERT

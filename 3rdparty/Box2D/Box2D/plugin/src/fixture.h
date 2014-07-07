@@ -15,8 +15,10 @@ public:
 	RefCounter refCounter;
 	void addRef() { refCounter.add(); }
 	void release() { if(refCounter.release() == 0) delete this; }
-
+	
+	void setFriction(const float friction);
 	void setDensity(const float density);
+	void setRestitution(const float restitution);
 	void setMaskBits(const uint maskBits);
 	void setCategoryBits(const uint categoryBits);
 

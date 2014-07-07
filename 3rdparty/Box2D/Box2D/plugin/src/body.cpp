@@ -306,6 +306,14 @@ Vector2 b2BodyWrapper::getLinearVelocity() const
 	return toXDVec(m_body->GetLinearVelocity());
 }
 
+float b2BodyWrapper::getMass() const
+{
+	if(!m_body)
+		return 0.0f;
+
+	return m_body->GetMass();
+}
+
 void b2BodyWrapper::applyImpulse(const Vector2 &impulse, const Vector2 &position)
 {
 	if(!m_body)

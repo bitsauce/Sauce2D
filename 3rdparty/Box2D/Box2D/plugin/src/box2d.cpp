@@ -69,6 +69,16 @@ float Box2D::getScale() const
 	return m_scale;
 }
 
+void Box2D::setGravity(const Vector2 &gravity)
+{
+	m_world->SetGravity(toB2Vec(gravity));
+}
+
+Vector2 Box2D::getGravity() const
+{
+	return toXDVec(m_world->GetGravity());
+}
+
 b2World *Box2D::getWorld() const
 {
 	return m_world;

@@ -62,6 +62,9 @@ public:
 	void setLooping(const bool looping);
 	bool getLooping() const;
 
+	void setTimeScale(const float timeScale);
+	float getTimeScale() const;
+
 	void setAnimation(const string &name);
 	void setAnimation(spAnimationWrapper *anim);
 	void addAnimation(const string &name, const float delay);

@@ -14,10 +14,18 @@ public:
 	~spSkeletonWrapper();
 
 	spAnimationWrapper *findAnimation(const string &name);
+
 	void setPosition(const Vector2 &pos);
+	Vector2 getPosition() const;
+
 	void setFlipX(const bool flip);
+	bool getFlipX() const;
+
 	void setFlipY(const bool flip);
+	bool getFlipY() const;
+
 	void draw(class Batch *batch);
+
 	spSkeletonData *data() const;
 	spSkeleton *get() const;
 

@@ -49,14 +49,29 @@ void spSkeletonWrapper::setPosition(const Vector2 &pos)
 	m_self->y = pos.y;
 }
 
+Vector2 spSkeletonWrapper::getPosition() const
+{
+	return Vector2(m_self->x, m_self->y);
+}
+
 void spSkeletonWrapper::setFlipX(const bool flip)
 {
 	m_self->flipX = flip;
 }
 
+bool spSkeletonWrapper::getFlipX() const
+{
+	return m_self->flipX != 0;
+}
+
 void spSkeletonWrapper::setFlipY(const bool flip)
 {
 	m_self->flipY = flip;
+}
+
+bool spSkeletonWrapper::getFlipY() const
+{
+	return m_self->flipY != 0;
 }
 
 void spSkeletonWrapper::draw(Batch *batch)

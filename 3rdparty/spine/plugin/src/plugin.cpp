@@ -56,9 +56,12 @@ int CreatePlugin(xdScriptEngine *scriptEngine)
 
 	r = scriptEngine->registerObjectFactory("spSkeleton", "spSkeleton @f(const string &in, const string &in, const float scale = 1.0f)", asFUNCTION(spSkeletonWrapper::Factory));
 	r = scriptEngine->registerObjectMethod("spSkeleton", "spAnimation @findAnimation(const string &in)", asMETHOD(spSkeletonWrapper, findAnimation));
-	r = scriptEngine->registerObjectMethod("spSkeleton", "void setPosition(const Vector2 &in)", asMETHOD(spSkeletonWrapper, setPosition));
-	r = scriptEngine->registerObjectMethod("spSkeleton", "void setFlipX(const bool)", asMETHOD(spSkeletonWrapper, setFlipX));
-	r = scriptEngine->registerObjectMethod("spSkeleton", "void setFlipY(const bool)", asMETHOD(spSkeletonWrapper, setFlipY));
+	r = scriptEngine->registerObjectMethod("spSkeleton", "void set_position(const Vector2 &in)", asMETHOD(spSkeletonWrapper, setPosition));
+	r = scriptEngine->registerObjectMethod("spSkeleton", "Vector2 get_position() const", asMETHOD(spSkeletonWrapper, getPosition));
+	r = scriptEngine->registerObjectMethod("spSkeleton", "void set_flipX(const bool)", asMETHOD(spSkeletonWrapper, setFlipX));
+	r = scriptEngine->registerObjectMethod("spSkeleton", "bool get_flipX() const", asMETHOD(spSkeletonWrapper, getFlipX));
+	r = scriptEngine->registerObjectMethod("spSkeleton", "void set_flipY(const bool)", asMETHOD(spSkeletonWrapper, setFlipY));
+	r = scriptEngine->registerObjectMethod("spSkeleton", "bool get_flipY() const", asMETHOD(spSkeletonWrapper, getFlipY));
 	r = scriptEngine->registerObjectMethod("spSkeleton", "void draw(Batch@)", asMETHOD(spSkeletonWrapper, draw));
 	
 	r = scriptEngine->registerObjectMethod("spAnimation", "void set_time(const float)", asMETHOD(spAnimationWrapper, setTime));
@@ -76,6 +79,8 @@ int CreatePlugin(xdScriptEngine *scriptEngine)
 	r = scriptEngine->registerObjectFactory("spAnimationState", "spAnimationState @f(spAnimationStateData@)", asFUNCTION(spAnimationStateWrapper::Factory));
 	r = scriptEngine->registerObjectMethod("spAnimationState", "void set_looping(const bool)", asMETHOD(spAnimationStateWrapper, setLooping));
 	r = scriptEngine->registerObjectMethod("spAnimationState", "bool get_looping() const", asMETHOD(spAnimationStateWrapper, getLooping));
+	r = scriptEngine->registerObjectMethod("spAnimationState", "void set_timeScale(const float)", asMETHOD(spAnimationStateWrapper, setTimeScale));
+	r = scriptEngine->registerObjectMethod("spAnimationState", "float get_timeScale() const", asMETHOD(spAnimationStateWrapper, getTimeScale));
 	r = scriptEngine->registerObjectMethod("spAnimationState", "void setAnimation(spAnimation@)", asMETHODPR(spAnimationStateWrapper, setAnimation, (spAnimationWrapper*), void));
 	r = scriptEngine->registerObjectMethod("spAnimationState", "void setAnimation(const string &in)", asMETHODPR(spAnimationStateWrapper, setAnimation, (const string&), void));
 	r = scriptEngine->registerObjectMethod("spAnimationState", "void addAnimation(spAnimation@, const float)", asMETHODPR(spAnimationStateWrapper, addAnimation, (spAnimationWrapper*, const float), void));
