@@ -4,8 +4,9 @@
 #include "plugin.h"
 #include <x2d/scriptengine.h>
 #include <x2d/scripts/array.h>
-#include <x2d/scripts/anyobject.h>
 #include <Box2D/Box2D.h>
+
+int b2BodyWrapper::TypeId = 0;
 
 b2BodyDefWrapper::b2BodyDefWrapper() :
 	type(StaticBody),
@@ -57,17 +58,20 @@ b2BodyWrapper::b2BodyWrapper(b2Body *body) :
 b2BodyWrapper::~b2BodyWrapper()
 {
 	freeObject();
-	for(vector<b2FixtureWrapper*>::iterator itr = m_fixtures.begin(); itr != m_fixtures.end(); ++itr) {
-		(*itr)->release();
-	}
 	destroy();
+	for(vector<b2FixtureWrapper*>::iterator itr = m_fixtures.begin(); itr != m_fixtures.end(); ++itr) {
+		(*itr)->m_body = 0;
+	}
 }
 
 void b2BodyWrapper::destroy()
 {
-	if(m_body) {
-		b2d->destroyBody(m_body);
-		m_body = 0;
+	if(m_body)
+	{
+		b2d->destroyBody(&m_body);
+		for(vector<b2FixtureWrapper*>::iterator itr = m_fixtures.begin(); itr != m_fixtures.end(); ++itr) {
+			(*itr)->destroy();
+		}
 	}
 }
 
@@ -79,7 +83,16 @@ b2FixtureWrapper *b2BodyWrapper::createFixture(const Rect &rect, float density)
 	b2PolygonShape shape;
 	b2Vec2 halfSize = toB2Vec(rect.getSize()/2.0f);
 	shape.SetAsBox(halfSize.x, halfSize.y, toB2Vec(rect.getCenter()), 0.0f);
-	return new b2FixtureWrapper(m_body->CreateFixture(&shape, density));
+	
+	addRef();
+	b2FixtureWrapper *fixture = new b2FixtureWrapper(this, m_body->CreateFixture(&shape, density));
+	fixture->addRef();
+	
+	asIScriptEngine *engine = scriptEngine->getASEngine();
+	engine->NotifyGarbageCollectorOfNewObject(fixture, engine->GetObjectTypeById(b2FixtureWrapper::TypeId));
+
+	m_fixtures.push_back(fixture);
+	return fixture;
 }
 	
 b2FixtureWrapper *b2BodyWrapper::createFixture(const Vector2 &center, const float radius, float density)
@@ -90,7 +103,16 @@ b2FixtureWrapper *b2BodyWrapper::createFixture(const Vector2 &center, const floa
 	b2CircleShape shape;
 	shape.m_p = toB2Vec(center);
 	shape.m_radius = radius/b2d->getScale();
-	return new b2FixtureWrapper(m_body->CreateFixture(&shape, density));
+	
+	addRef();
+	b2FixtureWrapper *fixture = new b2FixtureWrapper(this, m_body->CreateFixture(&shape, density));
+	fixture->addRef();
+	
+	asIScriptEngine *engine = scriptEngine->getASEngine();
+	engine->NotifyGarbageCollectorOfNewObject(fixture, engine->GetObjectTypeById(b2FixtureWrapper::TypeId));
+
+	m_fixtures.push_back(fixture);
+	return fixture;
 }
 	
 b2FixtureWrapper *b2BodyWrapper::createFixture(Array *arr, float density)
@@ -113,19 +135,30 @@ b2FixtureWrapper *b2BodyWrapper::createFixture(Array *arr, float density)
 	delete[] verts;
 
 	// Add fixture
-	return new b2FixtureWrapper(m_body->CreateFixture(&shape, density));
+	addRef();
+	b2FixtureWrapper *fixture = new b2FixtureWrapper(this, m_body->CreateFixture(&shape, density));
+	fixture->addRef();
+	
+	asIScriptEngine *engine = scriptEngine->getASEngine();
+	engine->NotifyGarbageCollectorOfNewObject(fixture, engine->GetObjectTypeById(b2FixtureWrapper::TypeId));
+
+	m_fixtures.push_back(fixture);
+	return fixture;
 }
 
 void b2BodyWrapper::removeFixture(b2FixtureWrapper *fixture)
 {
 	if(!m_body || b2d->getWorld()->IsLocked())
 		return;
-
-	m_body->DestroyFixture(fixture->m_fixture);
+	
 	vector<b2FixtureWrapper*>::iterator itr;
-	if((itr = find(m_fixtures.begin(), m_fixtures.end(), fixture)) != m_fixtures.end()) {
-		(*itr)->release();
+	if((itr = find(m_fixtures.begin(), m_fixtures.end(), fixture)) != m_fixtures.end())
+	{
+		fixture->destroy();
+		//fixture->release();
+		//m_fixtures.erase(itr);
 	}
+	fixture->release();
 }
 
 void b2BodyWrapper::setTransform(const Vector2 &position, float angle)
@@ -256,6 +289,9 @@ void b2BodyWrapper::enumReferences(asIScriptEngine *engine)
 	if(m_postSolveFunc) {
 		engine->GCEnumCallback(m_postSolveFunc);
 	}
+	for(vector<b2FixtureWrapper*>::iterator itr = m_fixtures.begin(); itr != m_fixtures.end(); ++itr) {
+		engine->GCEnumCallback(*itr);
+	}
 }
 
 void b2BodyWrapper::releaseReferences(asIScriptEngine *engine)
@@ -272,6 +308,9 @@ void b2BodyWrapper::releaseReferences(asIScriptEngine *engine)
 	}
 	if(m_postSolveFunc) {
 		m_postSolveFunc->Release();
+	}
+	for(vector<b2FixtureWrapper*>::iterator itr = m_fixtures.begin(); itr != m_fixtures.end(); ++itr) {
+		(*itr)->release();
 	}
 }
 
@@ -335,6 +374,6 @@ b2BodyWrapper *b2BodyWrapper::Factory(const b2BodyDefWrapper &def)
 	b2BodyDef bodyDef = def.getBodyDef();
 	b2BodyWrapper *body = new b2BodyWrapper(b2d->getWorld()->CreateBody(&bodyDef));
 	asIScriptEngine *engine = scriptEngine->getASEngine();
-	engine->NotifyGarbageCollectorOfNewObject(body, engine->GetObjectTypeByName("b2Body"));
+	engine->NotifyGarbageCollectorOfNewObject(body, engine->GetObjectTypeById(b2BodyWrapper::TypeId));
 	return body;
 }

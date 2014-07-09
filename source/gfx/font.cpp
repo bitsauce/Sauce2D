@@ -284,6 +284,7 @@ void Font::draw(Batch *batch, const Vector2 &pos, const string &str)
 
 	m_texture->addRef();
 	batch->setTexture(m_texture);
+	batch->setPrimitive(Batch::PRIMITIVE_TRIANGLES);
 
 	// Split string lines
 	string line;
@@ -327,6 +328,5 @@ void Font::draw(Batch *batch, const Vector2 &pos, const string &str)
 		// Apply advance
 		xOffset += c.advance;
 	}
-	batch->setTexture(0);
 	batch->release();
 }

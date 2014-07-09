@@ -17,6 +17,7 @@
 	#include <assert.h>
 	#include <algorithm>
 	#include <map>
+	#include <set>
 	#include <exception>
 #elif X2D_LINUX
 	// Android and STL headers

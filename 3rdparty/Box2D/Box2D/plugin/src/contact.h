@@ -6,11 +6,12 @@
 
 class b2Contact;
 class b2BodyWrapper;
+class b2FixtureWrapper;
 
 class b2ContactWrapper
 {
 public:
-	b2ContactWrapper(b2Contact *contact, b2BodyWrapper *thisBody, b2BodyWrapper *otherBody);
+	b2ContactWrapper(b2Contact *contact, b2FixtureWrapper *fixtureA, b2FixtureWrapper *fixtureB);
 	~b2ContactWrapper();
 
 	enum ContactType
@@ -26,17 +27,28 @@ public:
 	void release() { if(refCounter.release() == 0) delete this; }
 
 	void setEnabled(bool enabled);
+	bool isTouching() const;
 	
-	void swapBodies();
+	void setFriction(float friction);
+	float getFriction() const;
+	void resetFriction();
+
+	void setRestitution(float restitution);
+	float getRestitution() const;
+	void resetRestitution();
+	
+	void swapAB();
 	void call(ContactType stage);
 
-	b2BodyWrapper *getOtherBody() const;
-	b2BodyWrapper *getThisBody() const;
+	b2BodyWrapper *getBodyA() const;
+	b2BodyWrapper *getBodyB() const;
+	b2FixtureWrapper *getFixtureA() const;
+	b2FixtureWrapper *getFixtureB() const;
 
 private:
 	b2Contact *m_contact;
-	b2BodyWrapper *m_thisBody;
-	b2BodyWrapper *m_otherBody;
+	b2FixtureWrapper *m_fixtureA;
+	b2FixtureWrapper *m_fixtureB;
 };
 
 #endif // B2_CONTACT_WRAPPER_H

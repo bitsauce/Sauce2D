@@ -166,6 +166,16 @@ Texture *Batch::getTexture() const
 	return m_state.texture;
 }
 
+void Batch::setPrimitive(PrimitiveType primitive)
+{
+	m_state.primitive = primitive;
+}
+
+Batch::PrimitiveType Batch::getPrimitive() const
+{
+	return m_state.primitive;
+}
+
 void Batch::addVertices(Vertex *vertices, int vcount, uint *indices, int icount)
 {
 	if(m_static) {

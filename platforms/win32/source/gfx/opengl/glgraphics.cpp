@@ -125,6 +125,8 @@ void OpenGL::init(Window *window)
 
 	// Set OpenGL hints
 	glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
+
+	glPointSize(4);
 }
 
 void OpenGL::createContext(HWND window)
@@ -240,6 +242,16 @@ GLenum toGLBlend(const Batch::BlendFunc value)
 	return GL_ZERO;
 }
 
+GLenum toGLPrimitive(const Batch::PrimitiveType value)
+{
+	switch(value) {
+	case Batch::PRIMITIVE_POINTS:		return GL_POINTS;
+	case Batch::PRIMITIVE_LINES:		return GL_LINES;
+	case Batch::PRIMITIVE_TRIANGLES:	return GL_TRIANGLES;
+	}
+	return GL_TRIANGLES;
+}
+
 void OpenGL::renderBatch(const Batch &batch)
 {
 	// Enable client state
@@ -313,7 +325,7 @@ void OpenGL::renderBatch(const Batch &batch)
 			glTexCoordPointer(2, GL_FLOAT, VERTEX_SIZE, vertexData + 6);
 
 			// Draw batch
-			glDrawElements(GL_TRIANGLES, itr->second->indices.size(), GL_UNSIGNED_INT, indexData);
+			glDrawElements(toGLPrimitive(state.primitive), itr->second->indices.size(), GL_UNSIGNED_INT, indexData);
 		}else
 		{
 			// Bind vertices and indices array
@@ -326,7 +338,7 @@ void OpenGL::renderBatch(const Batch &batch)
 			glTexCoordPointer(2, GL_FLOAT, VERTEX_SIZE, (void*)(6*FLOAT_SIZE));
 
 			// Draw vbo
-			glDrawElements(GL_TRIANGLES, itr->second->indices.size(), GL_UNSIGNED_INT, 0);
+			glDrawElements(toGLPrimitive(state.primitive), itr->second->indices.size(), GL_UNSIGNED_INT, 0);
 
 			// Reset vbo buffers
 			glBindBuffer(GL_ARRAY_BUFFER_ARB, 0);

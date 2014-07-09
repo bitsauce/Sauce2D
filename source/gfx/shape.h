@@ -8,7 +8,7 @@
 #include <x2d/graphics/batch.h>
 #include <x2d/graphics/texture.h>
 
-class Shape
+class XDAPI Shape
 {
 	friend class Sprite;
 public:

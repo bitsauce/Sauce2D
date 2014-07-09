@@ -42,6 +42,7 @@ public:
 
 class b2BodyWrapper
 {
+	friend class b2FixtureWrapper;
 	friend class b2ContactWrapper;
 public:
 	b2BodyWrapper(b2Body *body);
@@ -92,6 +93,7 @@ public:
 	void setLinearVelocity(const Vector2 &velocity);
 
 	static b2BodyWrapper *Factory(const b2BodyDefWrapper &def);
+	static int TypeId;
 
 private:
 	b2Body *m_body;

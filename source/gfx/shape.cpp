@@ -97,7 +97,7 @@ Shape::Shape(const Vector2 &center, const float radius, const int vertCount) :
 		if(i > 0)
 		{
 			m_indices.push_back(0);
-			m_indices.push_back(i < vertCount ? 1+i : 1);
+			m_indices.push_back(i < vertCount ? i+1 : 1);
 			m_indices.push_back(i);
 		}
 	}
@@ -170,22 +170,23 @@ void Shape::draw(Batch *batch)
 		return;
 
 	if(!batch) {
-		LOG("Shape.draw: Can not draw to a 'null' batch");
+		LOG("Shape.draw: Can not draw to 'null' batch");
 		return;
 	}
 
+	// Set vertex colors
 	for(uint i = 0; i < m_vertices.size(); i++)
 		m_vertices[i].color = m_fillColor;
 	
-	//batch.setColor(m_fillColor);
 	if(m_fillTexture) {
 		m_fillTexture->addRef();
 		batch->setTexture(m_fillTexture);
+	}else{
+		batch->setTexture(0);
 	}
-	batch->addVertices(m_vertices.data(), m_vertices.size(), m_indices.data(), m_indices.size());
 	
-	batch->setTexture(0);
-	//batch.setColor(Vector4(1.0f));
+	batch->setPrimitive(Batch::PRIMITIVE_TRIANGLES);
+	batch->addVertices(m_vertices.data(), m_vertices.size(), m_indices.data(), m_indices.size());
 	batch->release();
 }
 

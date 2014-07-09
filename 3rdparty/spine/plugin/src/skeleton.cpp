@@ -124,8 +124,8 @@ void spSkeletonWrapper::draw(Batch *batch)
 
 			texture->addRef();
 			batch->setTexture(texture);
+			batch->setPrimitive(Batch::PRIMITIVE_TRIANGLES);
 			batch->addVertices(vertices, 4, QUAD_INDICES, 6);
-			batch->setTexture(0);
 		} /*else if (attachment->type == ATTACHMENT_MESH) {
 			MeshAttachment* mesh = (MeshAttachment*)attachment;
 			if (mesh->verticesCount > SPINE_MESH_VERTEX_COUNT_MAX) continue;

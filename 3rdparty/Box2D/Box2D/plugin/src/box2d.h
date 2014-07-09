@@ -3,6 +3,8 @@
 
 #include <x2d/console.h>
 #include <x2d/util.h>
+#include <x2d/graphics.h>
+#include <x2d/graphics/batch.h>
 
 #include <Box2D/Dynamics/b2World.h>
 #include <Box2D/Common/b2Draw.h>
@@ -14,7 +16,7 @@ public:
 	~Box2D();
 
 	void step(float timeStep);
-	void draw();
+	void draw(Batch *batch);
 	void setDrawFlags(int flags);
 	void setScale(float scale);
 	float getScale() const;
@@ -22,14 +24,19 @@ public:
 	Vector2 getGravity() const;
 	b2World *getWorld() const;
 
-	void destroyBody(b2Body *body);
+	Batch *getDrawBatch() const;
+
+	void destroyBody(b2Body **body);
+	void destroyFixture(b2Body *body, b2Fixture **fixture);
 
 private:
 	float m_scale;
 	b2World *m_world;
 	b2Draw *m_debugDraw;
 	b2ContactListener *m_contactListener;
-	vector<b2Body*> m_bodiesToDestoy;
+	set<b2Body**> m_bodiesToDestroy;
+	set<pair<b2Body*, b2Fixture**>> m_fixturesToDestroy;
+	Batch *m_drawBatch;
 };
 
 extern Box2D *b2d;

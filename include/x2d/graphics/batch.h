@@ -64,6 +64,14 @@ public:
 		BLEND_ONE_MINUS_DST_ALPHA,
 		BLEND_SRC_ALPHA_SATURATE
 	};
+
+	// Primitive types
+	enum PrimitiveType
+	{
+		PRIMITIVE_POINTS,
+		PRIMITIVE_LINES,
+		PRIMITIVE_TRIANGLES
+	};
 	
 	// Batch projection matrix
 	void setProjectionMatrix(const Matrix4 &projmat);
@@ -79,6 +87,10 @@ public:
 	// Get/set texture
 	void setTexture(Texture *texture);
 	Texture *getTexture() const;
+
+	// Get/set primitive type
+	void setPrimitive(PrimitiveType primitive);
+	PrimitiveType getPrimitive() const;
 
 	// Add vertices and indices to the batch
 	void addVertices(Vertex *vertices, int vcount, uint *indices, int icount);
@@ -104,6 +116,7 @@ public:
 	{
 		State() :
 			drawOrder(0),
+			primitive(PRIMITIVE_TRIANGLES),
 			texture(0),
 			srcBlendFunc(BLEND_SRC_ALPHA),
 			dstBlendFunc(BLEND_ONE_MINUS_SRC_ALPHA),
@@ -114,6 +127,7 @@ public:
 		bool operator<(const State &other) const
 		{
 			TUPLE_CMP(this->drawOrder, other.drawOrder);
+			TUPLE_CMP(this->primitive, other.primitive);
 			TUPLE_CMP(this->texture, other.texture);
 			TUPLE_CMP(this->srcBlendFunc, other.srcBlendFunc);
 			TUPLE_CMP(this->dstBlendFunc, other.dstBlendFunc);
@@ -122,6 +136,7 @@ public:
 		}
 
 		int drawOrder;
+		PrimitiveType primitive;
 		Texture *texture;
 		BlendFunc srcBlendFunc;
 		BlendFunc dstBlendFunc;

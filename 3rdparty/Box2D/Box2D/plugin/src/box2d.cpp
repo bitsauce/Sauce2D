@@ -40,17 +40,26 @@ Box2D::~Box2D()
 
 void Box2D::step(float timeStep)
 {
-	// Destroy bodies while the world is unlocked
-	for(vector<b2Body*>::iterator itr = m_bodiesToDestoy.begin(); itr != m_bodiesToDestoy.end(); ++itr) {
-		m_world->DestroyBody(*itr);
+	// Destroy bodies and fixtures while the world is unlocked
+	for(set<pair<b2Body*, b2Fixture**>>::iterator itr = m_fixturesToDestroy.begin(); itr != m_fixturesToDestroy.end(); ++itr) {
+		(*itr).first->DestroyFixture(*(*itr).second);
+		*(*itr).second = 0; // Flag as removed
+
 	}
-	m_bodiesToDestoy.clear();
+	m_fixturesToDestroy.clear();
+
+	for(set<b2Body**>::iterator itr = m_bodiesToDestroy.begin(); itr != m_bodiesToDestroy.end(); ++itr) {
+		m_world->DestroyBody(**itr);
+		*(*itr) = 0; // Flag as removed
+	}
+	m_bodiesToDestroy.clear();
 
 	m_world->Step(timeStep, 8, 3);
 }
 
-void Box2D::draw()
+void Box2D::draw(Batch *batch)
 {
+	m_drawBatch = batch;
 	m_world->DrawDebugData();
 }
 
@@ -84,7 +93,17 @@ b2World *Box2D::getWorld() const
 	return m_world;
 }
 
-void Box2D::destroyBody(b2Body *body)
+Batch *Box2D::getDrawBatch() const
 {
-	m_bodiesToDestoy.push_back(body);
+	return m_drawBatch;
+}
+
+void Box2D::destroyBody(b2Body **body)
+{
+	m_bodiesToDestroy.insert(body);
+}
+
+void Box2D::destroyFixture(b2Body *body, b2Fixture **fixture)
+{
+	m_fixturesToDestroy.insert(make_pair(body, fixture));
 }

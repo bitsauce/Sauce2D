@@ -178,8 +178,8 @@ void Sprite::draw(Batch *batch) const
 	getVertices(vertices);
 
 	batch->setTexture(m_textureRegion->getTexture());
+	batch->setPrimitive(Batch::PRIMITIVE_TRIANGLES);
 	batch->addVertices(vertices, 4, QUAD_INDICES, 6);
-	batch->setTexture(0);
 	batch->release();
 }
 

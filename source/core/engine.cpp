@@ -394,7 +394,7 @@ void xdEngine::update()
 		ERR("Run-Time exception '%s' occured in function '%s' in file '%s:%i'",
 			ctx->GetExceptionString(), ctx->GetExceptionFunction()->GetDeclaration(), sectionName, line);
 	}
-	ctx->GetEngine()->GarbageCollect(asGC_ONE_STEP);
+	ctx->GetEngine()->GarbageCollect(asGC_ONE_STEP | asGC_DESTROY_GARBAGE);
 	r = ctx->Release(); assert(r >= 0);
 	
 	m_profiler->popProfile();
@@ -497,6 +497,9 @@ int xdEngine::run()
 		}
 		return XD_UNKNOWN_EXCEPTION;
 	}
+
+	LOG("Exiting x2D Engine...");
+
 	// Return OK
 	return XD_OK;
 }
