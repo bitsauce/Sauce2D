@@ -32,6 +32,7 @@ public:
 	void setViewport(const Recti&);
 	void setViewport(const Vector2i&, Vector2i&);
 	void setViewport(const int, const int, const int, const int);
+	void getViewport(int &x, int &y, int &w, int &h);
 
 private:
 	void renderBatch(const Batch &batch);
@@ -44,6 +45,7 @@ private:
 	HGLRC m_openGLContext;
 	HDC m_deviceContext;
 	float m_currentOrtho[6];
+	int m_currentViewport[4];
 };
 
 #endif // GFX_OPENGL_H

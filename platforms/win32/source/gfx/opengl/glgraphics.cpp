@@ -67,9 +67,10 @@ public:
 		glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, ((GLtexture*)texture)->m_id, 0);
 
 		gl->getOrthoProjection(m_ortho[0], m_ortho[1], m_ortho[2], m_ortho[3], m_ortho[4], m_ortho[5]);
+		gl->getViewport(m_viewport[0], m_viewport[1], m_viewport[2], m_viewport[3]);
 		
 		int w = texture->getWidth(), h = texture->getHeight();
-		gl->setOrthoProjection(0.0f, w, h, 0.0f, m_ortho[4], m_ortho[5]);
+		gl->setOrthoProjection(0.0f, (float)w, (float)h, 0.0f, m_ortho[4], m_ortho[5]);
 		gl->setViewport(Recti(0, 0, w, h));
 	}
 
@@ -77,11 +78,13 @@ public:
 	{
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
 		gl->setOrthoProjection(m_ortho[0], m_ortho[1], m_ortho[2], m_ortho[3], m_ortho[4], m_ortho[5]);
+		gl->setViewport(Recti(m_viewport[0], m_viewport[1], m_viewport[2], m_viewport[3]));
 	}
 
 private:
 	GLuint m_id;
 	float m_ortho[6];
+	int m_viewport[4];
 	OpenGL *gl;
 };
 
@@ -188,7 +191,22 @@ void OpenGL::swapBuffers()
 
 void OpenGL::setViewport(const Recti &rect)
 {
+	// Set viewport
 	glViewport(rect.getX(), rect.getY(), rect.getWidth(), rect.getHeight());
+
+	// Store viewport
+	m_currentViewport[0] = rect.getX();
+	m_currentViewport[1] = rect.getY();
+	m_currentViewport[2] = rect.getWidth();
+	m_currentViewport[3] = rect.getHeight();
+}
+
+void OpenGL::getViewport(int &x, int &y, int &w, int &h)
+{
+	x = m_currentViewport[0];
+	y = m_currentViewport[1];
+	w = m_currentViewport[2];
+	h = m_currentViewport[3];
 }
 
 void OpenGL::setOrthoProjection(const float l, const float r, const float b, const float t, const float n, const float f)
