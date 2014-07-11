@@ -61,7 +61,7 @@ int xdInput::Register(asIScriptEngine *scriptEngine)
 	r = scriptEngine->RegisterEnumValue("VirtualKey", "KEY_NUMPAD_7", X2D_KeyNumpad7); AS_ASSERT
 	r = scriptEngine->RegisterEnumValue("VirtualKey", "KEY_NUMPAD_8", X2D_KeyNumpad8); AS_ASSERT
 	r = scriptEngine->RegisterEnumValue("VirtualKey", "KEY_NUMPAD_9", X2D_KeyNumpad9); AS_ASSERT
-	r = scriptEngine->RegisterEnumValue("VirtualKey", "KEY_PULSS", X2D_KeyPluss); AS_ASSERT // Numpad add
+	r = scriptEngine->RegisterEnumValue("VirtualKey", "KEY_PLUS", X2D_KeyPlus); AS_ASSERT // Numpad add
 	r = scriptEngine->RegisterEnumValue("VirtualKey", "KEY_HYPHEN", X2D_KeyHyphen); AS_ASSERT // Numpad subtract
 	r = scriptEngine->RegisterEnumValue("VirtualKey", "KEY_PERIOD", X2D_KeyPeriod); AS_ASSERT // Numpad dot
 	r = scriptEngine->RegisterEnumValue("VirtualKey", "KEY_SLASH", X2D_KeySlash); AS_ASSERT // Numpad divide

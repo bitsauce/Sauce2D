@@ -101,7 +101,7 @@ enum xdVirtualKey
 	X2D_KeyNumpad7,
 	X2D_KeyNumpad8,
 	X2D_KeyNumpad9,
-	X2D_KeyPluss,
+	X2D_KeyPlus,
 	X2D_KeyHyphen,
 
 	// Other keys

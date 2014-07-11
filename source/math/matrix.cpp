@@ -511,7 +511,12 @@ int Matrix4::Register(asIScriptEngine *scriptEngine)
 
 	
 	r = scriptEngine->RegisterObjectMethod("Matrix4", "void identity()", asMETHOD(Matrix4, identityAS), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("Matrix4", "void translate(float x, float y, float z)", asMETHODPR(Matrix4, translateAS, (float, float, float), void), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("Matrix4", "void translate(float, float, float)", asMETHODPR(Matrix4, translateAS, (float, float, float), void), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("Matrix4", "void translate(const Vector3 &in)", asMETHODPR(Matrix4, translateAS, (const Vector3&), void), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("Matrix4", "void rotate(float, float, float, float)", asMETHODPR(Matrix4, rotateAS, (float, float, float, float), void), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("Matrix4", "void rotate(float, const Vector3 &in)", asMETHODPR(Matrix4, rotateAS, (float, const Vector3&), void), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("Matrix4", "void scale(float)", asMETHODPR(Matrix4, scaleAS, (float), void), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("Matrix4", "void scale(float, float, float)", asMETHODPR(Matrix4, scaleAS, (float, float, float), void), asCALL_THISCALL); AS_ASSERT
 
 	return r;
 }
