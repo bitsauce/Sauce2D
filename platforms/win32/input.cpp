@@ -84,7 +84,7 @@ bool Input::getKeyState(const xdVirtualKey key) const
 	case X2D_KeyW: vk = 'W'; break;
 	case X2D_KeyX: vk = 'X'; break;
 	case X2D_KeyY: vk = 'Y'; break;
-	case X2D_KeyZ: vk = 'X'; break;
+	case X2D_KeyZ: vk = 'Z'; break;
 	case X2D_KeyRight: vk = VK_RIGHT; break;
 	case X2D_KeyDown: vk = VK_DOWN; break;
 	case X2D_KeyLeft: vk = VK_LEFT; break;

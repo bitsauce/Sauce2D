@@ -18,7 +18,7 @@ int xdWindow::Register(asIScriptEngine *scriptEngine)
 	// Fullscreen and resolution
 	r = scriptEngine->RegisterObjectMethod("ScriptWindow", "void enableFullscreen()", asMETHOD(xdWindow, enableFullscreen), asCALL_THISCALL); AS_ASSERT
 	r = scriptEngine->RegisterObjectMethod("ScriptWindow", "void disableFullscreen()", asMETHOD(xdWindow, disableFullscreen), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("ScriptWindow", "array<Vector2> @getResolutionList()", asMETHOD(xdWindow, resolutionList), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("ScriptWindow", "array<Vector2i> @getResolutionList()", asMETHOD(xdWindow, getResolutionList), asCALL_THISCALL); AS_ASSERT
 
 	// Window flags
 	r = scriptEngine->RegisterObjectMethod("ScriptWindow", "void enableResize()", asMETHOD(xdWindow, enableResize), asCALL_THISCALL); AS_ASSERT

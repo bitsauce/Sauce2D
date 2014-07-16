@@ -52,6 +52,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, INT)
 
 	xdConfig config;
 	config.loadPluginsFunc = &loadPlugins;
+	config.loadEventsFunc = &loadEvents;
 	config.platform = "windows";
 #ifdef X2D_DEBUG
 	config.workDir = "C:\\Users\\Marcus\\Documents\\GitHub\\Overworld\\";
@@ -80,7 +81,6 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, INT)
 		return -1;
 	}
 
-	window->initEvents();
 	int r = engine->run();
 	delete engine;
 	cleanPlugins();

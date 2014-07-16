@@ -37,6 +37,9 @@
     <ClCompile Include="debug.cpp">
       <Filter>source\app</Filter>
     </ClCompile>
+    <ClCompile Include="source\sfx\openal\alsource.cpp">
+      <Filter>source\sfx\openal</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\gfx\opengl\gltexture.h">
@@ -71,6 +74,9 @@
     </ClInclude>
     <ClInclude Include="debug.h">
       <Filter>source\app</Filter>
+    </ClInclude>
+    <ClInclude Include="source\sfx\openal\alsource.h">
+      <Filter>source\sfx\openal</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

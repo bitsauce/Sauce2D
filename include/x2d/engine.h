@@ -29,7 +29,7 @@ typedef void asIScriptFunction;
 #endif
 
 typedef int (*LoadPluginsFunc)(xdScriptEngine*);
-typedef void (*ProcessEventsFunc)();
+typedef int (*LoadEventsFunc)(xdScriptEngine*);
 
 struct XDAPI xdConfig
 {
@@ -73,6 +73,9 @@ struct XDAPI xdConfig
 
 	// Plugin load function (optional)
 	LoadPluginsFunc	loadPluginsFunc;
+
+	// Load events
+	LoadEventsFunc loadEventsFunc;
 
 	// Engine timer object (required)
 	xdTimer*		timer;
@@ -148,6 +151,7 @@ public:
 	
 	// Static engine modules
 	static xdConsole* GetConsole() { return s_this->m_console; }
+	xdScriptEngine *getScriptEngine() const { return m_scripts; }
 
 private:
 	int m_flags;

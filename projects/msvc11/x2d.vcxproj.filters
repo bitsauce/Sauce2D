@@ -16,26 +16,23 @@
     <Filter Include="source\scripts">
       <UniqueIdentifier>{46869ec1-1a86-441d-b137-022f9066427d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="source\gfx">
-      <UniqueIdentifier>{886cf122-dec7-49d6-bb07-8397dbdec785}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="source\gfx\abstract">
-      <UniqueIdentifier>{1a7bf352-53bf-4367-8140-81bebf7e824c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="source\gfx\portable">
-      <UniqueIdentifier>{815faabe-e862-4175-aff2-fca537eabb43}</UniqueIdentifier>
-    </Filter>
     <Filter Include="source\core">
       <UniqueIdentifier>{14948e6d-8616-4118-b570-b573ac4adb68}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="source\sfx">
-      <UniqueIdentifier>{43ec08c3-6bf6-475f-8617-ab1188e8c430}</UniqueIdentifier>
     </Filter>
     <Filter Include="include\scripts">
       <UniqueIdentifier>{25df4107-2711-490e-937d-5df919d502cc}</UniqueIdentifier>
     </Filter>
     <Filter Include="include\graphics">
       <UniqueIdentifier>{7165c08c-b771-49f1-87a3-42c5fce47fe9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source\graphics">
+      <UniqueIdentifier>{b8826ba9-373b-469b-9942-29d310877829}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source\audio">
+      <UniqueIdentifier>{39bb7ad7-8632-4004-9f02-ae1173d85ff4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\audio">
+      <UniqueIdentifier>{9281aa68-64bf-41ac-baf3-c860741812b1}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -72,15 +69,6 @@
     <ClInclude Include="..\..\include\x2d\math\rectPacker.h">
       <Filter>include\math</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\source\gfx\animation.h">
-      <Filter>source\gfx\portable</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\gfx\font.h">
-      <Filter>source\gfx\portable</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\gfx\sprite.h">
-      <Filter>source\gfx\portable</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\include\x2d\console.h">
       <Filter>include</Filter>
     </ClInclude>
@@ -110,9 +98,6 @@
     </ClInclude>
     <ClInclude Include="..\..\include\x2d\graphics.h">
       <Filter>include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\gfx\shape.h">
-      <Filter>source\gfx\portable</Filter>
     </ClInclude>
     <ClInclude Include="..\..\include\x2d\util.h">
       <Filter>include</Filter>
@@ -168,6 +153,33 @@
     <ClInclude Include="..\..\include\x2d\graphics\pixmap.h">
       <Filter>include\graphics</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\source\graphics\animation.h">
+      <Filter>source\graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\graphics\camera.h">
+      <Filter>source\graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\graphics\font.h">
+      <Filter>source\graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\graphics\shader.h">
+      <Filter>source\graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\graphics\shape.h">
+      <Filter>source\graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\graphics\sprite.h">
+      <Filter>source\graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\graphics\viewport.h">
+      <Filter>source\graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\x2d\audio\source.h">
+      <Filter>include\audio</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\x2d\audio\buffer.h">
+      <Filter>include\audio</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\source\math\math.cpp">
@@ -200,39 +212,6 @@
     <ClCompile Include="..\..\source\math\rectPacker.cpp">
       <Filter>source\math</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\source\gfx\shader.cpp">
-      <Filter>source\gfx\abstract</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\gfx\texture.cpp">
-      <Filter>source\gfx\abstract</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\gfx\viewport.cpp">
-      <Filter>source\gfx\abstract</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\gfx\animation.cpp">
-      <Filter>source\gfx\portable</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\gfx\batch.cpp">
-      <Filter>source\gfx\portable</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\gfx\font.cpp">
-      <Filter>source\gfx\portable</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\gfx\pixmap.cpp">
-      <Filter>source\gfx\portable</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\gfx\sprite.cpp">
-      <Filter>source\gfx\portable</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\gfx\textureRegion.cpp">
-      <Filter>source\gfx\portable</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\gfx\camera.cpp">
-      <Filter>source\gfx\abstract</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\gfx\graphics.cpp">
-      <Filter>source\gfx</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\source\core\window.cpp">
       <Filter>source\core</Filter>
     </ClCompile>
@@ -241,9 +220,6 @@
     </ClCompile>
     <ClCompile Include="..\..\source\core\console.cpp">
       <Filter>source\core</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\sfx\audio.cpp">
-      <Filter>source\sfx</Filter>
     </ClCompile>
     <ClCompile Include="..\..\source\core\profiler.cpp">
       <Filter>source\core</Filter>
@@ -256,9 +232,6 @@
     </ClCompile>
     <ClCompile Include="..\..\source\core\filesystem.cpp">
       <Filter>source\core</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\gfx\shape.cpp">
-      <Filter>source\gfx\portable</Filter>
     </ClCompile>
     <ClCompile Include="..\..\source\core\debug.cpp">
       <Filter>source\core</Filter>
@@ -283,6 +256,51 @@
     </ClCompile>
     <ClCompile Include="..\..\source\core\scriptengine.cpp">
       <Filter>source\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\graphics\animation.cpp">
+      <Filter>source\graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\graphics\batch.cpp">
+      <Filter>source\graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\graphics\camera.cpp">
+      <Filter>source\graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\graphics\font.cpp">
+      <Filter>source\graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\graphics\graphics.cpp">
+      <Filter>source\graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\graphics\pixmap.cpp">
+      <Filter>source\graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\graphics\shader.cpp">
+      <Filter>source\graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\graphics\shape.cpp">
+      <Filter>source\graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\graphics\sprite.cpp">
+      <Filter>source\graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\graphics\texture.cpp">
+      <Filter>source\graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\graphics\textureRegion.cpp">
+      <Filter>source\graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\graphics\viewport.cpp">
+      <Filter>source\graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\audio\audio.cpp">
+      <Filter>source\audio</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\audio\source.cpp">
+      <Filter>source\audio</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\audio\buffer.cpp">
+      <Filter>source\audio</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

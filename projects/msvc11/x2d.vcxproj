@@ -20,6 +20,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\include\x2d\assetloader.h" />
+    <ClInclude Include="..\..\include\x2d\audio\buffer.h" />
+    <ClInclude Include="..\..\include\x2d\audio\source.h" />
     <ClInclude Include="..\..\include\x2d\base.h" />
     <ClInclude Include="..\..\include\x2d\config.h" />
     <ClInclude Include="..\..\include\x2d\console.h" />
@@ -51,10 +53,13 @@
     <ClInclude Include="..\..\include\x2d\timer.h" />
     <ClInclude Include="..\..\include\x2d\util.h" />
     <ClInclude Include="..\..\include\x2d\window.h" />
-    <ClInclude Include="..\..\source\gfx\animation.h" />
-    <ClInclude Include="..\..\source\gfx\font.h" />
-    <ClInclude Include="..\..\source\gfx\shape.h" />
-    <ClInclude Include="..\..\source\gfx\sprite.h" />
+    <ClInclude Include="..\..\source\graphics\animation.h" />
+    <ClInclude Include="..\..\source\graphics\camera.h" />
+    <ClInclude Include="..\..\source\graphics\font.h" />
+    <ClInclude Include="..\..\source\graphics\shader.h" />
+    <ClInclude Include="..\..\source\graphics\shape.h" />
+    <ClInclude Include="..\..\source\graphics\sprite.h" />
+    <ClInclude Include="..\..\source\graphics\viewport.h" />
     <ClInclude Include="..\..\source\scripts\scriptany.h" />
     <ClInclude Include="..\..\source\scripts\scriptarray.h" />
     <ClInclude Include="..\..\source\scripts\scriptbuilder.h" />
@@ -64,6 +69,9 @@
     <ClInclude Include="..\..\source\scripts\scriptstdstring.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\source\audio\audio.cpp" />
+    <ClCompile Include="..\..\source\audio\buffer.cpp" />
+    <ClCompile Include="..\..\source\audio\source.cpp" />
     <ClCompile Include="..\..\source\core\array.cpp" />
     <ClCompile Include="..\..\source\core\assetloader.cpp" />
     <ClCompile Include="..\..\source\core\console.cpp" />
@@ -76,18 +84,18 @@
     <ClCompile Include="..\..\source\core\timer.cpp" />
     <ClCompile Include="..\..\source\core\util.cpp" />
     <ClCompile Include="..\..\source\core\window.cpp" />
-    <ClCompile Include="..\..\source\gfx\animation.cpp" />
-    <ClCompile Include="..\..\source\gfx\batch.cpp" />
-    <ClCompile Include="..\..\source\gfx\camera.cpp" />
-    <ClCompile Include="..\..\source\gfx\font.cpp" />
-    <ClCompile Include="..\..\source\gfx\graphics.cpp" />
-    <ClCompile Include="..\..\source\gfx\pixmap.cpp" />
-    <ClCompile Include="..\..\source\gfx\shader.cpp" />
-    <ClCompile Include="..\..\source\gfx\shape.cpp" />
-    <ClCompile Include="..\..\source\gfx\sprite.cpp" />
-    <ClCompile Include="..\..\source\gfx\texture.cpp" />
-    <ClCompile Include="..\..\source\gfx\textureRegion.cpp" />
-    <ClCompile Include="..\..\source\gfx\viewport.cpp" />
+    <ClCompile Include="..\..\source\graphics\animation.cpp" />
+    <ClCompile Include="..\..\source\graphics\batch.cpp" />
+    <ClCompile Include="..\..\source\graphics\camera.cpp" />
+    <ClCompile Include="..\..\source\graphics\font.cpp" />
+    <ClCompile Include="..\..\source\graphics\graphics.cpp" />
+    <ClCompile Include="..\..\source\graphics\pixmap.cpp" />
+    <ClCompile Include="..\..\source\graphics\shader.cpp" />
+    <ClCompile Include="..\..\source\graphics\shape.cpp" />
+    <ClCompile Include="..\..\source\graphics\sprite.cpp" />
+    <ClCompile Include="..\..\source\graphics\texture.cpp" />
+    <ClCompile Include="..\..\source\graphics\textureRegion.cpp" />
+    <ClCompile Include="..\..\source\graphics\viewport.cpp" />
     <ClCompile Include="..\..\source\math\math.cpp" />
     <ClCompile Include="..\..\source\math\matrix.cpp" />
     <ClCompile Include="..\..\source\math\rect.cpp" />
@@ -101,7 +109,6 @@
     <ClCompile Include="..\..\source\scripts\scripthelper.cpp" />
     <ClCompile Include="..\..\source\scripts\scriptstdstring.cpp" />
     <ClCompile Include="..\..\source\scripts\scriptstdstring_utils.cpp" />
-    <ClCompile Include="..\..\source\sfx\audio.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{F3F25B49-2C6B-4FF0-98FB-47695DF70B8A}</ProjectGuid>

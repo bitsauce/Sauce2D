@@ -184,7 +184,7 @@ int xdEngine::init(const xdConfig &config)
 	m_assetLoader->s_this = m_assetLoader;
 	m_fileSystem->s_this = m_fileSystem;
 	m_graphics->s_this = m_graphics;
-	//m_audio->s_this = m_audio;
+	m_audio->s_this = m_audio;
 
 	if(!m_profiler) {
 		m_profiler = new xdProfiler(m_timer);
@@ -294,6 +294,11 @@ int xdEngine::init(const xdConfig &config)
 		// Create the game module
 		asIScriptModule *mod = scriptEngine->GetModule("GameModule");
 		m_scripts->m_module = mod;
+
+		// Load events
+		if(config.loadEventsFunc != 0 && config.loadEventsFunc(m_scripts) < 0) {
+			return XD_PLUGIN_LOAD_ERROR;
+		}
 
 		// Find the function that is to be called.
 		asIScriptFunction* mainFunc = mod->GetFunctionByDecl("void main()");

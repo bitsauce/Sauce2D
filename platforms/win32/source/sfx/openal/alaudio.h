@@ -10,35 +10,31 @@
 class OpenAL : public xdAudio
 {
 public:
-	/*~OpenALManager();
+	OpenAL();
+	~OpenAL();
 
-	// Initialation
-	void init();
+	void setPosition(const Vector2&);
+	Vector2 getPosition() const;
+	void setVelocity(const Vector2&);
+	Vector2 getVelocity() const;
+	void setOrientation(const Vector3&);
+	Vector3 getOrientation() const;
 
-	// Sfx source
-	int createSource();
-	void deleteSource(const int sourceId);
+private:
 
-	void playSource(const int sourceId);
-	void stopSource(const int sourceId);
-	
-	void setSourceBuffer(const int sourceId, const int bufferId);
-	void setSourcePosition(const int sourceId, const float x, const float y, const float z);
-	void setSourceVelocity(const int sourceId, const float x, const float y, const float z);
-	void setSourceLooping(const int sourceId, const bool looping);
-	void setSourceGain(const int sourceId, const float gain);
-	void setSourcePitch(const int sourceId, const float pitch);
-	void setSourceMinDist(const int sourceId, const float dist);
-	void setSourceMaxDist(const int sourceId, const float dist);
-
-	// Sfx listener
-	void setListenerPosition(const float x, const float y, const float z);
-	void setListenerVelocity(const float x, const float y, const float z);
-	void setListenerOrientation(const float x, const float y, const float z);
-
-	// Sfx buffer
-	int loadFile(const string &filePath);
-	void deleteBuffer(const int bufferId);*/
+	AudioSource *createSource(AudioBuffer *buffer);
 };
+
+#ifdef X2D_DEBUG
+	#define AL_ASSERT \
+		{ \
+			ALenum error = alGetError(); \
+			if(error != AL_NO_ERROR) { \
+				LOG("OpenAL error: '%X'", error); \
+			} \
+		}
+#else
+	#define AL_ASSERT
+#endif
 
 #endif // SFX_OPENAL_H

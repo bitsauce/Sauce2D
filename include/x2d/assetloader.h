@@ -3,6 +3,7 @@
 
 #include <x2d/config.h>
 #include <x2d/util.h>
+#include <x2d/audio.h>
 
 /*********************************************************************
 **	Asset loader image formats										**
@@ -39,6 +40,7 @@ class XDAPI xdAssetLoader
 {
 	friend class xdEngine;
 	friend class xdGraphics;
+	friend class xdAudio;
 public:
 	xdAssetLoader(xdFileSystem *fileSystem);
 
@@ -46,7 +48,7 @@ private:
 	int loadImage(string filePath, uchar** data, uint &width, uint &height, const xdImageFormat format = UnknownImage);
 	int saveImage(string filePath, uchar *data, const uint width, const uint height, const xdImageFormat format = UnknownImage);
 
-	int loadSound(string filePath, uchar** data, int &width, int &height, const xdSoundFormat format = UnknownSound);
+	AudioBuffer *loadSound(string filePath);
 	int saveSound(string filePath, uchar *data, const uint width, const uint height, const xdSoundFormat format = UnknownSound);
 	
 	xdFileSystem *m_fileSystem;

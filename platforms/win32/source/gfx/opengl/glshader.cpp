@@ -146,8 +146,9 @@ GLshader::GLshader(const string &vertFilePath, const string &fragFilePath)
 
 GLshader::~GLshader()
 {
-	for(map<string, Uniform*>::iterator itr = m_uniforms.begin(); itr != m_uniforms.end(); ++itr)
+	for(map<string, Uniform*>::iterator itr = m_uniforms.begin(); itr != m_uniforms.end(); ++itr) {
 		delete itr->second;
+	}
 }
 
 void GLshader::setUniform1i(const string &name, const int v0)
@@ -266,15 +267,20 @@ void GLshader::setUniform4f(const string &name, const float v0, const float v1, 
 	}
 }
 
-void GLshader::setSampler2D(const string &name, const Texture *texture)
+void GLshader::setSampler2D(const string &name, Texture *texture)
 {
+	// TODO: We should actually store a handle to the texture object to avoid it being destroyed
 	if(m_uniforms.find(name) != m_uniforms.end())
 	{
 		Uniform *uniform = m_uniforms[name];
 		if(uniform->type == GL_SAMPLER_2D) {
-			((GLuint*)uniform->data)[0] = ((GLtexture*)texture)->m_id;
+			((GLuint*)uniform->data)[0] = texture != 0 ? ((GLtexture*)texture)->m_id : 0;
 		}
 	}else{
 		LOG("Uniform '%s' does not exist.", name);
+	}
+
+	if(texture != 0) {
+		texture->release();
 	}
 }

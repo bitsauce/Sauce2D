@@ -13,6 +13,7 @@
 #include <x2d/engine.h>
 #include <x2d/math.h>
 #include <x2d/scriptengine.h>
+#include <x2d/scripts/funccall.h>
 #include <x2d/ini.h>
 #include <x2d/graphics.h>
 
@@ -29,6 +30,14 @@
 
 int integerTypeId = -1;
 int stringTypeId = -1;
+
+Window *g_window = 0;
+
+int loadEvents(xdScriptEngine *scriptEngine)
+{
+	g_window->initEvents(scriptEngine);
+	return 0;
+}
 
 //--------------------------------------------------------------------
 // Window
@@ -47,6 +56,8 @@ Window::Window(xdEngine *engine, Input *input, OpenGL *gfx) :
 
 	// Show the window
 	showWindow();
+
+	g_window = this;
 }
 
 Window::~Window()
@@ -236,24 +247,24 @@ void Window::showWindow()
 	}	
 }
 
-void Window::initEvents()
+void Window::initEvents(xdScriptEngine *scriptEngine)
 {
 	// Set optional event functions
-	/*m_focusLostFunc			= getScriptFuncHandle("void focusLost()");
-	m_focusGainedFunc		= getScriptFuncHandle("void focusGained()");
-	m_windowResizedFunc		= getScriptFuncHandle("void windowResized(int width, int height)");
-	m_leftMouseDownFunc		= getScriptFuncHandle("void leftMouseDown()");
-	m_leftMouseUpFunc		= getScriptFuncHandle("void leftMouseUp()");
-	m_rightMouseDownFunc	= getScriptFuncHandle("void rightMouseDown()");
-	m_rightMouseUpFunc		= getScriptFuncHandle("void rightMouseUp()");
-	m_middleMouseDownFunc	= getScriptFuncHandle("void middleMouseDown()");
-	m_middleMouseUpFunc		= getScriptFuncHandle("void middleMouseUp()");
-	m_mouseMoveFunc			= getScriptFuncHandle("void mouseMove(int x, int y)");
-	m_mouseWheelFunc		= getScriptFuncHandle("void mouseWheel(int scrollDelta)");
-	m_inputCharFunc			= getScriptFuncHandle("void inputText(string key)");
+	m_focusLostFunc			=	scriptEngine->getGlobalFunction("void focusLost()");
+	m_focusGainedFunc		=	scriptEngine->getGlobalFunction("void focusGained()");
+	m_windowResizedFunc		=	scriptEngine->getGlobalFunction("void windowResized(int, int)");
+	m_leftMouseDownFunc		=	scriptEngine->getGlobalFunction("void leftMouseDown()");
+	m_leftMouseUpFunc		=	scriptEngine->getGlobalFunction("void leftMouseUp()");
+	m_rightMouseDownFunc	=	scriptEngine->getGlobalFunction("void rightMouseDown()");
+	m_rightMouseUpFunc		=	scriptEngine->getGlobalFunction("void rightMouseUp()");
+	m_middleMouseDownFunc	=	scriptEngine->getGlobalFunction("void middleMouseDown()");
+	m_middleMouseUpFunc		=	scriptEngine->getGlobalFunction("void middleMouseUp()");
+	m_mouseMoveFunc			=	scriptEngine->getGlobalFunction("void mouseMove(int, int)");
+	m_mouseWheelFunc		=	scriptEngine->getGlobalFunction("void mouseWheel(int)");
+	m_inputCharFunc			=	scriptEngine->getGlobalFunction("void inputText(string key)");
 
-	integerTypeId = getObjectTypeId("int"); 
-	stringTypeId = getObjectTypeId("string");*/
+	integerTypeId = scriptEngine->getObjectTypeId("int"); 
+	stringTypeId = scriptEngine->getObjectTypeId("string");
 
 	m_initEventsDone = true;
 }
@@ -313,7 +324,7 @@ void Window::enableFullscreen()
 		SetWindowLong(m_window, GWL_EXSTYLE, exStyle);
 
 		// Hide the cursor
-		ShowCursor(false);
+		//ShowCursor(false);
 
 		// Set window pos and size
 		SetWindowPos(m_window, HWND_TOP, 0, 0, (uint)m_size.x, (uint)m_size.y, SWP_SHOWWINDOW);
@@ -362,7 +373,7 @@ void Window::disableFullscreen()
 	}
 }
 
-Array *Window::resolutionList() const
+Array *Window::getResolutionList() const
 {
     // Create the array object
     Array *arr = CreateArray("Vector2i", 0);
@@ -411,11 +422,11 @@ Vector2i Window::getPosition() const
 void Window::setSize(const Vector2i &size)
 {
 	// Make sure the application is initialized
-	if(!m_initEventsDone)
+	/*if(!m_initEventsDone)
 	{
 		ERR("Window::resize(): Application has to be initialized first!");
 		return;
-	}
+	}*/
 
 	// Set size
 	m_size = size;
@@ -527,6 +538,7 @@ LRESULT Window::OnEvent(HWND Handle, UINT Message, WPARAM wParam, LPARAM lParam)
     return DefWindowProc(Handle, Message, wParam, lParam);
 }
 
+
 void Window::processEvents(UINT Message, WPARAM wParam, LPARAM lParam)
 {
 	// Make sure app is initialized
@@ -548,11 +560,14 @@ void Window::processEvents(UINT Message, WPARAM wParam, LPARAM lParam)
 		{
 			// Resize viewport
 			m_size.set(LOWORD(lParam), HIWORD(lParam));
-			if(m_windowResizedFunc) {
-				//startScriptFuncCall(m_windowResizedFunc);
-				//addScriptFuncArg(&m_size.x, 4);
-				//addScriptFuncArg(&m_size.y, 4);
-				//endScriptFuncCall();
+			if(m_windowResizedFunc)
+			{
+				FunctionCall *func = CreateFuncCall();
+				func->Prepare(m_windowResizedFunc);
+				func->SetArgument(0, &m_size.x, 4);
+				func->SetArgument(1, &m_size.y, 4);
+				func->Execute();
+				delete func;
 			}
 
 			m_graphics->setOrthoProjection(0.0f, m_size.x, m_size.y, 0.0f, -1.0f, 1.0f);

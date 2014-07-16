@@ -4,7 +4,7 @@
 #include "glgraphics.h"
 #include <x2d/util.h>
 
-#include "../source/gfx/shader.h"
+#include <x2d/graphics/shader.h>
 
 class GLshader : public Shader
 {
@@ -22,7 +22,7 @@ public:
 	void setUniform2f(const string &name, const float v0, const float v1);
 	void setUniform3f(const string &name, const float v0, const float v1, const float v2);
 	void setUniform4f(const string &name, const float v0, const float v1, const float v2, const float v3);
-	void setSampler2D(const string &name, const Texture *texture);
+	void setSampler2D(const string &name, Texture *texture);
 
 private:
 	

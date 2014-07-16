@@ -135,6 +135,17 @@ int xdScriptEngine::registerFuncdef(const char *decl)
 	return r;
 }
 
+void *xdScriptEngine::getGlobalFunction(const char *decl)
+{
+	return m_module->GetFunctionByDecl(decl);
+}
+
+int xdScriptEngine::getObjectTypeId(const char *decl)
+{
+	asIObjectType *type = scriptEngine->GetObjectTypeByDecl(decl);
+	return type != 0 ? type->GetTypeId() : -1;
+}
+
 int xdScriptEngine::releaseScriptObject(void *object)
 {
 	int r = 0;
@@ -151,12 +162,6 @@ int xdScriptEngine::releaseScriptFunc(void *function)
 		r = static_cast<asIScriptFunction*>(function)->Release();
 	}
 	return r;
-}
-
-
-void *getScriptFuncHandle(const char *decl)
-{
-	return 0;//xdEngine::GetScripts()->getModule()->GetFunctionByDecl(decl);
 }
 
 AS_REG_SINGLETON(xdScriptEngine, "ScriptManager")

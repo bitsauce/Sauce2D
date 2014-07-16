@@ -4,40 +4,32 @@
 #include <x2d/config.h>
 #include <x2d/console.h>
 
+#include <x2d/audio/source.h>
+#include <x2d/audio/buffer.h>
+
 /*********************************************************************
 **	Abstract Sound Manager											**
 **********************************************************************/
 class XDAPI xdAudio
 {
+	friend class xdEngine;
 public:
 	AS_DECL_SINGLETON
+		
+	virtual void setPosition(const Vector2&)	{ NOT_IMPLEMENTED(setPosition) }
+	virtual Vector2 getPosition() const			{ NOT_IMPLEMENTED_RET(getPosition, Vector2(0.0f)) }
+	virtual void setVelocity(const Vector2&)	{ NOT_IMPLEMENTED(setVelocity) }
+	virtual Vector2 getVelocity() const			{ NOT_IMPLEMENTED_RET(getVelocity, Vector2(0.0f)) }
+	virtual void setOrientation(const Vector3&) { NOT_IMPLEMENTED(setOrientation) }
+	virtual Vector3 getOrientation() const		{ NOT_IMPLEMENTED_RET(getOrientation, Vector3(0.0f)) }
+	
+	static AudioSource *CreateSource(AudioBuffer *buffer);
+	static AudioSource *CreateSource(const string &path);
 
-	//virtual ~xdAudio();
+private:
+	static xdAudio *s_this;
 
-	// Sfx sources
-	/*virtual int createSource()							{ NOT_IMPLEMENTED_RET(createSource, -1) }
-	virtual void deleteSource(const int sourceId)		{ NOT_IMPLEMENTED(deleteSource) }
-
-	virtual void playSource(const int sourceId)			{ NOT_IMPLEMENTED(playSource) }
-	virtual void stopSource(const int sourceId)			{ NOT_IMPLEMENTED(stopSource) }
-
-	virtual void setSourceBuffer(const int sourceId, const int bufferId)								{ NOT_IMPLEMENTED(setSourceBuffer) }
-	virtual void setSourcePosition(const int sourceId, const float x, const float y, const float z)		{ NOT_IMPLEMENTED(setSourcePosition) }
-	virtual void setSourceVelocity(const int sourceId, const float x, const float y, const float z)		{ NOT_IMPLEMENTED(setSourceVelocity) }
-	virtual void setSourceLooping(const int sourceId, const bool looping)								{ NOT_IMPLEMENTED(setSourceLooping) }
-	virtual void setSourceGain(const int sourceId, const float gain)									{ NOT_IMPLEMENTED(setSourceGain) }
-	virtual void setSourcePitch(const int sourceId, const float pitch)									{ NOT_IMPLEMENTED(setSourcePitch) }
-	virtual void setSourceMinDist(const int sourceId, const float dist)									{ NOT_IMPLEMENTED(setSourceMinDist) }
-	virtual void setSourceMaxDist(const int sourceId, const float dist)									{ NOT_IMPLEMENTED(setSourceMaxDist) }
-
-	// Sfx listener
-	virtual void setListenerPosition(const float x, const float y, const float z)		{ NOT_IMPLEMENTED(setListenerPosition) }
-	virtual void setListenerVelocity(const float x, const float y, const float z)		{ NOT_IMPLEMENTED(setListenerVelocity) }
-	virtual void setListenerOrientation(const float x, const float y, const float z)	{ NOT_IMPLEMENTED(setListenerOrientation) }
-
-	// Sfx buffer
-	virtual int loadFile(const string &filePath)		{ NOT_IMPLEMENTED_RET(loadFile, -1) }
-	virtual void deleteBuffer(const int bufferId)		{ NOT_IMPLEMENTED(deleteBuffer) }*/
+	virtual AudioSource *createSource(AudioBuffer *buffer) = 0;
 };
 
 #endif // X2D_SOUND_H

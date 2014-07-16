@@ -83,6 +83,9 @@ public:
 	int registerEnumValue(const char *enumname, const char *valuename, int value);
 	int registerFuncdef(const char *decl);
 
+	void *getGlobalFunction(const char *decl);
+	int getObjectTypeId(const char *decl);
+
 private:
 	asIScriptModule *m_module;
 	asIObjectType *m_createObjectType;

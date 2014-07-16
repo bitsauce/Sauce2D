@@ -10,6 +10,9 @@
 class OpenGL;
 class Input;
 class xdEngine;
+class xdScriptEngine;
+
+extern int loadEvents(xdScriptEngine*);
 
 // The window class:
 // It wraps the handle of the window and initializes the OpenGL rendering context.
@@ -62,7 +65,7 @@ public:
 	void close();
 	
 	// Window events
-	void initEvents();
+	void initEvents(xdScriptEngine*);
 	void processEvents();
 
 	// Display exception
@@ -71,7 +74,7 @@ public:
 	// Window functions
 	void enableFullscreen();
 	void disableFullscreen();
-	class Array *resolutionList() const;
+	class Array *getResolutionList() const;
 
 	void enableResize();
 	void disableResize();
