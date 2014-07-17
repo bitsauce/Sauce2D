@@ -5,6 +5,7 @@
 #include <spine/spine.h>
 
 class spSkeletonWrapper;
+class spEventWrapper;
 
 class spAnimationWrapper
 {
@@ -53,24 +54,9 @@ private:
 	spSkeletonWrapper *m_skeleton;
 };
 
-class spEventWrapper
-{
-public:
-	spEventWrapper(spEvent *event, spEventType type, int loopCount) :
-		m_self(event),
-		m_type(type),
-		m_loopCount(loopCount)
-	{
-	}
-
-private:
-	spEvent *m_self;
-	spEventType m_type;
-	int m_loopCount;
-};
-
 class spAnimationStateWrapper
 {
+	friend class spEventWrapper;
 public:
 	spAnimationStateWrapper(spAnimationStateDataWrapper *data);
 	~spAnimationStateWrapper();
@@ -82,7 +68,7 @@ public:
 	float getTimeScale() const;
 
 	void setEventCallback(void *func);
-	void callEvent(spEventWrapper *event);
+	void *getEventCallback() const;
 
 	void setAnimation(const string &name);
 	void setAnimation(spAnimationWrapper *anim);

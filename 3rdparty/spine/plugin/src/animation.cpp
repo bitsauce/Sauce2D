@@ -1,8 +1,8 @@
 #include "animation.h"
 #include "skeleton.h"
+#include "event.h"
 
 #include <spine/spine.h>
-
 
 spAnimationWrapper::spAnimationWrapper(spSkeleton *skeleton, spAnimation *anim) :
 	m_self(anim),
@@ -95,9 +95,9 @@ spAnimationStateDataWrapper *spAnimationStateDataWrapper::Factory(spSkeletonWrap
 
 void eventListener(spAnimationState* state, int trackIndex, spEventType type, spEvent* event, int loopCount)
 {
-	spAnimationStateWrapper *animState = (spAnimationStateWrapper*)state->rendererObject;
-	spEventWrapper eventWrapped(event, type, loopCount);
-	animState->callEvent(&eventWrapped);
+	spEventWrapper *wrappedEvent = new spEventWrapper(event, type, loopCount);
+	wrappedEvent->call(((spAnimationStateWrapper*)state->rendererObject)->getEventCallback());
+	wrappedEvent->release();
 }
 
 spAnimationStateWrapper::spAnimationStateWrapper(spAnimationStateDataWrapper *data) :
@@ -141,18 +141,9 @@ void spAnimationStateWrapper::setEventCallback(void *func)
 	m_eventCallback = func;
 }
 
-#include <x2d/scripts/funccall.h>
-
-void spAnimationStateWrapper::callEvent(spEventWrapper *event)
+void *spAnimationStateWrapper::getEventCallback() const
 {
-	if(m_eventCallback)
-	{
-		FunctionCall *func = CreateFuncCall();
-		func->Prepare(m_eventCallback);
-		func->SetArgument(0, event, 4);
-		func->Execute();
-		delete func;
-	}
+	return m_eventCallback;
 }
 
 void spAnimationStateWrapper::setAnimation(const string &name)

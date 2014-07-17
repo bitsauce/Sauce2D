@@ -12,11 +12,13 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\animation.cpp" />
+    <ClCompile Include="..\src\event.cpp" />
     <ClCompile Include="..\src\plugin.cpp" />
     <ClCompile Include="..\src\skeleton.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\animation.h" />
+    <ClInclude Include="..\src\event.h" />
     <ClInclude Include="..\src\plugin.h" />
     <ClInclude Include="..\src\skeleton.h" />
   </ItemGroup>

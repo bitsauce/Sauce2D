@@ -4,10 +4,12 @@
     <ClCompile Include="..\src\animation.cpp" />
     <ClCompile Include="..\src\plugin.cpp" />
     <ClCompile Include="..\src\skeleton.cpp" />
+    <ClCompile Include="..\src\event.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\animation.h" />
     <ClInclude Include="..\src\plugin.h" />
     <ClInclude Include="..\src\skeleton.h" />
+    <ClInclude Include="..\src\event.h" />
   </ItemGroup>
 </Project>

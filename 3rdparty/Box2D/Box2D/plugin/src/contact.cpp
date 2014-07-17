@@ -87,7 +87,6 @@ void b2ContactWrapper::call(ContactType type)
 	{
 		FunctionCall *funcCall = CreateFuncCall();
 		funcCall->Prepare(func);
-		//funcCall->SetObject(&m_thisBody, 0x40000000);
 		b2ContactWrapper *self = this;
 		addRef();
 		funcCall->SetArgument(0, &self, 0x40000000);
