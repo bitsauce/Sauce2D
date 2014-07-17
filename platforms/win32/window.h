@@ -10,9 +10,8 @@
 class OpenGL;
 class Input;
 class xdEngine;
-class xdScriptEngine;
 
-extern int loadEvents(xdScriptEngine*);
+extern int loadEvents(xdEngine*);
 
 // The window class:
 // It wraps the handle of the window and initializes the OpenGL rendering context.

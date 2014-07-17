@@ -1,8 +1,14 @@
+#include "plugin.h"
 #include "animation.h"
 #include "skeleton.h"
 #include "event.h"
 
 #include <spine/spine.h>
+
+#include <x2d/engine.h>
+#include <x2d/scriptengine.h>
+
+int spAnimationStateWrapper::TypeId = 0;
 
 spAnimationWrapper::spAnimationWrapper(spSkeleton *skeleton, spAnimation *anim) :
 	m_self(anim),
@@ -112,7 +118,6 @@ spAnimationStateWrapper::spAnimationStateWrapper(spAnimationStateDataWrapper *da
 
 spAnimationStateWrapper::~spAnimationStateWrapper()
 {
-	m_data->release();
 	spAnimationState_dispose(m_self);
 }
 
@@ -136,13 +141,19 @@ float spAnimationStateWrapper::getTimeScale() const
 	return m_self->timeScale;
 }
 
-void spAnimationStateWrapper::setEventCallback(void *func)
+void spAnimationStateWrapper::setEventCallback(asIScriptFunction *func)
 {
+	if(m_eventCallback) {
+		m_eventCallback->Release();
+	}
 	m_eventCallback = func;
 }
 
-void *spAnimationStateWrapper::getEventCallback() const
+asIScriptFunction *spAnimationStateWrapper::getEventCallback() const
 {
+	if(m_eventCallback) {
+		m_eventCallback->AddRef();
+	}
 	return m_eventCallback;
 }
 
@@ -172,7 +183,30 @@ void spAnimationStateWrapper::addAnimation(const string &name, const float delay
 	spAnimationState_addAnimationByName(m_self, 0, name.c_str(), m_looping, delay);
 }
 
+void spAnimationStateWrapper::enumReferences(asIScriptEngine *engine)
+{
+	engine->GCEnumCallback(m_data);
+	if(m_eventCallback) {
+		engine->GCEnumCallback(m_eventCallback);
+	}
+}
+
+void spAnimationStateWrapper::releaseReferences(asIScriptEngine *engine)
+{
+	m_data->release();
+	if(m_eventCallback) {
+		m_eventCallback->Release();
+	}
+}
+
 spAnimationStateWrapper *spAnimationStateWrapper::Factory(spAnimationStateDataWrapper *data)
 {
-	return data != 0 ? new spAnimationStateWrapper(data) : 0;
+	if(!data) return 0;
+
+	spAnimationStateWrapper *animState = new spAnimationStateWrapper(data);
+
+	asIScriptEngine *scriptEngine = xdengine->getScriptEngine()->getASEngine();
+	scriptEngine->NotifyGarbageCollectorOfNewObject(animState, scriptEngine->GetObjectTypeById(spAnimationStateWrapper::TypeId));
+
+	return animState;
 }

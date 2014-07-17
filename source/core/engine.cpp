@@ -278,7 +278,7 @@ int xdEngine::init(const xdConfig &config)
 		srand((uint)time(0));
 
 		// Load plugins
-		if(config.loadPluginsFunc != 0 && config.loadPluginsFunc(m_scripts) < 0) {
+		if(config.loadPluginsFunc != 0 && config.loadPluginsFunc(this) < 0) {
 			return XD_PLUGIN_LOAD_ERROR;
 		}
 
@@ -296,7 +296,7 @@ int xdEngine::init(const xdConfig &config)
 		m_scripts->m_module = mod;
 
 		// Load events
-		if(config.loadEventsFunc != 0 && config.loadEventsFunc(m_scripts) < 0) {
+		if(config.loadEventsFunc != 0 && config.loadEventsFunc(this) < 0) {
 			return XD_PLUGIN_LOAD_ERROR;
 		}
 
@@ -476,7 +476,7 @@ int xdEngine::run()
 			if(currFpsSample >= numFpsSamples) {
 				float fps = 0.0f;
 				for(int i = 0; i < numFpsSamples; i++) fps += fpsSamples[i];
-				m_graphics->m_framesPerSecond = int(fps/numFpsSamples);
+				m_graphics->m_framesPerSecond = (float)int(fps/numFpsSamples);
 				currFpsSample = 0;
 			}
 		

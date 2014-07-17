@@ -28,14 +28,11 @@
 // Window title
 #define WINDOW_TITLE "x2D Game Engine"
 
-int integerTypeId = -1;
-int stringTypeId = -1;
-
 Window *g_window = 0;
 
-int loadEvents(xdScriptEngine *scriptEngine)
+int loadEvents(xdEngine *engine)
 {
-	g_window->initEvents(scriptEngine);
+	g_window->initEvents(engine->getScriptEngine());
 	return 0;
 }
 
@@ -57,6 +54,7 @@ Window::Window(xdEngine *engine, Input *input, OpenGL *gfx) :
 	// Show the window
 	showWindow();
 
+	// Set global window for this source file
 	g_window = this;
 }
 
@@ -250,21 +248,18 @@ void Window::showWindow()
 void Window::initEvents(xdScriptEngine *scriptEngine)
 {
 	// Set optional event functions
-	m_focusLostFunc			=	scriptEngine->getGlobalFunction("void focusLost()");
-	m_focusGainedFunc		=	scriptEngine->getGlobalFunction("void focusGained()");
-	m_windowResizedFunc		=	scriptEngine->getGlobalFunction("void windowResized(int, int)");
-	m_leftMouseDownFunc		=	scriptEngine->getGlobalFunction("void leftMouseDown()");
-	m_leftMouseUpFunc		=	scriptEngine->getGlobalFunction("void leftMouseUp()");
-	m_rightMouseDownFunc	=	scriptEngine->getGlobalFunction("void rightMouseDown()");
-	m_rightMouseUpFunc		=	scriptEngine->getGlobalFunction("void rightMouseUp()");
-	m_middleMouseDownFunc	=	scriptEngine->getGlobalFunction("void middleMouseDown()");
-	m_middleMouseUpFunc		=	scriptEngine->getGlobalFunction("void middleMouseUp()");
-	m_mouseMoveFunc			=	scriptEngine->getGlobalFunction("void mouseMove(int, int)");
-	m_mouseWheelFunc		=	scriptEngine->getGlobalFunction("void mouseWheel(int)");
-	m_inputCharFunc			=	scriptEngine->getGlobalFunction("void inputText(string key)");
-
-	integerTypeId = scriptEngine->getObjectTypeId("int"); 
-	stringTypeId = scriptEngine->getObjectTypeId("string");
+	m_focusLostFunc			=	scriptEngine->getModule()->GetFunctionByDecl("void focusLost()");
+	m_focusGainedFunc		=	scriptEngine->getModule()->GetFunctionByDecl("void focusGained()");
+	m_windowResizedFunc		=	scriptEngine->getModule()->GetFunctionByDecl("void windowResized(int, int)");
+	m_leftMouseDownFunc		=	scriptEngine->getModule()->GetFunctionByDecl("void leftMouseDown()");
+	m_leftMouseUpFunc		=	scriptEngine->getModule()->GetFunctionByDecl("void leftMouseUp()");
+	m_rightMouseDownFunc	=	scriptEngine->getModule()->GetFunctionByDecl("void rightMouseDown()");
+	m_rightMouseUpFunc		=	scriptEngine->getModule()->GetFunctionByDecl("void rightMouseUp()");
+	m_middleMouseDownFunc	=	scriptEngine->getModule()->GetFunctionByDecl("void middleMouseDown()");
+	m_middleMouseUpFunc		=	scriptEngine->getModule()->GetFunctionByDecl("void middleMouseUp()");
+	m_mouseMoveFunc			=	scriptEngine->getModule()->GetFunctionByDecl("void mouseMove(int, int)");
+	m_mouseWheelFunc		=	scriptEngine->getModule()->GetFunctionByDecl("void mouseWheel(int)");
+	m_inputCharFunc			=	scriptEngine->getModule()->GetFunctionByDecl("void inputText(string key)");
 
 	m_initEventsDone = true;
 }

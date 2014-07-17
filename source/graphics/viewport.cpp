@@ -15,11 +15,6 @@ int Viewport::Register(asIScriptEngine *scriptEngine)
 {
 	int r = 0;
 
-	AS_REGISTER_FACTORY(Viewport, "const Recti &in", (const Recti &))
-	AS_REGISTER_FACTORY(Viewport, "const int, const int, const int, const int", (const int, const int, const int, const int))
-
-	AS_REGISTER_METHOD(Viewport, "void makeCurrent() const", makeCurrent, () const, void)
-
 	return r;
 }
 

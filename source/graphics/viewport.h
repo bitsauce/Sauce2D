@@ -8,8 +8,6 @@ class Viewport
 {
 public:
 	AS_DECL_REF
-	AS_FACTORY_ARG1(Viewport, const Recti&)
-	AS_FACTORY_ARG4(Viewport, const int, const int, const int, const int)
 
 	Viewport(const Recti &view);
 	Viewport(const int x, const int y, const int w, const int h);

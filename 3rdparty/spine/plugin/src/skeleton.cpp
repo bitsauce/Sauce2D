@@ -77,11 +77,7 @@ bool spSkeletonWrapper::getFlipY() const
 Texture *spSkeletonWrapper::getTexture() const
 {
 	Texture *texture = (Texture*)m_atlas->pages->rendererObject;
-	if(!texture) {
-		return 0;
-	}
-
-	texture->addRef();
+	if(texture) texture->addRef();
 	return texture;
 }
 

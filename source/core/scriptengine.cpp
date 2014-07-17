@@ -52,118 +52,6 @@ FunctionCall *CreateFuncCall()
 
 // HAX END
 
-int getObjectTypeId(const char *objectName)
-{
-	asIObjectType *type = scriptEngine->GetObjectTypeByName(objectName);
-	if(!type) return -1;
-	return type->GetTypeId();
-}
-
-int registerGlobalFunction(const char *funcDef, const asSFuncPtr &funcPointer)
-{
-	int r = scriptEngine->RegisterGlobalFunction(funcDef, funcPointer, asCALL_CDECL);
-	if(r < 0)
-	{
-		ERR("registerGlobalFunction failed with the error code %i, with funcDef '%s'", r, funcDef);
-		assert(false);
-	}
-	return r;
-}
-
-int xdScriptEngine::registerSingletonType(const char *obj)
-{
-	return scriptEngine->RegisterObjectType(obj, 0, asOBJ_REF | asOBJ_NOHANDLE);
-}
-
-int xdScriptEngine::registerRefType(const char *obj, const asSFuncPtr &addRef, const asSFuncPtr &release)
-{
-	int r = 0;
-	int typeId = r = scriptEngine->RegisterObjectType(obj, 0, asOBJ_REF); AS_ASSERT
-	r = scriptEngine->RegisterObjectBehaviour(obj, asBEHAVE_ADDREF, "void f()", addRef, asCALL_THISCALL); AS_ASSERT		
-	r = scriptEngine->RegisterObjectBehaviour(obj, asBEHAVE_RELEASE, "void f()", release, asCALL_THISCALL); AS_ASSERT		
-	return typeId;
-}
-
-int xdScriptEngine::registerValueType(const char *obj, const int size)
-{
-	return scriptEngine->RegisterObjectType(obj, size, asOBJ_VALUE | asOBJ_POD | asOBJ_APP_CLASS_CAK);
-}
-
-int xdScriptEngine::registerObjectFactory(const char *obj, const char *decl, const asSFuncPtr &func)
-{
-	return scriptEngine->RegisterObjectBehaviour(obj, asBEHAVE_FACTORY, decl, func, asCALL_CDECL);
-}
-
-int xdScriptEngine::registerObjectConstructor(const char *obj, const char *decl, const asSFuncPtr &func)
-{
-	return scriptEngine->RegisterObjectBehaviour(obj, asBEHAVE_CONSTRUCT, decl, func, asCALL_CDECL_OBJLAST);
-}
-
-int xdScriptEngine::registerObjectMethod(const char *obj, const char *decl, const asSFuncPtr &funcPointer)
-{
-	return scriptEngine->RegisterObjectMethod(obj, decl, funcPointer, asCALL_THISCALL);
-}
-
-int xdScriptEngine::registerObjectProperty(const char *obj, const char *decl, const int offset)
-{
-	return scriptEngine->RegisterObjectProperty(obj, decl, offset);
-}
-
-int xdScriptEngine::registerGlobalProperty(const char *decl, void *pointer)
-{
-	return scriptEngine->RegisterGlobalProperty(decl, pointer);
-}
-
-int xdScriptEngine::registerEnum(const char* name)
-{
-	return scriptEngine->RegisterEnum(name);
-}
-
-int xdScriptEngine::registerEnumValue(const char *enumname, const char *valuename, int value)
-{
-	return scriptEngine->RegisterEnumValue(enumname, valuename, value);
-}
-
-int xdScriptEngine::registerFuncdef(const char *decl)
-{
-	int r = scriptEngine->RegisterFuncdef(decl);
-	if(r < 0)
-	{
-		ERR("registerFunctionDef failed with the error code %i, with decl '%s'", r, decl);
-		assert(false);
-	}
-	return r;
-}
-
-void *xdScriptEngine::getGlobalFunction(const char *decl)
-{
-	return m_module->GetFunctionByDecl(decl);
-}
-
-int xdScriptEngine::getObjectTypeId(const char *decl)
-{
-	asIObjectType *type = scriptEngine->GetObjectTypeByDecl(decl);
-	return type != 0 ? type->GetTypeId() : -1;
-}
-
-int xdScriptEngine::releaseScriptObject(void *object)
-{
-	int r = 0;
-	if(object) {
-		r = static_cast<asIScriptObject*>(object)->Release();
-	}
-	return r;
-}
-
-int xdScriptEngine::releaseScriptFunc(void *function)
-{
-	int r = 0;
-	if(function) {
-		r = static_cast<asIScriptFunction*>(function)->Release();
-	}
-	return r;
-}
-
 AS_REG_SINGLETON(xdScriptEngine, "ScriptManager")
 
 int xdScriptEngine::Register(asIScriptEngine *scriptEngine)
@@ -198,8 +86,6 @@ xdScriptEngine::xdScriptEngine(asIScriptEngine *scriptEngine, xdDebug *debugger)
 
 xdScriptEngine::~xdScriptEngine()
 {
-	m_createArgs.clear();
-	
 	// Clean up AngelScript
 	asIScriptContext* ctx = asGetActiveContext();
 	if(ctx) assert("AngelScript: There is an active context running!");
@@ -209,8 +95,9 @@ xdScriptEngine::~xdScriptEngine()
 asIScriptContext *xdScriptEngine::createContext() const
 {
 	asIScriptContext *ctx = scriptEngine->CreateContext();
-	if(xdEngine::IsEnabled(XD_DEBUG))
+	if(xdEngine::IsEnabled(XD_DEBUG)) {
 		ctx->SetLineCallback(asMETHOD(xdDebug, lineCallback), m_debugger, asCALL_THISCALL);
+	}
 	return ctx;
 }
 
@@ -270,7 +157,74 @@ bool xdScriptEngine::classDerivesFromId(const uint id1, const uint id2) const
 	return false;
 }
 
-void xdScriptEngine::setCreateArg(const uint idx, void *value, int typeId)
+string xdScriptEngine::objectClassName(void *obj, int typeId) const
+{
+	// Check if the provied object
+	// is a script object
+	if(!(typeId & asTYPEID_SCRIPTOBJECT)) {
+		asIScriptContext *ctx = asGetActiveContext();
+		if(ctx) {
+			// Set a script exception
+			ctx->SetException("xdScriptEngine::objectClassName() should only be called on a script object!");
+		}
+		return "";
+	}
+
+	// Get the provided script object
+	asIScriptObject* scriptObject = NULL;
+	scriptObject = static_cast<asIScriptObject*>(*(void**)obj); // Reference-to-pointer
+
+	// Return name
+	return scriptObject->GetObjectType()->GetName();
+}
+
+ScriptArgument::ScriptArgument() :
+	valid(false)
+{
+}
+
+ScriptArgument::~ScriptArgument()
+{
+	clear();
+}
+
+void ScriptArgument::set(void *value, int typeId)
+{
+	// Set argument value
+	asIObjectType *objectType = scriptEngine->GetObjectTypeById(typeId);
+	if(typeId == asTYPEID_VOID || typeId & asTYPEID_OBJHANDLE)
+	{
+		// Add handle reference and store address
+		scriptEngine->AddRefScriptObject(*(void**)value, objectType);
+		this->value = *(void**)value;
+	}else if(typeId & asTYPEID_MASK_OBJECT)
+	{
+		// Construct and copy script object
+		this->value = scriptEngine->CreateScriptObject(objectType);
+		scriptEngine->AssignScriptObject(this->value, value, objectType);
+	}else{
+		// Copy primitive value
+		int primitiveSize = scriptEngine->GetSizeOfPrimitiveType(typeId);
+		this->value = malloc(primitiveSize);
+		memcpy(this->value, value, primitiveSize);
+	}
+	this->valid = true;
+	this->typeId = typeId;
+}
+
+void ScriptArgument::clear()
+{
+	// Clear the argument data
+	if(valid) {
+		if(typeId == asTYPEID_VOID || typeId & asTYPEID_OBJHANDLE)
+			scriptEngine->ReleaseScriptObject(value, scriptEngine->GetObjectTypeById(typeId));
+		else
+			free(value);
+	}
+	valid = false;
+}
+
+/*void xdScriptEngine::setCreateArg(const uint idx, void *value, int typeId)
 {
 	// Check for valid index
 	if(m_createArgs.size() <= idx) return;
@@ -357,74 +311,7 @@ void xdScriptEngine::createObject(void *object, int typeId, const string decl) c
 		*(void**)object = newObject;
 	}
 	ctx->Release();
-}
-
-string xdScriptEngine::objectClassName(void *obj, int typeId) const
-{
-	// Check if the provied object
-	// is a script object
-	if(!(typeId & asTYPEID_SCRIPTOBJECT)) {
-		asIScriptContext *ctx = asGetActiveContext();
-		if(ctx) {
-			// Set a script exception
-			ctx->SetException("xdScriptEngine::objectClassName() should only be called on a script object!");
-		}
-		return "";
-	}
-
-	// Get the provided script object
-	asIScriptObject* scriptObject = NULL;
-	scriptObject = static_cast<asIScriptObject*>(*(void**)obj); // Reference-to-pointer
-
-	// Return name
-	return scriptObject->GetObjectType()->GetName();
-}
-
-ScriptArgument::ScriptArgument() :
-	valid(false)
-{
-}
-
-ScriptArgument::~ScriptArgument()
-{
-	clear();
-}
-
-void ScriptArgument::set(void *value, int typeId)
-{
-	// Set argument value
-	asIObjectType *objectType = scriptEngine->GetObjectTypeById(typeId);
-	if(typeId == asTYPEID_VOID || typeId & asTYPEID_OBJHANDLE)
-	{
-		// Add handle reference and store address
-		scriptEngine->AddRefScriptObject(*(void**)value, objectType);
-		this->value = *(void**)value;
-	}else if(typeId & asTYPEID_MASK_OBJECT)
-	{
-		// Construct and copy script object
-		this->value = scriptEngine->CreateScriptObject(objectType);
-		scriptEngine->AssignScriptObject(this->value, value, objectType);
-	}else{
-		// Copy primitive value
-		int primitiveSize = scriptEngine->GetSizeOfPrimitiveType(typeId);
-		this->value = malloc(primitiveSize);
-		memcpy(this->value, value, primitiveSize);
-	}
-	this->valid = true;
-	this->typeId = typeId;
-}
-
-void ScriptArgument::clear()
-{
-	// Clear the argument data
-	if(valid) {
-		if(typeId == asTYPEID_VOID || typeId & asTYPEID_OBJHANDLE)
-			scriptEngine->ReleaseScriptObject(value, scriptEngine->GetObjectTypeById(typeId));
-		else
-			free(value);
-	}
-	valid = false;
-}
+}*/
 
 //----------------------------------------------------------------------------
 // AngelScript

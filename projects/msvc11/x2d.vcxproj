@@ -27,7 +27,6 @@
     <ClInclude Include="..\..\include\x2d\console.h" />
     <ClInclude Include="..\..\include\x2d\eventhandler.h" />
     <ClInclude Include="..\..\include\x2d\exception.h" />
-    <ClInclude Include="..\..\include\x2d\faux_angelscript.h" />
     <ClInclude Include="..\..\include\x2d\graphics\batch.h" />
     <ClInclude Include="..\..\include\x2d\graphics\framebufferobject.h" />
     <ClInclude Include="..\..\include\x2d\graphics\pixmap.h" />
@@ -209,7 +208,7 @@
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <WarningLevel>Level4</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>USING_AS;X2D_EXPORT;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>X2D_EXPORT;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -269,7 +268,7 @@
     <ClCompile>
       <WarningLevel>Level4</WarningLevel>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>USING_AS;X2D_EXPORT;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>X2D_EXPORT;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <Optimization>Full</Optimization>

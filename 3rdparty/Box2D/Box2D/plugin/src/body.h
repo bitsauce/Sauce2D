@@ -49,8 +49,6 @@ public:
 	~b2BodyWrapper();
 	void destroy();
 
-	RefCounter refCounter;
-	bool gcFlag;
 	void addRef()
 	{
 		gcFlag = false;
@@ -96,6 +94,8 @@ public:
 	static int TypeId;
 
 private:
+	RefCounter refCounter;
+	bool gcFlag;
 	b2Body *m_body;
 	vector<b2FixtureWrapper*> m_fixtures;
 	struct

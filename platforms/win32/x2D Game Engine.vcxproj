@@ -52,13 +52,13 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>
       </SDLCheck>
-      <AdditionalIncludeDirectories>..\..\include;..\..\3rdparty\vld\include;..\..\3rdparty\openal\include;..\..\3rdparty\glew\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\include;..\..\3rdparty\vld\include;..\..\3rdparty\openal\include;..\..\3rdparty\glew\include;..\..\3rdparty\angelscript\sdk\angelscript\include</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>X2D_DEBUG;X2D_IMPORT;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>..\..\build\$(Platform)\$(Configuration)\;..\..\3rdparty\vld\lib\Win32;..\..\3rdparty\glew\lib;..\..\3rdparty\openal\libs;..\..\3rdparty\openal\libs\Win32</AdditionalLibraryDirectories>
-      <AdditionalDependencies>ws2_32.lib;iphlpapi.lib;x2dd.lib;openal32.lib;opengl32.lib;glewd.lib;glu32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>..\..\build\$(Platform)\$(Configuration)\;..\..\3rdparty\vld\lib\Win32;..\..\3rdparty\glew\lib;..\..\3rdparty\openal\libs;..\..\3rdparty\openal\libs\Win32;..\..\3rdparty\angelscript\sdk\angelscript\lib</AdditionalLibraryDirectories>
+      <AdditionalDependencies>ws2_32.lib;iphlpapi.lib;x2dd.lib;openal32.lib;opengl32.lib;glewd.lib;glu32.lib;angelscriptd.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
     </Link>
   </ItemDefinitionGroup>
@@ -70,7 +70,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>
       </SDLCheck>
-      <AdditionalIncludeDirectories>..\..\include;..\..\3rdparty\vld\include;..\..\3rdparty\openal\include;..\..\3rdparty\glew\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\include;..\..\3rdparty\vld\include;..\..\3rdparty\openal\include;..\..\3rdparty\glew\include;..\..\3rdparty\angelscript\sdk\angelscript\include</AdditionalIncludeDirectories>
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <PreprocessorDefinitions>X2D_IMPORT;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
@@ -78,8 +78,8 @@
       <GenerateDebugInformation>false</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>ws2_32.lib;iphlpapi.lib;x2d.lib;openal32.lib;opengl32.lib;glew.lib;glu32.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>..\..\build\$(Platform)\$(Configuration)\;..\..\3rdparty\vld\lib\Win32;..\..\3rdparty\glew\lib;..\..\3rdparty\openal\libs;..\..\3rdparty\openal\libs\Win32</AdditionalLibraryDirectories>
+      <AdditionalDependencies>ws2_32.lib;iphlpapi.lib;x2d.lib;openal32.lib;opengl32.lib;glew.lib;glu32.lib;angelscript.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>..\..\build\$(Platform)\$(Configuration)\;..\..\3rdparty\vld\lib\Win32;..\..\3rdparty\glew\lib;..\..\3rdparty\openal\libs;..\..\3rdparty\openal\libs\Win32;..\..\3rdparty\angelscript\sdk\angelscript\lib</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>

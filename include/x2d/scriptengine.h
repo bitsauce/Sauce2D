@@ -5,13 +5,6 @@
 #include <x2d/util.h>
 #include <x2d/base.h>
 
-// Include AngelScript header
-#ifdef USING_AS
-#include <angelscript.h>
-#else
-#include "faux_angelscript.h"
-#endif // USING_AS
-
 // Script func-call argument
 struct ScriptArgument
 {
@@ -54,52 +47,18 @@ public:
 	bool classDerivesFromId(const uint id1, const uint id2) const;
 
 	// Script objects
-	void setCreateArg(const uint idx, void *object, int typeId);
-	void resizeCreateArgs(const uint size);
-	void setCreateObjectByName(const string name);
-	void setCreateObjectById(const uint id);
-	void createObject(void *object, int typeId, const string decl = "") const;
 	string objectClassName(void *obj, int typeId) const;
 
-	// 
+	// Execute string
 	void executeString(const string &str) const;
-
-	// Release
-	int releaseScriptFunc(void *function);
-	int releaseScriptObject(void *object);
-
-	// Registers
-	int registerSingletonType(const char *obj);
-	int registerRefType(const char *obj, const asSFuncPtr &addRef, const asSFuncPtr &release);
-	int registerGCType(const char *obj, const asSFuncPtr &addRef, const asSFuncPtr &release, const asSFuncPtr &setflag,
-		const asSFuncPtr &getflag, const asSFuncPtr &getrefcount, const asSFuncPtr &enumrefs, const asSFuncPtr &releaserefs);
-	int registerValueType(const char *obj, int size);
-	int registerObjectFactory(const char *obj, const char *decl, const asSFuncPtr &func);
-	int registerObjectConstructor(const char *obj, const char *decl, const asSFuncPtr &func);
-	int registerObjectMethod(const char *obj, const char *decl, const asSFuncPtr &funcPointer); 
-	int registerObjectProperty(const char *obj, const char *decl, const int offset); 
-	int registerGlobalProperty(const char *decl, void *pointer);
-	int registerEnum(const char *decl);
-	int registerEnumValue(const char *enumname, const char *valuename, int value);
-	int registerFuncdef(const char *decl);
-
-	void *getGlobalFunction(const char *decl);
-	int getObjectTypeId(const char *decl);
 
 private:
 	asIScriptModule *m_module;
-	asIObjectType *m_createObjectType;
-	vector<ScriptArgument> m_createArgs;
 	class xdDebug *m_debugger;
 };
-
-#ifdef USING_AS
 
 // AngelScript functions
 void asMessageCallback(const asSMessageInfo *msg, void *param);
 int  asCompileModule(const string &name, class xdFileSystem *fileSystem);
-
-#endif // USING_AS
-
 
 #endif // X2D_SCRIPTS_H

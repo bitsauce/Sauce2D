@@ -5,6 +5,7 @@
 #include <x2d/base.h>
 #include <x2d/util.h>
 
+class xdEngine;
 class xdTimer;
 class xdWindow;
 class xdMath;
@@ -20,16 +21,9 @@ class xdAssetLoader;
 enum xdRetCode;
 enum xdEngineFlag;
 enum xdState;
-struct xdConfig;
 
-#ifdef USING_AS
-class asIScriptFunction;
-#else
-typedef void asIScriptFunction;
-#endif
-
-typedef int (*LoadPluginsFunc)(xdScriptEngine*);
-typedef int (*LoadEventsFunc)(xdScriptEngine*);
+typedef int (*LoadPluginsFunc)(xdEngine*);
+typedef int (*LoadEventsFunc)(xdEngine*);
 
 struct XDAPI xdConfig
 {

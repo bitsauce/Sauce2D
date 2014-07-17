@@ -3,11 +3,11 @@
 #include <x2d/util.h>
 
 // Plugin globals
-typedef int  (*PLUGIN_FACTORY)(xdScriptEngine*);
+typedef int  (*PLUGIN_FACTORY)(xdEngine*);
 typedef void (*PLUGIN_CLEANUP)();
 vector<HMODULE> plugins;
 
-int loadPlugins(xdScriptEngine *scriptEngine)
+int loadPlugins(xdEngine *engine)
 {
 	string pluginDir = util::getAbsoluteFilePath(":/plugins/");
 
@@ -40,7 +40,7 @@ int loadPlugins(xdScriptEngine *scriptEngine)
 			if(factoryFunc != 0 && cleanupFunc != 0)
 			{
 				// Call factory func
-				int r = factoryFunc(scriptEngine);
+				int r = factoryFunc(engine);
 				if(r < 0) return r;
 
 				// Add cleanup func to a list

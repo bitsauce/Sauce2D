@@ -114,9 +114,6 @@
     <ClInclude Include="..\..\source\scripts\scriptgrid.h">
       <Filter>source\scripts</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\x2d\faux_angelscript.h">
-      <Filter>include</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\include\x2d\math\array.h">
       <Filter>include\scripts</Filter>
     </ClInclude>

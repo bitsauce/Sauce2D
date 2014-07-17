@@ -67,8 +67,8 @@ public:
 	void setTimeScale(const float timeScale);
 	float getTimeScale() const;
 
-	void setEventCallback(void *func);
-	void *getEventCallback() const;
+	void setEventCallback(asIScriptFunction *func);
+	asIScriptFunction *getEventCallback() const;
 
 	void setAnimation(const string &name);
 	void setAnimation(spAnimationWrapper *anim);
@@ -78,15 +78,33 @@ public:
 
 	static spAnimationStateWrapper *Factory(spAnimationStateDataWrapper *data);
 
-	void addRef() { refCounter.add(); }
-	void release() { if(refCounter.release() == 0) delete this; }
+	void addRef()
+	{
+		gcFlag = false;
+		refCounter.add();
+	}
+	void release()
+	{
+		gcFlag = false;
+		if(refCounter.release() == 0) {
+			delete this;
+		}
+	}
+	int getRefCount() { return refCounter.get(); }
+	void setGCFlag() { gcFlag = true; }
+	bool getGCFlag() { return gcFlag; }
+	void enumReferences(asIScriptEngine*);
+	void releaseReferences(asIScriptEngine*);
+
+	static int TypeId;
 
 private:
 	RefCounter refCounter;
+	bool gcFlag;
 	spAnimationStateDataWrapper *m_data;
 	spAnimationState *m_self;
 	bool m_looping;
-	void *m_eventCallback;
+	asIScriptFunction *m_eventCallback;
 };
 
 #endif // PLUGIN_ANIMATION_H

@@ -34,7 +34,7 @@ int spEventWrapper::getLoopCount() const
 	return m_loopCount;
 }
 
-void spEventWrapper::call(void *func)
+void spEventWrapper::call(asIScriptFunction *func)
 {
 	if(func)
 	{
@@ -45,5 +45,6 @@ void spEventWrapper::call(void *func)
 		funcCall->SetArgument(0, &self, 0x40000000);
 		funcCall->Execute();
 		delete funcCall;
+		func->Release();
 	}
 }

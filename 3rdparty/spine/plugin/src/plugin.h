@@ -2,10 +2,10 @@
 extern "C"
 {
        // Plugin factory function
-       __declspec(dllexport) int CreatePlugin(class xdScriptEngine*);
+       __declspec(dllexport) int CreatePlugin(class xdEngine*);
  
        // Plugin cleanup function
        __declspec(dllexport) void ReleasePlugin();
 }
 
-extern xdScriptEngine *scriptEngine;
+extern xdEngine *xdengine;

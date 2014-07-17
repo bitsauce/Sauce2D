@@ -15,7 +15,7 @@ public:
 	spEventType getType() const;
 	int getLoopCount() const;
 
-	void call(void *func);
+	void call(asIScriptFunction *func);
 	
 	void addRef() { refCounter.add(); }
 	void release() { if(refCounter.release() == 0) delete this; }
