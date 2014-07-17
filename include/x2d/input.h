@@ -127,6 +127,8 @@ class XDAPI xdInput
 public:
 	AS_DECL_SINGLETON
 
+	virtual ~xdInput();
+
 	// Desktop cursor functions
 	virtual void     setCursorPos(const Vector2i &pos)			{ NOT_IMPLEMENTED(setCursorPos) }
 	virtual Vector2i getCursorPos() const						{ NOT_IMPLEMENTED_RET(getCursorPos, Vector2i(0)) }
@@ -139,11 +141,21 @@ public:
 	virtual Vector2 getPosition() const 						{ NOT_IMPLEMENTED_RET(getPosition, Vector2(0.0f)) }
 
 	// Key binding
-	void bind(const xdVirtualKey key, asIScriptFunction *func) {}
+	void bind(const xdVirtualKey key, asIScriptFunction *func);
+	void checkBindings();
 	
 	// Overloads
 	void setCursorPos(const int x, const int y) { setCursorPos(Vector2i(x, y)); }
 	void setCursorLimits(const int x, const int y, const int w, const int h) { setCursorLimits(Recti(x, y, w, h)); }
+
+private:
+	struct KeyBind
+	{
+		bool pressed;
+		asIScriptFunction *function;
+	};
+
+	map<xdVirtualKey, KeyBind> m_keyBindings;
 };
 
 #endif // X2D_INPUT_H

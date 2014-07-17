@@ -114,10 +114,10 @@ xdEngine::~xdEngine()
 	delete m_audio;
 	delete m_profiler;
 	delete m_timer;
+	delete m_input;
 	delete m_scripts;
 	delete m_window;
 	delete m_math;
-	delete m_input;
 	delete m_assetLoader;
 	delete m_debugger;
 	delete m_console;
@@ -385,6 +385,10 @@ void xdEngine::update()
 {
 	m_profiler->pushProfile("Update");
 
+	// Check all bindings
+	m_input->checkBindings();
+
+	// Call 'void update()'
 	asIScriptContext *ctx = m_scripts->createContext();
 	int r = ctx->Prepare(m_updateFunc); assert(r >= 0);
 	r = ctx->Execute(); assert(r >= 0);

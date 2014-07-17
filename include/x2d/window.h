@@ -20,6 +20,7 @@ public:
 	// Virtual window functions
 	virtual void enableFullscreen()									{ NOT_IMPLEMENTED(enableFullscreen) }
 	virtual void disableFullscreen()								{ NOT_IMPLEMENTED(disableFullscreen) }
+	virtual bool isFullscreen() const								{ NOT_IMPLEMENTED_RET(isFullscreen, false) }
 	virtual Array* getResolutionList() const						{ NOT_IMPLEMENTED_ARR(getResolutionList, "Vector2i") }
 
 	// Window flags

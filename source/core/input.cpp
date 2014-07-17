@@ -116,7 +116,7 @@ int xdInput::Register(asIScriptEngine *scriptEngine)
 	r = scriptEngine->RegisterEnumValue("VirtualKey", "KEY_Z", X2D_KeyZ); AS_ASSERT
 
 	// Callback funcdef
-	r = scriptEngine->RegisterFuncdef("void Callback()"); AS_ASSERT
+	r = scriptEngine->RegisterFuncdef("void KeybindCallback()"); AS_ASSERT
 
 	// Desktop cursor
 	r = scriptEngine->RegisterObjectMethod("ScriptInput", "void     setCursorPos(const Vector2i &in)", asMETHODPR(xdInput, setCursorPos, (const Vector2i&), void), asCALL_THISCALL); AS_ASSERT
@@ -125,10 +125,59 @@ int xdInput::Register(asIScriptEngine *scriptEngine)
 
 	// Keyboard
 	r = scriptEngine->RegisterObjectMethod("ScriptInput", "bool getKeyState(const VirtualKey key) const", asMETHOD(xdInput, getKeyState), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("ScriptInput", "void bind(const VirtualKey key, Callback @callback)", asMETHOD(xdInput, bind), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("ScriptInput", "void bind(const VirtualKey key, KeybindCallback @callback)", asMETHOD(xdInput, bind), asCALL_THISCALL); AS_ASSERT
 
 	// General
 	r = scriptEngine->RegisterObjectMethod("ScriptInput", "Vector2 get_position() const", asMETHOD(xdInput, getPosition), asCALL_THISCALL); AS_ASSERT
 
 	return r;
+}
+
+xdInput::~xdInput()
+{
+	for(map<xdVirtualKey, KeyBind>::iterator itr = m_keyBindings.begin(); itr != m_keyBindings.end(); ++itr)
+	{
+		// Release all function handles
+		if(itr->second.function)
+			itr->second.function->Release();
+	}
+}
+
+void xdInput::bind(const xdVirtualKey key, asIScriptFunction *function)
+{
+	// If key is already bound, release its function handle
+	if(m_keyBindings.find(key) != m_keyBindings.end())
+	{
+		asIScriptFunction *func = m_keyBindings[key].function;
+		if(func) func->Release();
+	}
+
+	// Bind function to key
+	m_keyBindings[key].function = function;
+	m_keyBindings[key].pressed = false;
+}
+
+#include <x2d/scripts/funccall.h>
+
+void xdInput::checkBindings()
+{
+	// Iterate key bindings
+	for(map<xdVirtualKey, KeyBind>::iterator itr = m_keyBindings.begin(); itr != m_keyBindings.end(); ++itr)
+	{
+		KeyBind &key = itr->second;
+		if(getKeyState(itr->first))
+		{
+			if(!key.pressed && key.function)
+			{
+				// Key was pressed, call function
+				FunctionCall *funcCall = CreateFuncCall();
+				funcCall->Prepare(key.function);
+				funcCall->Execute();
+				delete funcCall;
+			}
+			key.pressed = true;
+		}else{
+			key.pressed = false;
+		}
+	}
 }

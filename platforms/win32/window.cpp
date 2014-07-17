@@ -239,7 +239,7 @@ void Window::showWindow()
 	DEVMODE dm = { 0 };
 	dm.dmSize = sizeof(dm);
 	for(int i = 0; EnumDisplaySettings(NULL, i, &dm) != 0; i++) {
-		Vector2 res((float)dm.dmPelsWidth, (float)dm.dmPelsHeight);
+		Vector2i res(dm.dmPelsWidth, dm.dmPelsHeight);
 		if(find(m_resolutions.begin(), m_resolutions.end(), res) == m_resolutions.end())
 			m_resolutions.push_back(res);
 	}	
@@ -366,6 +366,11 @@ void Window::disableFullscreen()
 		// Set fullscreen
 		m_fullscreen = false;
 	}
+}
+
+bool Window::isFullscreen() const
+{
+	return m_fullscreen;
 }
 
 Array *Window::getResolutionList() const

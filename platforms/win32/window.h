@@ -73,6 +73,7 @@ public:
 	// Window functions
 	void enableFullscreen();
 	void disableFullscreen();
+	bool isFullscreen() const;
 	class Array *getResolutionList() const;
 
 	void enableResize();
