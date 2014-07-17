@@ -74,6 +74,17 @@ bool spSkeletonWrapper::getFlipY() const
 	return m_self->flipY != 0;
 }
 
+Texture *spSkeletonWrapper::getTexture() const
+{
+	Texture *texture = (Texture*)m_atlas->pages->rendererObject;
+	if(!texture) {
+		return 0;
+	}
+
+	texture->addRef();
+	return texture;
+}
+
 void spSkeletonWrapper::draw(Batch *batch)
 {
 	if(!batch)

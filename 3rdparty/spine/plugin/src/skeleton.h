@@ -6,6 +6,7 @@
 #include <spine/spine.h>
 
 class spAnimationWrapper;
+class Texture;
 
 class spSkeletonWrapper
 {
@@ -23,6 +24,8 @@ public:
 
 	void setFlipY(const bool flip);
 	bool getFlipY() const;
+
+	Texture *getTexture() const;
 
 	void draw(class Batch *batch);
 

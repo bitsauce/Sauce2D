@@ -93,11 +93,21 @@ spAnimationStateDataWrapper *spAnimationStateDataWrapper::Factory(spSkeletonWrap
 	return skeleton != 0 ? new spAnimationStateDataWrapper(skeleton) : 0;
 }
 
+void eventListener(spAnimationState* state, int trackIndex, spEventType type, spEvent* event, int loopCount)
+{
+	spAnimationStateWrapper *animState = (spAnimationStateWrapper*)state->rendererObject;
+	spEventWrapper eventWrapped(event, type, loopCount);
+	animState->callEvent(&eventWrapped);
+}
+
 spAnimationStateWrapper::spAnimationStateWrapper(spAnimationStateDataWrapper *data) :
 	m_data(data),
-	m_looping(false)
+	m_looping(false),
+	m_eventCallback(0)
 {
 	m_self = spAnimationState_create(data->get());
+	m_self->listener = &eventListener;
+	m_self->rendererObject = this;
 }
 
 spAnimationStateWrapper::~spAnimationStateWrapper()
@@ -124,6 +134,25 @@ void spAnimationStateWrapper::setTimeScale(const float timeScale)
 float spAnimationStateWrapper::getTimeScale() const
 {
 	return m_self->timeScale;
+}
+
+void spAnimationStateWrapper::setEventCallback(void *func)
+{
+	m_eventCallback = func;
+}
+
+#include <x2d/scripts/funccall.h>
+
+void spAnimationStateWrapper::callEvent(spEventWrapper *event)
+{
+	if(m_eventCallback)
+	{
+		FunctionCall *func = CreateFuncCall();
+		func->Prepare(m_eventCallback);
+		func->SetArgument(0, event, 4);
+		func->Execute();
+		delete func;
+	}
 }
 
 void spAnimationStateWrapper::setAnimation(const string &name)

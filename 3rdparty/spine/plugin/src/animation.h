@@ -53,6 +53,22 @@ private:
 	spSkeletonWrapper *m_skeleton;
 };
 
+class spEventWrapper
+{
+public:
+	spEventWrapper(spEvent *event, spEventType type, int loopCount) :
+		m_self(event),
+		m_type(type),
+		m_loopCount(loopCount)
+	{
+	}
+
+private:
+	spEvent *m_self;
+	spEventType m_type;
+	int m_loopCount;
+};
+
 class spAnimationStateWrapper
 {
 public:
@@ -64,6 +80,9 @@ public:
 
 	void setTimeScale(const float timeScale);
 	float getTimeScale() const;
+
+	void setEventCallback(void *func);
+	void callEvent(spEventWrapper *event);
 
 	void setAnimation(const string &name);
 	void setAnimation(spAnimationWrapper *anim);
@@ -81,6 +100,7 @@ private:
 	spAnimationStateDataWrapper *m_data;
 	spAnimationState *m_self;
 	bool m_looping;
+	void *m_eventCallback;
 };
 
 #endif // PLUGIN_ANIMATION_H

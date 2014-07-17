@@ -24,8 +24,8 @@ int Texture::Register(asIScriptEngine *scriptEngine)
 	r = scriptEngine->RegisterObjectBehaviour("Texture", asBEHAVE_FACTORY, "Texture @f(const Texture @)", asFUNCTIONPR(xdGraphics::CreateTexture, (const Texture&), Texture*), asCALL_CDECL); AS_ASSERT
 
 	r = scriptEngine->RegisterEnum("TextureFilter"); AS_ASSERT
-	r = scriptEngine->RegisterEnumValue("TextureFilter", "Nearest", xdNearest); AS_ASSERT
-	r = scriptEngine->RegisterEnumValue("TextureFilter", "Linear", xdLinear); AS_ASSERT
+	r = scriptEngine->RegisterEnumValue("TextureFilter", "NEAREST", xdNearest); AS_ASSERT
+	r = scriptEngine->RegisterEnumValue("TextureFilter", "LINEAR", xdLinear); AS_ASSERT
 
 	r = scriptEngine->RegisterObjectMethod("Texture", "void enableMipmaps()", asMETHODPR(Texture, enableMipmaps, (), void), asCALL_THISCALL); AS_ASSERT
 	r = scriptEngine->RegisterObjectMethod("Texture", "void disableMipmaps()", asMETHODPR(Texture, disableMipmaps, (), void), asCALL_THISCALL); AS_ASSERT

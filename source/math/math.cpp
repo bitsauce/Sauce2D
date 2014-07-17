@@ -98,9 +98,9 @@ int xdMath::getRandomInt(int start, int end)
 		return -1;
 
 #if defined(X2D_WINDOWS)
-	return (rand() % (end-start) + start);
+	return (rand() % (end-start+1) + start);
 #else defined(X2D_LINUX)
-	return ((int)lrand48() % (end-start) + start);
+	return ((int)lrand48() % (end-start+1) + start);
 #endif
 }
 
