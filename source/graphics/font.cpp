@@ -151,7 +151,7 @@ void Font::load(const string &filePath, const uint size)
 	FT_Set_Char_Size(face, size << 6, size << 6, 96, 96);
 
 	// Load bitmap data for each of the character of the font
-	RectPacker packer;
+	RectanglePacker packer;
 	for(uchar ch = 0; ch < 128; ch++)
 	{
 		// Load the glyph for our character
@@ -188,7 +188,7 @@ void Font::load(const string &filePath, const uint size)
 		charData[2*width*height] = ch;
 
 		// Get width of our font texture
-		RectPacker::Rect rect(charData);
+		RectanglePacker::Rectangle rect(charData);
 		rect.setSize(width, height);
 		packer.addRect(rect);
 
@@ -201,7 +201,7 @@ void Font::load(const string &filePath, const uint size)
 	}
 
 	// Pack rects
-	RectPacker::Result result = packer.pack();
+	const RectanglePacker::Result result = packer.pack();
 
 	// Create font texture
 	uchar *dataPtr = new uchar[result.canvas.x*result.canvas.y*2];
@@ -209,16 +209,15 @@ void Font::load(const string &filePath, const uint size)
 	for(uchar i = 0; i < 128; i++)
 	{
 		// Fill glyph data
-		RectPacker::Rect rect = result.rectList[i];
+		const RectanglePacker::Rectangle &rect = result.rectangles[i];
 		uchar *rectData = (uchar*)rect.getData();
-		uchar ch = rectData[2*rect.getArea()];
-		int dataPos = 0, rectPos = 0;
-		for(int y = 0; y < rect.getHeight(); y++)
+		uchar ch = rectData[2*rect.width*rect.height];
+		for(int y = 0; y < rect.height; y++)
 		{
-			for(int x = 0; x < rect.getWidth(); x++)
+			for(int x = 0; x < rect.width; x++)
 			{
-				dataPos = 2 * (((rect.getY()+y) * result.canvas.x) + (rect.getX()+x));
-				rectPos = 2 * (y*rect.getWidth()+x);
+				int dataPos = 2 * ((rect.x + x) + ((rect.y + y) * result.canvas.x));
+				int rectPos = 2 * (x + y*rect.width);
 				dataPtr[dataPos] = rectData[rectPos];
 				dataPtr[dataPos+1] = rectData[rectPos+1];
 			}
@@ -226,9 +225,9 @@ void Font::load(const string &filePath, const uint size)
 		delete[] rectData;
 
 		// Set char tex coord
-		m_chars[ch].size = rect.getSize();
-		m_chars[ch].texCoord1.set((float)rect.getRight()/(float)result.canvas.x, (float)rect.getBottom()/(float)result.canvas.y);// = rect.getSize()/result.canvas;
-		m_chars[ch].texCoord0.set((float)rect.getLeft()/(float)result.canvas.x, (float)rect.getTop()/(float)result.canvas.y);
+		m_chars[ch].size.set(rect.width, rect.height);
+		m_chars[ch].texCoord0.set((float)(rect.x)/(float)result.canvas.x, (float)(rect.y)/(float)result.canvas.y);
+		m_chars[ch].texCoord1.set((float)(rect.x + rect.width)/(float)result.canvas.x, (float)(rect.y + rect.height)/(float)result.canvas.y);// = rect.getSize()/result.canvas;
 	}
 
 	// Set texture param

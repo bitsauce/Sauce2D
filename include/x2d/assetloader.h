@@ -41,6 +41,7 @@ class XDAPI xdAssetLoader
 	friend class xdEngine;
 	friend class xdGraphics;
 	friend class xdAudio;
+	friend class Pixmap;
 public:
 	xdAssetLoader(xdFileSystem *fileSystem);
 

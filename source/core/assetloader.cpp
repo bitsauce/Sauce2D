@@ -57,13 +57,12 @@ int xdAssetLoader::loadImage(string filePath, uchar** data, uint &width, uint &h
 
 int xdAssetLoader::saveImage(string filePath, uchar *data, const uint width, const uint height, const xdImageFormat format)
 {
-	/*if(format == UnknownImage)
-	{
-		FIBITMAP *bitmap = FreeImage_ConvertFromRawBits((uchar*)data, width, height, width * 4, 32, FI_RGBA_RED_MASK, FI_RGBA_GREEN_MASK, FI_RGBA_BLUE_MASK, false);
+	FIBITMAP *bitmap = FreeImage_ConvertFromRawBits(data, width, height, width * 4, 32, FI_RGBA_RED_MASK, FI_RGBA_GREEN_MASK, FI_RGBA_BLUE_MASK, false);
 		
-		// For now, let's just save everything as png
-		FreeImage_Save(FIF_PNG, bitmap, filePath);
-	}*/
+	// For now, let's just save everything as png
+	util::toAbsoluteFilePath(filePath);
+	FreeImage_Save(FIF_PNG, bitmap, filePath.c_str());
+
 	return XD_OK;
 }
 

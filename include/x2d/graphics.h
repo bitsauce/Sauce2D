@@ -6,12 +6,13 @@
 #include <x2d/util.h>
 #include <x2d/console.h>
 
-class Pixmap;
-class Texture;
+#include <x2d/graphics/pixmap.h>
+#include <x2d/graphics/texture.h>
+#include <x2d/graphics/textureRegion.h>
+
 class Shader;
 class Batch;
 class Sprite;
-class TextureRegion;
 class Vector2;
 class VertexBufferObject;
 class FrameBufferObject;
@@ -45,10 +46,6 @@ public:
 	static Texture *CreateTexture(const int width, const int height);
 	static Texture *CreateTexture(const Texture &texture);
 	static Shader *CreateShader(const string &vertFilePath, const string &fragFilePath);
-	static Sprite *CreateSprite(const TextureRegion *, const bool);
-	static TextureRegion *CreateTextureRegion(Texture *texture);
-	static TextureRegion *CreateTextureRegion(Texture *texture, const Vector2 &uv0, const Vector2 &uv1);
-	static TextureRegion *CreateTextureRegion(Texture *texture, const float u0, const float v0, const float u1, const float v1);
 	static VertexBufferObject *CreateVertexBufferObject();
 	static FrameBufferObject *CreateFrameBufferObject();
 	static bool IsSupported(Feature feature);

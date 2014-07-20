@@ -76,7 +76,7 @@ Pixmap GLtexture::getPixmap() const
 	// Get texture data
 	Vector4 *data = new Vector4[m_width*m_height];
 	glBindTexture(GL_TEXTURE_2D, m_id);
-	glGetTexImage(GL_TEXTURE_2D, 0, GL_RGBA, GL_UNSIGNED_BYTE, (GLvoid*)data);
+	glGetTexImage(GL_TEXTURE_2D, 0, GL_RGBA, GL_FLOAT, (GLvoid*)data);
 	glBindTexture(GL_TEXTURE_2D, 0);
 
 	// Copy data to pixmap

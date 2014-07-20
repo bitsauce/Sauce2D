@@ -53,6 +53,7 @@
     <ClInclude Include="..\..\include\x2d\util.h" />
     <ClInclude Include="..\..\include\x2d\window.h" />
     <ClInclude Include="..\..\source\graphics\animation.h" />
+    <ClInclude Include="..\..\source\graphics\textureAtlas.h" />
     <ClInclude Include="..\..\source\graphics\camera.h" />
     <ClInclude Include="..\..\source\graphics\font.h" />
     <ClInclude Include="..\..\source\graphics\shader.h" />
@@ -84,6 +85,7 @@
     <ClCompile Include="..\..\source\core\util.cpp" />
     <ClCompile Include="..\..\source\core\window.cpp" />
     <ClCompile Include="..\..\source\graphics\animation.cpp" />
+    <ClCompile Include="..\..\source\graphics\textureAtlas.cpp" />
     <ClCompile Include="..\..\source\graphics\batch.cpp" />
     <ClCompile Include="..\..\source\graphics\camera.cpp" />
     <ClCompile Include="..\..\source\graphics\font.cpp" />

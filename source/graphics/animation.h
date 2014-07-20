@@ -1,5 +1,5 @@
-#ifndef GFX_ANIMATION_H
-#define GFX_ANIMATION_H
+#ifndef GRAPHICS_ANIMATION_H
+#define GRAPHICS_ANIMATION_H
 
 #include <x2d/config.h>
 #include <x2d/util.h>
@@ -16,14 +16,14 @@ public:
 	Animation(Texture *texture, const int nRows, const int nColumns);
 	~Animation();
 
-	TextureRegion *getKeyFrame(int frameIndex);
+	TextureRegion getKeyFrame(int frameIndex);
 
 private:
-	vector<TextureRegion*> m_textureRegions;
+	vector<TextureRegion> m_textureRegions;
 
 	static Animation *Factory(Texture *texture, const int nRows, const int nColumns) {
 		return new Animation(texture, nRows, nColumns);
 	}
 };
 
-#endif // GFX_ANIMATION_H
+#endif // GRAPHICS_ANIMATION_H

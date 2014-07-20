@@ -177,6 +177,9 @@
     <ClInclude Include="..\..\include\x2d\audio\buffer.h">
       <Filter>include\audio</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\source\graphics\textureAtlas.h">
+      <Filter>source\graphics</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\source\math\math.cpp">
@@ -298,6 +301,9 @@
     </ClCompile>
     <ClCompile Include="..\..\source\audio\buffer.cpp">
       <Filter>source\audio</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\graphics\textureAtlas.cpp">
+      <Filter>source\graphics</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -46,6 +46,7 @@ public:
 	asIObjectType *GetArrayObjectType() const;
 	int            GetArrayTypeId() const;
 	int            GetElementTypeId() const;
+	string         GetElementTypeName() const;
 
 
 	asUINT GetSize() const;

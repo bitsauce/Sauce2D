@@ -732,6 +732,11 @@ int CScriptArray::GetElementTypeId() const
 	return subTypeId;
 }
 
+string CScriptArray::GetElementTypeName() const
+{
+	return objType->GetSubType()->GetName();
+}
+
 void CScriptArray::InsertAt(asUINT index, void *value)
 {
 	if( index > buffer->numElements )

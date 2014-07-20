@@ -10,9 +10,11 @@ class XDAPI Pixmap
 public:
 	AS_DECL_VALUE
 
+	Pixmap();
 	Pixmap(const int width, const int height);
 	Pixmap(const int width, const int height, const Vector4 *pixels);
 	Pixmap(const int width, const int height, const Array &pixels);
+	Pixmap(const Pixmap& other);
 	~Pixmap();
 
 	int getWidth() const;
@@ -24,7 +26,11 @@ public:
 	void fill(const Vector4 &color);
 	void clear();
 
+	void exportToFile(const string &path) const;
+
 	const float *getData() const;
+
+	//Pixmap &operator=(Pixmap &other);
 
 private:
 	Vector4 *m_data;

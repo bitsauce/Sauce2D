@@ -19,6 +19,8 @@ public:
 	virtual void *At(unsigned int index) = 0;
 	virtual const void *At(unsigned int index) const = 0;
 	virtual void  SetValue(unsigned int index, void *value) = 0;
+
+	virtual string GetElementTypeName() const = 0;
 };
 
 XDAPI Array *CreateArray(const string &type, const uint size);

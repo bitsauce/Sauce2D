@@ -20,6 +20,8 @@ int Pixmap::Register(asIScriptEngine *scriptEngine)
 	r = scriptEngine->RegisterObjectBehaviour("Pixmap", asBEHAVE_CONSTRUCT, "void f(const int, const int)", asFUNCTIONPR(Factory, (const int, const int, Pixmap*), void), asCALL_CDECL_OBJLAST); AS_ASSERT
 	r = scriptEngine->RegisterObjectBehaviour("Pixmap", asBEHAVE_CONSTRUCT, "void f(const int, const int, const array<Vector4> &in)", asFUNCTIONPR(Factory, (const int, const int, Array&, Pixmap*), void), asCALL_CDECL_OBJLAST); AS_ASSERT
 
+	r = scriptEngine->RegisterObjectMethod("Pixmap", "void exportToFile(const string &in) const", asMETHOD(Pixmap, exportToFile), asCALL_THISCALL);
+
 	return r;
 }
 
@@ -33,17 +35,23 @@ void printContent(Pixmap &px)
 	}
 }
 
+Pixmap::Pixmap() :
+	m_width(0),
+	m_height(0),
+	m_data(0)
+{
+}
+
 Pixmap::Pixmap(const int width, const int height, const Vector4 *pixels) :
 	m_width(width),
 	m_height(height)
 {
-	if (width >= 0 && height >= 0) {
-		// Copy pixels
+	// Copy pixels
+	if(width >= 0 && height >= 0) {
 		m_data = new Vector4[width*height];
 		memcpy(m_data, pixels, width*height*sizeof(Vector4));
 	}else{
-		//error("Pixmaps cannot have width or height less than 0!");
-		return;
+		m_data = 0;
 	}
 }
 
@@ -51,8 +59,8 @@ Pixmap::Pixmap(const int width, const int height, const Array &pixels) :
 	m_width(width),
 	m_height(height)
 {
-	if (width >= 0 && height >= 0) {
-		// Copy pixels
+	// Copy pixels
+	if(width >= 0 && height >= 0) {
 		m_data = new Vector4[width*height];
 		int i = 0;
 		for(int y = 0; y < height; y++) {
@@ -62,8 +70,7 @@ Pixmap::Pixmap(const int width, const int height, const Array &pixels) :
 			}
 		}
 	}else{
-		//error("Pixmaps cannot have width or height less than 0!");
-		return;
+		m_data = 0;
 	}
 }
 
@@ -71,14 +78,34 @@ Pixmap::Pixmap(const int width, const int height) :
 	m_width(width),
 	m_height(height)
 {
-	if (width >= 0 && height >= 0) {
-		// Create empty pixmap
+	// Create empty pixmap
+	if(width >= 0 && height >= 0) {
 		m_data = new Vector4[width*height];
 	}else{
-		//error("Pixmaps cannot have width or height less than 0!");
-		return;
+		m_data = 0;
 	}
 }
+
+Pixmap::Pixmap(const Pixmap &other)
+{
+	m_width = other.m_width;
+	m_height = other.m_height;
+	if(other.m_data)
+	{
+		m_data = new Vector4[m_width*m_height];
+		memcpy(m_data, other.m_data, m_width*m_height*sizeof(Vector4));
+	}else{
+		m_data = 0;
+	}
+}
+
+/*Pixmap &Pixmap::operator=(Pixmap &other)
+{
+	swap(m_data, other.m_data);
+	swap(m_width, other.m_width);
+	swap(m_height, other.m_height);
+	return *this;
+}*/
 
 Pixmap::~Pixmap()
 {
@@ -119,4 +146,11 @@ void Pixmap::setColor(const int x, const int y, const Vector4 &color)
 	}else{
 		//warn("");
 	}
+}
+
+#include <x2d/assetloader.h>
+
+void Pixmap::exportToFile(const string &path) const
+{
+	xdAssetLoader::s_this->saveImage(path, (uchar*)m_data, m_width, m_height);
 }

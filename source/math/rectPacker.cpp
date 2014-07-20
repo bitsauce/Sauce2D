@@ -9,29 +9,31 @@
 
 #include "x2d/math/rectPacker.h"
 
-bool heightSort(RectPacker::Rect i, RectPacker::Rect j)
+bool heightSort(RectanglePacker::Rectangle i, RectanglePacker::Rectangle j)
 {
-	return i.getHeight() > j.getHeight();
+	return i.height > j.height;
 }
 
-RectPacker::Result RectPacker::pack()
+const RectanglePacker::Result RectanglePacker::pack()
 {
 	// No point in packing 0 rectangles
-	if(rectList.size() == 0)
+	if(m_rectangles.size() == 0)
 		return Result();
 
 	// Sort rectangles by height
-	sort(rectList.begin(), rectList.end(), heightSort);
+	sort(m_rectangles.begin(), m_rectangles.end(), heightSort);
 
 	// Find total area and max height
 	int totalArea = 0;
 	int rightMost = 0;
-	int maxWidth = 0, maxHeight = rectList[0].getHeight();
-	for(uint i = 0; i < rectList.size(); i++)
+	int maxWidth = 0, maxHeight = m_rectangles[0].height;
+	for(uint i = 0; i < m_rectangles.size(); i++)
 	{
-		totalArea += rectList[i].getArea();
-		if(maxWidth < rectList[i].getWidth())
-			maxWidth = rectList[i].getWidth();
+		Rectangle &rect = m_rectangles[i];
+		totalArea += rect.height * rect.height;
+		if(maxWidth < rect.width) {
+			maxWidth = rect.width;
+		}
 	}
 
 	// Setup loop vars
@@ -46,14 +48,14 @@ RectPacker::Result RectPacker::pack()
 	while(canvasWidth >= maxWidth)
 	{
 		// Get rectangle
-		Rect rect = rectList[idx++];
+		Rectangle &rect = m_rectangles[idx++];
 
 		// Find best cell
 		int bestCellIdx = -1;
 		for(uint i = 0; i < cells.size(); i++)
 		{
 			Recti *cell = &cells[i];
-			if(cell->getWidth() >= rect.getWidth() && cell->getHeight() >= rect.getHeight())
+			if(cell->getWidth() >= rect.width && cell->getHeight() >= rect.height)
 			{
 				if(bestCellIdx < 0 || cell->getArea() < cells[bestCellIdx].getArea())
 					bestCellIdx = i;
@@ -73,20 +75,21 @@ RectPacker::Result RectPacker::pack()
 			cells.erase(cells.begin() + bestCellIdx);
 			
 			// Place rectangle into results
-			rect.set(cell.getX(), cell.getY(), rect.getWidth(), rect.getHeight());
-			result.rectList.push_back(rect);
-			if(rect.getRight() > rightMost)
-				rightMost = rect.getRight();
+			rect.set(cell.getX(), cell.getY(), rect.width, rect.height);
+			result.rectangles.push_back(rect);
+			if(rect.x + rect.width > rightMost) {
+				rightMost = rect.x + rect.width;
+			}
 				
 			// Split the cell into 2 smaller cells
-			Recti c1(cell.getX() + rect.getWidth(), cell.getY(), cell.getWidth() - rect.getWidth(), rect.getHeight());   // +1 for padding pixel
-			Recti c2(cell.getX(), cell.getY() + rect.getHeight(), cell.getWidth(), cell.getHeight() - rect.getHeight()); // +1 for padding pixel
+			Recti c1(cell.getX() + rect.width, cell.getY(), cell.getWidth() - rect.width, rect.height);   // +1 for padding pixel
+			Recti c2(cell.getX(), cell.getY() + rect.height, cell.getWidth(), cell.getHeight() - rect.height); // +1 for padding pixel
 				
 			if(c1.getArea() > 0) cells.push_back(c1);
 			if(c2.getArea() > 0) cells.push_back(c2);
 				
 			// Check for end
-			if(idx == (int)rectList.size())
+			if(idx == (int)m_rectangles.size())
 			{
 				// Success, check for the smalest area
 				result.area = rightMost*canvasHeight;
@@ -113,12 +116,12 @@ RectPacker::Result RectPacker::pack()
 	return bestResult;
 }
 
-void RectPacker::addRect(const Rect rect)
+void RectanglePacker::addRect(const Rectangle rect)
 {
-	rectList.push_back(rect);
+	m_rectangles.push_back(rect);
 }
 
-void RectPacker::clearRects()
+void RectanglePacker::clearRects()
 {
-	rectList.clear();
+	m_rectangles.clear();
 }
