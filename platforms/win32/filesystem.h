@@ -16,6 +16,11 @@ public:
 	{
 	}
 
+	bool isEOF()
+	{
+		return stream.eof();
+	}
+
 	bool isOpen()
 	{
 		return stream.is_open();
@@ -30,6 +35,9 @@ public:
 	{
 		string line;
 		getline(stream, line);
+		if(!line.empty() && line.back() == '\r') {
+			line.pop_back();
+		}
 		return line.c_str();
 	}
 
@@ -89,6 +97,10 @@ private:
 
 class FileSystem : public xdFileSystem
 {
+public:
+
+	Array *listFiles(string &directory, const string &mask, const bool recursive) const;
+
 private:
 	xdFileReader *createFileReader(const string &filePath)
 	{

@@ -34,6 +34,9 @@
     <Filter Include="include\audio">
       <UniqueIdentifier>{9281aa68-64bf-41ac-baf3-c860741812b1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="source\io">
+      <UniqueIdentifier>{91e4a5fe-d0c6-45d0-a8b9-a16937d721da}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\include\x2d\engine.h">
@@ -114,9 +117,6 @@
     <ClInclude Include="..\..\source\scripts\scriptgrid.h">
       <Filter>source\scripts</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\x2d\math\array.h">
-      <Filter>include\scripts</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\include\x2d\scripts\anyobject.h">
       <Filter>include\scripts</Filter>
     </ClInclude>
@@ -179,6 +179,12 @@
     </ClInclude>
     <ClInclude Include="..\..\source\graphics\textureAtlas.h">
       <Filter>source\graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\x2d\scripts\array.h">
+      <Filter>include\scripts</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\io\iniParser.h">
+      <Filter>source\io</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -304,6 +310,9 @@
     </ClCompile>
     <ClCompile Include="..\..\source\graphics\textureAtlas.cpp">
       <Filter>source\graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\io\iniParser.cpp">
+      <Filter>source\io</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

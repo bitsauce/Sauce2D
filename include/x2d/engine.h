@@ -39,6 +39,7 @@ struct XDAPI xdConfig
 		flags = other.flags;
 		platform = other.platform;
 		workDir = other.workDir;
+		saveDir = other.saveDir;
 		loadPluginsFunc = other.loadPluginsFunc;
 		timer = other.timer;
 		fileSystem = other.fileSystem;
@@ -126,6 +127,9 @@ public:
 	// Working directory
 	string getWorkingDirectory() const;
 
+	// Save directory
+	string getSaveDirectory() const;
+
 	// Profiler
 	void toggleProfiler();
 	void pushProfile(const string &profile);
@@ -152,6 +156,7 @@ private:
 
 	string m_platformString;
 	string m_workDir;
+	string m_saveDir;
 	
 	xdFileSystem *m_fileSystem;
 	xdGraphics *m_graphics;

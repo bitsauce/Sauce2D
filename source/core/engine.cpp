@@ -42,6 +42,7 @@ xdConfig::xdConfig() :
 	flags(0),
 	platform(""),
 	workDir(""),
+	saveDir(""),
 	loadPluginsFunc(0),
 	timer(0),
 	input(0),
@@ -133,6 +134,11 @@ string xdEngine::getWorkingDirectory() const
 	return m_workDir;
 }
 
+string xdEngine::getSaveDirectory() const
+{
+	return m_saveDir;
+}
+
 void xdEngine::toggleProfiler()
 {
 	m_toggleProfiler = true;
@@ -168,6 +174,12 @@ int xdEngine::init(const xdConfig &config)
 	replace(m_workDir.begin(), m_workDir.end(), '\\', '/');
 	if(m_workDir.back() != '/') {
 		m_workDir += "/";
+	}
+
+	m_saveDir = config.saveDir;
+	replace(m_saveDir.begin(), m_saveDir.end(), '\\', '/');
+	if(m_saveDir.back() != '/') {
+		m_saveDir += "/";
 	}
 
 	m_timer = config.timer;
@@ -278,6 +290,7 @@ int xdEngine::init(const xdConfig &config)
 		srand((uint)time(0));
 
 		// Load plugins
+		LOG("Loading plugins...");
 		if(config.loadPluginsFunc != 0 && config.loadPluginsFunc(this) < 0) {
 			return XD_PLUGIN_LOAD_ERROR;
 		}

@@ -21,15 +21,11 @@ int xdFileSystem::Register(asIScriptEngine *scriptEngine)
 {
 	int r = 0;
 
-	r = scriptEngine->RegisterObjectMethod("ScriptFileSystem", "bool fileExists(string) const", asMETHOD(xdFileSystem, fileExists), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("ScriptFileSystem", "bool fileExists(string &in) const", asMETHOD(xdFileSystem, fileExists), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("ScriptFileSystem", "array<string>@ listFiles(string &in, const string &in, const bool recursive = false) const", asMETHOD(xdFileSystem, listFiles), asCALL_THISCALL); AS_ASSERT
 
 	r = scriptEngine->RegisterObjectMethod("ScriptFileSystem", "void removeFile(string)", asMETHOD(xdFileSystem, removeFile), asCALL_THISCALL); AS_ASSERT
 	r = scriptEngine->RegisterObjectMethod("ScriptFileSystem", "void removeDir(string)", asMETHOD(xdFileSystem, removeDir), asCALL_THISCALL); AS_ASSERT
-
-	r = scriptEngine->RegisterObjectMethod("ScriptFileSystem", "string get_saveDirectory() const", asMETHOD(xdFileSystem, getSaveDirectory), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("ScriptFileSystem", "string get_personalDirectory() const", asMETHOD(xdFileSystem, getPersonalDirectory), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("ScriptFileSystem", "string get_programDirectory() const", asMETHOD(xdFileSystem, getWorkingDirectory), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("ScriptFileSystem", "string get_root() const", asMETHOD(xdFileSystem, getRoot), asCALL_THISCALL); AS_ASSERT
 	
 	r = scriptEngine->RegisterObjectMethod("ScriptFileSystem", "string showSaveDialog() const", asMETHOD(xdFileSystem, showSaveDialog), asCALL_THISCALL); AS_ASSERT
 	r = scriptEngine->RegisterObjectMethod("ScriptFileSystem", "string showOpenDialog() const", asMETHOD(xdFileSystem, showOpenDialog), asCALL_THISCALL); AS_ASSERT
@@ -42,7 +38,12 @@ bool xdFileSystem::ReadFile(string path, string &content)
 	return s_this->readFile(path, content);
 }
 
-bool xdFileSystem::fileExists(const string &filePath) const
+bool xdFileSystem::WriteFile(string path, const string &content)
+{
+	return s_this->writeFile(path, content);
+}
+
+bool xdFileSystem::fileExists(string &filePath) const
 {
 	return util::fileExists(filePath);
 }
@@ -64,7 +65,7 @@ bool xdFileSystem::readFile(string filePath, string &content) const
 	return false;
 }
 
-bool xdFileSystem::writeFile(string filePath, string content) const
+bool xdFileSystem::writeFile(string filePath, const string content) const
 {
 	util::toAbsoluteFilePath(filePath);
 	xdFileWriter *fileWriter = CreateFileWriter(filePath);
@@ -80,11 +81,6 @@ bool xdFileSystem::writeFile(string filePath, string content) const
 	
 	delete fileWriter;
 	return false;
-}
-
-string xdFileSystem::getWorkingDirectory() const
-{
-	return g_engine->getWorkingDirectory();
 }
 
 #ifdef DEPRICATED
@@ -555,61 +551,6 @@ string showOpenDialog(const string &file, const string &ext, const string &title
     }
 	
     return string(path);
-}
-
-// Recursive directory traversal using the Win32 API
-bool listFiles(string path, string mask, vector<string>& files)
-{
-	HANDLE hFind = INVALID_HANDLE_VALUE;
-	WIN32_FIND_DATA fdata;
-	string fullpath;
-	stack<string> folders;
-	folders.push(path);
-	files.clear();
-
-	while(!folders.empty())
-	{
-		string path = folders.top();
-		fullpath = path + "\\" + mask;
-		folders.pop();
-
-		hFind = FindFirstFile(fullpath.c_str(), &fdata);
-
-		if(hFind != INVALID_HANDLE_VALUE)
-		{
-			do
-			{
-				wchar_t filename[1024];
-				mbstowcs_s(0, filename, fdata.cFileName, 1024);
-
-				if(wcscmp(filename, L".") != 0 &&
-                    wcscmp(filename, L"..") != 0)
-				{
-					if(fdata.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY)
-					{
-						folders.push(path + "/" + fdata.cFileName);
-					}
-					else
-					{
-						files.push_back(path + "/" + fdata.cFileName);
-					}
-				}
-			}
-			while (FindNextFile(hFind, &fdata) != 0);
-		}
-
-		if(GetLastError() != ERROR_NO_MORE_FILES)
-		{
-			FindClose(hFind);
-
-			return false;
-		}
-
-		FindClose(hFind);
-		hFind = INVALID_HANDLE_VALUE;
-	}
-
-	return true;
 }
 
 bool listFolders(string path, vector<string>& folders)

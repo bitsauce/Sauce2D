@@ -39,7 +39,6 @@
     <ClInclude Include="..\..\include\x2d\engine.h" />
     <ClInclude Include="..\..\include\x2d\graphics.h" />
     <ClInclude Include="..\..\include\x2d\math.h" />
-    <ClInclude Include="..\..\include\x2d\math\array.h" />
     <ClInclude Include="..\..\include\x2d\math\matrix.h" />
     <ClInclude Include="..\..\include\x2d\math\rect.h" />
     <ClInclude Include="..\..\include\x2d\math\rectPacker.h" />
@@ -48,6 +47,7 @@
     <ClInclude Include="..\..\include\x2d\scriptengine.h" />
     <ClInclude Include="..\..\include\x2d\audio.h" />
     <ClInclude Include="..\..\include\x2d\scripts\anyobject.h" />
+    <ClInclude Include="..\..\include\x2d\scripts\array.h" />
     <ClInclude Include="..\..\include\x2d\scripts\funccall.h" />
     <ClInclude Include="..\..\include\x2d\timer.h" />
     <ClInclude Include="..\..\include\x2d\util.h" />
@@ -60,6 +60,7 @@
     <ClInclude Include="..\..\source\graphics\shape.h" />
     <ClInclude Include="..\..\source\graphics\sprite.h" />
     <ClInclude Include="..\..\source\graphics\viewport.h" />
+    <ClInclude Include="..\..\source\io\iniParser.h" />
     <ClInclude Include="..\..\source\scripts\scriptany.h" />
     <ClInclude Include="..\..\source\scripts\scriptarray.h" />
     <ClInclude Include="..\..\source\scripts\scriptbuilder.h" />
@@ -97,6 +98,7 @@
     <ClCompile Include="..\..\source\graphics\texture.cpp" />
     <ClCompile Include="..\..\source\graphics\textureRegion.cpp" />
     <ClCompile Include="..\..\source\graphics\viewport.cpp" />
+    <ClCompile Include="..\..\source\io\iniParser.cpp" />
     <ClCompile Include="..\..\source\math\math.cpp" />
     <ClCompile Include="..\..\source\math\matrix.cpp" />
     <ClCompile Include="..\..\source\math\rect.cpp" />

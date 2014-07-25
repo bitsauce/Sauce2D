@@ -101,19 +101,20 @@ string util::asciiToStr(const uchar value)
 	return s;
 }
 
-string util::getAbsoluteFilePath(const string &assetPath)
+string util::getAbsoluteFilePath(const string &path)
 {
-	if(assetPath.substr(0, 2) != ":/")
-		return assetPath;
-	return g_engine->getWorkingDirectory() + assetPath.substr(2, assetPath.size()-2);
+	if(path.substr(0, 2) == ":/") {
+		return g_engine->getWorkingDirectory() + path.substr(2, string::npos);
+	}
+	if(path.substr(0, 7) == "saves:/") {
+		return g_engine->getSaveDirectory() + path.substr(7, string::npos);
+	}
+	return path;
 }
 
-void util::toAbsoluteFilePath(string &assetPath)
+void util::toAbsoluteFilePath(string &path)
 {
-	if(assetPath.substr(0, 2) == ":/") {
-		assetPath = assetPath.substr(2, assetPath.size()-2);
-		assetPath.insert(0, g_engine->getWorkingDirectory());
-	}
+	path = getAbsoluteFilePath(path);
 }
 
 bool util::fileExists(string filePath)
