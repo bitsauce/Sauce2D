@@ -43,7 +43,8 @@ int Vector2::Register(asIScriptEngine *scriptEngine)
 	r = scriptEngine->RegisterObjectMethod("Vector2", "bool opEquals(const Vector2 &in) const", asMETHOD(Vector2, operator==), asCALL_THISCALL); AS_ASSERT
 	r = scriptEngine->RegisterObjectMethod("Vector2", "Vector2 opAdd(const Vector2 &in) const", asMETHOD(Vector2, operator+), asCALL_THISCALL); AS_ASSERT
 	r = scriptEngine->RegisterObjectMethod("Vector2", "Vector2 opSub(const Vector2 &in) const", asMETHOD(Vector2, operator-), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("Vector2", "Vector2 opMul(const float) const", asMETHOD(Vector2, operator*), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("Vector2", "Vector2 opMul(const float) const", asMETHODPR(Vector2, operator*, (const float) const, const Vector2), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("Vector2", "Vector2 opMul(const Vector2 &in) const", asMETHODPR(Vector2, operator*, (const Vector2&) const, const Vector2), asCALL_THISCALL); AS_ASSERT
 	r = scriptEngine->RegisterObjectMethod("Vector2", "Vector2 opDiv(const float) const", asMETHOD(Vector2, operator/), asCALL_THISCALL); AS_ASSERT
 
 	// Register the object methods
@@ -369,10 +370,18 @@ const Vector2 Vector2::operator-(const Vector2 &v2) const
 {
     return Vector2(*this) -= v2;
 }
- 
+
 const Vector2 Vector2::operator*(const float scalar) const
 {
     return Vector2(*this) *= scalar;
+}
+
+const Vector2 Vector2::operator*(const Vector2 &v2) const
+{
+    Vector2 v1(*this);
+	v1.x *= v2.x;
+	v1.y *= v2.y;
+	return v1;
 }
  
 const Vector2 Vector2::operator/(const float scalar) const

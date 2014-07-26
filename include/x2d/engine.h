@@ -134,9 +134,11 @@ public:
 	void toggleProfiler();
 	void pushProfile(const string &profile);
 	void popProfile();
-
-	// Profiler
 	void setProfiler(xdProfiler *profiler) { m_profiler = profiler; }
+
+	// Scene
+	void pushScene(asIScriptObject *object);
+	void popScene();
 
 	// Debugger
 	void setDebugger(xdDebug *debugger) { m_debugger = debugger; }
@@ -184,9 +186,14 @@ private:
 
 	bool m_toggleProfiler;
 
+	// Scene stack
+	stack<asIScriptObject*> m_sceneStack;
+
 	// Event functions
-	asIScriptFunction *m_updateFunc;
-	asIScriptFunction *m_drawFunc;
+	asIScriptFunction *m_defaultUpdateFunc;
+	asIScriptFunction *m_defaultDrawFunc;
+	asIScriptFunction *m_sceneUpdateFunc;
+	asIScriptFunction *m_sceneDrawFunc;
 
 	bool m_initialized;
 

@@ -153,6 +153,7 @@ private:
 	void *m_mouseMoveFunc;
 	void *m_mouseWheelFunc;
 	void *m_inputCharFunc;
+	void *m_shutdownFunc;
 
 public:
 	

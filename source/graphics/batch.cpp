@@ -351,7 +351,9 @@ void SpriteBatch::draw()
 
 			// Set state texture
 			Texture *texture = sprite->getTexture();
-			texture->addRef();
+			if(texture) {
+				texture->addRef();
+			}
 			setTexture(texture);
 
 			// Set correct draw order
@@ -359,7 +361,9 @@ void SpriteBatch::draw()
 
 			// Replace existing vertices
 			m_buffers[m_state]->vbo->uploadSub(m_offsets[sprite], vertices, 4);
-			texture->release();
+			if(texture) {
+				texture->release();
+			}
 		}
 		m_returnedSprites.clear();
 	}else{

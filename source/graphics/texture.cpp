@@ -37,6 +37,7 @@ int Texture::Register(asIScriptEngine *scriptEngine)
 	
 	r = scriptEngine->RegisterObjectMethod("Texture", "int getWidth() const", asMETHOD(Texture, getWidth), asCALL_THISCALL); AS_ASSERT
 	r = scriptEngine->RegisterObjectMethod("Texture", "int getHeight() const", asMETHOD(Texture, getHeight), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("Texture", "Vector2i getSize() const", asMETHOD(Texture, getSize), asCALL_THISCALL); AS_ASSERT
 
 	return r;
 }

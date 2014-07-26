@@ -16,6 +16,11 @@ public:
 	{
 	}
 
+	~FileReader()
+	{
+		close();
+	}
+
 	bool isEOF()
 	{
 		return stream.eof();

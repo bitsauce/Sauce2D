@@ -261,7 +261,7 @@ float Font::getStringWidth(const string &str)
 
 float Font::getStringHeight(const string &str)
 {
-	float height = 0.0f;
+	float height = m_size/0.63f;
 	for(uint i = 0; i < str.size(); i++) {
 		if(str[i] == '\n')
 			height += m_size/0.63f;

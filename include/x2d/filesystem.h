@@ -9,6 +9,8 @@
 class XDAPI xdFileReader
 {
 public:
+	virtual ~xdFileReader() {}
+
 	virtual bool isOpen() = 0;
 	virtual bool isEOF() = 0;
 	virtual void close() = 0;

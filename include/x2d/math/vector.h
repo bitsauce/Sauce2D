@@ -53,6 +53,7 @@ public:
     const Vector2 operator+(const Vector2 &v2) const;
     const Vector2 operator-(const Vector2 &v2) const;
     const Vector2 operator*(const float scalar) const;
+	const Vector2 operator*(const Vector2 &v2) const;
     const Vector2 operator/(const float scalar) const;
     bool operator==(const Vector2& v2) const;
 

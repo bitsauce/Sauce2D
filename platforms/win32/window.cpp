@@ -260,6 +260,7 @@ void Window::initEvents(xdScriptEngine *scriptEngine)
 	m_mouseMoveFunc			=	scriptEngine->getModule()->GetFunctionByDecl("void mouseMove(int, int)");
 	m_mouseWheelFunc		=	scriptEngine->getModule()->GetFunctionByDecl("void mouseWheel(int)");
 	m_inputCharFunc			=	scriptEngine->getModule()->GetFunctionByDecl("void inputText(string key)");
+	m_shutdownFunc			= 	scriptEngine->getModule()->GetFunctionByDecl("void shutdown()");
 
 	m_initEventsDone = true;
 }
@@ -550,6 +551,14 @@ void Window::processEvents(UINT Message, WPARAM wParam, LPARAM lParam)
     {
         case WM_CLOSE:
 		{
+			if(m_shutdownFunc)
+			{
+				FunctionCall *func = CreateFuncCall();
+				func->Prepare(m_shutdownFunc);
+				func->Execute();
+				delete func;
+			}
+
 			// Quit when we close the main window
             PostQuitMessage(0);
 			close();

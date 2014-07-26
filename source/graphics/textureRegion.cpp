@@ -51,9 +51,6 @@ TextureRegion::TextureRegion(const TextureRegion &other) :
 	uv1(other.uv1),
 	texture(other.texture)
 {
-	if(texture) {
-		texture->addRef();
-	}
 }
 
 /*TextureRegion &TextureRegion::operator=(TextureRegion &other)

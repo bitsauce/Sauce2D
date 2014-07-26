@@ -77,6 +77,9 @@ int xdEngine::Register(asIScriptEngine *scriptEngine)
 	r = scriptEngine->RegisterObjectMethod("ScriptEngine", "void toggleProfiler()", asMETHOD(xdEngine, toggleProfiler), asCALL_THISCALL); AS_ASSERT
 	r = scriptEngine->RegisterObjectMethod("ScriptEngine", "void pushProfile(const string &in)", asMETHOD(xdEngine, pushProfile), asCALL_THISCALL); AS_ASSERT
 	r = scriptEngine->RegisterObjectMethod("ScriptEngine", "void popProfile()", asMETHOD(xdEngine, popProfile), asCALL_THISCALL); AS_ASSERT
+	
+	r = scriptEngine->RegisterObjectMethod("ScriptEngine", "void pushScene(Scene@)", asMETHOD(xdEngine, pushScene), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("ScriptEngine", "void popScene()", asMETHOD(xdEngine, popScene), asCALL_THISCALL); AS_ASSERT
 
 	return r;
 }
@@ -86,8 +89,10 @@ xdEngine::xdEngine() :
 	m_profiler(0),
 	m_running(false),
 	m_paused(false),
-	m_updateFunc(0),
-	m_drawFunc(0),
+	m_defaultUpdateFunc(0),
+	m_defaultDrawFunc(0),
+	m_sceneUpdateFunc(0),
+	m_sceneDrawFunc(0),
 	m_initialized(false),
 	m_toggleProfiler(false)
 {
@@ -109,14 +114,19 @@ xdEngine::~xdEngine()
 	// Close sockets
 	closeSockets();
 #endif
+
+	// Pop all scene objects
+	while(m_sceneStack.size() > 0) {
+		popScene();
+	}
 	
+	delete m_input;
+	delete m_scripts;
 	delete m_fileSystem;
 	delete m_graphics;
 	delete m_audio;
 	delete m_profiler;
 	delete m_timer;
-	delete m_input;
-	delete m_scripts;
 	delete m_window;
 	delete m_math;
 	delete m_assetLoader;
@@ -152,6 +162,83 @@ void xdEngine::pushProfile(const string &profile)
 void xdEngine::popProfile()
 {
 	m_profiler->popProfile();
+}
+
+void xdEngine::pushScene(asIScriptObject *object)
+{
+	// Get previous scene
+	asIScriptObject *prevScene = m_sceneStack.size() > 0 ? m_sceneStack.top() : 0;
+
+	if(prevScene)
+	{
+		// Call hide on previous scene
+		asIScriptFunction *hideFunc = prevScene->GetObjectType()->GetMethodByDecl("void hide()");
+		asIScriptContext *ctx = m_scripts->createContext();
+		int r = ctx->Prepare(hideFunc); assert(r >= 0);
+		r = ctx->SetObject(prevScene); assert(r >= 0);
+		r = ctx->Execute(); assert(r >= 0);
+		r = ctx->Release(); assert(r >= 0);
+	}
+
+	// Add scene to stack
+	m_sceneStack.push(object);
+
+	if(object)
+	{
+		// Cache draw and update functions
+		asIObjectType *objectType = object->GetObjectType();
+		m_sceneDrawFunc = objectType->GetMethodByDecl("void draw()");
+		m_sceneUpdateFunc = objectType->GetMethodByDecl("void update()");
+
+		// Call show func
+		asIScriptFunction *showFunc = objectType->GetMethodByDecl("void show()");
+		asIScriptContext *ctx = m_scripts->createContext();
+		int r = ctx->Prepare(showFunc); assert(r >= 0);
+		r = ctx->SetObject(object); assert(r >= 0);
+		r = ctx->Execute(); assert(r >= 0);
+		r = ctx->Release(); assert(r >= 0);
+	}
+}
+
+void xdEngine::popScene()
+{
+	if(m_sceneStack.size() > 0)
+	{
+		// Get topmost scene
+		asIScriptObject *object = m_sceneStack.top();
+
+		// Call hide func on scene
+		asIScriptFunction *hideFunc = object->GetObjectType()->GetMethodByDecl("void hide()");
+		asIScriptContext *ctx = m_scripts->createContext();
+		int r = ctx->Prepare(hideFunc); assert(r >= 0);
+		r = ctx->SetObject(object); assert(r >= 0);
+		r = ctx->Execute(); assert(r >= 0);
+		r = ctx->Release(); assert(r >= 0);
+
+		// Relese the ref held by the engine
+		if(object) object->Release();
+
+		// Pop scene
+		m_sceneStack.pop();
+
+		// Get next scene
+		asIScriptObject *nextScene = m_sceneStack.size() > 0 ? m_sceneStack.top() : 0;
+		if(nextScene)
+		{
+			// Cache draw and update functions
+			asIObjectType *objectType = nextScene->GetObjectType();
+			m_sceneDrawFunc = objectType->GetMethodByDecl("void draw()");
+			m_sceneUpdateFunc = objectType->GetMethodByDecl("void update()");
+
+			// Call show on topmost scene
+			asIScriptFunction *showFunc = objectType->GetMethodByDecl("void show()");
+			asIScriptContext *ctx = m_scripts->createContext();
+			int r = ctx->Prepare(showFunc); assert(r >= 0);
+			r = ctx->SetObject(nextScene); assert(r >= 0);
+			r = ctx->Execute(); assert(r >= 0);
+			r = ctx->Release(); assert(r >= 0);
+		}
+	}
 }
 
 #include <ctime>
@@ -267,6 +354,12 @@ int xdEngine::init(const xdConfig &config)
 		RegisterScriptGrid(scriptEngine);
 		RegisterScriptAny(scriptEngine);
 
+		r = scriptEngine->RegisterInterface("Scene"); AS_ASSERT
+		r = scriptEngine->RegisterInterfaceMethod("Scene", "void show()"); AS_ASSERT
+		r = scriptEngine->RegisterInterfaceMethod("Scene", "void hide()"); AS_ASSERT
+		r = scriptEngine->RegisterInterfaceMethod("Scene", "void draw()"); AS_ASSERT
+		r = scriptEngine->RegisterInterfaceMethod("Scene", "void update()"); AS_ASSERT
+
 		// This will register all game objects
 		Base::Register(scriptEngine);
 	
@@ -323,8 +416,8 @@ int xdEngine::init(const xdConfig &config)
 			LOG("Could not find 'void main()', 'void update()' and 'void draw()'. Please make sure these functions exists.");
 			return XD_MISSING_MAIN;
 		}
-		m_updateFunc = updateFunc;
-		m_drawFunc = drawFunc;
+		m_defaultUpdateFunc = updateFunc;
+		m_defaultDrawFunc = drawFunc;
 
 		LOG("Running void main()...");
 
@@ -383,10 +476,19 @@ void xdEngine::draw()
 	// Start draw
 	m_profiler->pushProfile("Draw");
 
-	asIScriptContext *ctx = m_scripts->createContext();
-	int r = ctx->Prepare(m_drawFunc); assert(r >= 0);
-	r = ctx->Execute(); assert(r >= 0);
-	r = ctx->Release(); assert(r >= 0);
+	asIScriptObject *object = m_sceneStack.size() > 0 ? m_sceneStack.top() : 0;
+	asIScriptFunction *func = object != 0 ? m_sceneDrawFunc : m_defaultDrawFunc;
+	if(func)
+	{
+		// Call draw function
+		asIScriptContext *ctx = m_scripts->createContext();
+		int r = ctx->Prepare(func); assert(r >= 0);
+		if(object) {
+			r = ctx->SetObject(object); assert(r >= 0);
+		}
+		r = ctx->Execute(); assert(r >= 0);
+		r = ctx->Release(); assert(r >= 0);
+	}
 
 	m_graphics->swapBuffers();
 
@@ -400,24 +502,32 @@ void xdEngine::update()
 
 	// Check all bindings
 	m_input->checkBindings();
-
-	// Call 'void update()'
-	asIScriptContext *ctx = m_scripts->createContext();
-	int r = ctx->Prepare(m_updateFunc); assert(r >= 0);
-	r = ctx->Execute(); assert(r >= 0);
-	if(r != asEXECUTION_FINISHED)
+	
+	asIScriptObject *object = m_sceneStack.size() > 0 ? m_sceneStack.top() : 0;
+	asIScriptFunction *func = object != 0 ? m_sceneUpdateFunc : m_defaultUpdateFunc;
+	if(func)
 	{
-		// Get exception section and line
-		const char *sectionName;
-		int line;
-		ctx->GetExceptionLineNumber(&line, &sectionName);
+		// Call 'void update()'
+		asIScriptContext *ctx = m_scripts->createContext();
+		int r = ctx->Prepare(func); assert(r >= 0);
+		if(object) {
+			r = ctx->SetObject(object); assert(r >= 0);
+		}
+		r = ctx->Execute(); assert(r >= 0);
+		if(r != asEXECUTION_FINISHED)
+		{
+			// Get exception section and line
+			const char *sectionName;
+			int line;
+			ctx->GetExceptionLineNumber(&line, &sectionName);
 		
-		// Format output string
-		ERR("Run-Time exception '%s' occured in function '%s' in file '%s:%i'",
-			ctx->GetExceptionString(), ctx->GetExceptionFunction()->GetDeclaration(), sectionName, line);
+			// Format output string
+			ERR("Run-Time exception '%s' occured in function '%s' in file '%s:%i'",
+				ctx->GetExceptionString(), ctx->GetExceptionFunction()->GetDeclaration(), sectionName, line);
+		}
+		r = ctx->GetEngine()->GarbageCollect(asGC_ONE_STEP | asGC_DESTROY_GARBAGE); assert(r >= 0);
+		r = ctx->Release(); assert(r >= 0);
 	}
-	ctx->GetEngine()->GarbageCollect(asGC_ONE_STEP | asGC_DESTROY_GARBAGE);
-	r = ctx->Release(); assert(r >= 0);
 	
 	m_profiler->popProfile();
 }

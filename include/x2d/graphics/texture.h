@@ -3,6 +3,7 @@
 
 #include <x2d/config.h>
 #include <x2d/base.h>
+#include <x2d/math.h>
 
 class Pixmap;
 
@@ -30,6 +31,7 @@ public:
 	// Size
 	virtual int getWidth() const = 0;
 	virtual int getHeight() const = 0;
+	Vector2i getSize() const { return Vector2i(getWidth(), getHeight()); }
 
 	// Pixmap (texture data)
 	virtual Pixmap getPixmap() const = 0;
