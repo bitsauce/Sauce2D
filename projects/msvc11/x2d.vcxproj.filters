@@ -37,9 +37,6 @@
     <Filter Include="source\io">
       <UniqueIdentifier>{91e4a5fe-d0c6-45d0-a8b9-a16937d721da}</UniqueIdentifier>
     </Filter>
-    <Filter Include="source\ui">
-      <UniqueIdentifier>{d042701d-7e0c-4cb1-b96e-933b5f4ae53a}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\include\x2d\engine.h">

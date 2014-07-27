@@ -25,8 +25,8 @@ int xdMath::Register(asIScriptEngine *scriptEngine)
 	r = scriptEngine->RegisterObjectMethod("ScriptMath", "float strToFloat(const string &in)", asMETHOD(xdMath, strToFloat), asCALL_THISCALL); AS_ASSERT
 	r = scriptEngine->RegisterObjectMethod("ScriptMath", "bool strToBool(const string &in)", asMETHOD(xdMath, strToBool), asCALL_THISCALL); AS_ASSERT
 	r = scriptEngine->RegisterObjectMethod("ScriptMath", "string strToAscii(const uint8)", asMETHOD(xdMath, strToAscii), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("ScriptMath", "uint8 asciiToStr(const string &in)", asMETHOD(xdMath, asciiToStr), asCALL_THISCALL); AS_ASSERT*/
-	r = scriptEngine->RegisterObjectMethod("ScriptMath", "void setEnumValue(?&out, const int value)", asMETHOD(xdMath, setEnumValue), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("ScriptMath", "uint8 asciiToStr(const string &in)", asMETHOD(xdMath, asciiToStr), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("ScriptMath", "void setEnumValue(?&out, const int value)", asMETHOD(xdMath, setEnumValue), asCALL_THISCALL); AS_ASSERT*/
 
 	// Supplementary math funcs
 	/*r = scriptEngine->RegisterObjectMethod("ScriptMath", "string tolower(string &in, const int begin = 0, const int end = 0)", asMETHOD(xdMath, toLower), asCALL_THISCALL); AS_ASSERT

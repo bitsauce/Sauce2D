@@ -9,6 +9,9 @@
 
 #include <x2d/input.h>
 
+#include <x2d/scriptengine.h>
+#include <x2d/scripts/funccall.h>
+
 AS_REG_SINGLETON(xdInput, "ScriptInput")
 
 int xdInput::Register(asIScriptEngine *scriptEngine)
@@ -26,97 +29,103 @@ int xdInput::Register(asIScriptEngine *scriptEngine)
 	r = scriptEngine->RegisterEnumValue("VirtualKey", "KEY_LMB", X2D_LeftMouse); AS_ASSERT // Left mouse button
 	r = scriptEngine->RegisterEnumValue("VirtualKey", "KEY_RMB", X2D_RightMouse); AS_ASSERT // Right mouse button
 	r = scriptEngine->RegisterEnumValue("VirtualKey", "KEY_MMB", X2D_MiddleMouse); AS_ASSERT // Any mouse button
-	r = scriptEngine->RegisterEnumValue("VirtualKey", "KEY_BACKSPACE", X2D_KeyBackspace); AS_ASSERT // Backspace
-	r = scriptEngine->RegisterEnumValue("VirtualKey", "KEY_ESCAPE", X2D_KeyEscape); AS_ASSERT
-	r = scriptEngine->RegisterEnumValue("VirtualKey", "KEY_TAB", X2D_KeyTab); AS_ASSERT
-	r = scriptEngine->RegisterEnumValue("VirtualKey", "KEY_ENTER", X2D_KeyEnter); AS_ASSERT // Enter
-	r = scriptEngine->RegisterEnumValue("VirtualKey", "KEY_SHIFT", X2D_KeyShift); AS_ASSERT
-	r = scriptEngine->RegisterEnumValue("VirtualKey", "KEY_LEFT_SHIFT", X2D_KeyLeftShift); AS_ASSERT
-	r = scriptEngine->RegisterEnumValue("VirtualKey", "KEY_RIGHT_SHIFT", X2D_KeyRightShift); AS_ASSERT
-	r = scriptEngine->RegisterEnumValue("VirtualKey", "KEY_CONTROL", X2D_KeyControl); AS_ASSERT
-	r = scriptEngine->RegisterEnumValue("VirtualKey", "KEY_LEFT_CONTROL", X2D_KeyLeftControl); AS_ASSERT
-	r = scriptEngine->RegisterEnumValue("VirtualKey", "KEY_RIGHT_CONTROL", X2D_KeyRightControl); AS_ASSERT
-	r = scriptEngine->RegisterEnumValue("VirtualKey", "KEY_MENU", X2D_KeyMenu); AS_ASSERT // Windows
-	r = scriptEngine->RegisterEnumValue("VirtualKey", "KEY_LEFT_MENU", X2D_KeyLeftMenu); AS_ASSERT
-	r = scriptEngine->RegisterEnumValue("VirtualKey", "KEY_RIGHT_MENU", X2D_KeyRightMenu); AS_ASSERT
-	r = scriptEngine->RegisterEnumValue("VirtualKey", "KEY_SPACE", X2D_KeySpace); AS_ASSERT
-	r = scriptEngine->RegisterEnumValue("VirtualKey", "KEY_PAGE_UP", X2D_KeyPageUp); AS_ASSERT // Page up
-	r = scriptEngine->RegisterEnumValue("VirtualKey", "KEY_PAGE_DOWN", X2D_KeyPageDown); AS_ASSERT // Page down
-	r = scriptEngine->RegisterEnumValue("VirtualKey", "KEY_END", X2D_KeyEnd); AS_ASSERT
-	r = scriptEngine->RegisterEnumValue("VirtualKey", "KEY_HOME", X2D_KeyHome); AS_ASSERT
-	r = scriptEngine->RegisterEnumValue("VirtualKey", "KEY_LEFT", X2D_KeyLeft); AS_ASSERT
-	r = scriptEngine->RegisterEnumValue("VirtualKey", "KEY_UP", X2D_KeyUp); AS_ASSERT
-	r = scriptEngine->RegisterEnumValue("VirtualKey", "KEY_RIGHT", X2D_KeyRight); AS_ASSERT
-	r = scriptEngine->RegisterEnumValue("VirtualKey", "KEY_DOWN", X2D_KeyDown); AS_ASSERT
-	r = scriptEngine->RegisterEnumValue("VirtualKey", "KEY_SNAPSHOT", X2D_KeySnapshot); AS_ASSERT // Printscreen
-	r = scriptEngine->RegisterEnumValue("VirtualKey", "KEY_INSERT", X2D_KeyInsert); AS_ASSERT
-	r = scriptEngine->RegisterEnumValue("VirtualKey", "KEY_DELETE", X2D_KeyDelete); AS_ASSERT
-	r = scriptEngine->RegisterEnumValue("VirtualKey", "KEY_NUMPAD_0", X2D_KeyNumpad0); AS_ASSERT
-	r = scriptEngine->RegisterEnumValue("VirtualKey", "KEY_NUMPAD_1", X2D_KeyNumpad1); AS_ASSERT
-	r = scriptEngine->RegisterEnumValue("VirtualKey", "KEY_NUMPAD_2", X2D_KeyNumpad2); AS_ASSERT
-	r = scriptEngine->RegisterEnumValue("VirtualKey", "KEY_NUMPAD_3", X2D_KeyNumpad3); AS_ASSERT
-	r = scriptEngine->RegisterEnumValue("VirtualKey", "KEY_NUMPAD_4", X2D_KeyNumpad4); AS_ASSERT
-	r = scriptEngine->RegisterEnumValue("VirtualKey", "KEY_NUMPAD_5", X2D_KeyNumpad5); AS_ASSERT
-	r = scriptEngine->RegisterEnumValue("VirtualKey", "KEY_NUMPAD_6", X2D_KeyNumpad6); AS_ASSERT
-	r = scriptEngine->RegisterEnumValue("VirtualKey", "KEY_NUMPAD_7", X2D_KeyNumpad7); AS_ASSERT
-	r = scriptEngine->RegisterEnumValue("VirtualKey", "KEY_NUMPAD_8", X2D_KeyNumpad8); AS_ASSERT
-	r = scriptEngine->RegisterEnumValue("VirtualKey", "KEY_NUMPAD_9", X2D_KeyNumpad9); AS_ASSERT
-	r = scriptEngine->RegisterEnumValue("VirtualKey", "KEY_PLUS", X2D_KeyPlus); AS_ASSERT // Numpad add
-	r = scriptEngine->RegisterEnumValue("VirtualKey", "KEY_HYPHEN", X2D_KeyHyphen); AS_ASSERT // Numpad subtract
-	r = scriptEngine->RegisterEnumValue("VirtualKey", "KEY_PERIOD", X2D_KeyPeriod); AS_ASSERT // Numpad dot
-	r = scriptEngine->RegisterEnumValue("VirtualKey", "KEY_SLASH", X2D_KeySlash); AS_ASSERT // Numpad divide
-	r = scriptEngine->RegisterEnumValue("VirtualKey", "KEY_ASTERISK", X2D_KeyAsterisk); AS_ASSERT // Numpad multiply
-	r = scriptEngine->RegisterEnumValue("VirtualKey", "KEY_CARET", X2D_KeyCaret); AS_ASSERT
-	r = scriptEngine->RegisterEnumValue("VirtualKey", "KEY_APOSTROPHE", X2D_KeyApostrophe); AS_ASSERT
-	r = scriptEngine->RegisterEnumValue("VirtualKey", "KEY_QUESTION_MARK", X2D_KeyQuotationMark); AS_ASSERT
-	r = scriptEngine->RegisterEnumValue("VirtualKey", "KEY_BACKSLASH", X2D_KeyBackslash); AS_ASSERT
-	r = scriptEngine->RegisterEnumValue("VirtualKey", "KEY_PIPE", X2D_KeyPipe); AS_ASSERT
-	r = scriptEngine->RegisterEnumValue("VirtualKey", "KEY_COLON", X2D_KeyColon); AS_ASSERT
-	r = scriptEngine->RegisterEnumValue("VirtualKey", "KEY_SEMICOLON", X2D_KeySemicolon); AS_ASSERT
-	r = scriptEngine->RegisterEnumValue("VirtualKey", "KEY_TILDE", X2D_KeyTilde); AS_ASSERT
-	r = scriptEngine->RegisterEnumValue("VirtualKey", "KEY_COMMA", X2D_KeyComma); AS_ASSERT
-	r = scriptEngine->RegisterEnumValue("VirtualKey", "KEY_GREATER", X2D_KeyGreater); AS_ASSERT
-	r = scriptEngine->RegisterEnumValue("VirtualKey", "KEY_LESS", X2D_KeyLess); AS_ASSERT
-	r = scriptEngine->RegisterEnumValue("VirtualKey", "KEY_EQUALS", X2D_KeyEquals); AS_ASSERT
-	r = scriptEngine->RegisterEnumValue("VirtualKey", "KEY_0", X2D_Key0); AS_ASSERT
-	r = scriptEngine->RegisterEnumValue("VirtualKey", "KEY_1", X2D_Key1); AS_ASSERT
-	r = scriptEngine->RegisterEnumValue("VirtualKey", "KEY_2", X2D_Key2); AS_ASSERT
-	r = scriptEngine->RegisterEnumValue("VirtualKey", "KEY_3", X2D_Key3); AS_ASSERT
-	r = scriptEngine->RegisterEnumValue("VirtualKey", "KEY_4", X2D_Key4); AS_ASSERT
-	r = scriptEngine->RegisterEnumValue("VirtualKey", "KEY_5", X2D_Key5); AS_ASSERT
-	r = scriptEngine->RegisterEnumValue("VirtualKey", "KEY_6", X2D_Key6); AS_ASSERT
-	r = scriptEngine->RegisterEnumValue("VirtualKey", "KEY_7", X2D_Key7); AS_ASSERT
-	r = scriptEngine->RegisterEnumValue("VirtualKey", "KEY_8", X2D_Key8); AS_ASSERT
-	r = scriptEngine->RegisterEnumValue("VirtualKey", "KEY_9", X2D_Key9); AS_ASSERT
-	r = scriptEngine->RegisterEnumValue("VirtualKey", "KEY_A", X2D_KeyA); AS_ASSERT
-	r = scriptEngine->RegisterEnumValue("VirtualKey", "KEY_B", X2D_KeyB); AS_ASSERT
-	r = scriptEngine->RegisterEnumValue("VirtualKey", "KEY_C", X2D_KeyC); AS_ASSERT
-	r = scriptEngine->RegisterEnumValue("VirtualKey", "KEY_D", X2D_KeyD); AS_ASSERT
-	r = scriptEngine->RegisterEnumValue("VirtualKey", "KEY_E", X2D_KeyE); AS_ASSERT
-	r = scriptEngine->RegisterEnumValue("VirtualKey", "KEY_F", X2D_KeyF); AS_ASSERT
-	r = scriptEngine->RegisterEnumValue("VirtualKey", "KEY_G", X2D_KeyG); AS_ASSERT
-	r = scriptEngine->RegisterEnumValue("VirtualKey", "KEY_H", X2D_KeyH); AS_ASSERT
-	r = scriptEngine->RegisterEnumValue("VirtualKey", "KEY_I", X2D_KeyI); AS_ASSERT
-	r = scriptEngine->RegisterEnumValue("VirtualKey", "KEY_J", X2D_KeyJ); AS_ASSERT
-	r = scriptEngine->RegisterEnumValue("VirtualKey", "KEY_K", X2D_KeyK); AS_ASSERT
-	r = scriptEngine->RegisterEnumValue("VirtualKey", "KEY_L", X2D_KeyL); AS_ASSERT
-	r = scriptEngine->RegisterEnumValue("VirtualKey", "KEY_M", X2D_KeyM); AS_ASSERT
-	r = scriptEngine->RegisterEnumValue("VirtualKey", "KEY_N", X2D_KeyN); AS_ASSERT
-	r = scriptEngine->RegisterEnumValue("VirtualKey", "KEY_O", X2D_KeyO); AS_ASSERT
-	r = scriptEngine->RegisterEnumValue("VirtualKey", "KEY_P", X2D_KeyP); AS_ASSERT
-	r = scriptEngine->RegisterEnumValue("VirtualKey", "KEY_Q", X2D_KeyQ); AS_ASSERT
-	r = scriptEngine->RegisterEnumValue("VirtualKey", "KEY_R", X2D_KeyR); AS_ASSERT
-	r = scriptEngine->RegisterEnumValue("VirtualKey", "KEY_S", X2D_KeyS); AS_ASSERT
-	r = scriptEngine->RegisterEnumValue("VirtualKey", "KEY_T", X2D_KeyT); AS_ASSERT
-	r = scriptEngine->RegisterEnumValue("VirtualKey", "KEY_U", X2D_KeyU); AS_ASSERT
-	r = scriptEngine->RegisterEnumValue("VirtualKey", "KEY_V", X2D_KeyV); AS_ASSERT
-	r = scriptEngine->RegisterEnumValue("VirtualKey", "KEY_W", X2D_KeyW); AS_ASSERT
-	r = scriptEngine->RegisterEnumValue("VirtualKey", "KEY_X", X2D_KeyX); AS_ASSERT
-	r = scriptEngine->RegisterEnumValue("VirtualKey", "KEY_Y", X2D_KeyY); AS_ASSERT
-	r = scriptEngine->RegisterEnumValue("VirtualKey", "KEY_Z", X2D_KeyZ); AS_ASSERT
+	r = scriptEngine->RegisterEnumValue("VirtualKey", "KEY_BACKSPACE", XD_KEY_BACKSPACE); AS_ASSERT // Backspace
+	r = scriptEngine->RegisterEnumValue("VirtualKey", "KEY_ESCAPE", XD_KEY_ESCAPE); AS_ASSERT
+	r = scriptEngine->RegisterEnumValue("VirtualKey", "KEY_TAB", XD_KEY_TAB); AS_ASSERT
+	r = scriptEngine->RegisterEnumValue("VirtualKey", "KEY_ENTER", XD_KEY_ENTER); AS_ASSERT // Enter
+	r = scriptEngine->RegisterEnumValue("VirtualKey", "KEY_SHIFT", XD_KEY_Shift); AS_ASSERT
+	r = scriptEngine->RegisterEnumValue("VirtualKey", "KEY_LEFT_SHIFT", XD_KEY_LeftShift); AS_ASSERT
+	r = scriptEngine->RegisterEnumValue("VirtualKey", "KEY_RIGHT_SHIFT", XD_KEY_RightShift); AS_ASSERT
+	r = scriptEngine->RegisterEnumValue("VirtualKey", "KEY_CONTROL", XD_KEY_Control); AS_ASSERT
+	r = scriptEngine->RegisterEnumValue("VirtualKey", "KEY_LEFT_CONTROL", XD_KEY_LeftControl); AS_ASSERT
+	r = scriptEngine->RegisterEnumValue("VirtualKey", "KEY_RIGHT_CONTROL", XD_KEY_RightControl); AS_ASSERT
+	r = scriptEngine->RegisterEnumValue("VirtualKey", "KEY_MENU", XD_KEY_Menu); AS_ASSERT // Windows
+	r = scriptEngine->RegisterEnumValue("VirtualKey", "KEY_LEFT_MENU", XD_KEY_LeftMenu); AS_ASSERT
+	r = scriptEngine->RegisterEnumValue("VirtualKey", "KEY_RIGHT_MENU", XD_KEY_RightMenu); AS_ASSERT
+	r = scriptEngine->RegisterEnumValue("VirtualKey", "KEY_SPACE", XD_KEY_Space); AS_ASSERT
+	r = scriptEngine->RegisterEnumValue("VirtualKey", "KEY_PAGE_UP", XD_KEY_PageUp); AS_ASSERT // Page up
+	r = scriptEngine->RegisterEnumValue("VirtualKey", "KEY_PAGE_DOWN", XD_KEY_PageDown); AS_ASSERT // Page down
+	r = scriptEngine->RegisterEnumValue("VirtualKey", "KEY_END", XD_KEY_End); AS_ASSERT
+	r = scriptEngine->RegisterEnumValue("VirtualKey", "KEY_HOME", XD_KEY_Home); AS_ASSERT
+	r = scriptEngine->RegisterEnumValue("VirtualKey", "KEY_LEFT", XD_KEY_Left); AS_ASSERT
+	r = scriptEngine->RegisterEnumValue("VirtualKey", "KEY_UP", XD_KEY_Up); AS_ASSERT
+	r = scriptEngine->RegisterEnumValue("VirtualKey", "KEY_RIGHT", XD_KEY_Right); AS_ASSERT
+	r = scriptEngine->RegisterEnumValue("VirtualKey", "KEY_DOWN", XD_KEY_Down); AS_ASSERT
+	r = scriptEngine->RegisterEnumValue("VirtualKey", "KEY_SNAPSHOT", XD_KEY_Snapshot); AS_ASSERT // Printscreen
+	r = scriptEngine->RegisterEnumValue("VirtualKey", "KEY_INSERT", XD_KEY_Insert); AS_ASSERT
+	r = scriptEngine->RegisterEnumValue("VirtualKey", "KEY_DELETE", XD_KEY_Delete); AS_ASSERT
+	r = scriptEngine->RegisterEnumValue("VirtualKey", "KEY_NUMPAD_0", XD_KEY_Numpad0); AS_ASSERT
+	r = scriptEngine->RegisterEnumValue("VirtualKey", "KEY_NUMPAD_1", XD_KEY_Numpad1); AS_ASSERT
+	r = scriptEngine->RegisterEnumValue("VirtualKey", "KEY_NUMPAD_2", XD_KEY_Numpad2); AS_ASSERT
+	r = scriptEngine->RegisterEnumValue("VirtualKey", "KEY_NUMPAD_3", XD_KEY_Numpad3); AS_ASSERT
+	r = scriptEngine->RegisterEnumValue("VirtualKey", "KEY_NUMPAD_4", XD_KEY_Numpad4); AS_ASSERT
+	r = scriptEngine->RegisterEnumValue("VirtualKey", "KEY_NUMPAD_5", XD_KEY_Numpad5); AS_ASSERT
+	r = scriptEngine->RegisterEnumValue("VirtualKey", "KEY_NUMPAD_6", XD_KEY_Numpad6); AS_ASSERT
+	r = scriptEngine->RegisterEnumValue("VirtualKey", "KEY_NUMPAD_7", XD_KEY_Numpad7); AS_ASSERT
+	r = scriptEngine->RegisterEnumValue("VirtualKey", "KEY_NUMPAD_8", XD_KEY_Numpad8); AS_ASSERT
+	r = scriptEngine->RegisterEnumValue("VirtualKey", "KEY_NUMPAD_9", XD_KEY_Numpad9); AS_ASSERT
+	r = scriptEngine->RegisterEnumValue("VirtualKey", "KEY_PLUS", XD_KEY_Plus); AS_ASSERT // Numpad add
+	r = scriptEngine->RegisterEnumValue("VirtualKey", "KEY_HYPHEN", XD_KEY_Hyphen); AS_ASSERT // Numpad subtract
+	r = scriptEngine->RegisterEnumValue("VirtualKey", "KEY_PERIOD", XD_KEY_Period); AS_ASSERT // Numpad dot
+	r = scriptEngine->RegisterEnumValue("VirtualKey", "KEY_SLASH", XD_KEY_Slash); AS_ASSERT // Numpad divide
+	r = scriptEngine->RegisterEnumValue("VirtualKey", "KEY_ASTERISK", XD_KEY_Asterisk); AS_ASSERT // Numpad multiply
+	r = scriptEngine->RegisterEnumValue("VirtualKey", "KEY_CARET", XD_KEY_Caret); AS_ASSERT
+	r = scriptEngine->RegisterEnumValue("VirtualKey", "KEY_APOSTROPHE", XD_KEY_Apostrophe); AS_ASSERT
+	r = scriptEngine->RegisterEnumValue("VirtualKey", "KEY_QUESTION_MARK", XD_KEY_QuotationMark); AS_ASSERT
+	r = scriptEngine->RegisterEnumValue("VirtualKey", "KEY_BACKSLASH", XD_KEY_Backslash); AS_ASSERT
+	r = scriptEngine->RegisterEnumValue("VirtualKey", "KEY_PIPE", XD_KEY_Pipe); AS_ASSERT
+	r = scriptEngine->RegisterEnumValue("VirtualKey", "KEY_COLON", XD_KEY_Colon); AS_ASSERT
+	r = scriptEngine->RegisterEnumValue("VirtualKey", "KEY_SEMICOLON", XD_KEY_Semicolon); AS_ASSERT
+	r = scriptEngine->RegisterEnumValue("VirtualKey", "KEY_TILDE", XD_KEY_Tilde); AS_ASSERT
+	r = scriptEngine->RegisterEnumValue("VirtualKey", "KEY_COMMA", XD_KEY_Comma); AS_ASSERT
+	r = scriptEngine->RegisterEnumValue("VirtualKey", "KEY_GREATER", XD_KEY_Greater); AS_ASSERT
+	r = scriptEngine->RegisterEnumValue("VirtualKey", "KEY_LESS", XD_KEY_Less); AS_ASSERT
+	r = scriptEngine->RegisterEnumValue("VirtualKey", "KEY_EQUALS", XD_KEY_Equals); AS_ASSERT
+	r = scriptEngine->RegisterEnumValue("VirtualKey", "KEY_0", XD_KEY_0); AS_ASSERT
+	r = scriptEngine->RegisterEnumValue("VirtualKey", "KEY_1", XD_KEY_1); AS_ASSERT
+	r = scriptEngine->RegisterEnumValue("VirtualKey", "KEY_2", XD_KEY_2); AS_ASSERT
+	r = scriptEngine->RegisterEnumValue("VirtualKey", "KEY_3", XD_KEY_3); AS_ASSERT
+	r = scriptEngine->RegisterEnumValue("VirtualKey", "KEY_4", XD_KEY_4); AS_ASSERT
+	r = scriptEngine->RegisterEnumValue("VirtualKey", "KEY_5", XD_KEY_5); AS_ASSERT
+	r = scriptEngine->RegisterEnumValue("VirtualKey", "KEY_6", XD_KEY_6); AS_ASSERT
+	r = scriptEngine->RegisterEnumValue("VirtualKey", "KEY_7", XD_KEY_7); AS_ASSERT
+	r = scriptEngine->RegisterEnumValue("VirtualKey", "KEY_8", XD_KEY_8); AS_ASSERT
+	r = scriptEngine->RegisterEnumValue("VirtualKey", "KEY_9", XD_KEY_9); AS_ASSERT
+	r = scriptEngine->RegisterEnumValue("VirtualKey", "KEY_A", XD_KEY_A); AS_ASSERT
+	r = scriptEngine->RegisterEnumValue("VirtualKey", "KEY_B", XD_KEY_B); AS_ASSERT
+	r = scriptEngine->RegisterEnumValue("VirtualKey", "KEY_C", XD_KEY_C); AS_ASSERT
+	r = scriptEngine->RegisterEnumValue("VirtualKey", "KEY_D", XD_KEY_D); AS_ASSERT
+	r = scriptEngine->RegisterEnumValue("VirtualKey", "KEY_E", XD_KEY_E); AS_ASSERT
+	r = scriptEngine->RegisterEnumValue("VirtualKey", "KEY_F", XD_KEY_F); AS_ASSERT
+	r = scriptEngine->RegisterEnumValue("VirtualKey", "KEY_G", XD_KEY_G); AS_ASSERT
+	r = scriptEngine->RegisterEnumValue("VirtualKey", "KEY_H", XD_KEY_H); AS_ASSERT
+	r = scriptEngine->RegisterEnumValue("VirtualKey", "KEY_I", XD_KEY_I); AS_ASSERT
+	r = scriptEngine->RegisterEnumValue("VirtualKey", "KEY_J", XD_KEY_J); AS_ASSERT
+	r = scriptEngine->RegisterEnumValue("VirtualKey", "KEY_K", XD_KEY_K); AS_ASSERT
+	r = scriptEngine->RegisterEnumValue("VirtualKey", "KEY_L", XD_KEY_L); AS_ASSERT
+	r = scriptEngine->RegisterEnumValue("VirtualKey", "KEY_M", XD_KEY_M); AS_ASSERT
+	r = scriptEngine->RegisterEnumValue("VirtualKey", "KEY_N", XD_KEY_N); AS_ASSERT
+	r = scriptEngine->RegisterEnumValue("VirtualKey", "KEY_O", XD_KEY_O); AS_ASSERT
+	r = scriptEngine->RegisterEnumValue("VirtualKey", "KEY_P", XD_KEY_P); AS_ASSERT
+	r = scriptEngine->RegisterEnumValue("VirtualKey", "KEY_Q", XD_KEY_Q); AS_ASSERT
+	r = scriptEngine->RegisterEnumValue("VirtualKey", "KEY_R", XD_KEY_R); AS_ASSERT
+	r = scriptEngine->RegisterEnumValue("VirtualKey", "KEY_S", XD_KEY_S); AS_ASSERT
+	r = scriptEngine->RegisterEnumValue("VirtualKey", "KEY_T", XD_KEY_T); AS_ASSERT
+	r = scriptEngine->RegisterEnumValue("VirtualKey", "KEY_U", XD_KEY_U); AS_ASSERT
+	r = scriptEngine->RegisterEnumValue("VirtualKey", "KEY_V", XD_KEY_V); AS_ASSERT
+	r = scriptEngine->RegisterEnumValue("VirtualKey", "KEY_W", XD_KEY_W); AS_ASSERT
+	r = scriptEngine->RegisterEnumValue("VirtualKey", "KEY_X", XD_KEY_X); AS_ASSERT
+	r = scriptEngine->RegisterEnumValue("VirtualKey", "KEY_Y", XD_KEY_Y); AS_ASSERT
+	r = scriptEngine->RegisterEnumValue("VirtualKey", "KEY_Z", XD_KEY_Z); AS_ASSERT
 
 	// Callback funcdef
 	r = scriptEngine->RegisterFuncdef("void KeybindCallback()"); AS_ASSERT
+
+	// Keyboard listener
+	r = scriptEngine->RegisterInterface("KeyboardListener"); AS_ASSERT
+	r = scriptEngine->RegisterInterfaceMethod("KeyboardListener", "void charEvent(uint)"); AS_ASSERT
+	r = scriptEngine->RegisterInterfaceMethod("KeyboardListener", "void keyPressed(VirtualKey key)"); AS_ASSERT
+	r = scriptEngine->RegisterInterfaceMethod("KeyboardListener", "void keyReleased(VirtualKey key)"); AS_ASSERT
 
 	// Desktop cursor
 	r = scriptEngine->RegisterObjectMethod("ScriptInput", "void     setCursorPos(const Vector2i &in)", asMETHODPR(xdInput, setCursorPos, (const Vector2i&), void), asCALL_THISCALL); AS_ASSERT
@@ -126,6 +135,7 @@ int xdInput::Register(asIScriptEngine *scriptEngine)
 	// Keyboard
 	r = scriptEngine->RegisterObjectMethod("ScriptInput", "bool getKeyState(const VirtualKey key) const", asMETHOD(xdInput, getKeyState), asCALL_THISCALL); AS_ASSERT
 	r = scriptEngine->RegisterObjectMethod("ScriptInput", "void bind(const VirtualKey key, KeybindCallback @callback)", asMETHOD(xdInput, bind), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("ScriptInput", "void addKeyboardListener(KeyboardListener@)", asMETHOD(xdInput, addKeyboardListener), asCALL_THISCALL); AS_ASSERT
 
 	// General
 	r = scriptEngine->RegisterObjectMethod("ScriptInput", "Vector2 get_position() const", asMETHOD(xdInput, getPosition), asCALL_THISCALL); AS_ASSERT
@@ -141,6 +151,13 @@ xdInput::~xdInput()
 		if(itr->second.function)
 			itr->second.function->Release();
 	}
+	
+	for(vector<asIScriptObject*>::iterator itr = m_keyListeners.begin(); itr != m_keyListeners.end(); ++itr)
+	{
+		// Release keyboard listeners
+		(*itr)->Release();
+	}
+	
 }
 
 void xdInput::bind(const xdVirtualKey key, asIScriptFunction *function)
@@ -157,7 +174,61 @@ void xdInput::bind(const xdVirtualKey key, asIScriptFunction *function)
 	m_keyBindings[key].pressed = false;
 }
 
-#include <x2d/scripts/funccall.h>
+void xdInput::addKeyboardListener(asIScriptObject *object)
+{
+	// Add keyboard listener
+	if(object) {
+		m_keyListeners.push_back(object);
+	}
+}
+
+void xdInput::charEvent(uint utf8char)
+{
+	for(vector<asIScriptObject*>::iterator itr = m_keyListeners.begin(); itr != m_keyListeners.end(); ++itr)
+	{
+		asIObjectType *type = (*itr)->GetObjectType();
+		asIScriptFunction *func = type->GetMethodByDecl("void charEvent(uint)");
+
+		asIScriptContext *ctx = g_engine->getScriptEngine()->createContext();
+		int r = ctx->Prepare(func); assert(r >= 0);
+		r = ctx->SetObject(*itr); assert(r >= 0);
+		r = ctx->SetArgDWord(0, utf8char);
+		r = ctx->Execute(); assert(r >= 0);
+		r = ctx->Release(); assert(r >= 0);
+	}
+}
+
+void xdInput::keyPressed(xdVirtualKey key)
+{
+	for(vector<asIScriptObject*>::iterator itr = m_keyListeners.begin(); itr != m_keyListeners.end(); ++itr)
+	{
+		asIObjectType *type = (*itr)->GetObjectType();
+		asIScriptFunction *func = type->GetMethodByDecl("void keyPressed(VirtualKey)");
+
+		asIScriptContext *ctx = g_engine->getScriptEngine()->createContext();
+		int r = ctx->Prepare(func); assert(r >= 0);
+		r = ctx->SetObject(*itr); assert(r >= 0);
+		r = ctx->SetArgDWord(0, key);
+		r = ctx->Execute(); assert(r >= 0);
+		r = ctx->Release(); assert(r >= 0);
+	}
+}
+
+void xdInput::keyReleased(xdVirtualKey key)
+{
+	for(vector<asIScriptObject*>::iterator itr = m_keyListeners.begin(); itr != m_keyListeners.end(); ++itr)
+	{
+		asIObjectType *type = (*itr)->GetObjectType();
+		asIScriptFunction *func = type->GetMethodByDecl("void keyReleased(VirtualKey)");
+
+		asIScriptContext *ctx = g_engine->getScriptEngine()->createContext();
+		int r = ctx->Prepare(func); assert(r >= 0);
+		r = ctx->SetObject(*itr); assert(r >= 0);
+		r = ctx->SetArgDWord(0, key);
+		r = ctx->Execute(); assert(r >= 0);
+		r = ctx->Release(); assert(r >= 0);
+	}
+}
 
 void xdInput::checkBindings()
 {

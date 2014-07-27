@@ -417,6 +417,13 @@ static string formatFloat(double value, const string &options, asUINT width, asU
 	return buf;
 }
 
+static string formatUtf8(asUINT val)
+{
+	string str;
+	str += char(val);
+	return str;
+}
+
 // AngelScript signature:
 // int64 parseInt(const string &in val, uint base = 10, uint &out byteCount = 0)
 static asINT64 parseInt(const string &val, asUINT base, asUINT *byteCount)
@@ -603,6 +610,7 @@ void RegisterStdString_Native(asIScriptEngine *engine)
 
 	r = engine->RegisterGlobalFunction("string formatInt(int64 val, const string &in options, uint width = 0)", asFUNCTION(formatInt), asCALL_CDECL); assert(r >= 0);
 	r = engine->RegisterGlobalFunction("string formatFloat(double val, const string &in options, uint width = 0, uint precision = 0)", asFUNCTION(formatFloat), asCALL_CDECL); assert(r >= 0);
+	r = engine->RegisterGlobalFunction("string formatUtf8(uint)", asFUNCTION(formatUtf8), asCALL_CDECL); assert(r >= 0);
 	r = engine->RegisterGlobalFunction("int64 parseInt(const string &in, uint base = 10, uint &out byteCount = 0)", asFUNCTION(parseInt), asCALL_CDECL); assert(r >= 0);
 	r = engine->RegisterGlobalFunction("double parseFloat(const string &in, uint &out byteCount = 0)", asFUNCTION(parseFloat), asCALL_CDECL); assert(r >= 0);
 

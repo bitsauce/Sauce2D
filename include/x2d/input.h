@@ -16,110 +16,113 @@ enum xdMouseButton
 // Virtual keys
 enum xdVirtualKey
 {
+	// Standard ASCII-Mapped keys
+	XD_KEY_NULL = 0x00,
+	XD_KEY_BACKSPACE = 0x08,
+	XD_KEY_TAB = 0x09,
+	XD_KEY_ENTER = 0x0D,
+	XD_KEY_ESCAPE = 0x1B,
+	XD_KEY_SPACE = 0x20,
+
+	XD_KEY_0 = 0x30,
+	XD_KEY_1,
+	XD_KEY_2,
+	XD_KEY_3,
+	XD_KEY_4,
+	XD_KEY_5,
+	XD_KEY_6,
+	XD_KEY_7,
+	XD_KEY_8,
+	XD_KEY_9,
+
+	// Alphabetic keys
+	XD_KEY_A = 0x41,
+	XD_KEY_B,
+	XD_KEY_C,
+	XD_KEY_D,
+	XD_KEY_E,
+	XD_KEY_F,
+	XD_KEY_G,
+	XD_KEY_H,
+	XD_KEY_I,
+	XD_KEY_J,
+	XD_KEY_K,
+	XD_KEY_L,
+	XD_KEY_M,
+	XD_KEY_N,
+	XD_KEY_O,
+	XD_KEY_P,
+	XD_KEY_Q,
+	XD_KEY_R,
+	XD_KEY_S,
+	XD_KEY_T,
+	XD_KEY_U,
+	XD_KEY_V,
+	XD_KEY_W,
+	XD_KEY_X,
+	XD_KEY_Y,
+	XD_KEY_Z,
+
 	// Mouse keys
-	X2D_LeftMouse,
+	X2D_LeftMouse = 0x80,
 	X2D_RightMouse,
 	X2D_MiddleMouse,
 
-	// Numeric keys
-	X2D_Key0,
-	X2D_Key1,
-	X2D_Key2,
-	X2D_Key3,
-	X2D_Key4,
-	X2D_Key5,
-	X2D_Key6,
-	X2D_Key7,
-	X2D_Key8,
-	X2D_Key9,
-
-	// Alphabetic keys
-	X2D_KeyA,
-	X2D_KeyB,
-	X2D_KeyC,
-	X2D_KeyD,
-	X2D_KeyE,
-	X2D_KeyF,
-	X2D_KeyG,
-	X2D_KeyH,
-	X2D_KeyI,
-	X2D_KeyJ,
-	X2D_KeyK,
-	X2D_KeyL,
-	X2D_KeyM,
-	X2D_KeyN,
-	X2D_KeyO,
-	X2D_KeyP,
-	X2D_KeyQ,
-	X2D_KeyR,
-	X2D_KeyS,
-	X2D_KeyT,
-	X2D_KeyU,
-	X2D_KeyV,
-	X2D_KeyW,
-	X2D_KeyX,
-	X2D_KeyY,
-	X2D_KeyZ,
-
 	// Arrow keys
-	X2D_KeyLeft,
-	X2D_KeyUp,
-	X2D_KeyRight,
-	X2D_KeyDown,
+	XD_KEY_Left,
+	XD_KEY_Up,
+	XD_KEY_Right,
+	XD_KEY_Down,
 
 	// Special keys
-	X2D_KeyBackspace,
-	X2D_KeyEscape,
-	X2D_KeyTab,
-	X2D_KeyEnter,
-	X2D_KeyShift,
-	X2D_KeyLeftShift,
-	X2D_KeyRightShift,
-	X2D_KeyControl,
-	X2D_KeyLeftControl,
-	X2D_KeyRightControl,
-	X2D_KeyMenu, // Windows button
-	X2D_KeyLeftMenu,
-	X2D_KeyRightMenu,
-	X2D_KeySpace,
-	X2D_KeyPageUp,
-	X2D_KeyPageDown,
-	X2D_KeyEnd,
-	X2D_KeyHome,
-	X2D_KeySnapshot,
-	X2D_KeyInsert,
-	X2D_KeyDelete,
+	XD_KEY_Shift,
+	XD_KEY_LeftShift,
+	XD_KEY_RightShift,
+	XD_KEY_Control,
+	XD_KEY_LeftControl,
+	XD_KEY_RightControl,
+	XD_KEY_Menu, // Windows button
+	XD_KEY_LeftMenu,
+	XD_KEY_RightMenu,
+	XD_KEY_Space,
+	XD_KEY_PageUp,
+	XD_KEY_PageDown,
+	XD_KEY_End,
+	XD_KEY_Home,
+	XD_KEY_Snapshot,
+	XD_KEY_Insert,
+	XD_KEY_Delete,
 
 	// Numpad keys
-	X2D_KeyNumpad0,
-	X2D_KeyNumpad1,
-	X2D_KeyNumpad2,
-	X2D_KeyNumpad3,
-	X2D_KeyNumpad4,
-	X2D_KeyNumpad5,
-	X2D_KeyNumpad6,
-	X2D_KeyNumpad7,
-	X2D_KeyNumpad8,
-	X2D_KeyNumpad9,
-	X2D_KeyPlus,
-	X2D_KeyHyphen,
+	XD_KEY_Numpad0,
+	XD_KEY_Numpad1,
+	XD_KEY_Numpad2,
+	XD_KEY_Numpad3,
+	XD_KEY_Numpad4,
+	XD_KEY_Numpad5,
+	XD_KEY_Numpad6,
+	XD_KEY_Numpad7,
+	XD_KEY_Numpad8,
+	XD_KEY_Numpad9,
+	XD_KEY_Plus,
+	XD_KEY_Hyphen,
 
 	// Other keys
-	X2D_KeyCaret,
-	X2D_KeyApostrophe,
-	X2D_KeyQuotationMark,
-	X2D_KeyBackslash,
-	X2D_KeySlash,
-	X2D_KeyAsterisk,
-	X2D_KeyPipe,
-	X2D_KeyColon,
-	X2D_KeySemicolon,
-	X2D_KeyTilde,
-	X2D_KeyComma,
-	X2D_KeyPeriod,
-	X2D_KeyGreater,
-	X2D_KeyLess,
-	X2D_KeyEquals
+	XD_KEY_Caret,
+	XD_KEY_Apostrophe,
+	XD_KEY_QuotationMark,
+	XD_KEY_Backslash,
+	XD_KEY_Slash,
+	XD_KEY_Asterisk,
+	XD_KEY_Pipe,
+	XD_KEY_Colon,
+	XD_KEY_Semicolon,
+	XD_KEY_Tilde,
+	XD_KEY_Comma,
+	XD_KEY_Period,
+	XD_KEY_Greater,
+	XD_KEY_Less,
+	XD_KEY_Equals
 };
 
 class XDAPI xdInput
@@ -143,6 +146,12 @@ public:
 	// Key binding
 	void bind(const xdVirtualKey key, asIScriptFunction *func);
 	void checkBindings();
+
+	// Keyboard listener
+	void addKeyboardListener(asIScriptObject *object);
+	void charEvent(uint utf8char);
+	void keyPressed(xdVirtualKey key);
+	void keyReleased(xdVirtualKey key);
 	
 	// Overloads
 	void setCursorPos(const int x, const int y) { setCursorPos(Vector2i(x, y)); }
@@ -156,6 +165,7 @@ private:
 	};
 
 	map<xdVirtualKey, KeyBind> m_keyBindings;
+	vector<asIScriptObject*> m_keyListeners;
 };
 
 #endif // X2D_INPUT_H

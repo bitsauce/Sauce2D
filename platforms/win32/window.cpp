@@ -684,17 +684,16 @@ void Window::processEvents(UINT Message, WPARAM wParam, LPARAM lParam)
 		}
 		break;
 
+		case WM_KEYDOWN:
+			m_input->keyPressed(fromWinKey((uchar)wParam));
+		break;
+
+		case WM_KEYUP:
+			m_input->keyReleased(fromWinKey((uchar)wParam));
+		break;
+
 		case WM_CHAR:
-		{
-			if(m_inputCharFunc) {
-				string key;
-				key += (char)wParam;
-				
-				//startScriptFuncCall(m_inputCharFunc);
-				//addScriptFuncArg(&key, stringTypeId);
-				//endScriptFuncCall();
-			}
-		}
+			m_input->charEvent((uint)wParam);
 		break;
     }
 }

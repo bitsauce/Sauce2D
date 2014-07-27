@@ -41,102 +41,136 @@ Vector2 Input::getPosition() const
 	return m_position;
 }
 
-bool Input::getKeyState(const xdVirtualKey key) const
+xdVirtualKey fromWinKey(uchar vk)
 {
-	int vk = 0;
+	// Keys below 0x80 are standardized
+	if(vk < 0x80) {
+		return xdVirtualKey(vk);
+	}
+
+	switch(vk)
+	{
+	case VK_LBUTTON: return X2D_LeftMouse;
+	case VK_RBUTTON: return X2D_RightMouse; 
+	case VK_MBUTTON: return X2D_MiddleMouse; 
+	case VK_RIGHT: return XD_KEY_Right; 
+	case VK_DOWN: return XD_KEY_Down; 
+	case VK_LEFT: return XD_KEY_Left; 
+	case VK_UP: return XD_KEY_Up;
+	case VK_SHIFT: return XD_KEY_Shift; 
+	case VK_LSHIFT: return XD_KEY_LeftShift; 
+	case VK_RSHIFT: return XD_KEY_RightShift; 
+	case VK_CONTROL: return XD_KEY_Control; 
+	case VK_LCONTROL: return XD_KEY_LeftControl; 
+	case VK_RCONTROL: return XD_KEY_RightControl; 
+	case VK_MENU: return XD_KEY_Menu; 
+	case VK_LMENU: return XD_KEY_LeftMenu; 
+	case VK_RMENU: return XD_KEY_RightMenu; 
+	case VK_SPACE: return XD_KEY_Space; 
+	case VK_NEXT: return XD_KEY_PageUp; 
+	case VK_PRIOR: return XD_KEY_PageDown; 
+	case VK_END: return XD_KEY_End; 
+	case VK_HOME: return XD_KEY_Home; 
+	case VK_SNAPSHOT: return XD_KEY_Snapshot; 
+	case VK_INSERT: return XD_KEY_Insert; 
+	case VK_DELETE: return XD_KEY_Delete; 
+	case VK_NUMPAD0: return XD_KEY_Numpad0; 
+	case VK_NUMPAD1: return XD_KEY_Numpad1; 
+	case VK_NUMPAD2: return XD_KEY_Numpad2; 
+	case VK_NUMPAD3: return XD_KEY_Numpad3; 
+	case VK_NUMPAD4: return XD_KEY_Numpad4; 
+	case VK_NUMPAD5: return XD_KEY_Numpad5; 
+	case VK_NUMPAD6: return XD_KEY_Numpad6; 
+	case VK_NUMPAD7: return XD_KEY_Numpad7; 
+	case VK_NUMPAD8: return XD_KEY_Numpad8; 
+	case VK_NUMPAD9: return XD_KEY_Numpad9; 
+	case VK_OEM_PLUS: return XD_KEY_Plus; 
+	//case XD_KEY_Hyphen: return VK_OEM_MINUS; break;
+	//case XD_KEY_Caret: return VK_OEM_CAR; break;
+	//case XD_KEY_Apostrophe: return VK_OEM_7; break;
+	//case XD_KEY_QuotationMark: return VK_OEM_2; break;
+	//case XD_KEY_Backslash: return VK_OEM_5; break;
+	//case XD_KEY_Slash: return VK_OEM_2; break;
+	//case XD_KEY_Asterisk: return VK_OEM_; break;
+	//case XD_KEY_Pipe: return VK_OEM_5; break;
+	//case XD_KEY_Colon: return VK_OEM_1; break;
+	//case XD_KEY_Semicolon: return VK_OEM_1; break;
+	//case XD_KEY_Tilde: return ; break;
+	//case XD_KEY_Comma: return VK_OEM_COMMA; break;
+	//case XD_KEY_Period: return VK_OEM_PERIOD; break;
+	//case XD_KEY_Greater: return VK_OEM; break;
+	//case XD_KEY_Less: return ; break;
+	//case XD_KEY_Equals: return VK_; break;
+	}
+	return XD_KEY_NULL;
+}
+
+uchar toWinKey(xdVirtualKey key)
+{
+	// Keys below 0x80 are standardized
+	if(key < 0x80) {
+		return key;
+	}
+
+	uchar vk = 0;
 	switch(key)
 	{
 	case X2D_LeftMouse:	vk = VK_LBUTTON; break;
 	case X2D_RightMouse: vk = VK_RBUTTON; break;
 	case X2D_MiddleMouse: vk = VK_MBUTTON; break;
-	case X2D_Key0: vk = '0'; break;
-	case X2D_Key1: vk = '1'; break;
-	case X2D_Key2: vk = '2'; break;
-	case X2D_Key3: vk = '3'; break;
-	case X2D_Key4: vk = '4'; break;
-	case X2D_Key5: vk = '5'; break;
-	case X2D_Key6: vk = '6'; break;
-	case X2D_Key7: vk = '7'; break;
-	case X2D_Key8: vk = '8'; break;
-	case X2D_Key9: vk = '9'; break;
-	case X2D_KeyA: vk = 'A'; break;
-	case X2D_KeyB: vk = 'B'; break;
-	case X2D_KeyC: vk = 'C'; break;
-	case X2D_KeyD: vk = 'D'; break;
-	case X2D_KeyE: vk = 'E'; break;
-	case X2D_KeyF: vk = 'F'; break;
-	case X2D_KeyG: vk = 'G'; break;
-	case X2D_KeyH: vk = 'H'; break;
-	case X2D_KeyI: vk = 'I'; break;
-	case X2D_KeyJ: vk = 'J'; break;
-	case X2D_KeyK: vk = 'K'; break;
-	case X2D_KeyL: vk = 'L'; break;
-	case X2D_KeyM: vk = 'M'; break;
-	case X2D_KeyN: vk = 'N'; break;
-	case X2D_KeyO: vk = 'O'; break;
-	case X2D_KeyP: vk = 'P'; break;
-	case X2D_KeyQ: vk = 'Q'; break;
-	case X2D_KeyR: vk = 'R'; break;
-	case X2D_KeyS: vk = 'S'; break;
-	case X2D_KeyT: vk = 'T'; break;
-	case X2D_KeyU: vk = 'U'; break;
-	case X2D_KeyV: vk = 'V'; break;
-	case X2D_KeyW: vk = 'W'; break;
-	case X2D_KeyX: vk = 'X'; break;
-	case X2D_KeyY: vk = 'Y'; break;
-	case X2D_KeyZ: vk = 'Z'; break;
-	case X2D_KeyRight: vk = VK_RIGHT; break;
-	case X2D_KeyDown: vk = VK_DOWN; break;
-	case X2D_KeyLeft: vk = VK_LEFT; break;
-	case X2D_KeyUp: vk = VK_UP; break;
-	case X2D_KeyBackspace: vk = VK_BACK; break;
-	case X2D_KeyEscape: vk = VK_ESCAPE; break;
-	case X2D_KeyTab: vk = VK_TAB; break;
-	case X2D_KeyEnter: vk = VK_RETURN; break;
-	case X2D_KeyShift: vk = VK_SHIFT; break;
-	case X2D_KeyLeftShift: vk = VK_LSHIFT; break;
-	case X2D_KeyRightShift: vk = VK_RSHIFT; break;
-	case X2D_KeyControl: vk = VK_CONTROL; break;
-	case X2D_KeyLeftControl: vk = VK_LCONTROL; break;
-	case X2D_KeyRightControl: vk = VK_RCONTROL; break;
-	case X2D_KeyMenu: vk = VK_MENU; break;
-	case X2D_KeyLeftMenu: vk = VK_LMENU; break;
-	case X2D_KeyRightMenu: vk = VK_RMENU; break;
-	case X2D_KeySpace: vk = VK_SPACE; break;
-	case X2D_KeyPageUp: vk = VK_NEXT; break;
-	case X2D_KeyPageDown: vk = VK_PRIOR; break;
-	case X2D_KeyEnd: vk = VK_END; break;
-	case X2D_KeyHome: vk = VK_HOME; break;
-	case X2D_KeySnapshot: vk = VK_SNAPSHOT; break;
-	case X2D_KeyInsert: vk = VK_INSERT; break;
-	case X2D_KeyDelete: vk = VK_DELETE; break;
-	case X2D_KeyNumpad0: vk = VK_NUMPAD0; break;
-	case X2D_KeyNumpad1: vk = VK_NUMPAD1; break;
-	case X2D_KeyNumpad2: vk = VK_NUMPAD2; break;
-	case X2D_KeyNumpad3: vk = VK_NUMPAD3; break;
-	case X2D_KeyNumpad4: vk = VK_NUMPAD4; break;
-	case X2D_KeyNumpad5: vk = VK_NUMPAD5; break;
-	case X2D_KeyNumpad6: vk = VK_NUMPAD6; break;
-	case X2D_KeyNumpad7: vk = VK_NUMPAD7; break;
-	case X2D_KeyNumpad8: vk = VK_NUMPAD8; break;
-	case X2D_KeyNumpad9: vk = VK_NUMPAD9; break;
-	/*case X2D_KeyPluss: vk = ; break;
-	case X2D_KeyHyphen: vk = ; break;
-	case X2D_KeyCaret: vk = ; break;
-	case X2D_KeyApostrophe: vk = ; break;
-	case X2D_KeyQuotationMark: vk = ; break;
-	case X2D_KeyBackslash: vk = ; break;
-	case X2D_KeySlash: vk = ; break;
-	case X2D_KeyAsterisk: vk = ; break;
-	case X2D_KeyPipe: vk = ; break;
-	case X2D_KeyColon: vk = ; break;
-	case X2D_KeySemicolon: vk = ; break;
-	case X2D_KeyTilde: vk = ; break;
-	case X2D_KeyComma: vk = ; break;
-	case X2D_KeyPeriod: vk = ; break;
-	case X2D_KeyGreater: vk = ; break;
-	case X2D_KeyLess: vk = ; break;
-	case X2D_KeyEquals: vk = VK_; break;*/
+	case XD_KEY_Right: vk = VK_RIGHT; break;
+	case XD_KEY_Down: vk = VK_DOWN; break;
+	case XD_KEY_Left: vk = VK_LEFT; break;
+	case XD_KEY_Up: vk = VK_UP; break;
+	case XD_KEY_Shift: vk = VK_SHIFT; break;
+	case XD_KEY_LeftShift: vk = VK_LSHIFT; break;
+	case XD_KEY_RightShift: vk = VK_RSHIFT; break;
+	case XD_KEY_Control: vk = VK_CONTROL; break;
+	case XD_KEY_LeftControl: vk = VK_LCONTROL; break;
+	case XD_KEY_RightControl: vk = VK_RCONTROL; break;
+	case XD_KEY_Menu: vk = VK_MENU; break;
+	case XD_KEY_LeftMenu: vk = VK_LMENU; break;
+	case XD_KEY_RightMenu: vk = VK_RMENU; break;
+	case XD_KEY_Space: vk = VK_SPACE; break;
+	case XD_KEY_PageUp: vk = VK_NEXT; break;
+	case XD_KEY_PageDown: vk = VK_PRIOR; break;
+	case XD_KEY_End: vk = VK_END; break;
+	case XD_KEY_Home: vk = VK_HOME; break;
+	case XD_KEY_Snapshot: vk = VK_SNAPSHOT; break;
+	case XD_KEY_Insert: vk = VK_INSERT; break;
+	case XD_KEY_Delete: vk = VK_DELETE; break;
+	case XD_KEY_Numpad0: vk = VK_NUMPAD0; break;
+	case XD_KEY_Numpad1: vk = VK_NUMPAD1; break;
+	case XD_KEY_Numpad2: vk = VK_NUMPAD2; break;
+	case XD_KEY_Numpad3: vk = VK_NUMPAD3; break;
+	case XD_KEY_Numpad4: vk = VK_NUMPAD4; break;
+	case XD_KEY_Numpad5: vk = VK_NUMPAD5; break;
+	case XD_KEY_Numpad6: vk = VK_NUMPAD6; break;
+	case XD_KEY_Numpad7: vk = VK_NUMPAD7; break;
+	case XD_KEY_Numpad8: vk = VK_NUMPAD8; break;
+	case XD_KEY_Numpad9: vk = VK_NUMPAD9; break;
+	case XD_KEY_Plus: vk = VK_OEM_PLUS; break;
+	case XD_KEY_Hyphen: vk = VK_OEM_MINUS; break;
+	//case XD_KEY_Caret: vk = VK_OEM_CAR; break;
+	case XD_KEY_Apostrophe: vk = VK_OEM_7; break;
+	case XD_KEY_QuotationMark: vk = VK_OEM_2; break;
+	case XD_KEY_Backslash: vk = VK_OEM_5; break;
+	case XD_KEY_Slash: vk = VK_OEM_2; break;
+	//case XD_KEY_Asterisk: vk = VK_OEM_; break;
+	case XD_KEY_Pipe: vk = VK_OEM_5; break;
+	case XD_KEY_Colon: vk = VK_OEM_1; break;
+	case XD_KEY_Semicolon: vk = VK_OEM_1; break;
+	//case XD_KEY_Tilde: vk = ; break;
+	case XD_KEY_Comma: vk = VK_OEM_COMMA; break;
+	case XD_KEY_Period: vk = VK_OEM_PERIOD; break;
+	//case XD_KEY_Greater: vk = VK_OEM; break;
+	//case XD_KEY_Less: vk = ; break;
+	//case XD_KEY_Equals: vk = VK_; break;
 	}
-	return /*Window::hasFocus() &&*/ (GetKeyState(vk) & 0x80) != 0;
+	return vk;
+}
+
+bool Input::getKeyState(const xdVirtualKey key) const
+{
+	return /*Window::hasFocus() &&*/ (GetKeyState(toWinKey(key)) & 0x80) != 0;
 }

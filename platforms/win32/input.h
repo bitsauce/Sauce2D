@@ -25,4 +25,7 @@ private:
 	Vector2 m_position;
 };
 
+extern xdVirtualKey fromWinKey(uchar key);
+extern uchar toWinKey(xdVirtualKey key);
+
 #endif // WIN_INPUT_H
