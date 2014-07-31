@@ -29,7 +29,7 @@ int Font::Register(asIScriptEngine *scriptEngine)
 {
 	int r = 0;
 
-	r = scriptEngine->RegisterObjectBehaviour("Font", asBEHAVE_FACTORY, "Font @f(const string &in, const int)", asFUNCTIONPR(Factory, (const string&, const uint), Font*), asCALL_CDECL); AS_ASSERT
+	r = scriptEngine->RegisterObjectBehaviour("Font", asBEHAVE_FACTORY, "Font @f(const string &in, const int)", asFUNCTIONPR(Factory, (string&, const uint), Font*), asCALL_CDECL); AS_ASSERT
 
 	r = scriptEngine->RegisterObjectMethod("Font", "float getStringWidth(const string &in)", asMETHOD(Font, getStringWidth), asCALL_THISCALL); AS_ASSERT
 	r = scriptEngine->RegisterObjectMethod("Font", "float getStringHeight(const string &in)", asMETHOD(Font, getStringHeight), asCALL_THISCALL); AS_ASSERT
@@ -39,7 +39,7 @@ int Font::Register(asIScriptEngine *scriptEngine)
 	return r;
 }
 
-bool getFontFile(LPCTSTR fontName, string &fileName)
+bool getFontFile(string &fontName)
 {
 	HKEY hkey;
 	if(RegOpenKeyEx(HKEY_LOCAL_MACHINE, "Software\\Microsoft\\Windows NT\\CurrentVersion\\Fonts", 0, KEY_READ, &hkey) == ERROR_SUCCESS)
@@ -70,7 +70,7 @@ bool getFontFile(LPCTSTR fontName, string &fileName)
 				// Set filename
 				char *winDir = new char[MAX_PATH];
 				GetWindowsDirectory(winDir, MAX_PATH);
-				fileName = string(winDir) + "\\Fonts\\" + string(reinterpret_cast<char*>(data));
+				fontName = string(winDir) + "\\Fonts\\" + string(reinterpret_cast<char*>(data));
 
 				// Clean up
 				delete[] value;
@@ -101,30 +101,19 @@ inline int next_p2(int a)
 	return rval;
 }
 
-Font::Font(const string &filePathOrFontName, const uint size) :
-	m_color(1.0f)
+Font::Font(const string &path, const uint size) :
+	m_color(1.0f),
+	m_atlas(0),
+	m_size(0),
+	m_lineSize(0)
 {
-	// Check if we can find the file in the local directories
-	string filePath;
-	if(util::fileExists(filePathOrFontName))
-	{
-		// Set file
-		filePath = filePathOrFontName;
-	}else{
-		// Loop throught the registry to find the file by font name
-		if(!getFontFile(filePathOrFontName.c_str(), filePath)) {
-			ERR("Font '%s' not found!", filePath.c_str());
-			return;
-		}
-	}
-
-	load(filePath, size);
+	load(path, size);
 }
 
 Font::~Font()
 {
-	if(m_texture) {
-		m_texture->release();
+	if(m_atlas) {
+		m_atlas->release();
 	}
 }
 
@@ -132,139 +121,115 @@ void Font::load(const string &filePath, const uint size)
 {
 	// Create and initialize a FreeType library
 	FT_Library library;
-	if(FT_Init_FreeType(&library))
-		assert("FT_Init_FreeType failed");
+	FT_Error error;
+	if(error = FT_Init_FreeType(&library))
+	{
+		ERR("Font::load - Failed to initialize FreeType 2 (error code: %i)", error);
+		return;
+	}
 
 	// Load the font information from file
 	FT_Face face;
-	if(FT_New_Face(library, filePath.c_str(), 0, &face) != 0)
-		assert("FT_New_Face failed (there is probably a problem with your font file)");
+	if(error = FT_New_Face(library, filePath.c_str(), 0, &face))
+	{
+		ERR("Font::load - Failed load font data (error code: %i)", error);
+		return;
+	}
 
-	// Generate texture and resize chars
-	m_chars.resize(128);
+	// Setup font characters
+	m_metrics.resize(128);
 	m_size = size;
 
-	// Get font name
-	//m_fontName = face->family_name + string(" ") + util::intToStr(size);
-
-	// Set character size
-	FT_Set_Char_Size(face, size << 6, size << 6, 96, 96);
+	// Set characterset size
+	//if(error = FT_Set_Char_Size(face, size << 6, size << 6, 96, 96))
+	if(error = FT_Set_Pixel_Sizes(face, size, size))
+	{
+		ERR("Font::load - Failed to set pixel size (error code: %i)", error);
+		return;
+	}
 
 	// Load bitmap data for each of the character of the font
-	RectanglePacker packer;
+	vector<Pixmap> pixmaps;
 	for(uchar ch = 0; ch < 128; ch++)
 	{
 		// Load the glyph for our character
-		if(FT_Load_Glyph(face, FT_Get_Char_Index(face, ch), FT_LOAD_DEFAULT))
-			assert("FT_Load_Glyph failed");
+		if(error = FT_Load_Glyph(face, FT_Get_Char_Index(face, ch), FT_LOAD_DEFAULT))
+		{
+			ERR("Font::load - Failed to load glyph '%c' (error code: %i)", ch, error);
+			return;
+		}
 
-		// Move The Face's Glyph Into A Glyph Object.
-		FT_Glyph glyph;
-		if(FT_Get_Glyph(face->glyph, &glyph))
-			assert("FT_Get_Glyph failed");
+		// Render glyph to bitmap
+		if(error = FT_Render_Glyph(face->glyph, FT_RENDER_MODE_NORMAL))
+		{
+			ERR("Font::load - Failed to get glyph '%c' (error code: %i)", ch, error);
+			return;
+		}
 
-		// Convert The Glyph To A Bitmap.
-		FT_Glyph_To_Bitmap(&glyph, FT_RENDER_MODE_NORMAL, 0, 1);
-		FT_BitmapGlyph bitmapGlyph = (FT_BitmapGlyph)glyph;
-
-		// This reference will make accessing the bitmap easier
-		FT_Bitmap &bitmap = bitmapGlyph->bitmap;
+		// Get bitmap object
+		FT_Bitmap &bitmap = face->glyph->bitmap;
 
 		// Get dimentions of glyph
-		int width = next_p2(bitmap.width);
-		int height = next_p2(bitmap.rows);
+		uint width = bitmap.width;
+		uint height = bitmap.rows;
 
-		// Allocate memory for the texture data
-		uchar* charData = new uchar[2*width*height + 1]; // Create a 16-bit buffer
+		// Allocate memory for texture data
+		Pixmap pixmap(width, height);
 		for(uint y = 0; y < height; y++)
 		{ 
 			for(uint x = 0; x < width; x++)
 			{
-				charData[2*(x + y*width)] = 255;
-				charData[2*(x + y*width) + 1] = (x >= bitmap.width || bitmap.rows-y-1 >= bitmap.rows) ? 0 : bitmap.buffer[x + (bitmap.rows-y-1)*bitmap.width];// = 0;
+				uchar c = bitmap.buffer[x + (height-y-1)*width];
+				pixmap.setColor(x, y, Vector4(1.0f, 1.0f, 1.0f, c/255.0f));
 			}
 		}
+		pixmaps.push_back(pixmap);
 
-		charData[2*width*height] = ch;
-
-		// Get width of our font texture
-		RectanglePacker::Rectangle rect(charData);
-		rect.setSize(width, height);
-		packer.addRect(rect);
-
-		// Store advance
-		m_chars[ch].advance = face->glyph->advance.x >> 6;
-		m_chars[ch].pos.set(0, (-bitmapGlyph->top+(bitmap.rows-height)));
-
-		// Finish the display list
-		FT_Done_Glyph(glyph);
+		// Store metrics
+		CharMetrics &metrics = m_metrics[ch];
+		metrics.bearing.set(
+			face->glyph->metrics.horiBearingX >> 6,
+			face->glyph->metrics.horiBearingY >> 6
+			);
+		metrics.size.set(
+			face->glyph->metrics.width >> 6,
+			face->glyph->metrics.height >> 6
+			);
+		metrics.advance.set(
+			face->glyph->advance.x >> 6,
+			metrics.bearing.y - metrics.size.y
+			);
 	}
+	m_lineSize = face->height >> 6;
 
-	// Pack rects
-	const RectanglePacker::Result result = packer.pack();
-
-	// Create font texture
-	uchar *dataPtr = new uchar[result.canvas.x*result.canvas.y*2];
-	memset(dataPtr, 0, result.canvas.x*result.canvas.y*2);
-	for(uchar i = 0; i < 128; i++)
-	{
-		// Fill glyph data
-		const RectanglePacker::Rectangle &rect = result.rectangles[i];
-		uchar *rectData = (uchar*)rect.getData();
-		uchar ch = rectData[2*rect.width*rect.height];
-		for(int y = 0; y < rect.height; y++)
-		{
-			for(int x = 0; x < rect.width; x++)
-			{
-				int dataPos = 2 * ((rect.x + x) + ((rect.y + y) * result.canvas.x));
-				int rectPos = 2 * (x + y*rect.width);
-				dataPtr[dataPos] = rectData[rectPos];
-				dataPtr[dataPos+1] = rectData[rectPos+1];
-			}
-		}
-		delete[] rectData;
-
-		// Set char tex coord
-		m_chars[ch].size.set(rect.width, rect.height);
-		m_chars[ch].texCoord0.set((float)(rect.x)/(float)result.canvas.x, (float)(rect.y)/(float)result.canvas.y);
-		m_chars[ch].texCoord1.set((float)(rect.x + rect.width)/(float)result.canvas.x, (float)(rect.y + rect.height)/(float)result.canvas.y);// = rect.getSize()/result.canvas;
-	}
-
-	// Set texture param
-	Vector4 *pixels = new Vector4[result.canvas.x*result.canvas.y];
-	for(int i = 0; i < result.canvas.x*result.canvas.y*2; i += 2)
-	{
-		float v = dataPtr[i]/255.0f;
-		float a = dataPtr[i+1]/255.0f;
-		pixels[i/2].set(v, v, v, a);
-	}
-
-	m_texture = xdGraphics::CreateTexture(Pixmap(result.canvas.x, result.canvas.y, pixels));
-	m_texture->setFiltering(xdLinear);
-
-	delete[] pixels;
+	// Create font atlas
+	m_atlas = new TextureAtlas(pixmaps);
 
 	// Clean up FreeType
 	FT_Done_Face(face);
 	FT_Done_FreeType(library);
-	delete[] dataPtr;
 }
 
 float Font::getStringWidth(const string &str)
 {
 	float width = 0.0f;
-	for(uint i = 0; i < str.size(); i++) {
-		width += m_chars[str[i]].size.x;
+	for(uint i = 0; i < str.size(); i++)
+	{
+		uchar ch = str[i];
+		if(!isValidChar(ch))
+			continue;
+		width += m_metrics[ch].advance.x;
 	}
 	return width;
 }
 
 float Font::getStringHeight(const string &str)
 {
-	float height = m_size/0.63f;
-	for(uint i = 0; i < str.size(); i++) {
+	float height = m_lineSize;
+	for(uint i = 0; i < str.size(); i++)
+	{
 		if(str[i] == '\n')
-			height += m_size/0.63f;
+			height += m_lineSize;
 	}
 	return height;
 }
@@ -276,56 +241,76 @@ void Font::setColor(const Vector4 &color)
 
 void Font::draw(Batch *batch, const Vector2 &pos, const string &str)
 {
-	// Add space between lines
-	float h = m_size/0.63f;
-	float yOffset = 0.0f;
-	float xOffset = 0.0f;
+	// Get current position
+	Vector2 currentPos = pos;
 
-	m_texture->addRef();
-	batch->setTexture(m_texture);
+	// Setup batch
+	batch->setTexture(m_atlas->getTexture());
 	batch->setPrimitive(Batch::PRIMITIVE_TRIANGLES);
 
-	// Split string lines
-	string line;
+	// Draw string
+	Vertex vertices[4];
 	for(uint i = 0; i < str.size(); i++)
 	{
 		// Check for new line
 		if(str[i] == '\n')
 		{
-			yOffset += h;
-			xOffset = 0.0f;
+			currentPos.x = pos.x;
+			currentPos.y += m_lineSize;
 			continue;
 		}
 
-		// Get char
-		Char c = m_chars[str[i]];
+		// Get char index
+		uchar ch = str[i];
+		if(!isValidChar(ch)) {
+			continue; // Cannot draw this char (yet)
+		}
+		
+		// Get char object
+		const CharMetrics &metrics = m_metrics[ch];
 
+		// Apply char bearing
+		currentPos.x += metrics.bearing.x;
+		
 		// Draw char
-		float px = pos.x + xOffset + c.pos.x;
-		float py = pos.y + yOffset + c.pos.y + m_size;
-		
-		Vertex vertices[4];
-		
-		vertices[0].position.set(px, py);
+		TextureRegion region = m_atlas->get(ch);
+
+		vertices[0].position.set(currentPos.x, currentPos.y + (m_lineSize - metrics.size.y) - metrics.advance.y);
 		vertices[0].color = m_color;
-		vertices[0].texCoord.set(c.texCoord0.x, c.texCoord1.y);
-		
-		vertices[1].position.set(px + c.size.x, py);
+		vertices[0].texCoord.set(region.uv0.x, region.uv1.y);
+
+		vertices[1].position.set(currentPos.x + metrics.size.x, currentPos.y + (m_lineSize - metrics.size.y) - metrics.advance.y);
 		vertices[1].color = m_color;
-		vertices[1].texCoord.set(c.texCoord1.x, c.texCoord1.y);
+		vertices[1].texCoord.set(region.uv1.x, region.uv1.y);
 		
-		vertices[2].position.set(px + c.size.x, py + c.size.y);
+		vertices[2].position.set(currentPos.x + metrics.size.x, currentPos.y + (m_lineSize - metrics.size.y) - metrics.advance.y + metrics.size.y);
 		vertices[2].color = m_color;
-		vertices[2].texCoord.set(c.texCoord1.x, c.texCoord0.y);
+		vertices[2].texCoord.set(region.uv1.x, region.uv0.y);
 		
-		vertices[3].position.set(px, py + c.size.y);
+		vertices[3].position.set(currentPos.x, currentPos.y + (m_lineSize - metrics.size.y) - metrics.advance.y + metrics.size.y);
 		vertices[3].color = m_color;
-		vertices[3].texCoord.set(c.texCoord0.x, c.texCoord0.y);
+		vertices[3].texCoord.set(region.uv0.x, region.uv0.y);
 		
 		batch->addVertices(vertices, 4, QUAD_INDICES, 6);
 
 		// Apply advance
-		xOffset += c.advance;
+		currentPos.x += metrics.advance.x - metrics.bearing.x;
 	}
 	batch->release();
+}
+
+Font *Font::Factory(string &fontName, const uint size)
+{
+	// Check if we can find the font in the local directories
+	util::toAbsoluteFilePath(fontName);
+	if(!util::fileExists(fontName))
+	{
+		// Loop throught the registry to find the file by font name
+		if(!getFontFile(fontName))
+		{
+			ERR("Font '%s' not found!", fontName);
+			return 0;
+		}
+	}
+	return new Font(fontName, size);
 }

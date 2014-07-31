@@ -178,7 +178,7 @@ private:
 	int clazz::Declare(asIScriptEngine *scriptEngine)									\
 	{																					\
 		int r = scriptEngine->RegisterObjectType(#clazz, sizeof(clazz),					\
-						asOBJ_VALUE | asOBJ_POD | asOBJ_APP_CLASS_CAK); AS_ASSERT		\
+						asOBJ_VALUE | asOBJ_POD | asOBJ_APP_CLASS_CDAK); AS_ASSERT		\
 		return r;																		\
 	}
 

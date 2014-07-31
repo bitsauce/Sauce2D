@@ -51,7 +51,7 @@ int Sprite::Register(asIScriptEngine *scriptEngine)
 
 Sprite *Sprite::Factory(Texture *texture)
 {
-	texture->addRef();
+	//texture->addRef();
 	return new Sprite(TextureRegion(texture, Vector2(0.0f), Vector2(1.0f)));
 }
 

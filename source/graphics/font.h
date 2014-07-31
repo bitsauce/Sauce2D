@@ -6,13 +6,14 @@
 #include <x2d/math.h>
 #include <x2d/graphics/batch.h>
 #include <x2d/graphics/texture.h>
+#include <x2d/graphics/textureAtlas.h>
 
 class Font
 {
 public:
 	AS_DECL_REF
 
-	Font(const string &fontNameOrFile, const uint size);
+	Font(const string &path, const uint size);
 	~Font();
 
 	float getStringWidth(const string &str);
@@ -20,33 +21,42 @@ public:
 	void setColor(const Vector4 &color);
 	void draw(Batch *batch, const Vector2 &pos, const string &str);
 
-	struct Char
+	struct CharMetrics
 	{
-		Char() :
-			advance(0.0f),
-			pos(0.0f),
-			size(0.0f),
-			texCoord0(0.0f),
-			texCoord1(0.0f)
+		CharMetrics() :
+			advance(0),
+			bearing(0),
+			size(0)
 		{
 		}
 
-		float advance;
-		Vector2 pos;
-		Vector2 size;
-		Vector2 texCoord0;
-		Vector2 texCoord1;
+		// Metrics
+		Vector2i advance;
+		Vector2i bearing;
+		Vector2i size;
 	};
 
 private:
+	// Load font using TrueType 2
 	void load(const string &fontFile, const uint size);
+	bool isValidChar(uchar ch) { return ch >= 0 && ch < 128; }
 
+	// Font color
 	Vector4 m_color;
-	Texture *m_texture;
-	int m_size;
-	vector<Char> m_chars;
 
-	static Font *Factory(const string &fontNameOrFile, const uint size) { return new Font(fontNameOrFile, size); }
+	// Font texture atlas
+	TextureAtlas *m_atlas;
+
+	// Font size (px)
+	int m_size;
+
+	// Line size (px)
+	int m_lineSize;
+
+	// Font character metrics
+	vector<CharMetrics> m_metrics;
+
+	static Font *Factory(string &fontName, const uint size);
 };
 
 #endif // GFX_FONT_H

@@ -130,6 +130,7 @@ void OpenGL::init(Window *window)
 	glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
 
 	glPointSize(4);
+	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 }
 
 void OpenGL::createContext(HWND window)

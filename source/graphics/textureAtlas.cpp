@@ -1,4 +1,4 @@
-#include "textureAtlas.h"
+#include <x2d/graphics/textureAtlas.h>
 #include "../scripts/scriptarray.h"
 #include <x2d/scriptengine.h>
 
@@ -104,6 +104,7 @@ TextureRegion TextureAtlas::get(const int index, const Vector2 &uv0, const Vecto
 
 	// Get texture region
 	const RectanglePacker::Rectangle &rect = m_result.rectangles[index];
+	m_atlas->addRef();
 	return TextureRegion(m_atlas,
 		(rect.x + rect.width*uv0.x)/ATLAS_SIZE, (rect.y + rect.height*uv0.y)/ATLAS_SIZE,
 		(rect.x + rect.width*uv1.x)/ATLAS_SIZE, (rect.y + rect.height*uv1.y)/ATLAS_SIZE

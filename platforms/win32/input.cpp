@@ -43,11 +43,6 @@ Vector2 Input::getPosition() const
 
 xdVirtualKey fromWinKey(uchar vk)
 {
-	// Keys below 0x80 are standardized
-	if(vk < 0x80) {
-		return xdVirtualKey(vk);
-	}
-
 	switch(vk)
 	{
 	case VK_LBUTTON: return X2D_LeftMouse;
@@ -101,17 +96,13 @@ xdVirtualKey fromWinKey(uchar vk)
 	//case XD_KEY_Greater: return VK_OEM; break;
 	//case XD_KEY_Less: return ; break;
 	//case XD_KEY_Equals: return VK_; break;
+	default: return xdVirtualKey(vk);
 	}
 	return XD_KEY_NULL;
 }
 
 uchar toWinKey(xdVirtualKey key)
 {
-	// Keys below 0x80 are standardized
-	if(key < 0x80) {
-		return key;
-	}
-
 	uchar vk = 0;
 	switch(key)
 	{
@@ -166,6 +157,7 @@ uchar toWinKey(xdVirtualKey key)
 	//case XD_KEY_Greater: vk = VK_OEM; break;
 	//case XD_KEY_Less: vk = ; break;
 	//case XD_KEY_Equals: vk = VK_; break;
+	default: return key;
 	}
 	return vk;
 }

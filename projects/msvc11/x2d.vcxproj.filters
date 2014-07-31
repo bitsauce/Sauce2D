@@ -177,14 +177,14 @@
     <ClInclude Include="..\..\include\x2d\audio\buffer.h">
       <Filter>include\audio</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\source\graphics\textureAtlas.h">
-      <Filter>source\graphics</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\include\x2d\scripts\array.h">
       <Filter>include\scripts</Filter>
     </ClInclude>
     <ClInclude Include="..\..\source\io\iniParser.h">
       <Filter>source\io</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\x2d\graphics\textureAtlas.h">
+      <Filter>include\graphics</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

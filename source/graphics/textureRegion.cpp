@@ -20,6 +20,8 @@ int TextureRegion::Register(asIScriptEngine *scriptEngine)
 	r = scriptEngine->RegisterObjectBehaviour("TextureRegion", asBEHAVE_CONSTRUCT, "void f(Texture@)", asFUNCTIONPR(Factory, (Texture*, TextureRegion*), void), asCALL_CDECL_OBJLAST); AS_ASSERT
 	r = scriptEngine->RegisterObjectBehaviour("TextureRegion", asBEHAVE_CONSTRUCT, "void f(Texture @, const Vector2 &in, const Vector2 &in)", asFUNCTIONPR(Factory, (Texture*, const Vector2&, const Vector2&, TextureRegion*), void), asCALL_CDECL_OBJLAST); AS_ASSERT
 	r = scriptEngine->RegisterObjectBehaviour("TextureRegion", asBEHAVE_CONSTRUCT, "void f(Texture @, const float, const float, const float, const float)", asFUNCTIONPR(Factory, (Texture*, const float, const float, const float, const float, TextureRegion*), void), asCALL_CDECL_OBJLAST); AS_ASSERT
+	r = scriptEngine->RegisterObjectBehaviour("TextureRegion", asBEHAVE_CONSTRUCT, "void f(const TextureRegion &in)", asFUNCTIONPR(Factory, (const TextureRegion&, TextureRegion*), void), asCALL_CDECL_OBJLAST); AS_ASSERT
+	r = scriptEngine->RegisterObjectBehaviour("TextureRegion", asBEHAVE_DESTRUCT, "void f()", asFUNCTION(Destruct), asCALL_CDECL_OBJLAST); AS_ASSERT
 	
 	r = scriptEngine->RegisterObjectProperty("TextureRegion", "Vector2 uv0", offsetof(TextureRegion, uv0)); AS_ASSERT
 	r = scriptEngine->RegisterObjectProperty("TextureRegion", "Vector2 uv1", offsetof(TextureRegion, uv1)); AS_ASSERT
@@ -47,19 +49,34 @@ TextureRegion::TextureRegion(Texture *texture, const float u0, const float v0, c
 }
 
 TextureRegion::TextureRegion(const TextureRegion &other) :
-	uv0(other.uv0),
-	uv1(other.uv1),
-	texture(other.texture)
+	uv0(0.0f),
+	uv1(0.0f),
+	texture(0)
 {
+	*this = other;
 }
 
-/*TextureRegion &TextureRegion::operator=(TextureRegion &other)
+TextureRegion &TextureRegion::operator=(const TextureRegion &other)
 {
-	swap(uv0, other.uv0);
-	swap(uv1, other.uv1);
-	swap(texture, other.texture);
+	if(this == &other) {
+		return *this;
+	}
+	
+	uv0 = other.uv0;
+	uv1 = other.uv1;
+	if(texture != other.texture)
+	{
+		if(texture) {
+			texture->release();
+		}
+		texture = other.texture;
+		if(texture) {
+			texture->addRef();
+		}
+	}
+	
 	return *this;
-}*/
+}
 
 TextureRegion::~TextureRegion()
 {

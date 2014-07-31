@@ -31,6 +31,7 @@
     <ClInclude Include="..\..\include\x2d\graphics\framebufferobject.h" />
     <ClInclude Include="..\..\include\x2d\graphics\pixmap.h" />
     <ClInclude Include="..\..\include\x2d\graphics\texture.h" />
+    <ClInclude Include="..\..\include\x2d\graphics\textureAtlas.h" />
     <ClInclude Include="..\..\include\x2d\graphics\textureRegion.h" />
     <ClInclude Include="..\..\include\x2d\graphics\vertexbufferobject.h" />
     <ClInclude Include="..\..\include\x2d\input.h" />
@@ -53,7 +54,6 @@
     <ClInclude Include="..\..\include\x2d\util.h" />
     <ClInclude Include="..\..\include\x2d\window.h" />
     <ClInclude Include="..\..\source\graphics\animation.h" />
-    <ClInclude Include="..\..\source\graphics\textureAtlas.h" />
     <ClInclude Include="..\..\source\graphics\camera.h" />
     <ClInclude Include="..\..\source\graphics\font.h" />
     <ClInclude Include="..\..\source\graphics\shader.h" />

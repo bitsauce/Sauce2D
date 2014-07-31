@@ -16,7 +16,7 @@
 
 xdGraphics *xdGraphics::s_this = 0;
 
-uint QUAD_INDICES[6] = { 0, 1, 3, 1, 3, 2 };
+uint QUAD_INDICES[6] = { 0, 3, 1, 1, 3, 2 };
 Vector4 QUAD_VERTICES[4] = {
 	Vector4(0.0f, 0.0f, 0.0f, 1.0f),
 	Vector4(1.0f, 0.0f, 0.0f, 1.0f),
