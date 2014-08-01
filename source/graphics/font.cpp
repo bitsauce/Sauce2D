@@ -105,7 +105,8 @@ Font::Font(const string &path, const uint size) :
 	m_color(1.0f),
 	m_atlas(0),
 	m_size(0),
-	m_lineSize(0)
+	m_lineSize(0),
+	m_Msize(0)
 {
 	load(path, size);
 }
@@ -201,6 +202,7 @@ void Font::load(const string &filePath, const uint size)
 			);
 	}
 	m_lineSize = face->height >> 6;
+	m_Msize = m_metrics['M'].size.y;
 
 	// Create font atlas
 	m_atlas = new TextureAtlas(pixmaps);
@@ -275,19 +277,19 @@ void Font::draw(Batch *batch, const Vector2 &pos, const string &str)
 		// Draw char
 		TextureRegion region = m_atlas->get(ch);
 
-		vertices[0].position.set(currentPos.x, currentPos.y + (m_lineSize - metrics.size.y) - metrics.advance.y);
+		vertices[0].position.set(currentPos.x, currentPos.y + (m_Msize - metrics.size.y) - metrics.advance.y);
 		vertices[0].color = m_color;
 		vertices[0].texCoord.set(region.uv0.x, region.uv1.y);
 
-		vertices[1].position.set(currentPos.x + metrics.size.x, currentPos.y + (m_lineSize - metrics.size.y) - metrics.advance.y);
+		vertices[1].position.set(currentPos.x + metrics.size.x, currentPos.y + (m_Msize - metrics.size.y) - metrics.advance.y);
 		vertices[1].color = m_color;
 		vertices[1].texCoord.set(region.uv1.x, region.uv1.y);
 		
-		vertices[2].position.set(currentPos.x + metrics.size.x, currentPos.y + (m_lineSize - metrics.size.y) - metrics.advance.y + metrics.size.y);
+		vertices[2].position.set(currentPos.x + metrics.size.x, currentPos.y + (m_Msize - metrics.size.y) - metrics.advance.y + metrics.size.y);
 		vertices[2].color = m_color;
 		vertices[2].texCoord.set(region.uv1.x, region.uv0.y);
 		
-		vertices[3].position.set(currentPos.x, currentPos.y + (m_lineSize - metrics.size.y) - metrics.advance.y + metrics.size.y);
+		vertices[3].position.set(currentPos.x, currentPos.y + (m_Msize - metrics.size.y) - metrics.advance.y + metrics.size.y);
 		vertices[3].color = m_color;
 		vertices[3].texCoord.set(region.uv0.x, region.uv0.y);
 		

@@ -53,6 +53,9 @@ private:
 	// Line size (px)
 	int m_lineSize;
 
+	// Origin
+	int m_Msize;
+
 	// Font character metrics
 	vector<CharMetrics> m_metrics;
 
