@@ -14,6 +14,8 @@ int IniFile::Register(asIScriptEngine *scriptEngine)
 		
 	r = scriptEngine->RegisterObjectMethod("IniFile", "string getValue(const string &in, const string &in) const", asMETHOD(IniFile, getValue), asCALL_THISCALL); AS_ASSERT
 	r = scriptEngine->RegisterObjectMethod("IniFile", "void setValue(const string &in, const string &in, const string &in)", asMETHOD(IniFile, setValue), asCALL_THISCALL); AS_ASSERT
+	
+	r = scriptEngine->RegisterObjectMethod("IniFile", "bool isSection(const string &in) const", asMETHOD(IniFile, isSection), asCALL_THISCALL); AS_ASSERT
 
 	r = scriptEngine->RegisterObjectMethod("IniFile", "void save()", asMETHOD(IniFile, save), asCALL_THISCALL); AS_ASSERT
 
@@ -67,7 +69,7 @@ IniFile::IniFile(string &path) :
 
 string IniFile::getValue(const string &sec, const string &key) const
 {
-	if(m_sections.find(sec) != m_sections.end())
+	if(isSection(sec))
 	{
 		const Section &section = m_sections.at(sec);
 		if(section.keys.find(key) != section.keys.end())
@@ -82,6 +84,11 @@ void IniFile::setValue(const string &sec, const string &key, const string &value
 {
 	Section &section = m_sections[sec];
 	section.keys[key].value = value;
+}
+
+bool IniFile::isSection(const string &sec) const
+{
+	return m_sections.find(sec) != m_sections.end();
 }
 
 void IniFile::save()
@@ -106,5 +113,6 @@ void IniFile::save()
 		out << endl;
 	}
 	
+	xdFileSystem::MakeDir(m_path.substr(0, m_path.find_last_of('/')));
 	xdFileSystem::WriteFile(m_path, out.str());
 }

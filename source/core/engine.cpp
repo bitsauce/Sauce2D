@@ -534,7 +534,6 @@ void xdEngine::update()
 
 void xdEngine::exit()
 {
-	// TODO: post exit event
 	m_running = false;
 }
 

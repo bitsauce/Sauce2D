@@ -105,6 +105,7 @@ class FileSystem : public xdFileSystem
 public:
 
 	Array *listFiles(string &directory, const string &mask, const bool recursive) const;
+	Array *listFolders(string &directory, const string &mask, const bool recursive) const;
 
 private:
 	xdFileReader *createFileReader(const string &filePath)
@@ -116,6 +117,8 @@ private:
 	{
 		return new FileWriter(filePath);
 	}
+
+	bool makeDir(const string &path);
 };
 
 #endif // WIN_FILE_SYSTEM_H

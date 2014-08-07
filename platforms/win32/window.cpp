@@ -78,7 +78,7 @@ void Window::close()
 	}
 
 	// If we have a OpenGL context
-	m_graphics->destroyContext();
+	//m_graphics->destroyContext();
 
 	// If we have a device context
 	if(m_deviceContext)

@@ -152,7 +152,7 @@ int CScriptBuilder::LoadScriptSection(const char *filename)
 	string conent;
 	string assetPath(":/");
 	assetPath.append(filename);
-	if(!fileSystem->readFile(assetPath.c_str(), conent))
+	if(!xdFileSystem::ReadFile(assetPath.c_str(), conent))
 	{
 		// Write a message to the engine's message callback
 		char buf[256];

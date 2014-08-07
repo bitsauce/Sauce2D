@@ -16,6 +16,7 @@ extern const int FLOAT_SIZE;
 class OpenGL : public xdGraphics
 {
 public:
+	~OpenGL();
 	void init(Window *window);
 
 	void createContext(HWND window);

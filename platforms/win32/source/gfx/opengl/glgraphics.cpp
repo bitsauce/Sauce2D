@@ -133,6 +133,11 @@ void OpenGL::init(Window *window)
 	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 }
 
+OpenGL::~OpenGL()
+{
+	destroyContext();
+}
+
 void OpenGL::createContext(HWND window)
 {
 	// Describes the pixel format of the drawing surface

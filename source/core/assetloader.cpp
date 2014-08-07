@@ -32,25 +32,26 @@ int xdAssetLoader::loadImage(string filePath, uchar** data, uint &width, uint &h
 	{
 		// Load asset as a image
 		string content;
-		m_fileSystem->readFile(filePath, content);
-
-		// attach the binary data to a memory stream
-		FIMEMORY *hmem = FreeImage_OpenMemory((uchar*)content.c_str(), content.size());
+		if(xdFileSystem::ReadFile(filePath, content))
+		{
+			// attach the binary data to a memory stream
+			FIMEMORY *hmem = FreeImage_OpenMemory((uchar*)content.c_str(), content.size());
 		
-		// get the file type
-		FREE_IMAGE_FORMAT fif = FreeImage_GetFileTypeFromMemory(hmem);
+			// get the file type
+			FREE_IMAGE_FORMAT fif = FreeImage_GetFileTypeFromMemory(hmem);
 		
-		// load an image from the memory stream
-		FIBITMAP *bitmap = FreeImage_LoadFromMemory(fif, hmem, 0);
+			// load an image from the memory stream
+			FIBITMAP *bitmap = FreeImage_LoadFromMemory(fif, hmem, 0);
 		
-		width = FreeImage_GetWidth(bitmap);
-		height = FreeImage_GetHeight(bitmap);
-		*data = new uchar[width*height*4];
-		memcpy(*data, FreeImage_GetBits(bitmap), width*height*4);
+			width = FreeImage_GetWidth(bitmap);
+			height = FreeImage_GetHeight(bitmap);
+			*data = new uchar[width*height*4];
+			memcpy(*data, FreeImage_GetBits(bitmap), width*height*4);
 		
-		// always close the memory stream
-		FreeImage_Unload(bitmap);
-		FreeImage_CloseMemory(hmem);
+			// always close the memory stream
+			FreeImage_Unload(bitmap);
+			FreeImage_CloseMemory(hmem);
+		}
 	}
 	return r;
 }

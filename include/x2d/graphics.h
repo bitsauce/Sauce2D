@@ -33,6 +33,7 @@ public:
 	AS_DECL_SINGLETON
 
 	xdGraphics();
+	virtual ~xdGraphics() {}
 
 	enum Feature
 	{

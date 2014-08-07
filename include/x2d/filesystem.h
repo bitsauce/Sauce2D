@@ -47,6 +47,7 @@ public:
 	virtual bool fileExists(string &filePath) const;
 	// NOTE TO SELF: I might want to consider making a DirectoryIterator instead of using this function
 	virtual Array *listFiles(string &directory, const string &mask, const bool recursive) const		{ NOT_IMPLEMENTED_ARR(listFiles, "string") }			// Optional
+	virtual Array *listFolders(string &directory, const string &mask, const bool recursive) const	{ NOT_IMPLEMENTED_ARR(listFolders, "string") }			// Optional
 	virtual void removeFile(string filePath)														{ NOT_IMPLEMENTED(removeFile) }							// Optional
 	virtual void removeDir(string dirPath)															{ NOT_IMPLEMENTED(removeDir) }							// Optional
 
@@ -61,10 +62,12 @@ public:
 	// Static functions
 	static bool ReadFile(string path, string &content);
 	static bool WriteFile(string path, const string &content);
+	static bool MakeDir(string path);
 
 protected:
 	virtual xdFileWriter *createFileWriter(const string &filePath) = 0;
 	virtual xdFileReader *createFileReader(const string &filePath) = 0;
+	virtual bool makeDir(const string &path) = 0;
 	static xdFileSystem *s_this;
 };
 

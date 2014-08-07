@@ -23,6 +23,7 @@ int xdFileSystem::Register(asIScriptEngine *scriptEngine)
 
 	r = scriptEngine->RegisterObjectMethod("ScriptFileSystem", "bool fileExists(string &in) const", asMETHOD(xdFileSystem, fileExists), asCALL_THISCALL); AS_ASSERT
 	r = scriptEngine->RegisterObjectMethod("ScriptFileSystem", "array<string>@ listFiles(string &in, const string &in, const bool recursive = false) const", asMETHOD(xdFileSystem, listFiles), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("ScriptFileSystem", "array<string>@ listFolders(string &in, const string &in, const bool recursive = false) const", asMETHOD(xdFileSystem, listFolders), asCALL_THISCALL); AS_ASSERT
 
 	r = scriptEngine->RegisterObjectMethod("ScriptFileSystem", "void removeFile(string)", asMETHOD(xdFileSystem, removeFile), asCALL_THISCALL); AS_ASSERT
 	r = scriptEngine->RegisterObjectMethod("ScriptFileSystem", "void removeDir(string)", asMETHOD(xdFileSystem, removeDir), asCALL_THISCALL); AS_ASSERT
@@ -35,12 +36,20 @@ int xdFileSystem::Register(asIScriptEngine *scriptEngine)
 
 bool xdFileSystem::ReadFile(string path, string &content)
 {
+	util::toAbsoluteFilePath(path);
 	return s_this->readFile(path, content);
 }
 
 bool xdFileSystem::WriteFile(string path, const string &content)
 {
+	util::toAbsoluteFilePath(path);
 	return s_this->writeFile(path, content);
+}
+
+bool xdFileSystem::MakeDir(string path)
+{
+	util::toAbsoluteFilePath(path);
+	return s_this->makeDir(path);
 }
 
 bool xdFileSystem::fileExists(string &filePath) const
@@ -50,7 +59,6 @@ bool xdFileSystem::fileExists(string &filePath) const
 
 bool xdFileSystem::readFile(string filePath, string &content) const
 {
-	util::toAbsoluteFilePath(filePath);
 	xdFileReader *fileReader = CreateFileReader(filePath);
 	if(fileReader->isOpen())
 	{
@@ -67,7 +75,6 @@ bool xdFileSystem::readFile(string filePath, string &content) const
 
 bool xdFileSystem::writeFile(string filePath, const string content) const
 {
-	util::toAbsoluteFilePath(filePath);
 	xdFileWriter *fileWriter = CreateFileWriter(filePath);
 	fileWriter->clear();
 	if(fileWriter->isOpen())

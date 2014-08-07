@@ -14,6 +14,8 @@ public:
 	string getValue(const string &section, const string &key) const;
 	void setValue(const string &section, const string &key, const string &value);
 
+	bool isSection(const string &section) const;
+
 	void save();
 
 private:
