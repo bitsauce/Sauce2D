@@ -6,10 +6,10 @@
 #include <x2d/base.h>
 
 // Script func-call argument
-struct ScriptArgument
+struct ScriptValue
 {
-	ScriptArgument();
-	~ScriptArgument();
+	ScriptValue();
+	~ScriptValue();
 
 	void set(void *value, int typeId);
 	void clear();
@@ -52,9 +52,16 @@ public:
 	// Execute string
 	void executeString(const string &str) const;
 
+	// Serializing
+	void serialize(void *value, int typeId, string &path);
+	void serialize(void *value, int typeId, stringstream &ss);
+	void deserialize(void *value, int typeId, string &path);
+	void deserialize(void *value, int typeId, stringstream &ss);
+
 private:
 	asIScriptModule *m_module;
 	class xdDebug *m_debugger;
+	map<intptr_t, void*> m_pointerAddresses;
 };
 
 // AngelScript functions

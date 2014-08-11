@@ -42,6 +42,7 @@ bool xdFileSystem::ReadFile(string path, string &content)
 
 bool xdFileSystem::WriteFile(string path, const string &content)
 {
+	MakeDir(path.substr(0, path.find_last_of('/')));
 	util::toAbsoluteFilePath(path);
 	return s_this->writeFile(path, content);
 }

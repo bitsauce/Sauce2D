@@ -54,9 +54,6 @@
     <ClInclude Include="..\..\include\x2d\math.h">
       <Filter>include</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\source\scripts\scriptarray.h">
-      <Filter>source\scripts</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\source\scripts\scriptbuilder.h">
       <Filter>source\scripts</Filter>
     </ClInclude>
@@ -186,6 +183,12 @@
     <ClInclude Include="..\..\include\x2d\graphics\textureAtlas.h">
       <Filter>include\graphics</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\source\scripts\serializer.h">
+      <Filter>source\scripts</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\scripts\scriptarray.h">
+      <Filter>source\scripts</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\source\math\math.cpp">
@@ -199,9 +202,6 @@
     </ClCompile>
     <ClCompile Include="..\..\source\math\vector.cpp">
       <Filter>source\math</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\scripts\scriptarray.cpp">
-      <Filter>source\scripts</Filter>
     </ClCompile>
     <ClCompile Include="..\..\source\scripts\scriptbuilder.cpp">
       <Filter>source\scripts</Filter>
@@ -313,6 +313,12 @@
     </ClCompile>
     <ClCompile Include="..\..\source\io\iniParser.cpp">
       <Filter>source\io</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\scripts\serializer.cpp">
+      <Filter>source\scripts</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\scripts\scriptarray.cpp">
+      <Filter>source\scripts</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

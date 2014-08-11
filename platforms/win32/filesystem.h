@@ -62,7 +62,7 @@ class FileWriter : public xdFileWriter
 {
 public:
 	FileWriter(const string &filePath) :
-		stream(filePath)
+		stream(filePath, ofstream::binary)
 	{
 	}
 

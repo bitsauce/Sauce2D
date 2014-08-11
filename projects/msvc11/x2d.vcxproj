@@ -67,6 +67,7 @@
     <ClInclude Include="..\..\source\scripts\scriptfunc.h" />
     <ClInclude Include="..\..\source\scripts\scriptgrid.h" />
     <ClInclude Include="..\..\source\scripts\scripthelper.h" />
+    <ClInclude Include="..\..\source\scripts\serializer.h" />
     <ClInclude Include="..\..\source\scripts\scriptstdstring.h" />
   </ItemGroup>
   <ItemGroup>
@@ -110,6 +111,7 @@
     <ClCompile Include="..\..\source\scripts\scriptfunc.cpp" />
     <ClCompile Include="..\..\source\scripts\scriptgrid.cpp" />
     <ClCompile Include="..\..\source\scripts\scripthelper.cpp" />
+    <ClCompile Include="..\..\source\scripts\serializer.cpp" />
     <ClCompile Include="..\..\source\scripts\scriptstdstring.cpp" />
     <ClCompile Include="..\..\source\scripts\scriptstdstring_utils.cpp" />
   </ItemGroup>

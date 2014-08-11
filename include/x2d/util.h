@@ -20,6 +20,7 @@
 	#include <set>
 	#include <stack>
 	#include <exception>
+	#include <sstream>
 #elif X2D_LINUX
 	// Android and STL headers
 	#include <sys/socket.h>
