@@ -18,7 +18,7 @@ int CScriptFuncCall::Prepare(void *function)
 void CScriptFuncCall::SetObject(void *value, int typeId)
 {
 	if(m_object == 0) {
-		m_object  = new ScriptArgument;
+		m_object  = new ScriptValue;
 	}
 	m_object->set(value, typeId);
 }
@@ -34,7 +34,7 @@ int CScriptFuncCall::Execute()
 	for(uint i = 0; i < m_arguments.size(); i++)
 	{
 		// Make sure all the argument is defined
-		const ScriptArgument &arg = m_arguments[i];
+		const ScriptValue &arg = m_arguments[i];
 		if(!arg.valid) {
 			asIScriptContext *ctx = asGetActiveContext();
 			if(ctx) ctx->SetException("Invalid argument");

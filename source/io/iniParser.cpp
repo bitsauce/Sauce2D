@@ -113,6 +113,5 @@ void IniFile::save()
 		out << endl;
 	}
 	
-	xdFileSystem::MakeDir(m_path.substr(0, m_path.find_last_of('/')));
 	xdFileSystem::WriteFile(m_path, out.str());
 }

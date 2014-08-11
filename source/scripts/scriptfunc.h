@@ -27,8 +27,8 @@ public:
 protected:
 	asIScriptEngine *m_scriptEngine;
 	asIScriptContext *m_context;
-	vector<ScriptArgument> m_arguments;
-	ScriptArgument *m_object;
+	vector<ScriptValue> m_arguments;
+	ScriptValue *m_object;
 };
 
 void RegisterScriptArray(asIScriptEngine *engine, bool defaultArray);

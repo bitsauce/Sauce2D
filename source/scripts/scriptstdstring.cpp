@@ -130,6 +130,16 @@ static void DestructString(string *thisPointer)
 	thisPointer->~string();
 }
 
+static void ConstructStringStream(stringstream *ptr)
+{
+	new (ptr) stringstream();
+}
+
+static void DestructStringStream(stringstream *ptr)
+{
+	ptr->~basic_stringstream();
+}
+
 static string &AddAssignStringToString(const string &str, string &dest)
 {
 	// We don't register the method directly because some compilers
@@ -318,6 +328,17 @@ static int StringFindLast(const string &sub, int start, const string &str)
 {
 	// We don't register the method directly because the argument types change between 32bit and 64bit platforms
 	return (int)str.rfind(sub, (size_t)start);
+}
+
+
+static void serialize(stringstream &ss, const string &str)
+{
+	ss << str << endl;
+}
+
+static void deserialize(stringstream &ss, string &str)
+{
+	getline(ss, str);
 }
 
 // AngelScript signature:
@@ -607,6 +628,13 @@ void RegisterStdString_Native(asIScriptEngine *engine)
 	r = engine->RegisterObjectMethod("string", "string substr(uint start = 0, int count = -1) const", asFUNCTION(StringSubString), asCALL_CDECL_OBJLAST); assert( r >= 0 );
 	r = engine->RegisterObjectMethod("string", "int findFirst(const string &in, uint start = 0) const", asFUNCTION(StringFindFirst), asCALL_CDECL_OBJLAST); assert( r >= 0 );
 	r = engine->RegisterObjectMethod("string", "int findLast(const string &in, int start = -1) const", asFUNCTION(StringFindLast), asCALL_CDECL_OBJLAST); assert( r >= 0 );
+	
+	r = engine->RegisterObjectType("stringstream", sizeof(stringstream), asOBJ_VALUE | asOBJ_APP_CLASS_CD); assert( r >= 0 );
+	r = engine->RegisterObjectBehaviour("stringstream", asBEHAVE_CONSTRUCT,  "void f()",                    asFUNCTION(ConstructStringStream), asCALL_CDECL_OBJLAST); assert( r >= 0 );
+	r = engine->RegisterObjectBehaviour("stringstream", asBEHAVE_DESTRUCT,   "void f()",                    asFUNCTION(DestructStringStream),  asCALL_CDECL_OBJLAST); assert( r >= 0 );
+
+	r = engine->RegisterObjectMethod("string", "void serialize(stringstream &in) const", asFUNCTION(serialize), asCALL_CDECL_OBJLAST); assert( r >= 0 );
+	r = engine->RegisterObjectMethod("string", "void deserialize(stringstream &in)", asFUNCTION(deserialize), asCALL_CDECL_OBJLAST); assert( r >= 0 );
 
 	r = engine->RegisterGlobalFunction("string formatInt(int64 val, const string &in options, uint width = 0)", asFUNCTION(formatInt), asCALL_CDECL); assert(r >= 0);
 	r = engine->RegisterGlobalFunction("string formatFloat(double val, const string &in options, uint width = 0, uint precision = 0)", asFUNCTION(formatFloat), asCALL_CDECL); assert(r >= 0);

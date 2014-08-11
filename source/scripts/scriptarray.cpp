@@ -300,6 +300,9 @@ static void RegisterScriptArray_Native(asIScriptEngine *engine)
 	r = engine->RegisterObjectMethod("array<T>", "int findByRef(uint, const T&in) const", asMETHODPR(CScriptArray, FindByRef, (asUINT, void*) const, int), asCALL_THISCALL); assert( r >= 0 );
 	r = engine->RegisterObjectMethod("array<T>", "bool opEquals(const array<T>&in) const", asMETHOD(CScriptArray, operator==), asCALL_THISCALL); assert( r >= 0 );
 	r = engine->RegisterObjectMethod("array<T>", "bool isEmpty() const", asMETHOD(CScriptArray, IsEmpty), asCALL_THISCALL); assert( r >= 0 );
+	
+	r = engine->RegisterObjectMethod("array<T>", "void serialize(stringstream &in) const", asMETHOD(CScriptArray, serialize), asCALL_THISCALL); assert( r >= 0 );
+	r = engine->RegisterObjectMethod("array<T>", "void deserialize(stringstream &in)", asMETHOD(CScriptArray, deserialize), asCALL_THISCALL); assert( r >= 0 );
 
 	// Register virtual properties
 	r = engine->RegisterObjectMethod("array<T>", "uint get_size() const", asMETHOD(CScriptArray, GetSize), asCALL_THISCALL); assert( r >= 0 );
@@ -1982,6 +1985,32 @@ static void RegisterScriptArray_Generic(asIScriptEngine *engine)
 	r = engine->RegisterObjectBehaviour("array<T>", asBEHAVE_GETGCFLAG, "bool f()", asFUNCTION(ScriptArrayGetFlag_Generic), asCALL_GENERIC); assert( r >= 0 );
 	r = engine->RegisterObjectBehaviour("array<T>", asBEHAVE_ENUMREFS, "void f(int&in)", asFUNCTION(ScriptArrayEnumReferences_Generic), asCALL_GENERIC); assert( r >= 0 );
 	r = engine->RegisterObjectBehaviour("array<T>", asBEHAVE_RELEASEREFS, "void f(int&in)", asFUNCTION(ScriptArrayReleaseAllHandles_Generic), asCALL_GENERIC); assert( r >= 0 );
+}
+
+#include <x2d/engine.h>
+#include <x2d/scriptengine.h>
+
+void CScriptArray::serialize(stringstream &ss) const
+{
+	// Store size and serialize values
+	ss << GetSize() << endl;
+	for(int i = 0; i < GetSize(); i++) {
+		g_engine->getScriptEngine()->serialize((void*)At(i), subTypeId, ss);
+	}
+}
+
+void CScriptArray::deserialize(stringstream &ss)
+{
+	// Read size
+	int size;
+	ss >> size;
+	ss.ignore();
+
+	// Resize and deserialize values
+	Resize(size);
+	for(int i = 0; i < size; i++) {
+		g_engine->getScriptEngine()->deserialize((void*)At(i), subTypeId, ss);
+	}
 }
 
 END_AS_NAMESPACE

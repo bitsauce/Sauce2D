@@ -66,13 +66,8 @@ int xdScriptEngine::Register(asIScriptEngine *scriptEngine)
 	r = scriptEngine->RegisterObjectMethod("ScriptManager", "bool classDerivesFromName(const string, const string)", asMETHOD(xdScriptEngine, classDerivesFromName), asCALL_THISCALL); AS_ASSERT
 	r = scriptEngine->RegisterObjectMethod("ScriptManager", "bool classDerivesFromId(const uint, const uint)", asMETHOD(xdScriptEngine, classDerivesFromId), asCALL_THISCALL); AS_ASSERT
 
-	// Script object // TODO: Transplant to MetaObject class
-	/*r = scriptEngine->RegisterObjectMethod("ScriptManager", "void srcSetCreateArg(const uint, ?&in)", asMETHOD(xdScriptEngine, setCreateArg), asCALL_THISCALL);
-	r = scriptEngine->RegisterObjectMethod("ScriptManager", "void srcResizeCreateArgs(const uint)", asMETHOD(xdScriptEngine, resizeCreateArgs), asCALL_THISCALL);
-	r = scriptEngine->RegisterObjectMethod("ScriptManager", "void srcSetCreateObjectByName(const string)", asMETHOD(xdScriptEngine, setCreateObjectByName), asCALL_THISCALL);
-	r = scriptEngine->RegisterObjectMethod("ScriptManager", "void srcSetCreateObjectById(const uint)", asMETHOD(xdScriptEngine, setCreateObjectById), asCALL_THISCALL);
-	r = scriptEngine->RegisterObjectMethod("ScriptManager", "void srcCreateObject(?&out, const string s = \"\")", asMETHOD(xdScriptEngine, createObject), asCALL_THISCALL);
-	r = scriptEngine->RegisterObjectMethod("ScriptManager", "string srcGetObjectClassName(?&in)", asMETHOD(xdScriptEngine, objectClassName), asCALL_THISCALL);*/
+	r = scriptEngine->RegisterObjectMethod("ScriptManager", "void serialize(?&in, string &in)", asMETHODPR(xdScriptEngine, serialize, (void*, int, string&), void), asCALL_THISCALL);
+	r = scriptEngine->RegisterObjectMethod("ScriptManager", "void deserialize(?&out, string &in)", asMETHODPR(xdScriptEngine, deserialize, (void*, int, string&), void), asCALL_THISCALL);
 
 	return r;
 }
@@ -178,17 +173,17 @@ string xdScriptEngine::objectClassName(void *obj, int typeId) const
 	return scriptObject->GetObjectType()->GetName();
 }
 
-ScriptArgument::ScriptArgument() :
+ScriptValue::ScriptValue() :
 	valid(false)
 {
 }
 
-ScriptArgument::~ScriptArgument()
+ScriptValue::~ScriptValue()
 {
 	clear();
 }
 
-void ScriptArgument::set(void *value, int typeId)
+void ScriptValue::set(void *value, int typeId)
 {
 	// Set argument value
 	asIObjectType *objectType = scriptEngine->GetObjectTypeById(typeId);
@@ -212,7 +207,7 @@ void ScriptArgument::set(void *value, int typeId)
 	this->typeId = typeId;
 }
 
-void ScriptArgument::clear()
+void ScriptValue::clear()
 {
 	// Clear the argument data
 	if(valid) {
@@ -223,95 +218,6 @@ void ScriptArgument::clear()
 	}
 	valid = false;
 }
-
-/*void xdScriptEngine::setCreateArg(const uint idx, void *value, int typeId)
-{
-	// Check for valid index
-	if(m_createArgs.size() <= idx) return;
-	m_createArgs[idx].set(value, typeId);
-}
-
-void xdScriptEngine::resizeCreateArgs(const uint size)
-{
-	m_createArgs.resize(size);
-}
-
-void xdScriptEngine::setCreateObjectByName(const string name)
-{
-	m_createObjectType = m_module->GetObjectTypeByName(name.c_str());
-}
-
-void xdScriptEngine::setCreateObjectById(const uint id)
-{
-	m_createObjectType = scriptEngine->GetObjectTypeByIndex(id);
-}
-
-void xdScriptEngine::createObject(void *object, int typeId, const string decl) const
-{
-	// Make sure we have an object
-	if(!m_createObjectType) {
-		ERR("xdScriptEngine::createObject() No object was defined!");
-		return;
-	}
-
-	// Get constructor
-	string className = m_createObjectType->GetName();
-	asIScriptFunction *func = m_createObjectType->GetFactoryByDecl(string(className+"@ "+className+"(" + decl.c_str() + ")").c_str());
-	if(func->GetParamCount() != m_createArgs.size()) {
-		ERR("xdScriptEngine::createObject() Invalid number of arguments (got %i, expected %i)!", m_createArgs.size(), func->GetParamCount());
-		return;
-	}
-	
-	// Prepare the object constructor
-	int r;
-	asIScriptContext *ctx = createContext();
-	r = ctx->Prepare(func); assert(r >= 0);
-
-	// Set constructor arguments
-	for(uint i = 0; i < m_createArgs.size(); i++)
-	{
-		// Make sure all the argument is defined
-		const ScriptArgument *arg = &m_createArgs[i];
-		if(!arg->valid) {
-			asIScriptContext *ctx = asGetActiveContext();
-			if(ctx) ctx->SetException("Invalid argument");
-			return;
-		}
-
-		// Set argument
-		if((arg->typeId & ~asTYPEID_MASK_SEQNBR) && !(arg->typeId & asTYPEID_OBJHANDLE)) // Script object type
-			ctx->SetArgObject(i, arg->value);
-		else if(arg->typeId & asTYPEID_OBJHANDLE) // Handle type
-		{
-			scriptEngine->AddRefScriptObject(arg->value, scriptEngine->GetObjectTypeById(arg->typeId));
-			ctx->SetArgAddress(i, arg->value);
-		}else if(arg->typeId == asTYPEID_BOOL || // 8-bit types
-				arg->typeId == asTYPEID_INT8 ||
-				arg->typeId == asTYPEID_UINT8)
-			ctx->SetArgByte(i, *(char*)arg->value);
-		else if(arg->typeId == asTYPEID_INT16 || // 16-bit types
-				arg->typeId == asTYPEID_UINT16)
-			ctx->SetArgWord(i, *(short*)arg->value);
-		else if(arg->typeId == asTYPEID_INT32 || // 32-bit types
-				arg->typeId == asTYPEID_UINT32 ||
-				arg->typeId == asTYPEID_FLOAT ||
-				arg->typeId > asTYPEID_DOUBLE) // enums have a type id larger than doubles
-			ctx->SetArgDWord(i, *(int*)arg->value);
-		else if(arg->typeId == asTYPEID_INT64 || // 64-bit types
-				arg->typeId == asTYPEID_UINT64 ||
-				arg->typeId == asTYPEID_DOUBLE)
-			ctx->SetArgQWord(i, *(asQWORD*)arg->value);
-	}
-
-	// Execute constructor
-	r = ctx->Execute(); assert(r >= 0);
-	if(typeId & asTYPEID_OBJHANDLE) {
-		void *newObject = ctx->GetReturnAddress(); // Store return address
-		((asIScriptObject*)newObject)->AddRef(); // Keep alive
-		*(void**)object = newObject;
-	}
-	ctx->Release();
-}*/
 
 //----------------------------------------------------------------------------
 // AngelScript
@@ -415,4 +321,265 @@ int asCompileModule(const string &name, xdFileSystem *fileSystem)
 void xdScriptEngine::executeString(const string &str) const
 {
 	ExecuteString(scriptEngine, str.c_str(), scriptEngine->GetModule("GameModule"));
+}
+
+#include "../scripts/serializer.h"
+
+void xdScriptEngine::serialize(void *value, int typeId, string &path)
+{
+	// Make sure we got a valid object
+	if(value != 0 && (typeId & asTYPEID_SCRIPTOBJECT) && (typeId &asTYPEID_OBJHANDLE))
+	{
+		// Store object type
+		stringstream ss;
+		ss << (*(asIScriptObject**)value)->GetObjectType()->GetName() << endl;
+		serialize(value, typeId, ss);
+		xdFileSystem::WriteFile(path, ss.str());
+		m_pointerAddresses.clear();
+	}else{
+		LOG("Cannot serialize object of type '%s'", scriptEngine->GetObjectTypeById(typeId)->GetBaseType()->GetName());
+	}
+
+	if(typeId & asTYPEID_MASK_OBJECT)
+	{
+		//scriptEngine->ReleaseScriptObject(value, scriptEngine->GetObjectTypeById(typeId));
+	}
+}
+
+void xdScriptEngine::serialize(void *value, int typeId, stringstream &ss)
+{
+	// Make sure we got a valid object
+	if(value == 0)
+		return;
+	
+	if(typeId & asTYPEID_MASK_OBJECT)
+	{
+		// For script objects we need to serialize it's properties
+		if(typeId & asTYPEID_SCRIPTOBJECT)
+		{
+			// Get object and type
+			asIScriptObject *object = 0;
+			if(typeId & asTYPEID_OBJHANDLE)
+			{
+				// If it is a handle we need to dereference it
+				asIScriptObject *handleObj = *(asIScriptObject**)value;
+
+				// Get address of the object pointed to by the handle
+				intptr_t addr = (intptr_t)handleObj;
+				if(m_pointerAddresses.find(addr) == m_pointerAddresses.end())
+				{
+					// Add this object to our address list
+					m_pointerAddresses[addr] = handleObj;
+					object = handleObj; // Set the object up for serialization
+				}
+
+				// Store the object address
+				ss << addr << endl;
+			}else{
+				object = (asIScriptObject*)value;
+			}
+		
+			if(object)
+			{
+				// Serialize the object and its properties
+				asIObjectType *type = object->GetObjectType();
+				for(int i = 0; i < type->GetPropertyCount(); i++)
+				{
+					serialize(object->GetAddressOfProperty(i), object->GetPropertyTypeId(i), ss);
+				}
+			}
+		}else // if(asAPP_CLASS)
+		{
+			// Get object pointer
+			void *object = 0;
+			if(typeId & asTYPEID_OBJHANDLE)
+			{
+				// Have we already stored this object?
+				if(m_pointerAddresses.find((intptr_t)value) == m_pointerAddresses.end())
+				{
+					// We're receiving a reference to the handle, so we need to dereference it
+					object = *(void**)value;
+					ss << (intptr_t)value;
+				}
+
+				// 1) is adress already stored?
+				// 2) no? serialize the object which the handle points to and store its adress. yes? do nothing
+				// 3) assign this property to the appropriate adress
+			}else{
+				object = value;
+			}
+			
+			// Get object type
+			asIObjectType *type = scriptEngine->GetObjectTypeById(typeId);
+			if(object)
+			{
+				asIScriptFunction *func = type->GetMethodByDecl("void serialize(stringstream &in) const");
+				if(func)
+				{
+					// Call 'void serialize()' on object
+					asIScriptContext *ctx = createContext();
+					ctx->Prepare(func);
+					ctx->SetObject(object);
+					ctx->SetArgAddress(0, &ss);
+					ctx->Execute();
+
+					// Clean up
+					ctx->Release();
+				}else{
+					LOG("Object type '%s' does not support serialization!", type->GetName());
+				}
+			}
+		}
+	}else
+	{
+		// Primitive types
+		if(typeId == asTYPEID_BOOL || typeId == asTYPEID_INT8 || typeId == asTYPEID_UINT8)
+			ss << *(char*)value;
+		else if(typeId == asTYPEID_INT16 || typeId == asTYPEID_UINT16)
+			ss << *(short*)value;
+		else if(typeId == asTYPEID_INT32 || typeId == asTYPEID_UINT32 || typeId == asTYPEID_FLOAT || typeId > asTYPEID_DOUBLE) // enums have a type id larger than doubles
+			ss << *(int*)value;
+		else if(typeId == asTYPEID_INT64 || typeId == asTYPEID_UINT64 || typeId == asTYPEID_DOUBLE)
+			ss << *(double*)value;
+		ss << endl;
+	}
+}
+
+void xdScriptEngine::deserialize(void *value, int typeId, string &path)
+{
+	// Read file
+	string content;
+	if(!xdFileSystem::ReadFile(path, content))
+	{
+		LOG("Scripts::deserialize() - Unable to read serialized file '%s'", path);
+		return;
+	}
+	stringstream ss(content);
+	
+	// Get object type by name
+	string typeName;
+	ss >> typeName;
+	asIObjectType *type = m_module->GetObjectTypeByName(typeName.c_str());
+	if(type)
+	{
+		// Create uninitialized script object
+		void *object = 0;
+		deserialize(&object, typeId, ss);
+		m_pointerAddresses.clear();
+
+		// Set out object
+		if(typeId & asTYPEID_MASK_OBJECT && scriptEngine->IsHandleCompatibleWithObject(object, type->GetTypeId(), typeId))
+		{
+			*(void**)value = object;
+		}else if(typeId != asTYPEID_VOID) {
+			LOG("Scripts::deserialize() - Output variable is not a handle");
+		}
+	}
+}
+
+void xdScriptEngine::deserialize(void *value, int typeId, stringstream &ss)
+{
+	if(typeId & asTYPEID_MASK_OBJECT)
+	{
+		// Get object type
+		asIObjectType *type = scriptEngine->GetObjectTypeById(typeId);
+
+		// For script objects we need to deserialize it's properties
+		if(typeId & asTYPEID_SCRIPTOBJECT)
+		{
+			// Get object and type
+			asIScriptObject *object = 0;
+			if(typeId & asTYPEID_OBJHANDLE)
+			{
+				// Get the stored address value
+				intptr_t addr;
+				ss >> addr;
+				ss.ignore();
+
+				// Check if we've already restored this object
+				if(m_pointerAddresses.find(addr) == m_pointerAddresses.end())
+				{
+					// No. Create uninitialized object
+					asIScriptObject *handleObj = *(asIScriptObject**)value;
+					if(handleObj == 0) {
+						handleObj = (asIScriptObject*)scriptEngine->CreateUninitializedScriptObject(type);
+					}
+
+					// Add this object to our address list
+					m_pointerAddresses[addr] = handleObj;
+					object = handleObj; // This will deserialize the object
+					*(void**)value = handleObj;
+				}else{
+					// Yes. Set out value and add a reference to the script object
+					asIScriptObject *handleObj = (asIScriptObject*)m_pointerAddresses[addr];
+					handleObj->AddRef();
+					*(void**)value = handleObj;
+				}
+			}else{
+				object = (asIScriptObject*)value;
+			}
+		
+			if(object)
+			{
+				// Deserialize all object properties
+				for(int i = 0; i < type->GetPropertyCount(); i++)
+				{
+					deserialize(object->GetAddressOfProperty(i), object->GetPropertyTypeId(i), ss);
+				}
+			}
+		}else
+		{
+			// Get object type
+			asIObjectType *type = scriptEngine->GetObjectTypeById(typeId);
+
+			// Get object pointer
+			void *object = 0;
+			if(typeId & asTYPEID_OBJHANDLE)
+			{
+				if(m_pointerAddresses.find((intptr_t)value) == m_pointerAddresses.end())
+				{
+					// We're receiving a reference to the handle, so we need to dereference it
+					object = *(void**)value;
+					ss << (intptr_t)value;
+				}
+
+				// 1) is adress already stored?
+				// 2) no? serialize the object which the handle points to and store its adress. yes? do nothing
+				// 3) assign this property to the appropriate adress
+			}else{
+				object = value;
+			}
+		
+			if(object)
+			{
+				asIScriptFunction *func = type->GetMethodByDecl("void deserialize(stringstream &in)");
+				if(func)
+				{
+					// Call 'void deserialize()' on object
+					asIScriptContext *ctx = createContext();
+					ctx->Prepare(func);
+					ctx->SetObject(object);
+					ctx->SetArgAddress(0, &ss);
+					ctx->Execute();
+
+					// Clean up
+					ctx->Release();
+				}else{
+					LOG("Object type '%s' does not support serialization!", type->GetName());
+				}
+			}
+		}
+	}else
+	{
+		// Primitive types
+		if(typeId == asTYPEID_BOOL || typeId == asTYPEID_INT8 || typeId == asTYPEID_UINT8)
+			ss >> *(char*)value;
+		else if(typeId == asTYPEID_INT16 || typeId == asTYPEID_UINT16)
+			ss >> *(short*)value;
+		else if(typeId == asTYPEID_INT32 || typeId == asTYPEID_UINT32 || typeId == asTYPEID_FLOAT || typeId > asTYPEID_DOUBLE) // enums have a type id larger than doubles
+			ss >> *(int*)value;
+		else if(typeId == asTYPEID_INT64 || typeId == asTYPEID_UINT64 || typeId == asTYPEID_DOUBLE)
+			ss >> *(double*)value;
+		ss.ignore();
+	}
 }
