@@ -5,6 +5,7 @@
 #include <stdio.h> // sprintf
 
 #include "scriptarray.h"
+#include "stringstream.h"
 
 using namespace std;
 
@@ -300,9 +301,6 @@ static void RegisterScriptArray_Native(asIScriptEngine *engine)
 	r = engine->RegisterObjectMethod("array<T>", "int findByRef(uint, const T&in) const", asMETHODPR(CScriptArray, FindByRef, (asUINT, void*) const, int), asCALL_THISCALL); assert( r >= 0 );
 	r = engine->RegisterObjectMethod("array<T>", "bool opEquals(const array<T>&in) const", asMETHOD(CScriptArray, operator==), asCALL_THISCALL); assert( r >= 0 );
 	r = engine->RegisterObjectMethod("array<T>", "bool isEmpty() const", asMETHOD(CScriptArray, IsEmpty), asCALL_THISCALL); assert( r >= 0 );
-	
-	r = engine->RegisterObjectMethod("array<T>", "void serialize(stringstream &in) const", asMETHOD(CScriptArray, serialize), asCALL_THISCALL); assert( r >= 0 );
-	r = engine->RegisterObjectMethod("array<T>", "void deserialize(stringstream &in)", asMETHOD(CScriptArray, deserialize), asCALL_THISCALL); assert( r >= 0 );
 
 	// Register virtual properties
 	r = engine->RegisterObjectMethod("array<T>", "uint get_size() const", asMETHOD(CScriptArray, GetSize), asCALL_THISCALL); assert( r >= 0 );
@@ -1990,21 +1988,20 @@ static void RegisterScriptArray_Generic(asIScriptEngine *engine)
 #include <x2d/engine.h>
 #include <x2d/scriptengine.h>
 
-void CScriptArray::serialize(stringstream &ss) const
+void CScriptArray::serialize(StringStream &ss) const
 {
 	// Store size and serialize values
-	ss << GetSize() << endl;
+	(stringstream&)ss << GetSize() << endl;
 	for(int i = 0; i < GetSize(); i++) {
 		g_engine->getScriptEngine()->serialize((void*)At(i), subTypeId, ss);
 	}
 }
 
-void CScriptArray::deserialize(stringstream &ss)
+void CScriptArray::deserialize(StringStream &ss)
 {
 	// Read size
 	int size;
-	ss >> size;
-	ss.ignore();
+	(stringstream&)ss >> size; ((stringstream&)ss).ignore();
 
 	// Resize and deserialize values
 	Resize(size);

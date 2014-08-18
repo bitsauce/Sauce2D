@@ -22,6 +22,16 @@ GLint enumToGL(const xdTextureFilter filter)
 	return 0;
 }
 
+xdTextureFilter enumFromGL(const GLint filter)
+{
+	switch(filter)
+	{
+	case GL_NEAREST: return xdNearest;
+	case GL_LINEAR: return xdLinear;
+	}
+	return xdTextureFilter(0);
+}
+
 GLtexture::GLtexture(const Pixmap &pixmap)
 {
 	// Create an empty texture
@@ -69,6 +79,11 @@ void GLtexture::setFiltering(const xdTextureFilter filter)
 	}else{
 		//warn("Texture filtering was not changed.");
 	}
+}
+
+xdTextureFilter GLtexture::getFiltering() const
+{
+	return enumFromGL(m_filter);
 }
 
 Pixmap GLtexture::getPixmap() const

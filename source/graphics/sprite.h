@@ -57,6 +57,9 @@ private:
 	// Returns the transformed vertices
 	void getVertices(Vertex *vertices) const;
 
+	void serialize(StringStream &ss);
+	static Sprite *Factory(StringStream &ss);
+
 	static Sprite *Factory(const TextureRegion &region) { return new Sprite(region); }
 	static Sprite *Factory(Texture *texture);
 };

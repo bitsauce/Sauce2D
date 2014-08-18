@@ -369,6 +369,102 @@ void b2BodyWrapper::setLinearVelocity(const Vector2 &velocity)
 	m_body->SetLinearVelocity(toB2Vec(velocity));
 }
 
+void b2BodyWrapper::serialize(StringStream &ss) const
+{
+	(stringstream&)ss << (m_body != 0) << endl;
+	if(m_body)
+	{
+		(stringstream&)ss << (int32)m_body->GetType() << endl;
+		(stringstream&)ss << m_body->GetPosition().x << endl;
+		(stringstream&)ss << m_body->GetPosition().y << endl;
+		(stringstream&)ss << m_body->GetAngle() << endl;
+		(stringstream&)ss << m_body->GetLinearVelocity().x << endl;
+		(stringstream&)ss << m_body->GetLinearVelocity().y << endl;
+		(stringstream&)ss << m_body->GetAngularVelocity() << endl;
+		(stringstream&)ss << m_body->GetLinearDamping() << endl;
+		(stringstream&)ss << m_body->GetAngularDamping() << endl;
+		(stringstream&)ss << m_body->IsSleepingAllowed() << endl;
+		(stringstream&)ss << m_body->IsAwake() << endl;
+		(stringstream&)ss << m_body->IsFixedRotation() << endl;
+		(stringstream&)ss << m_body->IsBullet() << endl;
+		(stringstream&)ss << m_body->IsActive() << endl;
+		(stringstream&)ss << m_body->GetGravityScale() << endl;
+
+		(stringstream&)ss << m_fixtures.size() << endl;
+		for(int i = 0; i < m_fixtures.size(); i++)
+		{
+			xdengine->getScriptEngine()->serialize((void*)&m_fixtures[i], b2FixtureWrapper::TypeId | asTYPEID_OBJHANDLE, ss);
+		}
+	}
+}
+
+b2BodyWrapper *b2BodyWrapper::Factory(StringStream &ss)
+{
+	b2BodyWrapper *body = 0;
+	b2BodyDef def;
+	int32 i;
+	float32 x, y, f;
+	bool b;
+
+	(stringstream&)ss >> b; ((stringstream&)ss).ignore();
+	if(b)
+	{
+		(stringstream&)ss >> i; ((stringstream&)ss).ignore();
+		def.type = b2BodyType(i);
+
+		(stringstream&)ss >> x; ((stringstream&)ss).ignore();
+		(stringstream&)ss >> y; ((stringstream&)ss).ignore();
+		def.position.Set(x, y);
+
+		(stringstream&)ss >> f; ((stringstream&)ss).ignore();
+		def.angle = f;
+
+		(stringstream&)ss >> x; ((stringstream&)ss).ignore();
+		(stringstream&)ss >> y; ((stringstream&)ss).ignore();
+		def.linearVelocity.Set(x, y);
+
+		(stringstream&)ss >> f; ((stringstream&)ss).ignore();
+		def.angularVelocity = f;
+	
+		(stringstream&)ss >> f; ((stringstream&)ss).ignore();
+		def.linearDamping = f;
+	
+		(stringstream&)ss >> f; ((stringstream&)ss).ignore();
+		def.angularDamping = f;
+	
+		(stringstream&)ss >> b; ((stringstream&)ss).ignore();
+		def.allowSleep = b;
+	
+		(stringstream&)ss >> b; ((stringstream&)ss).ignore();
+		def.awake = b;
+
+		(stringstream&)ss >> b; ((stringstream&)ss).ignore();
+		def.fixedRotation = b;
+	
+		(stringstream&)ss >> b; ((stringstream&)ss).ignore();
+		def.bullet = b;
+	
+		(stringstream&)ss >> b; ((stringstream&)ss).ignore();
+		def.active = b;
+	
+		(stringstream&)ss >> f; ((stringstream&)ss).ignore();
+		def.gravityScale = f;
+
+		body = new b2BodyWrapper(b2d->getWorld()->CreateBody(&def));
+		asIScriptEngine *scriptEngine = xdengine->getScriptEngine()->getASEngine();
+		scriptEngine->NotifyGarbageCollectorOfNewObject(body, scriptEngine->GetObjectTypeById(b2BodyWrapper::TypeId));
+		xdengine->getScriptEngine()->notifySerializerOfNewObject(body);
+
+		(stringstream&)ss >> i; ((stringstream&)ss).ignore();
+		body->m_fixtures.resize(i);
+		for(int i = 0; i < body->m_fixtures.size(); i++)
+		{
+			xdengine->getScriptEngine()->deserialize(&body->m_fixtures[i], b2FixtureWrapper::TypeId | asTYPEID_OBJHANDLE, ss);
+		}
+	}
+	return body;
+}
+
 b2BodyWrapper *b2BodyWrapper::Factory(const b2BodyDefWrapper &def)
 {
 	b2BodyDef bodyDef = def.getBodyDef();

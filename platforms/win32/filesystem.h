@@ -106,6 +106,7 @@ public:
 
 	Array *listFiles(string &directory, const string &mask, const bool recursive) const;
 	Array *listFolders(string &directory, const string &mask, const bool recursive) const;
+	bool remove(string &path);
 
 private:
 	xdFileReader *createFileReader(const string &filePath)

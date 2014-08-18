@@ -61,8 +61,8 @@ int Vector2::Register(asIScriptEngine *scriptEngine)
 	r = scriptEngine->RegisterObjectMethod("Vector2", "float angle(const Vector2 &in) const", asMETHODPR(Vector2, angle, (const Vector2&) const, float), asCALL_THISCALL); AS_ASSERT
 
 	// Serialization
-	r = scriptEngine->RegisterObjectMethod("Vector2", "void serialize(stringstream &in) const", asMETHOD(Vector2, serialize), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("Vector2", "void deserialize(stringstream &in)", asMETHOD(Vector2, deserialize), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("Vector2", "void serialize(StringStream&) const", asMETHOD(Vector2, serialize), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("Vector2", "void deserialize(StringStream&)", asMETHOD(Vector2, deserialize), asCALL_THISCALL); AS_ASSERT
 	
 	return r;
 }
@@ -329,16 +329,16 @@ float Vector2::distance(const Vector2& v2) const
     return sqrtf(pow((v2.x - x), 2 ) + pow((v2.y - y), 2));
 }
 
-void Vector2::serialize(stringstream &ss) const
+void Vector2::serialize(StringStream &ss) const
 {
-	ss << x << endl;
-	ss << y << endl;
+	(stringstream&)ss << x << endl;
+	(stringstream&)ss << y << endl;
 }
 
-void Vector2::deserialize(stringstream &ss)
+void Vector2::deserialize(StringStream &ss)
 {
-	ss >> x; ss.ignore();
-	ss >> y; ss.ignore();
+	(stringstream&)ss >> x; ((stringstream&)ss).ignore();
+	(stringstream&)ss >> y; ((stringstream&)ss).ignore();
 }
 
 Vector2& Vector2::operator=(const Vector2& v2)

@@ -29,6 +29,7 @@
     <ClInclude Include="..\..\include\x2d\exception.h" />
     <ClInclude Include="..\..\include\x2d\graphics\batch.h" />
     <ClInclude Include="..\..\include\x2d\graphics\framebufferobject.h" />
+    <ClInclude Include="..\..\include\x2d\graphics\spritebatch.h" />
     <ClInclude Include="..\..\include\x2d\graphics\pixmap.h" />
     <ClInclude Include="..\..\include\x2d\graphics\texture.h" />
     <ClInclude Include="..\..\include\x2d\graphics\textureAtlas.h" />
@@ -42,7 +43,7 @@
     <ClInclude Include="..\..\include\x2d\math.h" />
     <ClInclude Include="..\..\include\x2d\math\matrix.h" />
     <ClInclude Include="..\..\include\x2d\math\rect.h" />
-    <ClInclude Include="..\..\include\x2d\math\rectPacker.h" />
+    <ClInclude Include="..\..\include\x2d\math\rectanglepacker.h" />
     <ClInclude Include="..\..\include\x2d\math\vector.h" />
     <ClInclude Include="..\..\include\x2d\profiler.h" />
     <ClInclude Include="..\..\include\x2d\scriptengine.h" />
@@ -64,11 +65,12 @@
     <ClInclude Include="..\..\source\scripts\scriptany.h" />
     <ClInclude Include="..\..\source\scripts\scriptarray.h" />
     <ClInclude Include="..\..\source\scripts\scriptbuilder.h" />
+    <ClInclude Include="..\..\source\scripts\scriptdictionary.h" />
     <ClInclude Include="..\..\source\scripts\scriptfunc.h" />
     <ClInclude Include="..\..\source\scripts\scriptgrid.h" />
     <ClInclude Include="..\..\source\scripts\scripthelper.h" />
-    <ClInclude Include="..\..\source\scripts\serializer.h" />
     <ClInclude Include="..\..\source\scripts\scriptstdstring.h" />
+    <ClInclude Include="..\..\source\scripts\stringstream.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\source\audio\audio.cpp" />
@@ -87,6 +89,7 @@
     <ClCompile Include="..\..\source\core\util.cpp" />
     <ClCompile Include="..\..\source\core\window.cpp" />
     <ClCompile Include="..\..\source\graphics\animation.cpp" />
+    <ClCompile Include="..\..\source\graphics\spritebatch.cpp" />
     <ClCompile Include="..\..\source\graphics\textureAtlas.cpp" />
     <ClCompile Include="..\..\source\graphics\batch.cpp" />
     <ClCompile Include="..\..\source\graphics\camera.cpp" />
@@ -103,17 +106,18 @@
     <ClCompile Include="..\..\source\math\math.cpp" />
     <ClCompile Include="..\..\source\math\matrix.cpp" />
     <ClCompile Include="..\..\source\math\rect.cpp" />
-    <ClCompile Include="..\..\source\math\rectPacker.cpp" />
+    <ClCompile Include="..\..\source\math\rectanglepacker.cpp" />
     <ClCompile Include="..\..\source\math\vector.cpp" />
     <ClCompile Include="..\..\source\scripts\scriptany.cpp" />
     <ClCompile Include="..\..\source\scripts\scriptarray.cpp" />
     <ClCompile Include="..\..\source\scripts\scriptbuilder.cpp" />
+    <ClCompile Include="..\..\source\scripts\scriptdictionary.cpp" />
     <ClCompile Include="..\..\source\scripts\scriptfunc.cpp" />
     <ClCompile Include="..\..\source\scripts\scriptgrid.cpp" />
     <ClCompile Include="..\..\source\scripts\scripthelper.cpp" />
-    <ClCompile Include="..\..\source\scripts\serializer.cpp" />
     <ClCompile Include="..\..\source\scripts\scriptstdstring.cpp" />
     <ClCompile Include="..\..\source\scripts\scriptstdstring_utils.cpp" />
+    <ClCompile Include="..\..\source\scripts\stringstream.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{F3F25B49-2C6B-4FF0-98FB-47695DF70B8A}</ProjectGuid>

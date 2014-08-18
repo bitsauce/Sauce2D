@@ -76,6 +76,10 @@ int CreatePlugin(xdEngine *engine)
 	r = scriptEngine->RegisterObjectMethod("b2Fixture", "void setCategoryBits(const uint)", asMETHOD(b2FixtureWrapper, setCategoryBits), asCALL_THISCALL); AS_ASSERT
 	r = scriptEngine->RegisterObjectMethod("b2Fixture", "b2Body @getBody() const", asMETHOD(b2FixtureWrapper, getBody), asCALL_THISCALL); AS_ASSERT
 	
+	// b2Fixture serialization
+	r = scriptEngine->RegisterObjectMethod("b2Fixture", "void serialize(StringStream&) const", asMETHOD(b2FixtureWrapper, serialize), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectBehaviour("b2Fixture", asBEHAVE_FACTORY, "b2Fixture @f(StringStream&)", asFUNCTIONPR(b2FixtureWrapper::Factory, (StringStream&), b2FixtureWrapper*), asCALL_CDECL); AS_ASSERT
+	
 	r = scriptEngine->RegisterObjectBehaviour("b2Body", asBEHAVE_ADDREF, "void f()", asMETHOD(b2BodyWrapper, addRef), asCALL_THISCALL); AS_ASSERT
 	r = scriptEngine->RegisterObjectBehaviour("b2Body", asBEHAVE_RELEASE, "void f()", asMETHOD(b2BodyWrapper, release), asCALL_THISCALL); AS_ASSERT
 	r = scriptEngine->RegisterObjectBehaviour("b2Body", asBEHAVE_SETGCFLAG, "void f()", asMETHOD(b2BodyWrapper, setGCFlag), asCALL_THISCALL); AS_ASSERT
@@ -84,7 +88,7 @@ int CreatePlugin(xdEngine *engine)
 	r = scriptEngine->RegisterObjectBehaviour("b2Body", asBEHAVE_ENUMREFS, "void f(int&in)", asMETHOD(b2BodyWrapper, enumReferences), asCALL_THISCALL); AS_ASSERT
 	r = scriptEngine->RegisterObjectBehaviour("b2Body", asBEHAVE_RELEASEREFS, "void f(int&in)", asMETHOD(b2BodyWrapper, releaseReferences), asCALL_THISCALL); AS_ASSERT
 
-	r = scriptEngine->RegisterObjectBehaviour("b2Body", asBEHAVE_FACTORY, "b2Body @f(const b2BodyDef &in)", asFUNCTION(b2BodyWrapper::Factory), asCALL_CDECL); AS_ASSERT
+	r = scriptEngine->RegisterObjectBehaviour("b2Body", asBEHAVE_FACTORY, "b2Body @f(const b2BodyDef &in)", asFUNCTIONPR(b2BodyWrapper::Factory, (const b2BodyDefWrapper&), b2BodyWrapper*), asCALL_CDECL); AS_ASSERT
 	r = scriptEngine->RegisterObjectMethod("b2Body", "void destroy()", asMETHOD(b2BodyWrapper, destroy), asCALL_THISCALL); AS_ASSERT
 	r = scriptEngine->RegisterObjectMethod("b2Body", "b2Fixture @createFixture(const Rect &in, float)", asMETHODPR(b2BodyWrapper, createFixture, (const Rect&, float), b2FixtureWrapper*), asCALL_THISCALL); AS_ASSERT
 	r = scriptEngine->RegisterObjectMethod("b2Body", "b2Fixture @createFixture(const Vector2 &in, const float, float)", asMETHODPR(b2BodyWrapper, createFixture, (const Vector2&, const float, float), b2FixtureWrapper*), asCALL_THISCALL); AS_ASSERT
@@ -106,6 +110,10 @@ int CreatePlugin(xdEngine *engine)
 	r = scriptEngine->RegisterObjectMethod("b2Body", "float getAngle() const", asMETHOD(b2BodyWrapper, getAngle), asCALL_THISCALL); AS_ASSERT
 	r = scriptEngine->RegisterObjectMethod("b2Body", "void applyImpulse(const Vector2 &in, const Vector2 &in)", asMETHOD(b2BodyWrapper, applyImpulse), asCALL_THISCALL); AS_ASSERT
 	r = scriptEngine->RegisterObjectMethod("b2Body", "void setLinearVelocity(const Vector2 &in)", asMETHOD(b2BodyWrapper, setLinearVelocity), asCALL_THISCALL); AS_ASSERT
+	
+	// b2Body serialization
+	r = scriptEngine->RegisterObjectMethod("b2Body", "void serialize(StringStream&) const", asMETHOD(b2BodyWrapper, serialize), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectBehaviour("b2Body", asBEHAVE_FACTORY, "b2Body @f(StringStream&)", asFUNCTIONPR(b2BodyWrapper::Factory, (StringStream&), b2BodyWrapper*), asCALL_CDECL); AS_ASSERT
 	
 	r = scriptEngine->RegisterObjectBehaviour("b2Contact", asBEHAVE_ADDREF, "void f()", asMETHOD(b2ContactWrapper, addRef), asCALL_THISCALL); AS_ASSERT
 	r = scriptEngine->RegisterObjectBehaviour("b2Contact", asBEHAVE_RELEASE, "void f()", asMETHOD(b2ContactWrapper, release), asCALL_THISCALL); AS_ASSERT

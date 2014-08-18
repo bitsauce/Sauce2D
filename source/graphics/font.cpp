@@ -123,7 +123,7 @@ void Font::load(const string &filePath, const uint size)
 	// Create and initialize a FreeType library
 	FT_Library library;
 	FT_Error error;
-	if(error = FT_Init_FreeType(&library))
+	if((error = FT_Init_FreeType(&library)) != 0)
 	{
 		ERR("Font::load - Failed to initialize FreeType 2 (error code: %i)", error);
 		return;
@@ -131,7 +131,7 @@ void Font::load(const string &filePath, const uint size)
 
 	// Load the font information from file
 	FT_Face face;
-	if(error = FT_New_Face(library, filePath.c_str(), 0, &face))
+	if((error = FT_New_Face(library, filePath.c_str(), 0, &face)) != 0)
 	{
 		ERR("Font::load - Failed load font data (error code: %i)", error);
 		return;
@@ -143,7 +143,7 @@ void Font::load(const string &filePath, const uint size)
 
 	// Set characterset size
 	//if(error = FT_Set_Char_Size(face, size << 6, size << 6, 96, 96))
-	if(error = FT_Set_Pixel_Sizes(face, size, size))
+	if((error = FT_Set_Pixel_Sizes(face, size, size)) != 0)
 	{
 		ERR("Font::load - Failed to set pixel size (error code: %i)", error);
 		return;
@@ -154,14 +154,14 @@ void Font::load(const string &filePath, const uint size)
 	for(uchar ch = 0; ch < 128; ch++)
 	{
 		// Load the glyph for our character
-		if(error = FT_Load_Glyph(face, FT_Get_Char_Index(face, ch), FT_LOAD_DEFAULT))
+		if((error = FT_Load_Glyph(face, FT_Get_Char_Index(face, ch), FT_LOAD_DEFAULT)) != 0)
 		{
 			ERR("Font::load - Failed to load glyph '%c' (error code: %i)", ch, error);
 			return;
 		}
 
 		// Render glyph to bitmap
-		if(error = FT_Render_Glyph(face->glyph, FT_RENDER_MODE_NORMAL))
+		if((error = FT_Render_Glyph(face->glyph, FT_RENDER_MODE_NORMAL)) != 0)
 		{
 			ERR("Font::load - Failed to get glyph '%c' (error code: %i)", ch, error);
 			return;

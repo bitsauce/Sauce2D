@@ -24,9 +24,11 @@ public:
 	// Mipmapping
 	virtual void enableMipmaps() = 0;
 	virtual void disableMipmaps() = 0;
+	virtual bool isMipmapsEnabled() const = 0;
 
 	// Texture filtering
 	virtual void setFiltering(const xdTextureFilter filter) = 0;
+	virtual xdTextureFilter getFiltering() const = 0;
 
 	// Size
 	virtual int getWidth() const = 0;
@@ -38,6 +40,8 @@ public:
 	virtual void updatePixmap(const Pixmap &pixmap) = 0;
 	virtual void updatePixmap(const int x, const int y, const Pixmap &pixmap) = 0;
 	virtual void clear() = 0;
+
+	void serialize(StringStream &ss) const;
 };
 
 #endif // GFX_TEXTURE_H

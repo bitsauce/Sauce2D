@@ -19,7 +19,7 @@ int TextureAtlas::Register(asIScriptEngine *scriptEngine)
 	r = scriptEngine->RegisterObjectMethod("TextureAtlas", "TextureRegion get(const int, const float, const float, const float, const float) const", asMETHODPR(TextureAtlas, get, (const int, const float, const float, const float, const float) const, TextureRegion), asCALL_THISCALL); AS_ASSERT
 	
 	r = scriptEngine->RegisterObjectMethod("TextureAtlas", "Texture @getTexture() const", asMETHOD(TextureAtlas, getTexture), asCALL_THISCALL); AS_ASSERT
-
+	
 	return r;
 }
 

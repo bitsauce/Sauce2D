@@ -48,8 +48,7 @@ public:
 	// NOTE TO SELF: I might want to consider making a DirectoryIterator instead of using this function
 	virtual Array *listFiles(string &directory, const string &mask, const bool recursive) const		{ NOT_IMPLEMENTED_ARR(listFiles, "string") }			// Optional
 	virtual Array *listFolders(string &directory, const string &mask, const bool recursive) const	{ NOT_IMPLEMENTED_ARR(listFolders, "string") }			// Optional
-	virtual void removeFile(string filePath)														{ NOT_IMPLEMENTED(removeFile) }							// Optional
-	virtual void removeDir(string dirPath)															{ NOT_IMPLEMENTED(removeDir) }							// Optional
+	virtual bool remove(string &path)																{ NOT_IMPLEMENTED_RET(remove, false) }					// Optional
 
 	// System windows
 	virtual string showSaveDialog(const string &file, const string &ext, const string &title, const string &folder) const	{ NOT_IMPLEMENTED_RET(showSaveDialog, "") }				// Optional

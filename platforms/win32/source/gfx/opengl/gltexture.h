@@ -19,9 +19,11 @@ public:
 	// Mipmapping
 	void enableMipmaps();
 	void disableMipmaps();
+	bool isMipmapsEnabled() const { return m_mipmaps; }
 
 	// Texture filtering
 	void setFiltering(const xdTextureFilter filter);
+	xdTextureFilter getFiltering() const;
 
 	// Size
 	int getWidth() const;

@@ -3,6 +3,7 @@
  
 #include <x2d/config.h>
 #include <x2d/base.h>
+#include <x2d/util.h>
 
 /** \brief A class which holds a 2 dimentional vector
  *
@@ -58,8 +59,8 @@ public:
     bool operator==(const Vector2& v2) const;
 
 	// Serialization
-	void serialize(stringstream &ss) const;
-	void deserialize(stringstream &ss);
+	void serialize(StringStream &ss) const;
+	void deserialize(StringStream &ss);
 
 public:
 

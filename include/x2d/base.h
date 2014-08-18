@@ -143,16 +143,20 @@ private:
 	static Base::Registerer s_basereg;													\
 	static int Declare(asIScriptEngine *scriptEngine);									\
 	static int Register(asIScriptEngine *scriptEngine);									\
+	static int s_typeId;																\
 	public:																				\
 	virtual void addRef() { refCounter.add(); }											\
-	virtual void release() { if(refCounter.release() == 0) delete this; }
+	virtual void release() { if(refCounter.release() == 0) delete this; }				\
+	static int GetTypeId() { return s_typeId; }
 
 #define AS_DECL_VALUE																	\
 	private:																			\
 	static Base::Registerer s_basereg;													\
 	static int Declare(asIScriptEngine *scriptEngine);									\
 	static int Register(asIScriptEngine *scriptEngine);									\
-	public:
+	static int s_typeId;																\
+	public:																				\
+	static int GetTypeId() { return s_typeId; }
 
 #define AS_DECL_SINGLETON																\
 	private:																			\
@@ -163,9 +167,11 @@ private:
 
 #define AS_REG_REF(clazz)																\
 	Base::Registerer clazz::s_basereg(&clazz::Declare, &clazz::Register);				\
+	int clazz::s_typeId = 0;															\
 	int clazz::Declare(asIScriptEngine *scriptEngine)									\
 	{																					\
-		int r = scriptEngine->RegisterObjectType(#clazz, 0, asOBJ_REF); AS_ASSERT		\
+		int r = s_typeId = scriptEngine->RegisterObjectType(#clazz, 0, asOBJ_REF);		\
+						AS_ASSERT														\
 		r = scriptEngine->RegisterObjectBehaviour(#clazz, asBEHAVE_ADDREF, "void f()",  \
 						asMETHOD(clazz, addRef), asCALL_THISCALL); AS_ASSERT			\
 		r = scriptEngine->RegisterObjectBehaviour(#clazz, asBEHAVE_RELEASE, "void f()", \
@@ -175,9 +181,10 @@ private:
 
 #define AS_REG_VALUE(clazz)																\
 	Base::Registerer clazz::s_basereg(&clazz::Declare, &clazz::Register);				\
+	int clazz::s_typeId = 0;															\
 	int clazz::Declare(asIScriptEngine *scriptEngine)									\
 	{																					\
-		int r = scriptEngine->RegisterObjectType(#clazz, sizeof(clazz),					\
+		int r = s_typeId = scriptEngine->RegisterObjectType(#clazz, sizeof(clazz),		\
 						asOBJ_VALUE | asOBJ_POD | asOBJ_APP_CLASS_CDAK); AS_ASSERT		\
 		return r;																		\
 	}

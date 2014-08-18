@@ -97,8 +97,8 @@ public:
 	int  FindByRef(asUINT startAt, void *ref) const;
 
 	// Serialization
-	void serialize(stringstream &ss) const;
-	void deserialize(stringstream &ss);
+	void serialize(StringStream &ss) const;
+	void deserialize(StringStream &ss);
 
 	// GC methods
 	int  GetRefCount();

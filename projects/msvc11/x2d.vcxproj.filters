@@ -66,9 +66,6 @@
     <ClInclude Include="..\..\include\x2d\debug.h">
       <Filter>include</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\x2d\math\rectPacker.h">
-      <Filter>include\math</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\include\x2d\console.h">
       <Filter>include</Filter>
     </ClInclude>
@@ -183,10 +180,19 @@
     <ClInclude Include="..\..\include\x2d\graphics\textureAtlas.h">
       <Filter>include\graphics</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\source\scripts\serializer.h">
+    <ClInclude Include="..\..\source\scripts\scriptarray.h">
       <Filter>source\scripts</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\source\scripts\scriptarray.h">
+    <ClInclude Include="..\..\include\x2d\graphics\spritebatch.h">
+      <Filter>include\graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\x2d\math\rectanglepacker.h">
+      <Filter>include\math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\scripts\stringstream.h">
+      <Filter>source\scripts</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\scripts\scriptdictionary.h">
       <Filter>source\scripts</Filter>
     </ClInclude>
   </ItemGroup>
@@ -214,9 +220,6 @@
     </ClCompile>
     <ClCompile Include="..\..\source\scripts\scriptstdstring_utils.cpp">
       <Filter>source\scripts</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\math\rectPacker.cpp">
-      <Filter>source\math</Filter>
     </ClCompile>
     <ClCompile Include="..\..\source\core\window.cpp">
       <Filter>source\core</Filter>
@@ -314,10 +317,19 @@
     <ClCompile Include="..\..\source\io\iniParser.cpp">
       <Filter>source\io</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\source\scripts\serializer.cpp">
+    <ClCompile Include="..\..\source\scripts\scriptarray.cpp">
       <Filter>source\scripts</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\source\scripts\scriptarray.cpp">
+    <ClCompile Include="..\..\source\graphics\spritebatch.cpp">
+      <Filter>source\graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\math\rectanglepacker.cpp">
+      <Filter>source\math</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\scripts\stringstream.cpp">
+      <Filter>source\scripts</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\scripts\scriptdictionary.cpp">
       <Filter>source\scripts</Filter>
     </ClCompile>
   </ItemGroup>

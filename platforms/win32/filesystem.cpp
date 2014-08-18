@@ -7,7 +7,8 @@ Array *FileSystem::listFiles(string &directory, const string &mask, const bool r
 	Array *files = CreateArray("string", 0);
 	
 	util::toAbsoluteFilePath(directory);
-	
+	util::toDirectoryPath(directory);
+
 	// Folders to search
 	vector<string> folders;
 	folders.push_back(directory);
@@ -131,4 +132,44 @@ bool FileSystem::makeDir(const string &path)
 		return CreateDirectory(path.c_str(), 0) != 0;
 	}
 	return true;
+}
+
+bool FileSystem::remove(string &path)
+{
+	util::toAbsoluteFilePath(path);
+
+	// Is it a directory?
+	if(dirExists(path))
+	{
+		util::toDirectoryPath(path);
+
+		// Perform recursive deletion
+		WIN32_FIND_DATA fdata;
+		HANDLE hFind = FindFirstFile((path + "*").c_str(), &fdata);
+
+		// Check if the search was successful
+		if(hFind != INVALID_HANDLE_VALUE)
+		{
+			do {
+				wchar_t filename[MAX_PATH];
+				mbstowcs_s(0, filename, fdata.cFileName, 1024);
+				if(wcscmp(filename, L".") != 0 && wcscmp(filename, L"..") != 0)
+				{
+					if(!remove(path + fdata.cFileName)) {
+						return false;
+					}
+				}
+			}
+			while (FindNextFile(hFind, &fdata) != 0);
+		}else
+		{
+			return false;
+		}
+
+		FindClose(hFind);
+		return RemoveDirectory(path.c_str());
+	}else
+	{
+		return DeleteFile(path.c_str());
+	}
 }

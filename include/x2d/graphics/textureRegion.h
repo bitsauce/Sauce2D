@@ -30,6 +30,10 @@ public:
 	TextureRegion &operator=(const TextureRegion &other);
 
 private:
+	
+	void serialize(StringStream &ss) const;
+	void deserialize(StringStream &ss);
+
 	static void Factory(Texture *texture, TextureRegion *self) { new (self) TextureRegion(texture, Vector2(0.0f), Vector2(1.0f)); }
 	static void Factory(Texture *texture, const Vector2 &uv0, const Vector2 &uv1, TextureRegion *self) { new (self) TextureRegion(texture, uv0, uv1); }
 	static void Factory(Texture *texture, const float u0, const float v0, const float u1, const float v1, TextureRegion *self) { new (self) TextureRegion(texture, u0, v0, u1, v1); }

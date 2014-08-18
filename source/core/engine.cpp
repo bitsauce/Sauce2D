@@ -30,6 +30,7 @@
 #include "scripts/scriptarray.h"
 #include "scripts/scriptgrid.h"
 #include "scripts/scriptany.h"
+#include "scripts/scriptdictionary.h"
 
 #ifdef X2D_LINUX
 #define MAX_PATH 256
@@ -183,6 +184,9 @@ void xdEngine::pushScene(asIScriptObject *object)
 	// Add scene to stack
 	m_sceneStack.push(object);
 
+	// Clear garbage
+	int r = m_scripts->getASEngine()->GarbageCollect(asGC_FULL_CYCLE | asGC_DESTROY_GARBAGE); assert(r >= 0);
+
 	if(object)
 	{
 		// Cache draw and update functions
@@ -220,6 +224,9 @@ void xdEngine::popScene()
 
 		// Pop scene
 		m_sceneStack.pop();
+		
+		// Clear garbage
+		r = m_scripts->getASEngine()->GarbageCollect(asGC_FULL_CYCLE | asGC_DESTROY_GARBAGE); assert(r >= 0);
 
 		// Get next scene
 		asIScriptObject *nextScene = m_sceneStack.size() > 0 ? m_sceneStack.top() : 0;
@@ -259,15 +266,11 @@ int xdEngine::init(const xdConfig &config)
 
 	m_workDir = config.workDir;
 	replace(m_workDir.begin(), m_workDir.end(), '\\', '/');
-	if(m_workDir.back() != '/') {
-		m_workDir += "/";
-	}
+	util::toDirectoryPath(m_workDir);
 
 	m_saveDir = config.saveDir;
 	replace(m_saveDir.begin(), m_saveDir.end(), '\\', '/');
-	if(m_saveDir.back() != '/') {
-		m_saveDir += "/";
-	}
+	util::toDirectoryPath(m_saveDir);
 
 	m_timer = config.timer;
 	m_fileSystem = config.fileSystem;
@@ -353,6 +356,7 @@ int xdEngine::init(const xdConfig &config)
 		RegisterStdStringUtils(scriptEngine);
 		RegisterScriptGrid(scriptEngine);
 		RegisterScriptAny(scriptEngine);
+		RegisterScriptDictionary(scriptEngine);
 
 		r = scriptEngine->RegisterInterface("Scene"); AS_ASSERT
 		r = scriptEngine->RegisterInterfaceMethod("Scene", "void show()"); AS_ASSERT

@@ -46,6 +46,7 @@ public:
 	static Texture *CreateTexture(const string &filePath);
 	static Texture *CreateTexture(const int width, const int height);
 	static Texture *CreateTexture(const Texture &texture);
+	static Texture *CreateTexture(StringStream &ss);
 	static Shader *CreateShader(const string &vertFilePath, const string &fragFilePath);
 	static VertexBufferObject *CreateVertexBufferObject();
 	static FrameBufferObject *CreateFrameBufferObject();

@@ -37,6 +37,7 @@
 	#include <map>
 #endif
 
+#include "../source/scripts/stringstream.h"
 /*********************************************************************
 **	Enable STL namespace											**
 **********************************************************************/
@@ -121,6 +122,7 @@ namespace util
 	XDAPI bool fileExists(string filePath);
 	XDAPI string getAbsoluteFilePath(const string &assetPath);
 	XDAPI void toAbsoluteFilePath(string &assetPath);
+	XDAPI void toDirectoryPath(string &path);
 }
 
 

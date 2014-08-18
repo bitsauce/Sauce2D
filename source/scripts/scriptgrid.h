@@ -6,6 +6,8 @@
 #include <angelscript.h>
 #endif
 
+#include <x2d/util.h>
+
 BEGIN_AS_NAMESPACE
 
 struct SGridBuffer;
@@ -44,6 +46,10 @@ public:
 	// Remember, if the grid holds handles the value parameter should be the 
 	// address of the handle. The refCount of the object will also be incremented
 	void  SetValue(asUINT x, asUINT y, void *value);
+
+	// Serialization
+	void serialize(StringStream &ss) const;
+	void deserialize(StringStream &ss);
 
 	// GC methods
 	int  GetRefCount();

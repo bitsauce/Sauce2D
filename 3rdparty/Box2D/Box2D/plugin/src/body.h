@@ -89,6 +89,10 @@ public:
 	float getMass() const;
 	void applyImpulse(const Vector2 &impulse, const Vector2 &position);
 	void setLinearVelocity(const Vector2 &velocity);
+	
+	// Serialization
+	void serialize(StringStream &ss) const;
+	static b2BodyWrapper *Factory(StringStream &ss);
 
 	static b2BodyWrapper *Factory(const b2BodyDefWrapper &def);
 	static int TypeId;

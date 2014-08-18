@@ -24,9 +24,7 @@ int xdFileSystem::Register(asIScriptEngine *scriptEngine)
 	r = scriptEngine->RegisterObjectMethod("ScriptFileSystem", "bool fileExists(string &in) const", asMETHOD(xdFileSystem, fileExists), asCALL_THISCALL); AS_ASSERT
 	r = scriptEngine->RegisterObjectMethod("ScriptFileSystem", "array<string>@ listFiles(string &in, const string &in, const bool recursive = false) const", asMETHOD(xdFileSystem, listFiles), asCALL_THISCALL); AS_ASSERT
 	r = scriptEngine->RegisterObjectMethod("ScriptFileSystem", "array<string>@ listFolders(string &in, const string &in, const bool recursive = false) const", asMETHOD(xdFileSystem, listFolders), asCALL_THISCALL); AS_ASSERT
-
-	r = scriptEngine->RegisterObjectMethod("ScriptFileSystem", "void removeFile(string)", asMETHOD(xdFileSystem, removeFile), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("ScriptFileSystem", "void removeDir(string)", asMETHOD(xdFileSystem, removeDir), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("ScriptFileSystem", "bool remove(string &in)", asMETHOD(xdFileSystem, remove), asCALL_THISCALL); AS_ASSERT
 	
 	r = scriptEngine->RegisterObjectMethod("ScriptFileSystem", "string showSaveDialog() const", asMETHOD(xdFileSystem, showSaveDialog), asCALL_THISCALL); AS_ASSERT
 	r = scriptEngine->RegisterObjectMethod("ScriptFileSystem", "string showOpenDialog() const", asMETHOD(xdFileSystem, showOpenDialog), asCALL_THISCALL); AS_ASSERT

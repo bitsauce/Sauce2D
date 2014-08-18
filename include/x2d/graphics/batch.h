@@ -170,30 +170,4 @@ protected:
 
 typedef map<Batch::State, VertexBuffer*> StateVertexMap;
 
-class Sprite;
-
-class SpriteBatch : public Batch
-{
-	AS_DECL_REF
-public:
-
-	~SpriteBatch();
-
-	void add(Sprite *sprite);
-	Sprite *get(int index);
-	int getSize() const;
-
-	void draw();
-	void clear();
-	void makeStatic();
-
-private:
-	vector<Sprite*> m_sprites;
-
-	vector<Sprite*> m_returnedSprites;
-	map<Sprite*, uint> m_offsets;
-	
-	static SpriteBatch *Factory() { return new SpriteBatch(); }
-};
-
 #endif // GFX_BATCH_H

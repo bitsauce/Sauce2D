@@ -256,6 +256,40 @@ Texture* xdGraphics::CreateTexture(const Texture &texture)
 	return s_this->createTexture(texture.getPixmap());
 }
 
+Texture* xdGraphics::CreateTexture(StringStream &ss)
+{
+	int width, height;
+	(stringstream&)ss >> width; ((stringstream&)ss).ignore();
+	(stringstream&)ss >> height; ((stringstream&)ss).ignore();
+	
+	float *data = new float[width*height*4];
+	for(int y = 0; y < height; y++)
+	{
+		for(int x = 0; x < width; x++)
+		{
+			int i = (x + y*width) * 4;
+			(stringstream&)ss >> data[i+0]; ((stringstream&)ss).ignore();
+			(stringstream&)ss >> data[i+1]; ((stringstream&)ss).ignore();
+			(stringstream&)ss >> data[i+2]; ((stringstream&)ss).ignore();
+			(stringstream&)ss >> data[i+3]; ((stringstream&)ss).ignore();
+		}
+	}
+
+	Texture *texture = CreateTexture(Pixmap(width, height, (const Vector4*)data));
+
+	int filter;
+	(stringstream&)ss >> filter; ((stringstream&)ss).ignore();
+	texture->setFiltering(xdTextureFilter(filter));
+
+	bool mipmaps;
+	(stringstream&)ss >> mipmaps; ((stringstream&)ss).ignore();
+	if(mipmaps) {
+		texture->enableMipmaps();
+	}
+
+	return texture;
+}
+
 Shader* xdGraphics::CreateShader(const string &vertFilePath, const string &fragFilePath)
 {
 	return s_this->createShader(vertFilePath, fragFilePath);

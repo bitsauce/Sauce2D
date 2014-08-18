@@ -38,10 +38,38 @@ int Texture::Register(asIScriptEngine *scriptEngine)
 	r = scriptEngine->RegisterObjectMethod("Texture", "int getWidth() const", asMETHOD(Texture, getWidth), asCALL_THISCALL); AS_ASSERT
 	r = scriptEngine->RegisterObjectMethod("Texture", "int getHeight() const", asMETHOD(Texture, getHeight), asCALL_THISCALL); AS_ASSERT
 	r = scriptEngine->RegisterObjectMethod("Texture", "Vector2i getSize() const", asMETHOD(Texture, getSize), asCALL_THISCALL); AS_ASSERT
+	
+	r = scriptEngine->RegisterObjectMethod("Texture", "void serialize(StringStream&) const", asMETHOD(Texture, serialize), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectBehaviour("Texture", asBEHAVE_FACTORY, "Texture @f(StringStream&)", asFUNCTIONPR(xdGraphics::CreateTexture, (StringStream&), Texture*), asCALL_CDECL); AS_ASSERT
 
 	return r;
 }
 
 Texture::Texture()
 {
+}
+
+void Texture::serialize(StringStream &ss) const
+{
+	Pixmap &pixmap = getPixmap();
+	int width = pixmap.getWidth(), height = pixmap.getHeight();
+
+	(stringstream&)ss << width << endl;
+	(stringstream&)ss << height << endl;
+
+	const float *data = pixmap.getData();
+	for(int y = 0; y < height; y++)
+	{
+		for(int x = 0; x < width; x++)
+		{
+			int i = (x + y*width) * 4;
+			(stringstream&)ss << data[i+0] << endl;
+			(stringstream&)ss << data[i+1] << endl;
+			(stringstream&)ss << data[i+2] << endl;
+			(stringstream&)ss << data[i+3] << endl;
+		} 
+	}
+
+	(stringstream&)ss << (int)getFiltering() << endl;
+	(stringstream&)ss << isMipmapsEnabled() << endl;
 }

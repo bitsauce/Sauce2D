@@ -780,4 +780,35 @@ bool CScriptGrid::GetFlag()
 	return gcFlag;
 }
 
+#include <x2d/engine.h>
+#include <x2d/scriptengine.h>
+
+void CScriptGrid::serialize(StringStream &ss) const
+{
+	// Store size and serialize values
+	(stringstream&)ss << GetWidth() << endl;
+	(stringstream&)ss << GetHeight() << endl;
+	for(int y = 0; y < GetHeight(); y++) {
+		for(int x = 0; x < GetWidth(); x++) {
+			g_engine->getScriptEngine()->serialize((void*)At(x, y), subTypeId, ss);
+		}
+	}
+}
+
+void CScriptGrid::deserialize(StringStream &ss)
+{
+	// Read size
+	int width, height;
+	(stringstream&)ss >> width; ((stringstream&)ss).ignore();
+	(stringstream&)ss >> height; ((stringstream&)ss).ignore();
+
+	// Resize and deserialize values
+	Resize(width, height);
+	for(int y = 0; y < GetHeight(); y++) {
+		for(int x = 0; x < GetWidth(); x++) {
+			g_engine->getScriptEngine()->deserialize((void*)At(x, y), subTypeId, ss);
+		}
+	}
+}
+
 END_AS_NAMESPACE

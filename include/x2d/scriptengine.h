@@ -54,14 +54,16 @@ public:
 
 	// Serializing
 	void serialize(void *value, int typeId, string &path);
-	void serialize(void *value, int typeId, stringstream &ss);
+	void serialize(void *value, int typeId, StringStream &ss);
 	void deserialize(void *value, int typeId, string &path);
-	void deserialize(void *value, int typeId, stringstream &ss);
+	void deserialize(void *value, int typeId, StringStream &ss);
+	void notifySerializerOfNewObject(void *value); // Nessesary for solving circular references
 
 private:
 	asIScriptModule *m_module;
 	class xdDebug *m_debugger;
 	map<intptr_t, void*> m_pointerAddresses;
+	intptr_t m_currentAddress;
 };
 
 // AngelScript functions
