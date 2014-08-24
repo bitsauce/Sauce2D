@@ -39,6 +39,7 @@ public:
 	
 	void swapAB();
 	void call(ContactType stage);
+	bool isValid() const;
 
 	b2BodyWrapper *getBodyA() const;
 	b2BodyWrapper *getBodyB() const;

@@ -43,14 +43,14 @@ void Box2D::step(float timeStep)
 	// Destroy bodies and fixtures while the world is unlocked
 	for(set<pair<b2Body*, b2Fixture**>>::iterator itr = m_fixturesToDestroy.begin(); itr != m_fixturesToDestroy.end(); ++itr) {
 		(*itr).first->DestroyFixture(*(*itr).second);
-		*(*itr).second = 0; // Flag as removed
+		*(*itr).second = 0; // Mark fixture as removed
 
 	}
 	m_fixturesToDestroy.clear();
 
 	for(set<b2Body**>::iterator itr = m_bodiesToDestroy.begin(); itr != m_bodiesToDestroy.end(); ++itr) {
 		m_world->DestroyBody(**itr);
-		*(*itr) = 0; // Flag as removed
+		*(*itr) = 0; // Mark body as removed
 	}
 	m_bodiesToDestroy.clear();
 

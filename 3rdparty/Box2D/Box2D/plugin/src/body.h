@@ -89,6 +89,7 @@ public:
 	float getMass() const;
 	void applyImpulse(const Vector2 &impulse, const Vector2 &position);
 	void setLinearVelocity(const Vector2 &velocity);
+	bool isValid() const;
 	
 	// Serialization
 	void serialize(StringStream &ss) const;

@@ -68,10 +68,11 @@ void b2BodyWrapper::destroy()
 {
 	if(m_body)
 	{
-		b2d->destroyBody(&m_body);
+		b2d->destroyBody(&m_body); // This function will set m_body to 0 once the body is removed
 		for(vector<b2FixtureWrapper*>::iterator itr = m_fixtures.begin(); itr != m_fixtures.end(); ++itr) {
 			(*itr)->destroy();
 		}
+		//m_body = 0; // We cannot do this as it will hinder the 'end contact' call from getting called
 	}
 }
 
@@ -86,7 +87,7 @@ b2FixtureWrapper *b2BodyWrapper::createFixture(const Rect &rect, float density)
 	
 	addRef();
 	b2FixtureWrapper *fixture = new b2FixtureWrapper(this, m_body->CreateFixture(&shape, density));
-	fixture->addRef();
+	fixture->addRef(); // Add a reference for us to store
 	
 	asIScriptEngine *scriptEngine = xdengine->getScriptEngine()->getASEngine();
 	scriptEngine->NotifyGarbageCollectorOfNewObject(fixture, scriptEngine->GetObjectTypeById(b2FixtureWrapper::TypeId));
@@ -106,7 +107,7 @@ b2FixtureWrapper *b2BodyWrapper::createFixture(const Vector2 &center, const floa
 	
 	addRef();
 	b2FixtureWrapper *fixture = new b2FixtureWrapper(this, m_body->CreateFixture(&shape, density));
-	fixture->addRef();
+	fixture->addRef(); // Add a reference for us to store
 	
 	asIScriptEngine *scriptEngine = xdengine->getScriptEngine()->getASEngine();
 	scriptEngine->NotifyGarbageCollectorOfNewObject(fixture, scriptEngine->GetObjectTypeById(b2FixtureWrapper::TypeId));
@@ -137,7 +138,7 @@ b2FixtureWrapper *b2BodyWrapper::createFixture(Array *arr, float density)
 	// Add fixture
 	addRef();
 	b2FixtureWrapper *fixture = new b2FixtureWrapper(this, m_body->CreateFixture(&shape, density));
-	fixture->addRef();
+	fixture->addRef(); // Add a reference for us to store
 	
 	asIScriptEngine *scriptEngine = xdengine->getScriptEngine()->getASEngine();
 	scriptEngine->NotifyGarbageCollectorOfNewObject(fixture, scriptEngine->GetObjectTypeById(b2FixtureWrapper::TypeId));
@@ -369,6 +370,11 @@ void b2BodyWrapper::setLinearVelocity(const Vector2 &velocity)
 	m_body->SetLinearVelocity(toB2Vec(velocity));
 }
 
+bool b2BodyWrapper::isValid() const
+{
+	return m_body != 0;
+}
+
 void b2BodyWrapper::serialize(StringStream &ss) const
 {
 	(stringstream&)ss << (m_body != 0) << endl;
@@ -391,7 +397,7 @@ void b2BodyWrapper::serialize(StringStream &ss) const
 		(stringstream&)ss << m_body->GetGravityScale() << endl;
 
 		(stringstream&)ss << m_fixtures.size() << endl;
-		for(int i = 0; i < m_fixtures.size(); i++)
+		for(uint i = 0; i < m_fixtures.size(); i++)
 		{
 			xdengine->getScriptEngine()->serialize((void*)&m_fixtures[i], b2FixtureWrapper::TypeId | asTYPEID_OBJHANDLE, ss);
 		}
@@ -457,7 +463,7 @@ b2BodyWrapper *b2BodyWrapper::Factory(StringStream &ss)
 
 		(stringstream&)ss >> i; ((stringstream&)ss).ignore();
 		body->m_fixtures.resize(i);
-		for(int i = 0; i < body->m_fixtures.size(); i++)
+		for(uint i = 0; i < body->m_fixtures.size(); i++)
 		{
 			xdengine->getScriptEngine()->deserialize(&body->m_fixtures[i], b2FixtureWrapper::TypeId | asTYPEID_OBJHANDLE, ss);
 		}
@@ -469,7 +475,9 @@ b2BodyWrapper *b2BodyWrapper::Factory(const b2BodyDefWrapper &def)
 {
 	b2BodyDef bodyDef = def.getBodyDef();
 	b2BodyWrapper *body = new b2BodyWrapper(b2d->getWorld()->CreateBody(&bodyDef));
+
 	asIScriptEngine *scriptEngine = xdengine->getScriptEngine()->getASEngine();
 	scriptEngine->NotifyGarbageCollectorOfNewObject(body, scriptEngine->GetObjectTypeById(b2BodyWrapper::TypeId));
+
 	return body;
 }

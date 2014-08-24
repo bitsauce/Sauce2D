@@ -27,7 +27,8 @@ void b2FixtureWrapper::destroy()
 {
 	if(m_fixture)
 	{
-		b2d->destroyFixture(m_body->m_body, &m_fixture);
+		b2d->destroyFixture(m_body->m_body, &m_fixture); // This function will set m_fixture to 0 once the fixture is removed
+		//m_fixture = 0;  // We cannot do this as it will hinder the 'end contact' call from getting called
 	}
 }
 
@@ -94,7 +95,7 @@ void b2FixtureWrapper::setCategoryBits(const uint categoryBits)
 
 b2BodyWrapper *b2FixtureWrapper::getBody() const
 {
-	if(!m_fixture)
+	if(!m_fixture || !m_body)
 		return 0;
 
 	m_body->addRef();
