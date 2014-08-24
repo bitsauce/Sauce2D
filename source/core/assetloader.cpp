@@ -51,6 +51,10 @@ int xdAssetLoader::loadImage(string filePath, uchar** data, uint &width, uint &h
 			// always close the memory stream
 			FreeImage_Unload(bitmap);
 			FreeImage_CloseMemory(hmem);
+		}else
+		{
+			// Unable to read file
+			return -1;
 		}
 	}
 	return r;

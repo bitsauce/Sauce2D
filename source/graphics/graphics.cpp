@@ -226,23 +226,30 @@ Texture* xdGraphics::CreateTexture(const string &filePath)
 {
 	uint width = 0, height = 0;
 	uchar *byteData;
-	xdAssetLoader::s_this->loadImage(filePath, &byteData, width, height);
-	Vector4 *colors = new Vector4[width*height];
+	Texture *texture = 0;
 
-	for(int i = 0; i < width*height*4; i += 4) {
-		colors[i/4].set( // I dunno why FreeImage loads images as BGRA, but it does.
-			byteData[i+2]/255.0f,
-			byteData[i+1]/255.0f,
-			byteData[i+0]/255.0f,
-			byteData[i+3]/255.0f
-			);
+	int r = 0;
+	if((r = xdAssetLoader::s_this->loadImage(filePath, &byteData, width, height)) >= 0)
+	{
+		Vector4 *colors = new Vector4[width*height];
+
+		for(int i = 0; i < width*height*4; i += 4) {
+			colors[i/4].set( // I dunno why FreeImage loads images as BGRA, but it does.
+				byteData[i+2]/255.0f,
+				byteData[i+1]/255.0f,
+				byteData[i+0]/255.0f,
+				byteData[i+3]/255.0f
+				);
+		}
+
+		texture = s_this->createTexture(Pixmap(width, height, colors));
+
+		delete[] byteData;
+		delete[] colors;
+	}else
+	{
+		LOG("xdGraphics::CreateTexture() - Unable to load image file '%s' (error code %i)", filePath.c_str(), r);
 	}
-
-	Texture *texture = s_this->createTexture(Pixmap(width, height, colors));
-
-	delete[] byteData;
-	delete[] colors;
-
 	return texture;
 }
 	
