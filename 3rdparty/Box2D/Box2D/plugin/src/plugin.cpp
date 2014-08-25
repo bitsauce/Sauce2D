@@ -96,7 +96,9 @@ int CreatePlugin(xdEngine *engine)
 	r = scriptEngine->RegisterObjectMethod("b2Body", "void removeFixture(b2Fixture @)", asMETHOD(b2BodyWrapper, removeFixture), asCALL_THISCALL); AS_ASSERT
 	r = scriptEngine->RegisterObjectMethod("b2Body", "void setTransform(const Vector2 &in, float)", asMETHOD(b2BodyWrapper, setTransform), asCALL_THISCALL); AS_ASSERT
 	r = scriptEngine->RegisterObjectMethod("b2Body", "void setPosition(const Vector2 &in)", asMETHOD(b2BodyWrapper, setPosition), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("b2Body", "void setAngle(const Vector2 &in)", asMETHOD(b2BodyWrapper, setAngle), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("b2Body", "void setAngle(float)", asMETHOD(b2BodyWrapper, setAngle), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("b2Body", "void setActive(const bool)", asMETHOD(b2BodyWrapper, setActive), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("b2Body", "bool isActive() const", asMETHOD(b2BodyWrapper, isActive), asCALL_THISCALL); AS_ASSERT
 	r = scriptEngine->RegisterObjectMethod("b2Body", "void setBeginContactCallback(b2ContactCallback@)", asMETHOD(b2BodyWrapper, setBeginContactCallback), asCALL_THISCALL); AS_ASSERT
 	r = scriptEngine->RegisterObjectMethod("b2Body", "void setEndContactCallback(b2ContactCallback@)", asMETHOD(b2BodyWrapper, setEndContactCallback), asCALL_THISCALL); AS_ASSERT
 	r = scriptEngine->RegisterObjectMethod("b2Body", "void setPreSolveCallback(b2ContactCallback@)", asMETHOD(b2BodyWrapper, setPreSolveCallback), asCALL_THISCALL); AS_ASSERT

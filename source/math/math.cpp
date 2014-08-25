@@ -48,6 +48,7 @@ int xdMath::Register(asIScriptEngine *scriptEngine)
 	r = scriptEngine->RegisterObjectMethod("ScriptMath", "float acos(const float)", asMETHOD(xdMath, acos), asCALL_THISCALL); AS_ASSERT
 	r = scriptEngine->RegisterObjectMethod("ScriptMath", "float asin(const float)", asMETHOD(xdMath, asin), asCALL_THISCALL); AS_ASSERT
 	r = scriptEngine->RegisterObjectMethod("ScriptMath", "float atan(const float)", asMETHOD(xdMath, atan), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("ScriptMath", "float atan2(const float, const float)", asMETHOD(xdMath, atan2), asCALL_THISCALL); AS_ASSERT
 	r = scriptEngine->RegisterObjectMethod("ScriptMath", "float get_PI() const", asMETHOD(xdMath, getPI), asCALL_THISCALL); AS_ASSERT
 
 	// Random

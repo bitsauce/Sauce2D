@@ -186,6 +186,22 @@ void b2BodyWrapper::setAngle(float angle)
 	m_body->SetTransform(m_body->GetPosition(), angle);
 }
 
+void b2BodyWrapper::setActive(const bool active)
+{
+	if(!m_body || b2d->getWorld()->IsLocked())
+		return;
+
+	m_body->SetActive(active);
+}
+
+bool b2BodyWrapper::isActive() const
+{
+	if(!m_body)
+		return false;
+
+	return m_body->IsActive();
+}
+
 void b2BodyWrapper::setBeginContactCallback(asIScriptFunction *func)
 {
 	m_beginContactFunc = func;

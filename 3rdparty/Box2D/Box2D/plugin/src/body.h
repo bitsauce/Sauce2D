@@ -72,14 +72,26 @@ public:
 	b2FixtureWrapper *createFixture(Array *arr, float density);
 
 	void removeFixture(b2FixtureWrapper *fixture);
+
 	void setTransform(const Vector2 &position, float angle);
+
 	void setPosition(const Vector2 &position);
+
 	void setAngle(float angle);
+
+	void setActive(const bool active);
+	bool isActive() const;
+
 	void setBeginContactCallback(asIScriptFunction *func);
+
 	void setEndContactCallback(asIScriptFunction *func);
+
 	void setPreSolveCallback(asIScriptFunction *func);
+
 	void setPostSolveCallback(asIScriptFunction *func);
+
 	void setObject(void *object, int typeId);
+
 	void freeObject();
 	bool getObject(void *object, int typeId);
 	Vector2 getPosition() const;
