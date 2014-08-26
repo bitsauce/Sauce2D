@@ -18,6 +18,7 @@
     <ClCompile Include="..\..\plugin\src\debugdraw.cpp" />
     <ClCompile Include="..\..\plugin\src\fixture.cpp" />
     <ClCompile Include="..\..\plugin\src\plugin.cpp" />
+    <ClCompile Include="..\..\plugin\src\weldjoint.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\plugin\src\body.h" />
@@ -27,6 +28,7 @@
     <ClInclude Include="..\..\plugin\src\debugdraw.h" />
     <ClInclude Include="..\..\plugin\src\fixture.h" />
     <ClInclude Include="..\..\plugin\src\plugin.h" />
+    <ClInclude Include="..\..\plugin\src\weldjoint.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{BFE43637-34C5-4ED7-BF2F-9B5FF7A43309}</ProjectGuid>

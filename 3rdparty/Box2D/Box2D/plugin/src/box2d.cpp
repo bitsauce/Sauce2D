@@ -54,6 +54,12 @@ void Box2D::step(float timeStep)
 	}
 	m_bodiesToDestroy.clear();
 
+	for(set<pair<b2Joint**, b2JointDef*>>::iterator itr = m_jointsToCreate.begin(); itr != m_jointsToCreate.end(); ++itr) {
+		/**(*itr).first = */m_world->CreateJoint((*itr).second);
+		//delete (*itr).second;
+	}
+	m_jointsToCreate.clear();
+
 	m_world->Step(timeStep, 8, 3);
 }
 
@@ -96,6 +102,11 @@ b2World *Box2D::getWorld() const
 Batch *Box2D::getDrawBatch() const
 {
 	return m_drawBatch;
+}
+
+void Box2D::createJoint(b2Joint **joint, const b2JointDef &def)
+{
+	m_jointsToCreate.insert(make_pair(joint, new b2JointDef(def)));
 }
 
 void Box2D::destroyBody(b2Body **body)

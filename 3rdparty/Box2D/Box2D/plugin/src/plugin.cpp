@@ -3,6 +3,7 @@
 #include "body.h"
 #include "fixture.h"
 #include "contact.h"
+#include "weldjoint.h"
 
 #include <Box2D/Box2D.h>
 #include <Box2D/Common/b2Settings.h>
@@ -24,10 +25,12 @@ int CreatePlugin(xdEngine *engine)
 	int r = 0;
 	
 	r = scriptEngine->RegisterObjectType("ScriptBox2D", 0, asOBJ_REF | asOBJ_NOHANDLE); AS_ASSERT
-	r = scriptEngine->RegisterObjectType("b2BodyDef", sizeof(b2BodyDefWrapper), asOBJ_VALUE | asOBJ_POD | asOBJ_APP_CLASS_CAK); AS_ASSERT
+	r = scriptEngine->RegisterObjectType("b2BodyDef", sizeof(b2BodyDefWrapper), asOBJ_VALUE | asOBJ_POD); AS_ASSERT
 	r = b2FixtureWrapper::TypeId	= scriptEngine->RegisterObjectType("b2Fixture", 0, asOBJ_REF | asOBJ_GC); AS_ASSERT
 	r = b2BodyWrapper::TypeId		= scriptEngine->RegisterObjectType("b2Body", 0, asOBJ_REF | asOBJ_GC); AS_ASSERT
 	r = scriptEngine->RegisterObjectType("b2Contact", 0, asOBJ_REF); AS_ASSERT
+	r = scriptEngine->RegisterObjectType("b2WeldJointDef", sizeof(b2WeldJointDefWrapper), asOBJ_VALUE | asOBJ_APP_CLASS_CD); AS_ASSERT
+	r = scriptEngine->RegisterObjectType("b2WeldJoint", 0, asOBJ_REF); AS_ASSERT
 
 	r = scriptEngine->RegisterFuncdef("void b2ContactCallback(b2Contact@)"); AS_ASSERT
 	
@@ -106,6 +109,7 @@ int CreatePlugin(xdEngine *engine)
 	r = scriptEngine->RegisterObjectMethod("b2Body", "void setObject(?&in)", asMETHOD(b2BodyWrapper, setObject), asCALL_THISCALL); AS_ASSERT
 	r = scriptEngine->RegisterObjectMethod("b2Body", "bool getObject(?&out)", asMETHOD(b2BodyWrapper, getObject), asCALL_THISCALL); AS_ASSERT
 	r = scriptEngine->RegisterObjectMethod("b2Body", "Vector2 getPosition() const", asMETHOD(b2BodyWrapper, getPosition), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("b2Body", "Vector2 getLocalPoint(const Vector2 &in) const", asMETHOD(b2BodyWrapper, getLocalPoint), asCALL_THISCALL); AS_ASSERT
 	r = scriptEngine->RegisterObjectMethod("b2Body", "Vector2 getCenter() const", asMETHOD(b2BodyWrapper, getCenter), asCALL_THISCALL); AS_ASSERT
 	r = scriptEngine->RegisterObjectMethod("b2Body", "Vector2 getLinearVelocity() const", asMETHOD(b2BodyWrapper, getLinearVelocity), asCALL_THISCALL); AS_ASSERT
 	r = scriptEngine->RegisterObjectMethod("b2Body", "float getMass() const", asMETHOD(b2BodyWrapper, getMass), asCALL_THISCALL); AS_ASSERT
@@ -131,6 +135,26 @@ int CreatePlugin(xdEngine *engine)
 	r = scriptEngine->RegisterObjectMethod("b2Contact", "b2Body @get_bodyB() const", asMETHOD(b2ContactWrapper, getBodyB), asCALL_THISCALL); AS_ASSERT
 	r = scriptEngine->RegisterObjectMethod("b2Contact", "b2Fixture @get_fixtureA() const", asMETHOD(b2ContactWrapper, getFixtureA), asCALL_THISCALL); AS_ASSERT
 	r = scriptEngine->RegisterObjectMethod("b2Contact", "b2Fixture @get_fixtureB() const", asMETHOD(b2ContactWrapper, getFixtureB), asCALL_THISCALL); AS_ASSERT
+	
+	r = scriptEngine->RegisterObjectBehaviour("b2WeldJointDef", asBEHAVE_CONSTRUCT, "void f()", asFUNCTION(b2WeldJointDefWrapper::Construct), asCALL_CDECL_OBJLAST); AS_ASSERT
+	r = scriptEngine->RegisterObjectBehaviour("b2WeldJointDef", asBEHAVE_DESTRUCT, "void f()", asFUNCTION(b2WeldJointDefWrapper::Destruct), asCALL_CDECL_OBJLAST); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("b2WeldJointDef", "void initialize(b2Body@, b2Body@, Vector2)", asMETHOD(b2WeldJointDefWrapper, initialize), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("b2WeldJointDef", "void set_bodyA(b2Body@)", asMETHOD(b2WeldJointDefWrapper, setBodyA), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("b2WeldJointDef", "b2Body @get_bodyA() const", asMETHOD(b2WeldJointDefWrapper, getBodyA), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("b2WeldJointDef", "void set_bodyB(b2Body@)", asMETHOD(b2WeldJointDefWrapper, setBodyB), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("b2WeldJointDef", "b2Body @get_bodyB() const", asMETHOD(b2WeldJointDefWrapper, getBodyB), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectProperty("b2WeldJointDef", "Vector2 anchor", offsetof(b2WeldJointDefWrapper, anchor)); AS_ASSERT
+	r = scriptEngine->RegisterObjectProperty("b2WeldJointDef", "Vector2 localAnchorA", offsetof(b2WeldJointDefWrapper, localAnchorA)); AS_ASSERT
+	r = scriptEngine->RegisterObjectProperty("b2WeldJointDef", "Vector2 localAnchorB", offsetof(b2WeldJointDefWrapper, localAnchorB)); AS_ASSERT
+	r = scriptEngine->RegisterObjectProperty("b2WeldJointDef", "float referenceAngle", offsetof(b2WeldJointDefWrapper, referenceAngle)); AS_ASSERT
+	r = scriptEngine->RegisterObjectProperty("b2WeldJointDef", "float frequencyHz", offsetof(b2WeldJointDefWrapper, frequencyHz)); AS_ASSERT
+	r = scriptEngine->RegisterObjectProperty("b2WeldJointDef", "float dampingRatio", offsetof(b2WeldJointDefWrapper, dampingRatio)); AS_ASSERT
+	r = scriptEngine->RegisterObjectProperty("b2WeldJointDef", "float collideConnected", offsetof(b2WeldJointDefWrapper, collideConnected)); AS_ASSERT
+	
+	r = scriptEngine->RegisterObjectBehaviour("b2WeldJoint", asBEHAVE_FACTORY, "b2WeldJoint @f(const b2WeldJointDef &in)", asFUNCTION(b2WeldJointWrapper::Factory), asCALL_CDECL); AS_ASSERT
+	r = scriptEngine->RegisterObjectBehaviour("b2WeldJoint", asBEHAVE_ADDREF, "void f()", asMETHOD(b2WeldJointWrapper, addRef), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectBehaviour("b2WeldJoint", asBEHAVE_RELEASE, "void f()", asMETHOD(b2WeldJointWrapper, release), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("b2WeldJoint", "float getReferenceAngle() const", asMETHOD(b2WeldJointWrapper, getReferenceAngle), asCALL_THISCALL); AS_ASSERT
 
 	b2d = new Box2D;
 	r = scriptEngine->RegisterGlobalProperty("ScriptBox2D Box2D", b2d);

@@ -8,6 +8,7 @@
     <ClCompile Include="..\..\plugin\src\body.cpp" />
     <ClCompile Include="..\..\plugin\src\fixture.cpp" />
     <ClCompile Include="..\..\plugin\src\contact.cpp" />
+    <ClCompile Include="..\..\plugin\src\weldjoint.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\plugin\src\plugin.h" />
@@ -17,5 +18,6 @@
     <ClInclude Include="..\..\plugin\src\body.h" />
     <ClInclude Include="..\..\plugin\src\fixture.h" />
     <ClInclude Include="..\..\plugin\src\contact.h" />
+    <ClInclude Include="..\..\plugin\src\weldjoint.h" />
   </ItemGroup>
 </Project>

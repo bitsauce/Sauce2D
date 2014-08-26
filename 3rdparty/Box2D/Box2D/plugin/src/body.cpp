@@ -339,6 +339,14 @@ Vector2 b2BodyWrapper::getPosition() const
 	return toXDVec(m_body->GetPosition());
 }
 
+Vector2 b2BodyWrapper::getLocalPoint(const Vector2 &worldPoint) const
+{
+	if(!m_body)
+		return Vector2(0.0f);
+
+	return toXDVec(m_body->GetLocalPoint(toB2Vec(worldPoint)));
+}
+
 float b2BodyWrapper::getAngle() const
 {
 	if(!m_body)

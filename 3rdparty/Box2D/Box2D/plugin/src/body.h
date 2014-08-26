@@ -94,7 +94,11 @@ public:
 
 	void freeObject();
 	bool getObject(void *object, int typeId);
+
 	Vector2 getPosition() const;
+	Vector2 getLocalPoint(const Vector2 &worldPoint) const;
+
+
 	float getAngle() const;
 	Vector2 getCenter() const;
 	Vector2 getLinearVelocity() const;
@@ -102,6 +106,10 @@ public:
 	void applyImpulse(const Vector2 &impulse, const Vector2 &position);
 	void setLinearVelocity(const Vector2 &velocity);
 	bool isValid() const;
+
+	b2Body *toB2() const {
+		return m_body;
+	}
 	
 	// Serialization
 	void serialize(StringStream &ss) const;
