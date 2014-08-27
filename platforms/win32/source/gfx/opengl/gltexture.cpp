@@ -114,7 +114,7 @@ void GLtexture::updatePixmap(const Pixmap &pixmap)
 	// Regenerate mipmaps
 	m_mipmapsGenerated = false;
 	
-	// NOTE: There is a litte redunacny with the glBindTexture() calls.
+	// NOTE: There is a litte redundancy with the glBindTexture() calls.
 	// Use default filtering options
 	updateFiltering();
 }

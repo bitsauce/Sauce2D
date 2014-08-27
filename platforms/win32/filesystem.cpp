@@ -118,7 +118,7 @@ bool FileSystem::makeDir(const string &path)
 	if(!dirExists(path))
 	{
 		// Create all intermediate directories
-		for(int i = 2; i < path.size(); i++)
+		for(uint i = 2; i < path.size(); i++)
 		{
 			if(path[i] == '/')
 			{
@@ -167,9 +167,9 @@ bool FileSystem::remove(string &path)
 		}
 
 		FindClose(hFind);
-		return RemoveDirectory(path.c_str());
+		return RemoveDirectory(path.c_str()) != 0;
 	}else
 	{
-		return DeleteFile(path.c_str());
+		return DeleteFile(path.c_str()) != 0;
 	}
 }

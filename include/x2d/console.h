@@ -23,7 +23,7 @@ public:
 	virtual ~xdConsole();
 
 	virtual void log(const string &msg);
-	void log(const char*, ...);
+	void log(const char *msg, ...);
 	string getLog() const;
 
 	void clear();

@@ -70,7 +70,7 @@ GLshader::GLshader(const string &vertFilePath, const string &fragFilePath)
     glGetShaderiv(fragShader, GL_INFO_LOG_LENGTH, &logLength);
 
 	// Get error log
-    glGetShaderInfoLog(vertShader, logLength, NULL, compileLog);
+    glGetShaderInfoLog(fragShader, logLength, NULL, compileLog);
 
 	// Print shader error to console
 	if(logLength > 1) {
@@ -125,7 +125,7 @@ GLshader::GLshader(const string &vertFilePath, const string &fragFilePath)
 		uniform->type = type;
 		uniform->loc = glGetUniformLocation(m_id, name);
 
-		int dataSize;
+		int dataSize = 0;
 		switch(type)
 		{
 		case GL_INT: dataSize = INT_SIZE; break;

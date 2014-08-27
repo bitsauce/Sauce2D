@@ -98,7 +98,6 @@ xdVirtualKey fromWinKey(uchar vk)
 	//case XD_KEY_Equals: return VK_; break;
 	default: return xdVirtualKey(vk);
 	}
-	return XD_KEY_NULL;
 }
 
 uchar toWinKey(xdVirtualKey key)
