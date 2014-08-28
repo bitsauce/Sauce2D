@@ -94,7 +94,7 @@ GLshader::GLshader(const string &vertFilePath, const string &fragFilePath)
 
 	// Print program error to console
 	if(logLength > 1) {
-		LOG("\t%s", compileLog);
+		LOG("\t%s", programLog);
 	}
 
 	// Delete shader buffers as they are loaded into the shader program
@@ -159,8 +159,9 @@ void GLshader::setUniform1i(const string &name, const int v0)
 		if(uniform->type == GL_INT) {
 			((GLint*)uniform->data)[0] = v0;
 		}
-	}else{
-		LOG("Uniform '%s' does not exist.", name);
+	}else
+	{
+		LOG("Uniform '%s' does not exist.", name.c_str());
 	}
 }
 
@@ -173,8 +174,9 @@ void GLshader::setUniform2i(const string &name, const int v0, const int v1)
 			((GLint*)uniform->data)[0] = v0;
 			((GLint*)uniform->data)[1] = v1;
 		}
-	}else{
-		LOG("Uniform '%s' does not exist.", name);
+	}else
+	{
+		LOG("Uniform '%s' does not exist.", name.c_str());
 	}
 }
 
@@ -188,8 +190,9 @@ void GLshader::setUniform3i(const string &name, const int v0, const int v1, cons
 			((GLint*)uniform->data)[1] = v1;
 			((GLint*)uniform->data)[2] = v2;
 		}
-	}else{
-		LOG("Uniform '%s' does not exist.", name);
+	}else
+	{
+		LOG("Uniform '%s' does not exist.", name.c_str());
 	}
 }
 
@@ -204,8 +207,9 @@ void GLshader::setUniform4i(const string &name, const int v0, const int v1, cons
 			((GLint*)uniform->data)[2] = v2;
 			((GLint*)uniform->data)[3] = v3;
 		}
-	}else{
-		LOG("Uniform '%s' does not exist.", name);
+	}else
+	{
+		LOG("Uniform '%s' does not exist.", name.c_str());
 	}
 }
 
@@ -217,8 +221,9 @@ void GLshader::setUniform1f(const string &name, const float v0)
 		if(uniform->type == GL_FLOAT) {
 			((GLfloat*)uniform->data)[0] = v0;
 		}
-	}else{
-		LOG("Uniform '%s' does not exist.", name);
+	}else
+	{
+		LOG("Uniform '%s' does not exist.", name.c_str());
 	}
 }
 
@@ -231,8 +236,9 @@ void GLshader::setUniform2f(const string &name, const float v0, const float v1)
 			((GLfloat*)uniform->data)[0] = v0;
 			((GLfloat*)uniform->data)[1] = v1;
 		}
-	}else{
-		LOG("Uniform '%s' does not exist.", name);
+	}else
+	{
+		LOG("Uniform '%s' does not exist.", name.c_str());
 	}
 }
 
@@ -246,8 +252,9 @@ void GLshader::setUniform3f(const string &name, const float v0, const float v1, 
 			((GLfloat*)uniform->data)[1] = v1;
 			((GLfloat*)uniform->data)[2] = v2;
 		}
-	}else{
-		LOG("Uniform '%s' does not exist.", name);
+	}else
+	{
+		LOG("Uniform '%s' does not exist.", name.c_str());
 	}
 }
 
@@ -262,8 +269,9 @@ void GLshader::setUniform4f(const string &name, const float v0, const float v1, 
 			((GLfloat*)uniform->data)[2] = v2;
 			((GLfloat*)uniform->data)[3] = v3;
 		}
-	}else{
-		LOG("Uniform '%s' does not exist.", name);
+	}else
+	{
+		LOG("Uniform '%s' does not exist.", name.c_str());
 	}
 }
 
@@ -276,8 +284,9 @@ void GLshader::setSampler2D(const string &name, Texture *texture)
 		if(uniform->type == GL_SAMPLER_2D) {
 			((GLuint*)uniform->data)[0] = texture != 0 ? ((GLtexture*)texture)->m_id : 0;
 		}
-	}else{
-		LOG("Uniform '%s' does not exist.", name);
+	}else
+	{
+		LOG("Uniform '%s' does not exist.", name.c_str());
 	}
 
 	if(texture != 0) {

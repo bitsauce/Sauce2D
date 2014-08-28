@@ -1,1 +1,31 @@
-** x2D Game Engine **Initializing AngelScript (2.29.0)Loading plugins...Compiling scripts...Compiling vertex shader: :/simplex3d.vertCompiling fragment shader: :/simplex3d.fragLinking shader programRunning void main()...x2D Engine InitializedExiting x2D Engine...
+** x2D Game Engine **
+Initializing AngelScript (2.29.0)
+Loading plugins...
+Compiling scripts...
+Running void main()...
+x2D Engine Initialized
+Compiling vertex shader: :/shaders/simplex3d.vert
+Compiling fragment shader: :/shaders/simplex3d.frag
+Linking shader program
+Compiling vertex shader: :/shaders/simplex3d_blend.vert
+Compiling fragment shader: :/shaders/simplex3d_blend.frag
+Linking shader program
+Compiling vertex shader: :/shaders/simplex3d.vert
+Compiling fragment shader: :/shaders/simplex3d.frag
+Linking shader program
+Compiling vertex shader: :/shaders/simplex3d_blend.vert
+Compiling fragment shader: :/shaders/simplex3d_blend.frag
+Linking shader program
+Compiling vertex shader: :/shaders/simplex3d.vert
+Compiling fragment shader: :/shaders/simplex3d.frag
+Linking shader program
+Compiling vertex shader: :/shaders/simplex3d_blend.vert
+Compiling fragment shader: :/shaders/simplex3d_blend.frag
+Linking shader program
+Compiling vertex shader: :/shaders/simplex3d.vert
+Compiling fragment shader: :/shaders/simplex3d.frag
+Linking shader program
+Compiling vertex shader: :/shaders/simplex3d_blend.vert
+Compiling fragment shader: :/shaders/simplex3d_blend.frag
+Linking shader program
+Exiting x2D Engine...

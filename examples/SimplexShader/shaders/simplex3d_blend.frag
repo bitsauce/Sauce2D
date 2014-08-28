@@ -7,7 +7,7 @@
 //     License : Copyright (C) 2011 Ashima Arts. All rights reserved.
 //               Distributed under the MIT License. See LICENSE file.
 //               https://github.com/ashima/webgl-noise
-// 
+//
 
 vec3 mod289(vec3 x)
 {
@@ -103,6 +103,8 @@ uniform float u_gain;
 uniform float u_lacunarity;
 uniform int u_octaves;
 uniform sampler2D u_gradient;
+uniform sampler2D u_image0;
+uniform sampler2D u_image1;
 
 varying vec2 v_texCoord;
 
@@ -127,5 +129,5 @@ float simplex(vec3 p)
 void main(void)
 {
 	vec2 v = v_texCoord * 10.0; // u_scale;
-	gl_FragColor = texture2D(u_gradient, vec2(clamp(0.5 + 0.5 * simplex(vec3(v, u_time)), 0.0, 1.0), 0.0));
+	gl_FragColor = mix(texture2D(u_image0, v_texCoord), texture2D(u_image1, v_texCoord), texture2D(u_gradient, vec2(0.5 + 0.5 * simplex(vec3(v, u_time)), 0.0)).r);
 }

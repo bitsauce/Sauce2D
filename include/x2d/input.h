@@ -145,6 +145,9 @@ public:
 
 	// Key binding
 	void bind(const xdVirtualKey key, asIScriptFunction *func);
+	void unbind(const xdVirtualKey key);
+	void unbindAll();
+	void updateBindings();
 	void checkBindings();
 
 	// Keyboard listener

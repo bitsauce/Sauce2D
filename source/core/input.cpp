@@ -134,7 +134,9 @@ int xdInput::Register(asIScriptEngine *scriptEngine)
 
 	// Keyboard
 	r = scriptEngine->RegisterObjectMethod("ScriptInput", "bool getKeyState(const VirtualKey key) const", asMETHOD(xdInput, getKeyState), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("ScriptInput", "void bind(const VirtualKey key, KeybindCallback @callback)", asMETHOD(xdInput, bind), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("ScriptInput", "void bind(const VirtualKey key, KeybindCallback @callback)", asMETHOD(xdInput, bind), asCALL_THISCALL); 
+	r = scriptEngine->RegisterObjectMethod("ScriptInput", "void unbind(const VirtualKey key)", asMETHOD(xdInput, unbind), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("ScriptInput", "void unbindAll()", asMETHOD(xdInput, unbindAll), asCALL_THISCALL); AS_ASSERT
 	r = scriptEngine->RegisterObjectMethod("ScriptInput", "void addKeyboardListener(KeyboardListener@)", asMETHOD(xdInput, addKeyboardListener), asCALL_THISCALL); AS_ASSERT
 
 	// General
@@ -148,8 +150,7 @@ xdInput::~xdInput()
 	for(map<xdVirtualKey, KeyBind>::iterator itr = m_keyBindings.begin(); itr != m_keyBindings.end(); ++itr)
 	{
 		// Release all function handles
-		if(itr->second.function)
-			itr->second.function->Release();
+		itr->second.function->Release();
 	}
 	
 	for(vector<asIScriptObject*>::iterator itr = m_keyListeners.begin(); itr != m_keyListeners.end(); ++itr)
@@ -165,13 +166,37 @@ void xdInput::bind(const xdVirtualKey key, asIScriptFunction *function)
 	// If key is already bound, release its function handle
 	if(m_keyBindings.find(key) != m_keyBindings.end())
 	{
-		asIScriptFunction *func = m_keyBindings[key].function;
-		if(func) func->Release();
+		// Relese function ref
+		m_keyBindings[key].function->Release();
+
+		// If there is no function
+		if(!function)
+		{
+			// Remove key binding
+			m_keyBindings.erase(key);
+		}
 	}
 
-	// Bind function to key
-	m_keyBindings[key].function = function;
-	m_keyBindings[key].pressed = false;
+	if(function)
+	{
+		// Bind function to key
+		m_keyBindings[key].function = function;
+		m_keyBindings[key].pressed = false;
+	}
+}
+
+void xdInput::unbind(const xdVirtualKey key)
+{
+	bind(key, 0);
+}
+
+void xdInput::unbindAll()
+{
+	// Release all function handles
+	for(map<xdVirtualKey, KeyBind>::iterator itr = m_keyBindings.begin(); itr != m_keyBindings.end(); ++itr) {
+		itr->second.function->Release();
+	}
+	m_keyBindings.clear();
 }
 
 void xdInput::addKeyboardListener(asIScriptObject *object)
@@ -233,12 +258,13 @@ void xdInput::keyReleased(xdVirtualKey key)
 void xdInput::checkBindings()
 {
 	// Iterate key bindings
-	for(map<xdVirtualKey, KeyBind>::iterator itr = m_keyBindings.begin(); itr != m_keyBindings.end(); ++itr)
+	map<xdVirtualKey, KeyBind> copy(m_keyBindings); // For keeping m_keyBindings mutable
+	for(map<xdVirtualKey, KeyBind>::iterator itr = copy.begin(); itr != copy.end(); ++itr)
 	{
 		KeyBind &key = itr->second;
 		if(getKeyState(itr->first))
 		{
-			if(!key.pressed && key.function)
+			if(!key.pressed)
 			{
 				// Key was pressed, call function
 				FunctionCall *funcCall = CreateFuncCall();

@@ -42,7 +42,14 @@ int xdAssetLoader::loadImage(string filePath, uchar** data, uint &width, uint &h
 		
 			// load an image from the memory stream
 			FIBITMAP *bitmap = FreeImage_LoadFromMemory(fif, hmem, 0);
-		
+
+			// Convert all non-32bpp bitmaps to 32bpp bitmaps // TODO: I should add support for loading different types of bit depth into graphics memory
+			if(FreeImage_GetBPP(bitmap) != 32) {
+				FIBITMAP *newBitmap = FreeImage_ConvertTo32Bits(bitmap);
+				FreeImage_Unload(bitmap);
+				bitmap = newBitmap;
+			}
+
 			width = FreeImage_GetWidth(bitmap);
 			height = FreeImage_GetHeight(bitmap);
 			*data = new uchar[width*height*4];
