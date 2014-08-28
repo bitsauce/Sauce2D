@@ -258,8 +258,7 @@ void xdInput::keyReleased(xdVirtualKey key)
 void xdInput::checkBindings()
 {
 	// Iterate key bindings
-	map<xdVirtualKey, KeyBind> copy(m_keyBindings); // For keeping m_keyBindings mutable
-	for(map<xdVirtualKey, KeyBind>::iterator itr = copy.begin(); itr != copy.end(); ++itr)
+	for(map<xdVirtualKey, KeyBind>::iterator itr = m_keyBindings.begin(); itr != m_keyBindings.end(); ++itr)
 	{
 		KeyBind &key = itr->second;
 		if(getKeyState(itr->first))

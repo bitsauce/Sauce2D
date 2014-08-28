@@ -332,7 +332,7 @@ int xdEngine::init(const xdConfig &config)
 	}
 
 	if(IsEnabled(XD_EXPORT_LOG)) {
-		m_console->m_output = xdFileSystem::CreateFileWriter(util::getAbsoluteFilePath(":/console.txt"));
+		m_console->m_output = xdFileSystem::CreateFileWriter(util::getAbsoluteFilePath(":/console.log"));
 	}
 	
 	try {

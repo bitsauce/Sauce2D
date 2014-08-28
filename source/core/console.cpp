@@ -98,7 +98,7 @@ void xdConsole::clear()
 
 void xdConsole::exportFile() const
 {
-	xdFileSystem::WriteFile(":/console.txt", m_log);
+	xdFileSystem::WriteFile(":/console.log", m_log);
 }
 
 string xdConsole::readBuffer()
