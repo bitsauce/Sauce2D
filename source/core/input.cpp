@@ -217,7 +217,7 @@ void xdInput::charEvent(uint utf8char)
 		asIScriptContext *ctx = g_engine->getScriptEngine()->createContext();
 		int r = ctx->Prepare(func); assert(r >= 0);
 		r = ctx->SetObject(*itr); assert(r >= 0);
-		r = ctx->SetArgDWord(0, utf8char);
+		r = ctx->SetArgDWord(0, utf8char); assert(r >= 0);
 		r = ctx->Execute(); assert(r >= 0);
 		r = ctx->Release(); assert(r >= 0);
 	}
@@ -233,7 +233,7 @@ void xdInput::keyPressed(xdVirtualKey key)
 		asIScriptContext *ctx = g_engine->getScriptEngine()->createContext();
 		int r = ctx->Prepare(func); assert(r >= 0);
 		r = ctx->SetObject(*itr); assert(r >= 0);
-		r = ctx->SetArgDWord(0, key);
+		r = ctx->SetArgDWord(0, key); assert(r >= 0);
 		r = ctx->Execute(); assert(r >= 0);
 		r = ctx->Release(); assert(r >= 0);
 	}
@@ -249,7 +249,7 @@ void xdInput::keyReleased(xdVirtualKey key)
 		asIScriptContext *ctx = g_engine->getScriptEngine()->createContext();
 		int r = ctx->Prepare(func); assert(r >= 0);
 		r = ctx->SetObject(*itr); assert(r >= 0);
-		r = ctx->SetArgDWord(0, key);
+		r = ctx->SetArgDWord(0, key); assert(r >= 0);
 		r = ctx->Execute(); assert(r >= 0);
 		r = ctx->Release(); assert(r >= 0);
 	}

@@ -24,7 +24,15 @@ public:
 	~Sprite();
 	
 	void setPosition(const Vector2 &pos);
+	void setPosition(const float x, const float y);
+	void setX(const float x);
+	void setY(const float y);
+
 	void setSize(const Vector2 &size);
+	void setSize(const float w, const float h);
+	void setWidth(const float w);
+	void setHeight(const float h);
+
 	void setOrigin(const Vector2 &origin);
 	void setRotation(const float ang);
 	void setRegion(const TextureRegion &region);
@@ -35,8 +43,15 @@ public:
 	void scale(const float);
 	
 	Shape *getAABB() const;
+
 	Vector2 getPosition() const;
+	float getX() const;
+	float getY() const;
+
 	Vector2 getSize() const;
+	float getWidth() const;
+	float getHeight() const;
+
 	Vector2 getOrigin() const;
 	Vector2 getCenter() const;
 	float getRotation() const;
