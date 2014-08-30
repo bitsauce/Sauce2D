@@ -340,9 +340,11 @@ int xdEngine::init(const xdConfig &config)
 		LOG("** x2D Game Engine **");
 	
 		// Create the script engine
-		LOG("Initializing AngelScript (%s)", ANGELSCRIPT_VERSION_STRING);
+		LOG("Initializing AngelScript %s", ANGELSCRIPT_VERSION_STRING);
 		asIScriptEngine *scriptEngine = asCreateScriptEngine(ANGELSCRIPT_VERSION);
 		scriptEngine->SetEngineProperty(asEP_COMPILER_WARNINGS, 0);
+
+		m_console->m_initialized = true;
 	
 		// Create script manager
 		m_scripts = new xdScriptEngine(scriptEngine, m_debugger);
@@ -459,7 +461,8 @@ int xdEngine::init(const xdConfig &config)
 	}catch(...)
 	{
 		asIScriptContext *ctx = asGetActiveContext();
-		if(ctx) {
+		if(ctx)
+		{
 			// Will probably never get here as long as AS_NO_EXCEPTION is not defined
 			const char *tmp;
 			int line = ctx->GetLineNumber(0, 0, &tmp);
@@ -467,7 +470,8 @@ int xdEngine::init(const xdConfig &config)
 			if(tmp) {
 				LOG("LOC : %s (%i)", line, tmp);
 			}
-		}else{
+		}else
+		{
 			LOG("Unknown exception occured.");
 		}
 		return XD_UNKNOWN_EXCEPTION;

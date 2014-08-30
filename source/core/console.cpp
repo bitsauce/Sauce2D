@@ -17,10 +17,12 @@ int xdConsole::Register(asIScriptEngine *scriptEngine)
 {
 	int r;
 
-	r = scriptEngine->RegisterObjectMethod("ScriptConsole", "void log(const string &in)", asMETHODPR(xdConsole, log, (const string &), void), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("ScriptConsole", "void log(const string &in)", asMETHODPR(xdConsole, log, (const string&), void), asCALL_THISCALL); AS_ASSERT
 	r = scriptEngine->RegisterObjectMethod("ScriptConsole", "string getLog(const string &in) const", asMETHOD(xdConsole, getLog), asCALL_THISCALL); AS_ASSERT
+
 	r = scriptEngine->RegisterObjectMethod("ScriptConsole", "void clear()", asMETHOD(xdConsole, clear), asCALL_THISCALL); AS_ASSERT
 	r = scriptEngine->RegisterObjectMethod("ScriptConsole", "void export()", asMETHOD(xdConsole, exportFile), asCALL_THISCALL); AS_ASSERT
+
 	r = scriptEngine->RegisterObjectMethod("ScriptConsole", "string readBuffer()", asMETHOD(xdConsole, readBuffer), asCALL_THISCALL); AS_ASSERT
 	r = scriptEngine->RegisterObjectMethod("ScriptConsole", "bool hasBuffer() const", asMETHOD(xdConsole, hasBuffer), asCALL_THISCALL); AS_ASSERT
 	r = scriptEngine->RegisterObjectMethod("ScriptConsole", "void clearBuffer()", asMETHOD(xdConsole, clearBuffer), asCALL_THISCALL); AS_ASSERT
@@ -31,7 +33,8 @@ int xdConsole::Register(asIScriptEngine *scriptEngine)
 xdConsole::xdConsole() :
 	m_fileSystem(0), // Set by the engine
 	m_debugger(0), // Set by the engine
-	m_output(0)
+	m_output(0),
+	m_initialized(false) // Set by the engine
 {
 }
 
@@ -42,31 +45,11 @@ xdConsole::~xdConsole()
 
 void xdConsole::log(const string &msg)
 {
-	// Append message to log file
-	if(xdEngine::IsEnabled(XD_EXPORT_LOG))
-	{
-		m_output->append(msg);
-		m_output->append("\n");
-		m_output->flush();
-	}
-
-	// Send message to debugger
-	if(m_debugger)
-	{
-		m_debugger->sendPacket(XD_MESSAGE_PACKET, msg.data());
-	}
-
-	// Append to console buffer
-	m_log.append(msg);
-	m_buffer.append(msg);
+	logf(msg.c_str());
 }
 
-void xdConsole::log(const char *msg, ...)
+void xdConsole::call_log(const char *msg, va_list args)
 {
-	// Get argument list
-	va_list args;
-	va_start(args, msg);
-	
 	// Get string length
 	int size = _vscprintf(msg, args) + 1;
 
@@ -80,10 +63,59 @@ void xdConsole::log(const char *msg, ...)
 #else
 	vsprintf(out, msg, args);
 #endif
-	va_end(args);
 
-	// Send to an overload
-	log(out);
+	// System log
+	syslog(out);
+	
+	// Append message to log file
+	if(xdEngine::IsEnabled(XD_EXPORT_LOG))
+	{
+		m_output->append(out);
+		m_output->append("\n");
+		m_output->flush();
+	}
+
+	// Send message to debugger
+	if(m_debugger)
+	{
+		m_debugger->sendPacket(XD_MESSAGE_PACKET, out.data());
+	}
+
+	// Append to console buffer
+	m_log.append(out);
+	m_buffer.append(out);
+}
+
+#define CALL_LOG(format, ...) \
+			int size = _scprintf(format, __VA_ARGS__) + 1; \
+			char *newMsg = new char[size]; \
+			sprintf(newMsg, format, __VA_ARGS__); \
+			call_log(newMsg, args); \
+			delete newMsg;
+
+void xdConsole::logf(const char *msg, ...)
+{
+	// Get argument list
+	va_list args;
+	va_start(args, msg);
+
+	asIScriptContext *ctx = m_initialized ? asGetActiveContext() : 0;
+	if(ctx)
+	{
+		const char *objName = ctx->GetFunction()->GetObjectName();
+		if(objName)
+		{
+			CALL_LOG("%s::%s(): %s", objName, ctx->GetFunction()->GetName(), msg);
+		}else
+		{
+			CALL_LOG("%s(): %s", ctx->GetFunction()->GetName(), msg);
+		}
+	}else
+	{
+		CALL_LOG("%s", msg);
+	}
+
+	va_end(args);
 }
 
 string xdConsole::getLog() const

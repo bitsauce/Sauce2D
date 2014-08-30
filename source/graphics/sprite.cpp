@@ -56,9 +56,6 @@ int Sprite::Register(asIScriptEngine *scriptEngine)
 	
 	r = scriptEngine->RegisterObjectMethod("Sprite", "void draw(Batch @batch)", asMETHOD(Sprite, draw), asCALL_THISCALL); AS_ASSERT
 
-	r = scriptEngine->RegisterObjectMethod("Sprite", "void serialize(StringStream&) const", asMETHOD(Sprite, serialize), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectBehaviour("Sprite", asBEHAVE_FACTORY, "Sprite @f(StringStream&)", asFUNCTIONPR(Factory, (StringStream&), Sprite*), asCALL_CDECL); AS_ASSERT
-
 	return r;
 }
 
@@ -257,44 +254,4 @@ void Sprite::getVertices(Vertex *vertices) const
 	vertices[1].texCoord.set(m_textureRegion.uv1.x, m_textureRegion.uv1.y);
 	vertices[2].texCoord.set(m_textureRegion.uv1.x, m_textureRegion.uv0.y);
 	vertices[3].texCoord.set(m_textureRegion.uv0.x, m_textureRegion.uv0.y);
-}
-
-#include <x2d/scriptengine.h>
-
-void Sprite::serialize(StringStream &ss)
-{
-	g_engine->getScriptEngine()->serialize(&m_textureRegion, TextureRegion::GetTypeId(), ss);
-
-	(stringstream&)ss << m_position.x << endl;
-	(stringstream&)ss << m_position.y << endl;
-	(stringstream&)ss << m_size.x << endl;
-	(stringstream&)ss << m_size.y << endl;
-	(stringstream&)ss << m_origin.x << endl;
-	(stringstream&)ss << m_origin.y << endl;
-	(stringstream&)ss << m_angle << endl;
-	(stringstream&)ss << m_color.x << endl;
-	(stringstream&)ss << m_color.y << endl;
-	(stringstream&)ss << m_color.z << endl;
-	(stringstream&)ss << m_color.w << endl;
-}
-
-Sprite *Sprite::Factory(StringStream &ss)
-{
-	TextureRegion region(0, 0.0f, 0.0f, 1.0f, 1.0f);
-	g_engine->getScriptEngine()->deserialize(&region, TextureRegion::GetTypeId(), ss);
-	Sprite *sprite = new Sprite(region);
-
-	(stringstream&)ss >> sprite->m_position.x; ((stringstream&)ss).ignore();
-	(stringstream&)ss >> sprite->m_position.y; ((stringstream&)ss).ignore();
-	(stringstream&)ss >> sprite->m_size.x; ((stringstream&)ss).ignore();
-	(stringstream&)ss >> sprite->m_size.y; ((stringstream&)ss).ignore();
-	(stringstream&)ss >> sprite->m_origin.x; ((stringstream&)ss).ignore();
-	(stringstream&)ss >> sprite->m_origin.y; ((stringstream&)ss).ignore();
-	(stringstream&)ss >> sprite->m_angle; ((stringstream&)ss).ignore();
-	(stringstream&)ss >> sprite->m_color.x; ((stringstream&)ss).ignore();
-	(stringstream&)ss >> sprite->m_color.y; ((stringstream&)ss).ignore();
-	(stringstream&)ss >> sprite->m_color.z; ((stringstream&)ss).ignore();
-	(stringstream&)ss >> sprite->m_color.w; ((stringstream&)ss).ignore();
-
-	return sprite;
 }

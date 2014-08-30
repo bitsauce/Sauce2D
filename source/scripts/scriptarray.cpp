@@ -1985,29 +1985,4 @@ static void RegisterScriptArray_Generic(asIScriptEngine *engine)
 	r = engine->RegisterObjectBehaviour("array<T>", asBEHAVE_RELEASEREFS, "void f(int&in)", asFUNCTION(ScriptArrayReleaseAllHandles_Generic), asCALL_GENERIC); assert( r >= 0 );
 }
 
-#include <x2d/engine.h>
-#include <x2d/scriptengine.h>
-
-void CScriptArray::serialize(StringStream &ss) const
-{
-	// Store size and serialize values
-	(stringstream&)ss << GetSize() << endl;
-	for(int i = 0; i < GetSize(); i++) {
-		g_engine->getScriptEngine()->serialize((void*)At(i), subTypeId, ss);
-	}
-}
-
-void CScriptArray::deserialize(StringStream &ss)
-{
-	// Read size
-	int size;
-	(stringstream&)ss >> size; ((stringstream&)ss).ignore();
-
-	// Resize and deserialize values
-	Resize(size);
-	for(int i = 0; i < size; i++) {
-		g_engine->getScriptEngine()->deserialize((void*)At(i), subTypeId, ss);
-	}
-}
-
 END_AS_NAMESPACE

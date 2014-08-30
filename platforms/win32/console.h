@@ -7,7 +7,7 @@ class Console : public xdConsole
 {
 public:
 #ifdef X2D_DEBUG
-	void log(const string &str);
+	void syslog(const string &str);
 #endif
 };
 

@@ -34,10 +34,6 @@ int SpriteBatch::Register(asIScriptEngine *scriptEngine)
 	r = scriptEngine->RegisterObjectMethod("SpriteBatch", "void makeStatic()", asMETHOD(SpriteBatch, makeStatic), asCALL_THISCALL); AS_ASSERT
 	r = scriptEngine->RegisterObjectMethod("SpriteBatch", "void renderToTexture(Texture@)", asMETHOD(SpriteBatch, renderToTexture), asCALL_THISCALL); AS_ASSERT
 
-	// Serialization
-	r = scriptEngine->RegisterObjectMethod("SpriteBatch", "void serialize(StringStream&) const", asMETHOD(SpriteBatch, serialize), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectBehaviour("SpriteBatch", asBEHAVE_FACTORY, "SpriteBatch @f(StringStream&)", asFUNCTIONPR(Factory, (StringStream&), SpriteBatch*), asCALL_CDECL); AS_ASSERT
-
 	return r;
 }
 
@@ -149,27 +145,4 @@ void SpriteBatch::makeStatic()
 		itr->second->vbo->upload(itr->second);
 	}
 	m_static = true;
-}
-
-#include <x2d/scriptengine.h>
-
-void SpriteBatch::serialize(StringStream &ss) const
-{
-	(stringstream&)ss << m_sprites.size() << endl;
-	for(uint i = 0; i < m_sprites.size(); i++) {
-		g_engine->getScriptEngine()->serialize((void*)&m_sprites[i], Sprite::GetTypeId() | asTYPEID_OBJHANDLE, ss);
-	}
-}
-
-SpriteBatch *SpriteBatch::Factory(StringStream &ss)
-{
-	SpriteBatch *batch = new SpriteBatch();
-
-	uint size;
-	(stringstream&)ss >> size; ((stringstream&)ss).ignore();
-	batch->m_sprites.resize(size);
-	for(uint i = 0; i < size; i++) {
-		g_engine->getScriptEngine()->deserialize(&batch->m_sprites[i], Sprite::GetTypeId() | asTYPEID_OBJHANDLE, ss);
-	}
-	return batch;
 }

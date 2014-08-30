@@ -5,6 +5,8 @@
 #include <x2d/util.h>
 #include <x2d/base.h>
 
+#include "../../source/scripts/stringstream.h"
+
 // Script func-call argument
 struct ScriptValue
 {
@@ -53,17 +55,14 @@ public:
 	void executeString(const string &str) const;
 
 	// Serializing
-	void serialize(void *value, int typeId, string &path);
-	void serialize(void *value, int typeId, StringStream &ss);
-	void deserialize(void *value, int typeId, string &path);
-	void deserialize(void *value, int typeId, StringStream &ss);
-	void notifySerializerOfNewObject(void *value); // Nessesary for solving circular references
+	void serialize(asIScriptObject *object, string &path);
+	void serialize(asIScriptObject *object, StringStream &ss);
+	asIScriptObject *deserialize(string &path);
+	asIScriptObject *deserialize(StringStream &ss);
 
 private:
 	asIScriptModule *m_module;
 	class xdDebug *m_debugger;
-	map<intptr_t, void*> m_pointerAddresses;
-	intptr_t m_currentAddress;
 };
 
 // AngelScript functions

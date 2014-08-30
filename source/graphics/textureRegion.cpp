@@ -30,9 +30,6 @@ int TextureRegion::Register(asIScriptEngine *scriptEngine)
 	r = scriptEngine->RegisterObjectMethod("TextureRegion", "void setRegion(const float, const float, const float, const float)", asMETHODPR(TextureRegion, setRegion, (const float, const float, const float, const float), void), asCALL_THISCALL); AS_ASSERT
 	r = scriptEngine->RegisterObjectMethod("TextureRegion", "Texture @getTexture() const", asMETHODPR(TextureRegion, getTexture, () const, Texture*), asCALL_THISCALL); AS_ASSERT
 	r = scriptEngine->RegisterObjectMethod("TextureRegion", "void setTexture(Texture @)", asMETHODPR(TextureRegion, setTexture, (Texture*), void), asCALL_THISCALL); AS_ASSERT
-	
-	r = scriptEngine->RegisterObjectMethod("TextureRegion", "void serialize(StringStream&) const", asMETHOD(TextureRegion, serialize), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("TextureRegion", "void deserialize(StringStream&)", asMETHOD(TextureRegion, deserialize), asCALL_THISCALL); AS_ASSERT
 
 	return r;
 }
@@ -122,26 +119,4 @@ void TextureRegion::setRegion(const float u0, const float v0, const float u1, co
 {
 	uv0.set(u0, v0);
 	uv1.set(u1, v1);
-}
-
-#include <x2d/scriptengine.h>
-
-void TextureRegion::serialize(StringStream &ss) const
-{
-	g_engine->getScriptEngine()->serialize((void*)&texture, Texture::GetTypeId() | asTYPEID_OBJHANDLE, ss);
-
-	(stringstream&)ss << uv0.x << endl;
-	(stringstream&)ss << uv0.y << endl;
-	(stringstream&)ss << uv1.x << endl;
-	(stringstream&)ss << uv1.y << endl;
-}
-
-void TextureRegion::deserialize(StringStream &ss)
-{
-	g_engine->getScriptEngine()->deserialize(&texture, Texture::GetTypeId() | asTYPEID_OBJHANDLE, ss);
-
-	(stringstream&)ss >> uv0.x; ((stringstream&)ss).ignore();
-	(stringstream&)ss >> uv0.y; ((stringstream&)ss).ignore();
-	(stringstream&)ss >> uv1.x; ((stringstream&)ss).ignore();
-	(stringstream&)ss >> uv1.y; ((stringstream&)ss).ignore();
 }

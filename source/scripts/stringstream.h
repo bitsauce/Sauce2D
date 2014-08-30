@@ -1,6 +1,7 @@
 #ifndef SCRIPTS_STRINGSTREAM_H
 #define SCRIPTS_STRINGSTREAM_H
 
+#include <x2d/math.h>
 #include <x2d/base.h>
 #include <x2d/util.h>
 
@@ -17,14 +18,27 @@ public:
 		m_stream(content)
 	{
 	}
+	
+	void write(const bool);
+	void write(const char);
+	void write(const short);
+	void write(const int);
+	void write(const long);
+	void write(const float);
+	void write(const double);
+	void write(const string&);
+	void write(const Vector2&);
+	
+	void read(bool&);
+	void read(char&);
+	void read(short&);
+	void read(int&);
+	void read(long&);
+	void read(float&);
+	void read(double&);
+	void read(string&);
+	void read(Vector2&);
 
-	operator stringstream&()
-	{
-		return m_stream;
-	}
-
-	void write(void *value, int typeId);
-	void read(void *value, int typeId);
 	string str() const;
 
 private:

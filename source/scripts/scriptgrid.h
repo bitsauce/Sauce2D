@@ -47,10 +47,6 @@ public:
 	// address of the handle. The refCount of the object will also be incremented
 	void  SetValue(asUINT x, asUINT y, void *value);
 
-	// Serialization
-	void serialize(StringStream &ss) const;
-	void deserialize(StringStream &ss);
-
 	// GC methods
 	int  GetRefCount();
 	void SetFlag();

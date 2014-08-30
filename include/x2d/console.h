@@ -6,8 +6,8 @@
 #include <x2d/base.h>
 #include <x2d/engine.h>
 
-#define LOG(str, ...) xdEngine::GetConsole()->log(str, __VA_ARGS__)
-#define ERR(str, ...) xdEngine::GetConsole()->log(str, __VA_ARGS__)
+#define LOG(str, ...) xdEngine::GetConsole()->logf(str, __VA_ARGS__)
+#define ERR(str, ...) xdEngine::GetConsole()->logf(str, __VA_ARGS__)
 
 class xdDebug;
 class xdFileSystem;
@@ -22,8 +22,8 @@ public:
 	xdConsole();
 	virtual ~xdConsole();
 
-	virtual void log(const string &msg);
-	void log(const char *msg, ...);
+	void log(const string &msg);
+	void logf(const char *msg, ...);
 	string getLog() const;
 
 	void clear();
@@ -33,9 +33,17 @@ public:
 	bool hasBuffer() const;
 	void clearBuffer();
 
+protected:
+	virtual void syslog(const string &msg) {}
+
 private:
+	void call_log(const char *msg, va_list args);
+
 	string m_log;
 	string m_buffer;
+	
+	bool m_initialized;
+	
 	xdDebug *m_debugger;
 	xdFileSystem *m_fileSystem;
 	xdFileWriter *m_output;

@@ -58,10 +58,6 @@ public:
     const Vector2 operator/(const float scalar) const;
     bool operator==(const Vector2& v2) const;
 
-	// Serialization
-	void serialize(StringStream &ss) const;
-	void deserialize(StringStream &ss);
-
 public:
 
 	// AngelScript

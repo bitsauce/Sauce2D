@@ -96,10 +96,6 @@ public:
 	int  FindByRef(void *ref) const;
 	int  FindByRef(asUINT startAt, void *ref) const;
 
-	// Serialization
-	void serialize(StringStream &ss) const;
-	void deserialize(StringStream &ss);
-
 	// GC methods
 	int  GetRefCount();
 	void SetFlag();

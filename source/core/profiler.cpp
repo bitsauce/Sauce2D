@@ -168,7 +168,7 @@ void xdProfiler::printChildren(Profile *node, const string &name, const int dept
 	string totalString(out);
 
 	// Print formated strings
-	LOG(treeString + aveString + maxString + minString + totalString);
+	LOG("%s%s%s%s%s", treeString, aveString, maxString, minString, totalString);
 
 	// Loop children nodes
 	for(map<string, Profile*>::iterator itr = node->children.begin(); itr != node->children.end(); ++itr)

@@ -40,8 +40,6 @@ public:
 	virtual void updatePixmap(const Pixmap &pixmap) = 0;
 	virtual void updatePixmap(const int x, const int y, const Pixmap &pixmap) = 0;
 	virtual void clear() = 0;
-
-	void serialize(StringStream &ss) const;
 };
 
 #endif // GFX_TEXTURE_H

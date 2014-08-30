@@ -43,10 +43,7 @@ public:
 	bool isSensor() const;
 	void setMaskBits(const uint maskBits);
 	void setCategoryBits(const uint categoryBits);
-
-	void serialize(StringStream &ss) const;
-	static b2FixtureWrapper *Factory(StringStream &ss);
-
+	
 	b2BodyWrapper *getBody() const;
 
 	static int TypeId;

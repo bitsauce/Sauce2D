@@ -26,10 +26,6 @@ private:
 	map<Sprite*, uint> m_offsets;
 	
 	static SpriteBatch *Factory() { return new SpriteBatch(); }
-
-	// Serialization
-	void serialize(StringStream &ss) const;
-	static SpriteBatch *Factory(StringStream &ss);
 };
 
 #endif // GRAPHICS_SPRITE_BATCH_H
