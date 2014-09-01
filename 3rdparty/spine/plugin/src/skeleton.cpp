@@ -201,12 +201,15 @@ spSkeletonWrapper *spSkeletonWrapper::Factory(const string &jsonFile, const stri
 	spAtlas *atlas = spAtlas_createFromFile(atlasFile.c_str(), 0);
 	spSkeletonJson* json = spSkeletonJson_create(atlas);
 	json->scale = scale;
+
 	spSkeletonData *data = spSkeletonJson_readSkeletonDataFile(json, jsonFile.c_str());
 	if(!data) {
 		LOG("spSkeleton.Factory: %s", json->error);
 		return 0;
 	}
+
 	LOG("spSkeleton.Constructor: Default skin name '%s'", data->defaultSkin->name);
 	spSkeletonJson_dispose(json);
+
 	return new spSkeletonWrapper(data, atlas);
 }

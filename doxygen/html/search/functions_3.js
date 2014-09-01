@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['move',['move',['../class_sprite.html#a8b25650441ad72d3c449494607d8dbda',1,'Sprite']]]
+  ['isfullscreen',['isFullscreen',['../class_window.html#a09601411d5da2b4fc85ac1a38820355f',1,'Window']]]
 ];

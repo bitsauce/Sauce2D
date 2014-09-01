@@ -74,6 +74,7 @@ int CreatePlugin(xdEngine *engine)
 	r = scriptEngine->RegisterObjectMethod("spSkeleton", "void set_flipY(const bool)", asMETHOD(spSkeletonWrapper, setFlipY), asCALL_THISCALL); AS_ASSERT
 	r = scriptEngine->RegisterObjectMethod("spSkeleton", "bool get_flipY() const", asMETHOD(spSkeletonWrapper, getFlipY), asCALL_THISCALL); AS_ASSERT
 	r = scriptEngine->RegisterObjectMethod("spSkeleton", "Texture @get_texture() const", asMETHOD(spSkeletonWrapper, getTexture), asCALL_THISCALL); AS_ASSERT
+	//r = scriptEngine->RegisterObjectMethod("spSkeleton", "spAtlasPage getPage(const string &in) const", asMETHOD(spSkeletonWrapper, getPage), asCALL_THISCALL); AS_ASSERT
 	r = scriptEngine->RegisterObjectMethod("spSkeleton", "void draw(Batch@)", asMETHOD(spSkeletonWrapper, draw), asCALL_THISCALL); AS_ASSERT
 	
 	r = scriptEngine->RegisterObjectBehaviour("spAnimation", asBEHAVE_ADDREF, "void f()", asMETHOD(spAnimationWrapper, addRef), asCALL_THISCALL); AS_ASSERT

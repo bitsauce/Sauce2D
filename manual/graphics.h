@@ -1,5 +1,5 @@
 /**
-  *	\brief The Graphics class is responsible for performing fundemental rendering operations.
+  *	\brief Responsible for performing fundemental rendering operations.
   */
 class Graphics
 {

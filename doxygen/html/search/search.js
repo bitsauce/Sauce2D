@@ -7,10 +7,11 @@
 
 var indexSectionsWithContent =
 {
-  0: "adgmprsu",
-  1: "ags",
-  2: "adgmrs",
-  3: "gmpru"
+  0: "degimprstuw",
+  1: "egsw",
+  2: "degimprst",
+  3: "pw",
+  4: "gmpru"
 };
 
 var indexSectionNames =
@@ -18,7 +19,8 @@ var indexSectionNames =
   0: "all",
   1: "classes",
   2: "functions",
-  3: "pages"
+  3: "variables",
+  4: "pages"
 };
 
 function convertToId(search)
