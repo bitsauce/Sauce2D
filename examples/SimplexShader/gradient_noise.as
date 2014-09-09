@@ -59,14 +59,15 @@ class GradientScene : Scene
 		shader.setUniform1i("u_octaves", octaves);
 		shader.setUniform1f("u_time", time);
 	}
-}
+}
 enum Gradient
 {
 	DEFAULT = 0,
 	WATER,
 	ICE,
 	LAVA,
-	DISCRETE,
+	DISCRETE,
+	CUTOFF,
 	GRADIENT_MAX
 }
 
@@ -75,16 +76,19 @@ array<string> GRADIENT_NAME = {
 	"Water",
 	"Ice",
 	"Lava",
-	"Discrete"
-};
+	"Discrete",
+	"Cutoff"
+};
 array<Texture@> GRADIENT_TEXTURES = {
 	@Texture(":/gradients/default.png"),
 	@Texture(":/gradients/water.png"),
 	@Texture(":/gradients/ice.png"),
 	@Texture(":/gradients/lava.png"),
-	@Texture(":/gradients/discrete.png")
+	@Texture(":/gradients/discrete.png"),
+	@Texture(":/gradients/cutoff.png")
 };
-Gradient gradient = DEFAULT;
+
+Gradient gradient = DEFAULT;
 void incGradient()
 {
 	gradient = Gradient(gradient+1);
@@ -93,10 +97,11 @@ void incGradient()
 		gradient = DEFAULT;
 	}
 }
+
 void decGradient()
 {
 	gradient = Gradient(gradient-1);
 	if(gradient < DEFAULT)
 	{
 		gradient = Gradient(GRADIENT_MAX-1);
-	}}
+	}}

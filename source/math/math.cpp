@@ -124,7 +124,7 @@ float xdMath::degToRad(const float deg)
 	return deg*(PI/180.0f);
 }
 
-float xdMath::clamp(const float min, const float max, const float x)
+float xdMath::clamp(const float x, const float min, const float max)
 {
 	return x < min ? min : (x > max ? max : x);
 }

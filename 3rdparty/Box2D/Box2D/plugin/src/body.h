@@ -111,10 +111,6 @@ public:
 		return m_body;
 	}
 	
-	// Serialization
-	void serialize(StringStream &ss) const;
-	static b2BodyWrapper *Factory(StringStream &ss);
-
 	static b2BodyWrapper *Factory(const b2BodyDefWrapper &def);
 	static int TypeId;
 

@@ -13,6 +13,14 @@ enum xdTextureFilter
 	xdLinear
 };
 
+enum TextureWrapping
+{
+	CLAMP_TO_BORDER,
+	CLAMP_TO_EDGE,
+	REPEAT,
+	MIRRORED_REPEAT
+};
+
 class XDAPI Texture
 {
 public:
@@ -29,6 +37,10 @@ public:
 	// Texture filtering
 	virtual void setFiltering(const xdTextureFilter filter) = 0;
 	virtual xdTextureFilter getFiltering() const = 0;
+	
+	// Texture wrapping
+	virtual void setWrapping(const TextureWrapping wrapping) = 0;
+	virtual TextureWrapping getWrapping() const = 0;
 
 	// Size
 	virtual int getWidth() const = 0;

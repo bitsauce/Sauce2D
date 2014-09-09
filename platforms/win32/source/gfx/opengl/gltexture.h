@@ -25,6 +25,10 @@ public:
 	void setFiltering(const xdTextureFilter filter);
 	xdTextureFilter getFiltering() const;
 
+	// Texture wrapping
+	void setWrapping(const TextureWrapping wrapping);
+	TextureWrapping getWrapping() const;
+
 	// Size
 	int getWidth() const;
 	int getHeight() const;
@@ -40,6 +44,7 @@ private:
 
 	GLuint m_id;
 	GLint m_filter;
+	GLint m_wrapping;
 	bool m_mipmaps;
 	bool m_mipmapsGenerated;
 	GLsizei m_width;

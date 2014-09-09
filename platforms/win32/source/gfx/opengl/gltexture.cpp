@@ -32,6 +32,30 @@ xdTextureFilter enumFromGL(const GLint filter)
 	return xdTextureFilter(0);
 }
 
+GLint wrapToGL(const TextureWrapping wrapping)
+{
+	switch(wrapping)
+	{
+	case CLAMP_TO_BORDER: return GL_CLAMP_TO_BORDER;
+	case CLAMP_TO_EDGE: return GL_CLAMP_TO_EDGE;
+	case REPEAT: return GL_REPEAT;
+	case MIRRORED_REPEAT: return GL_MIRRORED_REPEAT;
+	}
+	return GL_CLAMP_TO_BORDER;
+}
+
+TextureWrapping wrapFromGL(const GLint wrapping)
+{
+	switch(wrapping)
+	{
+	case GL_CLAMP_TO_BORDER: return CLAMP_TO_BORDER;
+	case GL_CLAMP_TO_EDGE: return CLAMP_TO_EDGE;
+	case GL_REPEAT: return REPEAT;
+	case GL_MIRRORED_REPEAT: return MIRRORED_REPEAT;
+	}
+	return CLAMP_TO_BORDER;
+}
+
 GLtexture::GLtexture(const Pixmap &pixmap)
 {
 	// Create an empty texture
@@ -39,6 +63,7 @@ GLtexture::GLtexture(const Pixmap &pixmap)
 
 	// Set default values
 	m_filter = GL_NEAREST; // Prefs::GetDefaultFilterMode();
+	m_wrapping = GL_CLAMP_TO_BORDER;
 	m_mipmaps = false; // Prefs::UseMipmaps()
 
 	// Update pixmap
@@ -84,6 +109,21 @@ void GLtexture::setFiltering(const xdTextureFilter filter)
 xdTextureFilter GLtexture::getFiltering() const
 {
 	return enumFromGL(m_filter);
+}
+
+void GLtexture::setWrapping(const TextureWrapping wrapping)
+{
+	GLint glwrapping = wrapToGL(wrapping);
+	if(m_wrapping != glwrapping)
+	{
+		m_wrapping = glwrapping;
+		updateFiltering();
+	}
+}
+
+TextureWrapping GLtexture::getWrapping() const
+{
+	return wrapFromGL(m_wrapping);
 }
 
 Pixmap GLtexture::getPixmap() const
@@ -150,6 +190,8 @@ void GLtexture::updateFiltering()
 	glBindTexture(GL_TEXTURE_2D, m_id);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, m_mipmaps ? (m_filter == GL_NEAREST ? GL_NEAREST_MIPMAP_LINEAR : GL_LINEAR_MIPMAP_LINEAR) : m_filter);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, m_filter);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, m_wrapping);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, m_wrapping);
 	glBindTexture(GL_TEXTURE_2D, 0);
 }
 

@@ -35,7 +35,7 @@ public:
 	string toUpper(string &str, const int begin = 0, const int end = 0);
 
 	// Supplementary math funcs
-	float clamp(const float min, const float max, const float x);
+	float clamp(const float x, const float min, const float max);
 	float maximum(const float a, const float b);
 	float minimum(const float a, const float b);
 	float round(const float value) { return (float)int((value > 0.0f) ? (value + 0.5f) : (value - 0.5f)); }

@@ -83,7 +83,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, INT)
 	config.loadEventsFunc = &loadEvents;
 	config.platform = "windows";
 #ifdef X2D_DEBUG
-	config.workDir = "C:\\Users\\Marcus\\Documents\\GitHub\\x2D-Game-Engine\\examples\\Serialization\\";//"C:\\Users\\Marcus\\Documents\\GitHub\\Overworld\\";
+	config.workDir = "C:\\Users\\Marcus\\Documents\\GitHub\\Overworld\\";
 	flags |= XD_DEBUG;
 #else
 	config.workDir = workDir.empty() ? _getcwd(0, 0) : workDir.c_str();
