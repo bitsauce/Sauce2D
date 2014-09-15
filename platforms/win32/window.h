@@ -141,19 +141,19 @@ private:
 	bool m_initEventsDone;
 
 	// Event functions
-	void *m_focusLostFunc;
-	void *m_focusGainedFunc;
-	void *m_windowResizedFunc;
-	void *m_leftMouseDownFunc;
-	void *m_leftMouseUpFunc;
-	void *m_rightMouseDownFunc;
-	void *m_rightMouseUpFunc;
-	void *m_middleMouseDownFunc;
-	void *m_middleMouseUpFunc;
-	void *m_mouseMoveFunc;
-	void *m_mouseWheelFunc;
-	void *m_inputCharFunc;
-	void *m_shutdownFunc;
+	asIScriptFunction *m_focusLostFunc;
+	asIScriptFunction *m_focusGainedFunc;
+	asIScriptFunction *m_windowResizedFunc;
+	asIScriptFunction *m_leftMouseDownFunc;
+	asIScriptFunction *m_leftMouseUpFunc;
+	asIScriptFunction *m_rightMouseDownFunc;
+	asIScriptFunction *m_rightMouseUpFunc;
+	asIScriptFunction *m_middleMouseDownFunc;
+	asIScriptFunction *m_middleMouseUpFunc;
+	asIScriptFunction *m_mouseMoveFunc;
+	asIScriptFunction *m_mouseWheelFunc;
+	asIScriptFunction *m_inputCharFunc;
+	asIScriptFunction *m_shutdownFunc;
 
 public:
 	

@@ -2,6 +2,8 @@
 #include "animation.h"
 #include <x2d/scripts/funccall.h>
 
+int spEventWrapper::TypeId = 0;
+
 spEventWrapper::spEventWrapper(spEvent *event, spEventType type, int loopCount) :
 	m_self(event),
 	m_type(type),
@@ -38,13 +40,11 @@ void spEventWrapper::call(asIScriptFunction *func)
 {
 	if(func)
 	{
-		FunctionCall *funcCall = CreateFuncCall();
-		funcCall->Prepare(func);
+		FuncCall funcCall(func);
 		spEventWrapper *self = this;
 		addRef();
-		funcCall->SetArgument(0, &self, 0x40000000);
-		funcCall->Execute();
-		delete funcCall;
+		funcCall.setArg(0, &self, spEventWrapper::TypeId | asTYPEID_OBJHANDLE);
+		funcCall.execute();
 		func->Release();
 	}
 }

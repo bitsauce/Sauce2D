@@ -47,6 +47,7 @@ int CreatePlugin(xdEngine *engine)
 	r = scriptEngine->RegisterObjectMethod("ScriptBox2D", "float get_scale() const", asMETHOD(Box2D, getScale), asCALL_THISCALL); AS_ASSERT
 	r = scriptEngine->RegisterObjectMethod("ScriptBox2D", "void set_gravity(const Vector2 &in)", asMETHOD(Box2D, setGravity), asCALL_THISCALL); AS_ASSERT
 	r = scriptEngine->RegisterObjectMethod("ScriptBox2D", "Vector2 get_gravity() const", asMETHOD(Box2D, getGravity), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("ScriptBox2D", "bool get_locked() const", asMETHOD(Box2D, isLocked), asCALL_THISCALL); AS_ASSERT
 
 	r = scriptEngine->RegisterObjectBehaviour("b2BodyDef", asBEHAVE_CONSTRUCT, "void f()", asFUNCTION(b2BodyDefWrapper::Construct), asCALL_CDECL_OBJLAST); AS_ASSERT
 	r = scriptEngine->RegisterObjectProperty("b2BodyDef", "BodyType type", offsetof(b2BodyDefWrapper, type)); AS_ASSERT

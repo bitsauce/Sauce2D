@@ -78,128 +78,137 @@ void b2BodyWrapper::destroy()
 
 b2FixtureWrapper *b2BodyWrapper::createFixture(const Rect &rect, float density)
 {
-	if(!m_body || b2d->getWorld()->IsLocked())
-		return 0;
-
-	b2PolygonShape shape;
-	b2Vec2 halfSize = toB2Vec(rect.getSize()/2.0f);
-	shape.SetAsBox(halfSize.x, halfSize.y, toB2Vec(rect.getCenter()), 0.0f);
+	b2FixtureWrapper *fixture = 0;
+	if(isValid() && !b2d->isLocked())
+	{
+		// Setup fixture def
+		b2PolygonShape shape;
+		b2Vec2 halfSize = toB2Vec(rect.getSize()/2.0f);
+		shape.SetAsBox(halfSize.x, halfSize.y, toB2Vec(rect.getCenter()), 0.0f);
 	
-	addRef();
-	b2FixtureWrapper *fixture = new b2FixtureWrapper(this, m_body->CreateFixture(&shape, density));
-	fixture->addRef(); // Add a reference for us to store
+		// Create fixture
+		addRef(); // Add a ref for the fixture to hold
+		fixture = new b2FixtureWrapper(this, m_body->CreateFixture(&shape, density));
+		fixture->addRef(); // Add a reference for the body to hold
 	
-	asIScriptEngine *scriptEngine = xdengine->getScriptEngine()->getASEngine();
-	scriptEngine->NotifyGarbageCollectorOfNewObject(fixture, scriptEngine->GetObjectTypeById(b2FixtureWrapper::TypeId));
+		// Notify garbage collector of the newly created object
+		asIScriptEngine *scriptEngine = xdengine->getScriptEngine()->getASEngine();
+		scriptEngine->NotifyGarbageCollectorOfNewObject(fixture, scriptEngine->GetObjectTypeById(b2FixtureWrapper::TypeId));
 
-	m_fixtures.push_back(fixture);
+		// Add fixture to list of fixtures owned by this body
+		m_fixtures.push_back(fixture);
+	}
 	return fixture;
 }
 	
 b2FixtureWrapper *b2BodyWrapper::createFixture(const Vector2 &center, const float radius, float density)
 {
-	if(!m_body || b2d->getWorld()->IsLocked())
-		return 0;
-
-	b2CircleShape shape;
-	shape.m_p = toB2Vec(center);
-	shape.m_radius = radius/b2d->getScale();
+	b2FixtureWrapper *fixture = 0;
+	if(isValid() && !b2d->isLocked())
+	{
+		// Setup fixture def
+		b2CircleShape shape;
+		shape.m_p = toB2Vec(center);
+		shape.m_radius = radius/b2d->getScale();
 	
-	addRef();
-	b2FixtureWrapper *fixture = new b2FixtureWrapper(this, m_body->CreateFixture(&shape, density));
-	fixture->addRef(); // Add a reference for us to store
+		// Create fixture
+		addRef(); // Add a ref for the fixture to hold
+		fixture = new b2FixtureWrapper(this, m_body->CreateFixture(&shape, density));
+		fixture->addRef(); // Add a reference for the body to hold
 	
-	asIScriptEngine *scriptEngine = xdengine->getScriptEngine()->getASEngine();
-	scriptEngine->NotifyGarbageCollectorOfNewObject(fixture, scriptEngine->GetObjectTypeById(b2FixtureWrapper::TypeId));
-
-	m_fixtures.push_back(fixture);
+		// Notify garbage collector of the newly created object
+		asIScriptEngine *scriptEngine = xdengine->getScriptEngine()->getASEngine();
+		scriptEngine->NotifyGarbageCollectorOfNewObject(fixture, scriptEngine->GetObjectTypeById(b2FixtureWrapper::TypeId));
+		
+		// Add fixture to list of fixtures owned by this body
+		m_fixtures.push_back(fixture);
+	}
 	return fixture;
 }
 	
 b2FixtureWrapper *b2BodyWrapper::createFixture(Array *arr, float density)
 {
-	if(!m_body || b2d->getWorld()->IsLocked())
-		return 0;
+	b2FixtureWrapper *fixture = 0;
+	if(isValid() && !b2d->isLocked() && arr->GetSize() <= b2_maxPolygonVertices)
+	{
+		// Set vertex count
+		b2Vec2 *verts = new b2Vec2[arr->GetSize()];
+		for(uint i = 0; i < arr->GetSize(); i++)
+		{
+			verts[i] = toB2Vec(*(Vector2*)arr->At(i));
+		}
 
-	if(arr->GetSize() > b2_maxPolygonVertices)
-		return 0;
-
-	// Set vertex count
-	b2Vec2 *verts = new b2Vec2[arr->GetSize()];
-	for(uint i = 0; i < arr->GetSize(); i++) {
-		verts[i] = toB2Vec(*(Vector2*)arr->At(i));
-	}
-
-	// Set shape
-	b2PolygonShape shape;
-	shape.Set(verts, arr->GetSize());
-	delete[] verts;
-
-	// Add fixture
-	addRef();
-	b2FixtureWrapper *fixture = new b2FixtureWrapper(this, m_body->CreateFixture(&shape, density));
-	fixture->addRef(); // Add a reference for us to store
+		// Set shape
+		b2PolygonShape shape;
+		shape.Set(verts, arr->GetSize());
+		delete[] verts;
+		
+		// Create fixture
+		addRef(); // Add a ref for the fixture to hold
+		fixture = new b2FixtureWrapper(this, m_body->CreateFixture(&shape, density));
+		fixture->addRef(); // Add a reference for the body to hold
 	
-	asIScriptEngine *scriptEngine = xdengine->getScriptEngine()->getASEngine();
-	scriptEngine->NotifyGarbageCollectorOfNewObject(fixture, scriptEngine->GetObjectTypeById(b2FixtureWrapper::TypeId));
-
-	m_fixtures.push_back(fixture);
+		// Notify garbage collector of the newly created object
+		asIScriptEngine *scriptEngine = xdengine->getScriptEngine()->getASEngine();
+		scriptEngine->NotifyGarbageCollectorOfNewObject(fixture, scriptEngine->GetObjectTypeById(b2FixtureWrapper::TypeId));
+		
+		// Add fixture to list of fixtures owned by this body
+		m_fixtures.push_back(fixture);
+	}
 	return fixture;
 }
 
 void b2BodyWrapper::removeFixture(b2FixtureWrapper *fixture)
 {
-	if(!m_body || b2d->getWorld()->IsLocked())
-		return;
-	
-	vector<b2FixtureWrapper*>::iterator itr;
-	if((itr = find(m_fixtures.begin(), m_fixtures.end(), fixture)) != m_fixtures.end())
+	if(isValid() && !b2d->isLocked())
 	{
-		fixture->destroy();
-		//fixture->release();
-		//m_fixtures.erase(itr);
+		// Setup fixture def
+		vector<b2FixtureWrapper*>::iterator itr;
+		if((itr = find(m_fixtures.begin(), m_fixtures.end(), fixture)) != m_fixtures.end())
+		{
+			fixture->destroy();
+			//fixture->release();
+			//m_fixtures.erase(itr);
+		}
+		fixture->release();
 	}
-	fixture->release();
 }
 
 void b2BodyWrapper::setTransform(const Vector2 &position, float angle)
 {
-	if(!m_body || b2d->getWorld()->IsLocked())
-		return;
-
-	m_body->SetTransform(toB2Vec(position), angle);
+	if(isValid() && !b2d->isLocked())
+	{
+		m_body->SetTransform(toB2Vec(position), angle);
+	}
 }
 
 void b2BodyWrapper::setPosition(const Vector2 &position)
 {
-	if(!m_body || b2d->getWorld()->IsLocked())
-		return;
-
-	m_body->SetTransform(toB2Vec(position), m_body->GetAngle());
+	if(isValid() && !b2d->isLocked())
+	{
+		m_body->SetTransform(toB2Vec(position), m_body->GetAngle());
+	}
 }
 
 void b2BodyWrapper::setAngle(float angle)
 {
-	if(!m_body || b2d->getWorld()->IsLocked())
-		return;
-
-	m_body->SetTransform(m_body->GetPosition(), angle);
+	if(isValid() && !b2d->isLocked())
+	{
+		m_body->SetTransform(m_body->GetPosition(), angle);
+	}
 }
 
 void b2BodyWrapper::setActive(const bool active)
 {
-	if(!m_body || b2d->getWorld()->IsLocked())
-		return;
-
-	m_body->SetActive(active);
+	if(isValid() && !b2d->isLocked())
+	{
+		m_body->SetActive(active);
+	}
 }
 
 bool b2BodyWrapper::isActive() const
 {
-	if(!m_body)
-		return false;
-
-	return m_body->IsActive();
+	return isValid() ? m_body->IsActive() : false;
 }
 
 void b2BodyWrapper::setBeginContactCallback(asIScriptFunction *func)
@@ -313,6 +322,7 @@ void b2BodyWrapper::enumReferences(asIScriptEngine *engine)
 
 void b2BodyWrapper::releaseReferences(asIScriptEngine *engine)
 {
+	// Release all held references
 	freeObject();
 	if(m_beginContactFunc) {
 		m_beginContactFunc->Release();
@@ -333,65 +343,48 @@ void b2BodyWrapper::releaseReferences(asIScriptEngine *engine)
 
 Vector2 b2BodyWrapper::getPosition() const
 {
-	if(!m_body)
-		return Vector2(0.0f);
-
-	return toXDVec(m_body->GetPosition());
+	return isValid() ? toXDVec(m_body->GetPosition()) : Vector2(0.0f);
 }
 
 Vector2 b2BodyWrapper::getLocalPoint(const Vector2 &worldPoint) const
 {
-	if(!m_body)
-		return Vector2(0.0f);
-
-	return toXDVec(m_body->GetLocalPoint(toB2Vec(worldPoint)));
+	return isValid() ? toXDVec(m_body->GetLocalPoint(toB2Vec(worldPoint))) : Vector2(0.0f);
 }
 
 float b2BodyWrapper::getAngle() const
 {
-	if(!m_body)
-		return 0.0f;
-	return m_body->GetAngle();
+	return isValid() ? m_body->GetAngle() : 0.0f;
 }
 
 Vector2 b2BodyWrapper::getCenter() const
 {
-	if(!m_body)
-		return Vector2(0.0f);
-
-	return toXDVec(m_body->GetWorldCenter());
+	return isValid() ? toXDVec(m_body->GetWorldCenter()) : Vector2(0.0f);
 }
 
 Vector2 b2BodyWrapper::getLinearVelocity() const
 {
-	if(!m_body)
-		return Vector2(0.0f);
-
-	return toXDVec(m_body->GetLinearVelocity());
+	return isValid() ? toXDVec(m_body->GetLinearVelocity()) : Vector2(0.0f);
 }
 
 float b2BodyWrapper::getMass() const
 {
-	if(!m_body)
-		return 0.0f;
-
-	return m_body->GetMass();
+	return isValid() ? m_body->GetMass() : 0.0f;
 }
 
 void b2BodyWrapper::applyImpulse(const Vector2 &impulse, const Vector2 &position)
 {
-	if(!m_body)
-		return;
-
-	m_body->ApplyLinearImpulse(toB2Vec(impulse), toB2Vec(position), true);
+	if(isValid())
+	{
+		m_body->ApplyLinearImpulse(toB2Vec(impulse), toB2Vec(position), true);
+	}
 }
 
 void b2BodyWrapper::setLinearVelocity(const Vector2 &velocity)
 {
-	if(!m_body)
-		return;
-
-	m_body->SetLinearVelocity(toB2Vec(velocity));
+	if(isValid())
+	{
+		m_body->SetLinearVelocity(toB2Vec(velocity));
+	}
 }
 
 bool b2BodyWrapper::isValid() const
@@ -401,11 +394,24 @@ bool b2BodyWrapper::isValid() const
 
 b2BodyWrapper *b2BodyWrapper::Factory(const b2BodyDefWrapper &def)
 {
-	b2BodyDef bodyDef = def.getBodyDef();
-	b2BodyWrapper *body = new b2BodyWrapper(b2d->getWorld()->CreateBody(&bodyDef));
+	b2BodyWrapper *body = 0;
 
-	asIScriptEngine *scriptEngine = xdengine->getScriptEngine()->getASEngine();
-	scriptEngine->NotifyGarbageCollectorOfNewObject(body, scriptEngine->GetObjectTypeById(b2BodyWrapper::TypeId));
+	// Check if world is locked
+	if(!b2d->isLocked())
+	{
+		// Create b2Body
+		body = new b2BodyWrapper(b2d->getWorld()->CreateBody(&def.getBodyDef()));
 
+		// Notify garbage collector of the newly created object
+		asIScriptEngine *scriptEngine = xdengine->getScriptEngine()->getASEngine();
+		scriptEngine->NotifyGarbageCollectorOfNewObject(body, scriptEngine->GetObjectTypeById(b2BodyWrapper::TypeId));
+	}
+	else
+	{
+		// We cannot create a b2Body if the world is locked
+		LOG("b2Body::b2Body() - World locked");
+	}
+
+	// Return body
 	return body;
 }

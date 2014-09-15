@@ -59,7 +59,7 @@ int CreatePlugin(xdEngine *engine)
 	r = scriptEngine->RegisterObjectType("spAnimation", 0, asOBJ_REF); AS_ASSERT
 	r = scriptEngine->RegisterObjectType("spAnimationStateData", 0, asOBJ_REF); AS_ASSERT
 	r = spAnimationStateWrapper::TypeId = scriptEngine->RegisterObjectType("spAnimationState", 0, asOBJ_REF | asOBJ_GC); AS_ASSERT
-	r = scriptEngine->RegisterObjectType("spEvent", 0, asOBJ_REF); AS_ASSERT
+	r = spEventWrapper::TypeId = scriptEngine->RegisterObjectType("spEvent", 0, asOBJ_REF); AS_ASSERT
 
 	r = scriptEngine->RegisterFuncdef("void spEventCallback(spEvent@)"); AS_ASSERT
 	

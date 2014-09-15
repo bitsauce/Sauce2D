@@ -20,6 +20,8 @@ public:
 	void addRef() { refCounter.add(); }
 	void release() { if(refCounter.release() == 0) delete this; }
 
+	static int TypeId;
+
 private:
 	RefCounter refCounter;
 	spEvent *m_self;

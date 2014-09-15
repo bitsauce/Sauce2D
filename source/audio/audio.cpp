@@ -7,45 +7,42 @@
 //				Originally written by Marcus Loo Vergara (aka. Bitsauce)
 //									2011-2014 (C)
 
-#include <x2d/audio.h>
-#include <x2d/console.h>
-#include <x2d/filesystem.h>
-#include <x2d/debug.h>
-#include <x2d/assetloader.h>
+#include "audio.h"
 
-AS_REG_SINGLETON(xdAudio, "ScriptAudio")
+AS_REG_SINGLETON(XAudioManager)
 
-xdAudio *xdAudio::s_this = 0;
+XAudioManager *XAudioManager::s_this = 0;
 
-int xdAudio::Register(asIScriptEngine *scriptEngine)
+int XAudioManager::Register(asIScriptEngine *scriptEngine)
 {
 	int r = 0;
 	
-	r = scriptEngine->RegisterObjectMethod("ScriptAudio", "void set_position(const Vector2 &in)", asMETHOD(xdAudio, setPosition), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("ScriptAudio", "Vector2 get_position() const", asMETHOD(xdAudio, getPosition), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("ScriptAudio", "void set_velocity(const Vector2 &in)", asMETHOD(xdAudio, setVelocity), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("ScriptAudio", "Vector2 get_velocity() const", asMETHOD(xdAudio, getVelocity), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("ScriptAudio", "void set_orientation(const Vector3 &in)", asMETHOD(xdAudio, setOrientation), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("ScriptAudio", "Vector3 get_orientation() const", asMETHOD(xdAudio, getOrientation), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("XAudioManager", "void set_position(const Vector2 &in)", asMETHOD(XAudioManager, setPosition), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("XAudioManager", "Vector2 get_position() const", asMETHOD(XAudioManager, getPosition), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("XAudioManager", "void set_velocity(const Vector2 &in)", asMETHOD(XAudioManager, setVelocity), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("XAudioManager", "Vector2 get_velocity() const", asMETHOD(XAudioManager, getVelocity), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("XAudioManager", "void set_orientation(const Vector3 &in)", asMETHOD(XAudioManager, setOrientation), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("XAudioManager", "Vector3 get_orientation() const", asMETHOD(XAudioManager, getOrientation), asCALL_THISCALL); AS_ASSERT
 
 	return r;
 }
 
-AudioSource *xdAudio::CreateSource(AudioBuffer *buffer)
+XAudioSource *XAudioManager::CreateSource(XAudioBuffer *buffer)
 {
 	// Check buffer
-	if(buffer == 0) {
+	if(buffer == 0)
+	{
 		LOG("Cannot create a AudioSource using a 'null' buffer");
 		return 0;
 	}
 
 	// Create a audio source using buffer
-	AudioSource *source = s_this->createSource(buffer);
+	XAudioSource *source = s_this->createSource(buffer);
 	delete buffer;
 	return source;
 }
 
-AudioSource *xdAudio::CreateSource(const string &path)
+XAudioSource *XAudioManager::CreateSource(const string &path)
 {
-	return CreateSource(xdAssetLoader::s_this->loadSound(path));
+	return CreateSource(XAssetManager::LoadSound(path));
 }

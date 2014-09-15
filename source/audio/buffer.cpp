@@ -1,14 +1,14 @@
-#include <x2d/audio.h>
+#include "buffer.h"
 
-AS_REG_VALUE(AudioBuffer)
+AS_REG_VALUE(XAudioBuffer)
 
-int AudioBuffer::Register(asIScriptEngine *scriptEngine)
+int XAudioBuffer::Register(asIScriptEngine *scriptEngine)
 {
 	int r = 0;
 	return r;
 }
 
-AudioBuffer::AudioBuffer(void *data, uint size, uint frequency, Format format) :
+XAudioBuffer::XAudioBuffer(void *data, uint size, uint frequency, Format format) :
 	m_frequency(frequency),
 	m_format(format)
 {
@@ -17,27 +17,27 @@ AudioBuffer::AudioBuffer(void *data, uint size, uint frequency, Format format) :
 	m_size = size;
 }
 
-AudioBuffer::~AudioBuffer()
+XAudioBuffer::~XAudioBuffer()
 {
 	delete m_data;
 }
 
-void *AudioBuffer::getData() const
+void *XAudioBuffer::getData() const
 {
 	return m_data;
 }
 
-uint AudioBuffer::getSize() const
+uint XAudioBuffer::getSize() const
 {
 	return m_size;
 }
 
-uint AudioBuffer::getFrequency() const
+uint XAudioBuffer::getFrequency() const
 {
 	return m_frequency;
 }
 
-AudioBuffer::Format AudioBuffer::getFormat() const
+XAudioBuffer::Format XAudioBuffer::getFormat() const
 {
 	return m_format;
 }

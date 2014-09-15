@@ -15,12 +15,13 @@ extern const int FLOAT_SIZE;
   */
 class OpenGL : public xdGraphics
 {
+	friend class Window;
 public:
 	~OpenGL();
 	void init(Window *window);
 
-	void createContext(HWND window);
-	void destroyContext();
+	HGLRC createContext();
+	void destroyContext(HGLRC context);
 
 	void swapBuffers();
 
@@ -43,10 +44,24 @@ private:
 	FrameBufferObject *createFrameBufferObject();
 	bool isSupported(Feature feature);
 
-	HGLRC m_openGLContext;
+	list<HGLRC> m_contexts;
 	HDC m_deviceContext;
 	float m_currentOrtho[6];
 	int m_currentViewport[4];
+};
+
+class xdIThreadManager
+{
+protected:
+	virtual void setupThread() = 0;
+	virtual void cleanupThread() = 0;
+};
+
+class ThreadManager : public xdIThreadManager
+{
+protected:
+	void setupThread();
+	void cleanupThread();
 };
 
 #endif // GFX_OPENGL_H

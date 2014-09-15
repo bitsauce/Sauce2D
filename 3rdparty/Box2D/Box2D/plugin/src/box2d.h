@@ -25,6 +25,7 @@ public:
 	void setGravity(const Vector2 &gravity);
 	Vector2 getGravity() const;
 	b2World *getWorld() const;
+	bool isLocked() const;
 
 	Batch *getDrawBatch() const;
 

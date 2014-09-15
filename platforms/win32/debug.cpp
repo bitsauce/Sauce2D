@@ -64,7 +64,7 @@ bool Debugger::listen(ushort port)
 	ioctlsocket(m_server, FIONBIO, &mode);
 
 	// Setup the TCP listening socket
-    r = bind(m_server, result->ai_addr, (int)result->ai_addrlen);
+    r = ::bind(m_server, result->ai_addr, (int)result->ai_addrlen);
     if(r == SOCKET_ERROR) {
         LOG("bind() failed with error code '%i'!", r);
         freeaddrinfo(result);

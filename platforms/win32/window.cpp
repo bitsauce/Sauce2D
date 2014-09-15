@@ -229,8 +229,36 @@ void Window::showWindow()
 	}
 	assert(m_window);
 
-	// Setup and show window
-	m_graphics->createContext(m_window);
+	// Describes the pixel format of the drawing surface
+	PIXELFORMATDESCRIPTOR pfd;
+	memset(&pfd, 0, sizeof(PIXELFORMATDESCRIPTOR));
+	pfd.nSize = sizeof(PIXELFORMATDESCRIPTOR);
+	pfd.nVersion = 1;					// Version Number
+	pfd.dwFlags = PFD_DRAW_TO_WINDOW |	// Draws to a window
+				PFD_SUPPORT_OPENGL |	// The format must support OpenGL
+				PFD_DOUBLEBUFFER;		// Support for double buffering
+	pfd.iPixelType = PFD_TYPE_RGBA;		// Uses an RGBA pixel format
+	pfd.cColorBits = 24;				// 24 bits colors
+	pfd.cAlphaBits = 8;					// 8 bits alpha
+
+	// Get device context
+	HDC deviceContext = GetDC(m_window);
+	if(!deviceContext)	
+		assert("Unable to create rendering context");
+
+	// Do Windows find a matching pixel format?
+	int pixelFormat = ChoosePixelFormat(deviceContext, &pfd);
+	if(!pixelFormat)				
+		assert("Unable to create rendering context");
+
+	// Set the new pixel format
+	if(!SetPixelFormat(m_deviceContext, pixelFormat, &pfd))			
+		assert("Unable to create rendering context");
+
+	m_graphics->m_deviceContext = deviceContext;
+	m_graphics->createContext();
+
+	// Setup window
 	ShowWindow(m_window, SW_SHOW);
 	SetForegroundWindow(m_window);
 	SetFocus(m_window);
@@ -553,10 +581,7 @@ void Window::processEvents(UINT Message, WPARAM wParam, LPARAM lParam)
 		{
 			if(m_shutdownFunc)
 			{
-				FunctionCall *func = CreateFuncCall();
-				func->Prepare(m_shutdownFunc);
-				func->Execute();
-				delete func;
+				FuncCall(m_shutdownFunc).execute();
 			}
 
 			// Quit when we close the main window
@@ -571,12 +596,10 @@ void Window::processEvents(UINT Message, WPARAM wParam, LPARAM lParam)
 			m_size.set(LOWORD(lParam), HIWORD(lParam));
 			if(m_windowResizedFunc)
 			{
-				FunctionCall *func = CreateFuncCall();
-				func->Prepare(m_windowResizedFunc);
-				func->SetArgument(0, &m_size.x, 4);
-				func->SetArgument(1, &m_size.y, 4);
-				func->Execute();
-				delete func;
+				FuncCall func(m_windowResizedFunc);
+				func.setArg(0, &m_size.x, 4);
+				func.setArg(1, &m_size.y, 4);
+				func.execute();
 			}
 
 			m_graphics->setOrthoProjection(0.0f, m_size.x, m_size.y, 0.0f, -1.0f, 1.0f);

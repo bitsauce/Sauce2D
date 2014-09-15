@@ -94,6 +94,11 @@ Vector2 Box2D::getGravity() const
 	return toXDVec(m_world->GetGravity());
 }
 
+bool Box2D::isLocked() const
+{
+	return m_world->IsLocked();
+}
+
 b2World *Box2D::getWorld() const
 {
 	return m_world;

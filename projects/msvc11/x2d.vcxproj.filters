@@ -2,155 +2,63 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <Filter Include="source">
-      <UniqueIdentifier>{0aad52fd-1078-44e5-a898-a1633cb64f5f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="include">
-      <UniqueIdentifier>{3d9abd4a-6da4-49a1-97dc-83f8614e73f0}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="include\math">
-      <UniqueIdentifier>{3bfba029-612b-4fd0-8acd-bf1e6da4f279}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="source\math">
-      <UniqueIdentifier>{4f5031a1-888b-4af4-9667-a9bd371448cc}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="source\scripts">
-      <UniqueIdentifier>{46869ec1-1a86-441d-b137-022f9066427d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="source\core">
-      <UniqueIdentifier>{14948e6d-8616-4118-b570-b573ac4adb68}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="include\scripts">
-      <UniqueIdentifier>{25df4107-2711-490e-937d-5df919d502cc}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="include\graphics">
-      <UniqueIdentifier>{7165c08c-b771-49f1-87a3-42c5fce47fe9}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="source\graphics">
-      <UniqueIdentifier>{b8826ba9-373b-469b-9942-29d310877829}</UniqueIdentifier>
+      <UniqueIdentifier>{dbaa90f1-6e42-4362-be07-632b221b4742}</UniqueIdentifier>
     </Filter>
     <Filter Include="source\audio">
       <UniqueIdentifier>{39bb7ad7-8632-4004-9f02-ae1173d85ff4}</UniqueIdentifier>
     </Filter>
-    <Filter Include="include\audio">
-      <UniqueIdentifier>{9281aa68-64bf-41ac-baf3-c860741812b1}</UniqueIdentifier>
+    <Filter Include="source\graphics">
+      <UniqueIdentifier>{b8826ba9-373b-469b-9942-29d310877829}</UniqueIdentifier>
     </Filter>
-    <Filter Include="source\io">
-      <UniqueIdentifier>{91e4a5fe-d0c6-45d0-a8b9-a16937d721da}</UniqueIdentifier>
+    <Filter Include="source\common">
+      <UniqueIdentifier>{eb8160ed-7f08-4413-be71-ebd7e1771d73}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source\common\math">
+      <UniqueIdentifier>{75496aa6-e494-42a7-ab65-c135565772ef}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source\common\scripts">
+      <UniqueIdentifier>{779e3bf8-a7da-4fa6-9369-7a2d420020da}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\include\x2d\engine.h">
-      <Filter>include</Filter>
+    <ClInclude Include="..\..\source\x2d.h" />
+    <ClInclude Include="..\..\source\audio\buffer.h">
+      <Filter>source\audio</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\x2d\math\matrix.h">
-      <Filter>include\math</Filter>
+    <ClInclude Include="..\..\source\audio\source.h">
+      <Filter>source\audio</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\x2d\math\rect.h">
-      <Filter>include\math</Filter>
+    <ClInclude Include="..\..\source\graphics\textureAtlas.h">
+      <Filter>source\graphics</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\x2d\math\vector.h">
-      <Filter>include\math</Filter>
+    <ClInclude Include="..\..\source\graphics\textureRegion.h">
+      <Filter>source\graphics</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\x2d\math.h">
-      <Filter>include</Filter>
+    <ClInclude Include="..\..\source\graphics\vertexbufferobject.h">
+      <Filter>source\graphics</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\source\scripts\scriptbuilder.h">
-      <Filter>source\scripts</Filter>
+    <ClInclude Include="..\..\source\graphics\viewport.h">
+      <Filter>source\graphics</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\source\scripts\scripthelper.h">
-      <Filter>source\scripts</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\scripts\scriptstdstring.h">
-      <Filter>source\scripts</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\x2d\debug.h">
-      <Filter>include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\x2d\console.h">
-      <Filter>include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\x2d\base.h">
-      <Filter>include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\x2d\input.h">
-      <Filter>include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\x2d\window.h">
-      <Filter>include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\x2d\eventhandler.h">
-      <Filter>include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\x2d\exception.h">
-      <Filter>include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\x2d\profiler.h">
-      <Filter>include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\x2d\filesystem.h">
-      <Filter>include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\x2d\audio.h">
-      <Filter>include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\x2d\graphics.h">
-      <Filter>include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\x2d\util.h">
-      <Filter>include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\x2d\config.h">
-      <Filter>include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\x2d\timer.h">
-      <Filter>include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\x2d\assetloader.h">
-      <Filter>include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\scripts\scriptgrid.h">
-      <Filter>source\scripts</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\x2d\scripts\anyobject.h">
-      <Filter>include\scripts</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\scripts\scriptany.h">
-      <Filter>source\scripts</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\x2d\scripts\funccall.h">
-      <Filter>include\scripts</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\scripts\scriptfunc.h">
-      <Filter>source\scripts</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\x2d\scriptengine.h">
-      <Filter>include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\x2d\graphics\framebufferobject.h">
-      <Filter>include\graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\x2d\graphics\texture.h">
-      <Filter>include\graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\x2d\graphics\textureRegion.h">
-      <Filter>include\graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\x2d\graphics\vertexbufferobject.h">
-      <Filter>include\graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\x2d\graphics\batch.h">
-      <Filter>include\graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\x2d\graphics\pixmap.h">
-      <Filter>include\graphics</Filter>
+    <ClInclude Include="..\..\source\graphics\graphics.h">
+      <Filter>source\graphics</Filter>
     </ClInclude>
     <ClInclude Include="..\..\source\graphics\animation.h">
+      <Filter>source\graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\graphics\batch.h">
       <Filter>source\graphics</Filter>
     </ClInclude>
     <ClInclude Include="..\..\source\graphics\camera.h">
       <Filter>source\graphics</Filter>
     </ClInclude>
     <ClInclude Include="..\..\source\graphics\font.h">
+      <Filter>source\graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\graphics\framebufferobject.h">
+      <Filter>source\graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\graphics\pixmap.h">
       <Filter>source\graphics</Filter>
     </ClInclude>
     <ClInclude Include="..\..\source\graphics\shader.h">
@@ -162,109 +70,130 @@
     <ClInclude Include="..\..\source\graphics\sprite.h">
       <Filter>source\graphics</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\source\graphics\viewport.h">
+    <ClInclude Include="..\..\source\graphics\spritebatch.h">
       <Filter>source\graphics</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\x2d\audio\source.h">
-      <Filter>include\audio</Filter>
+    <ClInclude Include="..\..\source\graphics\texture.h">
+      <Filter>source\graphics</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\x2d\audio\buffer.h">
-      <Filter>include\audio</Filter>
+    <ClInclude Include="..\..\source\common\classreg.h">
+      <Filter>source\common</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\x2d\scripts\array.h">
-      <Filter>include\scripts</Filter>
+    <ClInclude Include="..\..\source\common\config.h">
+      <Filter>source\common</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\source\io\iniParser.h">
-      <Filter>source\io</Filter>
+    <ClInclude Include="..\..\source\common\console.h">
+      <Filter>source\common</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\x2d\graphics\textureAtlas.h">
-      <Filter>include\graphics</Filter>
+    <ClInclude Include="..\..\source\common\engine.h">
+      <Filter>source\common</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\source\scripts\scriptarray.h">
-      <Filter>source\scripts</Filter>
+    <ClInclude Include="..\..\source\common\math\rect.h">
+      <Filter>source\common\math</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\x2d\graphics\spritebatch.h">
-      <Filter>include\graphics</Filter>
+    <ClInclude Include="..\..\source\common\math\rectanglepacker.h">
+      <Filter>source\common\math</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\x2d\math\rectanglepacker.h">
-      <Filter>include\math</Filter>
+    <ClInclude Include="..\..\source\common\math\vector.h">
+      <Filter>source\common\math</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\source\scripts\stringstream.h">
-      <Filter>source\scripts</Filter>
+    <ClInclude Include="..\..\source\common\math\math.h">
+      <Filter>source\common\math</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\source\scripts\scriptdictionary.h">
-      <Filter>source\scripts</Filter>
+    <ClInclude Include="..\..\source\common\math\matrix.h">
+      <Filter>source\common\math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\common\scripts\scriptarray.h">
+      <Filter>source\common\scripts</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\common\assetmanager.h">
+      <Filter>source\common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\common\debugger.h">
+      <Filter>source\common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\common\filesystem.h">
+      <Filter>source\common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\common\scripts\anyobject.h">
+      <Filter>source\common\scripts</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\common\scripts\funccall.h">
+      <Filter>source\common\scripts</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\common\scripts\iniparser.h">
+      <Filter>source\common\scripts</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\common\scripts\scriptany.h">
+      <Filter>source\common\scripts</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\common\scripts\scriptbuilder.h">
+      <Filter>source\common\scripts</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\common\scripts\scriptdictionary.h">
+      <Filter>source\common\scripts</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\common\scripts\scriptgrid.h">
+      <Filter>source\common\scripts</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\common\scripts\scripthelper.h">
+      <Filter>source\common\scripts</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\common\scripts\scriptstdstring.h">
+      <Filter>source\common\scripts</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\common\scripts\stringstream.h">
+      <Filter>source\common\scripts</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\common\scripts\thread.h">
+      <Filter>source\common\scripts</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\common\eventhandler.h">
+      <Filter>source\common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\common\exception.h">
+      <Filter>source\common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\common\ini.h">
+      <Filter>source\common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\common\input.h">
+      <Filter>source\common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\common\profiler.h">
+      <Filter>source\common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\common\scriptengine.h">
+      <Filter>source\common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\common\threadmanager.h">
+      <Filter>source\common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\common\timer.h">
+      <Filter>source\common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\common\window.h">
+      <Filter>source\common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\source\audio\audio.h">
+      <Filter>source\audio</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\source\math\math.cpp">
-      <Filter>source\math</Filter>
+    <ClCompile Include="..\..\source\audio\buffer.cpp">
+      <Filter>source\audio</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\source\math\matrix.cpp">
-      <Filter>source\math</Filter>
+    <ClCompile Include="..\..\source\audio\source.cpp">
+      <Filter>source\audio</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\source\math\rect.cpp">
-      <Filter>source\math</Filter>
+    <ClCompile Include="..\..\source\graphics\textureAtlas.cpp">
+      <Filter>source\graphics</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\source\math\vector.cpp">
-      <Filter>source\math</Filter>
+    <ClCompile Include="..\..\source\graphics\textureRegion.cpp">
+      <Filter>source\graphics</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\source\scripts\scriptbuilder.cpp">
-      <Filter>source\scripts</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\scripts\scripthelper.cpp">
-      <Filter>source\scripts</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\scripts\scriptstdstring.cpp">
-      <Filter>source\scripts</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\scripts\scriptstdstring_utils.cpp">
-      <Filter>source\scripts</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\core\window.cpp">
-      <Filter>source\core</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\core\input.cpp">
-      <Filter>source\core</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\core\console.cpp">
-      <Filter>source\core</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\core\profiler.cpp">
-      <Filter>source\core</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\core\array.cpp">
-      <Filter>source\core</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\core\engine.cpp">
-      <Filter>source\core</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\core\filesystem.cpp">
-      <Filter>source\core</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\core\debug.cpp">
-      <Filter>source\core</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\core\util.cpp">
-      <Filter>source\core</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\core\timer.cpp">
-      <Filter>source\core</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\core\assetloader.cpp">
-      <Filter>source\core</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\scripts\scriptgrid.cpp">
-      <Filter>source\scripts</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\scripts\scriptany.cpp">
-      <Filter>source\scripts</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\scripts\scriptfunc.cpp">
-      <Filter>source\scripts</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\core\scriptengine.cpp">
-      <Filter>source\core</Filter>
+    <ClCompile Include="..\..\source\graphics\viewport.cpp">
+      <Filter>source\graphics</Filter>
     </ClCompile>
     <ClCompile Include="..\..\source\graphics\animation.cpp">
       <Filter>source\graphics</Filter>
@@ -293,44 +222,98 @@
     <ClCompile Include="..\..\source\graphics\sprite.cpp">
       <Filter>source\graphics</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\source\graphics\texture.cpp">
-      <Filter>source\graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\graphics\textureRegion.cpp">
-      <Filter>source\graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\graphics\viewport.cpp">
-      <Filter>source\graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\audio\audio.cpp">
-      <Filter>source\audio</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\audio\source.cpp">
-      <Filter>source\audio</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\audio\buffer.cpp">
-      <Filter>source\audio</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\graphics\textureAtlas.cpp">
-      <Filter>source\graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\io\iniParser.cpp">
-      <Filter>source\io</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\scripts\scriptarray.cpp">
-      <Filter>source\scripts</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\source\graphics\spritebatch.cpp">
       <Filter>source\graphics</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\source\math\rectanglepacker.cpp">
-      <Filter>source\math</Filter>
+    <ClCompile Include="..\..\source\graphics\texture.cpp">
+      <Filter>source\graphics</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\source\scripts\stringstream.cpp">
-      <Filter>source\scripts</Filter>
+    <ClCompile Include="..\..\source\common\console.cpp">
+      <Filter>source\common</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\source\scripts\scriptdictionary.cpp">
-      <Filter>source\scripts</Filter>
+    <ClCompile Include="..\..\source\common\engine.cpp">
+      <Filter>source\common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\common\math\rectanglepacker.cpp">
+      <Filter>source\common\math</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\common\math\vector.cpp">
+      <Filter>source\common\math</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\common\math\math.cpp">
+      <Filter>source\common\math</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\common\math\matrix.cpp">
+      <Filter>source\common\math</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\common\math\rect.cpp">
+      <Filter>source\common\math</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\common\scripts\scriptarray.cpp">
+      <Filter>source\common\scripts</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\common\assetmanager.cpp">
+      <Filter>source\common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\common\debugger.cpp">
+      <Filter>source\common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\common\filesystem.cpp">
+      <Filter>source\common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\common\scripts\funccall.cpp">
+      <Filter>source\common\scripts</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\common\scripts\iniparser.cpp">
+      <Filter>source\common\scripts</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\common\scripts\scriptany.cpp">
+      <Filter>source\common\scripts</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\common\scripts\scriptbuilder.cpp">
+      <Filter>source\common\scripts</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\common\scripts\scriptdictionary.cpp">
+      <Filter>source\common\scripts</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\common\scripts\scriptgrid.cpp">
+      <Filter>source\common\scripts</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\common\scripts\scripthelper.cpp">
+      <Filter>source\common\scripts</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\common\scripts\scriptstdstring.cpp">
+      <Filter>source\common\scripts</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\common\scripts\scriptstdstring_utils.cpp">
+      <Filter>source\common\scripts</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\common\scripts\stringstream.cpp">
+      <Filter>source\common\scripts</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\common\scripts\thread.cpp">
+      <Filter>source\common\scripts</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\common\input.cpp">
+      <Filter>source\common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\common\profiler.cpp">
+      <Filter>source\common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\common\scriptengine.cpp">
+      <Filter>source\common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\common\timer.cpp">
+      <Filter>source\common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\common\util.cpp">
+      <Filter>source\common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\common\window.cpp">
+      <Filter>source\common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\audio\audio.cpp">
+      <Filter>source\audio</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
