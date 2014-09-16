@@ -19,28 +19,15 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\source\audio\audio.h" />
     <ClInclude Include="..\..\source\audio\buffer.h" />
     <ClInclude Include="..\..\source\audio\source.h" />
-    <ClInclude Include="..\..\source\common\assetmanager.h" />
-    <ClInclude Include="..\..\source\common\classreg.h" />
     <ClInclude Include="..\..\source\common\config.h" />
-    <ClInclude Include="..\..\source\common\console.h" />
-    <ClInclude Include="..\..\source\common\debugger.h" />
     <ClInclude Include="..\..\source\common\engine.h" />
-    <ClInclude Include="..\..\source\common\eventhandler.h" />
-    <ClInclude Include="..\..\source\common\exception.h" />
-    <ClInclude Include="..\..\source\common\filesystem.h" />
-    <ClInclude Include="..\..\source\common\ini.h" />
-    <ClInclude Include="..\..\source\common\input.h" />
     <ClInclude Include="..\..\source\common\math\math.h" />
     <ClInclude Include="..\..\source\common\math\matrix.h" />
     <ClInclude Include="..\..\source\common\math\rect.h" />
     <ClInclude Include="..\..\source\common\math\rectanglepacker.h" />
     <ClInclude Include="..\..\source\common\math\vector.h" />
-    <ClInclude Include="..\..\source\common\profiler.h" />
-    <ClInclude Include="..\..\source\common\scriptengine.h" />
-    <ClInclude Include="..\..\source\common\scripts\anyobject.h" />
     <ClInclude Include="..\..\source\common\scripts\funccall.h" />
     <ClInclude Include="..\..\source\common\scripts\iniparser.h" />
     <ClInclude Include="..\..\source\common\scripts\scriptany.h" />
@@ -52,15 +39,10 @@
     <ClInclude Include="..\..\source\common\scripts\scriptstdstring.h" />
     <ClInclude Include="..\..\source\common\scripts\stringstream.h" />
     <ClInclude Include="..\..\source\common\scripts\thread.h" />
-    <ClInclude Include="..\..\source\common\threadmanager.h" />
-    <ClInclude Include="..\..\source\common\timer.h" />
-    <ClInclude Include="..\..\source\common\window.h" />
     <ClInclude Include="..\..\source\graphics\animation.h" />
     <ClInclude Include="..\..\source\graphics\batch.h" />
-    <ClInclude Include="..\..\source\graphics\camera.h" />
     <ClInclude Include="..\..\source\graphics\font.h" />
     <ClInclude Include="..\..\source\graphics\framebufferobject.h" />
-    <ClInclude Include="..\..\source\graphics\graphics.h" />
     <ClInclude Include="..\..\source\graphics\pixmap.h" />
     <ClInclude Include="..\..\source\graphics\shader.h" />
     <ClInclude Include="..\..\source\graphics\shape.h" />
@@ -74,10 +56,10 @@
     <ClInclude Include="..\..\source\x2d.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\source\audio\audio.cpp" />
     <ClCompile Include="..\..\source\audio\buffer.cpp" />
     <ClCompile Include="..\..\source\audio\source.cpp" />
     <ClCompile Include="..\..\source\common\assetmanager.cpp" />
+    <ClCompile Include="..\..\source\common\audiomanager.cpp" />
     <ClCompile Include="..\..\source\common\console.cpp" />
     <ClCompile Include="..\..\source\common\debugger.cpp" />
     <ClCompile Include="..\..\source\common\engine.cpp" />
@@ -107,7 +89,6 @@
     <ClCompile Include="..\..\source\common\window.cpp" />
     <ClCompile Include="..\..\source\graphics\animation.cpp" />
     <ClCompile Include="..\..\source\graphics\batch.cpp" />
-    <ClCompile Include="..\..\source\graphics\camera.cpp" />
     <ClCompile Include="..\..\source\graphics\font.cpp" />
     <ClCompile Include="..\..\source\graphics\graphics.cpp" />
     <ClCompile Include="..\..\source\graphics\pixmap.cpp" />

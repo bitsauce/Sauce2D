@@ -40,16 +40,10 @@
     <ClInclude Include="..\..\source\graphics\viewport.h">
       <Filter>source\graphics</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\source\graphics\graphics.h">
-      <Filter>source\graphics</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\source\graphics\animation.h">
       <Filter>source\graphics</Filter>
     </ClInclude>
     <ClInclude Include="..\..\source\graphics\batch.h">
-      <Filter>source\graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\graphics\camera.h">
       <Filter>source\graphics</Filter>
     </ClInclude>
     <ClInclude Include="..\..\source\graphics\font.h">
@@ -76,13 +70,7 @@
     <ClInclude Include="..\..\source\graphics\texture.h">
       <Filter>source\graphics</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\source\common\classreg.h">
-      <Filter>source\common</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\source\common\config.h">
-      <Filter>source\common</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\common\console.h">
       <Filter>source\common</Filter>
     </ClInclude>
     <ClInclude Include="..\..\source\common\engine.h">
@@ -104,18 +92,6 @@
       <Filter>source\common\math</Filter>
     </ClInclude>
     <ClInclude Include="..\..\source\common\scripts\scriptarray.h">
-      <Filter>source\common\scripts</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\common\assetmanager.h">
-      <Filter>source\common</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\common\debugger.h">
-      <Filter>source\common</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\common\filesystem.h">
-      <Filter>source\common</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\common\scripts\anyobject.h">
       <Filter>source\common\scripts</Filter>
     </ClInclude>
     <ClInclude Include="..\..\source\common\scripts\funccall.h">
@@ -148,36 +124,6 @@
     <ClInclude Include="..\..\source\common\scripts\thread.h">
       <Filter>source\common\scripts</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\source\common\eventhandler.h">
-      <Filter>source\common</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\common\exception.h">
-      <Filter>source\common</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\common\ini.h">
-      <Filter>source\common</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\common\input.h">
-      <Filter>source\common</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\common\profiler.h">
-      <Filter>source\common</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\common\scriptengine.h">
-      <Filter>source\common</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\common\threadmanager.h">
-      <Filter>source\common</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\common\timer.h">
-      <Filter>source\common</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\common\window.h">
-      <Filter>source\common</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\source\audio\audio.h">
-      <Filter>source\audio</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\source\audio\buffer.cpp">
@@ -199,9 +145,6 @@
       <Filter>source\graphics</Filter>
     </ClCompile>
     <ClCompile Include="..\..\source\graphics\batch.cpp">
-      <Filter>source\graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\graphics\camera.cpp">
       <Filter>source\graphics</Filter>
     </ClCompile>
     <ClCompile Include="..\..\source\graphics\font.cpp">
@@ -312,8 +255,8 @@
     <ClCompile Include="..\..\source\common\window.cpp">
       <Filter>source\common</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\source\audio\audio.cpp">
-      <Filter>source\audio</Filter>
+    <ClCompile Include="..\..\source\common\audiomanager.cpp">
+      <Filter>source\common</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

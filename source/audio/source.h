@@ -1,7 +1,7 @@
 #ifndef X2D_AUDIO_SOURCE_H
 #define X2D_AUDIO_SOURCE_H
 
-#include "common/config.h"
+#include "common/engine.h"
 
 class XAudioSource
 {

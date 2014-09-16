@@ -19,8 +19,7 @@ BEGIN_AS_NAMESPACE
 // Helper functions
 static const char *GetCurrentDir(char *buf, size_t size);
 
-CScriptBuilder::CScriptBuilder(xdFileSystem *fileSystem) :
-	fileSystem(fileSystem)
+CScriptBuilder::CScriptBuilder()
 {
 	engine = 0;
 	module = 0;
@@ -143,8 +142,7 @@ bool CScriptBuilder::IncludeIfNotAlreadyIncluded(const char *filename)
 	return true;
 }
 
-#include <x2d/engine.h>
-#include <x2d/filesystem.h>
+#include "common/engine.h"
 
 int CScriptBuilder::LoadScriptSection(const char *filename)
 {
@@ -152,7 +150,7 @@ int CScriptBuilder::LoadScriptSection(const char *filename)
 	string conent;
 	string assetPath(":/");
 	assetPath.append(filename);
-	if(!xdFileSystem::ReadFile(assetPath.c_str(), conent))
+	if(!XFileSystem::ReadFile(assetPath.c_str(), conent))
 	{
 		// Write a message to the engine's message callback
 		char buf[256];

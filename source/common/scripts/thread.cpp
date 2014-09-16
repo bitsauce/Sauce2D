@@ -1,6 +1,5 @@
 #include "thread.h"
-#include <x2d/scripts/funccall.h>
-#include <x2d/threadmanager.h>
+#include "funccall.h"
 
 template<typename T> T &Get()
 {
@@ -8,9 +7,10 @@ template<typename T> T &Get()
 
 void CallFunction(FuncCall &funccall)
 {
-	Get<xdIThreadManager>().setupThread();
+	// TODO: REFACTORING
+	//Get<xdIThreadManager>().setupThread();
 	funccall.execute();
-	xdIThreadManager::Get().cleanupThread();
+	//xdIThreadManager::Get().cleanupThread();
 	asThreadCleanup();
 }
 

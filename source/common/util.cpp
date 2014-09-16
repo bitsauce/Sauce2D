@@ -7,8 +7,7 @@
 //				Originally written by Marcus Loo Vergara (aka. Bitsauce)
 //									2011-2014 (C)
 
-#include <x2d/util.h>
-#include <x2d/engine.h>
+#include "engine.h"
 #include <sstream>
 #include <fstream>
 
@@ -104,10 +103,10 @@ string util::asciiToStr(const uchar value)
 string util::getAbsoluteFilePath(const string &path)
 {
 	if(path.substr(0, 2) == ":/") {
-		return g_engine->getWorkingDirectory() + path.substr(2, string::npos);
+		return XEngine::GetWorkingDirectory() + path.substr(2, string::npos);
 	}
 	if(path.substr(0, 7) == "saves:/") {
-		return g_engine->getSaveDirectory() + path.substr(7, string::npos);
+		return XEngine::GetSaveDirectory() + path.substr(7, string::npos);
 	}
 	return path;
 }

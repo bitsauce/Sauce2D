@@ -7,7 +7,7 @@
 //				Originally written by Marcus Loo Vergara (aka. Bitsauce)
 //									2011-2014 (C)
 
-#include "debugger.h"
+#include "engine.h"
 
 bool XDebugger::connect()
 {
@@ -233,7 +233,7 @@ void XDebugger::takeCommands(void *ctxptr)
 
 	// Tell the remote debugger a breakpoint was hit
 	filePath += ";" + util::intToStr(line-1);
-	sendPacket(XD_BREAK_PACKET, filePath.c_str());
+	sendPacket(X2D_BREAK_PACKET, filePath.c_str());
 
 	// Send local variable information
 	/*asIScriptFunction *func = ctx->GetFunction();

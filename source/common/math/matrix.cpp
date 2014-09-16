@@ -1,6 +1,5 @@
-#include <cmath>
-#include <algorithm>
-#include "x2d/math/matrix.h"
+#include "matrix.h"
+#include "common/engine.h"
 
 const float DEG2RAD = 3.141593f / 180;
 
@@ -520,8 +519,6 @@ int Matrix4::Register(asIScriptEngine *scriptEngine)
 
 	return r;
 }
-
-#include <x2d/scripts/array.h>
 
 void Matrix4::Factory(Matrix4 *self)
 {

@@ -1,9 +1,7 @@
 #ifndef SCRIPTS_STRINGSTREAM_H
 #define SCRIPTS_STRINGSTREAM_H
 
-#include <x2d/math.h>
-#include <x2d/base.h>
-#include <x2d/util.h>
+#include "common/engine.h"
 
 class StringStream
 {

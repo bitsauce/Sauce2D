@@ -1,25 +1,22 @@
-#ifndef GFX_FONT_H
-#define GFX_FONT_H
+#ifndef X2D_FONT_H
+#define X2D_FONT_H
 
-#include <x2d/config.h>
-#include <x2d/base.h>
-#include <x2d/math.h>
-#include <x2d/graphics/batch.h>
-#include <x2d/graphics/texture.h>
-#include <x2d/graphics/textureAtlas.h>
+#include "common/engine.h"
 
-class Font
+class XTextureAtlas;
+
+class XFont
 {
 public:
 	AS_DECL_REF
 
-	Font(const string &path, const uint size);
-	~Font();
+	XFont(const string &path, const uint size);
+	~XFont();
 
 	float getStringWidth(const string &str);
 	float getStringHeight(const string &str);
 	void setColor(const Vector4 &color);
-	void draw(Batch *batch, const Vector2 &pos, const string &str);
+	void draw(XBatch *batch, const Vector2 &pos, const string &str);
 
 	struct CharMetrics
 	{
@@ -45,7 +42,7 @@ private:
 	Vector4 m_color;
 
 	// Font texture atlas
-	TextureAtlas *m_atlas;
+	XTextureAtlas *m_atlas;
 
 	// Font size (px)
 	int m_size;
@@ -59,7 +56,7 @@ private:
 	// Font character metrics
 	vector<CharMetrics> m_metrics;
 
-	static Font *Factory(string &fontName, const uint size);
+	static XFont *Factory(string &fontName, const uint size);
 };
 
-#endif // GFX_FONT_H
+#endif // X2D_FONT_H

@@ -51,7 +51,7 @@ typedef int (*INCLUDECALLBACK_t)(const char *include, const char *from, CScriptB
 class CScriptBuilder
 {
 public:
-	CScriptBuilder(class xdFileSystem *fileSystem);
+	CScriptBuilder();
 
 	// Start a new module
 	int StartNewModule(asIScriptEngine *engine, const char *moduleName);
@@ -118,7 +118,6 @@ protected:
 	asIScriptEngine           *engine;
 	asIScriptModule           *module;
 	std::string                modifiedScript;
-	class xdFileSystem		  *fileSystem;
 
 	INCLUDECALLBACK_t  includeCallback;
 	void              *callbackParam;

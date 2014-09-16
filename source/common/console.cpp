@@ -7,9 +7,10 @@
 //				Originally written by Marcus Loo Vergara (aka. Bitsauce)
 //									2011-2014 (C)
 
-#include "console.h"
-#include "filesystem.h"
-#include "debugger.h"
+#include "engine.h"
+
+bool XConsole::s_initialized = false;
+XConsole *XConsole::s_this = 0;
 
 AS_REG_SINGLETON(XConsole)
 
@@ -31,10 +32,8 @@ int XConsole::Register(asIScriptEngine *scriptEngine)
 }
 
 XConsole::XConsole() :
-	m_fileSystem(0), // Set by the engine
 	m_debugger(0), // Set by the engine
-	m_output(0),
-	m_initialized(false) // Set by the engine
+	m_output(0)
 {
 }
 
@@ -45,7 +44,7 @@ XConsole::~XConsole()
 
 void XConsole::log(const string &msg)
 {
-	logf(msg.c_str());
+	Log(msg.c_str());
 }
 
 void XConsole::call_log(const char *msg, va_list args)
@@ -86,31 +85,42 @@ void XConsole::call_log(const char *msg, va_list args)
 	m_buffer.append(out);
 }
 
+#ifndef USE_CTR_SECURE
 #define CALL_LOG(format, ...)						\
 	int size = _scprintf(format, __VA_ARGS__) + 1;	\
 	char *newMsg = new char[size];					\
 	sprintf(newMsg, format, __VA_ARGS__);			\
-	call_log(newMsg, args);							\
+	s_this->call_log(newMsg, args);					\
 	delete newMsg;
+#else
+#define CALL_LOG(format, ...)						\
+	int size = _scprintf(format, __VA_ARGS__) + 1;	\
+	char *newMsg = new char[size];					\
+	sprintf_s(newMsg, size, format, __VA_ARGS__);	\
+	s_this->call_log(newMsg, args);					\
+	delete newMsg;
+#endif
 
-void XConsole::logf(const char *msg, ...)
+void XConsole::Log(const char *msg, ...)
 {
-	// Get argument list
+	// Get argument lists
 	va_list args;
 	va_start(args, msg);
 
-	asIScriptContext *ctx = m_initialized ? asGetActiveContext() : 0;
+	asIScriptContext *ctx = s_initialized ? asGetActiveContext() : 0;
 	if(ctx)
 	{
 		const char *objName = ctx->GetFunction()->GetObjectName();
 		if(objName)
 		{
 			CALL_LOG("%s::%s(): %s", objName, ctx->GetFunction()->GetName(), msg);
-		}else
+		}
+		else
 		{
 			CALL_LOG("%s(): %s", ctx->GetFunction()->GetName(), msg);
 		}
-	}else
+	}
+	else
 	{
 		CALL_LOG("%s", msg);
 	}

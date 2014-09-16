@@ -9,10 +9,10 @@
 // Inspired by: http://nehe.gamedev.net/tutorial/freetype_fonts_in_opengl/24001/
 
 #include "font.h"
-#include <x2d/console.h>
-#include <x2d/graphics.h>
-#include <x2d/graphics/pixmap.h>
+#include "batch.h"
 #include "sprite.h"
+#include "textureRegion.h"
+#include "textureAtlas.h"
 
 // Credits to the FreeType library
 // FreeType Headers
@@ -23,26 +23,26 @@
 #include <freetype/fttrigon.h>
 #include <freetype/ftsnames.h>
 
-AS_REG_REF(Font)
+AS_REG_REF(XFont)
 
-int Font::Register(asIScriptEngine *scriptEngine)
+int XFont::Register(asIScriptEngine *scriptEngine)
 {
 	int r = 0;
 
-	r = scriptEngine->RegisterObjectBehaviour("Font", asBEHAVE_FACTORY, "Font @f(const string &in, const int)", asFUNCTIONPR(Factory, (string&, const uint), Font*), asCALL_CDECL); AS_ASSERT
+	r = scriptEngine->RegisterObjectBehaviour("XFont", asBEHAVE_FACTORY, "XFont @f(const string &in, const int)", asFUNCTIONPR(Factory, (string&, const uint), XFont*), asCALL_CDECL); AS_ASSERT
 
-	r = scriptEngine->RegisterObjectMethod("Font", "float getStringWidth(const string &in)", asMETHOD(Font, getStringWidth), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("Font", "float getStringHeight(const string &in)", asMETHOD(Font, getStringHeight), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("Font", "void setColor(const Vector4 &in)", asMETHOD(Font, setColor), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("Font", "void draw(Batch @batch, const Vector2 &in, const string &in)", asMETHOD(Font, draw), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("XFont", "float getStringWidth(const string &in)", asMETHOD(XFont, getStringWidth), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("XFont", "float getStringHeight(const string &in)", asMETHOD(XFont, getStringHeight), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("XFont", "void setColor(const Vector4 &in)", asMETHOD(XFont, setColor), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("XFont", "void draw(Batch @batch, const Vector2 &in, const string &in)", asMETHOD(XFont, draw), asCALL_THISCALL); AS_ASSERT
 
 	return r;
 }
 
-bool getFontFile(string &fontName)
+bool getXFontFile(string &XFontName)
 {
 	HKEY hkey;
-	if(RegOpenKeyEx(HKEY_LOCAL_MACHINE, "Software\\Microsoft\\Windows NT\\CurrentVersion\\Fonts", 0, KEY_READ, &hkey) == ERROR_SUCCESS)
+	if(RegOpenKeyEx(HKEY_LOCAL_MACHINE, "Software\\Microsoft\\Windows NT\\CurrentVersion\\XFonts", 0, KEY_READ, &hkey) == ERROR_SUCCESS)
 	{
 		// Get maximum buffer sizes
 		ulong maxValue;
@@ -60,17 +60,17 @@ bool getFontFile(string &fontName)
 		ulong datatype = REG_SZ;
 		while(RegEnumValue(hkey, i++, value, &valsize, 0, &datatype, data, &datasize) == ERROR_SUCCESS)
 		{
-			// Get name of font
+			// Get name of XFont
 			string valstr = value;
 			valstr = valstr.substr(0, valstr.find_first_of('(')-1);
 
 			// Check if the value was found
-			if(fontName == valstr)
+			if(XFontName == valstr)
 			{
 				// Set filename
 				char *winDir = new char[MAX_PATH];
 				GetWindowsDirectory(winDir, MAX_PATH);
-				fontName = string(winDir) + "\\Fonts\\" + string(reinterpret_cast<char*>(data));
+				XFontName = string(winDir) + "\\XFonts\\" + string(reinterpret_cast<char*>(data));
 
 				// Clean up
 				delete[] value;
@@ -101,7 +101,7 @@ inline int next_p2(int a)
 	return rval;
 }
 
-Font::Font(const string &path, const uint size) :
+XFont::XFont(const string &path, const uint size) :
 	m_color(1.0f),
 	m_atlas(0),
 	m_size(0),
@@ -111,33 +111,33 @@ Font::Font(const string &path, const uint size) :
 	load(path, size);
 }
 
-Font::~Font()
+XFont::~XFont()
 {
 	if(m_atlas) {
 		m_atlas->release();
 	}
 }
 
-void Font::load(const string &filePath, const uint size)
+void XFont::load(const string &filePath, const uint size)
 {
 	// Create and initialize a FreeType library
 	FT_Library library;
 	FT_Error error;
 	if((error = FT_Init_FreeType(&library)) != 0)
 	{
-		ERR("Font::load - Failed to initialize FreeType 2 (error code: %i)", error);
+		LOG("XFont::load - Failed to initialize FreeType 2 (error code: %i)", error);
 		return;
 	}
 
-	// Load the font information from file
+	// Load the XFont information from file
 	FT_Face face;
 	if((error = FT_New_Face(library, filePath.c_str(), 0, &face)) != 0)
 	{
-		ERR("Font::load - Failed load font data (error code: %i)", error);
+		LOG("XFont::load - Failed load XFont data (error code: %i)", error);
 		return;
 	}
 
-	// Setup font characters
+	// Setup XFont characters
 	m_metrics.resize(128);
 	m_size = size;
 
@@ -145,25 +145,25 @@ void Font::load(const string &filePath, const uint size)
 	//if(error = FT_Set_Char_Size(face, size << 6, size << 6, 96, 96))
 	if((error = FT_Set_Pixel_Sizes(face, size, size)) != 0)
 	{
-		ERR("Font::load - Failed to set pixel size (error code: %i)", error);
+		LOG("XFont::load - Failed to set pixel size (error code: %i)", error);
 		return;
 	}
 
-	// Load bitmap data for each of the character of the font
-	vector<Pixmap> pixmaps;
+	// Load bitmap data for each of the character of the XFont
+	vector<XPixmap> pixmaps;
 	for(uchar ch = 0; ch < 128; ch++)
 	{
 		// Load the glyph for our character
 		if((error = FT_Load_Glyph(face, FT_Get_Char_Index(face, ch), FT_LOAD_DEFAULT)) != 0)
 		{
-			ERR("Font::load - Failed to load glyph '%c' (error code: %i)", ch, error);
+			LOG("XFont::load - Failed to load glyph '%c' (error code: %i)", ch, error);
 			return;
 		}
 
 		// Render glyph to bitmap
 		if((error = FT_Render_Glyph(face->glyph, FT_RENDER_MODE_NORMAL)) != 0)
 		{
-			ERR("Font::load - Failed to get glyph '%c' (error code: %i)", ch, error);
+			LOG("XFont::load - Failed to get glyph '%c' (error code: %i)", ch, error);
 			return;
 		}
 
@@ -175,7 +175,7 @@ void Font::load(const string &filePath, const uint size)
 		uint height = bitmap.rows;
 
 		// Allocate memory for texture data
-		Pixmap pixmap(width, height);
+		XPixmap pixmap(width, height);
 		for(uint y = 0; y < height; y++)
 		{ 
 			for(uint x = 0; x < width; x++)
@@ -204,15 +204,15 @@ void Font::load(const string &filePath, const uint size)
 	m_lineSize = face->height >> 6;
 	m_Msize = m_metrics['M'].size.y;
 
-	// Create font atlas
-	m_atlas = new TextureAtlas(pixmaps);
+	// Create XFont atlas
+	m_atlas = new XTextureAtlas(pixmaps);
 
 	// Clean up FreeType
 	FT_Done_Face(face);
 	FT_Done_FreeType(library);
 }
 
-float Font::getStringWidth(const string &str)
+float XFont::getStringWidth(const string &str)
 {
 	float width = 0.0f;
 	for(uint i = 0; i < str.size(); i++)
@@ -225,9 +225,9 @@ float Font::getStringWidth(const string &str)
 	return width;
 }
 
-float Font::getStringHeight(const string &str)
+float XFont::getStringHeight(const string &str)
 {
-	float height = m_lineSize;
+	float height = (float)m_lineSize;
 	for(uint i = 0; i < str.size(); i++)
 	{
 		if(str[i] == '\n')
@@ -236,19 +236,19 @@ float Font::getStringHeight(const string &str)
 	return height;
 }
 
-void Font::setColor(const Vector4 &color)
+void XFont::setColor(const Vector4 &color)
 {
 	m_color = color;
 }
 
-void Font::draw(Batch *batch, const Vector2 &pos, const string &str)
+void XFont::draw(XBatch *batch, const Vector2 &pos, const string &str)
 {
 	// Get current position
 	Vector2 currentPos = pos;
 
 	// Setup batch
 	batch->setTexture(m_atlas->getTexture());
-	batch->setPrimitive(Batch::PRIMITIVE_TRIANGLES);
+	batch->setPrimitive(XBatch::PRIMITIVE_TRIANGLES);
 
 	// Draw string
 	Vertex vertices[4];
@@ -275,7 +275,7 @@ void Font::draw(Batch *batch, const Vector2 &pos, const string &str)
 		currentPos.x += metrics.bearing.x;
 		
 		// Draw char
-		TextureRegion region = m_atlas->get(ch);
+		XTextureRegion region = m_atlas->get(ch);
 
 		vertices[0].position.set(currentPos.x, currentPos.y + (m_Msize - metrics.size.y) - metrics.advance.y);
 		vertices[0].color = m_color;
@@ -301,18 +301,18 @@ void Font::draw(Batch *batch, const Vector2 &pos, const string &str)
 	batch->release();
 }
 
-Font *Font::Factory(string &fontName, const uint size)
+XFont *XFont::Factory(string &XFontName, const uint size)
 {
-	// Check if we can find the font in the local directories
-	util::toAbsoluteFilePath(fontName);
-	if(!util::fileExists(fontName))
+	// Check if we can find the XFont in the local directories
+	util::toAbsoluteFilePath(XFontName);
+	if(!util::fileExists(XFontName))
 	{
-		// Loop throught the registry to find the file by font name
-		if(!getFontFile(fontName))
+		// Loop throught the registry to find the file by XFont name
+		if(!getXFontFile(XFontName))
 		{
-			ERR("Font '%s' not found!", fontName);
+			LOG("XFont '%s' not found!", XFontName);
 			return 0;
 		}
 	}
-	return new Font(fontName, size);
+	return new XFont(XFontName, size);
 }

@@ -7,31 +7,27 @@
 //				Originally written by Marcus Loo Vergara (aka. Bitsauce)
 //									2011-2014 (C)
 
-#include <x2d/profiler.h>
-//#include <x2d/time.h>
-#include <x2d/engine.h>
-#include <x2d/filesystem.h>
-#include <x2d/timer.h>
+#include "engine.h"
 
-#include <angelscript.h>
+XProfiler *XProfiler::s_this = 0;
 
-AS_REG_SINGLETON(xdProfiler, "ScriptProfiler")
+AS_REG_SINGLETON(XProfiler)
 
-int xdProfiler::Register(asIScriptEngine *scriptEngine)
+int XProfiler::Register(asIScriptEngine *scriptEngine)
 {
 	int r = 0;
 
 	// Profiler
-	r = scriptEngine->RegisterObjectMethod("ScriptProfiler", "void start()", asMETHOD(xdProfiler, start), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("ScriptProfiler", "void stop()", asMETHOD(xdProfiler, stop), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("ScriptProfiler", "void push(const string &in)", asMETHOD(xdProfiler, pushProfile), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("ScriptProfiler", "void pop()", asMETHOD(xdProfiler, popProfile), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("ScriptProfiler", "void print()", asMETHOD(xdProfiler, printResults), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("XProfiler", "void start()", asMETHOD(XProfiler, start), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("XProfiler", "void stop()", asMETHOD(XProfiler, stop), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("XProfiler", "void push(const string &in)", asMETHOD(XProfiler, push), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("XProfiler", "void pop()", asMETHOD(XProfiler, pop), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("XProfiler", "void print()", asMETHOD(XProfiler, printResults), asCALL_THISCALL); AS_ASSERT
 
 	return r;
 }
 
-xdProfiler::xdProfiler(xdTimer *timer) :
+XProfiler::XProfiler(XTimer *timer) :
 	m_timer(timer),
 	m_active(false),
 	m_currentNode(0),
@@ -41,11 +37,11 @@ xdProfiler::xdProfiler(xdTimer *timer) :
 	assert(timer != 0);
 }
 
-xdProfiler::~xdProfiler()
+XProfiler::~XProfiler()
 {
 }
 
-void xdProfiler::start()
+void XProfiler::start()
 {
 	// Clear eplaced times
 	m_root = 0;
@@ -54,15 +50,18 @@ void xdProfiler::start()
 	m_active = true;
 }
 
-void xdProfiler::stop()
+void XProfiler::stop()
 {
 	m_active = false;
 	m_totalTime = m_timer->getTime()-m_startTime;
 }
 
-void xdProfiler::pushProfile(const string &name)
+void XProfiler::push(const string &name)
 {
-	if(!m_active) return;
+	if(!m_active)
+	{
+		return;
+	}
 	
 	Profile *p = &m_profiles[name];
 	if(m_currentNode == 0)
@@ -71,7 +70,9 @@ void xdProfiler::pushProfile(const string &name)
 		m_root = p;
 		m_rootName = name;
 		p->parent = 0;
-	}else{
+	}
+	else
+	{
 		p->parent = m_currentNode;
 		m_currentNode->children[name] = p;
 	}
@@ -80,13 +81,16 @@ void xdProfiler::pushProfile(const string &name)
 	m_currentNode = p;
 }
 
-void xdProfiler::popProfile()
+void XProfiler::pop()
 {
-	if(!m_active) return;
+	if(!m_active)
+	{
+		return;
+	}
 
 	if(!m_currentNode)
 	{
-		ERR("appPopProfile() no current node");
+		LOG("XProfiler::pop() - No current node");
 		return;
 	}
 
@@ -95,7 +99,7 @@ void xdProfiler::popProfile()
 }
 
 
-void xdProfiler::printChildren(Profile *node, const string &name, const int depth, const float parentTotal, const float globalTotal)
+void XProfiler::printChildren(Profile *node, const string &name, const int depth, const float parentTotal, const float globalTotal)
 {
 	// Print current node info
 
@@ -175,19 +179,19 @@ void xdProfiler::printChildren(Profile *node, const string &name, const int dept
 		printChildren(itr->second, itr->first, depth+1, total, globalTotal);
 }
 
-void xdProfiler::printResults()
+void XProfiler::printResults()
 {
 	// Check that it is stopped
 	if(m_active)
 	{
-		ERR("appPrintProfileResults() cannot print while the profilier is running");
+		LOG("XProfiler::printResults() - Cannot print while the profilier is running");
 		return;
 	}
 
 	// Validate stack
 	if(m_currentNode != 0)
 	{
-		ERR("appPrintProfileResults() the current profile is not 0");
+		LOG("XProfiler::printResults() - The current profile is not 0");
 		return;
 	}
 

@@ -3,17 +3,17 @@
 
 #include "batch.h"
 
-class Sprite;
+class XSprite;
 
-class SpriteBatch : public Batch
+class XSpriteBatch : public XBatch
 {
 	AS_DECL_REF
 public:
 
-	~SpriteBatch();
+	~XSpriteBatch();
 
-	void add(Sprite *sprite);
-	Sprite *get(int index);
+	void add(XSprite *sprite);
+	XSprite *get(int index);
 	int getSize() const;
 
 	void draw();
@@ -21,11 +21,11 @@ public:
 	void makeStatic();
 
 private:
-	vector<Sprite*> m_sprites;
-	vector<Sprite*> m_returnedSprites;
-	map<Sprite*, uint> m_offsets;
+	vector<XSprite*> m_sprites;
+	vector<XSprite*> m_returnedSprites;
+	map<XSprite*, uint> m_offsets;
 	
-	static SpriteBatch *Factory() { return new SpriteBatch(); }
+	static XSpriteBatch *Factory() { return new XSpriteBatch(); }
 };
 
 #endif // GRAPHICS_SPRITE_BATCH_H

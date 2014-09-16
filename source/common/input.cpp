@@ -7,14 +7,11 @@
 //				Originally written by Marcus Loo Vergara (aka. Bitsauce)
 //									2011-2014 (C)
 
-#include <x2d/input.h>
+#include "engine.h"
 
-#include <x2d/scriptengine.h>
-#include <x2d/scripts/funccall.h>
+AS_REG_SINGLETON(XInput)
 
-AS_REG_SINGLETON(xdInput, "ScriptInput")
-
-int xdInput::Register(asIScriptEngine *scriptEngine)
+int XInput::Register(asIScriptEngine *scriptEngine)
 {
 	int r;
 
@@ -128,26 +125,26 @@ int xdInput::Register(asIScriptEngine *scriptEngine)
 	r = scriptEngine->RegisterInterfaceMethod("KeyboardListener", "void keyReleased(VirtualKey key)"); AS_ASSERT
 
 	// Desktop cursor
-	r = scriptEngine->RegisterObjectMethod("ScriptInput", "void     setCursorPos(const Vector2i &in)", asMETHODPR(xdInput, setCursorPos, (const Vector2i&), void), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("ScriptInput", "Vector2i getCursorPos() const", asMETHOD(xdInput, getCursorPos), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("ScriptInput", "void     setCursorLimits(const Recti &in) const", asMETHODPR(xdInput, setCursorLimits, (const Recti&), void), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("XInput", "void     setCursorPos(const Vector2i &in)", asMETHODPR(XInput, setCursorPos, (const Vector2i&), void), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("XInput", "Vector2i getCursorPos() const", asMETHOD(XInput, getCursorPos), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("XInput", "void     setCursorLimits(const Recti &in) const", asMETHODPR(XInput, setCursorLimits, (const Recti&), void), asCALL_THISCALL); AS_ASSERT
 
 	// Keyboard
-	r = scriptEngine->RegisterObjectMethod("ScriptInput", "bool getKeyState(const VirtualKey key) const", asMETHOD(xdInput, getKeyState), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("ScriptInput", "void bind(const VirtualKey key, KeybindCallback @callback)", asMETHOD(xdInput, bind), asCALL_THISCALL); 
-	r = scriptEngine->RegisterObjectMethod("ScriptInput", "void unbind(const VirtualKey key)", asMETHOD(xdInput, unbind), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("ScriptInput", "void unbindAll()", asMETHOD(xdInput, unbindAll), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("ScriptInput", "void addKeyboardListener(KeyboardListener@)", asMETHOD(xdInput, addKeyboardListener), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("XInput", "bool getKeyState(const VirtualKey key) const", asMETHOD(XInput, getKeyState), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("XInput", "void bind(const VirtualKey key, KeybindCallback @callback)", asMETHOD(XInput, bind), asCALL_THISCALL); 
+	r = scriptEngine->RegisterObjectMethod("XInput", "void unbind(const VirtualKey key)", asMETHOD(XInput, unbind), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("XInput", "void unbindAll()", asMETHOD(XInput, unbindAll), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("XInput", "void addKeyboardListener(KeyboardListener@)", asMETHOD(XInput, addKeyboardListener), asCALL_THISCALL); AS_ASSERT
 
 	// General
-	r = scriptEngine->RegisterObjectMethod("ScriptInput", "Vector2 get_position() const", asMETHOD(xdInput, getPosition), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("XInput", "Vector2 get_position() const", asMETHOD(XInput, getPosition), asCALL_THISCALL); AS_ASSERT
 
 	return r;
 }
 
-xdInput::~xdInput()
+XInput::~XInput()
 {
-	for(map<xdVirtualKey, KeyBind>::iterator itr = m_keyBindings.begin(); itr != m_keyBindings.end(); ++itr)
+	for(map<XVirtualKey, KeyBind>::iterator itr = m_keyBindings.begin(); itr != m_keyBindings.end(); ++itr)
 	{
 		// Release all function handles
 		itr->second.function->Release();
@@ -161,7 +158,7 @@ xdInput::~xdInput()
 	
 }
 
-void xdInput::bind(const xdVirtualKey key, asIScriptFunction *function)
+void XInput::bind(const XVirtualKey key, asIScriptFunction *function)
 {
 	// If key is already bound, release its function handle
 	if(m_keyBindings.find(key) != m_keyBindings.end())
@@ -185,21 +182,21 @@ void xdInput::bind(const xdVirtualKey key, asIScriptFunction *function)
 	}
 }
 
-void xdInput::unbind(const xdVirtualKey key)
+void XInput::unbind(const XVirtualKey key)
 {
 	bind(key, 0);
 }
 
-void xdInput::unbindAll()
+void XInput::unbindAll()
 {
 	// Release all function handles
-	for(map<xdVirtualKey, KeyBind>::iterator itr = m_keyBindings.begin(); itr != m_keyBindings.end(); ++itr) {
+	for(map<XVirtualKey, KeyBind>::iterator itr = m_keyBindings.begin(); itr != m_keyBindings.end(); ++itr) {
 		itr->second.function->Release();
 	}
 	m_keyBindings.clear();
 }
 
-void xdInput::addKeyboardListener(asIScriptObject *object)
+void XInput::addKeyboardListener(asIScriptObject *object)
 {
 	// Add keyboard listener
 	if(object) {
@@ -207,14 +204,14 @@ void xdInput::addKeyboardListener(asIScriptObject *object)
 	}
 }
 
-void xdInput::charEvent(uint utf8char)
+void XInput::charEvent(uint utf8char)
 {
 	for(vector<asIScriptObject*>::iterator itr = m_keyListeners.begin(); itr != m_keyListeners.end(); ++itr)
 	{
 		asIObjectType *type = (*itr)->GetObjectType();
 		asIScriptFunction *func = type->GetMethodByDecl("void charEvent(uint)");
 
-		asIScriptContext *ctx = g_engine->getScriptEngine()->createContext();
+		asIScriptContext *ctx = XScriptEngine::CreateContext();
 		int r = ctx->Prepare(func); assert(r >= 0);
 		r = ctx->SetObject(*itr); assert(r >= 0);
 		r = ctx->SetArgDWord(0, utf8char); assert(r >= 0);
@@ -223,14 +220,14 @@ void xdInput::charEvent(uint utf8char)
 	}
 }
 
-void xdInput::keyPressed(xdVirtualKey key)
+void XInput::keyPressed(const XVirtualKey key)
 {
 	for(vector<asIScriptObject*>::iterator itr = m_keyListeners.begin(); itr != m_keyListeners.end(); ++itr)
 	{
 		asIObjectType *type = (*itr)->GetObjectType();
 		asIScriptFunction *func = type->GetMethodByDecl("void keyPressed(VirtualKey)");
 
-		asIScriptContext *ctx = g_engine->getScriptEngine()->createContext();
+		asIScriptContext *ctx = XScriptEngine::CreateContext();
 		int r = ctx->Prepare(func); assert(r >= 0);
 		r = ctx->SetObject(*itr); assert(r >= 0);
 		r = ctx->SetArgDWord(0, key); assert(r >= 0);
@@ -239,14 +236,14 @@ void xdInput::keyPressed(xdVirtualKey key)
 	}
 }
 
-void xdInput::keyReleased(xdVirtualKey key)
+void XInput::keyReleased(const XVirtualKey key)
 {
 	for(vector<asIScriptObject*>::iterator itr = m_keyListeners.begin(); itr != m_keyListeners.end(); ++itr)
 	{
 		asIObjectType *type = (*itr)->GetObjectType();
 		asIScriptFunction *func = type->GetMethodByDecl("void keyReleased(VirtualKey)");
 
-		asIScriptContext *ctx = g_engine->getScriptEngine()->createContext();
+		asIScriptContext *ctx = XScriptEngine::CreateContext();
 		int r = ctx->Prepare(func); assert(r >= 0);
 		r = ctx->SetObject(*itr); assert(r >= 0);
 		r = ctx->SetArgDWord(0, key); assert(r >= 0);
@@ -255,10 +252,12 @@ void xdInput::keyReleased(xdVirtualKey key)
 	}
 }
 
-void xdInput::checkBindings()
+#include "scripts/funccall.h"
+
+void XInput::checkBindings()
 {
 	// Iterate key bindings
-	for(map<xdVirtualKey, KeyBind>::iterator itr = m_keyBindings.begin(); itr != m_keyBindings.end(); ++itr)
+	for(map<XVirtualKey, KeyBind>::iterator itr = m_keyBindings.begin(); itr != m_keyBindings.end(); ++itr)
 	{
 		KeyBind &key = itr->second;
 		if(getKeyState(itr->first))

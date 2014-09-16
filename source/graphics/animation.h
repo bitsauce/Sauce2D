@@ -1,29 +1,28 @@
-#ifndef GRAPHICS_ANIMATION_H
-#define GRAPHICS_ANIMATION_H
+#ifndef X2D_ANIMATION_H
+#define X2D_ANIMATION_H
 
-#include <x2d/config.h>
-#include <x2d/util.h>
-#include <x2d/math.h>
+#include "common/engine.h"
 
-class Texture;
-class TextureRegion;
+class XTexture;
+class XTextureRegion;
 
-class Animation
+class XAnimation
 {
 public:
 	AS_DECL_REF
 
-	Animation(Texture *texture, const int nRows, const int nColumns);
-	~Animation();
+	XAnimation(XTexture *texture, const int nRows, const int nColumns);
+	~XAnimation();
 
-	TextureRegion getKeyFrame(int frameIndex);
+	XTextureRegion getKeyFrame(int frameIndex);
 
 private:
-	vector<TextureRegion> m_textureRegions;
+	vector<XTextureRegion> m_textureRegions;
 
-	static Animation *Factory(Texture *texture, const int nRows, const int nColumns) {
-		return new Animation(texture, nRows, nColumns);
+	static XAnimation *Factory(XTexture *texture, const int nRows, const int nColumns)
+	{
+		return new XAnimation(texture, nRows, nColumns);
 	}
 };
 
-#endif // GRAPHICS_ANIMATION_H
+#endif // X2D_ANIMATION_H

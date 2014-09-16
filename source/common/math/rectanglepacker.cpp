@@ -7,7 +7,7 @@
 //				Originally written by Marcus Loo Vergara (aka. Bitsauce)
 //									2011-2014 (C)
 
-#include <x2d/math/rectanglepacker.h>
+#include "rectanglepacker.h"
 
 bool heightSort(RectanglePacker::Rectangle i, RectanglePacker::Rectangle j)
 {

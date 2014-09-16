@@ -7,9 +7,7 @@
 //				Originally written by Marcus Loo Vergara (aka. Bitsauce)
 //									2011-2014 (C)
 
-#include <x2d/math/rect.h>
-#include <x2d/math/vector.h>
-#include <x2d/scriptengine.h>
+#include "rect.h"
 
 AS_REG_VALUE(Rect)
 

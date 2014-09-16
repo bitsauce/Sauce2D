@@ -7,42 +7,41 @@
 //				Originally written by Marcus Loo Vergara (aka. Bitsauce)
 //									2011-2014 (C)
 
-#include <x2d/graphics/pixmap.h>
-#include <x2d/console.h>
+#include "pixmap.h"
 
-AS_REG_VALUE(Pixmap)
+AS_REG_VALUE(XPixmap)
 
-int Pixmap::Register(asIScriptEngine *scriptEngine)
+int XPixmap::Register(asIScriptEngine *scriptEngine)
 {
 	int r = 0;
 	
-	r = scriptEngine->RegisterObjectBehaviour("Pixmap", asBEHAVE_CONSTRUCT, "void f(Pixmap &in)", asFUNCTIONPR(Factory, (Pixmap&, Pixmap*), void), asCALL_CDECL_OBJLAST); AS_ASSERT
-	r = scriptEngine->RegisterObjectBehaviour("Pixmap", asBEHAVE_CONSTRUCT, "void f(const int, const int)", asFUNCTIONPR(Factory, (const int, const int, Pixmap*), void), asCALL_CDECL_OBJLAST); AS_ASSERT
-	r = scriptEngine->RegisterObjectBehaviour("Pixmap", asBEHAVE_CONSTRUCT, "void f(const int, const int, const array<Vector4> &in)", asFUNCTIONPR(Factory, (const int, const int, Array&, Pixmap*), void), asCALL_CDECL_OBJLAST); AS_ASSERT
+	r = scriptEngine->RegisterObjectBehaviour("XPixmap", asBEHAVE_CONSTRUCT, "void f(XPixmap &in)", asFUNCTIONPR(Factory, (XPixmap&, XPixmap*), void), asCALL_CDECL_OBJLAST); AS_ASSERT
+	r = scriptEngine->RegisterObjectBehaviour("XPixmap", asBEHAVE_CONSTRUCT, "void f(const int, const int)", asFUNCTIONPR(Factory, (const int, const int, XPixmap*), void), asCALL_CDECL_OBJLAST); AS_ASSERT
+	r = scriptEngine->RegisterObjectBehaviour("XPixmap", asBEHAVE_CONSTRUCT, "void f(const int, const int, const array<Vector4> &in)", asFUNCTIONPR(Factory, (const int, const int, XScriptArray&, XPixmap*), void), asCALL_CDECL_OBJLAST); AS_ASSERT
 
-	r = scriptEngine->RegisterObjectMethod("Pixmap", "void exportToFile(const string &in) const", asMETHOD(Pixmap, exportToFile), asCALL_THISCALL);
+	r = scriptEngine->RegisterObjectMethod("XPixmap", "void exportToFile(const string &in) const", asMETHOD(XPixmap, exportToFile), asCALL_THISCALL);
 
 	return r;
 }
 
-void printContent(Pixmap &px)
+void printContent(XPixmap &px)
 {
 	for(int y = 0; y < px.getHeight(); y++) {
 		for(int x = 0; x < px.getWidth(); x++) {
 			Vector4 c = px.getColor(x, y);
-			LOG("Pixmap[%i][%i]: (%f,%f,%f,%f)", y, x, c.getR(), c.getG(), c.getB(), c.getA());
+			LOG("XPixmap[%i][%i]: (%f,%f,%f,%f)", y, x, c.getR(), c.getG(), c.getB(), c.getA());
 		}
 	}
 }
 
-Pixmap::Pixmap() :
+XPixmap::XPixmap() :
 	m_width(0),
 	m_height(0),
 	m_data(0)
 {
 }
 
-Pixmap::Pixmap(const int width, const int height, const Vector4 *pixels) :
+XPixmap::XPixmap(const int width, const int height, const Vector4 *pixels) :
 	m_width(width),
 	m_height(height)
 {
@@ -55,7 +54,7 @@ Pixmap::Pixmap(const int width, const int height, const Vector4 *pixels) :
 	}
 }
 
-Pixmap::Pixmap(const int width, const int height, const Array &pixels) :
+XPixmap::XPixmap(const int width, const int height, const XScriptArray &pixels) :
 	m_width(width),
 	m_height(height)
 {
@@ -74,11 +73,11 @@ Pixmap::Pixmap(const int width, const int height, const Array &pixels) :
 	}
 }
 
-Pixmap::Pixmap(const int width, const int height) :
+XPixmap::XPixmap(const int width, const int height) :
 	m_width(width),
 	m_height(height)
 {
-	// Create empty pixmap
+	// Create empty XPixmap
 	if(width >= 0 && height >= 0) {
 		m_data = new Vector4[width*height];
 	}else{
@@ -86,7 +85,7 @@ Pixmap::Pixmap(const int width, const int height) :
 	}
 }
 
-Pixmap::Pixmap(const Pixmap &other)
+XPixmap::XPixmap(const XPixmap &other)
 {
 	m_width = other.m_width;
 	m_height = other.m_height;
@@ -99,7 +98,7 @@ Pixmap::Pixmap(const Pixmap &other)
 	}
 }
 
-/*Pixmap &Pixmap::operator=(Pixmap &other)
+/*XPixmap &XPixmap::operator=(XPixmap &other)
 {
 	swap(m_data, other.m_data);
 	swap(m_width, other.m_width);
@@ -107,27 +106,27 @@ Pixmap::Pixmap(const Pixmap &other)
 	return *this;
 }*/
 
-Pixmap::~Pixmap()
+XPixmap::~XPixmap()
 {
 	delete[] m_data;
 }
 
-const float *Pixmap::getData() const
+const float *XPixmap::getData() const
 {
 	return (const float*)m_data;
 }
 
-int Pixmap::getWidth() const
+int XPixmap::getWidth() const
 {
 	return m_width;
 }
 
-int Pixmap::getHeight() const
+int XPixmap::getHeight() const
 {
 	return m_height;
 }
 
-Vector4 Pixmap::getColor(const int x, const int y) const
+Vector4 XPixmap::getColor(const int x, const int y) const
 {
 	if(x >= 0 && x < m_width && y >= 0 && y < m_height)
 	{
@@ -138,7 +137,7 @@ Vector4 Pixmap::getColor(const int x, const int y) const
 	return Vector4();
 }
 
-void Pixmap::setColor(const int x, const int y, const Vector4 &color)
+void XPixmap::setColor(const int x, const int y, const Vector4 &color)
 {
 	if(x >= 0 && x < m_width && y >= 0 && y < m_height)
 	{
@@ -148,9 +147,8 @@ void Pixmap::setColor(const int x, const int y, const Vector4 &color)
 	}
 }
 
-#include <x2d/assetloader.h>
-
-void Pixmap::exportToFile(const string &path) const
+void XPixmap::exportToFile(const string &path) const
 {
-	xdAssetLoader::s_this->saveImage(path, (uchar*)m_data, m_width, m_height);
+	// TODO: REFACTORING
+	//XAssetManager::SavePixmap(path, (uchar*)m_data, m_width, m_height);
 }

@@ -1,8 +1,7 @@
 #ifndef SCRIPTS_FUNCCALL_H
 #define SCRIPTS_FUNCCALL_H
 
-#include <x2d/scriptengine.h>
-#include <x2d/console.h>
+#include "common/engine.h"
 
 class XDAPI FuncCall
 {

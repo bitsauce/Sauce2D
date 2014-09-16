@@ -1,7 +1,7 @@
 #ifndef X2D_PIXMAP_H
 #define X2D_PIXMAP_H
 
-#include "common/config.h"
+#include "common/engine.h"
 
 class XDAPI XPixmap
 {

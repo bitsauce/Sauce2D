@@ -1,4 +1,4 @@
-#include <x2d/scripts/funccall.h>
+#include "funccall.h"
 
 FuncCall::FuncCall()
 {
@@ -43,7 +43,7 @@ FuncCall::FuncCall(asIScriptFunction *func)
 
 FuncCall::FuncCall(const string &func)
 {
-	asIScriptModule *mod = g_engine->getScriptEngine()->getModule();
+	asIScriptModule *mod = XScriptEngine::GetModule();
 	asIScriptFunction *function = mod->GetFunctionByDecl(func.c_str());
 	if(!function) function = mod->GetFunctionByName(func.c_str());
 	init(0, 0, function);
@@ -54,7 +54,7 @@ FuncCall::FuncCall(void *object, int typeId, const string &method)
 	asIScriptFunction *func = 0;
 	if(typeId & asTYPEID_MASK_OBJECT)
 	{
-		asIObjectType *type = g_engine->getScriptEngine()->getASEngine()->GetObjectTypeById(typeId);
+		asIObjectType *type = XScriptEngine::GetAngelScript()->GetObjectTypeById(typeId);
 		func = type->GetMethodByDecl(method.c_str());
 		if(!func) func = type->GetMethodByName(method.c_str());
 	}
@@ -73,15 +73,13 @@ FuncCall::~FuncCall()
 	{
 		if(arg.second & asTYPEID_OBJHANDLE)
 		{
-			asIScriptEngine *scriptEngine = g_engine->getScriptEngine()->getASEngine();
-			scriptEngine->ReleaseScriptObject(arg.first, scriptEngine->GetObjectTypeById(arg.second)); 
+			XScriptEngine::GetAngelScript()->ReleaseScriptObject(arg.first, XScriptEngine::GetAngelScript()->GetObjectTypeById(arg.second)); 
 		}
 	}
 	
 	if(m_object.second & asTYPEID_OBJHANDLE)
 	{
-		asIScriptEngine *scriptEngine = g_engine->getScriptEngine()->getASEngine();
-		scriptEngine->ReleaseScriptObject(m_object.first, scriptEngine->GetObjectTypeById(m_object.second));
+		XScriptEngine::GetAngelScript()->ReleaseScriptObject(m_object.first, XScriptEngine::GetAngelScript()->GetObjectTypeById(m_object.second));
 	}
 }
 
@@ -109,8 +107,7 @@ void FuncCall::setObject(void *object, int typeId)
 			m_object.first = *(void**)object;
 			
 			// Add handle ref
-			asIScriptEngine *scriptEngine = g_engine->getScriptEngine()->getASEngine();
-			scriptEngine->AddRefScriptObject(*(void**)object, scriptEngine->GetObjectTypeById(typeId));
+			XScriptEngine::GetAngelScript()->AddRefScriptObject(*(void**)object, XScriptEngine::GetAngelScript()->GetObjectTypeById(typeId));
 		}
 		else
 		{
@@ -130,7 +127,7 @@ void FuncCall::setArg(const uint index, void *value, int typeId)
 	{
 		int paramTypeId;
 		m_function->GetParam(index, &paramTypeId);
-		if(typeId == paramTypeId || g_engine->getScriptEngine()->getASEngine()->IsHandleCompatibleWithObject(value, typeId, paramTypeId))
+		if(typeId == paramTypeId || XScriptEngine::GetAngelScript()->IsHandleCompatibleWithObject(value, typeId, paramTypeId))
 		{
 			pair<void*, int> &arg = m_arguments[index];
 			if(typeId & asTYPEID_OBJHANDLE)
@@ -138,8 +135,7 @@ void FuncCall::setArg(const uint index, void *value, int typeId)
 				arg.first = *(void**)value;
 
 				// Add handle ref
-				asIScriptEngine *scriptEngine = g_engine->getScriptEngine()->getASEngine();
-				scriptEngine->AddRefScriptObject(*(void**)value, scriptEngine->GetObjectTypeById(typeId));
+				XScriptEngine::GetAngelScript()->AddRefScriptObject(*(void**)value, XScriptEngine::GetAngelScript()->GetObjectTypeById(typeId));
 			}
 			else
 			{
@@ -167,7 +163,7 @@ bool FuncCall::execute()
 	int r;
 
 	// Prepare context
-	asIScriptContext *ctx = g_engine->getScriptEngine()->createContext();
+	asIScriptContext *ctx = XScriptEngine::CreateContext();
 	r = ctx->Prepare(m_function); assert(r >= 0);
 	if(m_object.first != 0 && m_object.second != 0)
 	{
@@ -320,7 +316,7 @@ void ConstructDelegate(void *value, int typeId, FuncCall *self)
 	asIScriptFunction *func = 0;
 	if(typeId & asTYPEID_MASK_OBJECT && typeId & asTYPEID_APPOBJECT)
 	{
-		string name = g_engine->getScriptEngine()->getASEngine()->GetObjectTypeById(typeId)->GetName();
+		string name = XScriptEngine::GetAngelScript()->GetObjectTypeById(typeId)->GetName();
 		if(name == "_builtin_function_")
 		{
 			func = *(asIScriptFunction**)value;

@@ -2,6 +2,7 @@
 #define X2D_RECT_H
 
 #include "common/config.h"
+#include "vector.h"
 
 /** \brief A class which holds a 2 dimentional Rect
  *
@@ -11,6 +12,7 @@
  */
 
 void RegisterRect();
+
 class Recti;
 
 class XDAPI Rect

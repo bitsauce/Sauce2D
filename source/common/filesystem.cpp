@@ -7,7 +7,7 @@
 //				Originally written by Marcus Loo Vergara (aka. Bitsauce)
 //									2011-2014 (C)
 
-#include "filesystem.h"
+#include "engine.h"
 
 XFileSystem *XFileSystem::s_this = 0;
 

@@ -7,23 +7,9 @@
 //				Originally written by Marcus Loo Vergara (aka. Bitsauce)
 //									2011-2014 (C)
 
-#include <x2d/scriptengine.h>
-#include <x2d/engine.h>
-#include <x2d/filesystem.h>
-#include <x2d/debug.h>
-#include <x2d/exception.h>
+#include "common/engine.h"
 
-// Script engine
-asIScriptEngine* scriptEngine = 0;
-
-// HAX
-
-#include <x2d/scripts/array.h>
-#include <x2d/scriptengine.h>
-#include "scripts/scriptarray.h"
-#include "scripts/scriptany.h"
-
-Array *CreateArray(const string &type, const uint size)
+XScriptArray *CreateArray(const string &type, const uint size)
 {
 	// Create decl
 	string decl = "array<";
@@ -31,109 +17,102 @@ Array *CreateArray(const string &type, const uint size)
 	decl += ">";
 
     // Obtain a pointer to the engine
-	asIObjectType *arrayType = scriptEngine->GetObjectTypeById(scriptEngine->GetTypeIdByDecl(decl.c_str()));
+	asIObjectType *arrayType = XScriptEngine::GetAngelScript()->GetObjectTypeById(XScriptEngine::GetAngelScript()->GetTypeIdByDecl(decl.c_str()));
 
     // Create the array object
-    return new CScriptArray(size, arrayType);
+    return new XScriptArray(size, arrayType);
 }
 
-AnyObject *CreateAnyObject()
-{
-    // Create the array object
-	return new CScriptAny(scriptEngine);
-}
+asIScriptEngine *XScriptEngine::s_engine = 0;
+asIScriptModule *XScriptEngine::s_module = 0;
+XDebugger *XScriptEngine::s_debugger = 0;
 
-// HAX END
+AS_REG_SINGLETON(XScriptEngine)
 
-AS_REG_SINGLETON(xdScriptEngine, "ScriptManager")
-
-int xdScriptEngine::Register(asIScriptEngine *scriptEngine)
+int XScriptEngine::Register(asIScriptEngine *scriptEngine)
 {
 	int r;
 
 	// Scirpt classes
-	r = scriptEngine->RegisterObjectMethod("ScriptManager", "uint getClassCount() const", asMETHOD(xdScriptEngine, classCount), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("ScriptManager", "int getClassIdByName(const string)", asMETHOD(xdScriptEngine, classIdByName), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("ScriptManager", "string getClassNameById(const uint)", asMETHOD(xdScriptEngine, classNameById), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("ScriptManager", "bool classExists(const string)", asMETHOD(xdScriptEngine, isClassName), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("ScriptManager", "bool classDerivesFromName(const string, const string)", asMETHOD(xdScriptEngine, classDerivesFromName), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("ScriptManager", "bool classDerivesFromId(const uint, const uint)", asMETHOD(xdScriptEngine, classDerivesFromId), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("XScriptEngine", "uint getClassCount() const", asMETHOD(XScriptEngine, classCount), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("XScriptEngine", "int getClassIdByName(const string)", asMETHOD(XScriptEngine, classIdByName), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("XScriptEngine", "string getClassNameById(const uint)", asMETHOD(XScriptEngine, classNameById), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("XScriptEngine", "bool classExists(const string)", asMETHOD(XScriptEngine, isClassName), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("XScriptEngine", "bool classDerivesFromName(const string, const string)", asMETHOD(XScriptEngine, classDerivesFromName), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("XScriptEngine", "bool classDerivesFromId(const uint, const uint)", asMETHOD(XScriptEngine, classDerivesFromId), asCALL_THISCALL); AS_ASSERT
 
 	r = scriptEngine->RegisterInterface("Serializable"); AS_ASSERT
 	r = scriptEngine->RegisterInterfaceMethod("Serializable", "void serialize(StringStream&)"); AS_ASSERT
 	r = scriptEngine->RegisterInterfaceMethod("Serializable", "void deserialize(StringStream&)"); AS_ASSERT
 
-	r = scriptEngine->RegisterObjectMethod("ScriptManager", "void serialize(Serializable@, string &in)", asMETHODPR(xdScriptEngine, serialize, (asIScriptObject*, string&), void), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("ScriptManager", "Serializable @deserialize(string &in)", asMETHODPR(xdScriptEngine, deserialize, (string&), asIScriptObject*), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("XScriptEngine", "void serialize(Serializable@, string &in)", asMETHODPR(XScriptEngine, serialize, (asIScriptObject*, string&), void), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("XScriptEngine", "Serializable @deserialize(string &in)", asMETHODPR(XScriptEngine, deserialize, (string&), asIScriptObject*), asCALL_THISCALL); AS_ASSERT
 
 	return r;
 }
 
-xdScriptEngine::xdScriptEngine(asIScriptEngine *scriptEngine, xdDebug *debugger) :
-	m_module(0), // Set later by the engine
-	m_debugger(debugger)
+XScriptEngine::XScriptEngine()
 {
-	::scriptEngine = scriptEngine;
 }
 
-xdScriptEngine::~xdScriptEngine()
+XScriptEngine::~XScriptEngine()
 {
 	// Clean up AngelScript
 	asIScriptContext* ctx = asGetActiveContext();
 	if(ctx) assert("AngelScript: There is an active context running!");
-	if(scriptEngine) assert(scriptEngine->Release() == 0);
+	if(s_engine) assert(s_engine->Release() == 0);
 }
 
-asIScriptContext *xdScriptEngine::createContext() const
+asIScriptContext *XScriptEngine::CreateContext()
 {
-	asIScriptContext *ctx = scriptEngine->CreateContext();
-	if(XEngine::IsEnabled(XD_DEBUG)) {
-		ctx->SetLineCallback(asMETHOD(xdDebug, lineCallback), m_debugger, asCALL_THISCALL);
+	asIScriptContext *ctx = s_engine->CreateContext();
+	if(XEngine::IsEnabled(X2D_USE_DEBUGGER)) {
+		ctx->SetLineCallback(asMETHOD(XDebugger, lineCallback), s_debugger, asCALL_THISCALL);
 	}
 	return ctx;
 }
 
-asIScriptModule *xdScriptEngine::getModule() const
+asIScriptModule *XScriptEngine::GetModule()
 {
-	return m_module;
+	return s_module;
 }
 
-asIScriptEngine *xdScriptEngine::getASEngine() const
+asIScriptEngine *XScriptEngine::GetAngelScript()
 {
-	return scriptEngine;
+	return s_engine;
 }
 
-uint xdScriptEngine::classCount() const
+uint XScriptEngine::classCount() const
 {
-	return m_module->GetObjectTypeCount();
+	return s_module->GetObjectTypeCount();
 }
 
-int xdScriptEngine::classIdByName(const string name) const
+int XScriptEngine::classIdByName(const string name) const
 {
-	for(uint i = 0; i < m_module->GetObjectTypeCount(); i++) {
-		if(name == string(m_module->GetObjectTypeByIndex(i)->GetName()))
+	for(uint i = 0; i < s_module->GetObjectTypeCount(); i++) {
+		if(name == string(s_module->GetObjectTypeByIndex(i)->GetName()))
 			return i;
 	}
 	return -1;
 }
 
-string xdScriptEngine::classNameById(const uint id) const
+string XScriptEngine::classNameById(const uint id) const
 {
-	asIObjectType *objType = m_module->GetObjectTypeByIndex(id);
+	asIObjectType *objType = s_module->GetObjectTypeByIndex(id);
 	if(!objType) return ""; // Invalid id
 	return objType->GetName();
 }
 
-bool xdScriptEngine::isClassName(const string name) const
+bool XScriptEngine::isClassName(const string name) const
 {
-	for(uint i = 0; i < m_module->GetObjectTypeCount(); i++) {
-		if(name == string(m_module->GetObjectTypeByIndex(i)->GetName()))
+	for(uint i = 0; i < s_module->GetObjectTypeCount(); i++) {
+		if(name == string(s_module->GetObjectTypeByIndex(i)->GetName()))
 			return true;
 	}
 	return false;
 }
 
-bool xdScriptEngine::classDerivesFromName(const string name1, const string name2) const
+bool XScriptEngine::classDerivesFromName(const string name1, const string name2) const
 {
 	int id1 = classIdByName(name1);
 	if(id1 < 0) return false;
@@ -142,14 +121,14 @@ bool xdScriptEngine::classDerivesFromName(const string name1, const string name2
 	return classDerivesFromId(id1, id2);
 }
 
-bool xdScriptEngine::classDerivesFromId(const uint id1, const uint id2) const
+bool XScriptEngine::classDerivesFromId(const uint id1, const uint id2) const
 {
-	asIObjectType *objType = m_module->GetObjectTypeByIndex(id1);
-	if(objType->DerivesFrom(m_module->GetObjectTypeByIndex(id2)) && id1 != id2) return true;
+	asIObjectType *objType = s_module->GetObjectTypeByIndex(id1);
+	if(objType->DerivesFrom(s_module->GetObjectTypeByIndex(id2)) && id1 != id2) return true;
 	return false;
 }
 
-string xdScriptEngine::objectClassName(void *obj, int typeId) const
+string XScriptEngine::objectClassName(void *obj, int typeId) const
 {
 	// Check if the provied object
 	// is a script object
@@ -157,7 +136,7 @@ string xdScriptEngine::objectClassName(void *obj, int typeId) const
 		asIScriptContext *ctx = asGetActiveContext();
 		if(ctx) {
 			// Set a script exception
-			ctx->SetException("xdScriptEngine::objectClassName() should only be called on a script object!");
+			ctx->SetException("XScriptEngine::objectClassName() should only be called on a script object!");
 		}
 		return "";
 	}
@@ -183,6 +162,7 @@ ScriptValue::~ScriptValue()
 void ScriptValue::set(void *value, int typeId)
 {
 	// Set argument value
+	asIScriptEngine *scriptEngine = XScriptEngine::GetAngelScript();
 	asIObjectType *objectType = scriptEngine->GetObjectTypeById(typeId);
 	if(typeId == asTYPEID_VOID || typeId & asTYPEID_OBJHANDLE)
 	{
@@ -207,6 +187,7 @@ void ScriptValue::set(void *value, int typeId)
 void ScriptValue::clear()
 {
 	// Clear the argument data
+	asIScriptEngine *scriptEngine = XScriptEngine::GetAngelScript();
 	if(valid) {
 		if(typeId == asTYPEID_VOID || typeId & asTYPEID_OBJHANDLE)
 			scriptEngine->ReleaseScriptObject(value, scriptEngine->GetObjectTypeById(typeId));
@@ -220,11 +201,9 @@ void ScriptValue::clear()
 // AngelScript
 //----------------------------------------------------------------------------
 
-#include <x2d/console.h>
-#include <x2d/debug.h>
-
 #include "scripts/scripthelper.h"
 #include "scripts/scriptbuilder.h"
+#include "scripts/stringstream.h"
 
 #include <stdio.h>
 
@@ -262,18 +241,19 @@ void asMessageCallback(const asSMessageInfo *msg, void*)
 }
 
 // Compiles an angelscript module with name
-int asCompileModule(const string &name, xdFileSystem *fileSystem)
+int asCompileModule(const string &name)
 {
+	asIScriptEngine *scriptEngine = XScriptEngine::GetAngelScript();
 	bool error = true;
 	int r;
 	while(error)
 	{
-		CScriptBuilder builder(fileSystem);
+		CScriptBuilder builder;
 		r = builder.StartNewModule(scriptEngine, name.c_str()); 
 		if(r < 0)
 		{
 			// If the code fails here it is usually because there is no more memory to allocate the module
-			throw xdException(XD_COMPILE_FAILED, "Unable to start a new module. Usually do to lack of memory.");
+			throw XException(X2D_COMPILE_FAILED, "Unable to start a new module. Usually do to lack of memory.");
 		}
 
 		r = builder.AddSectionFromFile("main.as");
@@ -285,14 +265,14 @@ int asCompileModule(const string &name, xdFileSystem *fileSystem)
 			//if(XEngine::IsEnabled(XD_DEBUG))
 			//	XEngine::GetDebugger()->sendPacket(XD_MESSAGE_PACKET, "Unable to load main.as. Make sure the file and other included files exist.");
 			//else
-				throw xdException(XD_COMPILE_FAILED, "Unable to load main.as. Make sure the file and other included files exist.");
-			return XD_COMPILE_FAILED;
+				throw XException(X2D_COMPILE_FAILED, "Unable to load main.as. Make sure the file and other included files exist.");
+			return X2D_COMPILE_FAILED;
 		}
 
 		r = builder.BuildModule();
 		if(r < 0)
 		{
-			if(!XEngine::IsEnabled(XD_DEBUG))
+			if(!XEngine::IsEnabled(X2D_USE_DEBUGGER))
 			{
 				// An error occurred. Instruct the script writer to fix the 
 				// compilation errors that were listed in the output stream.
@@ -303,10 +283,10 @@ int asCompileModule(const string &name, xdFileSystem *fileSystem)
 
 				// TODO: Implement retry
 				// Show retry dialog
-				throw xdException(XD_COMPILE_FAILED, debug);
+				throw XException(X2D_COMPILE_FAILED, debug);
 			}
 
-			return XD_COMPILE_FAILED;
+			return X2D_COMPILE_FAILED;
 		}else{
 			error = false;
 		}
@@ -315,12 +295,12 @@ int asCompileModule(const string &name, xdFileSystem *fileSystem)
 }
 
 // Execute string
-void xdScriptEngine::executeString(const string &str) const
+void XScriptEngine::executeString(const string &str) const
 {
-	ExecuteString(scriptEngine, str.c_str(), scriptEngine->GetModule("GameModule"));
+	ExecuteString(s_engine, str.c_str(), s_module);
 }
 
-void xdScriptEngine::serialize(asIScriptObject *object, string &path)
+void XScriptEngine::serialize(asIScriptObject *object, string &path)
 {
 	// Make sure we got a valid object
 	if(object)
@@ -328,7 +308,7 @@ void xdScriptEngine::serialize(asIScriptObject *object, string &path)
 		// Store object type
 		StringStream ss;
 		serialize(object, ss);
-		xdFileSystem::WriteFile(path, ss.str());
+		XFileSystem::WriteFile(path, ss.str());
 
 		// Release handle
 		object->Release();
@@ -338,7 +318,7 @@ void xdScriptEngine::serialize(asIScriptObject *object, string &path)
 	}
 }
 
-void xdScriptEngine::serialize(asIScriptObject *object, StringStream &ss)
+void XScriptEngine::serialize(asIScriptObject *object, StringStream &ss)
 {
 	// Get script object type and it's serialization function
 	asIObjectType *type = object->GetObjectType(); // We need to do this to get the 'actual' object type (not a base type)
@@ -348,7 +328,7 @@ void xdScriptEngine::serialize(asIScriptObject *object, StringStream &ss)
 	ss.write(string(type->GetName()));
 	
 	// Call serialization function on the object
-	asIScriptContext *ctx = createContext();
+	asIScriptContext *ctx = CreateContext();
 	int r = ctx->Prepare(func); assert(r >= 0);
 	r = ctx->SetObject(object); assert(r >= 0);
 	r = ctx->SetArgAddress(0, &ss); assert(r >= 0);
@@ -358,14 +338,14 @@ void xdScriptEngine::serialize(asIScriptObject *object, StringStream &ss)
 	r = ctx->Release();
 }
 
-asIScriptObject *xdScriptEngine::deserialize(string &path)
+asIScriptObject *XScriptEngine::deserialize(string &path)
 {
 	// Out script object
 	asIScriptObject *object = 0;
 
 	// Read file
 	string content;
-	if(xdFileSystem::ReadFile(path, content))
+	if(XFileSystem::ReadFile(path, content))
 	{
 		// Deserialize object
 		StringStream ss(content);
@@ -379,15 +359,15 @@ asIScriptObject *xdScriptEngine::deserialize(string &path)
 	return object;
 }
 
-asIScriptObject *xdScriptEngine::deserialize(StringStream &ss)
+asIScriptObject *XScriptEngine::deserialize(StringStream &ss)
 {
 	// Get type name
 	string typeName;
 	ss.read(typeName);
 	
 	// Create uninitialized object
-	asIObjectType *type = m_module->GetObjectTypeByName(typeName.c_str());
-	asIScriptObject *object = (asIScriptObject*)scriptEngine->CreateUninitializedScriptObject(type);
+	asIObjectType *type = s_module->GetObjectTypeByName(typeName.c_str());
+	asIScriptObject *object = (asIScriptObject*)s_engine->CreateUninitializedScriptObject(type);
 
 	if(object)
 	{
@@ -395,7 +375,7 @@ asIScriptObject *xdScriptEngine::deserialize(StringStream &ss)
 		asIScriptFunction *func = type->GetMethodByDecl("void deserialize(StringStream&)");
 
 		// Call deserialization function on the object
-		asIScriptContext *ctx = createContext();
+		asIScriptContext *ctx = CreateContext();
 		int r = ctx->Prepare(func); assert(r >= 0);
 		r = ctx->SetObject(object); assert(r >= 0);
 		r = ctx->SetArgAddress(0, &ss); assert(r >= 0);

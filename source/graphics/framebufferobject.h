@@ -1,16 +1,16 @@
-#ifndef GFX_FRAME_BUFFER_H
-#define GFX_FRAME_BUFFER_H
+#ifndef X2D_FRAME_BUFFER_H
+#define X2D_FRAME_BUFFER_H
 
-#include <x2d/config.h>
+#include "common/engine.h"
 
-class Texture;
+class XTexture;
 
-class XDAPI FrameBufferObject
+class XDAPI XFrameBufferObject
 {
 public:
 
-	virtual void bind(Texture *texture) = 0;
+	virtual void bind(XTexture *texture) = 0;
 	virtual void unbind() = 0;
 };
 
-#endif // GFX_FRAME_BUFFER_H
+#endif // X2D_FRAME_BUFFER_H

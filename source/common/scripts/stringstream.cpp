@@ -2,8 +2,7 @@
 #include "scriptarray.h"
 #include "scriptgrid.h"
 
-#include <x2d/engine.h>
-#include <x2d/scriptengine.h>
+#include "common/engine.h"
 
 AS_REG_REF(StringStream)
 

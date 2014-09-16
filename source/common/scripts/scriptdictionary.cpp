@@ -351,7 +351,7 @@ void CScriptDictionary::DeleteAll()
 	dict.clear();
 }
 
-CScriptArray* CScriptDictionary::GetKeys() const
+XScriptArray* CScriptDictionary::GetKeys() const
 {
 	// TODO: optimize: The string array type should only be determined once. 
 	//                 It should be recomputed when registering the dictionary class.
@@ -361,7 +361,7 @@ CScriptArray* CScriptDictionary::GetKeys() const
 	asIObjectType *ot = engine->GetObjectTypeByDecl("array<string>");
 
 	// Create the array object
-	CScriptArray *array = CScriptArray::Create(ot, asUINT(dict.size()));
+	XScriptArray *array = XScriptArray::Create(ot, asUINT(dict.size()));
 	long current = -1;
 	std::map<string, CScriptDictValue>::const_iterator it;
 	for( it = dict.begin(); it != dict.end(); it++ )
@@ -527,7 +527,7 @@ static void ScriptDictionaryReleaseAllReferences_Generic(asIScriptGeneric *gen)
 static void CScriptDictionaryGetKeys_Generic(asIScriptGeneric *gen)
 {
 	CScriptDictionary *self = (CScriptDictionary*)gen->GetObject();
-	*(CScriptArray**)gen->GetAddressOfReturnLocation() = self->GetKeys();
+	*(XScriptArray**)gen->GetAddressOfReturnLocation() = self->GetKeys();
 }
 
 static void CScriptDictionary_opIndex_Generic(asIScriptGeneric *gen)

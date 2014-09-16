@@ -1,19 +1,17 @@
-#ifndef GFX_TEXTURE_H
-#define GFX_TEXTURE_H
+#ifndef X2D_TEXTURE_H
+#define X2D_TEXTURE_H
 
-#include <x2d/config.h>
-#include <x2d/base.h>
-#include <x2d/math.h>
+#include "common/engine.h"
 
-class Pixmap;
+class XPixmap;
 
-enum xdTextureFilter
+enum XTextureFilter
 {
 	xdNearest,
 	xdLinear
 };
 
-enum TextureWrapping
+enum XTextureWrapping
 {
 	CLAMP_TO_BORDER,
 	CLAMP_TO_EDGE,
@@ -21,13 +19,13 @@ enum TextureWrapping
 	MIRRORED_REPEAT
 };
 
-class XDAPI Texture
+class XDAPI XTexture
 {
 public:
 	AS_DECL_REF
 
-	Texture();
-	virtual ~Texture() {}
+	XTexture();
+	virtual ~XTexture() {}
 
 	// Mipmapping
 	virtual void enableMipmaps() = 0;
@@ -35,12 +33,12 @@ public:
 	virtual bool isMipmapsEnabled() const = 0;
 
 	// Texture filtering
-	virtual void setFiltering(const xdTextureFilter filter) = 0;
-	virtual xdTextureFilter getFiltering() const = 0;
+	virtual void setFiltering(const XTextureFilter filter) = 0;
+	virtual XTextureFilter getFiltering() const = 0;
 	
 	// Texture wrapping
-	virtual void setWrapping(const TextureWrapping wrapping) = 0;
-	virtual TextureWrapping getWrapping() const = 0;
+	virtual void setWrapping(const XTextureWrapping wrapping) = 0;
+	virtual XTextureWrapping getWrapping() const = 0;
 
 	// Size
 	virtual int getWidth() const = 0;
@@ -48,10 +46,10 @@ public:
 	Vector2i getSize() const { return Vector2i(getWidth(), getHeight()); }
 
 	// Pixmap (texture data)
-	virtual Pixmap getPixmap() const = 0;
-	virtual void updatePixmap(const Pixmap &pixmap) = 0;
-	virtual void updatePixmap(const int x, const int y, const Pixmap &pixmap) = 0;
+	virtual XPixmap getPixmap() const = 0;
+	virtual void updatePixmap(const XPixmap &pixmap) = 0;
+	virtual void updatePixmap(const int x, const int y, const XPixmap &pixmap) = 0;
 	virtual void clear() = 0;
 };
 
-#endif // GFX_TEXTURE_H
+#endif // X2D_TEXTURE_H

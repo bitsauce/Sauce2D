@@ -7,15 +7,11 @@
 //				Originally written by Marcus Loo Vergara (aka. Bitsauce)
 //									2011-2014 (C)
 
-#include <x2d/graphics/shader.h>
-
-#include <x2d/graphics/batch.h>
-#include <x2d/graphics/texture.h>
-#include <x2d/graphics/vertexbufferobject.h>
-#include <x2d/graphics/framebufferobject.h>
-
-#include <x2d/graphics.h>
-#include <x2d/exception.h>
+#include "batch.h"
+#include "texture.h"
+#include "shader.h"
+#include "framebufferobject.h"
+#include "vertexbufferobject.h"
 
 AS_REG_VALUE(Vertex)
 
@@ -30,9 +26,9 @@ int Vertex::Register(asIScriptEngine *scriptEngine)
 	return r;
 }
 
-AS_REG_REF(Batch)
+AS_REG_REF(XBatch)
 
-int Batch::Register(asIScriptEngine *scriptEngine)
+int XBatch::Register(asIScriptEngine *scriptEngine)
 {
 	int r = 0;
 
@@ -49,60 +45,60 @@ int Batch::Register(asIScriptEngine *scriptEngine)
 	r = scriptEngine->RegisterEnumValue("BlendFunc", "BLEND_ONE_MINUS_DST_ALPHA", BLEND_ONE_MINUS_DST_ALPHA); AS_ASSERT
 	r = scriptEngine->RegisterEnumValue("BlendFunc", "BLEND_SRC_ALPHA_SATURATE", BLEND_SRC_ALPHA_SATURATE); AS_ASSERT
 
-	r = scriptEngine->RegisterObjectBehaviour("Batch", asBEHAVE_FACTORY, "Batch @f()", asFUNCTIONPR(Factory, (), Batch*), asCALL_CDECL); AS_ASSERT
+	r = scriptEngine->RegisterObjectBehaviour("XBatch", asBEHAVE_FACTORY, "XBatch @f()", asFUNCTIONPR(Factory, (), XBatch*), asCALL_CDECL); AS_ASSERT
 		
 	// Getters/setters
-	r = scriptEngine->RegisterObjectMethod("Batch", "void setProjectionMatrix(const Matrix4 &in)", asMETHOD(Batch, setProjectionMatrix), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("Batch", "void setShader(Shader @shader)", asMETHOD(Batch, setShader), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("Batch", "void setTexture(Texture @texture)", asMETHOD(Batch, setTexture), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("Batch", "void setBlendFunc(const BlendFunc, const BlendFunc)", asMETHOD(Batch, setBlendFunc), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("Batch", "Matrix4 getProjectionMatrix() const", asMETHOD(Batch, getProjectionMatrix), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("Batch", "Shader @getShader() const", asMETHOD(Batch, getShader), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("Batch", "Texture @getTexture() const", asMETHOD(Batch, getTexture), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("XBatch", "void setProjectionMatrix(const Matrix4 &in)", asMETHOD(XBatch, setProjectionMatrix), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("XBatch", "void setShader(Shader @shader)", asMETHOD(XBatch, setShader), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("XBatch", "void setTexture(Texture @texture)", asMETHOD(XBatch, setTexture), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("XBatch", "void setBlendFunc(const BlendFunc, const BlendFunc)", asMETHOD(XBatch, setBlendFunc), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("XBatch", "Matrix4 getProjectionMatrix() const", asMETHOD(XBatch, getProjectionMatrix), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("XBatch", "Shader @getShader() const", asMETHOD(XBatch, getShader), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("XBatch", "Texture @getTexture() const", asMETHOD(XBatch, getTexture), asCALL_THISCALL); AS_ASSERT
 
 	// Vertex data
-	r = scriptEngine->RegisterObjectMethod("Batch", "void addVertices(array<Vertex> @vertices, array<uint> @indices)", asMETHOD(Batch, addVerticesAS), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("Batch", "Vertex getVertex(int index)", asMETHOD(Batch, getVertex), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("Batch", "void modifyVertex(int index, Vertex vertex)", asMETHOD(Batch, modifyVertex), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("XBatch", "void addVertices(array<Vertex> @vertices, array<uint> @indices)", asMETHOD(XBatch, addVerticesAS), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("XBatch", "Vertex getVertex(int index)", asMETHOD(XBatch, getVertex), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("XBatch", "void modifyVertex(int index, Vertex vertex)", asMETHOD(XBatch, modifyVertex), asCALL_THISCALL); AS_ASSERT
 
 	// Misc
-	r = scriptEngine->RegisterObjectMethod("Batch", "void draw()", asMETHOD(Batch, draw), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("Batch", "void clear()", asMETHOD(Batch, clear), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("Batch", "void makeStatic()", asMETHOD(Batch, makeStatic), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("Batch", "void renderToTexture(Texture@)", asMETHOD(Batch, renderToTexture), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("XBatch", "void draw()", asMETHOD(XBatch, draw), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("XBatch", "void clear()", asMETHOD(XBatch, clear), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("XBatch", "void makeStatic()", asMETHOD(XBatch, makeStatic), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("XBatch", "void renderToTexture(Texture@)", asMETHOD(XBatch, renderToTexture), asCALL_THISCALL); AS_ASSERT
 
 	return r;
 }
 
-Batch::Batch() :
+XBatch::XBatch() :
 	m_static(false),
 	m_fbo(0)
 {
 }
 
-Batch::~Batch()
+XBatch::~XBatch()
 {
 	delete m_fbo;
 	clear();
 }
 
-void Batch::setBlendFunc(const BlendFunc src, const BlendFunc dst)
+void XBatch::setBlendFunc(const BlendFunc src, const BlendFunc dst)
 {
 	m_state.srcBlendFunc = src;
 	m_state.dstBlendFunc = dst;
 }
 
-void Batch::setProjectionMatrix(const Matrix4 &projmat)
+void XBatch::setProjectionMatrix(const Matrix4 &projmat)
 {
 	m_projMatrix = projmat;
 }
 
-Matrix4 Batch::getProjectionMatrix() const
+Matrix4 XBatch::getProjectionMatrix() const
 {
 	return m_projMatrix;
 }
 
-void Batch::setShader(Shader *shader)
+void XBatch::setShader(XShader *shader)
 {
 	if(m_state.shader) {
 		m_state.shader->release();
@@ -110,7 +106,7 @@ void Batch::setShader(Shader *shader)
 	m_state.shader = shader;
 }
 
-Shader *Batch::getShader() const
+XShader *XBatch::getShader() const
 {
 	if(m_state.shader) {
 		m_state.shader->addRef();
@@ -118,7 +114,7 @@ Shader *Batch::getShader() const
 	return m_state.shader;
 }
 
-void Batch::setTexture(Texture *texture)
+void XBatch::setTexture(XTexture *texture)
 {
 	if(m_state.texture) {
 		m_state.texture->release();
@@ -126,7 +122,7 @@ void Batch::setTexture(Texture *texture)
 	m_state.texture = texture;
 }
 
-Texture *Batch::getTexture() const
+XTexture *XBatch::getTexture() const
 {
 	if(m_state.texture) {
 		m_state.texture->addRef();
@@ -134,20 +130,20 @@ Texture *Batch::getTexture() const
 	return m_state.texture;
 }
 
-void Batch::setPrimitive(PrimitiveType primitive)
+void XBatch::setPrimitive(PrimitiveType primitive)
 {
 	m_state.primitive = primitive;
 }
 
-Batch::PrimitiveType Batch::getPrimitive() const
+XBatch::PrimitiveType XBatch::getPrimitive() const
 {
 	return m_state.primitive;
 }
 
-void Batch::addVertices(Vertex *vertices, int vcount, uint *indices, int icount)
+void XBatch::addVertices(Vertex *vertices, int vcount, uint *indices, int icount)
 {
 	if(m_static) {
-		LOG("Cannot add vertices to a static Batch.");
+		LOG("Cannot add vertices to a static XBatch.");
 		return;
 	}
 	
@@ -181,7 +177,7 @@ void Batch::addVertices(Vertex *vertices, int vcount, uint *indices, int icount)
 	}
 }
 
-void Batch::addVerticesAS(Array *asvertices, Array *asindices)
+void XBatch::addVerticesAS(XScriptArray *asvertices, XScriptArray *asindices)
 {
 	uint vcount = asvertices->GetSize();
 	Vertex *vertices = new Vertex[vcount];
@@ -201,35 +197,36 @@ void Batch::addVerticesAS(Array *asvertices, Array *asindices)
 	asindices->Release();
 }
 
-void Batch::modifyVertex(int index, Vertex vertex)
+void XBatch::modifyVertex(int index, Vertex vertex)
 {
 	if(index < 0 || index >= (int)m_buffers[m_state]->vertices.size()) {
-		LOG("Batch.modifyVertex: Index out-of-bounds.");
+		LOG("XBatch.modifyVertex: Index out-of-bounds.");
 		return;
 	}
 
 	m_buffers[m_state]->vertices[index] = vertex;
-	if(m_static) {
+	if(m_static)
+	{
 		m_buffers[m_state]->vbo->uploadSub(index, &vertex, 1);
 	}
 }
 
-Vertex Batch::getVertex(int index)
+Vertex XBatch::getVertex(int index)
 {
 	if(index < 0 || index >= (int)m_buffers[m_state]->vertices.size()) {
-		LOG("Batch.getVertex: Index out-of-bounds.");
+		LOG("XBatch.getVertex: Index out-of-bounds.");
 		return Vertex();
 	}
 
 	return m_buffers[m_state]->vertices[index];
 }
 
-void Batch::draw()
+void XBatch::draw()
 {
-	xdGraphics::s_this->renderBatch(*this);
+	XGraphics::s_this->renderBatch(*this);
 }
 
-void Batch::clear()
+void XBatch::clear()
 {
 	for(StateVertexMap::iterator itr = m_buffers.begin(); itr != m_buffers.end(); ++itr) {
 		delete itr->second->vbo;
@@ -243,15 +240,15 @@ void Batch::clear()
 	setBlendFunc(BLEND_SRC_ALPHA, BLEND_ONE_MINUS_SRC_ALPHA);
 }
 
-void Batch::renderToTexture(Texture *texture)
+void XBatch::renderToTexture(XTexture *texture)
 {
 	if(!texture) {
-		LOG("Batch.renderToTexture: Cannot render to 'null' texture.");
+		LOG("XBatch.renderToTexture: Cannot render to 'null' texture.");
 		return;
 	}
 
 	if(!m_fbo) {
-		m_fbo = xdGraphics::CreateFrameBufferObject();
+		m_fbo = XGraphics::CreateFrameBufferObject();
 	}
 
 	m_fbo->bind(texture);
@@ -260,19 +257,19 @@ void Batch::renderToTexture(Texture *texture)
 	texture->release();
 }
 
-void Batch::makeStatic()
+void XBatch::makeStatic()
 {
-	if(!xdGraphics::IsSupported(xdGraphics::VertexBufferObjects)) {
+	if(!XGraphics::IsSupported(XGraphics::VertexBufferObjects)) {
 		AS_THROW("Tried to create a VBO whilst its not supported by the GPU!",);
 	}
 	for(StateVertexMap::iterator itr = m_buffers.begin(); itr != m_buffers.end(); ++itr) {
-		itr->second->vbo = xdGraphics::CreateVertexBufferObject();
+		itr->second->vbo = XGraphics::CreateVertexBufferObject();
 		itr->second->vbo->upload(itr->second);
 	}
 	m_static = true;
 }
 
-bool Batch::isStatic() const
+bool XBatch::isStatic() const
 {
 	return m_static;
 }

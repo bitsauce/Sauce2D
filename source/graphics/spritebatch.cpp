@@ -1,68 +1,66 @@
-#include <x2d/graphics/spritebatch.h>
-
-#include <x2d/exception.h>
-#include <x2d/graphics.h>
-#include <x2d/graphics/texture.h>
-#include <x2d/graphics/vertexbufferobject.h>
+#include "spriteBatch.h"
 #include "sprite.h"
+#include "texture.h"
+#include "vertexbufferobject.h"
+#include "framebufferobject.h"
 
-AS_REG_REF(SpriteBatch)
+AS_REG_REF(XSpriteBatch)
 
-int SpriteBatch::Register(asIScriptEngine *scriptEngine)
+int XSpriteBatch::Register(asIScriptEngine *scriptEngine)
 {
 	
 	int r = 0;
 
-	r = scriptEngine->RegisterObjectBehaviour("SpriteBatch", asBEHAVE_FACTORY, "SpriteBatch @f()", asFUNCTIONPR(Factory, (), SpriteBatch*), asCALL_CDECL); AS_ASSERT
+	r = scriptEngine->RegisterObjectBehaviour("XSpriteBatch", asBEHAVE_FACTORY, "XSpriteBatch @f()", asFUNCTIONPR(Factory, (), XSpriteBatch*), asCALL_CDECL); AS_ASSERT
 		
 	// Getters/setters
-	r = scriptEngine->RegisterObjectMethod("SpriteBatch", "void setProjectionMatrix(const Matrix4 &in)", asMETHOD(SpriteBatch, setProjectionMatrix), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("SpriteBatch", "void setShader(Shader @shader)", asMETHOD(SpriteBatch, setShader), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("SpriteBatch", "void setTexture(Texture @texture)", asMETHOD(SpriteBatch, setTexture), asCALL_THISCALL); AS_ASSERT
-	//r = scriptEngine->RegisterObjectMethod("SpriteBatch", "void setBlendFunc(const BlendFunc, const BlendFunc)", asMETHOD(SpriteBatch, setBlendFunc), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("SpriteBatch", "Matrix4 getProjectionMatrix() const", asMETHOD(SpriteBatch, getProjectionMatrix), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("SpriteBatch", "Shader @getShader() const", asMETHOD(SpriteBatch, getShader), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("SpriteBatch", "Texture @getTexture() const", asMETHOD(SpriteBatch, getTexture), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("XSpriteBatch", "void setProjectionMatrix(const Matrix4 &in)", asMETHOD(XSpriteBatch, setProjectionMatrix), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("XSpriteBatch", "void setShader(Shader @shader)", asMETHOD(XSpriteBatch, setShader), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("XSpriteBatch", "void setTexture(Texture @texture)", asMETHOD(XSpriteBatch, setTexture), asCALL_THISCALL); AS_ASSERT
+	//r = scriptEngine->RegisterObjectMethod("XSpriteBatch", "void setBlendFunc(const BlendFunc, const BlendFunc)", asMETHOD(XSpriteBatch, setBlendFunc), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("XSpriteBatch", "Matrix4 getProjectionMatrix() const", asMETHOD(XSpriteBatch, getProjectionMatrix), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("XSpriteBatch", "Shader @getShader() const", asMETHOD(XSpriteBatch, getShader), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("XSpriteBatch", "Texture @getTexture() const", asMETHOD(XSpriteBatch, getTexture), asCALL_THISCALL); AS_ASSERT
 
-	r = scriptEngine->RegisterObjectMethod("SpriteBatch", "void add(Sprite @)", asMETHOD(SpriteBatch, add), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("SpriteBatch", "Sprite @get(int)", asMETHOD(SpriteBatch, get), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("SpriteBatch", "int getSize() const", asMETHOD(SpriteBatch, getSize), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("XSpriteBatch", "void add(Sprite @)", asMETHOD(XSpriteBatch, add), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("XSpriteBatch", "Sprite @get(int)", asMETHOD(XSpriteBatch, get), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("XSpriteBatch", "int getSize() const", asMETHOD(XSpriteBatch, getSize), asCALL_THISCALL); AS_ASSERT
 	
 	// Misc
-	r = scriptEngine->RegisterObjectMethod("SpriteBatch", "void draw()", asMETHOD(SpriteBatch, draw), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("SpriteBatch", "void clear()", asMETHOD(SpriteBatch, clear), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("SpriteBatch", "void makeStatic()", asMETHOD(SpriteBatch, makeStatic), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("SpriteBatch", "void renderToTexture(Texture@)", asMETHOD(SpriteBatch, renderToTexture), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("XSpriteBatch", "void draw()", asMETHOD(XSpriteBatch, draw), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("XSpriteBatch", "void clear()", asMETHOD(XSpriteBatch, clear), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("XSpriteBatch", "void makeStatic()", asMETHOD(XSpriteBatch, makeStatic), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("XSpriteBatch", "void renderToTexture(Texture@)", asMETHOD(XSpriteBatch, renderToTexture), asCALL_THISCALL); AS_ASSERT
 
 	return r;
 }
 
-SpriteBatch::~SpriteBatch()
+XSpriteBatch::~XSpriteBatch()
 {
 	clear();
 }
 
-void SpriteBatch::add(Sprite *sprite)
+void XSpriteBatch::add(XSprite *sprite)
 {
 	if(!m_static) {
 		m_sprites.push_back(sprite);
 	}
 }
 
-Sprite *SpriteBatch::get(int index)
+XSprite *XSpriteBatch::get(int index)
 {
-	Sprite *sprite = m_sprites[index];
+	XSprite *sprite = m_sprites[index];
 	sprite->addRef();
 	m_returnedSprites.push_back(sprite);
 	return sprite;
 }
 
-int SpriteBatch::getSize() const
+int XSpriteBatch::getSize() const
 {
 	return m_sprites.size();
 }
 
-void SpriteBatch::draw()
+void XSpriteBatch::draw()
 {
 	if(m_static)
 	{
@@ -70,7 +68,7 @@ void SpriteBatch::draw()
 		// let's re-upload it
 		for(uint i = 0; i < m_returnedSprites.size(); i++)
 		{
-			Sprite *sprite = m_returnedSprites[i];
+			XSprite *sprite = m_returnedSprites[i];
 
 			// Get vertices
 			Vertex vertices[4];
@@ -78,7 +76,7 @@ void SpriteBatch::draw()
 			// m_matrixStack.top() * vertices[i];
 
 			// Set state texture
-			Texture *texture = sprite->getTexture();
+			XTexture *texture = sprite->getTexture();
 			if(texture) {
 				texture->addRef();
 			}
@@ -102,10 +100,10 @@ void SpriteBatch::draw()
 			m_sprites[i]->draw(this);
 		}
 	}
-	Batch::draw();
+	XBatch::draw();
 }
 
-void SpriteBatch::clear()
+void XSpriteBatch::clear()
 {
 	for(uint i = 0; i < m_sprites.size(); i++)
 	{
@@ -114,21 +112,21 @@ void SpriteBatch::clear()
 	m_returnedSprites.clear();
 	m_sprites.clear();
 	m_offsets.clear();
-	Batch::clear();
+	XBatch::clear();
 }
 
-void SpriteBatch::makeStatic()
+void XSpriteBatch::makeStatic()
 {
-	if(!xdGraphics::IsSupported(xdGraphics::VertexBufferObjects)) {
+	if(!XGraphics::IsSupported(XGraphics::VertexBufferObjects)) {
 		AS_THROW("Tried to create a VBO whilst its not supported by the GPU!",);
 	}
 
 	for(uint i = 0; i < m_sprites.size(); i++)
 	{
-		Sprite *sprite = m_sprites[i];
+		XSprite *sprite = m_sprites[i];
 
 		// Get sprite texture
-		Texture *texture = sprite->getTexture();
+		XTexture *texture = sprite->getTexture();
 		texture->addRef();
 		setTexture(texture);
 		
@@ -141,7 +139,7 @@ void SpriteBatch::makeStatic()
 		sprite->draw(this);
 	}
 	for(StateVertexMap::iterator itr = m_buffers.begin(); itr != m_buffers.end(); ++itr) {
-		itr->second->vbo = xdGraphics::CreateVertexBufferObject();
+		itr->second->vbo = XGraphics::CreateVertexBufferObject();
 		itr->second->vbo->upload(itr->second);
 	}
 	m_static = true;

@@ -7,28 +7,27 @@
 //				Originally written by Marcus Loo Vergara (aka. Bitsauce)
 //									2011-2014 (C)
 
-#include <x2d/timer.h>
-#include <ctime>
+#include "engine.h"
 
-AS_REG_SINGLETON(xdTimer, "ScriptTimer")
+AS_REG_SINGLETON(XTimer)
 
-int xdTimer::Register(asIScriptEngine *scriptEngine)
+int XTimer::Register(asIScriptEngine *scriptEngine)
 {
 	int r = 0;
 
 	// Timer
-	r = scriptEngine->RegisterObjectMethod("ScriptTimer", "uint64 getTickCount() const", asMETHOD(xdTimer, getTickCount), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectProperty("ScriptTimer", "const int ticksPerSec", offsetof(xdTimer, m_ticksPerSec)); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("XTimer", "uint64 getTickCount() const", asMETHOD(XTimer, getTickCount), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectProperty("XTimer", "const int ticksPerSec", offsetof(XTimer, m_ticksPerSec)); AS_ASSERT
 	
 	return r;
 }
 
-xdTimer::xdTimer() :
+XTimer::XTimer() :
 	m_ticksPerSec(CLOCKS_PER_SEC)
 {
 }
 
-long xdTimer::getTickCount() const
+long XTimer::getTickCount() const
 {
 	return clock();
 }

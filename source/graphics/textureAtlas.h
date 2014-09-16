@@ -1,33 +1,34 @@
-#ifndef GRAPHICS_TEXTURE_ATLAS_H
-#define GRAPHICS_TEXTURE_ATLAS_H
+#ifndef X2D_TEXTURE_ATLAS_H
+#define X2D_TEXTURE_ATLAS_H
 
-#include <x2d/math.h>
-#include <x2d/graphics.h>
-#include <x2d/base.h>
+#include "common/engine.h"
+#include "texture.h"
+#include "pixmap.h"
+#include "textureRegion.h"
 
-class TextureAtlas
+class XTextureAtlas
 {
 	AS_DECL_REF
 public:
-	TextureAtlas();
-	TextureAtlas(vector<Texture*> textures);
-	TextureAtlas(vector<Pixmap> &pixmaps);
-	~TextureAtlas();
+	XTextureAtlas();
+	XTextureAtlas(vector<XTexture*> textures);
+	XTextureAtlas(vector<XPixmap> &pixmaps);
+	~XTextureAtlas();
 
-	void add(Texture *texture);
-	void add(const Pixmap &pixmap);
+	void add(XTexture *texture);
+	void add(const XPixmap &pixmap);
 
 	void update();
 
-	TextureRegion get(const int index) const;
-	TextureRegion get(const int index, const Vector2 &uv0, const Vector2 &uv1) const;
-	TextureRegion get(const int index, const float u0, const float v0, const float u1, const float v1) const;
+	XTextureRegion get(const int index) const;
+	XTextureRegion get(const int index, const Vector2 &uv0, const Vector2 &uv1) const;
+	XTextureRegion get(const int index, const float u0, const float v0, const float u1, const float v1) const;
 
-	Texture *getTexture() const;
+	XTexture *getTexture() const;
 	
 	struct AtlasPage
 	{
-		AtlasPage(const Pixmap &pixmap, int index) :
+		AtlasPage(const XPixmap &pixmap, int index) :
 			index(index)
 		{
 			int size = pixmap.getWidth()*pixmap.getHeight()*4;
@@ -56,16 +57,16 @@ public:
 	};
 
 private:
-	void init(const vector<Pixmap> &pixmaps);
+	void init(const vector<XPixmap> &pixmaps);
 
-	Texture *m_atlas;
+	XTexture *m_atlas;
 	RectanglePacker m_texturePacker;
 	RectanglePacker::Result m_result;
 	int m_size;
 	bool m_initialized;
 
-	static TextureAtlas *Factory();
-	static TextureAtlas *Factory(Array *arr);
+	static XTextureAtlas *Factory();
+	static XTextureAtlas *Factory(XScriptArray *arr);
 };
 
-#endif // GRAPHICS_TEXTURE_ATLAS_H
+#endif // X2D_TEXTURE_ATLAS_H

@@ -6,7 +6,7 @@
 #include <angelscript.h>
 #endif
 
-#include <x2d/util.h>
+#include "common/engine.h"
 
 BEGIN_AS_NAMESPACE
 

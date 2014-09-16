@@ -273,7 +273,7 @@ private:
 	if(ctx) {											\
 		ctx->SetException(msg);							\
 	}else{												\
-		throw xdException(XD_RUNTIME_EXCEPTION, msg);	\
+		throw XException(X2D_RUNTIME_EXCEPTION, msg);	\
 	} return ret
 
 #define AS_DECL_REF																		\

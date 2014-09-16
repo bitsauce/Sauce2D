@@ -1,21 +1,16 @@
-#ifndef GFX_SHADER_H
-#define GFX_SHADER_H
+#ifndef X2D_SHADER_H
+#define X2D_SHADER_H
 
-#include <x2d/config.h>
-#include <x2d/base.h>
+#include "common/engine.h"
 
-#define TUPLE_CMP(a, b) \
-	if(a < b) return true; \
-	if(a > b) return false;
+class XTexture;
 
-class Texture;
-
-class XDAPI Shader
+class XDAPI XShader
 {
 public:
 	AS_DECL_REF
 
-	virtual ~Shader() {}
+	virtual ~XShader() {}
 	
 	virtual void setUniform1i(const string &name, const int v0) = 0;
 	virtual void setUniform2i(const string &name, const int v0, const int v1) = 0;
@@ -25,7 +20,7 @@ public:
 	virtual void setUniform2f(const string &name, const float v0, const float v1) = 0;
 	virtual void setUniform3f(const string &name, const float v0, const float v1, const float v2) = 0;
 	virtual void setUniform4f(const string &name, const float v0, const float v1, const float v2, const float v3) = 0;
-	virtual void setSampler2D(const string &name, Texture *texture) = 0;
+	virtual void setSampler2D(const string &name, XTexture *texture) = 0;
 };
 
-#endif // GFX_SHADER_H
+#endif // X2D_SHADER_H

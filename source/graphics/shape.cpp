@@ -8,27 +8,29 @@
 //									2011-2014 (C)
 
 #include "shape.h"
+#include "texture.h"
+#include "batch.h"
 
-AS_REG_REF(Shape)
+AS_REG_REF(XShape)
 
-int Shape::Register(asIScriptEngine *scriptEngine)
+int XShape::Register(asIScriptEngine *scriptEngine)
 {
 	int r = 0;
 	
-	r = scriptEngine->RegisterObjectBehaviour("Shape", asBEHAVE_FACTORY, "Shape @f()", asFUNCTIONPR(Factory, (), Shape*), asCALL_CDECL); AS_ASSERT
-	r = scriptEngine->RegisterObjectBehaviour("Shape", asBEHAVE_FACTORY, "Shape @f(const Rect &in)", asFUNCTIONPR(Factory, (const Rect&), Shape*), asCALL_CDECL); AS_ASSERT
-	r = scriptEngine->RegisterObjectBehaviour("Shape", asBEHAVE_FACTORY, "Shape @f(const Vector2 &in, const float, const int)", asFUNCTIONPR(Factory, (const Vector2&, const float, const int), Shape*), asCALL_CDECL); AS_ASSERT
-	r = scriptEngine->RegisterObjectBehaviour("Shape", asBEHAVE_FACTORY, "Shape @f(const array<Vector2> &in)", asFUNCTIONPR(Factory, (const Array&), Shape*), asCALL_CDECL); AS_ASSERT
+	r = scriptEngine->RegisterObjectBehaviour("XShape", asBEHAVE_FACTORY, "XShape @f()", asFUNCTIONPR(Factory, (), XShape*), asCALL_CDECL); AS_ASSERT
+	r = scriptEngine->RegisterObjectBehaviour("XShape", asBEHAVE_FACTORY, "XShape @f(const Rect &in)", asFUNCTIONPR(Factory, (const Rect&), XShape*), asCALL_CDECL); AS_ASSERT
+	r = scriptEngine->RegisterObjectBehaviour("XShape", asBEHAVE_FACTORY, "XShape @f(const Vector2 &in, const float, const int)", asFUNCTIONPR(Factory, (const Vector2&, const float, const int), XShape*), asCALL_CDECL); AS_ASSERT
+	r = scriptEngine->RegisterObjectBehaviour("XShape", asBEHAVE_FACTORY, "XShape @f(const array<Vector2> &in)", asFUNCTIONPR(Factory, (const XScriptArray&), XShape*), asCALL_CDECL); AS_ASSERT
 	
-	r = scriptEngine->RegisterObjectMethod("Shape", "void setFillColor(const Vector4 &in)", asMETHOD(Shape, setFillColor), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("Shape", "void setFillTexture(Texture @texture)", asMETHOD(Shape, setFillTexture), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("XShape", "void setFillColor(const Vector4 &in)", asMETHOD(XShape, setFillColor), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("XShape", "void setFillTexture(Texture @texture)", asMETHOD(XShape, setFillTexture), asCALL_THISCALL); AS_ASSERT
 
-	r = scriptEngine->RegisterObjectMethod("Shape", "void draw(Batch @batch)", asMETHOD(Shape, draw), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("XShape", "void draw(Batch @batch)", asMETHOD(XShape, draw), asCALL_THISCALL); AS_ASSERT
 
 	return r;
 }
 
-Shape::Shape() :
+XShape::XShape() :
 	m_fillColor(1.0f),
 	m_fillTexture(0),
 	m_penColor(1.0f),
@@ -37,7 +39,7 @@ Shape::Shape() :
 {
 }
 
-Shape::Shape(const Rect &rect) :
+XShape::XShape(const Rect &rect) :
 	m_fillColor(1.0f),
 	m_fillTexture(0),
 	m_penColor(1.0f),
@@ -74,7 +76,7 @@ Shape::Shape(const Rect &rect) :
 	m_index += 6;
 }
 
-Shape::Shape(const Vector2 &center, const float radius, const int vertCount) :
+XShape::XShape(const Vector2 &center, const float radius, const int vertCount) :
 	m_fillColor(1.0f),
 	m_fillTexture(0),
 	m_penColor(1.0f),
@@ -105,7 +107,7 @@ Shape::Shape(const Vector2 &center, const float radius, const int vertCount) :
 	m_index += vertCount * 3;
 }
 
-Shape::Shape(const vector<Vertex> &vertices) :
+XShape::XShape(const vector<Vertex> &vertices) :
 	m_fillColor(1.0f),
 	m_fillTexture(0),
 	m_penColor(1.0f),
@@ -115,14 +117,14 @@ Shape::Shape(const vector<Vertex> &vertices) :
 	//addVertices(vertices);
 }
 
-Shape::~Shape()
+XShape::~XShape()
 {
 	if(m_fillTexture) {
 		m_fillTexture->release();
 	}
 }
 
-/*void Shape::addVertex(const Vertex &vertex)
+/*void XShape::addVertex(const Vertex &vertex)
 {
 	m_vertices.push_back(vertex);
 	if(++m_index > 2) {
@@ -132,7 +134,7 @@ Shape::~Shape()
 	}
 }
 
-void Shape::addVertices(const vector<Vertex> &vertices)
+void XShape::addVertices(const vector<Vertex> &vertices)
 {
 	//if(m_vertices.size() % 3 == 0) LOG("Something's wrong");
 
@@ -141,12 +143,12 @@ void Shape::addVertices(const vector<Vertex> &vertices)
 	}
 }*/
 
-void Shape::setFillColor(const Vector4 &color)
+void XShape::setFillColor(const Vector4 &color)
 {
 	m_fillColor = color;
 }
 
-void Shape::setFillTexture(Texture* texture)
+void XShape::setFillTexture(XTexture* texture)
 {
 	if(m_fillTexture) {
 		m_fillTexture->release();
@@ -154,23 +156,23 @@ void Shape::setFillTexture(Texture* texture)
 	m_fillTexture = texture;
 }
 
-void Shape::setPenColor(const Vector4 &color)
+void XShape::setPenColor(const Vector4 &color)
 {
 	m_penColor = color;
 }
 
-void Shape::setPenSize(const float size)
+void XShape::setPenSize(const float size)
 {
 	m_penSize = size;
 }
 
-void Shape::draw(Batch *batch)
+void XShape::draw(XBatch *batch)
 {
 	if(!validate())
 		return;
 
 	if(!batch) {
-		LOG("Shape.draw: Can not draw to 'null' batch");
+		LOG("XShape.draw: Can not draw to 'null' batch");
 		return;
 	}
 
@@ -185,29 +187,29 @@ void Shape::draw(Batch *batch)
 		batch->setTexture(0);
 	}
 	
-	batch->setPrimitive(Batch::PRIMITIVE_TRIANGLES);
+	batch->setPrimitive(XBatch::PRIMITIVE_TRIANGLES);
 	batch->addVertices(m_vertices.data(), m_vertices.size(), m_indices.data(), m_indices.size());
 	batch->release();
 }
 
-bool Shape::validate()
+bool XShape::validate()
 {
 	return true;
 }
 
-Shape Shape::merge(const Shape &shape)
+XShape XShape::merge(const XShape &XShape)
 {
 	// TODO
 	return *this;
 }
 
-Shape Shape::subtract(const Shape &shape)
+XShape XShape::subtract(const XShape &XShape)
 {
 	// TODO
 	return *this;
 }
 
-Shape Shape::intersect(const Shape &shape)
+XShape XShape::intersect(const XShape &XShape)
 {
 	// TODO
 	return *this;

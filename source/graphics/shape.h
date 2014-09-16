@@ -1,55 +1,53 @@
-#ifndef GFX_SHAPE_H
-#define GFX_SHAPE_H
+#ifndef X2D_SHAPE_H
+#define X2D_SHAPE_H
 
-#include <x2d/math.h>
-#include <x2d/graphics.h>
-#include <x2d/config.h>
-#include <x2d/base.h>
-#include <x2d/graphics/batch.h>
-#include <x2d/graphics/texture.h>
+#include "common/engine.h"
+#include "batch.h"
 
-class XDAPI Shape
+class XTexture;
+
+class XDAPI XShape
 {
-	friend class Sprite;
+	friend class XSprite;
 public:
 	AS_DECL_REF
 
-	Shape();
-	Shape(const Rect &rect);
-	Shape(const Vector2 &center, const float radius, const int vertCount = -1);
-	Shape(const vector<Vertex> &vertices);
-	~Shape();
+	XShape();
+	XShape(const Rect &rect);
+	XShape(const Vector2 &center, const float radius, const int vertCount = -1);
+	XShape(const vector<Vertex> &vertices);
+	~XShape();
 
 	//void addVertex(const Vertex &vertex);
 	//void addVertices(const vector<Vertex> &vertices);
 
 	void setFillColor(const Vector4 &color);
-	void setFillTexture(Texture* texture);
+	void setFillTexture(XTexture* texture);
 	void setPenColor(const Vector4 &color);
 	void setPenSize(const float size);
 
-	void draw(Batch *batch);
+	void draw(XBatch *batch);
 
-	Shape merge(const Shape &shape); // union
-	Shape subtract(const Shape &shape);
-	Shape intersect(const Shape &shape);
+	XShape merge(const XShape &shape); // union
+	XShape subtract(const XShape &shape);
+	XShape intersect(const XShape &shape);
 
 private:
 	bool validate();
 
 	Vector4 m_fillColor;
-	Texture *m_fillTexture;
+	XTexture *m_fillTexture;
 	Vector4 m_penColor;
 	float m_penSize;
 	vector<Vertex> m_vertices;
 	vector<uint> m_indices;
 	int m_index;
 	
-	static Shape *Factory() { return new Shape(); }
-	static Shape *Factory(const Rect& rect) { return new Shape(rect); }
-	static Shape *Factory(const Vector2& center, const float radius, const int vertCount) { return new Shape(center, radius, vertCount); }
-	static Shape *Factory(const Array& arr) {
-
+	static XShape *Factory() { return new XShape(); }
+	static XShape *Factory(const Rect& rect) { return new XShape(rect); }
+	static XShape *Factory(const Vector2& center, const float radius, const int vertCount) { return new XShape(center, radius, vertCount); }
+	static XShape *Factory(const XScriptArray& arr)
+	{
 		vector<Vertex> vertices;
 		Vertex vert;
 		vert.color.set(1.0f, 1.0f, 1.0f, 1.0f);
@@ -59,8 +57,8 @@ private:
 			vertices.push_back(vert);
 		}
 
-		return new Shape(vertices);
+		return new XShape(vertices);
 	}
 };
 
-#endif // GFX_SHAPE_H
+#endif // X2D_SHAPE_H

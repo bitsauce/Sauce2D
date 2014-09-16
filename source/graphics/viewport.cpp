@@ -9,24 +9,24 @@
 
 #include "viewport.h"
 
-AS_REG_REF(Viewport)
+AS_REG_REF(XViewport)
 
-int Viewport::Register(asIScriptEngine *scriptEngine)
+int XViewport::Register(asIScriptEngine *scriptEngine)
 {
 	int r = 0;
 
 	return r;
 }
 
-Viewport::Viewport(const Recti &view)
+XViewport::XViewport(const Recti &view)
 {
 }
 
-Viewport::Viewport(const int x, const int y, const int w, const int h)
+XViewport::XViewport(const int x, const int y, const int w, const int h)
 {
 }
 
-void Viewport::makeCurrent() const
+void XViewport::makeCurrent() const
 {
 	//Gfx::setViewport(this);
 }

@@ -7,7 +7,7 @@
 //				Originally written by Marcus Loo Vergara (aka. Bitsauce)
 //									2011-2014 (C)
 
-#include "assetmanager.h"
+#include "engine.h"
 
 #include "graphics/pixmap.h"
 #include "audio/buffer.h"

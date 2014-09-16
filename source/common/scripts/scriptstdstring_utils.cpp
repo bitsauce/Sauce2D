@@ -22,7 +22,7 @@ BEGIN_AS_NAMESPACE
 //
 // AngelScript signature:
 // array<string>@ string::split(const string &in delim) const
-static CScriptArray *StringSplit(const string &delim, const string &str)
+static XScriptArray *StringSplit(const string &delim, const string &str)
 {
 	// Obtain a pointer to the engine
 	asIScriptContext *ctx = asGetActiveContext();
@@ -33,7 +33,7 @@ static CScriptArray *StringSplit(const string &delim, const string &str)
 	asIObjectType *arrayType = engine->GetObjectTypeByDecl("array<string>");
 
 	// Create the array object
-	CScriptArray *array = CScriptArray::Create(arrayType);
+	XScriptArray *array = XScriptArray::Create(arrayType);
 
 	// Find the existence of the delimiter in the input string
 	int pos = 0, prev = 0, count = 0;
@@ -62,7 +62,7 @@ static void StringSplit_Generic(asIScriptGeneric *gen)
 	string *delim = *(string**)gen->GetAddressOfArg(0);
 
 	// Return the array by handle
-	*(CScriptArray**)gen->GetAddressOfReturnLocation() = StringSplit(*delim, *str);
+	*(XScriptArray**)gen->GetAddressOfReturnLocation() = StringSplit(*delim, *str);
 }
 
 
@@ -80,7 +80,7 @@ static void StringSplit_Generic(asIScriptGeneric *gen)
 //
 // AngelScript signature:
 // string join(const array<string> &in array, const string &in delim)
-static string StringJoin(const CScriptArray &array, const string &delim)
+static string StringJoin(const XScriptArray &array, const string &delim)
 {
 	// Create the new string
 	string str = "";
@@ -103,7 +103,7 @@ static string StringJoin(const CScriptArray &array, const string &delim)
 static void StringJoin_Generic(asIScriptGeneric *gen)
 {
 	// Get the arguments
-	CScriptArray  *array = *(CScriptArray**)gen->GetAddressOfArg(0);
+	XScriptArray  *array = *(XScriptArray**)gen->GetAddressOfArg(0);
 	string *delim = *(string**)gen->GetAddressOfArg(1);
 
 	// Return the string

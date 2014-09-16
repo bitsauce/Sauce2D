@@ -1,9 +1,5 @@
 #include "iniParser.h"
 
-#include <x2d/filesystem.h>
-
-#include <sstream>
-
 AS_REG_REF(IniFile)
 
 int IniFile::Register(asIScriptEngine *scriptEngine)
@@ -30,7 +26,7 @@ IniFile::IniFile(string &path) :
 	if(!util::fileExists(path))
 		return;
 
-	xdFileReader *reader = xdFileSystem::CreateFileReader(path);
+	XFileReader *reader = XFileSystem::CreateFileReader(path);
 
 	string comment, sectionName;
 	while(!reader->isEOF())
@@ -113,5 +109,5 @@ void IniFile::save()
 		out << endl;
 	}
 	
-	xdFileSystem::WriteFile(m_path, out.str());
+	XFileSystem::WriteFile(m_path, out.str());
 }

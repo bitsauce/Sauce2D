@@ -1,8 +1,7 @@
-#ifndef IO_INI_PARSER_H
-#define IO_INI_PARSER_H
+#ifndef X2D_INI_PARSER_H
+#define X2D_INI_PARSER_H
 
-#include <x2d/base.h>
-#include <x2d/util.h>
+#include "common/engine.h"
 
 class IniFile
 {
@@ -38,4 +37,4 @@ private:
 	static IniFile *Factory(string &path) { return new IniFile(path); }
 };
 
-#endif // IO_INI_PARSER_H
+#endif // X2D_INI_PARSER_H

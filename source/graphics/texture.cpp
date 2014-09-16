@@ -7,48 +7,45 @@
 //				Originally written by Marcus Loo Vergara (aka. Bitsauce)
 //									2011-2014 (C)
 
-#include <x2d/graphics/texture.h>
-#include <x2d/graphics/pixmap.h>
+#include "texture.h"
 
-#include <x2d/graphics.h>
+AS_REG_REF(XTexture)
 
-AS_REG_REF(Texture)
-
-int Texture::Register(asIScriptEngine *scriptEngine)
+int XTexture::Register(asIScriptEngine *scriptEngine)
 {
 	int r = 0;
 
-	r = scriptEngine->RegisterObjectBehaviour("Texture", asBEHAVE_FACTORY, "Texture @f(const string &in)", asFUNCTIONPR(xdGraphics::CreateTexture, (const string&), Texture*), asCALL_CDECL); AS_ASSERT
-	r = scriptEngine->RegisterObjectBehaviour("Texture", asBEHAVE_FACTORY, "Texture @f(const int, const int)", asFUNCTIONPR(xdGraphics::CreateTexture, (const int, const int), Texture*), asCALL_CDECL); AS_ASSERT
-	r = scriptEngine->RegisterObjectBehaviour("Texture", asBEHAVE_FACTORY, "Texture @f(const Pixmap &in)", asFUNCTIONPR(xdGraphics::CreateTexture, (const Pixmap&), Texture*), asCALL_CDECL); AS_ASSERT
-	r = scriptEngine->RegisterObjectBehaviour("Texture", asBEHAVE_FACTORY, "Texture @f(const Texture @)", asFUNCTIONPR(xdGraphics::CreateTexture, (const Texture&), Texture*), asCALL_CDECL); AS_ASSERT
+	r = scriptEngine->RegisterObjectBehaviour("XTexture", asBEHAVE_FACTORY, "XTexture @f(const string &in)", asFUNCTIONPR(XGraphics::CreateTexture, (const string&), XTexture*), asCALL_CDECL); AS_ASSERT
+	r = scriptEngine->RegisterObjectBehaviour("XTexture", asBEHAVE_FACTORY, "XTexture @f(const int, const int)", asFUNCTIONPR(XGraphics::CreateTexture, (const int, const int), XTexture*), asCALL_CDECL); AS_ASSERT
+	r = scriptEngine->RegisterObjectBehaviour("XTexture", asBEHAVE_FACTORY, "XTexture @f(const XPixmap &in)", asFUNCTIONPR(XGraphics::CreateTexture, (const XPixmap&), XTexture*), asCALL_CDECL); AS_ASSERT
+	r = scriptEngine->RegisterObjectBehaviour("XTexture", asBEHAVE_FACTORY, "XTexture @f(const XTexture @)", asFUNCTIONPR(XGraphics::CreateTexture, (const XTexture&), XTexture*), asCALL_CDECL); AS_ASSERT
 
-	r = scriptEngine->RegisterEnum("TextureFilter"); AS_ASSERT
-	r = scriptEngine->RegisterEnumValue("TextureFilter", "NEAREST", xdNearest); AS_ASSERT
-	r = scriptEngine->RegisterEnumValue("TextureFilter", "LINEAR", xdLinear); AS_ASSERT
+	r = scriptEngine->RegisterEnum("XTextureFilter"); AS_ASSERT
+	r = scriptEngine->RegisterEnumValue("XTextureFilter", "NEAREST", xdNearest); AS_ASSERT
+	r = scriptEngine->RegisterEnumValue("XTextureFilter", "LINEAR", xdLinear); AS_ASSERT
 
-	r = scriptEngine->RegisterEnum("TextureWrapping"); AS_ASSERT
-	r = scriptEngine->RegisterEnumValue("TextureWrapping", "CLAMP_TO_BORDER", CLAMP_TO_BORDER); AS_ASSERT
-	r = scriptEngine->RegisterEnumValue("TextureWrapping", "CLAMP_TO_EDGE", CLAMP_TO_EDGE); AS_ASSERT
-	r = scriptEngine->RegisterEnumValue("TextureWrapping", "REPEAT", REPEAT); AS_ASSERT
-	r = scriptEngine->RegisterEnumValue("TextureWrapping", "MIRRORED_REPEAT", MIRRORED_REPEAT); AS_ASSERT
+	r = scriptEngine->RegisterEnum("XTextureWrapping"); AS_ASSERT
+	r = scriptEngine->RegisterEnumValue("XTextureWrapping", "CLAMP_TO_BORDER", CLAMP_TO_BORDER); AS_ASSERT
+	r = scriptEngine->RegisterEnumValue("XTextureWrapping", "CLAMP_TO_EDGE", CLAMP_TO_EDGE); AS_ASSERT
+	r = scriptEngine->RegisterEnumValue("XTextureWrapping", "REPEAT", REPEAT); AS_ASSERT
+	r = scriptEngine->RegisterEnumValue("XTextureWrapping", "MIRRORED_REPEAT", MIRRORED_REPEAT); AS_ASSERT
 
-	r = scriptEngine->RegisterObjectMethod("Texture", "void enableMipmaps()", asMETHODPR(Texture, enableMipmaps, (), void), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("Texture", "void disableMipmaps()", asMETHODPR(Texture, disableMipmaps, (), void), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("Texture", "void setFiltering(const TextureFilter)", asMETHODPR(Texture, setFiltering, (const xdTextureFilter), void), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("Texture", "void setWrapping(const TextureWrapping)", asMETHOD(Texture, setWrapping), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("Texture", "Pixmap getPixmap() const", asMETHODPR(Texture, getPixmap, () const, Pixmap), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("Texture", "void update(const Pixmap &in)", asMETHODPR(Texture, updatePixmap, (const Pixmap &), void), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("Texture", "void updateSection(const int, const int, const Pixmap &in)", asMETHODPR(Texture, updatePixmap, (const int, const int, const Pixmap &), void), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("Texture", "void clear()", asMETHODPR(Texture, clear, (), void), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("XTexture", "void enableMipmaps()", asMETHODPR(XTexture, enableMipmaps, (), void), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("XTexture", "void disableMipmaps()", asMETHODPR(XTexture, disableMipmaps, (), void), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("XTexture", "void setFiltering(const XTextureFilter)", asMETHODPR(XTexture, setFiltering, (const XTextureFilter), void), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("XTexture", "void setWrapping(const XTextureWrapping)", asMETHOD(XTexture, setWrapping), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("XTexture", "XPixmap getPixmap() const", asMETHODPR(XTexture, getPixmap, () const, XPixmap), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("XTexture", "void update(const XPixmap &in)", asMETHODPR(XTexture, updatePixmap, (const XPixmap &), void), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("XTexture", "void updateSection(const int, const int, const XPixmap &in)", asMETHODPR(XTexture, updatePixmap, (const int, const int, const XPixmap&), void), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("XTexture", "void clear()", asMETHODPR(XTexture, clear, (), void), asCALL_THISCALL); AS_ASSERT
 	
-	r = scriptEngine->RegisterObjectMethod("Texture", "int getWidth() const", asMETHOD(Texture, getWidth), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("Texture", "int getHeight() const", asMETHOD(Texture, getHeight), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("Texture", "Vector2i getSize() const", asMETHOD(Texture, getSize), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("XTexture", "int getWidth() const", asMETHOD(XTexture, getWidth), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("XTexture", "int getHeight() const", asMETHOD(XTexture, getHeight), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("XTexture", "Vector2i getSize() const", asMETHOD(XTexture, getSize), asCALL_THISCALL); AS_ASSERT
 	
 	return r;
 }
 
-Texture::Texture()
+XTexture::XTexture()
 {
 }

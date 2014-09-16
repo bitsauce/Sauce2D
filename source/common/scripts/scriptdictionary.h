@@ -33,7 +33,7 @@
 
 BEGIN_AS_NAMESPACE
 
-class CScriptArray;
+class XScriptArray;
 class CScriptDictionary;
 
 class CScriptDictValue
@@ -126,7 +126,7 @@ public:
 	void DeleteAll();
 
 	// Get an array of all keys
-	CScriptArray *GetKeys() const;
+	XScriptArray *GetKeys() const;
 
 public:
 	// STL style iterator

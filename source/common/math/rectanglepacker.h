@@ -3,9 +3,12 @@
 
 #include "common/config.h"
 
+#include "vector.h"
+#include "rect.h"
+
 class XDAPI RectanglePacker
 {
-	friend class TextureAtlas;
+	friend class XTextureAtlas;
 public:
 	class XDAPI Rectangle
 	{

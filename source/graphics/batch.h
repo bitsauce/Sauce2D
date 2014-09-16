@@ -1,14 +1,12 @@
-#ifndef GFX_BATCH_H
-#define GFX_BATCH_H
+#ifndef X2D_BATCH_H
+#define X2D_BATCH_H
 
-#include <x2d/math.h>
-#include <x2d/util.h>
-#include <x2d/scripts/array.h>
+#include "common/engine.h"
 
-class Texture;
-class Shader;
-class VertexBufferObject;
-class FrameBufferObject;
+class XTexture;
+class XShader;
+class XVertexBufferObject;
+class XFrameBufferObject;
 
 // Vertex struct
 struct XDAPI Vertex
@@ -37,17 +35,17 @@ struct XDAPI VertexBuffer
 
 	vector<Vertex> vertices;
 	vector<uint> indices;
-	VertexBufferObject *vbo;
+	XVertexBufferObject *vbo;
 };
 
-class XDAPI Batch
+class XDAPI XBatch
 {
 	friend class OpenGL;
 public:
 	AS_DECL_REF
 
-	Batch();
-	virtual ~Batch();
+	XBatch();
+	virtual ~XBatch();
 	
 	// Blend func enum
 	enum BlendFunc
@@ -81,12 +79,12 @@ public:
 	void setBlendFunc(const BlendFunc src, const BlendFunc dst);
 
 	// Get/set shader
-	void setShader(Shader *shader);
-	Shader *getShader() const;
+	void setShader(XShader *shader);
+	XShader *getShader() const;
 
 	// Get/set texture
-	void setTexture(Texture *texture);
-	Texture *getTexture() const;
+	void setTexture(XTexture *texture);
+	XTexture *getTexture() const;
 
 	// Get/set primitive type
 	void setPrimitive(PrimitiveType primitive);
@@ -101,7 +99,7 @@ public:
 	int getVertexCount();
 
 	// Render-to-texture
-	void renderToTexture(Texture *texture);
+	void renderToTexture(XTexture *texture);
 
 	// Draw/clear
 	virtual void draw();
@@ -137,10 +135,10 @@ public:
 
 		int drawOrder;
 		PrimitiveType primitive;
-		Texture *texture;
+		XTexture *texture;
 		BlendFunc srcBlendFunc;
 		BlendFunc dstBlendFunc;
-		Shader *shader;
+		XShader *shader;
 	};
 
 protected:
@@ -149,10 +147,10 @@ protected:
 	map<State, VertexBuffer*> m_buffers;
 
 	// Texture drawing order map
-	map<Texture*, int> m_drawOrderMap;
+	map<XTexture*, int> m_drawOrderMap;
 
 	// Frame buffer object (for render-to-texture)
-	FrameBufferObject *m_fbo;
+	XFrameBufferObject *m_fbo;
 
 	// Static batch flag (vbo flag)
 	bool m_static;
@@ -164,10 +162,10 @@ protected:
 	// Current batch state
 	State m_state;
 	
-	void addVerticesAS(Array *vertices, Array *indices);
-	static Batch *Factory() { return new Batch(); }
+	void addVerticesAS(XScriptArray *vertices, XScriptArray *indices);
+	static XBatch *Factory() { return new XBatch(); }
 };
 
-typedef map<Batch::State, VertexBuffer*> StateVertexMap;
+typedef map<XBatch::State, VertexBuffer*> StateVertexMap;
 
-#endif // GFX_BATCH_H
+#endif // X2D_BATCH_H
