@@ -1,5 +1,5 @@
-#ifndef SCRIPTANY_H
-#define SCRIPTANY_H
+#ifndef X2D_SCRIPT_ANY_H
+#define X2D_SCRIPT_ANY_H
 
 #include "common/engine.h"
 
@@ -69,4 +69,4 @@ void RegisterScriptAny_Generic(asIScriptEngine *engine);
 
 END_AS_NAMESPACE
 
-#endif
+#endif // X2D_SCRIPT_ANY_H

@@ -1,5 +1,5 @@
-#ifndef SCRIPTBUILDER_H
-#define SCRIPTBUILDER_H
+#ifndef X2D_SCRIPT_BUILDER_H
+#define X2D_SCRIPT_BUILDER_H
 
 //---------------------------
 // Compilation settings
@@ -164,4 +164,4 @@ protected:
 
 END_AS_NAMESPACE
 
-#endif
+#endif // X2D_SCRIPT_BUILDER_H

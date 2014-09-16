@@ -1,5 +1,5 @@
-#ifndef SCRIPTHELPER_H
-#define SCRIPTHELPER_H
+#ifndef X2D_SCRIPT_HELPER_H
+#define X2D_SCRIPT_HELPER_H
 
 #include <sstream>
 
@@ -93,4 +93,4 @@ asUINT GetTypeTraits()
 
 END_AS_NAMESPACE
 
-#endif
+#endif // X2D_SCRIPT_HELPER_H

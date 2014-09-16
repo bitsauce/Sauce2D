@@ -341,4 +341,8 @@ private:
 	if(a < b) return true; \
 	if(a > b) return false;
 
+#define TUPLE_CMP2(a, b) \
+	if(a < b) return false; \
+	if(a > b) return true;
+
 #endif // X2D_CONFIG_H

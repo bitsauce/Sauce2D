@@ -1,5 +1,5 @@
-#ifndef GRAPHICS_SPRITE_BATCH_H
-#define GRAPHICS_SPRITE_BATCH_H
+#ifndef X2D_SPRITE_BATCH_H
+#define X2D_SPRITE_BATCH_H
 
 #include "batch.h"
 
@@ -28,4 +28,4 @@ private:
 	static XSpriteBatch *Factory() { return new XSpriteBatch(); }
 };
 
-#endif // GRAPHICS_SPRITE_BATCH_H
+#endif // X2D_SPRITE_BATCH_H

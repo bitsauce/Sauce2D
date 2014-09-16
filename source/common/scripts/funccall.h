@@ -1,5 +1,5 @@
-#ifndef SCRIPTS_FUNCCALL_H
-#define SCRIPTS_FUNCCALL_H
+#ifndef X2D_FUNCCALL_H
+#define X2D_FUNCCALL_H
 
 #include "common/engine.h"
 
@@ -29,4 +29,4 @@ protected:
 
 int RegisterScriptFuncCall(asIScriptEngine *scriptEngine);
 
-#endif // SCRIPTS_FUNCCALL_H
+#endif // X2D_FUNCCALL_H

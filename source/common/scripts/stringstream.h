@@ -1,5 +1,5 @@
-#ifndef SCRIPTS_STRINGSTREAM_H
-#define SCRIPTS_STRINGSTREAM_H
+#ifndef X2D_STRING_STREAM_H
+#define X2D_STRING_STREAM_H
 
 #include "common/engine.h"
 
@@ -48,4 +48,4 @@ private:
 	stringstream m_stream;
 };
 
-#endif // SCRIPTS_STRINGSTREAM_H
+#endif // X2D_STRING_STREAM_H

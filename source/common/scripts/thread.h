@@ -1,8 +1,8 @@
-#ifndef SCRIPTS_THREAD_H
-#define SCRIPTS_THREAD_H
+#ifndef X2D_THREAD_H
+#define X2D_THREAD_H
 
 #include "common/engine.h"
 
 int RegisterScriptThread(asIScriptEngine *scriptEngine);
 
-#endif // SCRIPTS_THREAD_H
+#endif // X2D_THREAD_H

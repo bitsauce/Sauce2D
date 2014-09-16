@@ -1,5 +1,5 @@
-#ifndef SCRIPTDICTIONARY_H
-#define SCRIPTDICTIONARY_H
+#ifndef X2D_SCRIPT_DICTIONARY_H
+#define X2D_SCRIPT_DICTIONARY_H
 
 // The dictionary class relies on the script string object, thus the script
 // string type must be registered with the engine before registering the
@@ -206,4 +206,4 @@ void RegisterScriptDictionary_Generic(asIScriptEngine *engine);
 
 END_AS_NAMESPACE
 
-#endif
+#endif // X2D_SCRIPT_DICTIONARY_H

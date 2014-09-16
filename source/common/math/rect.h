@@ -69,14 +69,6 @@ public:
 	Vector2 size;
 };
 
-#define TUPLE_CMP(a, b) \
-	if(a < b) return true; \
-	if(a > b) return false;
-
-#define TUPLE_CMP2(a, b) \
-	if(a < b) return false; \
-	if(a > b) return true;
-
 class XDAPI Recti
 {
 public:

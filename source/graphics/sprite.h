@@ -1,5 +1,5 @@
-#ifndef GRAPHICS_SPRITE_H
-#define GRAPHICS_SPRITE_H
+#ifndef X2D_SPRITE_H
+#define X2D_SPRITE_H
 
 #include "common/engine.h"
 #include "textureRegion.h"
@@ -74,4 +74,4 @@ private:
 	static XSprite *Factory(XTexture *texture);
 };
 
-#endif // GRAPHICS_SPRITE_H
+#endif // X2D_SPRITE_H

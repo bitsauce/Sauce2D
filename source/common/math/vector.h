@@ -1,5 +1,5 @@
-#ifndef MATH_VECTOR_H
-#define MATH_VECTOR_H
+#ifndef X2D_VECTOR_H
+#define X2D_VECTOR_H
 
 #include "common/config.h"
 
@@ -68,14 +68,6 @@ public:
 public:
     float x, y;
 };
-
-#define TUPLE_CMP(a, b) \
-	if(a < b) return true; \
-	if(a > b) return false;
-
-#define TUPLE_CMP2(a, b) \
-	if(a < b) return false; \
-	if(a > b) return true;
 
 class XDAPI Vector2i
 {
@@ -277,4 +269,4 @@ public:
     float x, y, z, w;
 };
 
-#endif // MATH_VECTOR_H
+#endif // X2D_VECTOR_H

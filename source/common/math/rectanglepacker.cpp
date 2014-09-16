@@ -6,6 +6,7 @@
 //                                                              |___/     
 //				Originally written by Marcus Loo Vergara (aka. Bitsauce)
 //									2011-2014 (C)
+// Inspired by: http://www.codeproject.com/Articles/210979/Fast-optimizing-rectangle-packing-algorithm-for-bu (i think)
 
 #include "rectanglepacker.h"
 

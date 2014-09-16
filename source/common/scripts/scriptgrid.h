@@ -1,10 +1,5 @@
-#ifndef SCRIPTGRID_H
-#define SCRIPTGRID_H
-
-#ifndef ANGELSCRIPT_H 
-// Avoid having to inform include path if header is already include before
-#include <angelscript.h>
-#endif
+#ifndef X2D_SCRIPT_GRID_H
+#define X2D_SCRIPT_GRID_H
 
 #include "common/engine.h"
 
@@ -81,4 +76,4 @@ void RegisterScriptGrid(asIScriptEngine *engine);
 
 END_AS_NAMESPACE
 
-#endif
+#endif // X2D_SCRIPT_GRID_H
