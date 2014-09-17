@@ -31,7 +31,7 @@ int XFont::Register(asIScriptEngine *scriptEngine)
 	r = scriptEngine->RegisterObjectMethod("XFont", "float getStringWidth(const string &in)", asMETHOD(XFont, getStringWidth), asCALL_THISCALL); AS_ASSERT
 	r = scriptEngine->RegisterObjectMethod("XFont", "float getStringHeight(const string &in)", asMETHOD(XFont, getStringHeight), asCALL_THISCALL); AS_ASSERT
 	r = scriptEngine->RegisterObjectMethod("XFont", "void setColor(const Vector4 &in)", asMETHOD(XFont, setColor), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("XFont", "void draw(Batch @batch, const Vector2 &in, const string &in)", asMETHOD(XFont, draw), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("XFont", "void draw(XBatch @batch, const Vector2 &in, const string &in)", asMETHOD(XFont, draw), asCALL_THISCALL); AS_ASSERT
 
 	return r;
 }

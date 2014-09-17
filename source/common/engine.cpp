@@ -260,11 +260,13 @@ int XEngine::init(const XConfig &config)
 	{
 		m_profiler = new XProfiler(m_timer);
 	}
+	m_profiler->s_this = m_profiler;
 
 	if(!m_console)
 	{
 		m_console = new XConsole;
 	}
+	m_console->s_this = m_console;
 
 	if(!m_window)
 	{
@@ -346,16 +348,16 @@ int XEngine::init(const XConfig &config)
 		ClassRegister::Register(scriptEngine);
 	
 		// Register singleton objects
-		r = scriptEngine->RegisterGlobalProperty("ScriptEngine Engine", this); AS_ASSERT
-		r = scriptEngine->RegisterGlobalProperty("ScriptFileSystem FileSystem", m_fileSystem); AS_ASSERT
-		r = scriptEngine->RegisterGlobalProperty("ScriptWindow Window", m_window); AS_ASSERT
-		r = scriptEngine->RegisterGlobalProperty("ScriptInput Input", m_input); AS_ASSERT
-		r = scriptEngine->RegisterGlobalProperty("ScriptMath Math", m_math); AS_ASSERT
-		r = scriptEngine->RegisterGlobalProperty("ScriptManager Scripts", m_scripts); AS_ASSERT
-		r = scriptEngine->RegisterGlobalProperty("ScriptGraphics Graphics", m_graphics); AS_ASSERT
-		r = scriptEngine->RegisterGlobalProperty("ScriptAudio Audio", m_audio); AS_ASSERT
-		r = scriptEngine->RegisterGlobalProperty("ScriptConsole Console", m_console); AS_ASSERT
-		r = scriptEngine->RegisterGlobalProperty("ScriptProfiler Profiler", m_profiler); AS_ASSERT
+		r = scriptEngine->RegisterGlobalProperty("XEngine Engine", this); AS_ASSERT
+		r = scriptEngine->RegisterGlobalProperty("XFileSystem FileSystem", m_fileSystem); AS_ASSERT
+		r = scriptEngine->RegisterGlobalProperty("XWindow Window", m_window); AS_ASSERT
+		r = scriptEngine->RegisterGlobalProperty("XInput Input", m_input); AS_ASSERT
+		r = scriptEngine->RegisterGlobalProperty("XMath Math", m_math); AS_ASSERT
+		r = scriptEngine->RegisterGlobalProperty("XScriptEngine Scripts", m_scripts); AS_ASSERT
+		r = scriptEngine->RegisterGlobalProperty("XGraphics Graphics", m_graphics); AS_ASSERT
+		r = scriptEngine->RegisterGlobalProperty("XAudioManager Audio", m_audio); AS_ASSERT
+		r = scriptEngine->RegisterGlobalProperty("XConsole Console", m_console); AS_ASSERT
+		r = scriptEngine->RegisterGlobalProperty("XProfiler Profiler", m_profiler); AS_ASSERT
 
 		// Create network managers
 		//initSockets();

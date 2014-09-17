@@ -22,9 +22,9 @@ int XShape::Register(asIScriptEngine *scriptEngine)
 	r = scriptEngine->RegisterObjectBehaviour("XShape", asBEHAVE_FACTORY, "XShape @f(const array<Vector2> &in)", asFUNCTIONPR(Factory, (const XScriptArray&), XShape*), asCALL_CDECL); AS_ASSERT
 	
 	r = scriptEngine->RegisterObjectMethod("XShape", "void setFillColor(const Vector4 &in)", asMETHOD(XShape, setFillColor), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("XShape", "void setFillTexture(Texture @texture)", asMETHOD(XShape, setFillTexture), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("XShape", "void setFillTexture(XTexture @texture)", asMETHOD(XShape, setFillTexture), asCALL_THISCALL); AS_ASSERT
 
-	r = scriptEngine->RegisterObjectMethod("XShape", "void draw(Batch @batch)", asMETHOD(XShape, draw), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("XShape", "void draw(XBatch @batch)", asMETHOD(XShape, draw), asCALL_THISCALL); AS_ASSERT
 
 	return r;
 }

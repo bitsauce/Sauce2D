@@ -344,19 +344,19 @@ int RegisterScriptFuncCall(asIScriptEngine *scriptEngine)
 {
 	int r;
 
-	r = scriptEngine->RegisterObjectType("XFuncCall", sizeof(XFuncCall), asOBJ_VALUE | asOBJ_APP_CLASS_CDK); AS_ASSERT
+	r = scriptEngine->RegisterObjectType("funccall", sizeof(XFuncCall), asOBJ_VALUE | asOBJ_APP_CLASS_CDK); AS_ASSERT
 		
-	r = scriptEngine->RegisterObjectBehaviour("XFuncCall", asBEHAVE_CONSTRUCT,  "void f()", asFUNCTION(ConstructDefault), asCALL_CDECL_OBJLAST); AS_ASSERT
-	r = scriptEngine->RegisterObjectBehaviour("XFuncCall", asBEHAVE_CONSTRUCT,  "void f(const XFuncCall &in)", asFUNCTION(CopyConstructXFuncCall), asCALL_CDECL_OBJLAST); AS_ASSERT
-	r = scriptEngine->RegisterObjectBehaviour("XFuncCall", asBEHAVE_CONSTRUCT,  "void f(const string &in)", asFUNCTION(ConstructFunction), asCALL_CDECL_OBJLAST); AS_ASSERT
-	r = scriptEngine->RegisterObjectBehaviour("XFuncCall", asBEHAVE_CONSTRUCT,  "void f(?&in, const string &in)", asFUNCTION(ConstructMethod), asCALL_CDECL_OBJLAST); AS_ASSERT
-	r = scriptEngine->RegisterObjectBehaviour("XFuncCall", asBEHAVE_CONSTRUCT,  "void f(?&in)", asFUNCTION(ConstructDelegate), asCALL_CDECL_OBJLAST); AS_ASSERT
-	r = scriptEngine->RegisterObjectBehaviour("XFuncCall", asBEHAVE_DESTRUCT,  "void f()", asFUNCTION(Destruct), asCALL_CDECL_OBJLAST); AS_ASSERT
+	r = scriptEngine->RegisterObjectBehaviour("funccall", asBEHAVE_CONSTRUCT,  "void f()", asFUNCTION(ConstructDefault), asCALL_CDECL_OBJLAST); AS_ASSERT
+	r = scriptEngine->RegisterObjectBehaviour("funccall", asBEHAVE_CONSTRUCT,  "void f(const funccall &in)", asFUNCTION(CopyConstructXFuncCall), asCALL_CDECL_OBJLAST); AS_ASSERT
+	r = scriptEngine->RegisterObjectBehaviour("funccall", asBEHAVE_CONSTRUCT,  "void f(const string &in)", asFUNCTION(ConstructFunction), asCALL_CDECL_OBJLAST); AS_ASSERT
+	r = scriptEngine->RegisterObjectBehaviour("funccall", asBEHAVE_CONSTRUCT,  "void f(?&in, const string &in)", asFUNCTION(ConstructMethod), asCALL_CDECL_OBJLAST); AS_ASSERT
+	r = scriptEngine->RegisterObjectBehaviour("funccall", asBEHAVE_CONSTRUCT,  "void f(?&in)", asFUNCTION(ConstructDelegate), asCALL_CDECL_OBJLAST); AS_ASSERT
+	r = scriptEngine->RegisterObjectBehaviour("funccall", asBEHAVE_DESTRUCT,  "void f()", asFUNCTION(Destruct), asCALL_CDECL_OBJLAST); AS_ASSERT
 	
-	r = scriptEngine->RegisterObjectMethod("XFuncCall", "void setObject(?&in)", asMETHOD(XFuncCall, setObject), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("XFuncCall", "void setArg(const int, ?&in)", asMETHOD(XFuncCall, setArg), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("XFuncCall", "bool execute()", asMETHOD(XFuncCall, execute), asCALL_THISCALL); AS_ASSERT
-	//r = scriptEngine->RegisterObjectMethod("XFuncCall", "void getReturn(?&out) const", asMETHOD(XFuncCall, getReturn), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("funccall", "void setObject(?&in)", asMETHOD(XFuncCall, setObject), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("funccall", "void setArg(const int, ?&in)", asMETHOD(XFuncCall, setArg), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("funccall", "bool execute()", asMETHOD(XFuncCall, execute), asCALL_THISCALL); AS_ASSERT
+	//r = scriptEngine->RegisterObjectMethod("funccall", "void getReturn(?&out) const", asMETHOD(XFuncCall, getReturn), asCALL_THISCALL); AS_ASSERT
 
 	return r;
 }

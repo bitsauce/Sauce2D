@@ -61,6 +61,11 @@
       <AdditionalDependencies>ws2_32.lib;iphlpapi.lib;x2dd.lib;openal32.lib;opengl32.lib;glewd.lib;glu32.lib;angelscriptd.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
     </Link>
+    <PostBuildEvent>
+      <Command>copy "..\..\3rdparty\vld\bin\Win32\vld_x86.dll" "..\..\build\$(Platform)\$(Configuration)\vld_x86.dll"
+copy "..\..\3rdparty\vld\bin\Win32\dbghelp.dll" "..\..\build\$(Platform)\$(Configuration)\dbghelp.dll"
+copy "..\..\3rdparty\vld\bin\Win32\Microsoft.DTfW.DHL.manifest" "..\..\build\$(Platform)\$(Configuration)\Microsoft.DTfW.DHL.manifest"</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>

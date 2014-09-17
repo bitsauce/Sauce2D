@@ -19,14 +19,14 @@ int XTextureAtlas::Register(asIScriptEngine *scriptEngine)
 	int r = 0;
 	
 	r = scriptEngine->RegisterObjectBehaviour("XTextureAtlas", asBEHAVE_FACTORY, "XTextureAtlas @f()", asFUNCTIONPR(Factory, (), XTextureAtlas*), asCALL_CDECL); AS_ASSERT
-	r = scriptEngine->RegisterObjectBehaviour("XTextureAtlas", asBEHAVE_FACTORY, "XTextureAtlas @f(array<Texture@>@)", asFUNCTIONPR(Factory, (XScriptArray*), XTextureAtlas*), asCALL_CDECL); AS_ASSERT
-	r = scriptEngine->RegisterObjectBehaviour("XTextureAtlas", asBEHAVE_FACTORY, "XTextureAtlas @f(array<Pixmap>@)", asFUNCTIONPR(Factory, (XScriptArray*), XTextureAtlas*), asCALL_CDECL); AS_ASSERT
+	r = scriptEngine->RegisterObjectBehaviour("XTextureAtlas", asBEHAVE_FACTORY, "XTextureAtlas @f(array<XTexture@>@)", asFUNCTIONPR(Factory, (XScriptArray*), XTextureAtlas*), asCALL_CDECL); AS_ASSERT
+	r = scriptEngine->RegisterObjectBehaviour("XTextureAtlas", asBEHAVE_FACTORY, "XTextureAtlas @f(array<XPixmap>@)", asFUNCTIONPR(Factory, (XScriptArray*), XTextureAtlas*), asCALL_CDECL); AS_ASSERT
 
-	r = scriptEngine->RegisterObjectMethod("XTextureAtlas", "TextureRegion get(const int) const", asMETHODPR(XTextureAtlas, get, (const int) const, XTextureRegion), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("XTextureAtlas", "TextureRegion get(const int, const Vector2 &in, const Vector2 &in) const", asMETHODPR(XTextureAtlas, get, (const int, const Vector2&, const Vector2&) const, XTextureRegion), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("XTextureAtlas", "TextureRegion get(const int, const float, const float, const float, const float) const", asMETHODPR(XTextureAtlas, get, (const int, const float, const float, const float, const float) const, XTextureRegion), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("XTextureAtlas", "XTextureRegion get(const int) const", asMETHODPR(XTextureAtlas, get, (const int) const, XTextureRegion), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("XTextureAtlas", "XTextureRegion get(const int, const Vector2 &in, const Vector2 &in) const", asMETHODPR(XTextureAtlas, get, (const int, const Vector2&, const Vector2&) const, XTextureRegion), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("XTextureAtlas", "XTextureRegion get(const int, const float, const float, const float, const float) const", asMETHODPR(XTextureAtlas, get, (const int, const float, const float, const float, const float) const, XTextureRegion), asCALL_THISCALL); AS_ASSERT
 	
-	r = scriptEngine->RegisterObjectMethod("XTextureAtlas", "Texture @getTexture() const", asMETHOD(XTextureAtlas, getTexture), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("XTextureAtlas", "XTexture @getTexture() const", asMETHOD(XTextureAtlas, getTexture), asCALL_THISCALL); AS_ASSERT
 	
 	return r;
 }

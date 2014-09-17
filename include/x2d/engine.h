@@ -481,6 +481,8 @@ private:
 **********************************************************************/
 class XDAPI XProfiler
 {
+	friend class XEngine;
+
 	struct Profile
 	{
 		Profile *parent;
