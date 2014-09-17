@@ -248,7 +248,8 @@ void Window::showWindow()
 		assert("Unable to create rendering context");
 
 	m_graphics->m_deviceContext = m_deviceContext = deviceContext;
-	m_glContext = m_graphics->createContext();
+	m_glContext = (GLcontext*)m_graphics->createContext();
+	m_glContext->makeCurrent();
 
 	// Setup window
 	ShowWindow(m_window, SW_SHOW);

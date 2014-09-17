@@ -30,6 +30,8 @@ Vector2 QUAD_TEXCOORD[4] = {
 	Vector2(0.0f, 0.0f)
 };
 
+vector<XRenderContext**> XGraphics::s_contextToCreate;
+
 AS_REG_SINGLETON(XGraphics)
 
 int XGraphics::Register(asIScriptEngine *scriptEngine)
@@ -77,6 +79,21 @@ float XGraphics::getTimeStep() const
 float XGraphics::getFPS() const
 {
 	return m_framesPerSecond;
+}
+
+void XGraphics::CreateContext(XRenderContext **context)
+{
+	s_contextToCreate.push_back(context);
+}
+
+XRenderContext* XGraphics::CreateContext()
+{
+	return s_this->createContext();
+}
+
+void XGraphics::DestroyContext(XRenderContext *context)
+{
+	return s_this->destroyContext(context);
 }
 
 XTexture* XGraphics::CreateTexture(const XPixmap &pixmap)

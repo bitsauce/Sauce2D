@@ -7,6 +7,38 @@
 
 class Window;
 
+class GLcontext : public XRenderContext
+{
+	friend class OpenGL;
+	friend class Window;
+public:
+	GLcontext(HDC deviceContext) :
+		m_deviceContext(deviceContext)
+	{
+		// Create OpenGL rendering context
+		m_context = wglCreateContext(m_deviceContext);
+	}
+
+	void makeCurrent()
+	{
+		// Make context current
+		wglMakeCurrent(m_deviceContext, m_context);
+	}
+
+private:
+	~GLcontext()
+	{
+		// Make the rendering context not current
+		wglMakeCurrent(NULL, NULL);
+
+		// Delete the OpenGL rendering context
+		wglDeleteContext(m_context);
+	}
+
+	HGLRC m_context;
+	HDC m_deviceContext;
+};
+
 extern const int INT_SIZE;
 extern const int FLOAT_SIZE;
 
@@ -20,8 +52,8 @@ public:
 	~OpenGL();
 	void init(Window *window);
 
-	HGLRC createContext();
-	void destroyContext(HGLRC context);
+	XRenderContext *createContext();
+	void destroyContext(XRenderContext *context);
 
 	void swapBuffers();
 
@@ -37,14 +69,14 @@ public:
 	void getViewport(int &x, int &y, int &w, int &h);
 
 private:
-	void renderBatch(const XBatch &batch);
-	XTexture *createTexture(const XPixmap &pixmap);
-	XShader *createShader(const string &vertFilePath, const string &fragFilePath);
-	XVertexBufferObject *createVertexBufferObject();
-	XFrameBufferObject *createFrameBufferObject();
-	bool isSupported(Feature feature);
+	void					renderBatch(const XBatch &batch);
+	XTexture*				createTexture(const XPixmap &pixmap);
+	XShader*				createShader(const string &vertFilePath, const string &fragFilePath);
+	XVertexBufferObject*	createVertexBufferObject();
+	XFrameBufferObject*		createFrameBufferObject();
+	bool					isSupported(Feature feature);
 
-	list<HGLRC> m_contexts;
+	list<GLcontext*> m_contexts;
 	HDC m_deviceContext;
 	float m_currentOrtho[6];
 	int m_currentViewport[4];

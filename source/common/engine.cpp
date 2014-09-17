@@ -462,6 +462,10 @@ void XEngine::draw()
 	// Start draw
 	XProfiler::Push("Draw");
 
+	for(XRenderContext **context : m_graphics->s_contextToCreate)
+		*context = XGraphics::CreateContext();
+	m_graphics->s_contextToCreate.clear();
+
 	asIScriptObject *object = m_sceneStack.size() > 0 ? m_sceneStack.top() : 0;
 	asIScriptFunction *func = object != 0 ? m_sceneDrawFunc : m_defaultDrawFunc;
 	if(func)

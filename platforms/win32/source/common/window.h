@@ -112,7 +112,7 @@ private:
     HDC m_deviceContext;
 
 	// The opengl rendering context
-	HGLRC m_glContext;
+	class GLcontext *m_glContext;
 	
 	// The event message
     MSG m_message;

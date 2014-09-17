@@ -141,6 +141,9 @@
     <ClInclude Include="..\..\include\x2d\graphics\framebufferobject.h">
       <Filter>include\graphics</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\include\x2d\graphics\context.h">
+      <Filter>include\graphics</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\source\audio\buffer.cpp">

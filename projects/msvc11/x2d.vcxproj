@@ -36,6 +36,7 @@
     <ClInclude Include="..\..\include\x2d\graphics.h" />
     <ClInclude Include="..\..\include\x2d\graphics\animation.h" />
     <ClInclude Include="..\..\include\x2d\graphics\batch.h" />
+    <ClInclude Include="..\..\include\x2d\graphics\context.h" />
     <ClInclude Include="..\..\include\x2d\graphics\font.h" />
     <ClInclude Include="..\..\include\x2d\graphics\framebufferobject.h" />
     <ClInclude Include="..\..\include\x2d\graphics\pixmap.h" />

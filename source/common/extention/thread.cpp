@@ -8,6 +8,7 @@
 //									2011-2014 (C)
 
 #include <x2d/engine.h>
+#include <x2d/graphics.h>
 #include <x2d/extention.h>
 
 // NOTE TO SELF:
@@ -20,11 +21,15 @@
 
 void CallFunction(XFuncCall &funccall)
 {
-	// TODO: REFACTORING
-	//Get<xdIThreadManager>().setupThread();
+	XRenderContext *context = 0;
+	XGraphics::CreateContext(&context);
+	while(!context);
+
+	context->makeCurrent();
 	funccall.execute();
-	//xdIThreadManager::Get().cleanupThread();
 	asThreadCleanup();
+
+	XGraphics::DestroyContext(context);
 }
 
 void ConstructThreadDefault(thread *self)
@@ -40,7 +45,7 @@ void ConstructThreadFuncCall(XFuncCall &funccall, thread *self)
 void DestructThread(thread *self)
 {
 	if(self->joinable())
-		self->join();
+		self->detach();
 	self->~thread();
 }
 

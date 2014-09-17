@@ -22,39 +22,31 @@ class GLvertexbuffer : public XVertexBufferObject
 public:
 	GLvertexbuffer()
 	{
-		GLmtx.lock();
 		glGenBuffers(1, &m_vboId);
 		glGenBuffers(1, &m_iboId);
-		GLmtx.unlock();
 	}
 
 	~GLvertexbuffer()
 	{
-		GLmtx.lock();
 		glDeleteBuffers(1, &m_vboId);
 		glDeleteBuffers(1, &m_iboId);
-		GLmtx.unlock();
 	}
 
 	void upload(const XVertexBuffer *buffer)
 	{
-		GLmtx.lock();
 		glBindBuffer(GL_ARRAY_BUFFER, m_vboId);
 		glBufferData(GL_ARRAY_BUFFER, buffer->vertices.size()*sizeof(XVertex), buffer->vertices.data(), GL_DYNAMIC_DRAW);
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_iboId);
 		glBufferData(GL_ELEMENT_ARRAY_BUFFER, buffer->indices.size()*sizeof(uint), buffer->indices.data(), GL_DYNAMIC_DRAW);
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-		GLmtx.unlock();
 	}
 
 	void uploadSub(int offset, XVertex *vertices, int count)
 	{
-		GLmtx.lock();
 		glBindBuffer(GL_ARRAY_BUFFER, m_vboId);
 		glBufferSubData(GL_ARRAY_BUFFER, offset*sizeof(XVertex), count*sizeof(XVertex), vertices);
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
-		GLmtx.unlock();
 	}
 
 private:
@@ -68,17 +60,13 @@ public:
 	GLframebufferobject(OpenGL *gl) :
 		gl(gl)
 	{
-		GLmtx.lock();
 		glGenFramebuffers(1, &m_id);
-		GLmtx.unlock();
 	}
 
 	void bind(XTexture *texture)
 	{
-		GLmtx.lock();
 		glBindFramebuffer(GL_FRAMEBUFFER, m_id);
 		glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, ((GLtexture*)texture)->m_id, 0);
-		GLmtx.unlock();
 
 		gl->getOrthoProjection(m_ortho[0], m_ortho[1], m_ortho[2], m_ortho[3], m_ortho[4], m_ortho[5]);
 		gl->getViewport(m_viewport[0], m_viewport[1], m_viewport[2], m_viewport[3]);
@@ -90,9 +78,7 @@ public:
 
 	void unbind()
 	{
-		GLmtx.lock();
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
-		GLmtx.unlock();
 
 		gl->setOrthoProjection(m_ortho[0], m_ortho[1], m_ortho[2], m_ortho[3], m_ortho[4], m_ortho[5]);
 		gl->setViewport(Recti(m_viewport[0], m_viewport[1], m_viewport[2], m_viewport[3]));
@@ -154,18 +140,16 @@ OpenGL::~OpenGL()
 {
 }
 
-HGLRC OpenGL::createContext()
+XRenderContext *OpenGL::createContext()
 {
 	// Create OpenGL context
-	HGLRC context = wglCreateContext(m_deviceContext);
+	GLcontext *context = new GLcontext(m_deviceContext);
 	if(m_contexts.size() > 0)
 	{
 		// Make sure resources are shared across threads
-		wglShareLists(m_contexts.front(), context);
+		if(!wglShareLists(m_contexts.front()->m_context, context->m_context))
+			LOG("Error: %i", GetLastError());
 	}
-
-	// Make new context current
-	wglMakeCurrent(m_deviceContext, context);
 
 	// Add to list of context
 	m_contexts.push_back(context);
@@ -174,18 +158,16 @@ HGLRC OpenGL::createContext()
 	return context;
 }
 
-void OpenGL::destroyContext(HGLRC context)
+void OpenGL::destroyContext(XRenderContext *contextPtr)
 {
+	GLcontext *context = (GLcontext*)contextPtr;
 	if(context)
 	{
-		// Make the rendering context not current
-		wglMakeCurrent(NULL, NULL);
-
-		// Delete the OpenGL rendering context
-		wglDeleteContext(context);
-
 		// Remove from context list
 		m_contexts.remove(context);
+
+		// Delete context
+		delete context;
 	}
 }
 
@@ -278,7 +260,6 @@ GLenum toGLPrimitive(const XBatch::PrimitiveType value)
 
 void OpenGL::renderBatch(const XBatch &batch)
 {
-	GLmtx.lock();
 	// Enable client state
 	glEnableClientState(GL_VERTEX_ARRAY);
 	glEnableClientState(GL_COLOR_ARRAY);
@@ -376,7 +357,6 @@ void OpenGL::renderBatch(const XBatch &batch)
 	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 	glDisableClientState(GL_COLOR_ARRAY);
 	glDisableClientState(GL_VERTEX_ARRAY);
-	GLmtx.unlock();
 }
 
 XTexture *OpenGL::createTexture(const XPixmap &pixmap)
