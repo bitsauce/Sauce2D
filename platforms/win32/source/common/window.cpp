@@ -70,7 +70,7 @@ void Window::close()
 	}
 
 	// If we have a OpenGL context
-	//m_graphics->destroyContext();
+	m_graphics->destroyContext(m_glContext);
 
 	// If we have a device context
 	if(m_deviceContext)
@@ -244,11 +244,11 @@ void Window::showWindow()
 		assert("Unable to create rendering context");
 
 	// Set the new pixel format
-	if(!SetPixelFormat(m_deviceContext, pixelFormat, &pfd))			
+	if(!SetPixelFormat(deviceContext, pixelFormat, &pfd))			
 		assert("Unable to create rendering context");
 
-	m_graphics->m_deviceContext = deviceContext;
-	m_graphics->createContext();
+	m_graphics->m_deviceContext = m_deviceContext = deviceContext;
+	m_glContext = m_graphics->createContext();
 
 	// Setup window
 	ShowWindow(m_window, SW_SHOW);

@@ -7,11 +7,11 @@
 
 void DebugDraw::DrawPolygon(const b2Vec2* vertices, int32 vertexCount, const b2Color& color)
 {
-	Batch *batch = b2d->getDrawBatch();
-	batch->setPrimitive(Batch::PRIMITIVE_LINES);
+	XBatch *batch = b2d->getDrawBatch();
+	batch->setPrimitive(XBatch::PRIMITIVE_LINES);
 	batch->setTexture(0);
 
-	Vertex *data = new Vertex[vertexCount];
+	XVertex *data = new XVertex[vertexCount];
 	vector<uint> indices;
 	for(int i = 0; i < vertexCount; i++)
 	{
@@ -35,11 +35,11 @@ void DebugDraw::DrawPolygon(const b2Vec2* vertices, int32 vertexCount, const b2C
 
 void DebugDraw::DrawSolidPolygon(const b2Vec2* vertices, int32 vertexCount, const b2Color& color)
 {
-	Batch *batch = b2d->getDrawBatch();
-	batch->setPrimitive(Batch::PRIMITIVE_TRIANGLES);
+	XBatch *batch = b2d->getDrawBatch();
+	batch->setPrimitive(XBatch::PRIMITIVE_TRIANGLES);
 	batch->setTexture(0);
 	
-	Vertex *data = new Vertex[vertexCount];
+	XVertex *data = new XVertex[vertexCount];
 	vector<uint> indices;
 
 	for(int i = 0; i < vertexCount; i++)
@@ -116,14 +116,14 @@ void DebugDraw::DrawSegment(const b2Vec2& p1, const b2Vec2& p2, const b2Color& c
 
 void DebugDraw::DrawTransform(const b2Transform& xf)
 {
-	Batch *batch = b2d->getDrawBatch();
-	batch->setPrimitive(Batch::PRIMITIVE_LINES);
+	XBatch *batch = b2d->getDrawBatch();
+	batch->setPrimitive(XBatch::PRIMITIVE_LINES);
 	batch->setTexture(0);
 
 	b2Vec2 p1 = xf.p, p2;
 	const float32 axisScale = 0.4f;
 
-	Vertex *data = new Vertex[4];
+	XVertex *data = new XVertex[4];
 	
 	data[0].position = toXDVec(p1);
 	data[0].color.set(1.0f, 0.0f, 0.0f, 1.0f);
@@ -148,11 +148,11 @@ void DebugDraw::DrawTransform(const b2Transform& xf)
 
 void DebugDraw::DrawPoint(const b2Vec2& p, float32 size, const b2Color& color)
 {
-	Batch *batch = b2d->getDrawBatch();
-	batch->setPrimitive(Batch::PRIMITIVE_POINTS);
+	XBatch *batch = b2d->getDrawBatch();
+	batch->setPrimitive(XBatch::PRIMITIVE_POINTS);
 	batch->setTexture(0);
 
-	Vertex vertex;
+	XVertex vertex;
 	vertex.color.set(color.r, color.g, color.b, 1.0f);
 	vertex.position = toXDVec(p);
 	
@@ -167,10 +167,10 @@ void DebugDraw::DrawString(int x, int y, const char* string, ...)
 
 void DebugDraw::DrawAABB(b2AABB* aabb, const b2Color& color)
 {
-	Batch *batch = b2d->getDrawBatch();
-	batch->setPrimitive(Batch::PRIMITIVE_TRIANGLES);
+	XBatch *batch = b2d->getDrawBatch();
+	batch->setPrimitive(XBatch::PRIMITIVE_TRIANGLES);
 
-	Vertex *data = new Vertex[4];
+	XVertex *data = new XVertex[4];
 	Vector2 upper = toXDVec(aabb->upperBound);
 	Vector2 lower = toXDVec(aabb->lowerBound);
 	

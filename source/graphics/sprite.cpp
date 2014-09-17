@@ -10,46 +10,46 @@
 #include <x2d/engine.h>
 #include <x2d/graphics.h>
 
-AS_REG_REF(XSprite)
+AS_REG_REF(XSprite, "Sprite")
 
 int XSprite::Register(asIScriptEngine *scriptEngine)
 {
 	int r = 0;
 	
-	r = scriptEngine->RegisterObjectBehaviour("XSprite", asBEHAVE_FACTORY, "XSprite @f(const XTextureRegion &in)", asFUNCTIONPR(Factory, (const XTextureRegion&), XSprite*), asCALL_CDECL); AS_ASSERT
-	r = scriptEngine->RegisterObjectBehaviour("XSprite", asBEHAVE_FACTORY, "XSprite @f(XTexture@)", asFUNCTIONPR(Factory, (XTexture*), XSprite*), asCALL_CDECL); AS_ASSERT
+	r = scriptEngine->RegisterObjectBehaviour("Sprite", asBEHAVE_FACTORY, "Sprite @f(const TextureRegion &in)", asFUNCTIONPR(Factory, (const XTextureRegion&), XSprite*), asCALL_CDECL); AS_ASSERT
+	r = scriptEngine->RegisterObjectBehaviour("Sprite", asBEHAVE_FACTORY, "Sprite @f(Texture@)", asFUNCTIONPR(Factory, (XTexture*), XSprite*), asCALL_CDECL); AS_ASSERT
 	
-	r = scriptEngine->RegisterObjectMethod("XSprite", "void setPosition(const Vector2 &in)", asMETHODPR(XSprite, setPosition, (const Vector2&), void), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("XSprite", "void setPosition(const float, const float)", asMETHODPR(XSprite, setPosition, (const float, const float), void), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("XSprite", "void setX(const float)", asMETHOD(XSprite, setX), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("XSprite", "void setY(const float)", asMETHOD(XSprite, setY), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("XSprite", "void setSize(const Vector2 &in)", asMETHODPR(XSprite, setSize, (const Vector2&), void), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("XSprite", "void setSize(const float, const float)", asMETHODPR(XSprite, setSize, (const float, const float), void), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("XSprite", "void setWidth(const float)", asMETHOD(XSprite, setWidth), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("XSprite", "void setHeight(const float)", asMETHOD(XSprite, setHeight), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("XSprite", "void setOrigin(const Vector2 &in)", asMETHOD(XSprite, setOrigin), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("XSprite", "void setRotation(const float)", asMETHOD(XSprite, setRotation), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("XSprite", "void setRegion(const XTextureRegion &in)", asMETHOD(XSprite, setRegion), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("XSprite", "void setColor(const Vector4 &in)", asMETHOD(XSprite, setColor), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("Sprite", "void setPosition(const Vector2 &in)", asMETHODPR(XSprite, setPosition, (const Vector2&), void), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("Sprite", "void setPosition(const float, const float)", asMETHODPR(XSprite, setPosition, (const float, const float), void), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("Sprite", "void setX(const float)", asMETHOD(XSprite, setX), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("Sprite", "void setY(const float)", asMETHOD(XSprite, setY), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("Sprite", "void setSize(const Vector2 &in)", asMETHODPR(XSprite, setSize, (const Vector2&), void), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("Sprite", "void setSize(const float, const float)", asMETHODPR(XSprite, setSize, (const float, const float), void), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("Sprite", "void setWidth(const float)", asMETHOD(XSprite, setWidth), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("Sprite", "void setHeight(const float)", asMETHOD(XSprite, setHeight), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("Sprite", "void setOrigin(const Vector2 &in)", asMETHOD(XSprite, setOrigin), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("Sprite", "void setRotation(const float)", asMETHOD(XSprite, setRotation), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("Sprite", "void setRegion(const TextureRegion &in)", asMETHOD(XSprite, setRegion), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("Sprite", "void setColor(const Vector4 &in)", asMETHOD(XSprite, setColor), asCALL_THISCALL); AS_ASSERT
 	
-	r = scriptEngine->RegisterObjectMethod("XSprite", "XShape @getAABB() const", asMETHOD(XSprite, getAABB), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("XSprite", "Vector2 getPosition() const", asMETHOD(XSprite, getPosition), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("XSprite", "float getX() const", asMETHOD(XSprite, getX), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("XSprite", "float getY() const", asMETHOD(XSprite, getY), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("XSprite", "Vector2 getSize() const", asMETHOD(XSprite, getSize), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("XSprite", "float getWidth() const", asMETHOD(XSprite, getWidth), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("XSprite", "float getHeight() const", asMETHOD(XSprite, getHeight), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("XSprite", "Vector2 getOrigin() const", asMETHOD(XSprite, getOrigin), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("XSprite", "Vector2 getCenter() const", asMETHOD(XSprite, getCenter), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("XSprite", "Vector4 getColor() const", asMETHOD(XSprite, getColor), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("XSprite", "XTextureRegion getRegion() const", asMETHOD(XSprite, getRegion), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("XSprite", "XTexture @getTexture() const", asMETHOD(XSprite, getTexture), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("Sprite", "Shape @getAABB() const", asMETHOD(XSprite, getAABB), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("Sprite", "Vector2 getPosition() const", asMETHOD(XSprite, getPosition), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("Sprite", "float getX() const", asMETHOD(XSprite, getX), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("Sprite", "float getY() const", asMETHOD(XSprite, getY), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("Sprite", "Vector2 getSize() const", asMETHOD(XSprite, getSize), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("Sprite", "float getWidth() const", asMETHOD(XSprite, getWidth), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("Sprite", "float getHeight() const", asMETHOD(XSprite, getHeight), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("Sprite", "Vector2 getOrigin() const", asMETHOD(XSprite, getOrigin), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("Sprite", "Vector2 getCenter() const", asMETHOD(XSprite, getCenter), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("Sprite", "Vector4 getColor() const", asMETHOD(XSprite, getColor), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("Sprite", "TextureRegion getRegion() const", asMETHOD(XSprite, getRegion), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("Sprite", "Texture @getTexture() const", asMETHOD(XSprite, getTexture), asCALL_THISCALL); AS_ASSERT
 
-	r = scriptEngine->RegisterObjectMethod("XSprite", "void move(const Vector2 &in)", asMETHOD(XSprite, move), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("XSprite", "void rotate(const float)", asMETHOD(XSprite, rotate), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("XSprite", "void scale(const float)", asMETHOD(XSprite, scale), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("Sprite", "void move(const Vector2 &in)", asMETHOD(XSprite, move), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("Sprite", "void rotate(const float)", asMETHOD(XSprite, rotate), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("Sprite", "void scale(const float)", asMETHOD(XSprite, scale), asCALL_THISCALL); AS_ASSERT
 	
-	r = scriptEngine->RegisterObjectMethod("XSprite", "void draw(XBatch @batch)", asMETHOD(XSprite, draw), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("Sprite", "void draw(Batch @batch)", asMETHOD(XSprite, draw), asCALL_THISCALL); AS_ASSERT
 
 	return r;
 }

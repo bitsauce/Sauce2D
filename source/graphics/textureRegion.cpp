@@ -10,25 +10,25 @@
 #include <x2d/engine.h>
 #include <x2d/graphics.h>
 
-AS_REG_VALUE(XTextureRegion)
+AS_REG_VALUE(XTextureRegion, "TextureRegion")
 
 int XTextureRegion::Register(asIScriptEngine *scriptEngine)
 {
 	int r = 0;
 	
-	r = scriptEngine->RegisterObjectBehaviour("XTextureRegion", asBEHAVE_CONSTRUCT, "void f(XTexture@)", asFUNCTIONPR(Factory, (XTexture*, XTextureRegion*), void), asCALL_CDECL_OBJLAST); AS_ASSERT
-	r = scriptEngine->RegisterObjectBehaviour("XTextureRegion", asBEHAVE_CONSTRUCT, "void f(XTexture @, const Vector2 &in, const Vector2 &in)", asFUNCTIONPR(Factory, (XTexture*, const Vector2&, const Vector2&, XTextureRegion*), void), asCALL_CDECL_OBJLAST); AS_ASSERT
-	r = scriptEngine->RegisterObjectBehaviour("XTextureRegion", asBEHAVE_CONSTRUCT, "void f(XTexture @, const float, const float, const float, const float)", asFUNCTIONPR(Factory, (XTexture*, const float, const float, const float, const float, XTextureRegion*), void), asCALL_CDECL_OBJLAST); AS_ASSERT
-	r = scriptEngine->RegisterObjectBehaviour("XTextureRegion", asBEHAVE_CONSTRUCT, "void f(const XTextureRegion &in)", asFUNCTIONPR(Factory, (const XTextureRegion&, XTextureRegion*), void), asCALL_CDECL_OBJLAST); AS_ASSERT
-	r = scriptEngine->RegisterObjectBehaviour("XTextureRegion", asBEHAVE_DESTRUCT, "void f()", asFUNCTION(Destruct), asCALL_CDECL_OBJLAST); AS_ASSERT
+	r = scriptEngine->RegisterObjectBehaviour("TextureRegion", asBEHAVE_CONSTRUCT, "void f(Texture@)", asFUNCTIONPR(Factory, (XTexture*, XTextureRegion*), void), asCALL_CDECL_OBJLAST); AS_ASSERT
+	r = scriptEngine->RegisterObjectBehaviour("TextureRegion", asBEHAVE_CONSTRUCT, "void f(Texture @, const Vector2 &in, const Vector2 &in)", asFUNCTIONPR(Factory, (XTexture*, const Vector2&, const Vector2&, XTextureRegion*), void), asCALL_CDECL_OBJLAST); AS_ASSERT
+	r = scriptEngine->RegisterObjectBehaviour("TextureRegion", asBEHAVE_CONSTRUCT, "void f(Texture @, const float, const float, const float, const float)", asFUNCTIONPR(Factory, (XTexture*, const float, const float, const float, const float, XTextureRegion*), void), asCALL_CDECL_OBJLAST); AS_ASSERT
+	r = scriptEngine->RegisterObjectBehaviour("TextureRegion", asBEHAVE_CONSTRUCT, "void f(const TextureRegion &in)", asFUNCTIONPR(Factory, (const XTextureRegion&, XTextureRegion*), void), asCALL_CDECL_OBJLAST); AS_ASSERT
+	r = scriptEngine->RegisterObjectBehaviour("TextureRegion", asBEHAVE_DESTRUCT, "void f()", asFUNCTION(Destruct), asCALL_CDECL_OBJLAST); AS_ASSERT
 	
-	r = scriptEngine->RegisterObjectProperty("XTextureRegion", "Vector2 uv0", offsetof(XTextureRegion, uv0)); AS_ASSERT
-	r = scriptEngine->RegisterObjectProperty("XTextureRegion", "Vector2 uv1", offsetof(XTextureRegion, uv1)); AS_ASSERT
+	r = scriptEngine->RegisterObjectProperty("TextureRegion", "Vector2 uv0", offsetof(XTextureRegion, uv0)); AS_ASSERT
+	r = scriptEngine->RegisterObjectProperty("TextureRegion", "Vector2 uv1", offsetof(XTextureRegion, uv1)); AS_ASSERT
 
-	r = scriptEngine->RegisterObjectMethod("XTextureRegion", "void setRegion(const Vector2 &in, const Vector2 &in)", asMETHODPR(XTextureRegion, setRegion, (const Vector2&, const Vector2&), void), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("XTextureRegion", "void setRegion(const float, const float, const float, const float)", asMETHODPR(XTextureRegion, setRegion, (const float, const float, const float, const float), void), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("XTextureRegion", "XTexture @getTexture() const", asMETHODPR(XTextureRegion, getTexture, () const, XTexture*), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("XTextureRegion", "void setTexture(XTexture@)", asMETHODPR(XTextureRegion, setTexture, (XTexture*), void), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("TextureRegion", "void setRegion(const Vector2 &in, const Vector2 &in)", asMETHODPR(XTextureRegion, setRegion, (const Vector2&, const Vector2&), void), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("TextureRegion", "void setRegion(const float, const float, const float, const float)", asMETHODPR(XTextureRegion, setRegion, (const float, const float, const float, const float), void), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("TextureRegion", "Texture @getTexture() const", asMETHODPR(XTextureRegion, getTexture, () const, XTexture*), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("TextureRegion", "void setTexture(Texture@)", asMETHODPR(XTextureRegion, setTexture, (XTexture*), void), asCALL_THISCALL); AS_ASSERT
 
 	return r;
 }

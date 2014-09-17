@@ -10,20 +10,20 @@
 #include <x2d/engine.h>
 #include <x2d/graphics.h>
 
-AS_REG_VALUE(XVertex)
+AS_REG_VALUE(XVertex, "Vertex")
 
 int XVertex::Register(asIScriptEngine *scriptEngine)
 {
 	int r = 0;
 
-	r = scriptEngine->RegisterObjectProperty("XVertex", "Vector2 position", offsetof(XVertex, position)); AS_ASSERT
-	r = scriptEngine->RegisterObjectProperty("XVertex", "Vector4 color", offsetof(XVertex, color)); AS_ASSERT
-	r = scriptEngine->RegisterObjectProperty("XVertex", "Vector2 texCoord", offsetof(XVertex, texCoord)); AS_ASSERT
+	r = scriptEngine->RegisterObjectProperty("Vertex", "Vector2 position", offsetof(XVertex, position)); AS_ASSERT
+	r = scriptEngine->RegisterObjectProperty("Vertex", "Vector4 color", offsetof(XVertex, color)); AS_ASSERT
+	r = scriptEngine->RegisterObjectProperty("Vertex", "Vector2 texCoord", offsetof(XVertex, texCoord)); AS_ASSERT
 
 	return r;
 }
 
-AS_REG_REF(XBatch)
+AS_REG_REF(XBatch, "Batch")
 
 int XBatch::Register(asIScriptEngine *scriptEngine)
 {
@@ -42,27 +42,27 @@ int XBatch::Register(asIScriptEngine *scriptEngine)
 	r = scriptEngine->RegisterEnumValue("BlendFunc", "BLEND_ONE_MINUS_DST_ALPHA", BLEND_ONE_MINUS_DST_ALPHA); AS_ASSERT
 	r = scriptEngine->RegisterEnumValue("BlendFunc", "BLEND_SRC_ALPHA_SATURATE", BLEND_SRC_ALPHA_SATURATE); AS_ASSERT
 
-	r = scriptEngine->RegisterObjectBehaviour("XBatch", asBEHAVE_FACTORY, "XBatch @f()", asFUNCTIONPR(Factory, (), XBatch*), asCALL_CDECL); AS_ASSERT
+	r = scriptEngine->RegisterObjectBehaviour("Batch", asBEHAVE_FACTORY, "Batch @f()", asFUNCTIONPR(Factory, (), XBatch*), asCALL_CDECL); AS_ASSERT
 		
 	// Getters/setters
-	r = scriptEngine->RegisterObjectMethod("XBatch", "void setProjectionMatrix(const Matrix4 &in)", asMETHOD(XBatch, setProjectionMatrix), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("XBatch", "void setShader(XShader @shader)", asMETHOD(XBatch, setShader), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("XBatch", "void setTexture(XTexture @texture)", asMETHOD(XBatch, setTexture), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("XBatch", "void setBlendFunc(const BlendFunc, const BlendFunc)", asMETHOD(XBatch, setBlendFunc), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("XBatch", "Matrix4 getProjectionMatrix() const", asMETHOD(XBatch, getProjectionMatrix), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("XBatch", "XShader @getShader() const", asMETHOD(XBatch, getShader), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("XBatch", "XTexture @getTexture() const", asMETHOD(XBatch, getTexture), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("Batch", "void setProjectionMatrix(const Matrix4 &in)", asMETHOD(XBatch, setProjectionMatrix), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("Batch", "void setShader(Shader @shader)", asMETHOD(XBatch, setShader), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("Batch", "void setTexture(Texture @texture)", asMETHOD(XBatch, setTexture), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("Batch", "void setBlendFunc(const BlendFunc, const BlendFunc)", asMETHOD(XBatch, setBlendFunc), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("Batch", "Matrix4 getProjectionMatrix() const", asMETHOD(XBatch, getProjectionMatrix), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("Batch", "Shader @getShader() const", asMETHOD(XBatch, getShader), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("Batch", "Texture @getTexture() const", asMETHOD(XBatch, getTexture), asCALL_THISCALL); AS_ASSERT
 
 	// Vertex data
-	r = scriptEngine->RegisterObjectMethod("XBatch", "void addVertices(array<XVertex> @vertices, array<uint> @indices)", asMETHOD(XBatch, addVerticesAS), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("XBatch", "XVertex getVertex(int index)", asMETHOD(XBatch, getVertex), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("XBatch", "void modifyVertex(int index, XVertex vertex)", asMETHOD(XBatch, modifyVertex), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("Batch", "void addVertices(array<Vertex> @vertices, array<uint> @indices)", asMETHOD(XBatch, addVerticesAS), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("Batch", "Vertex getVertex(int index)", asMETHOD(XBatch, getVertex), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("Batch", "void modifyVertex(int index, Vertex vertex)", asMETHOD(XBatch, modifyVertex), asCALL_THISCALL); AS_ASSERT
 
 	// Misc
-	r = scriptEngine->RegisterObjectMethod("XBatch", "void draw()", asMETHOD(XBatch, draw), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("XBatch", "void clear()", asMETHOD(XBatch, clear), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("XBatch", "void makeStatic()", asMETHOD(XBatch, makeStatic), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("XBatch", "void renderToTexture(XTexture@)", asMETHOD(XBatch, renderToTexture), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("Batch", "void draw()", asMETHOD(XBatch, draw), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("Batch", "void clear()", asMETHOD(XBatch, clear), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("Batch", "void makeStatic()", asMETHOD(XBatch, makeStatic), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("Batch", "void renderToTexture(Texture@)", asMETHOD(XBatch, renderToTexture), asCALL_THISCALL); AS_ASSERT
 
 	return r;
 }

@@ -42,12 +42,12 @@ int XScriptEngine::Register(asIScriptEngine *scriptEngine)
 	r = scriptEngine->RegisterObjectMethod("XScriptEngine", "bool classDerivesFromName(const string, const string)", asMETHOD(XScriptEngine, classDerivesFromName), asCALL_THISCALL); AS_ASSERT
 	r = scriptEngine->RegisterObjectMethod("XScriptEngine", "bool classDerivesFromId(const uint, const uint)", asMETHOD(XScriptEngine, classDerivesFromId), asCALL_THISCALL); AS_ASSERT
 
-	r = scriptEngine->RegisterInterface("XSerializable"); AS_ASSERT
-	r = scriptEngine->RegisterInterfaceMethod("XSerializable", "void serialize(XStringStream&)"); AS_ASSERT
-	r = scriptEngine->RegisterInterfaceMethod("XSerializable", "void deserialize(XStringStream&)"); AS_ASSERT
+	r = scriptEngine->RegisterInterface("Serializable"); AS_ASSERT
+	r = scriptEngine->RegisterInterfaceMethod("Serializable", "void serialize(StringStream&)"); AS_ASSERT
+	r = scriptEngine->RegisterInterfaceMethod("Serializable", "void deserialize(StringStream&)"); AS_ASSERT
 
-	r = scriptEngine->RegisterObjectMethod("XScriptEngine", "void serialize(XSerializable@, string &in)", asMETHODPR(XScriptEngine, serialize, (asIScriptObject*, string&), void), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("XScriptEngine", "XSerializable @deserialize(string &in)", asMETHODPR(XScriptEngine, deserialize, (string&), asIScriptObject*), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("XScriptEngine", "void serialize(Serializable@, string &in)", asMETHODPR(XScriptEngine, serialize, (asIScriptObject*, string&), void), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("XScriptEngine", "Serializable @deserialize(string &in)", asMETHODPR(XScriptEngine, deserialize, (string&), asIScriptObject*), asCALL_THISCALL); AS_ASSERT
 
 	return r;
 }

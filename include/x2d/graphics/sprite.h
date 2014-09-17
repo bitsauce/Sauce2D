@@ -7,7 +7,6 @@
 class XTexture;
 class XBatch;
 class XShape;
-struct Vertex;
 
 class XSprite
 {

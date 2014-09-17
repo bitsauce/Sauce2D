@@ -63,7 +63,7 @@ void Box2D::step(float timeStep)
 	m_world->Step(timeStep, 8, 3);
 }
 
-void Box2D::draw(Batch *batch)
+void Box2D::draw(XBatch *batch)
 {
 	m_drawBatch = batch;
 	m_world->DrawDebugData();
@@ -104,7 +104,7 @@ b2World *Box2D::getWorld() const
 	return m_world;
 }
 
-Batch *Box2D::getDrawBatch() const
+XBatch *Box2D::getDrawBatch() const
 {
 	return m_drawBatch;
 }

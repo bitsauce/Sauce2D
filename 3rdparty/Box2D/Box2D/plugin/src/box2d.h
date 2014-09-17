@@ -1,15 +1,9 @@
 #ifndef B2_BOX2D_H
 #define B2_BOX2D_H
 
-#include "body.h"
-
-#include <x2d/math.h>
-#include <x2d/console.h>
-#include <x2d/util.h>
-#include <x2d/graphics.h>
-#include <x2d/graphics/batch.h>
-
+#include <x2d/x2d.h>
 #include <Box2D/Box2D.h>
+#include "body.h"
 
 class Box2D
 {
@@ -18,7 +12,7 @@ public:
 	~Box2D();
 
 	void step(float timeStep);
-	void draw(Batch *batch);
+	void draw(XBatch *batch);
 	void setDrawFlags(int flags);
 	void setScale(float scale);
 	float getScale() const;
@@ -27,7 +21,7 @@ public:
 	b2World *getWorld() const;
 	bool isLocked() const;
 
-	Batch *getDrawBatch() const;
+	XBatch *getDrawBatch() const;
 
 	void createJoint(b2Joint **joint, const b2JointDef &jointDef);
 
@@ -45,7 +39,7 @@ private:
 	set<b2Body**> m_bodiesToDestroy;
 	set<pair<b2Body*, b2Fixture**>> m_fixturesToDestroy;
 
-	Batch *m_drawBatch;
+	XBatch *m_drawBatch;
 };
 
 extern Box2D *b2d;

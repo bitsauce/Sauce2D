@@ -5,9 +5,6 @@
 
 #include <spine/spine.h>
 
-#include <x2d/engine.h>
-#include <x2d/scriptengine.h>
-
 int spAnimationStateWrapper::TypeId = 0;
 
 spAnimationWrapper::spAnimationWrapper(spSkeleton *skeleton, spAnimation *anim) :
@@ -205,8 +202,7 @@ spAnimationStateWrapper *spAnimationStateWrapper::Factory(spAnimationStateDataWr
 
 	spAnimationStateWrapper *animState = new spAnimationStateWrapper(data);
 
-	asIScriptEngine *scriptEngine = xdengine->getScriptEngine()->getASEngine();
-	scriptEngine->NotifyGarbageCollectorOfNewObject(animState, scriptEngine->GetObjectTypeById(spAnimationStateWrapper::TypeId));
+	XScriptEngine::GetAngelScript()->NotifyGarbageCollectorOfNewObject(animState, XScriptEngine::GetAngelScript()->GetObjectTypeById(spAnimationStateWrapper::TypeId));
 
 	return animState;
 }

@@ -1,12 +1,10 @@
 #ifndef B2_FIXTURE_WRAPPER_H
 #define B2_FIXTURE_WRAPPER_H
 
-#include <x2d/base.h>
-#include <x2d/math.h>
+#include <x2d/x2d.h>
 
 class b2Fixture;
 class b2Shape;
-class asIScriptEngine;
 
 class b2FixtureWrapper
 {

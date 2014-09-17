@@ -1,7 +1,7 @@
 #ifndef PLUGIN_EVENT_H
 #define PLUGIN_EVENT_H
 
-#include <x2d/base.h>
+#include <x2d/x2d.h>
 #include <spine/spine.h>
 
 class spEventWrapper

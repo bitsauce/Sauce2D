@@ -10,7 +10,7 @@
 #include <x2d/engine.h>
 #include <x2d/graphics.h>
 
-AS_REG_REF(XViewport)
+AS_REG_REF(XViewport, "Viewport")
 
 int XViewport::Register(asIScriptEngine *scriptEngine)
 {

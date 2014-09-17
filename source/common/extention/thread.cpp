@@ -10,9 +10,13 @@
 #include <x2d/engine.h>
 #include <x2d/extention.h>
 
-template<typename T> T &Get()
-{
-}
+// NOTE TO SELF:
+// Mutexes must apparently be unlocked by the same thread as the one locking it.
+// Therefore doing try_lock and unlock in the destructor might cause problems as
+// the destructor will always be called on the Main thread (I think?) when exiting.
+//
+// A soultion to this can be to create a Thread object, which itself manages its
+// mutexes upon destruction.
 
 void CallFunction(XFuncCall &funccall)
 {
@@ -47,6 +51,7 @@ void ConstructMutex(mutex *self)
 
 void DestructMutex(mutex *self)
 {
+	self->try_lock();
 	self->unlock();
 	((_Mutex_base*)self)->~_Mutex_base();
 }

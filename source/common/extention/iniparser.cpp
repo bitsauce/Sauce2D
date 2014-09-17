@@ -10,20 +10,20 @@
 #include <x2d/engine.h>
 #include <x2d/extention.h>
 
-AS_REG_REF(XIniFile)
+AS_REG_REF(XIniFile, "IniFile")
 
 int XIniFile::Register(asIScriptEngine *scriptEngine)
 {
 	int r = 0;
 
-	r = scriptEngine->RegisterObjectBehaviour("XIniFile", asBEHAVE_FACTORY, "XIniFile @f(string &in)", asFUNCTIONPR(Factory, (string&), XIniFile*), asCALL_CDECL); AS_ASSERT
+	r = scriptEngine->RegisterObjectBehaviour("IniFile", asBEHAVE_FACTORY, "IniFile @f(string &in)", asFUNCTIONPR(Factory, (string&), XIniFile*), asCALL_CDECL); AS_ASSERT
 		
-	r = scriptEngine->RegisterObjectMethod("XIniFile", "string getValue(const string &in, const string &in) const", asMETHOD(XIniFile, getValue), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("XIniFile", "void setValue(const string &in, const string &in, const string &in)", asMETHOD(XIniFile, setValue), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("IniFile", "string getValue(const string &in, const string &in) const", asMETHOD(XIniFile, getValue), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("IniFile", "void setValue(const string &in, const string &in, const string &in)", asMETHOD(XIniFile, setValue), asCALL_THISCALL); AS_ASSERT
 	
-	r = scriptEngine->RegisterObjectMethod("XIniFile", "bool isSection(const string &in) const", asMETHOD(XIniFile, isSection), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("IniFile", "bool isSection(const string &in) const", asMETHOD(XIniFile, isSection), asCALL_THISCALL); AS_ASSERT
 
-	r = scriptEngine->RegisterObjectMethod("XIniFile", "void save()", asMETHOD(XIniFile, save), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("IniFile", "void save()", asMETHOD(XIniFile, save), asCALL_THISCALL); AS_ASSERT
 
 	return r;
 }

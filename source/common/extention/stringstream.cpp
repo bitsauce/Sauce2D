@@ -10,35 +10,35 @@
 #include <x2d/engine.h>
 #include <x2d/extention.h>
 
-AS_REG_REF(XStringStream)
+AS_REG_REF(XStringStream, "StringStream")
 
 int XStringStream::Register(asIScriptEngine *scriptEngine)
 {
 	int r = 0;
 	
-	r = scriptEngine->RegisterObjectBehaviour("XStringStream", asBEHAVE_FACTORY,  "XStringStream @f()", asFUNCTION(Factory), asCALL_CDECL); AS_ASSERT
+	r = scriptEngine->RegisterObjectBehaviour("StringStream", asBEHAVE_FACTORY,  "StringStream @f()", asFUNCTION(Factory), asCALL_CDECL); AS_ASSERT
 		
-	r = scriptEngine->RegisterObjectMethod("XStringStream", "void write(const bool)", asMETHODPR(XStringStream, write, (const bool), void), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("XStringStream", "void write(const int8)", asMETHODPR(XStringStream, write, (const char), void), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("XStringStream", "void write(const int16)", asMETHODPR(XStringStream, write, (const short), void), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("XStringStream", "void write(const int)", asMETHODPR(XStringStream, write, (const int), void), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("XStringStream", "void write(const int64)", asMETHODPR(XStringStream, write, (const long), void), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("XStringStream", "void write(const float)", asMETHODPR(XStringStream, write, (const float), void), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("XStringStream", "void write(const double)", asMETHODPR(XStringStream, write, (const double), void), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("XStringStream", "void write(const string&in)", asMETHODPR(XStringStream, write, (const string&), void), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("XStringStream", "void write(const Vector2&in)", asMETHODPR(XStringStream, write, (const Vector2&), void), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("StringStream", "void write(const bool)", asMETHODPR(XStringStream, write, (const bool), void), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("StringStream", "void write(const int8)", asMETHODPR(XStringStream, write, (const char), void), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("StringStream", "void write(const int16)", asMETHODPR(XStringStream, write, (const short), void), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("StringStream", "void write(const int)", asMETHODPR(XStringStream, write, (const int), void), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("StringStream", "void write(const int64)", asMETHODPR(XStringStream, write, (const long), void), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("StringStream", "void write(const float)", asMETHODPR(XStringStream, write, (const float), void), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("StringStream", "void write(const double)", asMETHODPR(XStringStream, write, (const double), void), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("StringStream", "void write(const string&in)", asMETHODPR(XStringStream, write, (const string&), void), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("StringStream", "void write(const Vector2&in)", asMETHODPR(XStringStream, write, (const Vector2&), void), asCALL_THISCALL); AS_ASSERT
 	
-	r = scriptEngine->RegisterObjectMethod("XStringStream", "void read(bool&out)", asMETHODPR(XStringStream, read, (bool&), void), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("XStringStream", "void read(int8&out)", asMETHODPR(XStringStream, read, (char&), void), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("XStringStream", "void read(int16&out)", asMETHODPR(XStringStream, read, (short&), void), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("XStringStream", "void read(int&out)", asMETHODPR(XStringStream, read, (int&), void), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("XStringStream", "void read(int64&out)", asMETHODPR(XStringStream, read, (long&), void), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("XStringStream", "void read(float&out)", asMETHODPR(XStringStream, read, (float&), void), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("XStringStream", "void read(double&out)", asMETHODPR(XStringStream, read, (double&), void), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("XStringStream", "void read(string&out)", asMETHODPR(XStringStream, read, (string&), void), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("XStringStream", "void read(Vector2&out)", asMETHODPR(XStringStream, read, (Vector2&), void), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("StringStream", "void read(bool&out)", asMETHODPR(XStringStream, read, (bool&), void), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("StringStream", "void read(int8&out)", asMETHODPR(XStringStream, read, (char&), void), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("StringStream", "void read(int16&out)", asMETHODPR(XStringStream, read, (short&), void), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("StringStream", "void read(int&out)", asMETHODPR(XStringStream, read, (int&), void), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("StringStream", "void read(int64&out)", asMETHODPR(XStringStream, read, (long&), void), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("StringStream", "void read(float&out)", asMETHODPR(XStringStream, read, (float&), void), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("StringStream", "void read(double&out)", asMETHODPR(XStringStream, read, (double&), void), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("StringStream", "void read(string&out)", asMETHODPR(XStringStream, read, (string&), void), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("StringStream", "void read(Vector2&out)", asMETHODPR(XStringStream, read, (Vector2&), void), asCALL_THISCALL); AS_ASSERT
 
-	r = scriptEngine->RegisterObjectMethod("XStringStream", "string str() const", asMETHODPR(XStringStream, str, () const, string), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("StringStream", "string str() const", asMETHODPR(XStringStream, str, () const, string), asCALL_THISCALL); AS_ASSERT
 
 	return r;
 }

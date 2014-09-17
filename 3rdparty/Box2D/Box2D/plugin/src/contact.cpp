@@ -4,7 +4,6 @@
 #include "fixture.h"
 #include "plugin.h"
 #include <Box2D/Box2D.h>
-#include <x2d/scriptengine.h>
 
 b2ContactWrapper::b2ContactWrapper(b2Contact *contact, b2FixtureWrapper *fixtureA, b2FixtureWrapper *fixtureB) :
 	m_fixtureA(fixtureA),
@@ -87,7 +86,7 @@ void b2ContactWrapper::call(ContactType type)
 
 	if(func)
 	{
-		asIScriptContext *ctx = xdengine->getScriptEngine()->createContext();
+		asIScriptContext *ctx = XScriptEngine::CreateContext();
 		int r = ctx->Prepare(func); assert(r >= 0); addRef();
 		r = ctx->SetArgAddress(0, this); assert(r >= 0);
 		r = ctx->Execute(); assert(r >= 0);

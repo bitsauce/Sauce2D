@@ -1,3 +1,12 @@
+//       ____  ____     ____                        _____             _            
+// __  _|___ \|  _ \   / ___| __ _ _ __ ___   ___  | ____|_ __   __ _(_)_ __   ___ 
+// \ \/ / __) | | | | | |  _ / _  |  _   _ \ / _ \ |  _| |  _ \ / _  | |  _ \ / _ \
+//  >  < / __/| |_| | | |_| | (_| | | | | | |  __/ | |___| | | | (_| | | | | |  __/
+// /_/\_\_____|____/   \____|\__ _|_| |_| |_|\___| |_____|_| |_|\__, |_|_| |_|\___|
+//                                                              |___/     
+//				Originally written by Marcus Loo Vergara (aka. Bitsauce)
+//									2011-2014 (C)
+
 #include "plugin.h"
 #include "box2d.h"
 #include "body.h"
@@ -8,20 +17,8 @@
 #include <Box2D/Box2D.h>
 #include <Box2D/Common/b2Settings.h>
 
-#include <x2d/config.h>
-#include <x2d/engine.h>
-#include <x2d/math.h>
-#include <x2d/scriptengine.h>
-#include <x2d/scripts/array.h>
-#include <x2d/scripts/anyobject.h>
-
-xdEngine *xdengine = 0;
-
-int CreatePlugin(xdEngine *engine)
+int CreatePlugin(asIScriptEngine *scriptEngine)
 {
-	xdengine = engine;
-	asIScriptEngine *scriptEngine = engine->getScriptEngine()->getASEngine();
-
 	int r = 0;
 	
 	r = scriptEngine->RegisterObjectType("ScriptBox2D", 0, asOBJ_REF | asOBJ_NOHANDLE); AS_ASSERT
@@ -92,7 +89,7 @@ int CreatePlugin(xdEngine *engine)
 	r = scriptEngine->RegisterObjectMethod("b2Body", "void destroy()", asMETHOD(b2BodyWrapper, destroy), asCALL_THISCALL); AS_ASSERT
 	r = scriptEngine->RegisterObjectMethod("b2Body", "b2Fixture @createFixture(const Rect &in, float)", asMETHODPR(b2BodyWrapper, createFixture, (const Rect&, float), b2FixtureWrapper*), asCALL_THISCALL); AS_ASSERT
 	r = scriptEngine->RegisterObjectMethod("b2Body", "b2Fixture @createFixture(const Vector2 &in, const float, float)", asMETHODPR(b2BodyWrapper, createFixture, (const Vector2&, const float, float), b2FixtureWrapper*), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("b2Body", "b2Fixture @createFixture(array<Vector2> &in, float density)", asMETHODPR(b2BodyWrapper, createFixture, (Array*, float), b2FixtureWrapper*), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("b2Body", "b2Fixture @createFixture(array<Vector2> &in, float density)", asMETHODPR(b2BodyWrapper, createFixture, (XScriptArray*, float), b2FixtureWrapper*), asCALL_THISCALL); AS_ASSERT
 	r = scriptEngine->RegisterObjectMethod("b2Body", "void removeFixture(b2Fixture @)", asMETHOD(b2BodyWrapper, removeFixture), asCALL_THISCALL); AS_ASSERT
 	r = scriptEngine->RegisterObjectMethod("b2Body", "void setTransform(const Vector2 &in, float)", asMETHOD(b2BodyWrapper, setTransform), asCALL_THISCALL); AS_ASSERT
 	r = scriptEngine->RegisterObjectMethod("b2Body", "void setPosition(const Vector2 &in)", asMETHOD(b2BodyWrapper, setPosition), asCALL_THISCALL); AS_ASSERT
@@ -174,8 +171,6 @@ void ReleasePlugin()
 {
 	delete b2d;
 }
-
-
 
 #ifdef OLD
 

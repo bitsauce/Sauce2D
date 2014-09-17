@@ -10,33 +10,33 @@
 #include <x2d/engine.h>
 #include <x2d/graphics.h>
 
-AS_REG_REF(XSpriteBatch)
+AS_REG_REF(XSpriteBatch, "SpriteBatch")
 
 int XSpriteBatch::Register(asIScriptEngine *scriptEngine)
 {
 	
 	int r = 0;
 
-	r = scriptEngine->RegisterObjectBehaviour("XSpriteBatch", asBEHAVE_FACTORY, "XSpriteBatch @f()", asFUNCTIONPR(Factory, (), XSpriteBatch*), asCALL_CDECL); AS_ASSERT
+	r = scriptEngine->RegisterObjectBehaviour("SpriteBatch", asBEHAVE_FACTORY, "SpriteBatch @f()", asFUNCTIONPR(Factory, (), XSpriteBatch*), asCALL_CDECL); AS_ASSERT
 		
 	// Getters/setters
-	r = scriptEngine->RegisterObjectMethod("XSpriteBatch", "void setProjectionMatrix(const Matrix4 &in)", asMETHOD(XSpriteBatch, setProjectionMatrix), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("XSpriteBatch", "void setShader(XShader @shader)", asMETHOD(XSpriteBatch, setShader), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("XSpriteBatch", "void setTexture(XTexture @texture)", asMETHOD(XSpriteBatch, setTexture), asCALL_THISCALL); AS_ASSERT
-	//r = scriptEngine->RegisterObjectMethod("XSpriteBatch", "void setBlendFunc(const BlendFunc, const BlendFunc)", asMETHOD(XSpriteBatch, setBlendFunc), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("XSpriteBatch", "Matrix4 getProjectionMatrix() const", asMETHOD(XSpriteBatch, getProjectionMatrix), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("XSpriteBatch", "XShader @getShader() const", asMETHOD(XSpriteBatch, getShader), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("XSpriteBatch", "XTexture @getTexture() const", asMETHOD(XSpriteBatch, getTexture), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("SpriteBatch", "void setProjectionMatrix(const Matrix4 &in)", asMETHOD(XSpriteBatch, setProjectionMatrix), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("SpriteBatch", "void setShader(Shader @shader)", asMETHOD(XSpriteBatch, setShader), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("SpriteBatch", "void setTexture(Texture @texture)", asMETHOD(XSpriteBatch, setTexture), asCALL_THISCALL); AS_ASSERT
+	//r = scriptEngine->RegisterObjectMethod("SpriteBatch", "void setBlendFunc(const BlendFunc, const BlendFunc)", asMETHOD(XSpriteBatch, setBlendFunc), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("SpriteBatch", "Matrix4 getProjectionMatrix() const", asMETHOD(XSpriteBatch, getProjectionMatrix), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("SpriteBatch", "Shader @getShader() const", asMETHOD(XSpriteBatch, getShader), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("SpriteBatch", "Texture @getTexture() const", asMETHOD(XSpriteBatch, getTexture), asCALL_THISCALL); AS_ASSERT
 
-	r = scriptEngine->RegisterObjectMethod("XSpriteBatch", "void add(XSprite@)", asMETHOD(XSpriteBatch, add), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("XSpriteBatch", "XSprite @get(int)", asMETHOD(XSpriteBatch, get), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("XSpriteBatch", "int getSize() const", asMETHOD(XSpriteBatch, getSize), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("SpriteBatch", "void add(Sprite@)", asMETHOD(XSpriteBatch, add), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("SpriteBatch", "Sprite @get(int)", asMETHOD(XSpriteBatch, get), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("SpriteBatch", "int getSize() const", asMETHOD(XSpriteBatch, getSize), asCALL_THISCALL); AS_ASSERT
 	
 	// Misc
-	r = scriptEngine->RegisterObjectMethod("XSpriteBatch", "void draw()", asMETHOD(XSpriteBatch, draw), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("XSpriteBatch", "void clear()", asMETHOD(XSpriteBatch, clear), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("XSpriteBatch", "void makeStatic()", asMETHOD(XSpriteBatch, makeStatic), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("XSpriteBatch", "void renderToTexture(XTexture@)", asMETHOD(XSpriteBatch, renderToTexture), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("SpriteBatch", "void draw()", asMETHOD(XSpriteBatch, draw), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("SpriteBatch", "void clear()", asMETHOD(XSpriteBatch, clear), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("SpriteBatch", "void makeStatic()", asMETHOD(XSpriteBatch, makeStatic), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("SpriteBatch", "void renderToTexture(Texture@)", asMETHOD(XSpriteBatch, renderToTexture), asCALL_THISCALL); AS_ASSERT
 
 	return r;
 }

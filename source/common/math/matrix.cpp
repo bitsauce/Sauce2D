@@ -12,18 +12,14 @@
 
 const float DEG2RAD = 3.141593f / 180;
 
-///////////////////////////////////////////////////////////////////////////////
-// return the determinant of 2x2 matrix
-///////////////////////////////////////////////////////////////////////////////
+/*********************************************************************
+**	2x2 Matrix														**
+**********************************************************************/
 float Matrix2::getDeterminant()
 {
     return m[0] * m[3] - m[1] * m[2];
 }
 
-///////////////////////////////////////////////////////////////////////////////
-// inverse of 2x2 matrix
-// If cannot find inverse, set identity matrix
-///////////////////////////////////////////////////////////////////////////////
 Matrix2& Matrix2::invert()
 {
     float determinant = m[0] * m[3] - m[1] * m[2];
@@ -42,21 +38,17 @@ Matrix2& Matrix2::invert()
     return *this;
 }
 
-///////////////////////////////////////////////////////////////////////////////
-// return determinant of 3x3 matrix
-///////////////////////////////////////////////////////////////////////////////
-float mat3::getDeterminant()
+/*********************************************************************
+**	3x3 Matrix														**
+**********************************************************************/
+float Matrix3::getDeterminant()
 {
     return m[0] * (m[4] * m[8] - m[5] * m[7]) -
            m[1] * (m[3] * m[8] - m[5] * m[6]) +
            m[2] * (m[3] * m[7] - m[4] * m[6]);
 }
 
-///////////////////////////////////////////////////////////////////////////////
-// inverse 3x3 matrix
-// If cannot find inverse, set identity matrix
-///////////////////////////////////////////////////////////////////////////////
-mat3& mat3::invert()
+Matrix3& Matrix3::invert()
 {
     float determinant, invDeterminant;
     float tmp[9];
@@ -93,9 +85,42 @@ mat3& mat3::invert()
     return *this;
 }
 
-///////////////////////////////////////////////////////////////////////////////
-// transpose 4x4 matrix
-///////////////////////////////////////////////////////////////////////////////
+/*********************************************************************
+**	4x4 Matrix														**
+**********************************************************************/
+
+AS_REG_VALUE(Matrix4, "Matrix4")
+
+int Matrix4::Register(asIScriptEngine *scriptEngine)
+{
+	int r = 0;
+
+	// Register the constructors
+	r = scriptEngine->RegisterObjectBehaviour("Matrix4", asBEHAVE_CONSTRUCT, "void f()", asFUNCTION(Factory), asCALL_CDECL_OBJLAST); AS_ASSERT
+	//r = scriptEngine->RegisterObjectBehaviour("Matrix4", asBEHAVE_CONSTRUCT, "void f(grid<float> @data)", asFUNCTION(Factory), asCALL_CDECL_OBJLAST); AS_ASSERT
+
+	
+	r = scriptEngine->RegisterObjectMethod("Matrix4", "void identity()", asMETHOD(Matrix4, identityAS), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("Matrix4", "void translate(float, float, float)", asMETHODPR(Matrix4, translateAS, (float, float, float), void), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("Matrix4", "void translate(const Vector3 &in)", asMETHODPR(Matrix4, translateAS, (const Vector3&), void), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("Matrix4", "void rotate(float, float, float, float)", asMETHODPR(Matrix4, rotateAS, (float, float, float, float), void), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("Matrix4", "void rotate(float, const Vector3 &in)", asMETHODPR(Matrix4, rotateAS, (float, const Vector3&), void), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("Matrix4", "void scale(float)", asMETHODPR(Matrix4, scaleAS, (float), void), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("Matrix4", "void scale(float, float, float)", asMETHODPR(Matrix4, scaleAS, (float, float, float), void), asCALL_THISCALL); AS_ASSERT
+
+	return r;
+}
+
+void Matrix4::Factory(Matrix4 *self)
+{
+	new (self) Matrix4();
+}
+
+/*void Matrix4::Factory(Array *data, Matrix4 *self)
+{
+	new (self) Matrix4();
+}*/
+
 Matrix4& Matrix4::transpose()
 {
     std::swap(m[1],  m[4]);
@@ -108,9 +133,6 @@ Matrix4& Matrix4::transpose()
     return *this;
 }
 
-///////////////////////////////////////////////////////////////////////////////
-// inverse 4x4 matrix
-///////////////////////////////////////////////////////////////////////////////
 Matrix4& Matrix4::invert()
 {
     // If the 4th row is [0,0,0,1] then it is affine matrix and
@@ -131,27 +153,27 @@ Matrix4& Matrix4::invert()
     return *this;
 }
 
-///////////////////////////////////////////////////////////////////////////////
-// compute the inverse of 4x4 Euclidean transformation matrix
-//
-// Euclidean transformation is translation, rotation, and reflection.
-// With Euclidean transform, only the position and orientation of the object
-// will be changed. Euclidean transform does not change the shape of an object
-// (no scaling). Length and angle are reserved.
-//
-// Use inverseAffine() if the matrix has scale and shear transformation.
-//
-// M = [ R | T ]
-//     [ --+-- ]    (R denotes 3x3 rotation/reflection matrix)
-//     [ 0 | 1 ]    (T denotes 1x3 translation matrix)
-//
-// y = M*x  ->  y = R*x + T  ->  x = R^-1*(y - T)  ->  x = R^T*y - R^T*T
-// (R is orthogonal,  R^-1 = R^T)
-//
-//  [ R | T ]-1    [ R^T | -R^T * T ]    (R denotes 3x3 rotation matrix)
-//  [ --+-- ]   =  [ ----+--------- ]    (T denotes 1x3 translation)
-//  [ 0 | 1 ]      [  0  |     1    ]    (R^T denotes R-transpose)
-///////////////////////////////////////////////////////////////////////////////
+/*********************************************************************
+** Compute the inverse of 4x4 Euclidean transformation matrix
+**
+** Euclidean transformation is translation, rotation, and reflection.
+** With Euclidean transform, only the position and orientation of the object
+** will be changed. Euclidean transform does not change the shape of an object
+** (no scaling). Length and angle are reserved.
+**
+** Use inverseAffine() if the matrix has scale and shear transformation.
+**
+** M = [ R | T ]
+**     [ --+-- ]    (R denotes 3x3 rotation/reflection matrix)
+**     [ 0 | 1 ]    (T denotes 1x3 translation matrix)
+**
+** y = M*x  ->  y = R*x + T  ->  x = R^-1*(y - T)  ->  x = R^T*y - R^T*T
+** (R is orthogonal,  R^-1 = R^T)
+**
+**  [ R | T ]-1    [ R^T | -R^T * T ]    (R denotes 3x3 rotation matrix)
+**  [ --+-- ]   =  [ ----+--------- ]    (T denotes 1x3 translation)
+**  [ 0 | 1 ]      [  0  |     1    ]    (R^T denotes R-transpose)
+**********************************************************************/
 Matrix4& Matrix4::invertEuclidean()
 {
     // transpose 3x3 rotation matrix part
@@ -179,26 +201,26 @@ Matrix4& Matrix4::invertEuclidean()
     return *this;
 }
 
-///////////////////////////////////////////////////////////////////////////////
-// compute the inverse of a 4x4 affine transformation matrix
-//
-// Affine transformations are generalizations of Euclidean transformations.
-// Affine transformation includes translation, rotation, reflection, scaling,
-// and shearing. Length and angle are NOT preserved.
-// M = [ R | T ]
-//     [ --+-- ]    (R denotes 3x3 rotation/scale/shear matrix)
-//     [ 0 | 1 ]    (T denotes 1x3 translation matrix)
-//
-// y = M*x  ->  y = R*x + T  ->  x = R^-1*(y - T)  ->  x = R^-1*y - R^-1*T
-//
-//  [ R | T ]-1   [ R^-1 | -R^-1 * T ]
-//  [ --+-- ]   = [ -----+---------- ]
-//  [ 0 | 1 ]     [  0   +     1     ]
-///////////////////////////////////////////////////////////////////////////////
+/*********************************************************************
+** Compute the inverse of a 4x4 affine transformation matrix
+**
+** Affine transformations are generalizations of Euclidean transformations.
+** Affine transformation includes translation, rotation, reflection, scaling,
+** and shearing. Length and angle are NOT preserved.
+** M = [ R | T ]
+**     [ --+-- ]    (R denotes 3x3 rotation/scale/shear matrix)
+**     [ 0 | 1 ]    (T denotes 1x3 translation matrix)
+**
+** y = M*x  ->  y = R*x + T  ->  x = R^-1*(y - T)  ->  x = R^-1*y - R^-1*T
+**
+**  [ R | T ]-1   [ R^-1 | -R^-1 * T ]
+**  [ --+-- ]   = [ -----+---------- ]
+**  [ 0 | 1 ]     [  0   +     1     ]
+**********************************************************************/
 Matrix4& Matrix4::invertAffine()
 {
     // R^-1
-    mat3 r(m[0],m[1],m[2], m[4],m[5],m[6], m[8],m[9],m[10]);
+    Matrix3 r(m[0],m[1],m[2], m[4],m[5],m[6], m[8],m[9],m[10]);
     r.invert();
     m[0] = r[0];  m[1] = r[1];  m[2] = r[2];
     m[4] = r[3];  m[5] = r[4];  m[6] = r[5];
@@ -219,24 +241,24 @@ Matrix4& Matrix4::invertAffine()
     return * this;
 }
 
-///////////////////////////////////////////////////////////////////////////////
-// inverse matrix using matrix partitioning (blockwise inverse)
-// It devides a 4x4 matrix into 4 of 2x2 matrices. It works in case of where
-// det(A) != 0. If not, use the generic inverse method
-// inverse formula.
-// M = [ A | B ]    A, B, C, D are 2x2 matrix blocks
-//     [ --+-- ]    det(M) = |A| * |D - ((C * A^-1) * B)|
-//     [ C | D ]
-//
-// M^-1 = [ A' | B' ]   A' = A^-1 - (A^-1 * B) * C'
-//        [ ---+--- ]   B' = (A^-1 * B) * -D'
-//        [ C' | D' ]   C' = -D' * (C * A^-1)
-//                      D' = (D - ((C * A^-1) * B))^-1
-//
-// NOTE: I wrap with () if it it used more than once.
-//       The matrix is invertable even if det(A)=0, so must check det(A) before
-//       calling this function, and use invertGeneric() instead.
-///////////////////////////////////////////////////////////////////////////////
+/*********************************************************************
+** Inverse matrix using matrix partitioning (blockwise inverse)
+** It devides a 4x4 matrix into 4 of 2x2 matrices. It works in case of where
+** det(A) != 0. If not, use the generic inverse method
+** inverse formula.
+** M = [ A | B ]    A, B, C, D are 2x2 matrix blocks
+**     [ --+-- ]    det(M) = |A| * |D - ((C * A^-1) * B)|
+**     [ C | D ]
+**
+** M^-1 = [ A' | B' ]   A' = A^-1 - (A^-1 * B) * C'
+**        [ ---+--- ]   B' = (A^-1 * B) * -D'
+**        [ C' | D' ]   C' = -D' * (C * A^-1)
+**                      D' = (D - ((C * A^-1) * B))^-1
+**
+** NOTE: I wrap with () if it it used more than once.
+**       The matrix is invertable even if det(A)=0, so must check det(A) before
+**       calling this function, and use invertGeneric() instead.
+**********************************************************************/
 Matrix4& Matrix4::invertProjective()
 {
     // partition
@@ -284,11 +306,11 @@ Matrix4& Matrix4::invertProjective()
     return *this;
 }
 
-///////////////////////////////////////////////////////////////////////////////
-// compute the inverse of a general 4x4 matrix using Cramer's Rule
-// If cannot find inverse, return indentity matrix
-// M^-1 = adj(M) / det(M)
-///////////////////////////////////////////////////////////////////////////////
+/*********************************************************************
+** Compute the inverse of a general 4x4 matrix using Cramer's Rule
+** If cannot find inverse, return indentity matrix
+** M^-1 = adj(M) / det(M)
+**********************************************************************/
 Matrix4& Matrix4::invertGeneral()
 {
     // get cofactors of minor matrices
@@ -346,9 +368,6 @@ Matrix4& Matrix4::invertGeneral()
     return *this;
 }
 
-///////////////////////////////////////////////////////////////////////////////
-// return determinant of 4x4 matrix
-///////////////////////////////////////////////////////////////////////////////
 float Matrix4::getDeterminant()
 {
     return m[0] * getCofactor(m[5],m[6],m[7], m[9],m[10],m[11], m[13],m[14],m[15]) -
@@ -357,13 +376,11 @@ float Matrix4::getDeterminant()
            m[3] * getCofactor(m[4],m[5],m[6], m[8],m[9], m[10], m[12],m[13],m[14]);
 }
 
-
-
-///////////////////////////////////////////////////////////////////////////////
-// compute cofactor of 3x3 minor matrix without sign
-// input params are 9 elements of the minor matrix
-// NOTE: The caller must know its sign.
-///////////////////////////////////////////////////////////////////////////////
+/*********************************************************************
+** Compute cofactor of 3x3 minor matrix without sign
+** input params are 9 elements of the minor matrix
+** NOTE: The caller must know its sign.
+**********************************************************************/
 float Matrix4::getCofactor(float m0, float m1, float m2,
                            float m3, float m4, float m5,
                            float m6, float m7, float m8)
@@ -373,9 +390,6 @@ float Matrix4::getCofactor(float m0, float m1, float m2,
            m2 * (m3 * m7 - m4 * m6);
 }
 
-///////////////////////////////////////////////////////////////////////////////
-// translate this matrix by (x, y, z)
-///////////////////////////////////////////////////////////////////////////////
 Matrix4& Matrix4::translate(const Vector3& v)
 {
     return translate(v.x, v.y, v.z);
@@ -389,9 +403,6 @@ Matrix4& Matrix4::translate(float x, float y, float z)
     return *this;
 }
 
-///////////////////////////////////////////////////////////////////////////////
-// uniform scale
-///////////////////////////////////////////////////////////////////////////////
 Matrix4& Matrix4::scale(float s)
 {
     return scale(s, s, s);
@@ -405,10 +416,6 @@ Matrix4& Matrix4::scale(float x, float y, float z)
     return *this;
 }
 
-///////////////////////////////////////////////////////////////////////////////
-// build a rotation matrix with given angle(degree) and rotation axis, then
-// multiply it with this object
-///////////////////////////////////////////////////////////////////////////////
 Matrix4& Matrix4::rotate(float angle, const Vector3& axis)
 {
     return rotate(angle, axis.x, axis.y, axis.z);
@@ -416,8 +423,8 @@ Matrix4& Matrix4::rotate(float angle, const Vector3& axis)
 
 Matrix4& Matrix4::rotate(float angle, float x, float y, float z)
 {
-    float c = cosf(angle * DEG2RAD);    // cosine
-    float s = sinf(angle * DEG2RAD);    // sine
+    float c = cosf(angle * DEG2RAD);
+    float s = sinf(angle * DEG2RAD);
     float xx = x * x;
     float xy = x * y;
     float xz = x * z;
@@ -425,7 +432,7 @@ Matrix4& Matrix4::rotate(float angle, float x, float y, float z)
     float yz = y * z;
     float zz = z * z;
 
-    // build rotation matrix
+    // Build rotation matrix
     Matrix4 m;
     m[0] = xx * (1 - c) + c;
     m[1] = xy * (1 - c) - z * s;
@@ -444,7 +451,7 @@ Matrix4& Matrix4::rotate(float angle, float x, float y, float z)
     m[14]= 0;
     m[15]= 1;
 
-    // multiply it
+    // Multiply it
     *this = m * (*this);
 
     return *this;
@@ -506,35 +513,3 @@ Matrix4& Matrix4::rotateZ(float angle)
 
     return *this;
 }
-
-AS_REG_VALUE(Matrix4)
-
-int Matrix4::Register(asIScriptEngine *scriptEngine)
-{
-	int r = 0;
-
-	// Register the constructors
-	r = scriptEngine->RegisterObjectBehaviour("Matrix4", asBEHAVE_CONSTRUCT, "void f()", asFUNCTION(Factory), asCALL_CDECL_OBJLAST); AS_ASSERT
-	//r = scriptEngine->RegisterObjectBehaviour("Matrix4", asBEHAVE_CONSTRUCT, "void f(grid<float> @data)", asFUNCTION(Factory), asCALL_CDECL_OBJLAST); AS_ASSERT
-
-	
-	r = scriptEngine->RegisterObjectMethod("Matrix4", "void identity()", asMETHOD(Matrix4, identityAS), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("Matrix4", "void translate(float, float, float)", asMETHODPR(Matrix4, translateAS, (float, float, float), void), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("Matrix4", "void translate(const Vector3 &in)", asMETHODPR(Matrix4, translateAS, (const Vector3&), void), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("Matrix4", "void rotate(float, float, float, float)", asMETHODPR(Matrix4, rotateAS, (float, float, float, float), void), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("Matrix4", "void rotate(float, const Vector3 &in)", asMETHODPR(Matrix4, rotateAS, (float, const Vector3&), void), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("Matrix4", "void scale(float)", asMETHODPR(Matrix4, scaleAS, (float), void), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("Matrix4", "void scale(float, float, float)", asMETHODPR(Matrix4, scaleAS, (float, float, float), void), asCALL_THISCALL); AS_ASSERT
-
-	return r;
-}
-
-void Matrix4::Factory(Matrix4 *self)
-{
-	new (self) Matrix4();
-}
-
-/*void Matrix4::Factory(Array *data, Matrix4 *self)
-{
-	new (self) Matrix4();
-}*/

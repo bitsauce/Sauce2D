@@ -10,17 +10,17 @@
 #include <x2d/engine.h>
 #include <x2d/graphics.h>
 
-AS_REG_VALUE(XPixmap)
+AS_REG_VALUE(XPixmap, "Pixmap")
 
 int XPixmap::Register(asIScriptEngine *scriptEngine)
 {
 	int r = 0;
 	
-	r = scriptEngine->RegisterObjectBehaviour("XPixmap", asBEHAVE_CONSTRUCT, "void f(XPixmap &in)", asFUNCTIONPR(Factory, (XPixmap&, XPixmap*), void), asCALL_CDECL_OBJLAST); AS_ASSERT
-	r = scriptEngine->RegisterObjectBehaviour("XPixmap", asBEHAVE_CONSTRUCT, "void f(const int, const int)", asFUNCTIONPR(Factory, (const int, const int, XPixmap*), void), asCALL_CDECL_OBJLAST); AS_ASSERT
-	r = scriptEngine->RegisterObjectBehaviour("XPixmap", asBEHAVE_CONSTRUCT, "void f(const int, const int, const array<Vector4> &in)", asFUNCTIONPR(Factory, (const int, const int, XScriptArray&, XPixmap*), void), asCALL_CDECL_OBJLAST); AS_ASSERT
+	r = scriptEngine->RegisterObjectBehaviour("Pixmap", asBEHAVE_CONSTRUCT, "void f(Pixmap &in)", asFUNCTIONPR(Factory, (XPixmap&, XPixmap*), void), asCALL_CDECL_OBJLAST); AS_ASSERT
+	r = scriptEngine->RegisterObjectBehaviour("Pixmap", asBEHAVE_CONSTRUCT, "void f(const int, const int)", asFUNCTIONPR(Factory, (const int, const int, XPixmap*), void), asCALL_CDECL_OBJLAST); AS_ASSERT
+	r = scriptEngine->RegisterObjectBehaviour("Pixmap", asBEHAVE_CONSTRUCT, "void f(const int, const int, const array<Vector4> &in)", asFUNCTIONPR(Factory, (const int, const int, XScriptArray&, XPixmap*), void), asCALL_CDECL_OBJLAST); AS_ASSERT
 
-	r = scriptEngine->RegisterObjectMethod("XPixmap", "void exportToFile(const string &in) const", asMETHOD(XPixmap, exportToFile), asCALL_THISCALL);
+	r = scriptEngine->RegisterObjectMethod("Pixmap", "void exportToFile(const string &in) const", asMETHOD(XPixmap, exportToFile), asCALL_THISCALL);
 
 	return r;
 }

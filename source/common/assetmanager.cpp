@@ -27,24 +27,36 @@ XPixmap *XAssetManager::LoadPixmap(string filePath, const XImageFormat format)
 		string content;
 		if(XFileSystem::ReadFile(filePath, content))
 		{
-			// attach the binary data to a memory stream
+			// Attach the binary data to a memory stream
 			FIMEMORY *hmem = FreeImage_OpenMemory((uchar*)content.c_str(), content.size());
 		
-			// get the file type
+			// Get the file type
 			FREE_IMAGE_FORMAT fif = FreeImage_GetFileTypeFromMemory(hmem);
 		
-			// load an image from the memory stream
+			// Load an image from the memory stream
 			FIBITMAP *bitmap = FreeImage_LoadFromMemory(fif, hmem, 0);
 
-			// Convert all non-32bpp bitmaps to 32bpp bitmaps // TODO: I should add support for loading different types of bit depth into graphics memory
+			// Convert all non-32bpp bitmaps to 32bpp bitmaps
+			// TODO: I should add support for loading different types of bit depth into graphics memory
 			if(FreeImage_GetBPP(bitmap) != 32)
 			{
 				FIBITMAP *newBitmap = FreeImage_ConvertTo32Bits(bitmap);
 				FreeImage_Unload(bitmap);
 				bitmap = newBitmap;
 			}
-
-			pixmap = new XPixmap(FreeImage_GetWidth(bitmap), FreeImage_GetHeight(bitmap), (Vector4*)FreeImage_GetBits(bitmap));
+			
+			// Create pixmap
+			uint width = FreeImage_GetWidth(bitmap), height = FreeImage_GetHeight(bitmap);
+			BYTE *data = FreeImage_GetBits(bitmap);
+			float *pixels = new float[width*height*4];
+			for(uint i = 0; i < width*height; i++) // BGRA to RGBA
+			{
+				pixels[i*4+0] = data[i*4+2]/255.0f;
+				pixels[i*4+1] = data[i*4+1]/255.0f;
+				pixels[i*4+2] = data[i*4+0]/255.0f;
+				pixels[i*4+3] = data[i*4+3]/255.0f;
+			}
+			pixmap = new XPixmap(width, height, (Vector4*)pixels);
 		
 			// Close the memory stream
 			FreeImage_Unload(bitmap);

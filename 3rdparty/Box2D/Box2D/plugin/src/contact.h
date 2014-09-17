@@ -1,8 +1,7 @@
 #ifndef B2_CONTACT_WRAPPER_H
 #define B2_CONTACT_WRAPPER_H
 
-#include <x2d/base.h>
-#include <x2d/math.h>
+#include <x2d/x2d.h>
 
 class b2Contact;
 class b2BodyWrapper;

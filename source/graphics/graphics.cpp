@@ -86,33 +86,19 @@ XTexture* XGraphics::CreateTexture(const XPixmap &pixmap)
 
 XTexture* XGraphics::CreateTexture(const string &filePath)
 {
-	uint width = 0, height = 0;
-	uchar *byteData;
 	XTexture *texture = 0;
+	XPixmap *pixmap = XAssetManager::LoadPixmap(filePath);
 
-	int r = 0;
-	// TODO: REFACTORING
-	if(/*(r = XAssetManager::LoadPixmap(filePath, &byteData, width, height)) >= 0*/false)
+	if(pixmap)
 	{
-		Vector4 *colors = new Vector4[width*height];
-
-		for(uint i = 0; i < width*height*4; i += 4) {
-			colors[i/4].set( // I dunno why FreeImage loads images as BGRA, but it does.
-				byteData[i+2]/255.0f,
-				byteData[i+1]/255.0f,
-				byteData[i+0]/255.0f,
-				byteData[i+3]/255.0f
-				);
-		}
-
-		texture = s_this->createTexture(XPixmap(width, height, colors));
-
-		delete[] byteData;
-		delete[] colors;
-	}else
-	{
-		LOG("XGraphics::CreateTexture() - Unable to load image file '%s' (error code %i)", filePath.c_str(), r);
+		texture = s_this->createTexture(*pixmap);
 	}
+	else
+	{
+		LOG("XGraphics::CreateTexture() - Unable to load image file '%s'", filePath.c_str());
+	}
+
+	delete pixmap;
 	return texture;
 }
 	

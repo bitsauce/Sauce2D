@@ -2,7 +2,6 @@
 #include "body.h"
 #include "box2d.h"
 #include "plugin.h"
-#include <x2d/scriptengine.h>
 #include <Box2D/Box2D.h>
 
 int b2FixtureWrapper::TypeId = 0;

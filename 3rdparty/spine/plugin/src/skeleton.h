@@ -1,12 +1,10 @@
 #ifndef PLUGIN_SKELETON_H
 #define PLUGIN_SKELETON_H
 
-#include <x2d/base.h>
-#include <x2d/math.h>
+#include <x2d/x2d.h>
 #include <spine/spine.h>
 
 class spAnimationWrapper;
-class Texture;
 
 class spSkeletonWrapper
 {
@@ -25,9 +23,9 @@ public:
 	void setFlipY(const bool flip);
 	bool getFlipY() const;
 
-	Texture *getTexture() const;
+	XTexture *getTexture() const;
 
-	void draw(class Batch *batch);
+	void draw(XBatch *batch);
 
 	spSkeletonData *data() const;
 	spSkeleton *get() const;

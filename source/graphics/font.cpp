@@ -20,26 +20,26 @@
 #include <freetype/fttrigon.h>
 #include <freetype/ftsnames.h>
 
-AS_REG_REF(XFont)
+AS_REG_REF(XFont, "Font")
 
 int XFont::Register(asIScriptEngine *scriptEngine)
 {
 	int r = 0;
 
-	r = scriptEngine->RegisterObjectBehaviour("XFont", asBEHAVE_FACTORY, "XFont @f(const string &in, const int)", asFUNCTIONPR(Factory, (string&, const uint), XFont*), asCALL_CDECL); AS_ASSERT
+	r = scriptEngine->RegisterObjectBehaviour("Font", asBEHAVE_FACTORY, "Font @f(const string &in, const int)", asFUNCTIONPR(Factory, (string&, const uint), XFont*), asCALL_CDECL); AS_ASSERT
 
-	r = scriptEngine->RegisterObjectMethod("XFont", "float getStringWidth(const string &in)", asMETHOD(XFont, getStringWidth), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("XFont", "float getStringHeight(const string &in)", asMETHOD(XFont, getStringHeight), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("XFont", "void setColor(const Vector4 &in)", asMETHOD(XFont, setColor), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("XFont", "void draw(XBatch @batch, const Vector2 &in, const string &in)", asMETHOD(XFont, draw), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("Font", "float getStringWidth(const string &in)", asMETHOD(XFont, getStringWidth), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("Font", "float getStringHeight(const string &in)", asMETHOD(XFont, getStringHeight), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("Font", "void setColor(const Vector4 &in)", asMETHOD(XFont, setColor), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("Font", "void draw(Batch @batch, const Vector2 &in, const string &in)", asMETHOD(XFont, draw), asCALL_THISCALL); AS_ASSERT
 
 	return r;
 }
 
-bool getXFontFile(string &XFontName)
+bool getFontFile(string &fontName)
 {
 	HKEY hkey;
-	if(RegOpenKeyEx(HKEY_LOCAL_MACHINE, "Software\\Microsoft\\Windows NT\\CurrentVersion\\XFonts", 0, KEY_READ, &hkey) == ERROR_SUCCESS)
+	if(RegOpenKeyEx(HKEY_LOCAL_MACHINE, "Software\\Microsoft\\Windows NT\\CurrentVersion\\Fonts", 0, KEY_READ, &hkey) == ERROR_SUCCESS)
 	{
 		// Get maximum buffer sizes
 		ulong maxValue;
@@ -62,12 +62,12 @@ bool getXFontFile(string &XFontName)
 			valstr = valstr.substr(0, valstr.find_first_of('(')-1);
 
 			// Check if the value was found
-			if(XFontName == valstr)
+			if(fontName == valstr)
 			{
 				// Set filename
 				char *winDir = new char[MAX_PATH];
 				GetWindowsDirectory(winDir, MAX_PATH);
-				XFontName = string(winDir) + "\\XFonts\\" + string(reinterpret_cast<char*>(data));
+				fontName = string(winDir) + "\\Fonts\\" + string(reinterpret_cast<char*>(data));
 
 				// Clean up
 				delete[] value;
@@ -298,18 +298,18 @@ void XFont::draw(XBatch *batch, const Vector2 &pos, const string &str)
 	batch->release();
 }
 
-XFont *XFont::Factory(string &XFontName, const uint size)
+XFont *XFont::Factory(string &fontName, const uint size)
 {
 	// Check if we can find the XFont in the local directories
-	util::toAbsoluteFilePath(XFontName);
-	if(!util::fileExists(XFontName))
+	util::toAbsoluteFilePath(fontName);
+	if(!util::fileExists(fontName))
 	{
 		// Loop throught the registry to find the file by XFont name
-		if(!getXFontFile(XFontName))
+		if(!getFontFile(fontName))
 		{
-			LOG("XFont '%s' not found!", XFontName);
+			LOG("Font '%s' not found!", fontName);
 			return 0;
 		}
 	}
-	return new XFont(XFontName, size);
+	return new XFont(fontName, size);
 }

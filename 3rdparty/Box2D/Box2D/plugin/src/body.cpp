@@ -2,8 +2,6 @@
 #include "fixture.h"
 #include "box2d.h"
 #include "plugin.h"
-#include <x2d/scriptengine.h>
-#include <x2d/scripts/array.h>
 #include <Box2D/Box2D.h>
 
 int b2BodyWrapper::TypeId = 0;
@@ -92,8 +90,7 @@ b2FixtureWrapper *b2BodyWrapper::createFixture(const Rect &rect, float density)
 		fixture->addRef(); // Add a reference for the body to hold
 	
 		// Notify garbage collector of the newly created object
-		asIScriptEngine *scriptEngine = xdengine->getScriptEngine()->getASEngine();
-		scriptEngine->NotifyGarbageCollectorOfNewObject(fixture, scriptEngine->GetObjectTypeById(b2FixtureWrapper::TypeId));
+		XScriptEngine::GetAngelScript()->NotifyGarbageCollectorOfNewObject(fixture, XScriptEngine::GetAngelScript()->GetObjectTypeById(b2FixtureWrapper::TypeId));
 
 		// Add fixture to list of fixtures owned by this body
 		m_fixtures.push_back(fixture);
@@ -117,8 +114,7 @@ b2FixtureWrapper *b2BodyWrapper::createFixture(const Vector2 &center, const floa
 		fixture->addRef(); // Add a reference for the body to hold
 	
 		// Notify garbage collector of the newly created object
-		asIScriptEngine *scriptEngine = xdengine->getScriptEngine()->getASEngine();
-		scriptEngine->NotifyGarbageCollectorOfNewObject(fixture, scriptEngine->GetObjectTypeById(b2FixtureWrapper::TypeId));
+		XScriptEngine::GetAngelScript()->NotifyGarbageCollectorOfNewObject(fixture, XScriptEngine::GetAngelScript()->GetObjectTypeById(b2FixtureWrapper::TypeId));
 		
 		// Add fixture to list of fixtures owned by this body
 		m_fixtures.push_back(fixture);
@@ -126,7 +122,7 @@ b2FixtureWrapper *b2BodyWrapper::createFixture(const Vector2 &center, const floa
 	return fixture;
 }
 	
-b2FixtureWrapper *b2BodyWrapper::createFixture(Array *arr, float density)
+b2FixtureWrapper *b2BodyWrapper::createFixture(XScriptArray *arr, float density)
 {
 	b2FixtureWrapper *fixture = 0;
 	if(isValid() && !b2d->isLocked() && arr->GetSize() <= b2_maxPolygonVertices)
@@ -149,8 +145,7 @@ b2FixtureWrapper *b2BodyWrapper::createFixture(Array *arr, float density)
 		fixture->addRef(); // Add a reference for the body to hold
 	
 		// Notify garbage collector of the newly created object
-		asIScriptEngine *scriptEngine = xdengine->getScriptEngine()->getASEngine();
-		scriptEngine->NotifyGarbageCollectorOfNewObject(fixture, scriptEngine->GetObjectTypeById(b2FixtureWrapper::TypeId));
+		XScriptEngine::GetAngelScript()->NotifyGarbageCollectorOfNewObject(fixture, XScriptEngine::GetAngelScript()->GetObjectTypeById(b2FixtureWrapper::TypeId));
 		
 		// Add fixture to list of fixtures owned by this body
 		m_fixtures.push_back(fixture);
@@ -234,12 +229,11 @@ void b2BodyWrapper::setPostSolveCallback(asIScriptFunction *func)
 void b2BodyWrapper::freeObject()
 {
 	// If it is a handle or a ref counted object, call release
-	asIScriptEngine *scriptEngine = xdengine->getScriptEngine()->getASEngine();
 	if(m_object.typeId & asTYPEID_MASK_OBJECT)
 	{
 		// Let the engine release the object
-		asIObjectType *ot = scriptEngine->GetObjectTypeById(m_object.typeId);
-		scriptEngine->ReleaseScriptObject(m_object.value, ot);
+		asIObjectType *ot = XScriptEngine::GetAngelScript()->GetObjectTypeById(m_object.typeId);
+		XScriptEngine::GetAngelScript()->ReleaseScriptObject(m_object.value, ot);
 
 		// Release the object type info
 		if(ot) ot->Release();
@@ -252,10 +246,9 @@ void b2BodyWrapper::freeObject()
 void b2BodyWrapper::setObject(void *object, int typeId)
 {
 	// Hold on to the object type reference so it isn't destroyed too early
-	asIScriptEngine *scriptEngine = xdengine->getScriptEngine()->getASEngine();
 	if(*(void**)object && (typeId & asTYPEID_MASK_OBJECT))
 	{
-		asIObjectType *ot = scriptEngine->GetObjectTypeById(typeId);
+		asIObjectType *ot = XScriptEngine::GetAngelScript()->GetObjectTypeById(typeId);
 		if(ot) ot->AddRef();
 	}
 
@@ -266,24 +259,25 @@ void b2BodyWrapper::setObject(void *object, int typeId)
 	{
 		// We're receiving a reference to the handle, so we need to dereference it
 		m_object.value = *(void**)object;
-		scriptEngine->AddRefScriptObject(m_object.value, scriptEngine->GetObjectTypeById(typeId));
-	}else{
+		XScriptEngine::GetAngelScript()->AddRefScriptObject(m_object.value, XScriptEngine::GetAngelScript()->GetObjectTypeById(typeId));
+	}
+	else
+	{
 		LOG("b2Body.setObject: Supports only object handles!");
 	}
 }
 
 bool b2BodyWrapper::getObject(void *object, int typeId)
 {
-	asIScriptEngine *scriptEngine = xdengine->getScriptEngine()->getASEngine();
 	if(typeId & asTYPEID_OBJHANDLE)
 	{
 		// Is the handle type compatible with the stored value?
 
 		// A handle can be retrieved if the stored type is a handle of same or compatible type
 		// or if the stored type is an object that implements the interface that the handle refer to.
-		if((m_object.typeId & asTYPEID_MASK_OBJECT) && scriptEngine->IsHandleCompatibleWithObject(m_object.value, m_object.typeId, typeId))
+		if((m_object.typeId & asTYPEID_MASK_OBJECT) && XScriptEngine::GetAngelScript()->IsHandleCompatibleWithObject(m_object.value, m_object.typeId, typeId))
 		{
-			scriptEngine->AddRefScriptObject(m_object.value, scriptEngine->GetObjectTypeById(m_object.typeId));
+			XScriptEngine::GetAngelScript()->AddRefScriptObject(m_object.value, XScriptEngine::GetAngelScript()->GetObjectTypeById(m_object.typeId));
 			*(void**)object = m_object.value;
 
 			return true;
@@ -403,8 +397,7 @@ b2BodyWrapper *b2BodyWrapper::Factory(const b2BodyDefWrapper &def)
 		body = new b2BodyWrapper(b2d->getWorld()->CreateBody(&def.getBodyDef()));
 
 		// Notify garbage collector of the newly created object
-		asIScriptEngine *scriptEngine = xdengine->getScriptEngine()->getASEngine();
-		scriptEngine->NotifyGarbageCollectorOfNewObject(body, scriptEngine->GetObjectTypeById(b2BodyWrapper::TypeId));
+		XScriptEngine::GetAngelScript()->NotifyGarbageCollectorOfNewObject(body, XScriptEngine::GetAngelScript()->GetObjectTypeById(b2BodyWrapper::TypeId));
 	}
 	else
 	{

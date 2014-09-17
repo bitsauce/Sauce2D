@@ -1,12 +1,9 @@
 #ifndef B2_BODY_WRAPPER_H
 #define B2_BODY_WRAPPER_H
 
-#include <x2d/base.h>
-#include <x2d/math.h>
+#include <x2d/x2d.h>
 #include <Box2D/Dynamics/b2Body.h>
 
-class Array;
-class AnyObject;
 class b2Body;
 class b2FixtureWrapper;
 
@@ -69,7 +66,7 @@ public:
 
 	b2FixtureWrapper *createFixture(const Rect &rect, float density);
 	b2FixtureWrapper *createFixture(const Vector2 &center, const float radius, float density);
-	b2FixtureWrapper *createFixture(Array *arr, float density);
+	b2FixtureWrapper *createFixture(XScriptArray *arr, float density);
 
 	void removeFixture(b2FixtureWrapper *fixture);
 

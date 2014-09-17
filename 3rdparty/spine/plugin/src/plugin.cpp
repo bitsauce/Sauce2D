@@ -3,19 +3,12 @@
 #include "animation.h"
 #include "event.h"
 
-#include <x2d/scriptengine.h>
-#include <x2d/util.h>
-#include <x2d/graphics.h>
-#include <x2d/graphics/batch.h>
-#include <x2d/graphics/texture.h>
-#include <x2d/filesystem.h>
-
 #include <spine/spine.h>
 #include <spine/extension.h>
 
 void _spAtlasPage_createTexture(spAtlasPage* self, const char* path)
 {
-	Texture *texture = xdGraphics::CreateTexture(path);
+	XTexture *texture = XGraphics::CreateTexture(path);
 	if(texture)
 	{
 		self->rendererObject = texture;
@@ -27,7 +20,7 @@ void _spAtlasPage_createTexture(spAtlasPage* self, const char* path)
 void _spAtlasPage_disposeTexture(spAtlasPage* self)
 {
 	if(self->rendererObject) {
-		((Texture*)self->rendererObject)->release();
+		((XTexture*)self->rendererObject)->release();
 	}
 }
 
@@ -35,7 +28,7 @@ char* _spUtil_readFile(const char* path, int* length)
 {
 	string content;
 	char *data = 0;
-	if(xdFileSystem::ReadFile(path, content))
+	if(XFileSystem::ReadFile(path, content))
 	{
 		*length = content.size();
 		data = MALLOC(char, *length);
@@ -44,13 +37,8 @@ char* _spUtil_readFile(const char* path, int* length)
 	return data;
 }
 
-xdEngine *xdengine = 0;
-
-int CreatePlugin(xdEngine *engine)
+int CreatePlugin(asIScriptEngine *scriptEngine)
 {
-	xdengine = engine;
-	asIScriptEngine *scriptEngine = engine->getScriptEngine()->getASEngine();
-
 	int r = 0;
 
 	spBone_setYDown(true);

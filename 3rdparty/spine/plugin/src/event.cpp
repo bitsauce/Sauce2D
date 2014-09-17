@@ -1,6 +1,5 @@
 #include "event.h"
 #include "animation.h"
-#include <x2d/scripts/funccall.h>
 
 int spEventWrapper::TypeId = 0;
 
@@ -40,7 +39,7 @@ void spEventWrapper::call(asIScriptFunction *func)
 {
 	if(func)
 	{
-		FuncCall funcCall(func);
+		XFuncCall funcCall(func);
 		spEventWrapper *self = this;
 		addRef();
 		funcCall.setArg(0, &self, spEventWrapper::TypeId | asTYPEID_OBJHANDLE);

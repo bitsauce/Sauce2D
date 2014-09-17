@@ -1,11 +1,6 @@
 #include "skeleton.h"
 #include "animation.h"
-
 #include <spine/extension.h>
-
-#include <x2d/graphics.h>
-#include <x2d/graphics/batch.h>
-#include <x2d/graphics/texture.h>
 
 #ifndef SPINE_MESH_VERTEX_COUNT_MAX
 #define SPINE_MESH_VERTEX_COUNT_MAX 1000
@@ -74,30 +69,30 @@ bool spSkeletonWrapper::getFlipY() const
 	return m_self->flipY != 0;
 }
 
-Texture *spSkeletonWrapper::getTexture() const
+XTexture *spSkeletonWrapper::getTexture() const
 {
-	Texture *texture = (Texture*)m_atlas->pages->rendererObject;
+	XTexture *texture = (XTexture*)m_atlas->pages->rendererObject;
 	if(texture) texture->addRef();
 	return texture;
 }
 
-void spSkeletonWrapper::draw(Batch *batch)
+void spSkeletonWrapper::draw(XBatch *batch)
 {
 	if(!batch)
 		return;
 	spSkeleton_updateWorldTransform(m_self);
 
-	Vertex vertices[4];
+	XVertex vertices[4];
 	for(int i = 0; i < m_self->slotCount; i++)
 	{
 		spSlot *slot = m_self->drawOrder[i];
 		spAttachment *attachment = slot->attachment;
 		if(!attachment) continue;
-		Texture *texture = 0;
+		XTexture *texture = 0;
 		if(attachment->type == SP_ATTACHMENT_REGION)
 		{
 			spRegionAttachment* regionAttachment = SUB_CAST(spRegionAttachment, attachment);
-			texture = (Texture*)((spAtlasRegion*)regionAttachment->rendererObject)->page->rendererObject;
+			texture = (XTexture*)((spAtlasRegion*)regionAttachment->rendererObject)->page->rendererObject;
 			spRegionAttachment_computeWorldVertices(regionAttachment, slot->skeleton->x, slot->skeleton->y, slot->bone, m_worldVertices);
 
 			uchar r = uchar(m_self->r * slot->r * 255);
@@ -131,7 +126,7 @@ void spSkeletonWrapper::draw(Batch *batch)
 
 			texture->addRef();
 			batch->setTexture(texture);
-			batch->setPrimitive(Batch::PRIMITIVE_TRIANGLES);
+			batch->setPrimitive(XBatch::PRIMITIVE_TRIANGLES);
 			batch->addVertices(vertices, 4, QUAD_INDICES, 6);
 		} /*else if (attachment->type == ATTACHMENT_MESH) {
 			MeshAttachment* mesh = (MeshAttachment*)attachment;
