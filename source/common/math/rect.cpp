@@ -7,7 +7,7 @@
 //				Originally written by Marcus Loo Vergara (aka. Bitsauce)
 //									2011-2014 (C)
 
-#include "rect.h"
+#include <x2d/math.h>
 
 AS_REG_VALUE(Rect)
 

@@ -7,7 +7,7 @@
 //				Originally written by Marcus Loo Vergara (aka. Bitsauce)
 //									2011-2014 (C)
 
-#include "engine.h"
+#include <x2d/engine.h>
 
 XFileSystem *XFileSystem::s_this = 0;
 
@@ -63,7 +63,6 @@ bool XFileSystem::readFile(string filePath, string &content) const
 		delete fileReader;
 		return true;
 	}
-
 	delete fileReader;
 	return false;
 }
@@ -80,7 +79,6 @@ bool XFileSystem::writeFile(string filePath, const string content) const
 		delete fileWriter;
 		return true;
 	}
-	
 	delete fileWriter;
 	return false;
 }

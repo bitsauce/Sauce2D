@@ -7,9 +7,8 @@
 //				Originally written by Marcus Loo Vergara (aka. Bitsauce)
 //									2011-2014 (C)
 
-#include "sprite.h"
-#include "batch.h"
-#include "shape.h"
+#include <x2d/engine.h>
+#include <x2d/graphics.h>
 
 AS_REG_REF(XSprite)
 
@@ -151,7 +150,7 @@ void XSprite::scale(const float scl)
 
 XShape *XSprite::getAABB() const
 {
-	Vertex vertices[4];
+	XVertex vertices[4];
 	getVertices(vertices);
 
 	XShape *shape = new XShape();
@@ -223,7 +222,7 @@ XTexture *XSprite::getTexture() const
 
 void XSprite::draw(XBatch *batch) const
 {
-	Vertex vertices[4];
+	XVertex vertices[4];
 	getVertices(vertices);
 
 	batch->setTexture(m_textureRegion.getTexture());
@@ -232,7 +231,7 @@ void XSprite::draw(XBatch *batch) const
 	batch->release();
 }
 
-void XSprite::getVertices(Vertex *vertices) const
+void XSprite::getVertices(XVertex *vertices) const
 {
 	Matrix4 mat;
 	mat.scale(m_size.x, m_size.y, 1.0f);

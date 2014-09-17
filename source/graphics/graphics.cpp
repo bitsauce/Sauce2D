@@ -7,9 +7,8 @@
 //				Originally written by Marcus Loo Vergara (aka. Bitsauce)
 //									2011-2014 (C)
 
-#include "common/engine.h"
-#include "pixmap.h"
-#include "texture.h"
+#include <x2d/engine.h>
+#include <x2d/graphics.h>
 
 XGraphics *XGraphics::s_this = 0;
 
@@ -23,6 +22,7 @@ Vector4 QUAD_VERTICES[4] = {
 	Vector4(1.0f, 1.0f, 0.0f, 1.0f),
 	Vector4(0.0f, 1.0f, 0.0f, 1.0f)
 };
+
 Vector2 QUAD_TEXCOORD[4] = {
 	Vector2(0.0f, 1.0f),
 	Vector2(1.0f, 1.0f),
@@ -37,12 +37,12 @@ int XGraphics::Register(asIScriptEngine *scriptEngine)
 	int r = 0;
 	
 	// Vsync
-	r = scriptEngine->RegisterObjectMethod("ScriptGraphics", "void enableVsync()", asMETHOD(XGraphics, enableVsync), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("ScriptGraphics", "void disableVsync()", asMETHOD(XGraphics, disableVsync), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("XGraphics", "void enableVsync()", asMETHOD(XGraphics, enableVsync), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("XGraphics", "void disableVsync()", asMETHOD(XGraphics, disableVsync), asCALL_THISCALL); AS_ASSERT
 
 	// Time delta
-	r = scriptEngine->RegisterObjectMethod("ScriptGraphics", "float get_dt() const", asMETHOD(XGraphics, getTimeStep), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("ScriptGraphics", "float get_FPS() const", asMETHOD(XGraphics, getFPS), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("XGraphics", "float get_dt() const", asMETHOD(XGraphics, getTimeStep), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("XGraphics", "float get_FPS() const", asMETHOD(XGraphics, getFPS), asCALL_THISCALL); AS_ASSERT
 
 	return 0;
 }

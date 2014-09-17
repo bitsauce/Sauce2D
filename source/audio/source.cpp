@@ -7,7 +7,7 @@
 //				Originally written by Marcus Loo Vergara (aka. Bitsauce)
 //									2011-2014 (C)
 
-#include "source.h"
+#include <x2d/audio.h>
 
 AS_REG_REF(XAudioSource)
 

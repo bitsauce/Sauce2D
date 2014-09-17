@@ -7,9 +7,8 @@
 //				Originally written by Marcus Loo Vergara (aka. Bitsauce)
 //									2011-2014 (C)
 
-#include "engine.h"
-#include "audio/buffer.h"
-#include "audio/source.h"
+#include <x2d/engine.h>
+#include <x2d/audio.h>
 
 AS_REG_SINGLETON(XAudioManager)
 

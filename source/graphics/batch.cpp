@@ -7,21 +7,18 @@
 //				Originally written by Marcus Loo Vergara (aka. Bitsauce)
 //									2011-2014 (C)
 
-#include "batch.h"
-#include "texture.h"
-#include "shader.h"
-#include "framebufferobject.h"
-#include "vertexbufferobject.h"
+#include <x2d/engine.h>
+#include <x2d/graphics.h>
 
-AS_REG_VALUE(Vertex)
+AS_REG_VALUE(XVertex)
 
-int Vertex::Register(asIScriptEngine *scriptEngine)
+int XVertex::Register(asIScriptEngine *scriptEngine)
 {
 	int r = 0;
 
-	r = scriptEngine->RegisterObjectProperty("Vertex", "Vector2 position", offsetof(Vertex, position)); AS_ASSERT
-	r = scriptEngine->RegisterObjectProperty("Vertex", "Vector4 color", offsetof(Vertex, color)); AS_ASSERT
-	r = scriptEngine->RegisterObjectProperty("Vertex", "Vector2 texCoord", offsetof(Vertex, texCoord)); AS_ASSERT
+	r = scriptEngine->RegisterObjectProperty("XVertex", "Vector2 position", offsetof(XVertex, position)); AS_ASSERT
+	r = scriptEngine->RegisterObjectProperty("XVertex", "Vector4 color", offsetof(XVertex, color)); AS_ASSERT
+	r = scriptEngine->RegisterObjectProperty("XVertex", "Vector2 texCoord", offsetof(XVertex, texCoord)); AS_ASSERT
 
 	return r;
 }
@@ -140,7 +137,7 @@ XBatch::PrimitiveType XBatch::getPrimitive() const
 	return m_state.primitive;
 }
 
-void XBatch::addVertices(Vertex *vertices, int vcount, uint *indices, int icount)
+void XBatch::addVertices(XVertex *vertices, int vcount, uint *indices, int icount)
 {
 	if(m_static) {
 		LOG("Cannot add vertices to a static XBatch.");
@@ -155,11 +152,11 @@ void XBatch::addVertices(Vertex *vertices, int vcount, uint *indices, int icount
 		m_state.drawOrder = m_drawOrderMap[m_state.texture];
 	}
 
-	VertexBuffer *buffer;
+	XVertexBuffer *buffer;
 	if(m_buffers.find(m_state) == m_buffers.end())
 	{
 		// Create new vertex buffer for this state
-		buffer = m_buffers[m_state] = new VertexBuffer();
+		buffer = m_buffers[m_state] = new XVertexBuffer();
 	}else{
 		buffer = m_buffers[m_state];
 	}
@@ -167,7 +164,7 @@ void XBatch::addVertices(Vertex *vertices, int vcount, uint *indices, int icount
 	int ioffset = buffer->vertices.size();
 
 	for(int i = 0; i < vcount; i++) {
-		Vertex &vertex = vertices[i];
+		XVertex &vertex = vertices[i];
 		//vertex.position = m_matrixStack.top() * Vector4(vertex.position.x, vertex.position.y, 0.0f, 1.0f);
 		buffer->vertices.push_back(vertex);
 	}
@@ -180,9 +177,9 @@ void XBatch::addVertices(Vertex *vertices, int vcount, uint *indices, int icount
 void XBatch::addVerticesAS(XScriptArray *asvertices, XScriptArray *asindices)
 {
 	uint vcount = asvertices->GetSize();
-	Vertex *vertices = new Vertex[vcount];
+	XVertex *vertices = new XVertex[vcount];
 	for(uint i = 0; i < vcount; i++) {
-		vertices[i] = *(Vertex*)asvertices->At(i);
+		vertices[i] = *(XVertex*)asvertices->At(i);
 	}
 
 	uint icount = asindices->GetSize();
@@ -197,7 +194,7 @@ void XBatch::addVerticesAS(XScriptArray *asvertices, XScriptArray *asindices)
 	asindices->Release();
 }
 
-void XBatch::modifyVertex(int index, Vertex vertex)
+void XBatch::modifyVertex(int index, XVertex vertex)
 {
 	if(index < 0 || index >= (int)m_buffers[m_state]->vertices.size()) {
 		LOG("XBatch.modifyVertex: Index out-of-bounds.");
@@ -211,11 +208,11 @@ void XBatch::modifyVertex(int index, Vertex vertex)
 	}
 }
 
-Vertex XBatch::getVertex(int index)
+XVertex XBatch::getVertex(int index)
 {
 	if(index < 0 || index >= (int)m_buffers[m_state]->vertices.size()) {
 		LOG("XBatch.getVertex: Index out-of-bounds.");
-		return Vertex();
+		return XVertex();
 	}
 
 	return m_buffers[m_state]->vertices[index];

@@ -7,8 +7,8 @@
 //				Originally written by Marcus Loo Vergara (aka. Bitsauce)
 //									2011-2014 (C)
 
-#include "textureRegion.h"
-#include "texture.h"
+#include <x2d/engine.h>
+#include <x2d/graphics.h>
 
 AS_REG_VALUE(XTextureRegion)
 

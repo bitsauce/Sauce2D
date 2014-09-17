@@ -7,7 +7,7 @@
 //				Originally written by Marcus Loo Vergara (aka. Bitsauce)
 //									2011-2014 (C)
 
-#include "engine.h"
+#include <x2d/engine.h>
 
 AS_REG_SINGLETON(XTimer)
 

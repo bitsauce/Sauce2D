@@ -7,7 +7,8 @@
 //				Originally written by Marcus Loo Vergara (aka. Bitsauce)
 //									2011-2014 (C)
 
-#include "engine.h"
+#include <x2d/engine.h>
+#include <x2d/extention.h>
 
 AS_REG_SINGLETON(XInput)
 
@@ -252,8 +253,6 @@ void XInput::keyReleased(const XVirtualKey key)
 	}
 }
 
-#include "scripts/funccall.h"
-
 void XInput::checkBindings()
 {
 	// Iterate key bindings
@@ -265,7 +264,7 @@ void XInput::checkBindings()
 			if(!key.pressed)
 			{
 				// Key was pressed, call function
-				FuncCall(key.function).execute();
+				XFuncCall(key.function).execute();
 			}
 			key.pressed = true;
 		}else{

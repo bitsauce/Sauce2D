@@ -8,11 +8,8 @@
 //									2011-2014 (C)
 // Inspired by: http://nehe.gamedev.net/tutorial/freetype_fonts_in_opengl/24001/
 
-#include "font.h"
-#include "batch.h"
-#include "sprite.h"
-#include "textureRegion.h"
-#include "textureAtlas.h"
+#include <x2d/engine.h>
+#include <x2d/graphics.h>
 
 // Credits to the FreeType library
 // FreeType Headers
@@ -251,7 +248,7 @@ void XFont::draw(XBatch *batch, const Vector2 &pos, const string &str)
 	batch->setPrimitive(XBatch::PRIMITIVE_TRIANGLES);
 
 	// Draw string
-	Vertex vertices[4];
+	XVertex vertices[4];
 	for(uint i = 0; i < str.size(); i++)
 	{
 		// Check for new line

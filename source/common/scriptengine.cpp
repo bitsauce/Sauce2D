@@ -7,7 +7,8 @@
 //				Originally written by Marcus Loo Vergara (aka. Bitsauce)
 //									2011-2014 (C)
 
-#include "common/engine.h"
+#include <x2d/engine.h>
+#include <x2d/extention.h>
 
 XScriptArray *CreateArray(const string &type, const uint size)
 {
@@ -201,12 +202,6 @@ void ScriptValue::clear()
 // AngelScript
 //----------------------------------------------------------------------------
 
-#include "scripts/scripthelper.h"
-#include "scripts/scriptbuilder.h"
-#include "scripts/stringstream.h"
-
-#include <stdio.h>
-
 // AngelScript callback function
 string messageCallback;
 void asMessageCallback(const asSMessageInfo *msg, void*)
@@ -306,7 +301,7 @@ void XScriptEngine::serialize(asIScriptObject *object, string &path)
 	if(object)
 	{
 		// Store object type
-		StringStream ss;
+		XStringStream ss;
 		serialize(object, ss);
 		XFileSystem::WriteFile(path, ss.str());
 
@@ -318,7 +313,7 @@ void XScriptEngine::serialize(asIScriptObject *object, string &path)
 	}
 }
 
-void XScriptEngine::serialize(asIScriptObject *object, StringStream &ss)
+void XScriptEngine::serialize(asIScriptObject *object, XStringStream &ss)
 {
 	// Get script object type and it's serialization function
 	asIObjectType *type = object->GetObjectType(); // We need to do this to get the 'actual' object type (not a base type)
@@ -348,9 +343,10 @@ asIScriptObject *XScriptEngine::deserialize(string &path)
 	if(XFileSystem::ReadFile(path, content))
 	{
 		// Deserialize object
-		StringStream ss(content);
+		XStringStream ss(content);
 		object = deserialize(ss);
-	}else
+	}
+	else
 	{
 		LOG("Unable to read serialized file '%s'", path);
 	}
@@ -359,7 +355,7 @@ asIScriptObject *XScriptEngine::deserialize(string &path)
 	return object;
 }
 
-asIScriptObject *XScriptEngine::deserialize(StringStream &ss)
+asIScriptObject *XScriptEngine::deserialize(XStringStream &ss)
 {
 	// Get type name
 	string typeName;
@@ -383,7 +379,8 @@ asIScriptObject *XScriptEngine::deserialize(StringStream &ss)
 
 		// Clean up
 		r = ctx->Release();
-	}else
+	}
+	else
 	{
 		LOG("Unable to create script object of type '%s'", typeName.c_str());
 	}

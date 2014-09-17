@@ -7,11 +7,9 @@
 //				Originally written by Marcus Loo Vergara (aka. Bitsauce)
 //									2011-2014 (C)
 
-#include "engine.h"
-
-#include "graphics/pixmap.h"
-#include "audio/buffer.h"
-
+#include <x2d/engine.h>
+#include <x2d/graphics.h>
+#include <x2d/audio.h>
 #include <freeimage.h>
 
 uint read(void *buffer, uint size, uint count, fi_handle handle)

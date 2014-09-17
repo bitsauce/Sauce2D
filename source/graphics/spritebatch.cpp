@@ -7,11 +7,8 @@
 //				Originally written by Marcus Loo Vergara (aka. Bitsauce)
 //									2011-2014 (C)
 
-#include "spriteBatch.h"
-#include "sprite.h"
-#include "texture.h"
-#include "vertexbufferobject.h"
-#include "framebufferobject.h"
+#include <x2d/engine.h>
+#include <x2d/graphics.h>
 
 AS_REG_REF(XSpriteBatch)
 
@@ -80,7 +77,7 @@ void XSpriteBatch::draw()
 			XSprite *sprite = m_returnedSprites[i];
 
 			// Get vertices
-			Vertex vertices[4];
+			XVertex vertices[4];
 			sprite->getVertices(vertices);
 			// m_matrixStack.top() * vertices[i];
 

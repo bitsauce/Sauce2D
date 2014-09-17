@@ -7,18 +7,10 @@
 //				Originally written by Marcus Loo Vergara (aka. Bitsauce)
 //									2011-2014 (C)
 
-#include "engine.h"
-
-// AngelScript add-ons
-#include "scripts/scriptstdstring.h"
-#include "scripts/scriptbuilder.h"
-#include "scripts/scripthelper.h"
-#include "scripts/scriptarray.h"
-#include "scripts/scriptgrid.h"
-#include "scripts/scriptany.h"
-#include "scripts/scriptdictionary.h"
-#include "scripts/thread.h"
-#include "scripts/funccall.h"
+#include <x2d/engine.h>
+#include <x2d/extention.h>
+#include <x2d/graphics.h>
+#include <x2d/audio.h>
 
 #ifdef X2D_LINUX
 #define MAX_PATH 256
@@ -374,7 +366,7 @@ int XEngine::init(const XConfig &config)
 
 		// Load plugins
 		LOG("Loading plugins...");
-		if(config.loadPluginsFunc != 0 && config.loadPluginsFunc(this) < 0) {
+		if(config.loadPluginsFunc != 0 && config.loadPluginsFunc(scriptEngine) < 0) {
 			return X2D_PLUGIN_LOAD_ERROR;
 		}
 
@@ -392,7 +384,7 @@ int XEngine::init(const XConfig &config)
 		m_scripts->s_module = mod;
 
 		// Load events
-		if(config.loadEventsFunc != 0 && config.loadEventsFunc(this) < 0) {
+		if(config.loadEventsFunc != 0 && config.loadEventsFunc(scriptEngine) < 0) {
 			return X2D_PLUGIN_LOAD_ERROR;
 		}
 

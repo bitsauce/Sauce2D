@@ -7,9 +7,8 @@
 //				Originally written by Marcus Loo Vergara (aka. Bitsauce)
 //									2011-2014 (C)
 
-#include "shape.h"
-#include "texture.h"
-#include "batch.h"
+#include <x2d/engine.h>
+#include <x2d/graphics.h>
 
 AS_REG_REF(XShape)
 
@@ -46,7 +45,7 @@ XShape::XShape(const Rect &rect) :
 	m_penSize(1.0f),
 	m_index(0)
 {
-	Vertex vert;
+	XVertex vert;
 	vert.color.set(1.0f, 1.0f, 1.0f, 1.0f);
 
 	vert.position.set(rect.getLeft(), rect.getTop());
@@ -83,7 +82,7 @@ XShape::XShape(const Vector2 &center, const float radius, const int vertCount) :
 	m_penSize(1.0f),
 	m_index(0)
 {
-	Vertex vert;
+	XVertex vert;
 	vert.color.set(1.0f, 1.0f, 1.0f, 1.0f);
 	vert.position = center;
 	vert.texCoord.set(0.5f, 0.5f);
@@ -107,7 +106,7 @@ XShape::XShape(const Vector2 &center, const float radius, const int vertCount) :
 	m_index += vertCount * 3;
 }
 
-XShape::XShape(const vector<Vertex> &vertices) :
+XShape::XShape(const vector<XVertex> &vertices) :
 	m_fillColor(1.0f),
 	m_fillTexture(0),
 	m_penColor(1.0f),

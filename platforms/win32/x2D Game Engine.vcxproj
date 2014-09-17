@@ -52,7 +52,7 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>
       </SDLCheck>
-      <AdditionalIncludeDirectories>..\..\include;..\..\3rdparty\vld\include;..\..\3rdparty\openal\include;..\..\3rdparty\glew\include;..\..\3rdparty\angelscript\sdk\angelscript\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.\source;..\..\include;..\..\3rdparty\vld\include;..\..\3rdparty\openal\include;..\..\3rdparty\glew\include;..\..\3rdparty\angelscript\sdk\angelscript\include</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>X2D_DEBUG;X2D_IMPORT;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
@@ -70,7 +70,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>
       </SDLCheck>
-      <AdditionalIncludeDirectories>..\..\include;..\..\3rdparty\vld\include;..\..\3rdparty\openal\include;..\..\3rdparty\glew\include;..\..\3rdparty\angelscript\sdk\angelscript\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.\source;..\..\include;..\..\3rdparty\vld\include;..\..\3rdparty\openal\include;..\..\3rdparty\glew\include;..\..\3rdparty\angelscript\sdk\angelscript\include</AdditionalIncludeDirectories>
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <PreprocessorDefinitions>X2D_IMPORT;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
@@ -83,36 +83,36 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="fileSystem.cpp" />
-    <ClCompile Include="input.cpp" />
-    <ClCompile Include="plugins.cpp" />
-    <ClCompile Include="source\gfx\opengl\glshader.cpp" />
-    <ClCompile Include="source\gfx\opengl\gltexture.cpp" />
-    <ClCompile Include="source\gfx\opengl\glgraphics.cpp" />
-    <ClCompile Include="source\sfx\openal\alaudio.cpp" />
-    <ClCompile Include="source\sfx\openal\alsource.cpp" />
-    <ClCompile Include="timer.cpp" />
-    <ClCompile Include="main.cpp" />
-    <ClCompile Include="window.cpp" />
-    <ClCompile Include="console.cpp" />
-    <ClCompile Include="debug.cpp" />
-  </ItemGroup>
-  <ItemGroup>
     <ResourceCompile Include="resources.rc" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="fileSystem.h" />
-    <ClInclude Include="input.h" />
-    <ClInclude Include="plugins.h" />
-    <ClInclude Include="source\gfx\opengl\glshader.h" />
-    <ClInclude Include="source\gfx\opengl\gltexture.h" />
-    <ClInclude Include="source\gfx\opengl\glgraphics.h" />
-    <ClInclude Include="source\sfx\openal\alaudio.h" />
-    <ClInclude Include="source\sfx\openal\alsource.h" />
-    <ClInclude Include="timer.h" />
-    <ClInclude Include="window.h" />
-    <ClInclude Include="console.h" />
-    <ClInclude Include="debug.h" />
+    <ClCompile Include="source\audio\openal\alaudio.cpp" />
+    <ClCompile Include="source\audio\openal\alsource.cpp" />
+    <ClCompile Include="source\common\console.cpp" />
+    <ClCompile Include="source\common\debug.cpp" />
+    <ClCompile Include="source\common\filesystem.cpp" />
+    <ClCompile Include="source\common\input.cpp" />
+    <ClCompile Include="source\common\plugins.cpp" />
+    <ClCompile Include="source\common\timer.cpp" />
+    <ClCompile Include="source\common\window.cpp" />
+    <ClCompile Include="source\graphics\opengl\glgraphics.cpp" />
+    <ClCompile Include="source\graphics\opengl\glshader.cpp" />
+    <ClCompile Include="source\graphics\opengl\gltexture.cpp" />
+    <ClCompile Include="source\main.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="source\audio\openal\alaudio.h" />
+    <ClInclude Include="source\audio\openal\alsource.h" />
+    <ClInclude Include="source\common\console.h" />
+    <ClInclude Include="source\common\debug.h" />
+    <ClInclude Include="source\common\filesystem.h" />
+    <ClInclude Include="source\common\input.h" />
+    <ClInclude Include="source\common\plugins.h" />
+    <ClInclude Include="source\common\timer.h" />
+    <ClInclude Include="source\common\window.h" />
+    <ClInclude Include="source\graphics\opengl\glgraphics.h" />
+    <ClInclude Include="source\graphics\opengl\glshader.h" />
+    <ClInclude Include="source\graphics\opengl\gltexture.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
