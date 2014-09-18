@@ -10,12 +10,29 @@
 #include <x2d/engine.h>
 #include <x2d/extention.h>
 
+AS_REG_REF(XFuncCall, "FuncCall")
+
+int XFuncCall::Register(asIScriptEngine *scriptEngine)
+{
+	int r;
+	r = scriptEngine->RegisterObjectBehaviour("FuncCall", asBEHAVE_FACTORY, "FuncCall @f()", asFUNCTIONPR(XFuncCall::Factory, (), XFuncCall*), asCALL_CDECL); AS_ASSERT
+	r = scriptEngine->RegisterObjectBehaviour("FuncCall", asBEHAVE_FACTORY, "FuncCall @f(const string &in)", asFUNCTIONPR(XFuncCall::Factory, (const string&), XFuncCall*), asCALL_CDECL); AS_ASSERT
+	r = scriptEngine->RegisterObjectBehaviour("FuncCall", asBEHAVE_FACTORY, "FuncCall @f(?&in, const string &in)", asFUNCTIONPR(XFuncCall::Factory, (void*, int, const string&), XFuncCall*), asCALL_CDECL); AS_ASSERT
+	r = scriptEngine->RegisterObjectBehaviour("FuncCall", asBEHAVE_FACTORY, "FuncCall @f(?&in)", asFUNCTIONPR(XFuncCall::Factory, (void*, int), XFuncCall*), asCALL_CDECL); AS_ASSERT
+	
+	r = scriptEngine->RegisterObjectMethod("FuncCall", "void setObject(?&in)", asMETHOD(XFuncCall, setObject), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("FuncCall", "void setArg(const int, ?&in)", asMETHOD(XFuncCall, setArg), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("FuncCall", "bool execute()", asMETHODPR(XFuncCall, execute, (), bool), asCALL_THISCALL); AS_ASSERT
+	//r = scriptEngine->RegisterObjectMethod("funccall", "void getReturn(?&out) const", asMETHOD(XFuncCall, getReturn), asCALL_THISCALL); AS_ASSERT
+	return r;
+}
+
 XFuncCall::XFuncCall()
 {
 	init(0, 0, 0);
 }
 
-XFuncCall::XFuncCall(const XFuncCall &other)
+/*XFuncCall::XFuncCall(const XFuncCall &other)
 {
 	// Set function
 	m_function = other.m_function;
@@ -44,7 +61,7 @@ XFuncCall::XFuncCall(const XFuncCall &other)
 			setArg(i, other.m_arguments[i].first, typeId);
 		}
 	}
-}
+}*/
 
 XFuncCall::XFuncCall(asIScriptFunction *func)
 {
@@ -164,17 +181,23 @@ void XFuncCall::setArg(const uint index, void *value, int typeId)
 	}
 }
 
-bool XFuncCall::execute()
+bool XFuncCall::execute(asIScriptContext *ctx)
 {
+	// Make sure we have a context
+	if(!ctx)
+	{
+		return false;
+	}
+
 	// Make sure we have a valid funcion
 	if(!m_function)
+	{
+		ctx->Release();
 		return false;
-
-	int r;
+	}
 
 	// Prepare context
-	asIScriptContext *ctx = XScriptEngine::CreateContext();
-	r = ctx->Prepare(m_function); assert(r >= 0);
+	int r = ctx->Prepare(m_function); assert(r >= 0);
 	if(m_object.first != 0 && m_object.second != 0)
 	{
 		r = ctx->SetObject(m_object.first); assert(r >= 0);
@@ -255,6 +278,11 @@ bool XFuncCall::execute()
 	return executeResult == asEXECUTION_FINISHED;
 }
 
+bool XFuncCall::execute()
+{
+	return execute(XScriptEngine::CreateContext());
+}
+
 /*void XFuncCall::getReturn(void *value, int typeId) const
 {
 	// Make sure we have a valid funcion
@@ -301,27 +329,22 @@ bool XFuncCall::execute()
 	}
 }*/
 
-void ConstructDefault(XFuncCall *self)
+XFuncCall *XFuncCall::Factory()
 {
-	new (self) XFuncCall();
+	return new XFuncCall();
 }
 
-void CopyConstructXFuncCall(const XFuncCall &other, XFuncCall *self)
+XFuncCall *XFuncCall::Factory(const string &func)
 {
-	new (self) XFuncCall(other);
+	return new XFuncCall(func);
 }
 
-void ConstructFunction(const string &func, XFuncCall *self)
+XFuncCall *XFuncCall::Factory(void *value, int typeId, const string &method)
 {
-	new (self) XFuncCall(func);
+	return new XFuncCall(value, typeId, method);
 }
 
-void ConstructMethod(void *value, int typeId, const string &method, XFuncCall *self)
-{
-	new (self) XFuncCall(value, typeId, method);
-}
-
-void ConstructDelegate(void *value, int typeId, XFuncCall *self)
+XFuncCall *XFuncCall::Factory(void *value, int typeId)
 {
 	asIScriptFunction *func = 0;
 	if(typeId & asTYPEID_MASK_OBJECT && typeId & asTYPEID_APPOBJECT)
@@ -332,31 +355,5 @@ void ConstructDelegate(void *value, int typeId, XFuncCall *self)
 			func = *(asIScriptFunction**)value;
 		}
 	}
-	new (self) XFuncCall(func);
-}
-
-void Destruct(XFuncCall *self)
-{
-	self->~XFuncCall();
-}
-
-int RegisterScriptFuncCall(asIScriptEngine *scriptEngine)
-{
-	int r;
-
-	r = scriptEngine->RegisterObjectType("funccall", sizeof(XFuncCall), asOBJ_VALUE | asOBJ_APP_CLASS_CDK); AS_ASSERT
-		
-	r = scriptEngine->RegisterObjectBehaviour("funccall", asBEHAVE_CONSTRUCT,  "void f()", asFUNCTION(ConstructDefault), asCALL_CDECL_OBJLAST); AS_ASSERT
-	r = scriptEngine->RegisterObjectBehaviour("funccall", asBEHAVE_CONSTRUCT,  "void f(const funccall &in)", asFUNCTION(CopyConstructXFuncCall), asCALL_CDECL_OBJLAST); AS_ASSERT
-	r = scriptEngine->RegisterObjectBehaviour("funccall", asBEHAVE_CONSTRUCT,  "void f(const string &in)", asFUNCTION(ConstructFunction), asCALL_CDECL_OBJLAST); AS_ASSERT
-	r = scriptEngine->RegisterObjectBehaviour("funccall", asBEHAVE_CONSTRUCT,  "void f(?&in, const string &in)", asFUNCTION(ConstructMethod), asCALL_CDECL_OBJLAST); AS_ASSERT
-	r = scriptEngine->RegisterObjectBehaviour("funccall", asBEHAVE_CONSTRUCT,  "void f(?&in)", asFUNCTION(ConstructDelegate), asCALL_CDECL_OBJLAST); AS_ASSERT
-	r = scriptEngine->RegisterObjectBehaviour("funccall", asBEHAVE_DESTRUCT,  "void f()", asFUNCTION(Destruct), asCALL_CDECL_OBJLAST); AS_ASSERT
-	
-	r = scriptEngine->RegisterObjectMethod("funccall", "void setObject(?&in)", asMETHOD(XFuncCall, setObject), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("funccall", "void setArg(const int, ?&in)", asMETHOD(XFuncCall, setArg), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("funccall", "bool execute()", asMETHOD(XFuncCall, execute), asCALL_THISCALL); AS_ASSERT
-	//r = scriptEngine->RegisterObjectMethod("funccall", "void getReturn(?&out) const", asMETHOD(XFuncCall, getReturn), asCALL_THISCALL); AS_ASSERT
-
-	return r;
+	return new XFuncCall(func);
 }

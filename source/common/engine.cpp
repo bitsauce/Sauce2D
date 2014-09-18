@@ -335,8 +335,6 @@ int XEngine::init(const XConfig &config)
 		RegisterScriptGrid(scriptEngine);
 		RegisterScriptAny(scriptEngine);
 		RegisterScriptDictionary(scriptEngine);
-		RegisterScriptFuncCall(scriptEngine);
-		RegisterScriptThread(scriptEngine);
 
 		r = scriptEngine->RegisterInterface("Scene"); AS_ASSERT
 		r = scriptEngine->RegisterInterfaceMethod("Scene", "void show()"); AS_ASSERT
@@ -461,10 +459,14 @@ void XEngine::draw()
 {
 	// Start draw
 	XProfiler::Push("Draw");
-
+	
+	ctxmtx.lock();
 	for(XRenderContext **context : m_graphics->s_contextToCreate)
+	{
 		*context = XGraphics::CreateContext();
+	}
 	m_graphics->s_contextToCreate.clear();
+	ctxmtx.unlock();
 
 	asIScriptObject *object = m_sceneStack.size() > 0 ? m_sceneStack.top() : 0;
 	asIScriptFunction *func = object != 0 ? m_sceneDrawFunc : m_defaultDrawFunc;

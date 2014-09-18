@@ -11,74 +11,196 @@
 #include <x2d/graphics.h>
 #include <x2d/extention.h>
 
-// NOTE TO SELF:
-// Mutexes must apparently be unlocked by the same thread as the one locking it.
-// Therefore doing try_lock and unlock in the destructor might cause problems as
-// the destructor will always be called on the Main thread (I think?) when exiting.
-//
-// A soultion to this can be to create a Thread object, which itself manages its
-// mutexes upon destruction.
+/*********************************************************************
+**	A managed mutex class											**
+**********************************************************************/
 
-void CallFunction(XFuncCall &funccall)
+AS_REG_REF(XMutex, "Mutex")
+
+int XMutex::Register(asIScriptEngine *scriptEngine)
+{
+	int r;
+	r = scriptEngine->RegisterObjectBehaviour("Mutex", asBEHAVE_FACTORY, "Mutex @f()", asFUNCTION(XMutex::Factory), asCALL_CDECL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("Mutex", "void lock()", asMETHOD(XMutex, lock), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("Mutex", "bool tryLock()", asMETHOD(XMutex, tryLock), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("Mutex", "void unlock()", asMETHOD(XMutex, unlock), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("Mutex", "bool isLocked() const", asMETHOD(XMutex, isLocked), asCALL_THISCALL); AS_ASSERT
+	return r;
+}
+
+XMutex::XMutex() :
+	m_this(),
+	m_locked(false)
+{
+}
+
+void XMutex::lock()
+{
+	m_this.lock();
+	m_locked = true;
+	m_owner = this_thread::get_id();
+}
+
+bool XMutex::tryLock()
+{
+	bool result = m_this.try_lock();
+	if(result)
+	{
+		m_locked = true;
+		m_owner = this_thread::get_id();
+	}
+	return result;
+}
+
+void XMutex::unlock()
+{
+	if(m_owner == this_thread::get_id())
+	{
+		m_this.unlock();
+		m_locked = false;
+	}
+	else
+	{
+		LOG("XMutex::unlock() - Has to be called on the same thread which locked it");
+	}
+}
+
+bool XMutex::isLocked() const
+{
+	return m_locked;
+}
+
+/*********************************************************************
+**	A managed thread class											**
+**********************************************************************/
+
+AS_REG_REF(XThread, "Thread")
+
+int XThread::Register(asIScriptEngine *scriptEngine)
+{
+	int r;
+	r = scriptEngine->RegisterObjectBehaviour("Thread", asBEHAVE_FACTORY, "Thread @f(FuncCall@)", asFUNCTIONPR(XThread::Factory, (XFuncCall*), XThread*), asCALL_CDECL); AS_ASSERT
+
+	r = scriptEngine->RegisterObjectMethod("Thread", "void start()", asMETHOD(XThread, start), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("Thread", "void stop()", asMETHOD(XThread, stop), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("Thread", "void dump() const", asMETHOD(XThread, dump), asCALL_THISCALL); AS_ASSERT
+
+	r = scriptEngine->RegisterObjectMethod("Thread", "bool isJoinable() const", asMETHOD(XThread, isJoinable), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("Thread", "void detach()", asMETHOD(XThread, detach), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("Thread", "void join()", asMETHOD(XThread, join), asCALL_THISCALL); AS_ASSERT
+	return r;
+}
+
+XThread::XThread(XFuncCall *funcCall) :
+	m_this(0),
+	m_funcCall(funcCall),
+	m_context(0)
+{
+	if(m_funcCall)
+	{
+		m_funcCall->addRef();
+	}
+}
+
+XThread::~XThread()
+{
+	if(m_funcCall)
+	{
+		m_funcCall->release();
+	}
+
+	if(m_this)
+	{
+		if(m_this->joinable())
+			m_this->detach();
+		delete m_this;
+	}
+}
+
+bool XThread::isJoinable() const
+{
+	return m_this ? m_this->joinable() : false;
+}
+
+void XThread::detach()
+{
+	if(m_this && m_this->joinable())
+	{
+		m_this->detach();
+	}
+}
+
+void XThread::join()
+{
+	if(m_this && m_this->joinable())
+	{
+		m_this->join();
+	}
+}
+
+XFuncCall *XThread::getFuncCall() const
+{
+	return m_funcCall;
+}
+
+void XThread::setContext(asIScriptContext *ctx)
+{
+	m_context = ctx;
+}
+
+void CallFunction(XThread *thread)
 {
 	XRenderContext *context = 0;
 	XGraphics::CreateContext(&context);
-	while(!context);
+	bool hasContext = false;
+	while(!hasContext)
+	{
+		ctxmtx.lock();
+		hasContext = context != 0;
+		ctxmtx.unlock();
+	}
 
 	context->makeCurrent();
-	funccall.execute();
-	asThreadCleanup();
+	
+	// Create and set context
+	asIScriptContext *ctx = XScriptEngine::CreateContext();
+	thread->setContext(ctx);
+	thread->getFuncCall()->execute(ctx);
+	thread->setContext(0);
 
+	asThreadCleanup();
+	
 	XGraphics::DestroyContext(context);
 }
 
-void ConstructThreadDefault(thread *self)
+void XThread::start()
 {
-	new (self) thread();
+	if(!m_this && m_funcCall)
+	{
+		m_this = new thread(CallFunction, this);
+	}
+	else
+	{
+		LOG("XThread::start() - Already running");
+	}
 }
 
-void ConstructThreadFuncCall(XFuncCall &funccall, thread *self)
+void XThread::stop()
 {
-	new (self) thread(CallFunction, funccall);
+	if(m_context)
+	{
+		m_context->Abort();
+	}
 }
 
-void DestructThread(thread *self)
+void XThread::dump() const
 {
-	if(self->joinable())
-		self->detach();
-	self->~thread();
-}
-
-void ConstructMutex(mutex *self)
-{
-	new (self) mutex();
-}
-
-void DestructMutex(mutex *self)
-{
-	self->try_lock();
-	self->unlock();
-	((_Mutex_base*)self)->~_Mutex_base();
-}
-
-int RegisterScriptThread(asIScriptEngine *scriptEngine)
-{
-	int r = 0;
-
-	r = scriptEngine->RegisterObjectType("thread", sizeof(thread), asOBJ_VALUE | asOBJ_APP_CLASS_CD/*A*/); assert( r >= 0 ); AS_ASSERT
-	r = scriptEngine->RegisterObjectBehaviour("thread", asBEHAVE_CONSTRUCT, "void f()", asFUNCTION(ConstructThreadDefault), asCALL_CDECL_OBJLAST); AS_ASSERT
-	r = scriptEngine->RegisterObjectBehaviour("thread", asBEHAVE_CONSTRUCT, "void f(funccall &in)", asFUNCTION(ConstructThreadFuncCall), asCALL_CDECL_OBJLAST); AS_ASSERT
-	r = scriptEngine->RegisterObjectBehaviour("thread", asBEHAVE_DESTRUCT, "void f()", asFUNCTION(DestructThread), asCALL_CDECL_OBJLAST); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("thread", "bool joinable() const", asMETHODPR(thread, joinable, () const, bool), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("thread", "void detach()", asMETHODPR(thread, detach, (), void), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("thread", "void join()", asMETHODPR(thread, join, (), void), asCALL_THISCALL); AS_ASSERT
-	
-	r = scriptEngine->RegisterObjectType("mutex", sizeof(mutex), asOBJ_VALUE | asOBJ_APP_CLASS_CD/*A*/); assert( r >= 0 ); AS_ASSERT
-	r = scriptEngine->RegisterObjectBehaviour("mutex", asBEHAVE_CONSTRUCT, "void f()", asFUNCTION(ConstructMutex), asCALL_CDECL_OBJLAST); AS_ASSERT
-	r = scriptEngine->RegisterObjectBehaviour("mutex", asBEHAVE_DESTRUCT, "void f()", asFUNCTION(DestructMutex), asCALL_CDECL_OBJLAST); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("mutex", "void lock()", asMETHODPR(mutex, lock, (), void), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("mutex", "bool tryLock()", asMETHODPR(mutex, try_lock, (), bool), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("mutex", "void unlock()", asMETHODPR(mutex, unlock, (), void), asCALL_THISCALL); AS_ASSERT
-
-	return r;
+	if(m_context)
+	{
+		const char *file;
+		int line = m_context->GetLineNumber(0, 0, &file);
+		asIScriptFunction *func = m_context->GetFunction();
+		LOG("CURRENT FUNCTION: %s", func ? func->GetName() : "NONE");
+		LOG("LOCATION: %s (%i)", file ? file : "NONE", line);
+	}
 }

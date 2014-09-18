@@ -815,5 +815,6 @@ private:
 };
 
 XDAPI XEngine *CreateEngine();
+extern mutex ctxmtx;
 
 #endif // X2D_ENGINE_H

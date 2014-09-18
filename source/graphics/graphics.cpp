@@ -31,6 +31,7 @@ Vector2 QUAD_TEXCOORD[4] = {
 };
 
 vector<XRenderContext**> XGraphics::s_contextToCreate;
+mutex ctxmtx;
 
 AS_REG_SINGLETON(XGraphics)
 
@@ -83,7 +84,9 @@ float XGraphics::getFPS() const
 
 void XGraphics::CreateContext(XRenderContext **context)
 {
+	ctxmtx.lock();
 	s_contextToCreate.push_back(context);
+	ctxmtx.unlock();
 }
 
 XRenderContext* XGraphics::CreateContext()

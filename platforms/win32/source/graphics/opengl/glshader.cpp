@@ -34,7 +34,7 @@ GLshader::GLshader(const string &vertFilePath, const string &fragFilePath)
 
 	// Result variables
     int result = 0;
-    int logLength;
+    int logLength = 0;
 
 	LOG("Compiling vertex shader: %s", vertFilePath.c_str());
 	

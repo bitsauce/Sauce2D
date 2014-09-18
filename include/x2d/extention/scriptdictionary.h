@@ -1,34 +1,13 @@
 #ifndef X2D_SCRIPT_DICTIONARY_H
 #define X2D_SCRIPT_DICTIONARY_H
 
-// The dictionary class relies on the script string object, thus the script
-// string type must be registered with the engine before registering the
-// dictionary type
-
-#ifndef ANGELSCRIPT_H 
-// Avoid having to inform include path if header is already include before
-#include <angelscript.h>
-#endif
-
-#include <string>
+#include "../config.h"
 
 #ifdef _MSC_VER
 // Turn off annoying warnings about truncated symbol names
 #pragma warning (disable:4786)
 #endif
 
-#include <map>
-
-// Sometimes it may be desired to use the same method names as used by C++ STL.
-// This may for example reduce time when converting code from script to C++ or
-// back.
-//
-//  0 = off
-//  1 = on
-
-#ifndef AS_USE_STLNAMES
-#define AS_USE_STLNAMES 0
-#endif
 class XScriptArray;
 class XScriptDictionary;
 
@@ -191,13 +170,5 @@ protected:
 // This function will determine the configuration of the engine
 // and use one of the two functions below to register the dictionary object
 void RegisterScriptDictionary(asIScriptEngine *engine);
-
-// Call this function to register the math functions
-// using native calling conventions
-void RegisterScriptDictionary_Native(asIScriptEngine *engine);
-
-// Use this one instead if native calling conventions
-// are not supported on the target platform
-void RegisterScriptDictionary_Generic(asIScriptEngine *engine);
 
 #endif // X2D_SCRIPT_DICTIONARY_H

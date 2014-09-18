@@ -27,6 +27,10 @@ bool XDebugger::connect()
 	return true;
 }
 
+// This mutex is necessary for making sure no other thread reads the async
+// packet before the thread awaiting it reads it.
+mutex sockmtx;
+
 void XDebugger::sendPacket(XPacketType type, const char *data)
 {
 	// Make sure we have a connection
@@ -45,6 +49,7 @@ void XDebugger::sendPacket(XPacketType type, const char *data)
 	}
 	sendPacket(XD_MESSAGE_PACKET, (colorTag + data).c_str());
 #endif*/
+	sockmtx.lock();
 
 	// Create packet
 	char packet[512];
@@ -77,6 +82,8 @@ void XDebugger::sendPacket(XPacketType type, const char *data)
 		disconnect();
 	}
 	delete[] recvData;
+
+	sockmtx.unlock();
 }
 
 void XDebugger::recvPacket(char **data)
@@ -105,6 +112,7 @@ void XDebugger::lineCallback(void *ctxptr)
 	asIScriptContext *ctx = static_cast<asIScriptContext*>(ctxptr);
 
 	// Check for actions
+	sockmtx.lock();
 	while(bytesReady() >= 512)
 	{
 		char *data = new char[512];
@@ -153,6 +161,7 @@ void XDebugger::lineCallback(void *ctxptr)
 		}
 		delete[] data;
 	}
+	sockmtx.unlock();
 
 	// Perform debug actions
 	if(m_command == NoCommand)
@@ -160,7 +169,8 @@ void XDebugger::lineCallback(void *ctxptr)
 		// Continue until breakpoint
 		if(!isBreakpoint(ctx))
 			return;
-	}else if(m_command == StepOver)
+	}
+	else if(m_command == StepOver)
 	{
 		// Continue until stack size is equal...
 		if(ctx->GetCallstackSize() > m_prevStackSize)
@@ -169,7 +179,8 @@ void XDebugger::lineCallback(void *ctxptr)
 			if(!isBreakpoint(ctx))
 				return;
 		}
-	}else if(m_command == StepOut)
+	}
+	else if(m_command == StepOut)
 	{
 		// Continue until stack size is smaller than previous...
 		if(ctx->GetCallstackSize() >= m_prevStackSize) // TODO: ctx->GetCallstackSize != 0?
@@ -178,7 +189,8 @@ void XDebugger::lineCallback(void *ctxptr)
 			if(!isBreakpoint(ctx))
 				return;
 		}
-	}else if(m_command == StepInto)
+	}
+	else if(m_command == StepInto)
 	{
 		// We always break, but we call the check break point anyway 
 		// to tell user when break point has been reached

@@ -77,6 +77,7 @@ void XConsole::call_log(const char *msg, va_list args)
 	// Send message to debugger
 	if(m_debugger)
 	{
+		// TODO: This function will for some reason occasionally cause a halt in multithreaded programs...
 		m_debugger->sendPacket(X2D_MESSAGE_PACKET, out.data());
 	}
 
