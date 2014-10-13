@@ -12,6 +12,8 @@
 
 #define ATLAS_SIZE 2048
 
+// TDOD: Add a border option to the texture atlas (usefull for fixing font bleeding)
+
 AS_REG_REF(XTextureAtlas, "TextureAtlas")
 
 int XTextureAtlas::Register(asIScriptEngine *scriptEngine)

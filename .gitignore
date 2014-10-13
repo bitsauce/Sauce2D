@@ -26,6 +26,7 @@
 # Exclude subversion control folders
 .svn
 AS_DEBUG
+3rdparty/RakNet
 
 # Exclude this...
 lib/vld-2.2.3/src/Debug/
