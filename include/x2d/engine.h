@@ -485,7 +485,7 @@ class XDAPI XProfiler
 
 	struct Node
 	{
-		// Constructor
+		// Constructors
 		Node(asIScriptFunction *func) :
 			function(func)
 		{
@@ -495,13 +495,14 @@ class XDAPI XProfiler
 		Node *parent;
 		map<asIScriptFunction*, Node*> children;
 
-		// Node function
-		asIScriptFunction *function;
-
 		// Time measurement
 		chrono::high_resolution_clock::time_point currentTime;
-		vector<chrono::high_resolution_clock::duration> eplacedTimes;
+		vector<chrono::high_resolution_clock::duration> durrations;
+
+		// Node data
+		asIScriptFunction *function;
 	};
+
 public:
 	AS_DECL_SINGLETON
 
@@ -569,6 +570,8 @@ public:
 	void lineCallback(asIScriptContext *ctx);
 	bool isBreakpoint(asIScriptContext *ctx);
 	void takeCommands(asIScriptContext *ctx);
+
+	XProfiler *getProfiler() { return &m_profiler; }
 
 private:
 	enum Command

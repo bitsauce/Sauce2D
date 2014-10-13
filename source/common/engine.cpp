@@ -294,7 +294,8 @@ int XEngine::init(const XConfig &config)
 		m_console->m_output = XFileSystem::CreateFileWriter(util::getAbsoluteFilePath(":/console.log"));
 	}
 	
-	try {
+	try
+	{
 		// Print application message
 		LOG("** x2D Game Engine **");
 	
@@ -350,7 +351,8 @@ int XEngine::init(const XConfig &config)
 
 		// Load plugins
 		LOG("Loading plugins...");
-		if(config.loadPluginsFunc != 0 && config.loadPluginsFunc(scriptEngine) < 0) {
+		if(config.loadPluginsFunc != 0 && config.loadPluginsFunc(scriptEngine) < 0)
+		{
 			return X2D_PLUGIN_LOAD_ERROR;
 		}
 
@@ -368,7 +370,8 @@ int XEngine::init(const XConfig &config)
 		m_scripts->s_module = mod;
 
 		// Load events
-		if(config.loadEventsFunc != 0 && config.loadEventsFunc(scriptEngine) < 0) {
+		if(config.loadEventsFunc != 0 && config.loadEventsFunc(scriptEngine) < 0)
+		{
 			return X2D_PLUGIN_LOAD_ERROR;
 		}
 
@@ -505,7 +508,8 @@ int XEngine::run()
 {
 	assert(m_initialized);
 
-	try {
+	try
+	{
 		// Setup game loop
 		m_timer->start();
 		float prevTime = m_timer->getTime();
@@ -550,8 +554,13 @@ int XEngine::run()
 			draw();
 
 			// Calculate fps
-			if(deltaTime != 0.0f) fpsSamples[currFpsSample++] = 1.0f/deltaTime;
-			if(currFpsSample >= numFpsSamples) {
+			if(deltaTime != 0.0f)
+			{
+				fpsSamples[currFpsSample++] = 1.0f/deltaTime;
+			}
+
+			if(currFpsSample >= numFpsSamples)
+			{
 				float fps = 0.0f;
 				for(int i = 0; i < numFpsSamples; i++) fps += fpsSamples[i];
 				m_graphics->m_framesPerSecond = (float)int(fps/numFpsSamples);

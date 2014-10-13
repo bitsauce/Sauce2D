@@ -129,6 +129,10 @@ void OpenGL::init(Window *window)
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
+	// Enable alpha test // Optimization?
+	glEnable(GL_ALPHA_TEST);
+	glAlphaFunc(GL_LEQUAL, 0.0f);
+
 	// Set OpenGL hints
 	glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
 
