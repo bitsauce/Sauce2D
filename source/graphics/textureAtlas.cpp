@@ -68,6 +68,7 @@ void XTextureAtlas::init(const vector<XPixmap> &pixmaps)
 
 	// Set as uninitialized
 	m_initialized = false;
+	m_border = 1;
 	m_size = 0;
 	
 	// Add all pixmaps
@@ -91,7 +92,7 @@ void XTextureAtlas::add(XTexture *texture)
 void XTextureAtlas::add(const XPixmap &pixmap)
 {
 	RectanglePacker::Rectangle rect(new AtlasPage(pixmap, m_size++));
-	rect.setSize(pixmap.getWidth(), pixmap.getHeight());
+	rect.setSize(pixmap.getWidth()+m_border*2, pixmap.getHeight()+m_border*2);
 	m_texturePacker.addRect(rect);
 	if(m_initialized) {
 		update();
@@ -144,14 +145,14 @@ void XTextureAtlas::update()
 	for(vector<const RectanglePacker::Rectangle>::const_iterator itr = result.rectangles.begin(); itr != result.rectangles.end(); ++itr)
 	{
 		const RectanglePacker::Rectangle &rect = (*itr);
-		const float *page = ((AtlasPage*)rect.getData())->getData();
-		for(int x = 0; x < rect.width; x++)
+		const XPixmap *pixmap = ((AtlasPage*)rect.getData())->getPixmap();
+		for(int x = 0; x < pixmap->getWidth(); x++)
 		{
-			for(int y = 0; y < rect.height; y++)
+			for(int y = 0; y < pixmap->getHeight(); y++)
 			{
-				int dataPos = ((rect.x + x) + ((rect.y + y) * ATLAS_SIZE)) * 4;
-				int pagePos = (x + y*rect.width) * 4;
-				memcpy(&pixels[dataPos], &page[pagePos], sizeof(float) * 4);
+				int dataPos = ((rect.x + x + m_border) + ((rect.y + y + m_border) * ATLAS_SIZE)) * 4;
+				int pagePos = (x + y * pixmap->getWidth()) * 4;
+				memcpy(&pixels[dataPos], &pixmap->getData()[pagePos], sizeof(float) * 4);
 			}
 		}
 	}

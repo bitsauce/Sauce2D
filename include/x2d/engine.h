@@ -481,47 +481,44 @@ private:
 **********************************************************************/
 class XDAPI XProfiler
 {
-	friend class XEngine;
+	friend class XDebugger;
 
-	struct Profile
+	struct Node
 	{
-		Profile *parent;
-		map<string, Profile*> children;
-		float currentTime;
-		vector<float> eplacedTimes;
+		// Constructor
+		Node(asIScriptFunction *func) :
+			function(func)
+		{
+		}
+
+		// Parent-child relations
+		Node *parent;
+		map<asIScriptFunction*, Node*> children;
+
+		// Node function
+		asIScriptFunction *function;
+
+		// Time measurement
+		chrono::high_resolution_clock::time_point currentTime;
+		vector<chrono::high_resolution_clock::duration> eplacedTimes;
 	};
 public:
 	AS_DECL_SINGLETON
 
-	XProfiler(XTimer *timer);
+	XProfiler();
 	virtual ~XProfiler();
 
-	void start();
-	void stop();
+	void recursiveDelete(Node *node);
 
-	void push(const string &name);
+	void push(asIScriptContext *ctx);
 	void pop();
-
-	void printResults();
-	void printChildren(Profile *node, const string &name, const int depth, const float parentTotal, const float globalTotal);
-
-	bool isActive() const { return m_active; }
-
-	// Static functions
-	static void Push(const string &name) { s_this->push(name); }
-	static void Pop() { s_this->pop(); }
+	void sendStats(Node *node);
 
 private:
-	XTimer *m_timer;
-	bool m_active;
-	float m_startTime;
-	float m_totalTime;
-	Profile *m_root;
-	string m_rootName;
-	Profile *m_currentNode;
-	map<string, Profile> m_profiles;
-
-	static XProfiler *s_this;
+	Node *m_root;
+	Node *m_currentNode;
+	XDebugger *m_debugger;
+	uint m_samples;
 };
 
 /*********************************************************************
@@ -538,22 +535,17 @@ enum XPacketType
 	X2D_COMPILE_PACKET,
 	X2D_BREAK_PACKET,
 	X2D_TEXT_VAR_PACKET,
-	X2D_IMAGE_VAR_PACKET
+	X2D_IMAGE_VAR_PACKET,
+
+	XD_PUSH_NODE_PACKET,
+	XD_POP_NODE_PACKET
 };
 
-class XDebugger
+class XDAPI XDebugger
 {
 public:
-	XDebugger() :
-		m_connected(false),
-		m_command(NoCommand),
-		m_prevStackSize(0),
-		m_timeoutValue(60000)
-	{
-	}
-	
-	virtual ~XDebugger() {
-	}
+	XDebugger();
+	virtual ~XDebugger() {}
 
 	/*********************************************************************
 	**	Virtual part													**
@@ -574,9 +566,9 @@ public:
 	void sendPacket(XPacketType type, const char *data = 0);
 	void recvPacket(char **data);
 
-	void lineCallback(void *ctx);
-	bool isBreakpoint(void *ctx);
-	void takeCommands(void *ctx);
+	void lineCallback(asIScriptContext *ctx);
+	bool isBreakpoint(asIScriptContext *ctx);
+	void takeCommands(asIScriptContext *ctx);
 
 private:
 	enum Command
@@ -591,6 +583,7 @@ private:
 		RemoveBreakpoint
 	};
 
+	// Breakpoint struct
 	struct Breakpoint
 	{
 		string file;
@@ -606,6 +599,7 @@ private:
 	uint m_prevStackSize;
 	uint m_timeoutValue;
 	list<Breakpoint> m_breakpoints;
+	XProfiler m_profiler;
 };
 
 /*********************************************************************
@@ -748,9 +742,6 @@ public:
 
 	// Profiler
 	void toggleProfiler();
-	void pushProfile(const string &profile);
-	void popProfile();
-	void setProfiler(XProfiler *profiler) { m_profiler = profiler; }
 
 	// Scene
 	void pushScene(asIScriptObject *object);
@@ -777,7 +768,6 @@ private:
 	XFileSystem*	m_fileSystem;
 	XGraphics*		m_graphics;
 	XAudioManager*	m_audio;
-	XProfiler*		m_profiler;
 	XDebugger*		m_debugger;
 	XTimer*			m_timer;
 	XScriptEngine*	m_scripts;

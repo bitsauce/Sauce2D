@@ -67,7 +67,8 @@ XScriptEngine::~XScriptEngine()
 asIScriptContext *XScriptEngine::CreateContext()
 {
 	asIScriptContext *ctx = s_engine->CreateContext();
-	if(XEngine::IsEnabled(X2D_USE_DEBUGGER)) {
+	if(XEngine::IsEnabled(X2D_USE_DEBUGGER))
+	{
 		ctx->SetLineCallback(asMETHOD(XDebugger, lineCallback), s_debugger, asCALL_THISCALL);
 	}
 	return ctx;

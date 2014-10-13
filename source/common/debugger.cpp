@@ -9,6 +9,16 @@
 
 #include <x2d/engine.h>
 
+XDebugger::XDebugger() :
+	m_profiler(),
+	m_connected(false),
+	m_command(NoCommand),
+	m_prevStackSize(0),
+	m_timeoutValue(60000)
+{
+	m_profiler.m_debugger = this;
+}
+
 bool XDebugger::connect()
 {
 	// Block until timeout
@@ -106,106 +116,122 @@ void XDebugger::recvPacket(char **data)
 	}
 }
 
-void XDebugger::lineCallback(void *ctxptr)
+void XDebugger::lineCallback(asIScriptContext *ctx)
 {
-	// Cast ctx
-	asIScriptContext *ctx = static_cast<asIScriptContext*>(ctxptr);
-
-	// Check for actions
-	sockmtx.lock();
-	while(bytesReady() >= 512)
+	if(ctx->GetState() == asEXECUTION_FINISHED)
 	{
-		char *data = new char[512];
-		recvPacket(&data);
-		switch(data[0])
+		// Clean up stuff
+		m_profiler.pop();
+		m_prevStackSize = 0;
+	}
+	else
+	{
+		// Call profiler push/pop for each function call
+		uint stackSize = ctx->GetCallstackSize();
+		if(m_prevStackSize < stackSize)
 		{
-		case Interupt:
-			m_command = (Command)data[0];
-			break;
-		case AddBreakpoint:
+			m_profiler.push(ctx);
+		}
+		else if(m_prevStackSize > stackSize)
+		{
+			m_profiler.pop();
+		}
+
+		// Check for actions
+		sockmtx.lock();
+		while(bytesReady() >= 512)
+		{
+			char *data = new char[512];
+			recvPacket(&data);
+			switch(data[0])
 			{
-				string bpstr(data+1);
-				vector<string> bpstings = util::splitString(bpstr, ";");
-				if(bpstings.size() == 2)
+			case Interupt:
+				m_command = (Command)data[0];
+				break;
+			case AddBreakpoint:
 				{
-					string file = bpstings[0];
-					int line = util::strToInt(bpstings[1])+1;
-					Breakpoint bp = { file, line };
-					m_breakpoints.push_back(bp);
-				}
-			}
-			break;
-		case RemoveBreakpoint:
-			{
-				string bpstr(data+1);
-				vector<string> bpstings = util::splitString(bpstr, ";");
-				if(bpstings.size() == 2)
-				{
-					string file = bpstings[0];
-					int line = util::strToInt(bpstings[1]);
-					for(list<Breakpoint>::iterator itr = m_breakpoints.begin(); itr != m_breakpoints.end(); ++itr)
+					string bpstr(data+1);
+					vector<string> bpstings = util::splitString(bpstr, ";");
+					if(bpstings.size() == 2)
 					{
-						Breakpoint &bp = (*itr);
-						if(bp.file == file && bp.line == line)
+						string file = bpstings[0];
+						int line = util::strToInt(bpstings[1])+1;
+						Breakpoint bp = { file, line };
+						m_breakpoints.push_back(bp);
+					}
+				}
+				break;
+			case RemoveBreakpoint:
+				{
+					string bpstr(data+1);
+					vector<string> bpstings = util::splitString(bpstr, ";");
+					if(bpstings.size() == 2)
+					{
+						string file = bpstings[0];
+						int line = util::strToInt(bpstings[1]);
+						for(list<Breakpoint>::iterator itr = m_breakpoints.begin(); itr != m_breakpoints.end(); ++itr)
 						{
-							m_breakpoints.remove(bp);
-							break;
+							Breakpoint &bp = (*itr);
+							if(bp.file == file && bp.line == line)
+							{
+								m_breakpoints.remove(bp);
+								break;
+							}
 						}
 					}
 				}
+				break;
+			default:
+				LOG("DEBUGGER: Unknown packet type '%i'.", data[0]);
+				break;
 			}
-			break;
-		default:
-			LOG("DEBUGGER: Unknown packet type '%i'.", data[0]);
-			break;
+			delete[] data;
 		}
-		delete[] data;
-	}
-	sockmtx.unlock();
+		sockmtx.unlock();
 
-	// Perform debug actions
-	if(m_command == NoCommand)
-	{
-		// Continue until breakpoint
-		if(!isBreakpoint(ctx))
-			return;
-	}
-	else if(m_command == StepOver)
-	{
-		// Continue until stack size is equal...
-		if(ctx->GetCallstackSize() > m_prevStackSize)
+		// Perform debug actions
+		if(isBreakpoint(ctx))
+			takeCommands(ctx);
+
+		/*if(m_command == NoCommand)
 		{
-			// ... or if a breakpoint is hit
+			// Continue until breakpoint
 			if(!isBreakpoint(ctx))
 				return;
 		}
-	}
-	else if(m_command == StepOut)
-	{
-		// Continue until stack size is smaller than previous...
-		if(ctx->GetCallstackSize() >= m_prevStackSize) // TODO: ctx->GetCallstackSize != 0?
+		else if(m_command == StepOver)
 		{
-			// ... or if a breakpoint is hit
-			if(!isBreakpoint(ctx))
-				return;
+			// Continue until stack size is equal...
+			if(ctx->GetCallstackSize() > m_prevStackSize)
+			{
+				// ... or if a breakpoint is hit
+				if(!isBreakpoint(ctx))
+					return;
+			}
 		}
-	}
-	else if(m_command == StepInto)
-	{
-		// We always break, but we call the check break point anyway 
-		// to tell user when break point has been reached
-		isBreakpoint(ctx);
-	}
+		else if(m_command == StepOut)
+		{
+			// Continue until stack size is smaller than previous...
+			if(ctx->GetCallstackSize() >= m_prevStackSize) // TODO: ctx->GetCallstackSize != 0?
+			{
+				// ... or if a breakpoint is hit
+				if(!isBreakpoint(ctx))
+					return;
+			}
+		}
+		else if(m_command == StepInto)
+		{
+			// We always break, but we call the check break point anyway 
+			// to tell user when break point has been reached
+			isBreakpoint(ctx);
+		}*/
 
-	// Breakpoint hit
-	takeCommands(ctx);
+		m_prevStackSize = stackSize;
+	}
 }
 
-bool XDebugger::isBreakpoint(void *ctxptr)
+bool XDebugger::isBreakpoint(asIScriptContext *ctx)
 {
-	// Cast ctx
-	asIScriptContext *ctx = static_cast<asIScriptContext*>(ctxptr);
-
 	// Get line number and file
 	const char* tmp;
 	int line = ctx->GetLineNumber(0, 0, &tmp);
@@ -227,11 +253,8 @@ bool XDebugger::isBreakpoint(void *ctxptr)
 	return false;
 }
 
-void XDebugger::takeCommands(void *ctxptr)
+void XDebugger::takeCommands(asIScriptContext *ctx)
 {
-	// Cast ctx
-	asIScriptContext *ctx = static_cast<asIScriptContext*>(ctxptr);
-
 	// Get line number and file
 	const char* tmp;
 	int line = ctx->GetLineNumber(0, 0, &tmp);
@@ -362,85 +385,3 @@ void XDebugger::takeCommands(void *ctxptr)
 			m_prevStackSize = stackSize;
 	}
 }
-
-/*string WinDebug::toString(void *value, uint typeId)
-{
-	stringstream s;
-	if(typeId == asTYPEID_VOID)
-		s << "<void>";
-	else if(typeId == asTYPEID_BOOL)
-		s << *(bool*)value ? "true" : "false";
-	else if(typeId == asTYPEID_INT8)
-		s << (int)*(signed char*)value;
-	else if(typeId == asTYPEID_INT16)
-		s << (int)*(signed short*)value;
-	else if(typeId == asTYPEID_INT32)
-		s << *(signed int*)value;
-	else if(typeId == asTYPEID_INT64)
-		s << *(asINT64*)value;
-	else if(typeId == asTYPEID_UINT8)
-		s << (unsigned int)*(unsigned char*)value;
-	else if(typeId == asTYPEID_UINT16)
-		s << (unsigned int)*(unsigned short*)value;
-	else if(typeId == asTYPEID_UINT32)
-		s << *(unsigned int*)value;
-	else if(typeId == asTYPEID_UINT64)
-		s << *(asQWORD*)value;
-	else if(typeId == asTYPEID_FLOAT)
-		s << *(float*)value;
-	else if(typeId == asTYPEID_DOUBLE)
-		s << *(double*)value;
-	else if((typeId & asTYPEID_MASK_OBJECT) == 0)
-	{
-		// The type is an enum
-		s << *(asUINT*)value;
-
-		// Check if the value matches one of the defined enums
-		for(int i = 0; i < scriptEngine->GetEnumValueCount(typeId); i++)
-		{
-			int enumVal;
-			const char *enumName = scriptEngine->GetEnumValueByIndex(typeId, i, &enumVal);
-			if(enumVal == *(int*)value)
-			{
-				s << ", " << enumName;
-				break;
-			}
-		}
-	}
-	else if(typeId & asTYPEID_SCRIPTOBJECT)
-	{
-		// Dereference handles, so we can see what it points to
-		if(typeId & asTYPEID_OBJHANDLE)
-			value = *(void**)value;
-
-		// Print address
-		ScriptObject *obj = (ScriptObject*)value;
-		s << "{" << obj << "}";
-	}
-	else
-	{
-		// Dereference handles, so we can see what it points to
-		if(typeId & asTYPEID_OBJHANDLE)
-			value = *(void**)value;
-
-		ScriptObject *obj = (ScriptObject*)value;
-		if(obj)
-		{
-			// Handle string
-			if((int)typeId == scriptEngine->GetTypeIdByDecl("string"))
-			{
-				// String type
-				s << "\"" << *(string*)value << "\"";
-			}else if((int)typeId == scriptEngine->GetTypeIdByDecl("Vector2")){
-				// Vector2 type
-				Vector2 p = *(Vector2*)value;
-				s << "(" << p.x << ", " << p.y << ")";
-			}else{
-				// Just print the address
-				s << "{" << value << "}";
-			}
-		}
-	}
-
-	return s.str();
-}*/

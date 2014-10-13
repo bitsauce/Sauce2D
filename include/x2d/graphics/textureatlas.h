@@ -29,21 +29,18 @@ public:
 	struct AtlasPage
 	{
 		AtlasPage(const XPixmap &pixmap, int index) :
+			pixmap(pixmap),
 			index(index)
 		{
-			int size = pixmap.getWidth()*pixmap.getHeight()*4;
-			data = new float[size];
-			memcpy((void*)data, pixmap.getData(), size*sizeof(float));
 		}
 
 		~AtlasPage()
 		{
-			delete[] data;
 		}
 
-		const float *getData() const
+		const XPixmap *getPixmap() const
 		{
-			return data;
+			return &pixmap;
 		}
 
 		int getIndex() const
@@ -52,7 +49,7 @@ public:
 		}
 
 	private:
-		const float *data;
+		XPixmap pixmap;
 		int index;
 	};
 
@@ -64,6 +61,7 @@ private:
 	RectanglePacker::Result m_result;
 	int m_size;
 	bool m_initialized;
+	int m_border;
 
 	static XTextureAtlas *Factory();
 	static XTextureAtlas *Factory(XScriptArray *arr);

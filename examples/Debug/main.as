@@ -1,17 +1,11 @@
 void print()
 {
-	int i = 0;
-	while(true)
-	{
-		Console.log("Loop count: " + ++i);
-	}
-}
+	Console.log("Hello World");
+}
 
-Thread @logThread;
 void main()
 {
-	@logThread = @Thread(@FuncCall("print"));
-	logThread.start();
+	Console.log("Foo bar");
 }
 
 void draw()
@@ -19,6 +13,6 @@ void draw()
 }
 
 void update()
-{
-	Console.log("Hello World");
+{
+	print();
 }

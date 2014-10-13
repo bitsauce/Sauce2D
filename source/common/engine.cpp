@@ -12,6 +12,8 @@
 #include <x2d/graphics.h>
 #include <x2d/audio.h>
 
+#include <ctime>
+
 #ifdef X2D_LINUX
 #define MAX_PATH 256
 #endif
@@ -38,26 +40,23 @@ XConfig::XConfig() :
 // Engine
 //------------------------------------------------------------------------
 
+AS_REG_SINGLETON(XEngine)
+
 XEngine *CreateEngine()
 {
 	return new XEngine();
 }
 
-AS_REG_SINGLETON(XEngine)
-
 int XEngine::Register(asIScriptEngine *scriptEngine)
 {
 	int r = 0;
 	
+	// General
 	r = scriptEngine->RegisterObjectMethod("XEngine", "void exit()", asMETHOD(XEngine, exit), asCALL_THISCALL); AS_ASSERT
 	r = scriptEngine->RegisterObjectMethod("XEngine", "string get_platform() const", asMETHOD(XEngine, getPlatformString), asCALL_THISCALL); AS_ASSERT
 	r = scriptEngine->RegisterObjectMethod("XEngine", "string get_workDir() const", asMETHOD(XEngine, getWorkingDirectory), asCALL_THISCALL); AS_ASSERT
 	
-	// TODO: REFACTORING
-	//r = scriptEngine->RegisterObjectMethod("XEngine", "void toggleProfiler()", asMETHOD(XEngine, toggleProfiler), asCALL_THISCALL); AS_ASSERT
-	//r = scriptEngine->RegisterObjectMethod("XEngine", "void pushProfile(const string &in)", asMETHOD(XEngine, pushProfile), asCALL_THISCALL); AS_ASSERT
-	//r = scriptEngine->RegisterObjectMethod("XEngine", "void popProfile()", asMETHOD(XEngine, popProfile), asCALL_THISCALL); AS_ASSERT
-	
+	// Scene
 	r = scriptEngine->RegisterObjectMethod("XEngine", "void pushScene(Scene@)", asMETHOD(XEngine, pushScene), asCALL_THISCALL); AS_ASSERT
 	r = scriptEngine->RegisterObjectMethod("XEngine", "void popScene()", asMETHOD(XEngine, popScene), asCALL_THISCALL); AS_ASSERT
 
@@ -66,7 +65,6 @@ int XEngine::Register(asIScriptEngine *scriptEngine)
 
 XEngine::XEngine() :
 	m_debugger(0),
-	m_profiler(0),
 	m_running(false),
 	m_paused(false),
 	m_defaultUpdateFunc(0),
@@ -81,21 +79,9 @@ XEngine::XEngine() :
 
 XEngine::~XEngine()
 {
-#ifdef NO
-	// Make sure the server is disconnected
-	if(!gameServer->isDisconnected())
-		gameServer->disconnect();
-
-	// Make sure the client is disconnected
-	if(!gameClient->isDisconnected())
-		gameClient->disconnect();
-
-	// Close sockets
-	closeSockets();
-#endif
-
 	// Pop all scene objects
-	while(m_sceneStack.size() > 0) {
+	while(m_sceneStack.size() > 0)
+	{
 		popScene();
 	}
 	
@@ -104,7 +90,6 @@ XEngine::~XEngine()
 	delete m_fileSystem;
 	delete m_graphics;
 	delete m_audio;
-	delete m_profiler;
 	delete m_timer;
 	delete m_window;
 	delete m_math;
@@ -216,14 +201,14 @@ void XEngine::popScene()
 	}
 }
 
-#include <ctime>
-
 //------------------------------------------------------------------------
 // Run
 //------------------------------------------------------------------------
 int XEngine::init(const XConfig &config)
 {
-	if(!config.isValid()) {
+	// Make sure the config is valid
+	if(!config.isValid())
+	{
 		return X2D_INVALID_CONFIG;
 	}
 
@@ -256,12 +241,6 @@ int XEngine::init(const XConfig &config)
 	m_graphics->s_this = m_graphics;
 	m_audio->s_this = m_audio;
 
-	if(!m_profiler)
-	{
-		m_profiler = new XProfiler(m_timer);
-	}
-	m_profiler->s_this = m_profiler;
-
 	if(!m_console)
 	{
 		m_console = new XConsole;
@@ -292,13 +271,19 @@ int XEngine::init(const XConfig &config)
 				{
 					// Tell the external debugger the connection was successful
 					m_debugger->sendPacket(X2D_CONNECTED_PACKET);
-				}else{
+				}
+				else
+				{
 					// Failed to connect to external debugger (timed out)
 				}
-			}else{
+			}
+			else
+			{
 				// Failed to listen on port
 			}
-		}else{
+		}
+		else
+		{
 			// Failed to initialize socket
 		}
 		m_console->m_debugger = m_debugger;
@@ -355,7 +340,6 @@ int XEngine::init(const XConfig &config)
 		r = scriptEngine->RegisterGlobalProperty("XGraphics Graphics", m_graphics); AS_ASSERT
 		r = scriptEngine->RegisterGlobalProperty("XAudioManager Audio", m_audio); AS_ASSERT
 		r = scriptEngine->RegisterGlobalProperty("XConsole Console", m_console); AS_ASSERT
-		r = scriptEngine->RegisterGlobalProperty("XProfiler Profiler", m_profiler); AS_ASSERT
 
 		// Create network managers
 		//initSockets();
@@ -457,9 +441,6 @@ int XEngine::init(const XConfig &config)
 
 void XEngine::draw()
 {
-	// Start draw
-	XProfiler::Push("Draw");
-	
 	ctxmtx.lock();
 	for(XRenderContext **context : m_graphics->s_contextToCreate)
 	{
@@ -483,16 +464,10 @@ void XEngine::draw()
 	}
 
 	m_graphics->swapBuffers();
-
-	// End draw
-	XProfiler::Pop();
 }
 
 void XEngine::update()
 {
-	// Start update
-	XProfiler::Push("Update");
-
 	// Check all bindings
 	m_input->checkBindings();
 	
@@ -519,9 +494,6 @@ void XEngine::update()
 		
 		r = XScriptEngine::GetAngelScript()->GarbageCollect(asGC_ONE_STEP | asGC_DESTROY_GARBAGE); assert(r >= 0);
 	}
-
-	// End update
-	XProfiler::Pop();
 }
 
 void XEngine::exit()
@@ -549,18 +521,6 @@ int XEngine::run()
 		// Game loop
 		while(m_running)
 		{
-			// Toggle profiler
-			if(m_toggleProfiler) {
-				if(!m_profiler->isActive()) {
-					m_profiler->start();
-				}else{
-					m_profiler->stop();
-					m_profiler->printResults();
-				}
-				m_toggleProfiler = false;
-			}
-			XProfiler::Push("Game Loop");
-
 			// Process game events
 			m_window->processEvents();
 
@@ -597,8 +557,6 @@ int XEngine::run()
 				m_graphics->m_framesPerSecond = (float)int(fps/numFpsSamples);
 				currFpsSample = 0;
 			}
-		
-			XProfiler::Pop();
 		}
 	}catch(XException e)
 	{
