@@ -82,8 +82,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, INT)
 	config.loadEventsFunc = &loadEvents;
 	config.platform = "windows";
 #ifdef X2D_DEBUG
-	//config.workDir = "C:\\Users\\Marcus\\Documents\\GitHub\\Overworld\\";
-	config.workDir = "C:\\Users\\Marcus\\Documents\\GitHub\\x2D-Game-Engine\\examples\\Debug\\";
+	config.workDir = "C:\\Users\\Marcus\\Documents\\GitHub\\Overworld\\";
+	//config.workDir = "C:\\Users\\Marcus\\Documents\\GitHub\\x2D-Game-Engine\\examples\\Debug\\";
 	flags |= X2D_USE_DEBUGGER;
 	engine->setDebugger(new Debugger);
 #else

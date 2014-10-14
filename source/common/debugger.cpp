@@ -130,11 +130,13 @@ void XDebugger::lineCallback(asIScriptContext *ctx)
 		uint stackSize = ctx->GetCallstackSize();
 		if(m_prevStackSize < stackSize)
 		{
-			m_profiler.push(ctx);
+			for(int i = 0; i < stackSize-m_prevStackSize; i++)
+				m_profiler.push(ctx);
 		}
 		else if(m_prevStackSize > stackSize)
 		{
-			m_profiler.pop();
+			for(int i = 0; i < m_prevStackSize-stackSize; i++)
+				m_profiler.pop();
 		}
 
 		// Check for actions

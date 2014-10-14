@@ -566,23 +566,31 @@ int XEngine::run()
 				m_graphics->m_framesPerSecond = (float)int(fps/numFpsSamples);
 				currFpsSample = 0;
 			}
+
+			m_debugger->getProfiler()->stepDone();
 		}
-	}catch(XException e)
+	}
+	catch(XException e)
 	{
 		LOG("An exception occured: %s", e.message().c_str());
 		return e.errorCode();
-	}catch(...)
+	}
+	catch(...)
 	{
 		asIScriptContext *ctx = asGetActiveContext();
-		if(ctx) {
+		if(ctx)
+		{
 			// Will probably never get here as long as AS_NO_EXCEPTION is not defined
 			const char *tmp;
 			int line = ctx->GetLineNumber(0, 0, &tmp);
 			LOG("Unknown exception occured while a script was running.");
-			if(tmp) {
+			if(tmp)
+			{
 				LOG("LOC : %s (%i)", line, tmp);
 			}
-		}else{
+		}
+		else
+		{
 			LOG("Unknown exception occured.");
 		}
 		return X2D_UNKNOWN_EXCEPTION;

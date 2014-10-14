@@ -9,8 +9,6 @@
 
 #include <x2d/engine.h>
 
-#define NUM_SAMPLES 10
-
 XProfiler::XProfiler() :
 	m_root(new Node(0)),
 	m_samples(0)
@@ -40,7 +38,7 @@ void XProfiler::push(asIScriptContext *ctx)
 		asIScriptFunction *func = ctx->GetFunction();
 		if(func)
 		{
-			Node *node = 0;
+			Node *node;
 			if(m_currentNode->children.find(func) == m_currentNode->children.end())
 			{
 				// Create node if it doesn't exist
@@ -67,14 +65,6 @@ void XProfiler::pop()
 	{
 		m_currentNode->durrations.push_back(chrono::high_resolution_clock::now() - m_currentNode->currentTime);
 		m_currentNode = m_currentNode->parent;
-		if(m_currentNode == m_root && ++m_samples >= 3)
-		{
-			for(map<asIScriptFunction*, Node*>::iterator itr = m_root->children.begin(); itr != m_root->children.end(); ++itr)
-			{
-				sendStats(itr->second);
-			}
-			m_samples = 0;
-		}
 	}
 	else
 	{
@@ -87,22 +77,18 @@ void XProfiler::sendStats(Node *node)
 	// Calculate stuffs
 	int total = 0, ave = 0, max = INT_MIN, min = INT_MAX;
 
-	if(!node->durrations.empty())
+	for(chrono::high_resolution_clock::duration durr : node->durrations)
 	{
-		for(chrono::high_resolution_clock::duration durr : node->durrations)
-		{
-			int time = chrono::duration<float, milli>(durr).count();
-			if(time < min) min = time;
-			if(time > max) max = time;
-			total += time;
-		}
-
-		ave = total/node->durrations.size();
-		node->durrations.clear();
+		int time = chrono::duration<float, milli>(durr).count();
+		if(time < min) min = time;
+		if(time > max) max = time;
+		total += time;
 	}
 
+	ave = total/node->durrations.size();
+
 	char *msg = new char[511];
-	sprintf_s(msg, 511, "%s;%i ms;%i ms;%i ms", node->function->GetDeclaration(), max, min, ave);
+	sprintf_s(msg, 511, "%s;%i;%i;%i;%i;%i", node->function->GetDeclaration(), total, max, min, ave, node->durrations.size());
 	m_debugger->sendPacket(XD_PUSH_NODE_PACKET, msg);
 
 	// Recursive call to children
@@ -113,4 +99,21 @@ void XProfiler::sendStats(Node *node)
 	
 	// Pop stack level
 	m_debugger->sendPacket(XD_POP_NODE_PACKET);
+
+	// Delete node
+	delete node;
+}
+
+void XProfiler::stepDone()
+{
+	assert(m_currentNode == m_root);
+
+	// Recursive call to children
+	for(map<asIScriptFunction*, Node*>::iterator itr = m_root->children.begin(); itr != m_root->children.end(); ++itr)
+	{
+		sendStats(itr->second);
+	}
+
+	delete m_root;
+	m_root = m_currentNode = new Node(0);
 }

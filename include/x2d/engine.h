@@ -513,7 +513,9 @@ public:
 
 	void push(asIScriptContext *ctx);
 	void pop();
+
 	void sendStats(Node *node);
+	void stepDone();
 
 private:
 	Node *m_root;
