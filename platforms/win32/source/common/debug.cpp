@@ -7,17 +7,13 @@
 //				Originally written by Marcus Loo Vergara (aka. Bitsauce)
 //									2011-2014 (C)
 
-#include <winsock2.h>
-#include <ws2tcpip.h>
-
 #include "debug.h"
 
 //----------------------------------------------------------------------------
 // Debugger
 //----------------------------------------------------------------------------
 Debugger::Debugger() :
-	m_server(INVALID_SOCKET),
-	m_client(INVALID_SOCKET)
+	m_client(0)
 {
 }
 
@@ -26,99 +22,52 @@ Debugger::~Debugger()
 	disconnect();
 }
 
-bool Debugger::init()
+bool Debugger::connect()
 {
-	// Initialize Winsock
-	WSADATA wsaData;
-	int r = WSAStartup(MAKEWORD(2, 2), &wsaData);
-	if(r < 0) {
-		// Error initializing socket
-		LOG("WSAStartup() failed with error code '%i'!", r);
+	// Create pipe
+	m_client = CreateNamedPipe("\\\\.\\pipe\\x2d_debug_pipe", PIPE_ACCESS_DUPLEX, PIPE_TYPE_BYTE, 1, 0, 0, 0, NULL);
+	if(m_client == NULL || m_client == INVALID_HANDLE_VALUE)
+	{
+		LOG("Failed to create pipe.");
+		return false;
+	}
+
+	// Connect clients
+	BOOL result = ConnectNamedPipe(m_client, NULL);
+	if(!result)
+	{
+		LOG("Failed to make connections on named pipe");
+		disconnect();
 		return false;
 	}
 	return true;
-}
-
-bool Debugger::listen(ushort port)
-{
-	// Create address struct
-	struct addrinfo *result = NULL, hints;
-	ZeroMemory(&hints, sizeof(hints));
-	hints.ai_family = AF_INET;
-	hints.ai_socktype = SOCK_STREAM;
-	hints.ai_protocol = IPPROTO_TCP;
-	hints.ai_flags = AI_PASSIVE;
-
-	// Resolve the server address and port
-	int r = getaddrinfo(NULL, util::intToStr(port).c_str(), &hints, &result);
-	if(r < 0) {
-		LOG("getaddrinfo() failed with error code '%i'!", r);
-		WSACleanup();
-		return false;
-	}
-
-	// Create a SOCKET for the server to listen for client connections
-	m_server = socket(result->ai_family, result->ai_socktype, result->ai_protocol);
-	if(m_server == INVALID_SOCKET) {
-		LOG("socket() failed!");
-		freeaddrinfo(result);
-		WSACleanup();
-		return false;
-	}
-
-	// Set non-blocking mode (Needed for runtime debug)
-	ulong mode = 1;
-	ioctlsocket(m_server, FIONBIO, &mode);
-
-	// Setup the TCP listening socket
-    r = ::bind(m_server, result->ai_addr, (int)result->ai_addrlen);
-    if(r == SOCKET_ERROR) {
-        LOG("bind() failed with error code '%i'!", r);
-        freeaddrinfo(result);
-        closesocket(m_server);
-        WSACleanup();
-        return false;
-    }
-	freeaddrinfo(result);
-
-	// Listen at the port
-	r = ::listen(m_server, SOMAXCONN);
-	if(r == SOCKET_ERROR) {
-		LOG("listen() failed with error code '%i'!", r);
-		closesocket(m_server);
-		WSACleanup();
-		return false;
-	}
-	return true;
-}
-
-bool Debugger::accept()
-{
-	// Look for client
-	return (m_client = ::accept(m_server, NULL, NULL)) != INVALID_SOCKET;
 }
 
 void Debugger::disconnect()
 {
-	// Close client socket and clean up
-	closesocket(m_client);
-	WSACleanup();
+	// Close pipe
+	if(m_client)
+	{
+		CloseHandle(m_client);
+	}
+	m_client = 0;
 }
 
-bool Debugger::send(const char *data)
+bool Debugger::send(const char *data, const int size)
 {
-	return ::send(m_client, data, 512, 0) != SOCKET_ERROR;
+	DWORD bytesWritten;
+	return WriteFile(m_client, data, size, &bytesWritten, NULL) == TRUE;
 }
 
-bool Debugger::recv(char **data)
+bool Debugger::recv(char *data, int size)
 {
-	return ::recv(m_client, (*data), 512, 0) != SOCKET_ERROR;
+	DWORD bytesRead;
+	return ReadFile(m_client, data, size, &bytesRead, NULL) == TRUE;
 }
 
 int Debugger::bytesReady()
 {
-	// Check bytes available
-	ulong numBytes;
-	ioctlsocket(m_client, FIONREAD, &numBytes);
-	return numBytes;
+	DWORD bytesAvailable;
+	PeekNamedPipe(m_client, NULL, 0, 0, &bytesAvailable, NULL);
+	return bytesAvailable;
 }

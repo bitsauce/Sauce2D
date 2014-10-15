@@ -11,109 +11,87 @@
 
 XDebugger::XDebugger() :
 	m_profiler(),
-	m_connected(false),
 	m_command(NoCommand),
-	m_prevStackSize(0),
-	m_timeoutValue(60000)
+	m_prevStackSize(0)
 {
 	m_profiler.m_debugger = this;
-}
-
-bool XDebugger::connect()
-{
-	// Block until timeout
-	ulong beginTick = GetTickCount();
-	bool success = false;
-	while((success = accept()) == false && (GetTickCount() - beginTick < m_timeoutValue));
-	m_connected = success;
-
-	// Check if connection was successful
-	if(!success)
-	{
-		LOG("DEBUGGER: Failed to connect to external debugger.");
-		disconnect();
-		return false;
-	}
-	return true;
 }
 
 // This mutex is necessary for making sure no other thread reads the async
 // packet before the thread awaiting it reads it.
 mutex sockmtx;
 
-void XDebugger::sendPacket(XPacketType type, const char *data)
+void XDebugger::sendPacket(XPacketType type, string data)
 {
-	// Make sure we have a connection
-	if(!m_connected)
-		return;
-
-/*#ifdef X2D_SIMPLE
-	sendData(data.c_str(), MessagePacket);
-#else
-	string colorTag = "";
-	switch(type) {
-		case XD_SUCCESS_MSG: colorTag = "#00adeb"; break;
-		case XD_WARN_MSG: colorTag = "#e6a000"; break;
-		case XD_ERR_MSG: colorTag = "#de0000"; break;
-		default: break;
-	}
-	sendPacket(XD_MESSAGE_PACKET, (colorTag + data).c_str());
-#endif*/
-	sockmtx.lock();
+	//sockmtx.lock();
 
 	// Create packet
-	char packet[512];
-	packet[0] = (char)type;
-	if(data != 0) memcpy(&packet[1], data, 511);
+	int packetSize = data.size() + sizeof(int);
+	char *packet = new char[packetSize + 1];
+	((int*)packet)[0] = type;
+	memcpy((void*)(packet + sizeof(int)), data.c_str(), data.size());
+	packet[packetSize] = '\0';
 
-	// Send data
-	ulong beginTick = GetTickCount();
-	bool success = false;
-	while((success = send(packet)) == false && (GetTickCount() - beginTick < m_timeoutValue));
-
-	// Sending failed
-	if(!success)
+	// Send packet
+	if(send(packet, packetSize))
 	{
-		m_connected = false;
-		LOG("DEBUGGER: Lost connection to external debugger.");
+		// Wait for ack
+		if(!recv(packet, sizeof(int)) || ((int*)packet)[0] != XD_ACK_PACKET)
+		{
+			// Received incorrect async data, disconnect
+			disconnect();
+			LOG("XDebugger::sendPacket(): No ack packet recieved.");
+
+			// Disable the debugger
+			m_engine->killDebugger();
+		}
+	}
+	else
+	{
+		// Unable to send packet, disconnect
 		disconnect();
-		return;
+		LOG("XDebugger::sendPacket(): Unable to communicate with the debugger.");
+
+		// Disable the debugger
+		m_engine->killDebugger();
 	}
 
-	// Wait for async data
-	char *recvData = new char[512];
-	memset(recvData, 0, 512);
-	recvPacket(&recvData);
-	if(recvData[0] != 0x01)
-	{
-		// Incorrect async data
-		m_connected = false;
-		LOG("DEBUGGER: Lost connection to external debugger.");
-		disconnect();
-	}
-	delete[] recvData;
+	delete[] packet;
 
-	sockmtx.unlock();
+	//sockmtx.unlock();
 }
 
-void XDebugger::recvPacket(char **data)
+void XDebugger::recvPacket(string &data, const bool blocking)
 {
-	// Make sure we have a connection
-	if(!m_connected)
-		return;
-
-	// Receive info
-	ulong beginTick = GetTickCount();
-	bool success = false;
-	while(((bytesReady() < 512) || (success = recv(data)) == false) && (GetTickCount() - beginTick < m_timeoutValue));
-
-	if(!success)
+	if(blocking)
 	{
-		// Error on recieve async data
-		m_connected = false;
-		//LOG("DEBUGGER: Failed to recieve packet with error code '%i'.", WSAGetLastError());
-		disconnect();
+		// Block until there are bytes ready
+		while(bytesReady() == 0);
 	}
+	else
+	{
+		// Skip when non-blocking and there is no ready packet
+		if(bytesReady() == 0)
+			return;
+	}
+
+	// Receive packet
+	int size = bytesReady();
+	char *packet = new char[size + 1];
+	if(!recv(packet, size))
+	{
+		// Failed to recieve packet, disconnect
+		disconnect();
+		LOG("DEBUGGER: Failed to receieve packet.");
+
+		// Disable the debugger
+		m_engine->killDebugger();
+	}
+	packet[size] = '\0';
+
+	data = packet;
+
+	delete[] packet;
 }
 
 void XDebugger::lineCallback(asIScriptContext *ctx)
@@ -140,7 +118,7 @@ void XDebugger::lineCallback(asIScriptContext *ctx)
 		}
 
 		// Check for actions
-		sockmtx.lock();
+		/*sockmtx.lock();
 		while(bytesReady() >= 512)
 		{
 			char *data = new char[512];
@@ -270,7 +248,7 @@ void XDebugger::takeCommands(asIScriptContext *ctx)
 
 	// Tell the remote debugger a breakpoint was hit
 	filePath += ";" + util::intToStr(line-1);
-	sendPacket(X2D_BREAK_PACKET, filePath.c_str());
+	sendPacket(XD_BREAK_PACKET, filePath);
 
 	// Send local variable information
 	/*asIScriptFunction *func = ctx->GetFunction();
@@ -340,7 +318,7 @@ void XDebugger::takeCommands(asIScriptContext *ctx)
 					SendMembers(name, (ScriptObject*)var);
 			}
 		}
-	}*/
+	}
 	
 	// Wait for command
 	while(true)
@@ -385,5 +363,5 @@ void XDebugger::takeCommands(asIScriptContext *ctx)
 			m_command = NoCommand; // ... Therefore we just continue
 		else
 			m_prevStackSize = stackSize;
-	}
+	}*/
 }

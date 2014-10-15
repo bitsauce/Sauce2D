@@ -87,9 +87,14 @@ void XProfiler::sendStats(Node *node)
 
 	ave = total/node->durrations.size();
 
-	char *msg = new char[511];
-	sprintf_s(msg, 511, "%s;%i;%i;%i;%i;%i", node->function->GetDeclaration(), total, max, min, ave, node->durrations.size());
-	m_debugger->sendPacket(XD_PUSH_NODE_PACKET, msg);
+	stringstream ss;
+	ss << node->function->GetDeclaration(); ss << ";";
+	ss << total; ss << ";";
+	ss << max; ss << ";";
+	ss << min; ss << ";";
+	ss << ave; ss << ";";
+	ss << node->durrations.size();
+	m_debugger->sendPacket(XD_PUSH_NODE_PACKET, ss.str());
 
 	// Recursive call to children
 	for(map<asIScriptFunction*, Node*>::iterator itr = node->children.begin(); itr != node->children.end(); ++itr)

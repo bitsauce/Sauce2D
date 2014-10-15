@@ -26,7 +26,7 @@ XScriptArray *CreateArray(const string &type, const uint size)
 
 asIScriptEngine *XScriptEngine::s_engine = 0;
 asIScriptModule *XScriptEngine::s_module = 0;
-XDebugger *XScriptEngine::s_debugger = 0;
+XEngine *XScriptEngine::s_gameEngine = 0;
 
 AS_REG_SINGLETON(XScriptEngine)
 
@@ -67,9 +67,9 @@ XScriptEngine::~XScriptEngine()
 asIScriptContext *XScriptEngine::CreateContext()
 {
 	asIScriptContext *ctx = s_engine->CreateContext();
-	if(XEngine::IsEnabled(X2D_USE_DEBUGGER))
+	if(s_gameEngine->getDebugger())
 	{
-		ctx->SetLineCallback(asMETHOD(XDebugger, lineCallback), s_debugger, asCALL_THISCALL);
+		ctx->SetLineCallback(asMETHOD(XDebugger, lineCallback), s_gameEngine->getDebugger(), asCALL_THISCALL);
 	}
 	return ctx;
 }
@@ -268,7 +268,7 @@ int asCompileModule(const string &name)
 		r = builder.BuildModule();
 		if(r < 0)
 		{
-			if(!XEngine::IsEnabled(X2D_USE_DEBUGGER))
+			/*if(!XEngine::IsEnabled(XD_DEBUGGER))
 			{
 				// An error occurred. Instruct the script writer to fix the 
 				// compilation errors that were listed in the output stream.
@@ -280,7 +280,7 @@ int asCompileModule(const string &name)
 				// TODO: Implement retry
 				// Show retry dialog
 				throw XException(X2D_COMPILE_FAILED, debug);
-			}
+			}*/
 
 			return X2D_COMPILE_FAILED;
 		}else{

@@ -32,7 +32,7 @@ int XConsole::Register(asIScriptEngine *scriptEngine)
 }
 
 XConsole::XConsole() :
-	m_debugger(0), // Set by the engine
+	m_engine(0), // Set by the engine
 	m_output(0)
 {
 }
@@ -67,7 +67,7 @@ void XConsole::call_log(const char *msg, va_list args)
 	syslog(out);
 	
 	// Append message to log file
-	if(XEngine::IsEnabled(X2D_EXPORT_LOG))
+	if(XEngine::IsEnabled(XD_EXPORT_LOG))
 	{
 		m_output->append(out);
 		m_output->append("\n");
@@ -75,9 +75,9 @@ void XConsole::call_log(const char *msg, va_list args)
 	}
 
 	// Send message to debugger
-	if(m_debugger)
+	if(m_engine->getDebugger())
 	{
-		m_debugger->sendPacket(X2D_MESSAGE_PACKET, out.data());
+		m_engine->getDebugger()->sendPacket(XD_MESSAGE_PACKET, out);
 	}
 
 	// Append to console buffer

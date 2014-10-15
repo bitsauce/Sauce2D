@@ -50,7 +50,7 @@ private:
 	string m_log;
 	string m_buffer;
 	
-	XDebugger *m_debugger;
+	XEngine *m_engine;
 	XFileWriter *m_output;
 	
 	static bool s_initialized;
@@ -224,7 +224,7 @@ public:
 private:
 	static asIScriptEngine *s_engine;
 	static asIScriptModule *s_module;
-	static XDebugger *s_debugger;
+	static XEngine *s_gameEngine;
 };
 
 // AngelScript functions
@@ -531,21 +531,26 @@ private:
 // Packet types
 enum XPacketType
 {
-	X2D_NULL_PACKET = 0x00,
-	X2D_CONNECTED_PACKET,
-	X2D_INITIALIZED_PACKET,
-	X2D_MESSAGE_PACKET,
-	X2D_COMPILE_PACKET,
-	X2D_BREAK_PACKET,
-	X2D_TEXT_VAR_PACKET,
-	X2D_IMAGE_VAR_PACKET,
+    XD_NULL_PACKET = 0x00,
 
+    // Information packets
+    XD_ACK_PACKET,
+    XD_MESSAGE_PACKET,
+    XD_COMPILE_ERROR_PACKET,
+
+    // Programflow packets
+    XD_BREAK_PACKET,
+
+    // Profiler packets
+    XD_START_PROFILER,
+    XD_STOP_PROFILER,
 	XD_PUSH_NODE_PACKET,
 	XD_POP_NODE_PACKET
 };
 
 class XDAPI XDebugger
 {
+	friend class XEngine;
 public:
 	XDebugger();
 	virtual ~XDebugger() {}
@@ -553,21 +558,17 @@ public:
 	/*********************************************************************
 	**	Virtual part													**
 	**********************************************************************/
-	virtual bool init()											{ NOT_IMPLEMENTED_RET(init, false) }
-	virtual void setTimeoutValue(const uint ms)					{ NOT_IMPLEMENTED(setTimeoutValue) }
-	virtual bool listen(const ushort port)						{ NOT_IMPLEMENTED_RET(listen, false) }
-	virtual bool accept()										{ NOT_IMPLEMENTED_RET(accept, false) }
+	virtual bool connect()										{ NOT_IMPLEMENTED_RET(connect, false) }
 	virtual void disconnect()									{ NOT_IMPLEMENTED(disconnect) }
-	virtual bool send(const char *data)							{ NOT_IMPLEMENTED_RET(send, false) }
-	virtual bool recv(char **data)								{ NOT_IMPLEMENTED_RET(recv, false) }
+	virtual bool send(const char *data, const int size)			{ NOT_IMPLEMENTED_RET(send, false) }
+	virtual bool recv(char *data, const int size)				{ NOT_IMPLEMENTED_RET(recv, false) }
 	virtual int  bytesReady()									{ NOT_IMPLEMENTED_RET(bytesReady, 0) }
 	
 	/*********************************************************************
 	**	Implemented part												**
 	**********************************************************************/
-	bool connect();
-	void sendPacket(XPacketType type, const char *data = 0);
-	void recvPacket(char **data);
+	void sendPacket(XPacketType type, string data = "");
+	void recvPacket(string &data, bool blocking = true);
 
 	void lineCallback(asIScriptContext *ctx);
 	bool isBreakpoint(asIScriptContext *ctx);
@@ -598,13 +599,14 @@ private:
             return file == other.file && line == other.line;
         }
 	};
-
-	bool m_connected;
-	Command m_command;
+	
 	uint m_prevStackSize;
-	uint m_timeoutValue;
+
+	Command m_command;
 	list<Breakpoint> m_breakpoints;
+
 	XProfiler m_profiler;
+	XEngine *m_engine;
 };
 
 /*********************************************************************
@@ -745,15 +747,14 @@ public:
 	// Save directory
 	string getSaveDirectory() const;
 
-	// Profiler
-	void toggleProfiler();
-
 	// Scene
 	void pushScene(asIScriptObject *object);
 	void popScene();
 
 	// Debugger
 	void setDebugger(XDebugger *debugger) { m_debugger = debugger; }
+	XDebugger *getDebugger() const { return m_debugger; }
+	void killDebugger() { delete m_debugger; m_debugger = 0; }
 
 	// Exceptions
 	void exception(XRetCode errorCode, const char* message);
@@ -792,8 +793,7 @@ private:
 	// State
 	bool m_running;
 	bool m_paused;
-
-	bool m_toggleProfiler;
+	bool m_initialized;
 
 	// Scene stack
 	stack<asIScriptObject*> m_sceneStack;
@@ -803,8 +803,6 @@ private:
 	asIScriptFunction *m_defaultDrawFunc;
 	asIScriptFunction *m_sceneUpdateFunc;
 	asIScriptFunction *m_sceneDrawFunc;
-
-	bool m_initialized;
 
 	static XEngine *s_this;
 };

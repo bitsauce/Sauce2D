@@ -71,8 +71,7 @@ XEngine::XEngine() :
 	m_defaultDrawFunc(0),
 	m_sceneUpdateFunc(0),
 	m_sceneDrawFunc(0),
-	m_initialized(false),
-	m_toggleProfiler(false)
+	m_initialized(false)
 {
 	s_this = this;
 }
@@ -111,11 +110,6 @@ string XEngine::getWorkingDirectory() const
 string XEngine::getSaveDirectory() const
 {
 	return m_saveDir;
-}
-
-void XEngine::toggleProfiler()
-{
-	m_toggleProfiler = true;
 }
 
 void XEngine::pushScene(asIScriptObject *object)
@@ -246,6 +240,12 @@ int XEngine::init(const XConfig &config)
 		m_console = new XConsole;
 	}
 	m_console->s_this = m_console;
+	m_console->m_engine = this;
+	
+	if(IsEnabled(XD_EXPORT_LOG))
+	{
+		m_console->m_output = XFileSystem::CreateFileWriter(util::getAbsoluteFilePath(":/console.log"));
+	}
 
 	if(!m_window)
 	{
@@ -257,41 +257,16 @@ int XEngine::init(const XConfig &config)
 		m_math = new XMath;
 	}
 
-	// Check for debug flag
-	if(IsEnabled(X2D_USE_DEBUGGER) && m_debugger)
+	// Setup debugger
+	if(m_debugger)
 	{
-		// Init debugger
-		if(m_debugger->init())
+		// Initialize debugger
+		m_debugger->m_engine = this;
+		if(!m_debugger->connect())
 		{
-			// Socket initialized, listen on port 5120
-			if(m_debugger->listen(5120))
-			{
-				// Try to connect to the external debugger
-				if(m_debugger->connect())
-				{
-					// Tell the external debugger the connection was successful
-					m_debugger->sendPacket(X2D_CONNECTED_PACKET);
-				}
-				else
-				{
-					// Failed to connect to external debugger (timed out)
-				}
-			}
-			else
-			{
-				// Failed to listen on port
-			}
+			LOG("Failed to connect to external debugger");
+			killDebugger();
 		}
-		else
-		{
-			// Failed to initialize socket
-		}
-		m_console->m_debugger = m_debugger;
-	}
-
-	if(IsEnabled(X2D_EXPORT_LOG))
-	{
-		m_console->m_output = XFileSystem::CreateFileWriter(util::getAbsoluteFilePath(":/console.log"));
 	}
 	
 	try
@@ -308,8 +283,8 @@ int XEngine::init(const XConfig &config)
 	
 		// Create script manager
 		m_scripts = new XScriptEngine;
-		m_scripts->s_debugger = m_debugger;
 		m_scripts->s_engine = scriptEngine;
+		m_scripts->s_gameEngine = this;
 
 		// Set the message callback to receive information on errors in human readable form.
 		int r = scriptEngine->SetMessageCallback(asFUNCTION(asMessageCallback), 0, asCALL_CDECL); assert( r >= 0 );
@@ -408,12 +383,6 @@ int XEngine::init(const XConfig &config)
 			return X2D_RUNTIME_EXCEPTION;
 		}
 		r = ctx->Release();
-
-		if(IsEnabled(X2D_USE_DEBUGGER) && m_debugger)
-		{
-			// Tell the debugger the engine is initialized
-			m_debugger->sendPacket(X2D_INITIALIZED_PACKET);
-		}
 	
 		LOG("x2D Engine Initialized");
 		m_initialized = true;

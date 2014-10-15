@@ -67,13 +67,12 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, INT)
 		{
 			switch(__argv[i][1])
 			{
-			case 'd': flags |= X2D_USE_DEBUGGER; break;
-			case 'v': flags |= X2D_EXPORT_LOG; break;
+			case 'v': flags |= XD_EXPORT_LOG; break;
 			case 'w': workDir = string(__argv[i]+3); break;
 			}
 		}
 	}
-	flags |= X2D_EXPORT_LOG; // For now we force this flag
+	flags |= XD_EXPORT_LOG; // For now we force this flag
 
 	XEngine *engine = CreateEngine();
 
@@ -84,7 +83,6 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, INT)
 #ifdef X2D_DEBUG
 	config.workDir = "C:\\Users\\Marcus\\Documents\\GitHub\\Overworld\\";
 	//config.workDir = "C:\\Users\\Marcus\\Documents\\GitHub\\x2D-Game-Engine\\examples\\Debug\\";
-	flags |= X2D_USE_DEBUGGER;
 	engine->setDebugger(new Debugger);
 #else
 	config.workDir = workDir.empty() ? _getcwd(0, 0) : workDir.c_str();
