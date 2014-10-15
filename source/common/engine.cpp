@@ -536,7 +536,10 @@ int XEngine::run()
 				currFpsSample = 0;
 			}
 
-			m_debugger->getProfiler()->stepDone();
+			if(m_debugger)
+			{
+				m_debugger->getProfiler()->stepDone();
+			}
 		}
 	}
 	catch(XException e)

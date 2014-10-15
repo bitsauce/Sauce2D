@@ -158,7 +158,7 @@ int CScriptBuilder::LoadScriptSection(const char *filename)
 	{
 		// Write a message to the engine's message callback
 		char buf[256];
-		string msg = "Failed to load script file '" + string(GetCurrentDir(buf, 256)) + string(filename) + "'";
+		string msg = "Failed to load script file '" + util::getAbsoluteFilePath(assetPath) + "'";
 		engine->WriteMessage(filename, 0, 0, asMSGTYPE_ERROR, msg.c_str());
 		return -1;
 	}

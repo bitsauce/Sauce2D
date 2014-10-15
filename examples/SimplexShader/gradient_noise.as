@@ -38,7 +38,7 @@ class GradientScene : Scene
 		
 		// Draw font
 		fontBatch.clear();
-		font.draw(@fontBatch, Vector2(20.0f), "Gradient: " + GRADIENT_NAME[gradient] + "\nFrequency: " + frequency + "\nGain: " + gain + "\nLacunarity: " + lacunarity + "\nOctaves: " + octaves);
+		font.draw(@fontBatch, Vector2(20.0f), "FPS: " + Graphics.FPS + "\nGradient: " + GRADIENT_NAME[gradient] + "\nFrequency: " + frequency + "\nGain: " + gain + "\nLacunarity: " + lacunarity + "\nOctaves: " + octaves);
 		font.draw(@fontBatch, Vector2(Window.getSize().x - 250.0f, 20.0f), "Controls:\nQ/W: Change Colors\nA/S: Change Frequency\nZ/X: Change Gain\nE/R: Change Lacunarity\nD/F: Change Octaves\nC/V: Stop/Start Time\nESC: Back");
 		fontBatch.draw();
 	}
