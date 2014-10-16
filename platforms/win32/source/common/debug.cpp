@@ -33,10 +33,10 @@ bool Debugger::connect()
 	}
 
 	// Connect clients
-	BOOL result = ConnectNamedPipe(m_client, NULL);
-	if(!result)
+	BOOL result = ConnectNamedPipe(m_client, NULL); ULONG id;
+	if(result == FALSE && GetNamedPipeClientProcessId(m_client, &id) == FALSE)
 	{
-		LOG("Failed to make connections on named pipe");
+		LOG("Failed to make connections on named pipe (error code %i)", GetLastError());
 		disconnect();
 		return false;
 	}
