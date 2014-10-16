@@ -82,8 +82,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, INT)
 	config.platform = "windows";
 #ifdef X2D_DEBUG
 	config.workDir = "C:\\Users\\Marcus\\Documents\\GitHub\\Overworld\\";
-	config.workDir = "C:\\Users\\Marcus\\Documents\\GitHub\\x2D-Game-Engine\\examples\\SimplexShader\\";
-	//engine->setDebugger(new Debugger);
+	//config.workDir = "C:\\Users\\Marcus\\Documents\\GitHub\\x2D-Game-Engine\\examples\\SimplexShader\\";
+	engine->setDebugger(new Debugger);
 #else
 	config.workDir = workDir.empty() ? _getcwd(0, 0) : workDir.c_str();
 	engine->setDebugger(new Debugger);

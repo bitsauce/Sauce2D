@@ -21,48 +21,50 @@ XDebugger::XDebugger() :
 // packet before the thread awaiting it reads it.
 mutex sockmtx;
 
-void XDebugger::sendPacket(XPacketType type, string data)
+bool XDebugger::sendPacket(XPacketType type, string data)
 {
 	//sockmtx.lock();
 
 	// Create packet
-	int packetSize = data.size() + sizeof(int);
+	int packetSize = data.size() + 1;
 	char *packet = new char[packetSize + 1];
-	((int*)packet)[0] = type;
-	memcpy((void*)(packet + sizeof(int)), data.c_str(), data.size());
+	packet[0] = type;
+	memcpy((void*)(packet + 1), data.c_str(), data.size());
 	packet[packetSize] = '\0';
 
 	// Send packet
 	if(send(packet, packetSize))
 	{
 		// Wait for ack
-		if(!recv(packet, sizeof(int)) || ((int*)packet)[0] != XD_ACK_PACKET)
+		if(!recv(packet, 1) || packet[0] != XD_ACK_PACKET)
 		{
-			// Received incorrect async data, disconnect
-			disconnect();
-			LOG("XDebugger::sendPacket(): No ack packet recieved.");
-
-			// Disable the debugger
+			// Kill the debugger
 			m_engine->killDebugger();
+			LOG("XDebugger::sendPacket(): No ack packet recieved (received %i).", packet[0]);
+			return false;
 		}
+
+		// Receive the rest for later processing
+		string str;
+		recvPacket(str, false);
+		m_packet += str;
 	}
 	else
 	{
-		// Unable to send packet, disconnect
-		disconnect();
-		LOG("XDebugger::sendPacket(): Unable to communicate with the debugger.");
-
-		// Disable the debugger
+		// Kill the debugger
 		m_engine->killDebugger();
+		LOG("XDebugger::sendPacket(): Unable to communicate with the debugger.");
+		return false;
 	}
 
 	delete[] packet;
-
 	//sockmtx.unlock();
+	return true;
 }
 
-void XDebugger::recvPacket(string &data, const bool blocking)
+bool XDebugger::recvPacket(string &data, const bool blocking)
 {
+	// Blocking call?
 	if(blocking)
 	{
 		// Block until there are bytes ready
@@ -72,7 +74,9 @@ void XDebugger::recvPacket(string &data, const bool blocking)
 	{
 		// Skip when non-blocking and there is no ready packet
 		if(bytesReady() == 0)
-			return;
+		{
+			return false;
+		}
 	}
 
 	// Receive packet
@@ -80,22 +84,37 @@ void XDebugger::recvPacket(string &data, const bool blocking)
 	char *packet = new char[size + 1];
 	if(!recv(packet, size))
 	{
-		// Failed to recieve packet, disconnect
-		disconnect();
-		LOG("DEBUGGER: Failed to receieve packet.");
-
-		// Disable the debugger
+		// Kill the debugger
 		m_engine->killDebugger();
+		LOG("DEBUGGER: Failed to receieve packet.");
+		return false;
 	}
 	packet[size] = '\0';
 
 	data = packet;
 
 	delete[] packet;
+
+	return true;
 }
 
 void XDebugger::lineCallback(asIScriptContext *ctx)
 {
+	// Process packet
+	if(!m_packet.empty())
+	{
+		for(int i = 0; i < m_packet.size(); i++)
+		{
+			switch(m_packet[i])
+			{
+			case XD_START_PROFILER: m_profiler.enable(); break;
+			case XD_STOP_PROFILER: m_profiler.disable(); break;
+			}
+		}
+
+		m_packet.clear();
+	}
+
 	if(ctx->GetState() == asEXECUTION_FINISHED)
 	{
 		// Clean up stuff
@@ -108,12 +127,12 @@ void XDebugger::lineCallback(asIScriptContext *ctx)
 		uint stackSize = ctx->GetCallstackSize();
 		if(m_prevStackSize < stackSize)
 		{
-			for(int i = 0; i < stackSize-m_prevStackSize; i++)
+			for(uint i = 0; i < stackSize-m_prevStackSize; i++)
 				m_profiler.push(ctx);
 		}
 		else if(m_prevStackSize > stackSize)
 		{
-			for(int i = 0; i < m_prevStackSize-stackSize; i++)
+			for(uint i = 0; i < m_prevStackSize-stackSize; i++)
 				m_profiler.pop();
 		}
 

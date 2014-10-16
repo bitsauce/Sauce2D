@@ -511,6 +511,9 @@ public:
 
 	void recursiveDelete(Node *node);
 
+	void enable();
+	void disable();
+
 	void push(asIScriptContext *ctx);
 	void pop();
 
@@ -522,6 +525,8 @@ private:
 	Node *m_currentNode;
 	XDebugger *m_debugger;
 	uint m_samples;
+	bool m_enabled;
+	bool m_toggle;
 };
 
 /*********************************************************************
@@ -545,7 +550,8 @@ enum XPacketType
     XD_START_PROFILER,
     XD_STOP_PROFILER,
 	XD_PUSH_NODE_PACKET,
-	XD_POP_NODE_PACKET
+	XD_POP_NODE_PACKET,
+	XD_STEP_DONE_PACKET
 };
 
 class XDAPI XDebugger
@@ -567,8 +573,8 @@ public:
 	/*********************************************************************
 	**	Implemented part												**
 	**********************************************************************/
-	void sendPacket(XPacketType type, string data = "");
-	void recvPacket(string &data, bool blocking = true);
+	bool sendPacket(XPacketType type, string data = "");
+	bool recvPacket(string &data, bool blocking = true);
 
 	void lineCallback(asIScriptContext *ctx);
 	bool isBreakpoint(asIScriptContext *ctx);
@@ -607,6 +613,8 @@ private:
 
 	XProfiler m_profiler;
 	XEngine *m_engine;
+
+	string m_packet;
 };
 
 /*********************************************************************
@@ -754,7 +762,7 @@ public:
 	// Debugger
 	void setDebugger(XDebugger *debugger) { m_debugger = debugger; }
 	XDebugger *getDebugger() const { return m_debugger; }
-	void killDebugger() { delete m_debugger; m_debugger = 0; }
+	void killDebugger() { XDebugger *dbg = m_debugger; m_debugger = 0; delete dbg; }
 
 	// Exceptions
 	void exception(XRetCode errorCode, const char* message);

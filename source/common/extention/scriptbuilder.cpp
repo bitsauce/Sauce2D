@@ -22,9 +22,6 @@
 #include <unistd.h> // For getcwd()
 #endif
 
-// Helper functions
-static const char *GetCurrentDir(char *buf, size_t size);
-
 CScriptBuilder::CScriptBuilder()
 {
 	engine = 0;
@@ -157,7 +154,6 @@ int CScriptBuilder::LoadScriptSection(const char *filename)
 	if(!XFileSystem::ReadFile(assetPath.c_str(), conent))
 	{
 		// Write a message to the engine's message callback
-		char buf[256];
 		string msg = "Failed to load script file '" + util::getAbsoluteFilePath(assetPath) + "'";
 		engine->WriteMessage(filename, 0, 0, asMSGTYPE_ERROR, msg.c_str());
 		return -1;
@@ -884,55 +880,3 @@ const char *CScriptBuilder::GetMetadataStringForTypeMethod(int typeId, asIScript
 	return "";
 }
 #endif
-
-static const char *GetCurrentDir(char *buf, size_t size)
-{
-#ifdef _MSC_VER
-#ifdef _WIN32_WCE
-    static TCHAR apppath[MAX_PATH] = TEXT("");
-    if (!apppath[0])
-    {
-        GetModuleFileName(NULL, apppath, MAX_PATH);
-
-
-        int appLen = _tcslen(apppath);
-
-        // Look for the last backslash in the path, which would be the end
-        // of the path itself and the start of the filename.  We only want
-        // the path part of the exe's full-path filename
-        // Safety is that we make sure not to walk off the front of the
-        // array (in case the path is nothing more than a filename)
-        while (appLen > 1)
-        {
-            if (apppath[appLen-1] == TEXT('\\'))
-                break;
-            appLen--;
-        }
-
-        // Terminate the string after the trailing backslash
-        apppath[appLen] = TEXT('\0');
-    }
-#ifdef _UNICODE
-    wcstombs(buf, apppath, min(size, wcslen(apppath)*sizeof(wchar_t)));
-#else
-    memcpy(buf, apppath, min(size, strlen(apppath)));
-#endif
-
-    return buf;
-#elif defined(__S3E__)
-	// Marmalade uses its own portable C library
-	return getcwd(buf, (int)size);
-#elif _XBOX_VER >= 200
-	// XBox 360 doesn't support the getcwd function, just use the root folder
-	assert( size >= 7 );
-	sprintf(buf, "game:\\");
-	return buf;
-#else
-	return _getcwd(buf, (int)size);
-#endif // _MSC_VER
-#elif defined(__APPLE__)
-	return getcwd(buf, size);
-#else
-	return "";
-#endif
-}

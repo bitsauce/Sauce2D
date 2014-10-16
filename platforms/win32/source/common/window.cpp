@@ -596,7 +596,7 @@ void Window::processEvents(UINT Message, WPARAM wParam, LPARAM lParam)
 				func.execute();
 			}
 
-			m_graphics->setOrthoProjection(0.0f, m_size.x, m_size.y, 0.0f, -1.0f, 1.0f);
+			m_graphics->setOrthoProjection(0.0f, (float)m_size.x, (float)m_size.y, 0.0f, -1.0f, 1.0f);
 			m_graphics->setViewport(Recti(0, 0, m_size.x, m_size.y));
 		}
 		break;
@@ -693,7 +693,7 @@ void Window::processEvents(UINT Message, WPARAM wParam, LPARAM lParam)
 		case WM_MOUSEWHEEL:
 		{
 			if(m_mouseWheelFunc) {
-				int scrollDelta = (short)HIWORD(wParam);
+				//int scrollDelta = (short)HIWORD(wParam);
 				//startScriptFuncCall(m_mouseWheelFunc);
 				//addScriptFuncArg(&scrollDelta, 4);
 				//endScriptFuncCall();

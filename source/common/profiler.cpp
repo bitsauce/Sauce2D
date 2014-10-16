@@ -11,7 +11,9 @@
 
 XProfiler::XProfiler() :
 	m_root(new Node(0)),
-	m_samples(0)
+	m_samples(0),
+	m_enabled(false),
+	m_toggle(false)
 {
 	m_currentNode = m_root;
 }
@@ -32,7 +34,7 @@ void XProfiler::recursiveDelete(Node *node)
 
 void XProfiler::push(asIScriptContext *ctx)
 {
-	if(ctx)
+	if(m_enabled && ctx)
 	{
 		// Get function
 		asIScriptFunction *func = ctx->GetFunction();
@@ -61,14 +63,17 @@ void XProfiler::push(asIScriptContext *ctx)
 
 void XProfiler::pop()
 {
-	if(m_currentNode)
+	if(m_enabled)
 	{
-		m_currentNode->durrations.push_back(chrono::high_resolution_clock::now() - m_currentNode->currentTime);
-		m_currentNode = m_currentNode->parent;
-	}
-	else
-	{
-		LOG("XProfiler::pop() - No current node");
+		if(m_currentNode)
+		{
+			m_currentNode->durrations.push_back(chrono::high_resolution_clock::now() - m_currentNode->currentTime);
+			m_currentNode = m_currentNode->parent;
+		}
+		else
+		{
+			LOG("XProfiler::pop() - No current node");
+		}
 	}
 }
 
@@ -79,7 +84,7 @@ void XProfiler::sendStats(Node *node)
 
 	for(chrono::high_resolution_clock::duration durr : node->durrations)
 	{
-		int time = chrono::duration<float, milli>(durr).count();
+		int time = (int)chrono::duration<float, milli>(durr).count();
 		if(time < min) min = time;
 		if(time > max) max = time;
 		total += time;
@@ -109,6 +114,24 @@ void XProfiler::sendStats(Node *node)
 	delete node;
 }
 
+void XProfiler::enable()
+{
+	// Toggle if its not enabled
+	if(!m_enabled)
+	{
+		m_toggle = true;
+	}
+}
+
+void XProfiler::disable()
+{
+	// Toggle if its enabled
+	if(m_enabled)
+	{
+		m_toggle = true;
+	}
+}
+
 void XProfiler::stepDone()
 {
 	assert(m_currentNode == m_root);
@@ -118,7 +141,18 @@ void XProfiler::stepDone()
 	{
 		sendStats(itr->second);
 	}
+	
+	// Tell the profiler that a step was done
+	if(m_debugger->sendPacket(XD_STEP_DONE_PACKET))
+	{
+		delete m_root;
+		m_root = m_currentNode = new Node(0);
 
-	delete m_root;
-	m_root = m_currentNode = new Node(0);
+		// Toggle the profiler
+		if(m_toggle)
+		{
+			m_enabled = !m_enabled;
+			m_toggle = false;
+		}
+	}
 }
