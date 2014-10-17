@@ -20,45 +20,42 @@ XProfiler::XProfiler() :
 
 XProfiler::~XProfiler()
 {
-	recursiveDelete(m_root);
+	if(m_root)
+	{
+		deleteTree(m_root);
+	}
 }
 
-void XProfiler::recursiveDelete(Node *node)
+void XProfiler::deleteTree(Node *node)
 {
 	for(map<string, Node*>::iterator itr = node->children.begin(); itr != node->children.end(); ++itr)
 	{
-		recursiveDelete(itr->second);
+		deleteTree(itr->second);
 	}
 	delete node;
 }
 
-void XProfiler::push(asIScriptContext *ctx)
+void XProfiler::push(const string &name)
 {
-	if(m_enabled && ctx)
+	if(m_enabled && m_currentNode->name != name)
 	{
-		// Get function
-		asIScriptFunction *func = ctx->GetFunction();
-		if(func)
+		Node *node;
+		if(m_currentNode->children.find(name) == m_currentNode->children.end())
 		{
-			Node *node;
-			string decl = func->GetDeclaration();
-			if(m_currentNode->children.find(decl) == m_currentNode->children.end())
-			{
-				// Create node if it doesn't exist
-				node = new Node(decl);
-				node->parent = m_currentNode;
-				m_currentNode->children[decl] = node;
-			}
-			else
-			{
-				// Get node
-				node = m_currentNode->children[decl];
-			}
-
-			// Store time and set node
-			m_currentNode = node;
-			m_currentNode->currentTime = chrono::high_resolution_clock::now();
+			// Create node if it doesn't exist
+			node = new Node(name);
+			node->parent = m_currentNode;
+			m_currentNode->children[name] = node;
 		}
+		else
+		{
+			// Get node
+			node = m_currentNode->children[name];
+		}
+
+		// Store time and set node
+		m_currentNode = node;
+		m_currentNode->currentTime = chrono::high_resolution_clock::now();
 	}
 }
 

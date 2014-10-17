@@ -12,7 +12,8 @@
 XDebugger::XDebugger() :
 	m_profiler(),
 	m_command(NoCommand),
-	m_prevStackSize(0)
+	m_prevStackSize(0),
+	m_prevSystemFunc(0)
 {
 	m_profiler.m_debugger = this;
 }
@@ -120,20 +121,43 @@ void XDebugger::lineCallback(asIScriptContext *ctx)
 		// Clean up stuff
 		m_profiler.pop();
 		m_prevStackSize = 0;
+		m_prevSystemFunc = 0;
 	}
 	else
 	{
 		// Call profiler push/pop for each function call
 		uint stackSize = ctx->GetCallstackSize();
-		if(m_prevStackSize < stackSize)
+		
+		if(m_prevStackSize > stackSize)
 		{
-			for(uint i = 0; i < stackSize-m_prevStackSize; i++)
-				m_profiler.push(ctx);
-		}
-		else if(m_prevStackSize > stackSize)
-		{
-			for(uint i = 0; i < m_prevStackSize-stackSize; i++)
+			if(m_prevStackSize-stackSize > 1)
+			{
 				m_profiler.pop();
+				m_profiler.pop();
+				m_profiler.pop();
+			}
+			else
+			{
+				m_profiler.pop();
+			}
+		}
+		
+		asIScriptFunction *sysFunc = ctx->GetSystemFunction();
+		if(m_prevSystemFunc != sysFunc)
+		{
+			m_profiler.pop();
+			m_prevSystemFunc = 0;
+		}
+		
+		if(m_prevStackSize != stackSize)
+		{
+			m_profiler.push(ctx->GetFunction()->GetDeclaration());
+		}
+
+		if(sysFunc)
+		{
+			m_profiler.push(sysFunc->GetDeclaration());
+			m_prevSystemFunc = sysFunc;
 		}
 
 		// Check for actions

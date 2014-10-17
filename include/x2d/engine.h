@@ -509,12 +509,12 @@ public:
 	XProfiler();
 	virtual ~XProfiler();
 
-	void recursiveDelete(Node *node);
+	void deleteTree(Node *node);
 
 	void enable();
 	void disable();
 
-	void push(asIScriptContext *ctx);
+	void push(const string &name);
 	void pop();
 
 	void sendStats(Node *node);
@@ -607,6 +607,7 @@ private:
 	};
 	
 	uint m_prevStackSize;
+	asIScriptFunction *m_prevSystemFunc;
 
 	Command m_command;
 	list<Breakpoint> m_breakpoints;
