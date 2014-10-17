@@ -486,21 +486,21 @@ class XDAPI XProfiler
 	struct Node
 	{
 		// Constructors
-		Node(asIScriptFunction *func) :
-			function(func)
+		Node(const string &name) :
+			name(name)
 		{
 		}
 
 		// Parent-child relations
 		Node *parent;
-		map<asIScriptFunction*, Node*> children;
+		map<string, Node*> children;
 
 		// Time measurement
 		chrono::high_resolution_clock::time_point currentTime;
 		vector<chrono::high_resolution_clock::duration> durrations;
 
 		// Node data
-		asIScriptFunction *function;
+		string name;
 	};
 
 public:
@@ -518,7 +518,7 @@ public:
 	void pop();
 
 	void sendStats(Node *node);
-	void stepDone();
+	void stepBegin();
 
 private:
 	Node *m_root;

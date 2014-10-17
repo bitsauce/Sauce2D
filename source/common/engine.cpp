@@ -494,6 +494,12 @@ int XEngine::run()
 		// Game loop
 		while(m_running)
 		{
+			// Step begin
+			if(m_debugger)
+			{
+				m_debugger->getProfiler()->stepBegin();
+			}
+
 			// Process game events
 			m_window->processEvents();
 
@@ -534,11 +540,6 @@ int XEngine::run()
 				for(int i = 0; i < numFpsSamples; i++) fps += fpsSamples[i];
 				m_graphics->m_framesPerSecond = (float)int(fps/numFpsSamples);
 				currFpsSample = 0;
-			}
-
-			if(m_debugger)
-			{
-				m_debugger->getProfiler()->stepDone();
 			}
 		}
 	}

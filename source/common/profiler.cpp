@@ -10,12 +10,12 @@
 #include <x2d/engine.h>
 
 XProfiler::XProfiler() :
-	m_root(new Node(0)),
+	m_root(0),
+	m_currentNode(0),
 	m_samples(0),
 	m_enabled(false),
 	m_toggle(false)
 {
-	m_currentNode = m_root;
 }
 
 XProfiler::~XProfiler()
@@ -25,7 +25,7 @@ XProfiler::~XProfiler()
 
 void XProfiler::recursiveDelete(Node *node)
 {
-	for(map<asIScriptFunction*, Node*>::iterator itr = node->children.begin(); itr != node->children.end(); ++itr)
+	for(map<string, Node*>::iterator itr = node->children.begin(); itr != node->children.end(); ++itr)
 	{
 		recursiveDelete(itr->second);
 	}
@@ -41,17 +41,18 @@ void XProfiler::push(asIScriptContext *ctx)
 		if(func)
 		{
 			Node *node;
-			if(m_currentNode->children.find(func) == m_currentNode->children.end())
+			string decl = func->GetDeclaration();
+			if(m_currentNode->children.find(decl) == m_currentNode->children.end())
 			{
 				// Create node if it doesn't exist
-				node = new Node(func);
+				node = new Node(decl);
 				node->parent = m_currentNode;
-				m_currentNode->children[func] = node;
+				m_currentNode->children[decl] = node;
 			}
 			else
 			{
 				// Get node
-				node = m_currentNode->children[func];
+				node = m_currentNode->children[decl];
 			}
 
 			// Store time and set node
@@ -80,8 +81,7 @@ void XProfiler::pop()
 void XProfiler::sendStats(Node *node)
 {
 	// Calculate stuffs
-	int total = 0, ave = 0, max = INT_MIN, min = INT_MAX;
-
+	int total = 0, max = INT_MIN, min = INT_MAX;
 	for(chrono::high_resolution_clock::duration durr : node->durrations)
 	{
 		int time = (int)chrono::duration<float, milli>(durr).count();
@@ -90,19 +90,16 @@ void XProfiler::sendStats(Node *node)
 		total += time;
 	}
 
-	ave = total/node->durrations.size();
-
 	stringstream ss;
-	ss << node->function->GetDeclaration(); ss << ";";
+	ss << node->name; ss << ";";
 	ss << total; ss << ";";
 	ss << max; ss << ";";
 	ss << min; ss << ";";
-	ss << ave; ss << ";";
 	ss << node->durrations.size();
 	m_debugger->sendPacket(XD_PUSH_NODE_PACKET, ss.str());
 
 	// Recursive call to children
-	for(map<asIScriptFunction*, Node*>::iterator itr = node->children.begin(); itr != node->children.end(); ++itr)
+	for(map<string, Node*>::iterator itr = node->children.begin(); itr != node->children.end(); ++itr)
 	{
 		sendStats(itr->second);
 	}
@@ -132,27 +129,31 @@ void XProfiler::disable()
 	}
 }
 
-void XProfiler::stepDone()
+void XProfiler::stepBegin()
 {
 	assert(m_currentNode == m_root);
-
-	// Recursive call to children
-	for(map<asIScriptFunction*, Node*>::iterator itr = m_root->children.begin(); itr != m_root->children.end(); ++itr)
-	{
-		sendStats(itr->second);
-	}
 	
-	// Tell the profiler that a step was done
-	if(m_debugger->sendPacket(XD_STEP_DONE_PACKET))
+	if(m_root)
 	{
-		delete m_root;
-		m_root = m_currentNode = new Node(0);
+		// Get step time
+		m_root->durrations.push_back(chrono::high_resolution_clock::now() - m_root->currentTime);
 
-		// Toggle the profiler
-		if(m_toggle)
+		// Send stats
+		sendStats(m_root);
+	
+		// Tell the profiler that a step was done
+		if(m_debugger->sendPacket(XD_STEP_DONE_PACKET))
 		{
-			m_enabled = !m_enabled;
-			m_toggle = false;
+			// Toggle the profiler
+			if(m_toggle)
+			{
+				m_enabled = !m_enabled;
+				m_toggle = false;
+			}
 		}
 	}
+
+	// Create new root node
+	m_root = m_currentNode = new Node("Step");
+	m_root->currentTime = chrono::high_resolution_clock::now();
 }
