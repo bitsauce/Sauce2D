@@ -113,12 +113,13 @@ XTextureRegion XTextureAtlas::get(const int index, const Vector2 &uv0, const Vec
 		return XTextureRegion(0, Vector2(0.0f), Vector2(1.0f));
 	}
 
+	// TODO: Optimization: The texture regions can be precalculated in update() to save time
 	// Get texture region
 	const RectanglePacker::Rectangle &rect = m_result.rectangles[index];
 	m_atlas->addRef();
 	return XTextureRegion(m_atlas,
-		(rect.x + rect.width*uv0.x)/ATLAS_SIZE, (rect.y + rect.height*uv0.y)/ATLAS_SIZE,
-		(rect.x + rect.width*uv1.x)/ATLAS_SIZE, (rect.y + rect.height*uv1.y)/ATLAS_SIZE
+		((rect.x+m_border) + (rect.width-m_border*2)*uv0.x)/ATLAS_SIZE, ((rect.y+m_border) + (rect.height-m_border*2)*uv0.y)/ATLAS_SIZE,
+		((rect.x+m_border) + (rect.width-m_border*2)*uv1.x)/ATLAS_SIZE, ((rect.y+m_border) + (rect.height-m_border*2)*uv1.y)/ATLAS_SIZE
 		);
 }
 
