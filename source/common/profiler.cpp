@@ -55,7 +55,7 @@ void XProfiler::push(const string &name)
 
 		// Store time and set node
 		m_currentNode = node;
-		m_currentNode->currentTime = chrono::high_resolution_clock::now();
+		m_currentNode->startTime = chrono::high_resolution_clock::now();
 	}
 }
 
@@ -65,7 +65,8 @@ void XProfiler::pop()
 	{
 		if(m_currentNode)
 		{
-			m_currentNode->durrations.push_back(chrono::high_resolution_clock::now() - m_currentNode->currentTime);
+			m_currentNode->duration += chrono::duration<float, milli>(chrono::high_resolution_clock::now() - m_currentNode->startTime).count();
+			m_currentNode->calls++;
 			m_currentNode = m_currentNode->parent;
 		}
 		else
@@ -78,21 +79,10 @@ void XProfiler::pop()
 void XProfiler::sendStats(Node *node)
 {
 	// Calculate stuffs
-	int total = 0, max = INT_MIN, min = INT_MAX;
-	for(chrono::high_resolution_clock::duration durr : node->durrations)
-	{
-		int time = (int)chrono::duration<float, milli>(durr).count();
-		if(time < min) min = time;
-		if(time > max) max = time;
-		total += time;
-	}
-
 	stringstream ss;
 	ss << node->name; ss << ";";
-	ss << total; ss << ";";
-	ss << max; ss << ";";
-	ss << min; ss << ";";
-	ss << node->durrations.size();
+	ss << node->duration; ss << ";";
+	ss << node->calls;
 	m_debugger->sendPacket(XD_PUSH_NODE_PACKET, ss.str());
 
 	// Recursive call to children
@@ -133,7 +123,8 @@ void XProfiler::stepBegin()
 	if(m_root)
 	{
 		// Get step time
-		m_root->durrations.push_back(chrono::high_resolution_clock::now() - m_root->currentTime);
+		m_root->duration = chrono::duration<float, milli>(chrono::high_resolution_clock::now() - m_root->startTime).count();
+		m_root->calls = 1;
 
 		// Send stats
 		sendStats(m_root);
@@ -152,5 +143,5 @@ void XProfiler::stepBegin()
 
 	// Create new root node
 	m_root = m_currentNode = new Node("Step");
-	m_root->currentTime = chrono::high_resolution_clock::now();
+	m_root->startTime = chrono::high_resolution_clock::now();
 }

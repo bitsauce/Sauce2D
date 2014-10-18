@@ -487,7 +487,9 @@ class XDAPI XProfiler
 	{
 		// Constructors
 		Node(const string &name) :
-			name(name)
+			name(name),
+			duration(0.0f),
+			calls(0)
 		{
 		}
 
@@ -496,8 +498,9 @@ class XDAPI XProfiler
 		map<string, Node*> children;
 
 		// Time measurement
-		chrono::high_resolution_clock::time_point currentTime;
-		vector<chrono::high_resolution_clock::duration> durrations;
+		chrono::high_resolution_clock::time_point startTime;
+		float duration;
+		int calls;
 
 		// Node data
 		string name;

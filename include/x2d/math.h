@@ -37,6 +37,7 @@ public:
 	float abs(const float value) { return ::abs(value); }
 	float sqrt(const float value) { return sqrtf(value); }
 	float pow(const float a, const float b) { return powf(a, b); }
+	int mod(const int a, const int b) { int r = a % b; return r < 0 ? r + b : r; }
 
 	// Trigonometry
 	float cos(const float value) { return cosf(value); }
