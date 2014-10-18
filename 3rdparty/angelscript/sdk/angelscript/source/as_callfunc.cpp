@@ -590,6 +590,14 @@ int CallSystemFunction(int id, asCContext *context, void *objectPointer)
 	}
 
 	context->m_callingSystemFunction = descr;
+	
+	// <BITSAUCE>
+	if( context->m_funcCallback )
+	{
+		context->CallFuncBeginCallback(descr);
+	}
+	// </BITSAUCE>
+
 	bool cppException = false;
 #ifdef AS_NO_EXCEPTIONS
 	retQW = CallSystemFunctionNative(context, descr, obj, args, sysFunc->hostReturnInMemory ? retPointer : 0, retQW2);
@@ -612,8 +620,15 @@ int CallSystemFunction(int id, asCContext *context, void *objectPointer)
 		context->SetException(TXT_EXCEPTION_CAUGHT);
 	}
 #endif
-	context->m_callingSystemFunction = 0;
+	// <BITSAUCE>
+	if( context->m_funcCallback )
+	{
+		context->CallFuncEndCallback(descr);
+	}
+	// </BITSAUCE>
 
+	context->m_callingSystemFunction = 0;
+	
 #if defined(COMPLEX_OBJS_PASSED_BY_REF) || defined(AS_LARGE_OBJS_PASSED_BY_REF)
 	if( sysFunc->takesObjByVal )
 	{

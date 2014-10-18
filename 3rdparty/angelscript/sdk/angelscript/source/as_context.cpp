@@ -170,6 +170,9 @@ asCContext::asCContext(asCScriptEngine *engine, bool holdRef)
 	m_regs.objectRegister       = 0;
 	m_initialFunction           = 0;
 	m_lineCallback              = false;
+	// <BITSAUCE>
+	m_funcCallback              = false;
+	// </BITSAUCE>
 	m_exceptionCallback         = false;
 	m_regs.doProcessSuspend     = false;
 	m_doSuspend                 = false;
@@ -1222,9 +1225,19 @@ int asCContext::Execute()
 	asUINT gcPreObjects = 0;
 	if( m_engine->ep.autoGarbageCollect )
 		m_engine->gc.GetStatistics(&gcPreObjects, 0, 0, 0, 0);
+	
+	// <BITSAUCE>
+	if( m_funcCallback )
+		CallFuncBeginCallback(m_currentFunction);
+	// </BITSAUCE>
 
 	while( m_status == asEXECUTION_ACTIVE )
 		ExecuteNext();
+	
+	// <BITSAUCE>
+	if( m_funcCallback )
+		CallFuncEndCallback(m_currentFunction);
+	// </BITSAUCE>
 
 	if( m_lineCallback )
 	{
@@ -1406,10 +1419,20 @@ void asCContext::PushCallState()
 	tmp[2] = s[2];
 	tmp[3] = s[3];
 	tmp[4] = s[4];
+	
+	// <BITSAUCE>
+	if( m_funcCallback )
+		CallFuncBeginCallback(m_currentFunction);
+	// </BITSAUCE>
 }
 
 void asCContext::PopCallState()
 {
+	// <BITSAUCE>
+	if( m_funcCallback )
+		CallFuncEndCallback(m_currentFunction);
+	// </BITSAUCE>
+
 	// See comments in PushCallState about pointer aliasing and data cache trashing
 	asPWORD *tmp = m_callStack.AddressOf() + m_callStack.GetLength() - CALLSTACK_FRAME_SIZE;
 	asPWORD s[5];
@@ -1574,13 +1597,15 @@ void asCContext::CallScriptFunction(asCScriptFunction *func)
 {
 	asASSERT( func->scriptData );
 
+	// <BITSAUCE>
 	// Push the framepointer, function id and programCounter on the stack
-	PushCallState();
-
+	m_currentFunction = func; // I moved it here so that PushCallState() feeds the correct
+	PushCallState();          // function to CallFuncBeginCallback()
+	
 	// Update the current function and program position before increasing the stack
 	// so the exception handler will know what to do if there is a stack overflow
-	m_currentFunction = func;
 	m_regs.programPointer = m_currentFunction->scriptData->byteCode.AddressOf();
+	// </BITSAUCE>
 
 	// Make sure there is space on the stack to execute the function
 	asDWORD *oldStackPointer = m_regs.stackPointer;
@@ -4818,6 +4843,57 @@ void asCContext::CallLineCallback()
 	else
 		m_engine->CallObjectMethod(m_lineCallbackObj, this, &m_lineCallbackFunc, 0);
 }
+
+// <BITSAUCE>
+int asCContext::SetFuncCallback(asSFuncPtr beginCallback, asSFuncPtr endCallback, void *obj, int callConv)
+{
+	m_funcCallback = true;
+	m_funcCallbackObj = obj;
+	bool isObj = false;
+	if( (unsigned)callConv == asCALL_GENERIC || (unsigned)callConv == asCALL_THISCALL_OBJFIRST || (unsigned)callConv == asCALL_THISCALL_OBJLAST )
+	{
+		m_funcCallback = false;
+		return asNOT_SUPPORTED;
+	}
+	if( (unsigned)callConv >= asCALL_THISCALL )
+	{
+		isObj = true;
+		if( obj == 0 )
+		{
+			m_funcCallback = false;
+			return asINVALID_ARG;
+		}
+	}
+
+	int r = DetectCallingConvention(isObj, beginCallback, callConv, 0, &m_funcBeginCallbackFunc);
+	if( r < 0 )
+		m_funcCallback = false;
+	else
+	{
+		r = DetectCallingConvention(isObj, endCallback, callConv, 0, &m_funcEndCallbackFunc);
+		if( r < 0 )
+			m_funcCallback = false;
+	}
+
+	return r;
+}
+
+void asCContext::CallFuncBeginCallback(asIScriptFunction *func)
+{
+	if( m_funcBeginCallbackFunc.callConv < ICC_THISCALL )
+		m_engine->CallGlobalFunction(func, m_funcCallbackObj, &m_funcBeginCallbackFunc, 0);
+	else
+		m_engine->CallObjectMethod(m_funcCallbackObj, func, &m_funcBeginCallbackFunc, 0);
+}
+
+void asCContext::CallFuncEndCallback(asIScriptFunction *func)
+{
+	if( m_funcEndCallbackFunc.callConv < ICC_THISCALL )
+		m_engine->CallGlobalFunction(func, m_funcCallbackObj, &m_funcEndCallbackFunc, 0);
+	else
+		m_engine->CallObjectMethod(m_funcCallbackObj, func, &m_funcEndCallbackFunc, 0);
+}
+// </BITSAUCE>
 
 // interface
 int asCContext::SetExceptionCallback(asSFuncPtr callback, void *obj, int callConv)

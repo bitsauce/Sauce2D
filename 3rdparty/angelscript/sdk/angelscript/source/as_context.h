@@ -108,6 +108,9 @@ public:
 	// Debugging
 	int                SetLineCallback(asSFuncPtr callback, void *obj, int callConv);
 	void               ClearLineCallback();
+	// <BITSAUCE>
+	int                SetFuncCallback(asSFuncPtr beginCallback, asSFuncPtr endCallback, void *obj, int callConv);
+	// </BITSAUCE>
 	asUINT             GetCallstackSize() const;
 	asIScriptFunction *GetFunction(asUINT stackLevel);
 	int                GetLineNumber(asUINT stackLevel, int *column, const char **sectionName);
@@ -134,6 +137,10 @@ public:
 	friend class asCScriptEngine;
 
 	void CallLineCallback();
+	// <BITSAUCE>
+	void CallFuncBeginCallback(asIScriptFunction *func);
+	void CallFuncEndCallback(asIScriptFunction *func);
+	// </BITSAUCE>
 	void CallExceptionCallback();
 
 	int  CallGeneric(int funcID, void *objectPointer);
@@ -199,6 +206,13 @@ public:
 	bool                       m_lineCallback;
 	asSSystemFunctionInterface m_lineCallbackFunc;
 	void *                     m_lineCallbackObj;
+
+	// <BITSAUCE>
+	bool                       m_funcCallback;
+	void *                     m_funcCallbackObj;
+	asSSystemFunctionInterface m_funcBeginCallbackFunc;
+	asSSystemFunctionInterface m_funcEndCallbackFunc;
+	// </BITSAUCE>
 
 	bool                       m_exceptionCallback;
 	asSSystemFunctionInterface m_exceptionCallbackFunc;

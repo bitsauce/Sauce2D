@@ -37,7 +37,7 @@ void XProfiler::deleteTree(Node *node)
 
 void XProfiler::push(const string &name)
 {
-	if(m_enabled && m_currentNode->name != name)
+	if(m_enabled)
 	{
 		Node *node;
 		if(m_currentNode->children.find(name) == m_currentNode->children.end())

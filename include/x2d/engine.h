@@ -575,7 +575,9 @@ public:
 	**********************************************************************/
 	bool sendPacket(XPacketType type, string data = "");
 	bool recvPacket(string &data, bool blocking = true);
-
+	
+	void funcBeginCallback(asIScriptFunction *func);
+	void funcEndCallback(asIScriptFunction *func);
 	void lineCallback(asIScriptContext *ctx);
 	bool isBreakpoint(asIScriptContext *ctx);
 	void takeCommands(asIScriptContext *ctx);
@@ -607,6 +609,7 @@ private:
 	};
 	
 	uint m_prevStackSize;
+	asIScriptFunction *m_prevFunc;
 	asIScriptFunction *m_prevSystemFunc;
 
 	Command m_command;

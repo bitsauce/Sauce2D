@@ -19,8 +19,7 @@ void main()
 float time = 0.0f;
 void draw()
 {
-	Math.cos(time);
-	time += Graphics.dt;
+	Console.log("draw");
 }
 
 void update()

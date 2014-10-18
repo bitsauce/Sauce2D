@@ -834,6 +834,9 @@ public:
 	// Debugging
 	virtual int                SetLineCallback(asSFuncPtr callback, void *obj, int callConv) = 0;
 	virtual void               ClearLineCallback() = 0;
+	// <BITSAUCE>
+	virtual int                SetFuncCallback(asSFuncPtr beginCallback, asSFuncPtr endCallback, void *obj, int callConv) = 0;
+	// </BITSAUCE>
 	virtual asUINT             GetCallstackSize() const = 0;
 	virtual asIScriptFunction *GetFunction(asUINT stackLevel = 0) = 0;
 	virtual int                GetLineNumber(asUINT stackLevel = 0, int *column = 0, const char **sectionName = 0) = 0;

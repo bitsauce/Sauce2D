@@ -13,6 +13,7 @@ XDebugger::XDebugger() :
 	m_profiler(),
 	m_command(NoCommand),
 	m_prevStackSize(0),
+	m_prevFunc(0),
 	m_prevSystemFunc(0)
 {
 	m_profiler.m_debugger = this;
@@ -99,6 +100,16 @@ bool XDebugger::recvPacket(string &data, const bool blocking)
 	return true;
 }
 
+void XDebugger::funcBeginCallback(asIScriptFunction *func)
+{
+	m_profiler.push(func->GetDeclaration());
+}
+
+void XDebugger::funcEndCallback(asIScriptFunction *func)
+{
+	m_profiler.pop();
+}
+
 void XDebugger::lineCallback(asIScriptContext *ctx)
 {
 	// Process packet
@@ -116,141 +127,94 @@ void XDebugger::lineCallback(asIScriptContext *ctx)
 		m_packet.clear();
 	}
 
-	if(ctx->GetState() == asEXECUTION_FINISHED)
+	// Check for actions
+	/*sockmtx.lock();
+	while(bytesReady() >= 512)
 	{
-		// Clean up stuff
-		m_profiler.pop();
-		m_prevStackSize = 0;
-		m_prevSystemFunc = 0;
-	}
-	else
-	{
-		// Call profiler push/pop for each function call
-		uint stackSize = ctx->GetCallstackSize();
-		
-		if(m_prevStackSize > stackSize)
+		char *data = new char[512];
+		recvPacket(&data);
+		switch(data[0])
 		{
-			if(m_prevStackSize-stackSize > 1)
+		case Interupt:
+			m_command = (Command)data[0];
+			break;
+		case AddBreakpoint:
 			{
-				m_profiler.pop();
-				m_profiler.pop();
-				m_profiler.pop();
-			}
-			else
-			{
-				m_profiler.pop();
-			}
-		}
-		
-		asIScriptFunction *sysFunc = ctx->GetSystemFunction();
-		if(m_prevSystemFunc != sysFunc)
-		{
-			m_profiler.pop();
-			m_prevSystemFunc = 0;
-		}
-		
-		if(m_prevStackSize != stackSize)
-		{
-			m_profiler.push(ctx->GetFunction()->GetDeclaration());
-		}
-
-		if(sysFunc)
-		{
-			m_profiler.push(sysFunc->GetDeclaration());
-			m_prevSystemFunc = sysFunc;
-		}
-
-		// Check for actions
-		/*sockmtx.lock();
-		while(bytesReady() >= 512)
-		{
-			char *data = new char[512];
-			recvPacket(&data);
-			switch(data[0])
-			{
-			case Interupt:
-				m_command = (Command)data[0];
-				break;
-			case AddBreakpoint:
+				string bpstr(data+1);
+				vector<string> bpstings = util::splitString(bpstr, ";");
+				if(bpstings.size() == 2)
 				{
-					string bpstr(data+1);
-					vector<string> bpstings = util::splitString(bpstr, ";");
-					if(bpstings.size() == 2)
-					{
-						string file = bpstings[0];
-						int line = util::strToInt(bpstings[1])+1;
-						Breakpoint bp = { file, line };
-						m_breakpoints.push_back(bp);
-					}
+					string file = bpstings[0];
+					int line = util::strToInt(bpstings[1])+1;
+					Breakpoint bp = { file, line };
+					m_breakpoints.push_back(bp);
 				}
-				break;
-			case RemoveBreakpoint:
+			}
+			break;
+		case RemoveBreakpoint:
+			{
+				string bpstr(data+1);
+				vector<string> bpstings = util::splitString(bpstr, ";");
+				if(bpstings.size() == 2)
 				{
-					string bpstr(data+1);
-					vector<string> bpstings = util::splitString(bpstr, ";");
-					if(bpstings.size() == 2)
+					string file = bpstings[0];
+					int line = util::strToInt(bpstings[1]);
+					for(list<Breakpoint>::iterator itr = m_breakpoints.begin(); itr != m_breakpoints.end(); ++itr)
 					{
-						string file = bpstings[0];
-						int line = util::strToInt(bpstings[1]);
-						for(list<Breakpoint>::iterator itr = m_breakpoints.begin(); itr != m_breakpoints.end(); ++itr)
+						Breakpoint &bp = (*itr);
+						if(bp.file == file && bp.line == line)
 						{
-							Breakpoint &bp = (*itr);
-							if(bp.file == file && bp.line == line)
-							{
-								m_breakpoints.remove(bp);
-								break;
-							}
+							m_breakpoints.remove(bp);
+							break;
 						}
 					}
 				}
-				break;
-			default:
-				LOG("DEBUGGER: Unknown packet type '%i'.", data[0]);
-				break;
 			}
-			delete[] data;
+			break;
+		default:
+			LOG("DEBUGGER: Unknown packet type '%i'.", data[0]);
+			break;
 		}
-		sockmtx.unlock();
+		delete[] data;
+	}
+	sockmtx.unlock();
 
-		// Perform debug actions
-		if(isBreakpoint(ctx))
-			takeCommands(ctx);
+	// Perform debug actions
+	if(isBreakpoint(ctx))
+		takeCommands(ctx);
 
-		/*if(m_command == NoCommand)
+	/*if(m_command == NoCommand)
+	{
+		// Continue until breakpoint
+		if(!isBreakpoint(ctx))
+			return;
+	}
+	else if(m_command == StepOver)
+	{
+		// Continue until stack size is equal...
+		if(ctx->GetCallstackSize() > m_prevStackSize)
 		{
-			// Continue until breakpoint
+			// ... or if a breakpoint is hit
 			if(!isBreakpoint(ctx))
 				return;
 		}
-		else if(m_command == StepOver)
-		{
-			// Continue until stack size is equal...
-			if(ctx->GetCallstackSize() > m_prevStackSize)
-			{
-				// ... or if a breakpoint is hit
-				if(!isBreakpoint(ctx))
-					return;
-			}
-		}
-		else if(m_command == StepOut)
-		{
-			// Continue until stack size is smaller than previous...
-			if(ctx->GetCallstackSize() >= m_prevStackSize) // TODO: ctx->GetCallstackSize != 0?
-			{
-				// ... or if a breakpoint is hit
-				if(!isBreakpoint(ctx))
-					return;
-			}
-		}
-		else if(m_command == StepInto)
-		{
-			// We always break, but we call the check break point anyway 
-			// to tell user when break point has been reached
-			isBreakpoint(ctx);
-		}*/
-
-		m_prevStackSize = stackSize;
 	}
+	else if(m_command == StepOut)
+	{
+		// Continue until stack size is smaller than previous...
+		if(ctx->GetCallstackSize() >= m_prevStackSize) // TODO: ctx->GetCallstackSize != 0?
+		{
+			// ... or if a breakpoint is hit
+			if(!isBreakpoint(ctx))
+				return;
+		}
+	}
+	else if(m_command == StepInto)
+	{
+		// We always break, but we call the check break point anyway 
+		// to tell user when break point has been reached
+		isBreakpoint(ctx);
+	}*/
 }
 
 bool XDebugger::isBreakpoint(asIScriptContext *ctx)
