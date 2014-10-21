@@ -21,8 +21,8 @@ int XTextureAtlas::Register(asIScriptEngine *scriptEngine)
 	int r = 0;
 	
 	r = scriptEngine->RegisterObjectBehaviour("TextureAtlas", asBEHAVE_FACTORY, "TextureAtlas @f()", asFUNCTIONPR(Factory, (), XTextureAtlas*), asCALL_CDECL); AS_ASSERT
-	r = scriptEngine->RegisterObjectBehaviour("TextureAtlas", asBEHAVE_FACTORY, "TextureAtlas @f(array<Texture@>@)", asFUNCTIONPR(Factory, (XScriptArray*), XTextureAtlas*), asCALL_CDECL); AS_ASSERT
-	r = scriptEngine->RegisterObjectBehaviour("TextureAtlas", asBEHAVE_FACTORY, "TextureAtlas @f(array<Pixmap>@)", asFUNCTIONPR(Factory, (XScriptArray*), XTextureAtlas*), asCALL_CDECL); AS_ASSERT
+	r = scriptEngine->RegisterObjectBehaviour("TextureAtlas", asBEHAVE_FACTORY, "TextureAtlas @f(array<Texture@>@, const int border = 1)", asFUNCTIONPR(Factory, (XScriptArray*, const int), XTextureAtlas*), asCALL_CDECL); AS_ASSERT
+	r = scriptEngine->RegisterObjectBehaviour("TextureAtlas", asBEHAVE_FACTORY, "TextureAtlas @f(array<Pixmap>@, const int border = 1)", asFUNCTIONPR(Factory, (XScriptArray*, const int), XTextureAtlas*), asCALL_CDECL); AS_ASSERT
 
 	r = scriptEngine->RegisterObjectMethod("TextureAtlas", "TextureRegion get(const int) const", asMETHODPR(XTextureAtlas, get, (const int) const, XTextureRegion), asCALL_THISCALL); AS_ASSERT
 	r = scriptEngine->RegisterObjectMethod("TextureAtlas", "TextureRegion get(const int, const Vector2 &in, const Vector2 &in) const", asMETHODPR(XTextureAtlas, get, (const int, const Vector2&, const Vector2&) const, XTextureRegion), asCALL_THISCALL); AS_ASSERT
@@ -33,16 +33,20 @@ int XTextureAtlas::Register(asIScriptEngine *scriptEngine)
 	return r;
 }
 
-XTextureAtlas::XTextureAtlas()
+XTextureAtlas::XTextureAtlas() :
+	m_border(1)
 {
 	init(vector<XPixmap>());
 }
 
-XTextureAtlas::XTextureAtlas(vector<XTexture*> textures)
+XTextureAtlas::XTextureAtlas(vector<XTexture*> textures, const int border) :
+	m_border(border)
 {
 	vector<XPixmap> pixmaps;
-	for(vector<XTexture*>::iterator itr = textures.begin(); itr != textures.end(); ++itr) {
-		if(*itr) {
+	for(vector<XTexture*>::iterator itr = textures.begin(); itr != textures.end(); ++itr)
+	{
+		if(*itr)
+		{
 			pixmaps.push_back((*itr)->getPixmap());
 		}
 	}
@@ -50,7 +54,8 @@ XTextureAtlas::XTextureAtlas(vector<XTexture*> textures)
 	init(pixmaps);
 }
 
-XTextureAtlas::XTextureAtlas(vector<XPixmap> &pixmaps)
+XTextureAtlas::XTextureAtlas(vector<XPixmap> &pixmaps, const int border) :
+	m_border(border)
 {
 	init(pixmaps);
 }
@@ -67,10 +72,10 @@ void XTextureAtlas::init(const vector<XPixmap> &pixmaps)
 {
 	// Create a texture for the atlas
 	m_atlas = XGraphics::CreateTexture(ATLAS_SIZE, ATLAS_SIZE);
+	m_texturePacker.setMaxWidth(ATLAS_SIZE);
 
 	// Set as uninitialized
 	m_initialized = false;
-	m_border = 1;
 	m_size = 0;
 	
 	// Add all pixmaps
@@ -171,7 +176,7 @@ XTextureAtlas *XTextureAtlas::Factory()
 	return new XTextureAtlas();
 }
 
-XTextureAtlas *XTextureAtlas::Factory(XScriptArray *arr)
+XTextureAtlas *XTextureAtlas::Factory(XScriptArray *arr, const int border)
 {
 	XTextureAtlas *atlas = 0;
 	if(arr->GetElementTypeName() == "Texture")
@@ -180,14 +185,14 @@ XTextureAtlas *XTextureAtlas::Factory(XScriptArray *arr)
 		for(uint i = 0; i < arr->GetSize(); i++) {
 			textures.push_back(*(XTexture**)arr->At(i));
 		}
-		atlas = new XTextureAtlas(textures);
+		atlas = new XTextureAtlas(textures, border);
 	}else if(arr->GetElementTypeName() == "Pixmap")
 	{
 		vector<XPixmap> pixmaps;
 		for(uint i = 0; i < arr->GetSize(); i++) {
 			pixmaps.push_back(*(XPixmap*)arr->At(i));
 		}
-		atlas = new XTextureAtlas(pixmaps);
+		atlas = new XTextureAtlas(pixmaps, border);
 	}
 
 	arr->Release();

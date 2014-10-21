@@ -10,6 +10,16 @@ class XDAPI RectanglePacker
 {
 	friend class XTextureAtlas;
 public:
+	RectanglePacker() :
+		m_maxWidth(2048)
+	{
+	}
+
+	void setMaxWidth(const int width)
+	{
+		m_maxWidth = width;
+	}
+
 	class XDAPI Rectangle
 	{
 	public:
@@ -74,6 +84,7 @@ public:
 
 private:
 	vector<Rectangle> m_rectangles;
+	int m_maxWidth;
 };
 
 #endif // X2D_RECTANGLE_PACKER_H

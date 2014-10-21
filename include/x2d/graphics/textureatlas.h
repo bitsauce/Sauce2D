@@ -11,8 +11,8 @@ class XTextureAtlas
 	AS_DECL_REF
 public:
 	XTextureAtlas();
-	XTextureAtlas(vector<XTexture*> textures);
-	XTextureAtlas(vector<XPixmap> &pixmaps);
+	XTextureAtlas(vector<XTexture*> textures, const int border = 1);
+	XTextureAtlas(vector<XPixmap> &pixmaps, const int border = 1);
 	~XTextureAtlas();
 
 	void add(XTexture *texture);
@@ -64,7 +64,7 @@ private:
 	int m_border;
 
 	static XTextureAtlas *Factory();
-	static XTextureAtlas *Factory(XScriptArray *arr);
+	static XTextureAtlas *Factory(XScriptArray *arr, const int border);
 };
 
 #endif // X2D_TEXTURE_ATLAS_H

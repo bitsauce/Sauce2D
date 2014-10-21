@@ -55,9 +55,13 @@ void XSpriteBatch::add(XSprite *sprite)
 
 XSprite *XSpriteBatch::get(int index)
 {
-	XSprite *sprite = m_sprites[index];
-	sprite->addRef();
-	m_returnedSprites.push_back(sprite);
+	XSprite *sprite = 0;
+	if(index < m_sprites.size())
+	{
+		sprite = m_sprites[index];
+		sprite->addRef();
+		m_returnedSprites.push_back(sprite);
+	}
 	return sprite;
 }
 
@@ -133,12 +137,16 @@ void XSpriteBatch::makeStatic()
 
 		// Get sprite texture
 		XTexture *texture = sprite->getTexture();
-		texture->addRef();
+		if(texture) {
+			texture->addRef();
+		}
 		setTexture(texture);
 		
 		// Store current vertex offset
 		m_offsets[sprite] = m_buffers.find(m_state) == m_buffers.end() ? 0 : m_buffers[m_state]->vertices.size();
-		texture->release();
+		if(texture) {
+			texture->release();
+		}
 
 		// Draw this sprite into the buffer
 		this->addRef();

@@ -38,7 +38,7 @@ const RectanglePacker::Result RectanglePacker::pack()
 	}
 
 	// Setup loop vars
-	int canvasWidth = 8192, canvasHeight = maxHeight;
+	int canvasWidth = m_maxWidth, canvasHeight = maxHeight;
 	vector<Recti> cells;
 	cells.push_back(Recti(0, 0, canvasWidth, canvasHeight));
 	Result bestResult;
@@ -70,7 +70,9 @@ const RectanglePacker::Result RectanglePacker::pack()
 			cells.push_back(Recti(0, 0, canvasWidth, ++canvasHeight));
 			result.clear();
 			idx = rightMost = 0;
-		}else{
+		}
+		else
+		{
 			// Store cell and remove
 			Recti cell = cells[bestCellIdx];
 			cells.erase(cells.begin() + bestCellIdx);
