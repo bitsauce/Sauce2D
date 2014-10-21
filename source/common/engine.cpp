@@ -267,6 +267,7 @@ int XEngine::init(const XConfig &config)
 			LOG("Failed to connect to external debugger");
 			killDebugger();
 		}
+		m_debugger->m_profiler.m_timer = m_timer;
 	}
 	
 	try
@@ -481,7 +482,7 @@ int XEngine::run()
 	{
 		// Setup game loop
 		m_timer->start();
-		float prevTime = m_timer->getTime();
+		float prevTime = m_timer->getElapsedTime() * 0.001;
 		float acc = 0.0f;
 
 		// Fps sampling
@@ -508,7 +509,7 @@ int XEngine::run()
 				continue;
 
 			// Calculate time delta
-			const float currentTime = m_timer->getTime();
+			const float currentTime = m_timer->getElapsedTime() * 0.001;
 			float deltaTime = currentTime - prevTime;
 			prevTime = currentTime;
 		

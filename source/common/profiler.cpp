@@ -55,7 +55,7 @@ void XProfiler::push(const string &name)
 
 		// Store time and set node
 		m_currentNode = node;
-		m_currentNode->startTime = chrono::high_resolution_clock::now();
+		m_currentNode->startTime = m_timer->getElapsedTime();
 	}
 }
 
@@ -65,7 +65,7 @@ void XProfiler::pop()
 	{
 		if(m_currentNode)
 		{
-			m_currentNode->duration += chrono::duration<float, milli>(chrono::high_resolution_clock::now() - m_currentNode->startTime).count();
+			m_currentNode->duration += m_timer->getElapsedTime() - m_currentNode->startTime;
 			m_currentNode->calls++;
 			m_currentNode = m_currentNode->parent;
 		}
@@ -123,7 +123,7 @@ void XProfiler::stepBegin()
 	if(m_root)
 	{
 		// Get step time
-		m_root->duration = chrono::duration<float, milli>(chrono::high_resolution_clock::now() - m_root->startTime).count();
+		m_root->duration = m_timer->getElapsedTime() - m_root->startTime;
 		m_root->calls = 1;
 
 		// Send stats
@@ -143,5 +143,5 @@ void XProfiler::stepBegin()
 
 	// Create new root node
 	m_root = m_currentNode = new Node("Step");
-	m_root->startTime = chrono::high_resolution_clock::now();
+	m_root->startTime = m_timer->getElapsedTime();
 }
