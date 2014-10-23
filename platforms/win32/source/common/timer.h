@@ -9,11 +9,15 @@ public:
 	Timer();
 
 	void start();
-	float getTime() const;
+	void stop();
+
+	float getElapsedTime() const;
 
 private:
-	__int64 freqency;
-	__int64 counterStart;
+	LARGE_INTEGER m_frequency;
+	LARGE_INTEGER m_start;
+	LARGE_INTEGER m_end;
+	bool m_running;
 };
 
 #endif // WIN_TIMER_H

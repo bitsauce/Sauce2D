@@ -139,8 +139,9 @@ public:
 	XTimer();
 	
 	// High-resolution timing
-	virtual void  start()			= 0;
-	virtual float getTime() const	= 0;
+	virtual void  start()					= 0;
+	virtual void  stop()					= 0;
+	virtual float getElapsedTime() const	= 0;
 
 	// System clock
 	void getTicksPerSecond();
@@ -482,6 +483,7 @@ private:
 class XDAPI XProfiler
 {
 	friend class XDebugger;
+	friend class XEngine;
 
 	struct Node
 	{
@@ -498,7 +500,7 @@ class XDAPI XProfiler
 		map<string, Node*> children;
 
 		// Time measurement
-		chrono::high_resolution_clock::time_point startTime;
+		float startTime;
 		float duration;
 		int calls;
 
@@ -527,6 +529,7 @@ private:
 	Node *m_root;
 	Node *m_currentNode;
 	XDebugger *m_debugger;
+	XTimer *m_timer;
 	uint m_samples;
 	bool m_enabled;
 	bool m_toggle;

@@ -10,21 +10,33 @@
 #include "timer.h"
 
 Timer::Timer() :
-	freqency(1),
-	counterStart(0)
+	m_running(false)
 {
+    QueryPerformanceFrequency(&m_frequency);
+	m_start.QuadPart = m_end.QuadPart = 0;
 }
 
-// High-resolution timer
 void Timer::start()
 {
-    QueryPerformanceFrequency((LARGE_INTEGER*)&freqency);
-    QueryPerformanceCounter((LARGE_INTEGER*)&counterStart);
+	m_running = true;
+	QueryPerformanceCounter(&m_start);
 }
 
-float Timer::getTime() const
+void Timer::stop()
 {
-    __int64 counter = 0;
-    QueryPerformanceCounter((LARGE_INTEGER*)&counter);
-    return float(counter-counterStart)/float(freqency);
+	QueryPerformanceCounter(&m_end);
+	m_running = false;
+}
+
+float Timer::getElapsedTime() const
+{
+	LARGE_INTEGER end = m_end;
+    if(m_running)
+	{
+        QueryPerformanceCounter(&end);
+	}
+
+	float startTime = m_start.QuadPart * (1000.0f / m_frequency.QuadPart);
+	float endTime = end.QuadPart * (1000.0f / m_frequency.QuadPart);
+    return endTime - startTime;
 }

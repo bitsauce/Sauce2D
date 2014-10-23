@@ -58,7 +58,6 @@
 	#include <sstream>
 	#include <thread>
 	#include <mutex>
-	#include <chrono>
 #elif X2D_LINUX
 	#include <sys/socket.h>
 	#include <netinet/in.h>
