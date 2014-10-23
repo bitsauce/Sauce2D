@@ -15,7 +15,7 @@
 // - A 2-dimentional vector class
 //-----------------------------------------------------
 
-AS_REG_VALUE(Vector2, "Vector2")
+AS_REG_POD(Vector2, "Vector2")
 
 int Vector2::Register(asIScriptEngine *scriptEngine)
 {
@@ -61,7 +61,7 @@ int Vector2::Register(asIScriptEngine *scriptEngine)
 	return r;
 }
 
-AS_REG_VALUE(Vector2i, "Vector2i")
+AS_REG_POD(Vector2i, "Vector2i")
 
 int Vector2i::Register(asIScriptEngine *scriptEngine)
 {
@@ -106,7 +106,7 @@ int Vector2i::Register(asIScriptEngine *scriptEngine)
 	return r;
 }
 
-AS_REG_VALUE(Vector3, "Vector3")
+AS_REG_POD(Vector3, "Vector3")
 	
 int Vector3::Register(asIScriptEngine *scriptEngine)
 {
@@ -162,7 +162,7 @@ int Vector3::Register(asIScriptEngine *scriptEngine)
 	return r;
 }
 
-AS_REG_VALUE(Vector4, "Vector4")
+AS_REG_POD(Vector4, "Vector4")
 
 int Vector4::Register(asIScriptEngine *scriptEngine)
 {

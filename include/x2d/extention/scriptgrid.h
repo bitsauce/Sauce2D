@@ -39,6 +39,9 @@ public:
 	// Remember, if the grid holds handles the value parameter should be the 
 	// address of the handle. The refCount of the object will also be incremented
 	void  SetValue(asUINT x, asUINT y, void *value);
+	
+	// Copy the contents of one array to another (only if the types are the same)
+	XScriptGrid &operator=(const XScriptGrid&);
 
 	// GC methods
 	int  GetRefCount();
@@ -64,6 +67,7 @@ protected:
 	bool  CheckMaxSize(asUINT x, asUINT y);
 	void  CreateBuffer(SGridBuffer **buf, asUINT w, asUINT h);
 	void  DeleteBuffer(SGridBuffer *buf);
+	void  CopyBuffer(SGridBuffer *dst, SGridBuffer *src);
 	void  Construct(SGridBuffer *buf);
 	void  Destruct(SGridBuffer *buf);
 	void  SetValue(SGridBuffer *buf, asUINT x, asUINT y, void *value);

@@ -15,8 +15,9 @@ void DebugDraw::DrawPolygon(const b2Vec2* vertices, int32 vertexCount, const b2C
 	vector<uint> indices;
 	for(int i = 0; i < vertexCount; i++)
 	{
-		data[i].color.set(color.r, color.g, color.b, 1.0f);
-		data[i].position = toXDVec(vertices[i]);
+		Vector2 pos = toXDVec(vertices[i]);
+		data[i].set4ub(VERTEX_COLOR, uchar(color.r * 255), uchar(color.g * 255), uchar(color.b * 255), uchar(255));
+		data[i].set4f(VERTEX_POSITION, pos.x, pos.y);
 
 		if(i > 0)
 		{
@@ -44,8 +45,9 @@ void DebugDraw::DrawSolidPolygon(const b2Vec2* vertices, int32 vertexCount, cons
 
 	for(int i = 0; i < vertexCount; i++)
 	{
-		data[i].color = Vector4(color.r, color.g, color.b, 1.0f)*0.5f;
-		data[i].position = toXDVec(vertices[i]);
+		Vector2 pos = toXDVec(vertices[i]);
+		data[i].set4ub(VERTEX_COLOR, uchar(color.r * 255), uchar(color.g * 255), uchar(color.b * 255), uchar(255));
+		data[i].set4f(VERTEX_POSITION, pos.x, pos.y);
 		
 		if(i >= 2)
 		{
@@ -125,21 +127,25 @@ void DebugDraw::DrawTransform(const b2Transform& xf)
 
 	XVertex *data = new XVertex[4];
 	
-	data[0].position = toXDVec(p1);
-	data[0].color.set(1.0f, 0.0f, 0.0f, 1.0f);
+	Vector2 pos = toXDVec(p1);
+	data[0].set4f(VERTEX_POSITION, pos.x, pos.y);
+	data[0].set4ub(VERTEX_COLOR, 255, 0, 0, 255);
 
 	p2 = p1 + axisScale * xf.q.GetXAxis();
 	
-	data[1].position = toXDVec(p2);
-	data[1].color.set(1.0f, 0.0f, 0.0f, 1.0f);
+	pos = toXDVec(p2);
+	data[1].set4f(VERTEX_POSITION, pos.x, pos.y);
+	data[1].set4ub(VERTEX_COLOR, 255, 0, 0, 255);
 	
-	data[2].position = toXDVec(p1);
-	data[2].color.set(0.0f, 1.0f, 0.0f, 1.0f);
+	pos = toXDVec(p1);
+	data[2].set4f(VERTEX_POSITION, pos.x, pos.y);
+	data[2].set4ub(VERTEX_COLOR, 0, 255, 0, 255);
 
 	p2 = p1 + axisScale * xf.q.GetYAxis();
 	
-	data[3].position = toXDVec(p2);
-	data[3].color.set(0.0f, 1.0f, 0.0f, 1.0f);
+	pos = toXDVec(p2);
+	data[3].set4f(VERTEX_POSITION, pos.x, pos.y);
+	data[3].set4ub(VERTEX_COLOR, 0, 255, 0, 255);
 
 	uint indices[4] = { 0, 1, 2, 3 };
 
@@ -153,8 +159,9 @@ void DebugDraw::DrawPoint(const b2Vec2& p, float32 size, const b2Color& color)
 	batch->setTexture(0);
 
 	XVertex vertex;
-	vertex.color.set(color.r, color.g, color.b, 1.0f);
-	vertex.position = toXDVec(p);
+	Vector2 pos = toXDVec(p);
+	vertex.set4f(VERTEX_POSITION, pos.x, pos.y);
+	vertex.set4ub(VERTEX_COLOR, uchar(color.r * 255), uchar(color.g * 255), uchar(color.b * 255), uchar(255));
 	
 	uint indices = 0;
 
@@ -174,17 +181,17 @@ void DebugDraw::DrawAABB(b2AABB* aabb, const b2Color& color)
 	Vector2 upper = toXDVec(aabb->upperBound);
 	Vector2 lower = toXDVec(aabb->lowerBound);
 	
-	data[0].position.set(lower.x, lower.y);
-	data[0].color.set(color.r, color.g, color.b, 1.0f);
+	data[0].set4f(VERTEX_POSITION, lower.x, lower.y);
+	data[0].set4ub(VERTEX_COLOR, uchar(color.r * 255), uchar(color.g * 255), uchar(color.b * 255), uchar(255));
 	
-	data[1].position.set(upper.x, lower.y);
-	data[1].color.set(color.r, color.g, color.b, 1.0f);
+	data[1].set4f(VERTEX_POSITION, upper.x, lower.y);
+	data[1].set4ub(VERTEX_COLOR, uchar(color.r * 255), uchar(color.g * 255), uchar(color.b * 255), uchar(255));
 	
-	data[2].position.set(upper.x, upper.y);
-	data[2].color.set(color.r, color.g, color.b, 1.0f);
+	data[2].set4f(VERTEX_POSITION, upper.x, upper.y);
+	data[2].set4ub(VERTEX_COLOR, uchar(color.r * 255), uchar(color.g * 255), uchar(color.b * 255), uchar(255));
 
-	data[3].position.set(lower.x, upper.y);
-	data[3].color.set(color.r, color.g, color.b, 1.0f);
+	data[3].set4f(VERTEX_POSITION, lower.x, upper.y);
+	data[3].set4ub(VERTEX_COLOR, uchar(color.r * 255), uchar(color.g * 255), uchar(color.b * 255), uchar(255));
 
 	batch->addVertices(data, 4, QUAD_INDICES, 6);
 

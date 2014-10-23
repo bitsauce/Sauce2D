@@ -72,7 +72,7 @@ private:
 	void					renderBatch(const XBatch &batch);
 	XTexture*				createTexture(const XPixmap &pixmap);
 	XShader*				createShader(const string &vertFilePath, const string &fragFilePath);
-	XVertexBufferObject*	createVertexBufferObject();
+	XVertexBufferObject*	createVertexBufferObject(const XVertexBuffer &buffer);
 	XFrameBufferObject*		createFrameBufferObject();
 	bool					isSupported(Feature feature);
 

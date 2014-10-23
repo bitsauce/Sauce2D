@@ -9,7 +9,7 @@
 
 #include <x2d/audio.h>
 
-AS_REG_VALUE(XAudioBuffer, "AudioBuffer")
+AS_REG_POD(XAudioBuffer, "AudioBuffer")
 
 int XAudioBuffer::Register(asIScriptEngine *scriptEngine)
 {

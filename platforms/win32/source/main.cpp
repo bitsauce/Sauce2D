@@ -61,12 +61,14 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, INT)
 	// Process the command-line
 	int flags = 0;
 	string workDir;
+	bool useDebugger = false;
 	for(int i = 0; i < __argc; i++)
 	{
 		if(__argv[i][0] == '-')
 		{
 			switch(__argv[i][1])
 			{
+			case 'd': useDebugger = true; break;
 			case 'v': flags |= XD_EXPORT_LOG; break;
 			case 'w': workDir = string(__argv[i]+3); break;
 			}
@@ -86,7 +88,10 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, INT)
 	//engine->setDebugger(new Debugger);
 #else
 	config.workDir = workDir.empty() ? _getcwd(0, 0) : workDir.c_str();
-	engine->setDebugger(new Debugger);
+	if(useDebugger)
+	{
+		engine->setDebugger(new Debugger);
+	}
 #endif
 	string saveDir = getSaveDir();
 	config.saveDir = saveDir.c_str();

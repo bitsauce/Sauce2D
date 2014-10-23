@@ -18,7 +18,7 @@ class Recti;
 class XDAPI Rect
 {
 public:
-	AS_DECL_VALUE
+	AS_DECL_POD
 
 	Rect();
 	Rect(const Recti &r);
@@ -72,7 +72,7 @@ public:
 class XDAPI Recti
 {
 public:
-	AS_DECL_VALUE
+	AS_DECL_POD
 
 	Recti();
 	Recti(const Rect &r);

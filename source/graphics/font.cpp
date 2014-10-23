@@ -248,7 +248,7 @@ void XFont::draw(XBatch *batch, const Vector2 &pos, const string &str)
 	batch->setPrimitive(XBatch::PRIMITIVE_TRIANGLES);
 
 	// Draw string
-	XVertex vertices[4];
+	XVertex *vertices = new XVertex[4];
 	for(uint i = 0; i < str.size(); i++)
 	{
 		// Check for new line
@@ -274,27 +274,28 @@ void XFont::draw(XBatch *batch, const Vector2 &pos, const string &str)
 		// Draw char
 		XTextureRegion region = m_atlas->get(ch);
 
-		vertices[0].position.set(currentPos.x, currentPos.y + (m_Msize - metrics.size.y) - metrics.advance.y);
-		vertices[0].color = m_color;
-		vertices[0].texCoord.set(region.uv0.x, region.uv1.y);
+		vertices[0].set4f(VERTEX_POSITION, currentPos.x, currentPos.y + (m_Msize - metrics.size.y) - metrics.advance.y);
+		vertices[0].set4ub(VERTEX_COLOR, m_color.x*255, m_color.y*255, m_color.z*255, m_color.w*255);
+		vertices[0].set4f(VERTEX_TEX_COORD, region.uv0.x, region.uv1.y);
 
-		vertices[1].position.set(currentPos.x + metrics.size.x, currentPos.y + (m_Msize - metrics.size.y) - metrics.advance.y);
-		vertices[1].color = m_color;
-		vertices[1].texCoord.set(region.uv1.x, region.uv1.y);
+		vertices[1].set4f(VERTEX_POSITION, currentPos.x + metrics.size.x, currentPos.y + (m_Msize - metrics.size.y) - metrics.advance.y);
+		vertices[1].set4ub(VERTEX_COLOR, m_color.x*255, m_color.y*255, m_color.z*255, m_color.w*255);
+		vertices[1].set4f(VERTEX_TEX_COORD, region.uv1.x, region.uv1.y);
 		
-		vertices[2].position.set(currentPos.x + metrics.size.x, currentPos.y + (m_Msize - metrics.size.y) - metrics.advance.y + metrics.size.y);
-		vertices[2].color = m_color;
-		vertices[2].texCoord.set(region.uv1.x, region.uv0.y);
+		vertices[2].set4f(VERTEX_POSITION, currentPos.x + metrics.size.x, currentPos.y + (m_Msize - metrics.size.y) - metrics.advance.y + metrics.size.y);
+		vertices[2].set4ub(VERTEX_COLOR, m_color.x*255, m_color.y*255, m_color.z*255, m_color.w*255);
+		vertices[2].set4f(VERTEX_TEX_COORD, region.uv1.x, region.uv0.y);
 		
-		vertices[3].position.set(currentPos.x, currentPos.y + (m_Msize - metrics.size.y) - metrics.advance.y + metrics.size.y);
-		vertices[3].color = m_color;
-		vertices[3].texCoord.set(region.uv0.x, region.uv0.y);
+		vertices[3].set4f(VERTEX_POSITION, currentPos.x, currentPos.y + (m_Msize - metrics.size.y) - metrics.advance.y + metrics.size.y);
+		vertices[3].set4ub(VERTEX_COLOR, m_color.x*255, m_color.y*255, m_color.z*255, m_color.w*255);
+		vertices[3].set4f(VERTEX_TEX_COORD, region.uv0.x, region.uv0.y);
 		
 		batch->addVertices(vertices, 4, QUAD_INDICES, 6);
 
 		// Apply advance
 		currentPos.x += metrics.advance.x - metrics.bearing.x;
 	}
+	delete[] vertices;
 	batch->release();
 }
 

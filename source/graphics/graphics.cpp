@@ -31,6 +31,7 @@ Vector2 QUAD_TEXCOORD[4] = {
 };
 
 vector<XRenderContext**> XGraphics::s_contextToCreate;
+XVertexFormat XVertexFormat::s_vct;
 mutex ctxmtx;
 
 AS_REG_SINGLETON(XGraphics)
@@ -54,6 +55,10 @@ XGraphics::XGraphics() :
 	m_framesPerSecond(0.0f)
 {
 	setRefreshRate(60);
+
+	XVertexFormat::s_vct.set(VERTEX_POSITION, 2);
+	XVertexFormat::s_vct.set(VERTEX_COLOR, 4, XD_UBYTE);
+	XVertexFormat::s_vct.set(VERTEX_TEX_COORD, 2);
 }
 
 void XGraphics::setRefreshRate(const int hz)
@@ -137,9 +142,9 @@ XShader* XGraphics::CreateShader(const string &vertFilePath, const string &fragF
 	return s_this->createShader(vertFilePath, fragFilePath);
 }
 
-XVertexBufferObject *XGraphics::CreateVertexBufferObject()
+XVertexBufferObject *XGraphics::CreateVertexBufferObject(XVertexBuffer *buffer)
 {
-	return s_this->createVertexBufferObject();
+	return s_this->createVertexBufferObject(*buffer);
 }
 
 XFrameBufferObject *XGraphics::CreateFrameBufferObject()

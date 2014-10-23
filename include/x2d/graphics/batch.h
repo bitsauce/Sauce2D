@@ -2,42 +2,16 @@
 #define X2D_BATCH_H
 
 #include "../engine.h"
+#include "vertex.h"
 
 class XTexture;
 class XShader;
-class XVertexBufferObject;
 class XFrameBufferObject;
+class XVertexBuffer;
 
-// Vertex struct
-struct XDAPI XVertex
-{
-	AS_DECL_VALUE
-
-	XVertex() :
-		position(0.0f),
-		color(1.0f),
-		texCoord(0.0f)
-	{
-	}
-			
-	// NOTE TO SELF: DO NOT ALTER ORDER OF DEFINITION
-	Vector2 position;
-	Vector4 color;
-	Vector2 texCoord;
-};
-
-struct XDAPI XVertexBuffer
-{
-	XVertexBuffer() :
-		vbo(0)
-	{
-	}
-
-	vector<XVertex> vertices;
-	vector<uint> indices;
-	XVertexBufferObject *vbo;
-};
-
+/*********************************************************************
+**	Batch															**
+**********************************************************************/
 class XDAPI XBatch
 {
 	friend class OpenGL;
@@ -90,13 +64,9 @@ public:
 	void setPrimitive(PrimitiveType primitive);
 	PrimitiveType getPrimitive() const;
 
-	// Add vertices and indices to the batch
+	// Add vertices
+	void setVertexBuffer(XVertexBuffer *buffer);
 	void addVertices(XVertex *vertices, int vcount, uint *indices, int icount);
-	void modifyVertex(int index, XVertex vertex);
-
-	// Get vertex/vertex count
-	XVertex getVertex(int index);
-	int getVertexCount();
 
 	// Render-to-texture
 	void renderToTexture(XTexture *texture);
@@ -104,11 +74,6 @@ public:
 	// Draw/clear
 	virtual void draw();
 	virtual void clear();
-
-	// Makes the batch static for increased performance (by using VBOs)
-	// Note: While its called static, modifyVertex can still be accessed
-	virtual void makeStatic();
-	bool isStatic() const;
 	
 	struct State
 	{
@@ -151,9 +116,6 @@ protected:
 
 	// Frame buffer object (for render-to-texture)
 	XFrameBufferObject *m_fbo;
-
-	// Static batch flag (vbo flag)
-	bool m_static;
 
 	// Projection matrix
 	Matrix4 m_projMatrix;

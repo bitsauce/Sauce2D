@@ -6,7 +6,7 @@
 class XDAPI XPixmap
 {
 public:
-	AS_DECL_VALUE
+	AS_DECL_POD
 
 	XPixmap();
 	XPixmap(const int width, const int height);

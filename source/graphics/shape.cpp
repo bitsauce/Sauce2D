@@ -19,7 +19,7 @@ int XShape::Register(asIScriptEngine *scriptEngine)
 	r = scriptEngine->RegisterObjectBehaviour("Shape", asBEHAVE_FACTORY, "Shape @f()", asFUNCTIONPR(Factory, (), XShape*), asCALL_CDECL); AS_ASSERT
 	r = scriptEngine->RegisterObjectBehaviour("Shape", asBEHAVE_FACTORY, "Shape @f(const Rect &in)", asFUNCTIONPR(Factory, (const Rect&), XShape*), asCALL_CDECL); AS_ASSERT
 	r = scriptEngine->RegisterObjectBehaviour("Shape", asBEHAVE_FACTORY, "Shape @f(const Vector2 &in, const float, const int)", asFUNCTIONPR(Factory, (const Vector2&, const float, const int), XShape*), asCALL_CDECL); AS_ASSERT
-	r = scriptEngine->RegisterObjectBehaviour("Shape", asBEHAVE_FACTORY, "Shape @f(const array<Vector2> &in)", asFUNCTIONPR(Factory, (const XScriptArray&), XShape*), asCALL_CDECL); AS_ASSERT
+	//r = scriptEngine->RegisterObjectBehaviour("Shape", asBEHAVE_FACTORY, "Shape @f(const array<Vector2> &in)", asFUNCTIONPR(Factory, (const XScriptArray&), XShape*), asCALL_CDECL); AS_ASSERT
 	
 	r = scriptEngine->RegisterObjectMethod("Shape", "void setFillColor(const Vector4 &in)", asMETHOD(XShape, setFillColor), asCALL_THISCALL); AS_ASSERT
 	r = scriptEngine->RegisterObjectMethod("Shape", "void setFillTexture(Texture @texture)", asMETHOD(XShape, setFillTexture), asCALL_THISCALL); AS_ASSERT
@@ -45,24 +45,22 @@ XShape::XShape(const Rect &rect) :
 	m_penSize(1.0f),
 	m_index(0)
 {
-	XVertex vert;
-	vert.color.set(1.0f, 1.0f, 1.0f, 1.0f);
+	m_vertices = new XVertex[4]; 
 
-	vert.position.set(rect.getLeft(), rect.getTop());
-	vert.texCoord.set(0.0f, 1.0f);
-	m_vertices.push_back(vert);
-
-	vert.position.set(rect.getRight(), rect.getTop());
-	vert.texCoord.set(1.0f, 1.0f);
-	m_vertices.push_back(vert);
-
-	vert.position.set(rect.getRight(), rect.getBottom());
-	vert.texCoord.set(1.0f, 0.0f);
-	m_vertices.push_back(vert);
-
-	vert.position.set(rect.getLeft(), rect.getBottom());
-	vert.texCoord.set(0.0f, 0.0f);
-	m_vertices.push_back(vert);
+	m_vertices[0].set4ub(VERTEX_COLOR, 255, 255, 255, 255);
+	m_vertices[1].set4ub(VERTEX_COLOR, 255, 255, 255, 255);
+	m_vertices[2].set4ub(VERTEX_COLOR, 255, 255, 255, 255);
+	m_vertices[3].set4ub(VERTEX_COLOR, 255, 255, 255, 255);
+	
+	m_vertices[0].set4f(VERTEX_POSITION, rect.getLeft(), rect.getTop());
+	m_vertices[1].set4f(VERTEX_POSITION, rect.getRight(), rect.getTop());
+	m_vertices[2].set4f(VERTEX_POSITION, rect.getRight(), rect.getBottom());
+	m_vertices[3].set4f(VERTEX_POSITION, rect.getLeft(), rect.getBottom());
+	
+	m_vertices[0].set4f(VERTEX_TEX_COORD, 0.0f, 1.0f);
+	m_vertices[1].set4f(VERTEX_TEX_COORD, 1.0f, 1.0f);
+	m_vertices[2].set4f(VERTEX_TEX_COORD, 1.0f, 0.0f);
+	m_vertices[3].set4f(VERTEX_TEX_COORD, 0.0f, 0.0f);
 	
 	m_indices.push_back(0);
 	m_indices.push_back(3);
@@ -73,6 +71,7 @@ XShape::XShape(const Rect &rect) :
 	m_indices.push_back(2);
 
 	m_index += 6;
+	m_vertCount = 4;
 }
 
 XShape::XShape(const Vector2 &center, const float radius, const int vertCount) :
@@ -82,18 +81,18 @@ XShape::XShape(const Vector2 &center, const float radius, const int vertCount) :
 	m_penSize(1.0f),
 	m_index(0)
 {
-	XVertex vert;
-	vert.color.set(1.0f, 1.0f, 1.0f, 1.0f);
-	vert.position = center;
-	vert.texCoord.set(0.5f, 0.5f);
-	m_vertices.push_back(vert);
+	m_vertices = new XVertex[vertCount];
+	
+	m_vertices[0].set4f(VERTEX_POSITION, center.x, center.y);
+	m_vertices[0].set4ub(VERTEX_COLOR, 255, 255, 255, 255);
+	m_vertices[0].set4f(VERTEX_TEX_COORD, 0.5f, 0.5f);
 
-	for(int i = 0; i <= vertCount; i++)
+	for(int i = 0; i < vertCount; i++)
 	{
-		float r = (2.0f*PI*i)/vertCount;
-		vert.position.set(center.x + cos(r)*radius, center.y + sin(r)*radius);
-		vert.texCoord.set((1+cos(r))/2.0f, 1-(1+sin(r))/2.0f);
-		m_vertices.push_back(vert);
+		float r = (2.0f*PI*i)/(vertCount-1);
+		m_vertices[i].set4f(VERTEX_POSITION, center.x + cos(r)*radius, center.y + sin(r)*radius);
+		m_vertices[i].set4ub(VERTEX_COLOR, 255, 255, 255, 255);
+		m_vertices[i].set4f(VERTEX_TEX_COORD, (1 + cos(r))/2.0f, 1.0f - (1 + sin(r))/2.0f);
 
 		if(i > 0)
 		{
@@ -104,16 +103,19 @@ XShape::XShape(const Vector2 &center, const float radius, const int vertCount) :
 	}
 
 	m_index += vertCount * 3;
+	m_vertCount = vertCount;
 }
 
-XShape::XShape(const vector<XVertex> &vertices) :
+XShape::XShape(const XVertex *vertices, const int vertCount) :
 	m_fillColor(1.0f),
 	m_fillTexture(0),
 	m_penColor(1.0f),
 	m_penSize(1.0f),
 	m_index(0)
 {
-	//addVertices(vertices);
+	// TODO: implement
+	//memcpy(m_vertices, vertices, vertCount * sizeof(XVertex));
+	//m_index = vertCount;
 }
 
 XShape::~XShape()
@@ -121,6 +123,7 @@ XShape::~XShape()
 	if(m_fillTexture) {
 		m_fillTexture->release();
 	}
+	delete[] m_vertices;
 }
 
 /*void XShape::addVertex(const Vertex &vertex)
@@ -135,7 +138,7 @@ XShape::~XShape()
 
 void XShape::addVertices(const vector<Vertex> &vertices)
 {
-	//if(m_vertices.size() % 3 == 0) LOG("Something's wrong");
+	//if(m_vertices.size() % 3 == 0) LOG("Somethings wrong");
 
 	for(uint i = 0; i < vertices.size(); i++) {
 		addVertex(vertices[i]);
@@ -170,24 +173,25 @@ void XShape::draw(XBatch *batch)
 	if(!validate())
 		return;
 
-	if(!batch) {
-		LOG("XShape.draw: Can not draw to 'null' batch");
+	if(!batch)
+	{
+		LOG("void XShape::draw(): Can not draw to 'null' batch");
 		return;
 	}
 
 	// Set vertex colors
-	for(uint i = 0; i < m_vertices.size(); i++)
-		m_vertices[i].color = m_fillColor;
-	
-	if(m_fillTexture) {
-		m_fillTexture->addRef();
-		batch->setTexture(m_fillTexture);
-	}else{
-		batch->setTexture(0);
+	for(uint i = 0; i < m_vertCount; i++)
+	{
+		m_vertices[i].set4ub(VERTEX_COLOR, m_fillColor.x*255, m_fillColor.y*255, m_fillColor.z*255, m_fillColor.w*255);
 	}
 	
+	if(m_fillTexture)
+	{
+		m_fillTexture->addRef();
+	}
+	batch->setTexture(m_fillTexture);
 	batch->setPrimitive(XBatch::PRIMITIVE_TRIANGLES);
-	batch->addVertices(m_vertices.data(), m_vertices.size(), m_indices.data(), m_indices.size());
+	batch->addVertices(m_vertices, m_vertCount, m_indices.data(), m_indices.size());
 	batch->release();
 }
 
@@ -212,4 +216,9 @@ XShape XShape::intersect(const XShape &XShape)
 {
 	// TODO
 	return *this;
+}
+
+static XShape *Factory(const XScriptArray& arr)
+{
+	return 0;
 }

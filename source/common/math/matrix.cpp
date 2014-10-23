@@ -89,7 +89,7 @@ Matrix3& Matrix3::invert()
 **	4x4 Matrix														**
 **********************************************************************/
 
-AS_REG_VALUE(Matrix4, "Matrix4")
+AS_REG_POD(Matrix4, "Matrix4")
 
 int Matrix4::Register(asIScriptEngine *scriptEngine)
 {

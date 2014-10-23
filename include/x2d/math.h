@@ -38,6 +38,8 @@ public:
 	float sqrt(const float value) { return sqrtf(value); }
 	float pow(const float a, const float b) { return powf(a, b); }
 	int mod(const int a, const int b) { int r = a % b; return r < 0 ? r + b : r; }
+	uint ror(const uint a, const uint b);
+	uint rol(const uint a, const uint b);
 
 	// Trigonometry
 	float cos(const float value) { return cosf(value); }

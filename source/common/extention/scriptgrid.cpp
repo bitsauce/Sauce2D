@@ -243,6 +243,9 @@ static void RegisterScriptGrid_Native(asIScriptEngine *engine)
 	// The index operator returns the template subtype
 	r = engine->RegisterObjectMethod("grid<T>", "T &opIndex(uint, uint)", asMETHODPR(XScriptGrid, At, (asUINT, asUINT), void*), asCALL_THISCALL); assert( r >= 0 );
 	r = engine->RegisterObjectMethod("grid<T>", "const T &opIndex(uint, uint) const", asMETHODPR(XScriptGrid, At, (asUINT, asUINT) const, const void*), asCALL_THISCALL); assert( r >= 0 );
+	
+	// The assignment operator
+	r = engine->RegisterObjectMethod("grid<T>", "grid<T> &opAssign(const grid<T>&in)", asMETHOD(XScriptGrid, operator=), asCALL_THISCALL); assert( r >= 0 );
 
 	// Other methods
 	r = engine->RegisterObjectMethod("grid<T>", "void resize(uint width, uint height)", asMETHODPR(XScriptGrid, Resize, (asUINT, asUINT), void), asCALL_THISCALL); assert( r >= 0 );
@@ -537,6 +540,22 @@ void XScriptGrid::SetValue(SGridBuffer *buf, asUINT x, asUINT y, void *value)
 		*(double*)ptr = *(double*)value;
 }
 
+XScriptGrid &XScriptGrid::operator=(const XScriptGrid &other)
+{
+	// Only perform the copy if the array types are the same
+	if( &other != this &&
+		other.GetGridObjectType() == GetGridObjectType() )
+	{
+		// Make sure the arrays are of the same size
+		Resize(other.buffer->width, other.buffer->height);
+
+		// Copy the value of each element
+		CopyBuffer(buffer, other.buffer);
+	}
+
+	return *this;
+}
+
 XScriptGrid::~XScriptGrid()
 {
 	if( buffer )
@@ -663,6 +682,59 @@ void XScriptGrid::DeleteBuffer(SGridBuffer *buf)
 
 	// Free the buffer
 	userFree(buf);
+}
+
+// internal
+void XScriptGrid::CopyBuffer(SGridBuffer *dst, SGridBuffer *src)
+{
+	asIScriptEngine *engine = objType->GetEngine();
+	int dstSize = dst->width*dst->height, srcSize = src->width*src->height;
+	if( subTypeId & asTYPEID_OBJHANDLE )
+	{
+		// Copy the references and increase the reference counters
+		if( dstSize > 0 && srcSize > 0 )
+		{
+			int count = dstSize > srcSize ? srcSize : dstSize;
+
+			void **max = (void**)(dst->data + count * sizeof(void*));
+			void **d   = (void**)dst->data;
+			void **s   = (void**)src->data;
+
+			for( ; d < max; d++, s++ )
+			{
+				void *tmp = *d;
+				*d = *s;
+				if( *d )
+					engine->AddRefScriptObject(*d, objType->GetSubType());
+				// Release the old ref after incrementing the new to avoid problem incase it is the same ref
+				if( tmp )
+					engine->ReleaseScriptObject(tmp, objType->GetSubType());
+			}
+		}
+	}
+	else
+	{
+		if( dstSize > 0 && srcSize > 0 )
+		{
+			int count = dstSize > srcSize ? srcSize : dstSize;
+			if( subTypeId & asTYPEID_MASK_OBJECT )
+			{
+				// Call the assignment operator on all of the objects
+				void **max = (void**)(dst->data + count * sizeof(void*));
+				void **d   = (void**)dst->data;
+				void **s   = (void**)src->data;
+
+				asIObjectType *subType = objType->GetSubType();
+				for( ; d < max; d++, s++ )
+					engine->AssignScriptObject(*d, *s, subType);
+			}
+			else
+			{
+				// Primitives are copied byte for byte
+				memcpy(dst->data, src->data, count*elementSize);
+			}
+		}
+	}
 }
 
 // internal

@@ -11,10 +11,11 @@
 #include "graphics/shader.h"
 #include "graphics/shape.h"
 #include "graphics/sprite.h"
-#include "graphics/spritebatch.h"
 #include "graphics/texture.h"
 #include "graphics/textureatlas.h"
 #include "graphics/textureregion.h"
+#include "graphics/vertex.h"
+#include "graphics/vertexbuffer.h"
 #include "graphics/vertexbufferobject.h"
 #include "graphics/viewport.h"
 
@@ -24,8 +25,8 @@
 
 class XTexture;
 class XShader;
-class XVertexBufferObject;
 class XFrameBufferObject;
+class XVertexBufferObject;
 
 XDAPI extern uint QUAD_INDICES[6];
 XDAPI extern Vector4 QUAD_VERTICES[4];
@@ -56,7 +57,7 @@ public:
 	static XTexture*			CreateTexture(const int width, const int height);
 	static XTexture*			CreateTexture(const XTexture &texture);
 	static XShader*				CreateShader(const string &vertFilePath, const string &fragFilePath);
-	static XVertexBufferObject*	CreateVertexBufferObject();
+	static XVertexBufferObject*	CreateVertexBufferObject(XVertexBuffer *buffer);
 	static XFrameBufferObject*	CreateFrameBufferObject();
 	static bool					IsSupported(Feature feature);
 
@@ -87,7 +88,7 @@ private:
 	virtual void					destroyContext(XRenderContext *context) = 0;
 	virtual XTexture*				createTexture(const XPixmap &pixmap) = 0;
 	virtual XShader*				createShader(const string &vertFilePath, const string &fragFilePath) = 0;
-	virtual XVertexBufferObject*	createVertexBufferObject() = 0;
+	virtual XVertexBufferObject*	createVertexBufferObject(const XVertexBuffer &buffer) = 0;
 	virtual XFrameBufferObject*		createFrameBufferObject() = 0;
 	virtual bool					isSupported(Feature feature) = 0;
 

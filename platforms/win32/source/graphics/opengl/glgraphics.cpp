@@ -20,10 +20,20 @@ class GLvertexbuffer : public XVertexBufferObject
 {
 	friend class OpenGL;
 public:
-	GLvertexbuffer()
+	GLvertexbuffer(const XVertexBuffer &buffer) :
+		m_vertexFormat(buffer.getVertexFormat())
 	{
+		// Generate buffers
 		glGenBuffers(1, &m_vboId);
 		glGenBuffers(1, &m_iboId);
+
+		// Upload vertex data
+		glBindBuffer(GL_ARRAY_BUFFER, m_vboId);
+		glBufferData(GL_ARRAY_BUFFER, buffer.getVertexCount() * m_vertexFormat.getVertexSizeInBytes(), buffer.getVertexData(), GL_DYNAMIC_DRAW);
+		glBindBuffer(GL_ARRAY_BUFFER, 0);
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_iboId);
+		glBufferData(GL_ELEMENT_ARRAY_BUFFER, buffer.getIndexCount() * sizeof(uint), buffer.getIndexData(), GL_DYNAMIC_DRAW);
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 	}
 
 	~GLvertexbuffer()
@@ -32,26 +42,17 @@ public:
 		glDeleteBuffers(1, &m_iboId);
 	}
 
-	void upload(const XVertexBuffer *buffer)
+	void update(const int offset, const char *data, const int count)
 	{
 		glBindBuffer(GL_ARRAY_BUFFER, m_vboId);
-		glBufferData(GL_ARRAY_BUFFER, buffer->vertices.size()*sizeof(XVertex), buffer->vertices.data(), GL_DYNAMIC_DRAW);
-		glBindBuffer(GL_ARRAY_BUFFER, 0);
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_iboId);
-		glBufferData(GL_ELEMENT_ARRAY_BUFFER, buffer->indices.size()*sizeof(uint), buffer->indices.data(), GL_DYNAMIC_DRAW);
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-	}
-
-	void uploadSub(int offset, XVertex *vertices, int count)
-	{
-		glBindBuffer(GL_ARRAY_BUFFER, m_vboId);
-		glBufferSubData(GL_ARRAY_BUFFER, offset*sizeof(XVertex), count*sizeof(XVertex), vertices);
+		glBufferSubData(GL_ARRAY_BUFFER, offset * m_vertexFormat.getVertexSizeInBytes(), count * m_vertexFormat.getVertexSizeInBytes(), data);
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 	}
 
 private:
 	GLuint m_vboId;
 	GLuint m_iboId;
+	XVertexFormat m_vertexFormat;
 };
 
 class GLframebufferobject : public XFrameBufferObject
@@ -237,7 +238,7 @@ const int VERTEX_SIZE = sizeof(XVertex);
 GLenum toGLBlend(const XBatch::BlendFunc value)
 {
 	switch(value) {
-	case XBatch::BLEND_ZERO:					return GL_ZERO;
+	case XBatch::BLEND_ZERO:				return GL_ZERO;
 	case XBatch::BLEND_ONE:					return GL_ONE;
 	case XBatch::BLEND_SRC_COLOR:			return GL_SRC_COLOR;
 	case XBatch::BLEND_ONE_MINUS_SRC_COLOR:	return GL_ONE_MINUS_SRC_COLOR;
@@ -262,13 +263,23 @@ GLenum toGLPrimitive(const XBatch::PrimitiveType value)
 	return GL_TRIANGLES;
 }
 
+GLenum toGLType(const XDataType value)
+{
+	switch(value) {
+	case XD_FLOAT:		return GL_FLOAT;
+	case XD_UINT:		return GL_UNSIGNED_INT;
+	case XD_INT:		return GL_INT;
+	case XD_USHORT:		return GL_UNSIGNED_SHORT;
+	case XD_SHORT:		return GL_SHORT;
+	case XD_UBYTE:		return GL_UNSIGNED_BYTE;
+	case XD_BYTE:		return GL_BYTE;
+	}
+	return GL_FLOAT;
+}
+
 void OpenGL::renderBatch(const XBatch &batch)
 {
-	// Enable client state
-	glEnableClientState(GL_VERTEX_ARRAY);
-	glEnableClientState(GL_COLOR_ARRAY);
-	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-	
+	// Get buffers
 	StateVertexMap buffers = batch.m_buffers;
 	Matrix4 mat = batch.m_projMatrix;
 	glLoadMatrixf(mat.getTranspose());
@@ -306,7 +317,9 @@ void OpenGL::renderBatch(const XBatch &batch)
 					break;
 				}
 			}
-		}else{
+		}
+		else
+		{
 			// Disable shader
 			glUseProgram(0);
 
@@ -323,32 +336,115 @@ void OpenGL::renderBatch(const XBatch &batch)
 			glBlendFunc(toGLBlend(state.srcBlendFunc), toGLBlend(state.dstBlendFunc));
 		}
 		
-		if(!batch.isStatic())
+		XVertexBuffer *buffer = itr->second;
+		XVertexFormat fmt = buffer->getVertexFormat();
+		if(!buffer->isStatic())
 		{
 			// Get vertices and vertex data
-			float *vertexData = (float*)itr->second->vertices.data();
-			uint *indexData = (uint*)itr->second->indices.data();
+			char *vertexData = buffer->getVertexData();
+			uint *indexData = buffer->getIndexData();
 			
 			// Set array pointers
-			glVertexPointer(2, GL_FLOAT, VERTEX_SIZE, vertexData);
-			glColorPointer(4, GL_FLOAT, VERTEX_SIZE, vertexData + 2);
-			glTexCoordPointer(2, GL_FLOAT, VERTEX_SIZE, vertexData + 6);
+			int stride = fmt.getVertexSizeInBytes();
+			for(int i = 0; i < VERTEX_ATTRIB_MAX; i++)
+			{
+				XVertexAttribute attrib = XVertexAttribute(i);
+				switch(attrib)
+				{
+					case VERTEX_POSITION:
+						if(fmt.isAttributeEnabled(attrib))
+						{
+							glEnableClientState(GL_VERTEX_ARRAY);
+							glVertexPointer(fmt.getElementCount(attrib), toGLType(fmt.getDataType(attrib)), stride, vertexData + fmt.getAttributeOffset(attrib));
+						}
+						else
+						{
+							glDisableClientState(GL_VERTEX_ARRAY);
+						}
+						break;
+
+					case VERTEX_COLOR:
+						if(fmt.isAttributeEnabled(attrib))
+						{
+							glEnableClientState(GL_COLOR_ARRAY);
+							glColorPointer(fmt.getElementCount(attrib), toGLType(fmt.getDataType(attrib)), stride, vertexData + fmt.getAttributeOffset(attrib));
+						}
+						else
+						{
+							glDisableClientState(GL_COLOR_ARRAY);
+						}
+						break;
+
+					case VERTEX_TEX_COORD:
+						if(fmt.isAttributeEnabled(attrib))
+						{
+							glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+							glTexCoordPointer(fmt.getElementCount(attrib), toGLType(fmt.getDataType(attrib)), stride, vertexData + fmt.getAttributeOffset(attrib));
+						}
+						else
+						{
+							glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+						}
+						break;
+				}
+			}
 
 			// Draw batch
-			glDrawElements(toGLPrimitive(state.primitive), itr->second->indices.size(), GL_UNSIGNED_INT, indexData);
-		}else
+			glDrawElements(toGLPrimitive(state.primitive), buffer->getIndexCount(), GL_UNSIGNED_INT, indexData);
+		}
+		else
 		{
 			// Bind vertices and indices array
-			glBindBuffer(GL_ARRAY_BUFFER_ARB, ((GLvertexbuffer*)itr->second->vbo)->m_vboId);
-			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ((GLvertexbuffer*)itr->second->vbo)->m_iboId);
-
+			glBindBuffer(GL_ARRAY_BUFFER_ARB, ((GLvertexbuffer*)buffer->getVBO())->m_vboId);
+			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ((GLvertexbuffer*)buffer->getVBO())->m_iboId);
+			
 			// Set array pointers
-			glVertexPointer(2, GL_FLOAT, VERTEX_SIZE, (void*)(0*FLOAT_SIZE));
-			glColorPointer(4, GL_FLOAT, VERTEX_SIZE, (void*)(2*FLOAT_SIZE));
-			glTexCoordPointer(2, GL_FLOAT, VERTEX_SIZE, (void*)(6*FLOAT_SIZE));
+			int stride = fmt.getVertexSizeInBytes();
+			for(int i = 0; i < VERTEX_ATTRIB_MAX; i++)
+			{
+				XVertexAttribute attrib = XVertexAttribute(i);
+				switch(attrib)
+				{
+					case VERTEX_POSITION:
+						if(fmt.isAttributeEnabled(attrib))
+						{
+							glEnableClientState(GL_VERTEX_ARRAY);
+							glVertexPointer(fmt.getElementCount(attrib), toGLType(fmt.getDataType(attrib)), stride, (void*)fmt.getAttributeOffset(attrib));
+						}
+						else
+						{
+							glDisableClientState(GL_VERTEX_ARRAY);
+						}
+						break;
+
+					case VERTEX_COLOR:
+						if(fmt.isAttributeEnabled(attrib))
+						{
+							glEnableClientState(GL_COLOR_ARRAY);
+							glColorPointer(fmt.getElementCount(attrib), toGLType(fmt.getDataType(attrib)), stride, (void*)fmt.getAttributeOffset(attrib));
+						}
+						else
+						{
+							glDisableClientState(GL_COLOR_ARRAY);
+						}
+						break;
+
+					case VERTEX_TEX_COORD:
+						if(fmt.isAttributeEnabled(attrib))
+						{
+							glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+							glTexCoordPointer(fmt.getElementCount(attrib), toGLType(fmt.getDataType(attrib)), stride, (void*)fmt.getAttributeOffset(attrib));
+						}
+						else
+						{
+							glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+						}
+						break;
+				}
+			}
 
 			// Draw vbo
-			glDrawElements(toGLPrimitive(state.primitive), itr->second->indices.size(), GL_UNSIGNED_INT, 0);
+			glDrawElements(toGLPrimitive(state.primitive), buffer->getIndexCount(), GL_UNSIGNED_INT, 0);
 
 			// Reset vbo buffers
 			glBindBuffer(GL_ARRAY_BUFFER_ARB, 0);
@@ -373,9 +469,9 @@ XShader *OpenGL::createShader(const string &vertFilePath, const string &fragFile
 	return new GLshader(vertFilePath, fragFilePath);
 }
 
-XVertexBufferObject *OpenGL::createVertexBufferObject()
+XVertexBufferObject *OpenGL::createVertexBufferObject(const XVertexBuffer &buffer)
 {
-	return new GLvertexbuffer();
+	return new GLvertexbuffer(buffer);
 }
 
 XFrameBufferObject *OpenGL::createFrameBufferObject()

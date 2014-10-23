@@ -15,7 +15,7 @@ public:
 	XShape();
 	XShape(const Rect &rect);
 	XShape(const Vector2 &center, const float radius, const int vertCount = -1);
-	XShape(const vector<XVertex> &vertices);
+	XShape(const XVertex *vertices, const int vertCount);
 	~XShape();
 
 	//void addVertex(const Vertex &vertex);
@@ -39,26 +39,15 @@ private:
 	XTexture *m_fillTexture;
 	Vector4 m_penColor;
 	float m_penSize;
-	vector<XVertex> m_vertices;
+	XVertex *m_vertices;
+	int m_vertCount;
 	vector<uint> m_indices;
 	int m_index;
 	
 	static XShape *Factory() { return new XShape(); }
 	static XShape *Factory(const Rect& rect) { return new XShape(rect); }
 	static XShape *Factory(const Vector2& center, const float radius, const int vertCount) { return new XShape(center, radius, vertCount); }
-	static XShape *Factory(const XScriptArray& arr)
-	{
-		vector<XVertex> vertices;
-		XVertex vert;
-		vert.color.set(1.0f, 1.0f, 1.0f, 1.0f);
-		vert.texCoord.set(0.0f, 0.0f);
-		for(uint i = 0; i < arr.GetSize(); i++) {
-			vert.position = *(Vector2*)arr.At(i);
-			vertices.push_back(vert);
-		}
-
-		return new XShape(vertices);
-	}
+	static XShape *Factory(const XScriptArray& arr);
 };
 
 #endif // X2D_SHAPE_H

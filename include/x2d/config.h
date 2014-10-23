@@ -303,6 +303,25 @@ private:
 		return r;																		\
 	}
 
+#define AS_DECL_POD																		\
+	private:																			\
+	static ClassRegister::Registerer s_basereg;											\
+	static int Declare(asIScriptEngine *scriptEngine);									\
+	static int Register(asIScriptEngine *scriptEngine);									\
+	static int s_typeId;																\
+	public:																				\
+	static int GetTypeId() { return s_typeId; }
+
+#define AS_REG_POD(clazz, name)															\
+	ClassRegister::Registerer clazz::s_basereg(&clazz::Declare, &clazz::Register);		\
+	int clazz::s_typeId = 0;															\
+	int clazz::Declare(asIScriptEngine *scriptEngine)									\
+	{																					\
+		int r = s_typeId = scriptEngine->RegisterObjectType(name, sizeof(clazz),		\
+						asOBJ_VALUE | asOBJ_POD | asOBJ_APP_CLASS_CDAK); AS_ASSERT		\
+		return r;																		\
+	}
+
 #define AS_DECL_VALUE																	\
 	private:																			\
 	static ClassRegister::Registerer s_basereg;											\
@@ -318,7 +337,17 @@ private:
 	int clazz::Declare(asIScriptEngine *scriptEngine)									\
 	{																					\
 		int r = s_typeId = scriptEngine->RegisterObjectType(name, sizeof(clazz),		\
-						asOBJ_VALUE | asOBJ_POD | asOBJ_APP_CLASS_CDAK); AS_ASSERT		\
+						asOBJ_VALUE | asOBJ_APP_CLASS_CDAK); AS_ASSERT					\
+		r = scriptEngine->RegisterObjectBehaviour(name, asBEHAVE_CONSTRUCT, "void f()", \
+						asFUNCTION(Construct), asCALL_CDECL_OBJLAST); AS_ASSERT			\
+		r = scriptEngine->RegisterObjectBehaviour(name, asBEHAVE_CONSTRUCT,				\
+						"void f(const " name " &in)", asFUNCTION(CopyConstruct),		\
+						asCALL_CDECL_OBJLAST); AS_ASSERT								\
+		r = scriptEngine->RegisterObjectBehaviour(name, asBEHAVE_DESTRUCT, "void f()",  \
+						asFUNCTION(Destruct), asCALL_CDECL_OBJLAST); AS_ASSERT			\
+		r = scriptEngine->RegisterObjectMethod(name,									\
+						name " &opAssign(const "name" &in)", asMETHOD(clazz, operator=),\
+						asCALL_THISCALL); AS_ASSERT										\
 		return r;																		\
 	}
 

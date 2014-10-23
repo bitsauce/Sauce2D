@@ -100,29 +100,21 @@ void spSkeletonWrapper::draw(XBatch *batch)
 			uchar b = uchar(m_self->b * slot->b * 255);
 			uchar a = uchar(m_self->a * slot->a * 255);
 
-			vertices[0].color.set(r, g, b, a);
-			vertices[0].position.x = m_worldVertices[SP_VERTEX_X1];
-			vertices[0].position.y = m_worldVertices[SP_VERTEX_Y1];
-			vertices[0].texCoord.x = regionAttachment->uvs[SP_VERTEX_X1];
-			vertices[0].texCoord.y = 1.0f - regionAttachment->uvs[SP_VERTEX_Y1];
-				
-			vertices[1].color.set(r, g, b, a);
-			vertices[1].position.x = m_worldVertices[SP_VERTEX_X2];
-			vertices[1].position.y = m_worldVertices[SP_VERTEX_Y2];
-			vertices[1].texCoord.x = regionAttachment->uvs[SP_VERTEX_X2];
-			vertices[1].texCoord.y = 1.0f - regionAttachment->uvs[SP_VERTEX_Y2];
-				
-			vertices[2].color.set(r, g, b, a);
-			vertices[2].position.x = m_worldVertices[SP_VERTEX_X3];
-			vertices[2].position.y = m_worldVertices[SP_VERTEX_Y3];
-			vertices[2].texCoord.x = regionAttachment->uvs[SP_VERTEX_X3];
-			vertices[2].texCoord.y = 1.0f - regionAttachment->uvs[SP_VERTEX_Y3];
-				
-			vertices[3].color.set(r, g, b, a);
-			vertices[3].position.x = m_worldVertices[SP_VERTEX_X4];
-			vertices[3].position.y = m_worldVertices[SP_VERTEX_Y4];
-			vertices[3].texCoord.x = regionAttachment->uvs[SP_VERTEX_X4];
-			vertices[3].texCoord.y = 1.0f - regionAttachment->uvs[SP_VERTEX_Y4];
+			vertices[0].set4ub(VERTEX_COLOR, r, g, b, a);
+			vertices[0].set4f(VERTEX_POSITION, m_worldVertices[SP_VERTEX_X1], m_worldVertices[SP_VERTEX_Y1]);
+			vertices[0].set4f(VERTEX_TEX_COORD, regionAttachment->uvs[SP_VERTEX_X1], 1.0f - regionAttachment->uvs[SP_VERTEX_Y1]);
+
+			vertices[1].set4ub(VERTEX_COLOR, r, g, b, a);
+			vertices[1].set4f(VERTEX_POSITION, m_worldVertices[SP_VERTEX_X2], m_worldVertices[SP_VERTEX_Y2]);
+			vertices[1].set4f(VERTEX_TEX_COORD, regionAttachment->uvs[SP_VERTEX_X2], 1.0f - regionAttachment->uvs[SP_VERTEX_Y2]);
+			
+			vertices[2].set4ub(VERTEX_COLOR, r, g, b, a);
+			vertices[2].set4f(VERTEX_POSITION, m_worldVertices[SP_VERTEX_X3], m_worldVertices[SP_VERTEX_Y3]);
+			vertices[2].set4f(VERTEX_TEX_COORD, regionAttachment->uvs[SP_VERTEX_X3], 1.0f - regionAttachment->uvs[SP_VERTEX_Y3]);
+
+			vertices[3].set4ub(VERTEX_COLOR, r, g, b, a);
+			vertices[3].set4f(VERTEX_POSITION, m_worldVertices[SP_VERTEX_X4], m_worldVertices[SP_VERTEX_Y4]);
+			vertices[3].set4f(VERTEX_TEX_COORD, regionAttachment->uvs[SP_VERTEX_X4], 1.0f - regionAttachment->uvs[SP_VERTEX_Y4]);
 
 			texture->addRef();
 			batch->setTexture(texture);

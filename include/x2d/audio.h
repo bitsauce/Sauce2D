@@ -56,7 +56,7 @@ public:
 	};
 
 public:
-	AS_DECL_VALUE
+	AS_DECL_POD
 
 	XAudioBuffer(void *data, uint size, uint frequency, Format format);
 	~XAudioBuffer();

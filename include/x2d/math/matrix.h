@@ -411,7 +411,7 @@ inline std::ostream& operator<<(std::ostream& os, const Matrix3& m)
 class Matrix4
 {
 public:
-	AS_DECL_VALUE
+	AS_DECL_POD
 
     // constructors
     Matrix4();  // init with identity

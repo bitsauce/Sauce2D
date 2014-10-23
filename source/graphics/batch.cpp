@@ -10,19 +10,6 @@
 #include <x2d/engine.h>
 #include <x2d/graphics.h>
 
-AS_REG_VALUE(XVertex, "Vertex")
-
-int XVertex::Register(asIScriptEngine *scriptEngine)
-{
-	int r = 0;
-
-	r = scriptEngine->RegisterObjectProperty("Vertex", "Vector2 position", offsetof(XVertex, position)); AS_ASSERT
-	r = scriptEngine->RegisterObjectProperty("Vertex", "Vector4 color", offsetof(XVertex, color)); AS_ASSERT
-	r = scriptEngine->RegisterObjectProperty("Vertex", "Vector2 texCoord", offsetof(XVertex, texCoord)); AS_ASSERT
-
-	return r;
-}
-
 AS_REG_REF(XBatch, "Batch")
 
 int XBatch::Register(asIScriptEngine *scriptEngine)
@@ -53,22 +40,17 @@ int XBatch::Register(asIScriptEngine *scriptEngine)
 	r = scriptEngine->RegisterObjectMethod("Batch", "Shader @getShader() const", asMETHOD(XBatch, getShader), asCALL_THISCALL); AS_ASSERT
 	r = scriptEngine->RegisterObjectMethod("Batch", "Texture @getTexture() const", asMETHOD(XBatch, getTexture), asCALL_THISCALL); AS_ASSERT
 
-	// Vertex data
 	r = scriptEngine->RegisterObjectMethod("Batch", "void addVertices(array<Vertex> @vertices, array<uint> @indices)", asMETHOD(XBatch, addVerticesAS), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("Batch", "Vertex getVertex(int index)", asMETHOD(XBatch, getVertex), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("Batch", "void modifyVertex(int index, Vertex vertex)", asMETHOD(XBatch, modifyVertex), asCALL_THISCALL); AS_ASSERT
 
 	// Misc
 	r = scriptEngine->RegisterObjectMethod("Batch", "void draw()", asMETHOD(XBatch, draw), asCALL_THISCALL); AS_ASSERT
 	r = scriptEngine->RegisterObjectMethod("Batch", "void clear()", asMETHOD(XBatch, clear), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("Batch", "void makeStatic()", asMETHOD(XBatch, makeStatic), asCALL_THISCALL); AS_ASSERT
 	r = scriptEngine->RegisterObjectMethod("Batch", "void renderToTexture(Texture@)", asMETHOD(XBatch, renderToTexture), asCALL_THISCALL); AS_ASSERT
 
 	return r;
 }
 
 XBatch::XBatch() :
-	m_static(false),
 	m_fbo(0)
 {
 }
@@ -137,18 +119,34 @@ XBatch::PrimitiveType XBatch::getPrimitive() const
 	return m_state.primitive;
 }
 
-void XBatch::addVertices(XVertex *vertices, int vcount, uint *indices, int icount)
+void XBatch::setVertexBuffer(XVertexBuffer *buffer)
 {
-	if(m_static) {
-		LOG("Cannot add vertices to a static XBatch.");
-		return;
-	}
-	
 	// Get texture draw order
 	if(m_drawOrderMap.find(m_state.texture) == m_drawOrderMap.end())
 	{
 		m_state.drawOrder = m_drawOrderMap[m_state.texture] = m_drawOrderMap.size();
-	}else{
+	}
+	else
+	{
+		m_state.drawOrder = m_drawOrderMap[m_state.texture];
+	}
+	
+	if(m_buffers.find(m_state) != m_buffers.end())
+	{
+		m_buffers[m_state]->release();
+	}
+	m_buffers[m_state] = buffer;
+}
+
+void XBatch::addVertices(XVertex *vertices, int vcount, uint *indices, int icount)
+{
+	// Get texture draw order
+	if(m_drawOrderMap.find(m_state.texture) == m_drawOrderMap.end())
+	{
+		m_state.drawOrder = m_drawOrderMap[m_state.texture] = m_drawOrderMap.size();
+	}
+	else
+	{
 		m_state.drawOrder = m_drawOrderMap[m_state.texture];
 	}
 
@@ -156,66 +154,29 @@ void XBatch::addVertices(XVertex *vertices, int vcount, uint *indices, int icoun
 	if(m_buffers.find(m_state) == m_buffers.end())
 	{
 		// Create new vertex buffer for this state
-		buffer = m_buffers[m_state] = new XVertexBuffer();
-	}else{
+		buffer = m_buffers[m_state] = new XVertexBuffer(XVertexFormat::s_vct);
+	}
+	else
+	{
 		buffer = m_buffers[m_state];
 	}
 	
-	int ioffset = buffer->vertices.size();
+	buffer->addVertices(vertices, vcount, indices, icount);
 
-	for(int i = 0; i < vcount; i++) {
-		XVertex &vertex = vertices[i];
-		//vertex.position = m_matrixStack.top() * Vector4(vertex.position.x, vertex.position.y, 0.0f, 1.0f);
-		buffer->vertices.push_back(vertex);
-	}
-	
-	for(int i = 0; i < icount; i++) {
-		buffer->indices.push_back(indices[i] + ioffset);
-	}
+	//vertex.position = m_matrixStack.top() * Vector4(vertex.position.x, vertex.position.y, 0.0f, 1.0f);
 }
 
-void XBatch::addVerticesAS(XScriptArray *asvertices, XScriptArray *asindices)
+void XBatch::addVerticesAS(XScriptArray *vertices, XScriptArray *indices)
 {
-	uint vcount = asvertices->GetSize();
-	XVertex *vertices = new XVertex[vcount];
-	for(uint i = 0; i < vcount; i++) {
-		vertices[i] = *(XVertex*)asvertices->At(i);
-	}
-
-	uint icount = asindices->GetSize();
-	uint *indices = new uint[icount];
-	for(uint i = 0; i < icount; i++) {
-		indices[i] = *(uint*)asindices->At(i);
-	}
-
-	addVertices(vertices, vcount, indices, icount);
-
-	asvertices->Release();
-	asindices->Release();
-}
-
-void XBatch::modifyVertex(int index, XVertex vertex)
-{
-	if(index < 0 || index >= (int)m_buffers[m_state]->vertices.size()) {
-		LOG("XBatch.modifyVertex: Index out-of-bounds.");
-		return;
-	}
-
-	m_buffers[m_state]->vertices[index] = vertex;
-	if(m_static)
+	XVertex *vx = new XVertex[vertices->GetSize()];
+	for(int i = 0; i < vertices->GetSize(); i++)
 	{
-		m_buffers[m_state]->vbo->uploadSub(index, &vertex, 1);
+		vx[i] = *(XVertex*)vertices->At(i);
 	}
-}
-
-XVertex XBatch::getVertex(int index)
-{
-	if(index < 0 || index >= (int)m_buffers[m_state]->vertices.size()) {
-		LOG("XBatch.getVertex: Index out-of-bounds.");
-		return XVertex();
-	}
-
-	return m_buffers[m_state]->vertices[index];
+	addVertices(vx, vertices->GetSize(), (uint*)indices->At(0), indices->GetSize());
+	vertices->Release();
+	indices->Release();
+	delete[] vx;
 }
 
 void XBatch::draw()
@@ -226,12 +187,10 @@ void XBatch::draw()
 void XBatch::clear()
 {
 	for(StateVertexMap::iterator itr = m_buffers.begin(); itr != m_buffers.end(); ++itr) {
-		delete itr->second->vbo;
-		delete itr->second;
+		itr->second->release();
 	}
 	m_buffers.clear();
 	m_drawOrderMap.clear();
-	m_static = false;
 	setTexture(0);
 	setShader(0);
 	setBlendFunc(BLEND_SRC_ALPHA, BLEND_ONE_MINUS_SRC_ALPHA);
@@ -254,7 +213,7 @@ void XBatch::renderToTexture(XTexture *texture)
 	texture->release();
 }
 
-void XBatch::makeStatic()
+/*void XBatch::makeStatic()
 {
 	if(!XGraphics::IsSupported(XGraphics::VertexBufferObjects)) {
 		AS_THROW("Tried to create a VBO whilst its not supported by the GPU!",);
@@ -269,4 +228,4 @@ void XBatch::makeStatic()
 bool XBatch::isStatic() const
 {
 	return m_static;
-}
+}*/

@@ -9,7 +9,7 @@
 
 #include <x2d/math.h>
 
-AS_REG_VALUE(Rect, "Rect")
+AS_REG_POD(Rect, "Rect")
 
 int Rect::Register(asIScriptEngine *scriptEngine)
 {
@@ -52,7 +52,7 @@ int Rect::Register(asIScriptEngine *scriptEngine)
 	return r;
 }
 
-AS_REG_VALUE(Recti, "Recti")
+AS_REG_POD(Recti, "Recti")
 
 int Recti::Register(asIScriptEngine *scriptEngine)
 {

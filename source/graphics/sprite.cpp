@@ -150,13 +150,11 @@ void XSprite::scale(const float scl)
 
 XShape *XSprite::getAABB() const
 {
-	XVertex vertices[4];
+	XVertex *vertices = new XVertex[4];
 	getVertices(vertices);
 
-	XShape *shape = new XShape();
-	shape->m_vertices.assign(vertices, vertices + 4);
-	shape->m_indices.assign(QUAD_INDICES, QUAD_INDICES + 6);
-
+	XShape *shape = new XShape(vertices, 4);
+	delete[] vertices;
 	return shape;
 }
 
@@ -222,13 +220,14 @@ XTexture *XSprite::getTexture() const
 
 void XSprite::draw(XBatch *batch) const
 {
-	XVertex vertices[4];
+	XVertex *vertices = new XVertex[4];
 	getVertices(vertices);
 
 	batch->setTexture(m_textureRegion.getTexture());
 	batch->setPrimitive(XBatch::PRIMITIVE_TRIANGLES);
 	batch->addVertices(vertices, 4, QUAD_INDICES, 6);
 	batch->release();
+	delete[] vertices;
 }
 
 void XSprite::getVertices(XVertex *vertices) const
@@ -241,12 +240,13 @@ void XSprite::getVertices(XVertex *vertices) const
 
 	for(int i = 0; i < 4; i++)
 	{
-		vertices[i].position = mat * QUAD_VERTICES[i];
-		vertices[i].color = m_color;
+		Vector2 pos = mat * QUAD_VERTICES[i];
+		vertices[i].set4f(VERTEX_POSITION, pos.x, pos.y);
+		vertices[i].set4ub(VERTEX_COLOR, m_color.x*255, m_color.y*255, m_color.z*255, m_color.w*255);
 	}
 
-	vertices[0].texCoord.set(m_textureRegion.uv0.x, m_textureRegion.uv1.y);
-	vertices[1].texCoord.set(m_textureRegion.uv1.x, m_textureRegion.uv1.y);
-	vertices[2].texCoord.set(m_textureRegion.uv1.x, m_textureRegion.uv0.y);
-	vertices[3].texCoord.set(m_textureRegion.uv0.x, m_textureRegion.uv0.y);
+	vertices[0].set4f(VERTEX_TEX_COORD, m_textureRegion.uv0.x, m_textureRegion.uv1.y);
+	vertices[1].set4f(VERTEX_TEX_COORD, m_textureRegion.uv1.x, m_textureRegion.uv1.y);
+	vertices[2].set4f(VERTEX_TEX_COORD, m_textureRegion.uv1.x, m_textureRegion.uv0.y);
+	vertices[3].set4f(VERTEX_TEX_COORD, m_textureRegion.uv0.x, m_textureRegion.uv0.y);
 }

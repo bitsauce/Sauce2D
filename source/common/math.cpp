@@ -39,6 +39,8 @@ int XMath::Register(asIScriptEngine *scriptEngine)
 	r = scriptEngine->RegisterObjectMethod("XMath", "float sqrt(const float)", asMETHOD(XMath, sqrt), asCALL_THISCALL); AS_ASSERT
 	r = scriptEngine->RegisterObjectMethod("XMath", "float pow(const float, const float)", asMETHOD(XMath, pow), asCALL_THISCALL); AS_ASSERT
 	r = scriptEngine->RegisterObjectMethod("XMath", "int mod(const int, const int)", asMETHOD(XMath, mod), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("XMath", "uint ror(const uint, const uint)", asMETHOD(XMath, ror), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("XMath", "uint rol(const uint, const uint)", asMETHOD(XMath, rol), asCALL_THISCALL); AS_ASSERT
 	
 	// Trigonometry
 	r = scriptEngine->RegisterObjectMethod("XMath", "float cos(const float)", asMETHOD(XMath, cos), asCALL_THISCALL); AS_ASSERT
@@ -130,4 +132,14 @@ float XMath::maximum(const float a, const float b)
 float XMath::minimum(const float a, const float b)
 {
 	return (a < b ? a : b);
+}
+
+uint XMath::ror(const uint a, const uint b)
+{
+	return (a << b) | (a >> (sizeof(uint)*CHAR_BIT-b));
+}
+
+uint XMath::rol(const uint a, const uint b)
+{
+	return (a >> b) | (a << (sizeof(uint)*CHAR_BIT-b));
 }

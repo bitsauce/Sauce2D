@@ -10,7 +10,7 @@
 #include <x2d/engine.h>
 #include <x2d/graphics.h>
 
-AS_REG_VALUE(XPixmap, "Pixmap")
+AS_REG_POD(XPixmap, "Pixmap")
 
 int XPixmap::Register(asIScriptEngine *scriptEngine)
 {
