@@ -13520,7 +13520,9 @@ void asCCompiler::PerformFunctionCall(int funcId, asSExprContext *ctx, bool isCo
 	}
 
 	// Check if the function is private
-	if( descr->isPrivate && descr->GetObjectType() != outFunc->GetObjectType() )
+	// <BITSAUCE>
+	if( descr->isPrivate && descr->GetObjectType() != outFunc->GetObjectType() && !outFunc->GetObjectType()->DerivesFrom(descr->GetObjectType()))
+	// </BITSAUCE>
 	{
 		asCString msg;
 		msg.Format(TXT_PRIVATE_METHOD_CALL_s, descr->GetDeclarationStr().AddressOf());
