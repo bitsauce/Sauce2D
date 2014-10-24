@@ -4,7 +4,7 @@
 
 \image html aslogo.png 
 
-<center>Version 2.29.0</center>
+<center>Version 2.29.2</center>
 
 \ref doc_overview "AngelScript" is a \ref doc_license "free, open source", flexible, and cross-platform scripting library meant to be
 embedded in applications. The purpose is to provide an easy to use library that is powerful, but that isn't weighed 
@@ -103,11 +103,12 @@ The official site for the library is <a href="http://www.angelcode.com/angelscri
  - \subpage doc_adv_dynamic_config
  - \subpage doc_adv_custom_options
  - \subpage doc_adv_reflection
+ - \subpage doc_adv_inheritappclass
  - \subpage doc_adv_jit_topic
 
 \todo Add page on context pooling
 \todo Add page about imports and function binding
-\todo Add page on inheritance from application types
+
 
 
 
@@ -128,6 +129,8 @@ This is the reference documentation for the AngelScript scripting language.
  - \subpage doc_script_statements
  - \subpage doc_expressions
  - \subpage doc_datatypes
+ - \subpage doc_script_func
+ - \subpage doc_script_class
  - \subpage doc_script_handle
  - \subpage doc_script_shared
  - \subpage doc_operator_precedence
@@ -144,10 +147,10 @@ by the host application. Also, all declarations are visible to all, e.g. a
 function to be called does not have to be declared above the function that calls
 it.
 
- - \subpage doc_script_func
+ - \subpage doc_global_func
  - \subpage doc_global_variable
  - \subpage doc_global_virtprop
- - \subpage doc_script_class
+ - \subpage doc_global_class
  - \subpage doc_global_interface
  - \subpage doc_script_mixin
  - \subpage doc_global_enums
@@ -156,17 +159,47 @@ it.
  - \subpage doc_global_namespace
  - \subpage doc_global_import
 
+ 
+\page doc_global_func Functions
+
+\ref doc_script_func "Global functions" provide the mean to implement 
+routines that should operate on some input and produce a result. 
+
+<pre>
+  void foo()
+  {
+    // Do something
+  }
+</pre>
+
 
 
 \page doc_script_func Functions
 
-Global functions provide the mean to implement routines that should operate on some input and produce a result. 
+Functions are declared globally, and consists of a signature where the types of the arguments and the return value
+is defined, and a body where the implementation is declared. 
 
 - \subpage doc_script_func_decl
 - \subpage doc_script_func_ref
 - \subpage doc_script_func_retref
 - \subpage doc_script_func_overload
 - \subpage doc_script_func_defarg
+
+
+\page doc_global_class Script classes
+
+\ref doc_script_class "Script classes" are normally used to group together functions with values that will be 
+operated upon by those functions. Multiple instances of a class can exists where each instance has different values. 
+
+<pre>
+  class Foo
+  {
+    void bar() { value++; }
+    int value;
+  }
+</pre>
+
+
  
 
 \page doc_script_class Script classes

@@ -37,16 +37,6 @@ const char *script5 =
 
 const char *script6 = "class t { bool Test(bool, float) {return false;} }";
 
-const char *script7 =
-"class Ship                           \n\
-{                                     \n\
-	Sprite		_sprite;              \n\
-									  \n\
-	string GetName() {                \n\
-		return _sprite.GetName();     \n\
-	}								  \n\
-}";
-
 const char *script8 =
 "float calc(float x, float y) { Print(\"GOT THESE NUMBERS: \" + x + \", \" + y + \"\n\"); return x*y; }";
 
@@ -234,6 +224,229 @@ bool Test()
 	CBufferedOutStream bout;
 	COutStream out;
 	asIScriptModule *mod;
+
+	// Warn if inner scope re-declares variable from outer scope
+	// http://www.gamedev.net/topic/660746-problem-with-random-float-value-on-android/
+	{
+		engine = asCreateScriptEngine(ANGELSCRIPT_VERSION);
+		engine->SetMessageCallback(asMETHOD(CBufferedOutStream, Callback), &bout, asCALL_THISCALL);
+
+		RegisterScriptArray(engine, false);
+
+		bout.buffer = "";
+		mod = engine->GetModule("test", asGM_ALWAYS_CREATE);
+		mod->AddScriptSection("test",
+			"void func() { \n"
+			"  array<uint> arr = {0,1,2,3,4,5,6,7,8,9}; \n"
+			"  for( uint i = 0; i < 10; i++ ) { \n"
+			"    for( uint i = 0; i < arr[i]; i++ ) { \n"
+			"    } \n"
+			"  } \n"
+			"} \n");
+		r = mod->Build();
+		if( r < 0 )
+			TEST_FAILED;
+
+		if( bout.buffer != "test (1, 1) : Info    : Compiling void func()\n"
+						   "test (4, 15) : Warning : Variable 'i' hides another variable of same name in outer scope\n" )
+		{
+			PRINTF("%s", bout.buffer.c_str());
+			TEST_FAILED;
+		}
+
+		engine->Release();
+	}
+
+	// Give error if &out arg is called with non-lvalue expr
+	// http://www.gamedev.net/topic/660363-retrieving-an-array-of-strings-from-a-dictionary/
+	{
+		engine = asCreateScriptEngine(ANGELSCRIPT_VERSION);
+		engine->SetMessageCallback(asMETHOD(CBufferedOutStream, Callback), &bout, asCALL_THISCALL);
+
+		RegisterStdString(engine);
+		RegisterScriptArray(engine, false);
+		RegisterScriptDictionary(engine);
+
+		bout.buffer = "";
+		mod = engine->GetModule("test", asGM_ALWAYS_CREATE);
+		mod->AddScriptSection("test",
+			"void func() { \n"
+			"  dictionary d = { {'arr', array<string>(1, 'something')} }; \n"
+			"  array<string> arr4; \n"
+			"  bool found4 = d.get('arr', @arr4); \n" // This is not valid, because arr4 is not a handle and cannot be reassigned
+			"} \n");
+		r = mod->Build();
+		if( r >= 0 )
+			TEST_FAILED;
+
+		if( bout.buffer != "test (1, 1) : Info    : Compiling void func()\n"
+		                   "test (4, 31) : Error   : Output argument expression is not assignable\n" )
+		{
+			PRINTF("%s", bout.buffer.c_str());
+			TEST_FAILED;
+		}
+
+		engine->Release();
+	}
+
+	// Test identity comparison with output handle
+	// http://www.gamedev.net/topic/660025-inconsistent-behavior-with-ref-type-and-out-references-to-handle-params/
+	{
+		engine = asCreateScriptEngine(ANGELSCRIPT_VERSION);
+		engine->SetMessageCallback(asMETHOD(COutStream, Callback), &out, asCALL_THISCALL);
+
+		engine->RegisterGlobalFunction("void assert(bool)", asFUNCTION(Assert), asCALL_GENERIC);
+
+		mod = engine->GetModule("Test", asGM_ALWAYS_CREATE);
+		mod->AddScriptSection("test",
+			"void func(A@&out a) \n"
+			"{ \n"
+			"  assert( a is null ); \n"
+			"  @a = A(); \n"
+			"  assert( a !is null ); \n"
+			"} \n"
+			"class A{} \n");
+		r = mod->Build();
+		if( r < 0 )
+			TEST_FAILED;
+
+		r = ExecuteString(engine, "A @a; func(a); assert( a !is null );", mod);
+		if( r != asEXECUTION_FINISHED )
+			TEST_FAILED;
+
+		engine->Release();
+	}
+
+	// Test invalid syntax
+	// http://www.gamedev.net/topic/659153-crash-when-instantiating-handle-with-weird-syntax/
+	{
+		const char *script = 
+			"array<string> foo = { 'a', 'b', 'c' };\n"
+			"dictionary d1 = { {'arr', foo} };\n"
+			"array<string>@ s1 = array<string>@(d1['arr']);\n";
+
+		engine = asCreateScriptEngine(ANGELSCRIPT_VERSION);
+		engine->SetMessageCallback(asMETHOD(CBufferedOutStream, Callback), &bout, asCALL_THISCALL);
+		bout.buffer = "";
+
+		RegisterStdString(engine);
+		RegisterScriptArray(engine, false);
+		RegisterScriptDictionary(engine);
+
+		mod = engine->GetModule("test", asGM_ALWAYS_CREATE);
+		mod->AddScriptSection("test", script);
+		r = mod->Build();
+		if( r >= 0 )
+			TEST_FAILED;
+
+		if( bout.buffer != "test (3, 16) : Info    : Compiling array<string>@ s1\n"
+		                   "test (3, 21) : Error   : Can't construct handle 'array<string>@'. Use ref cast instead\n"
+		                   "test (3, 21) : Error   : Can't implicitly convert from 'const int' to 'array<string>@&'.\n" )
+		{
+			PRINTF("%s", bout.buffer.c_str());
+			TEST_FAILED;
+		}
+
+		engine->Release();
+	}
+
+	// Give proper error when declaring variable as only statement of an if
+	// http://www.gamedev.net/topic/653474-compile-error-in-if-statement-without-braces/
+	{
+		engine = asCreateScriptEngine(ANGELSCRIPT_VERSION);
+		engine->SetMessageCallback(asMETHOD(CBufferedOutStream, Callback), &bout, asCALL_THISCALL);
+		bout.buffer = "";
+
+		mod = engine->GetModule("test", asGM_ALWAYS_CREATE);
+		mod->AddScriptSection("test",
+			"void func(int a) \n"
+			"{ \n"
+			"  if( true ) \n"
+			"    int a; \n"
+			"} \n");
+		r = mod->Build();
+		if( r >= 0 )
+			TEST_FAILED;
+
+		if( bout.buffer != "test (1, 1) : Info    : Compiling void func(int)\n"
+		                   "test (4, 5) : Error   : Unexpected variable declaration\n" )
+		{
+			PRINTF("%s", bout.buffer.c_str());
+			TEST_FAILED;
+		}
+
+		engine->Release();
+	}
+
+	// Test appropriate error when attempting to declare variable as reference
+	// http://www.gamedev.net/topic/657196-problem-returning-reference-to-internal-members/
+	{
+		engine = asCreateScriptEngine(ANGELSCRIPT_VERSION);
+		engine->SetMessageCallback(asMETHOD(CBufferedOutStream, Callback), &bout, asCALL_THISCALL);
+		bout.buffer = "";
+
+		mod = engine->GetModule("test", asGM_ALWAYS_CREATE);
+		mod->AddScriptSection("test",
+			"class A {}; \n"
+			"void func(int a) { \n"
+			"  A &a; \n"      // Must detect this as a declaration and give error 
+			"  A &b = a; \n"  // instead of thinking it is a bitwise and-operation
+			"} \n");
+		r = mod->Build();
+		if( r >= 0 )
+			TEST_FAILED;
+
+		if( bout.buffer != "test (2, 1) : Info    : Compiling void func(int)\n"
+		                   "test (3, 5) : Error   : Expected identifier\n"
+		                   "test (3, 5) : Error   : Instead found '&'\n"
+		                   "test (4, 5) : Error   : Expected identifier\n"
+		                   "test (4, 5) : Error   : Instead found '&'\n" )
+		{
+			PRINTF("%s", bout.buffer.c_str());
+			TEST_FAILED;
+		}
+		
+		bout.buffer = "";
+		mod->AddScriptSection("test",
+			"int &glob; \n");  // Must give error for invalid reference
+		r = mod->Build();
+		if( r >= 0 )
+			TEST_FAILED;
+
+		if( bout.buffer != "test (1, 5) : Error   : Expected identifier\n"
+		                   "test (1, 5) : Error   : Instead found '&'\n" )
+		{
+			PRINTF("%s", bout.buffer.c_str());
+			TEST_FAILED;
+		}
+
+		engine->Release();
+	}
+
+	// Test proper error when attempting to use a type from an unrelated namespace
+	{
+		engine = asCreateScriptEngine(ANGELSCRIPT_VERSION);
+		engine->SetMessageCallback(asMETHOD(CBufferedOutStream, Callback), &bout, asCALL_THISCALL);
+		bout.buffer = "";
+
+		mod = engine->GetModule("test", asGM_ALWAYS_CREATE);
+		mod->AddScriptSection("test",
+			"namespace A { class C {} } \n"
+			"namespace B { void func( C @c ) {} } \n"
+			"void func2( C @c ) {} \n");
+		r = mod->Build();
+		if( r >= 0 )
+			TEST_FAILED;
+
+		if( bout.buffer != "test (2, 26) : Error   : Identifier 'C' is not a data type in namespace 'B' or parent\n"
+			               "test (3, 13) : Error   : Identifier 'C' is not a data type in global namespace\n" )
+		{
+			PRINTF("%s", bout.buffer.c_str());
+			TEST_FAILED;
+		}
+
+		engine->Release();
+	}
 
 	// Test proper error in case of double handle in variable decl
 	// http://www.gamedev.net/topic/657480-double-handle/
@@ -582,7 +795,7 @@ bool Test()
 		r = mod->Build();
 		if( r < 0 )
 			TEST_FAILED;
-
+			
 		engine->Release();
 	}
 
@@ -714,6 +927,10 @@ bool Test()
 		if( r != asEXECUTION_FINISHED )
 			TEST_FAILED;
 
+		r = ExecuteString(engine, "uint64 ui64 = 18446744073709551615; assert( ui64 == 0xFFFFFFFFFFFFFFFF ); ");
+		if( r != asEXECUTION_FINISHED )
+			TEST_FAILED;
+
 		if( bout.buffer != "" )
 		{
 			PRINTF("%s", bout.buffer.c_str());
@@ -734,6 +951,17 @@ bool Test()
 
 		if( bout.buffer != "ExecuteString (1, 16) : Warning : Value is too large for data type\n"
 			               "ExecuteString (1, 13) : Warning : Implicit conversion changed sign of value\n" )
+		{
+			PRINTF("%s", bout.buffer.c_str());
+			TEST_FAILED;
+		}
+
+		// Don't warn 
+		bout.buffer = "";
+		r = ExecuteString(engine, "int64 i64 = -9223372036854775808; assert( uint64(i64) == 0x8000000000000000 ); ");
+		if( r != asEXECUTION_FINISHED )
+			TEST_FAILED;
+		if( bout.buffer != "" )
 		{
 			PRINTF("%s", bout.buffer.c_str());
 			TEST_FAILED;
@@ -1120,7 +1348,7 @@ bool Test()
 			TEST_FAILED;
 
 		if( bout.buffer != "array (0, 0) : Error   : The subtype has no default factory\n"
-						   "Test (2, 7) : Error   : Can't instanciate template 'array' with subtype 'C'\n" )
+						   "Test (2, 7) : Error   : Can't instantiate template 'array' with subtype 'C'\n" )
 		{
 			PRINTF("%s", bout.buffer.c_str());
 			TEST_FAILED;
@@ -1227,7 +1455,7 @@ bool Test()
 		engine->RegisterGlobalFunction("void assert(bool)", asFUNCTION(Assert), asCALL_GENERIC);
 
 #ifdef AS_CAN_USE_CPP11
-        if( GetTypeTraits<A>() != asOBJ_APP_CLASS_CDAK )
+        if( asGetTypeTraits<A>() != asOBJ_APP_CLASS_CDAK )
             TEST_FAILED;
 #endif
 
@@ -1356,9 +1584,7 @@ bool Test()
 		if( r != asEXECUTION_FINISHED )
 			TEST_FAILED;
 
-		if( bout.buffer != "ExecuteString (1, 17) : Warning : Implicit conversion changed sign of value\n"
-						   "ExecuteString (1, 17) : Warning : Implicit conversion changed sign of value\n"
-						   "ExecuteString (1, 25) : Warning : Implicit conversion changed sign of value\n" )
+		if( bout.buffer != "" )
 		{
 			PRINTF("%s", bout.buffer.c_str());
 			TEST_FAILED;
@@ -2206,7 +2432,7 @@ bool Test()
 		r = mod->Build();
 		if( r >= 0 )
 			TEST_FAILED;
-		if( bout.buffer != "TestCompiler (3, 3) : Error   : Identifier 'Car' is not a data type\n"
+		if( bout.buffer != "TestCompiler (3, 3) : Error   : Identifier 'Car' is not a data type in global namespace\n"
 						   "TestCompiler (4, 3) : Info    : Compiling void AAA::Update()\n"
 						   "TestCompiler (6, 13) : Error   : Both operands must be handles when comparing identity\n"
 						   "TestCompiler (7, 10) : Error   : Illegal operation on 'int&'\n" )
@@ -2304,14 +2530,17 @@ bool Test()
 	}
 
 	{
-		// When passing 'null' to an output parameter the compiler shouldn't warn
+		// When passing 'null' or 'void' to an output parameter the compiler shouldn't warn
 		const char *script = "class C {} void func(C @&out) {} \n"
 			                 "void main() { \n"
 							 "  bool f = true; \n"
 							 "  if( f ) \n"
-							 "    func(null); \n"
+							 "  { \n"
+							 "    func(void); \n" // ok. output will be discarded
+							 "    func(null); \n" // ok. output will be discarded
+							 "  } \n"
 							 "  else \n"
-							 "    func(C()); \n"
+							 "    func(C()); \n" // error. not assignable
 	                         "}\n";
 
 		engine = asCreateScriptEngine(ANGELSCRIPT_VERSION);
@@ -2321,10 +2550,10 @@ bool Test()
 		asIScriptModule *mod = engine->GetModule(0, asGM_ALWAYS_CREATE);
 		mod->AddScriptSection(TESTNAME, script);
 		r = mod->Build();
-		if( r < 0 )
+		if( r >= 0 )
 			TEST_FAILED;
 		if( bout.buffer != "TestCompiler (2, 1) : Info    : Compiling void main()\n"
-		                   "TestCompiler (7, 10) : Warning : Argument cannot be assigned. Output will be discarded.\n" )
+		                   "TestCompiler (10, 10) : Error   : Output argument expression is not assignable\n" )
 		{
 			PRINTF("%s", bout.buffer.c_str());
 			TEST_FAILED;
@@ -2435,16 +2664,7 @@ bool Test()
 	if( r >= 0 )
 		TEST_FAILED;
 
-	if( bout.buffer != "TestCompiler (1, 11) : Error   : Identifier 'I' is not a data type\n" )
-		TEST_FAILED;
-
-	// test 5
-	RegisterScriptString(engine);
-	bout.buffer = "";
-	r = ExecuteString(engine, "string &ref");
-	if( r >= 0 )
-		TEST_FAILED;
-	if( bout.buffer != "ExecuteString (1, 1) : Error   : 'string' is not declared\n" )
+	if( bout.buffer != "TestCompiler (1, 11) : Error   : Identifier 'I' is not a data type in global namespace\n" )
 	{
 		PRINTF("%s", bout.buffer.c_str());
 		TEST_FAILED;
@@ -2481,13 +2701,24 @@ bool Test()
 	ExecuteString(engine, "void m;");
 	if( bout.buffer != "ExecuteString (1, 6) : Error   : Data type can't be 'void'\n" )
 	{
-		PRINTF("failed on 7\n");
+		PRINTF("%s", bout.buffer.c_str());
 		TEST_FAILED;
 	}
 
 	// test 8
 	// Don't assert on implicit conversion to object when a compile error has occurred
+	const char *script7 =
+		"class Ship                           \n"
+		"{                                    \n"
+		"	Sprite		_sprite;              \n"
+		"									  \n"
+		"	string GetName() {                \n"
+		"		return _sprite.GetName();     \n"
+		"	}								  \n"
+		"} \n";
+
 	bout.buffer = "";
+	RegisterStdString(engine);
 	mod = engine->GetModule(0, asGM_ALWAYS_CREATE);
 	mod->AddScriptSection("script", script7, strlen(script7));
 	r = mod->Build();
@@ -2495,10 +2726,11 @@ bool Test()
 	{
 		TEST_FAILED;
 	}
-	if( bout.buffer != "script (3, 2) : Error   : Identifier 'Sprite' is not a data type\n"
+	if( bout.buffer != "script (3, 2) : Error   : Identifier 'Sprite' is not a data type in global namespace\n"
 					   "script (5, 2) : Info    : Compiling string Ship::GetName()\n"
 					   "script (6, 17) : Error   : Illegal operation on 'int&'\n" )
 	{
+		PRINTF("%s", bout.buffer.c_str());
 		TEST_FAILED;
 	}
 
@@ -2514,7 +2746,7 @@ bool Test()
 	}
 	if( bout.buffer != "script (1, 1) : Info    : Compiling float calc(float, float)\n"
 	                   "script (1, 77) : Error   : Multiline strings are not allowed in this application\n"
-	                   "script (1, 32) : Error   : No matching signatures to 'Print(string@&)'\n" )
+	                   "script (1, 32) : Error   : No matching signatures to 'Print(string)'\n" )
 	{
 		PRINTF("%s", bout.buffer.c_str());
 		TEST_FAILED;
@@ -2565,7 +2797,7 @@ bool Test()
 	{
 		TEST_FAILED;
 	}
-	if( bout.buffer != "script (3, 3) : Error   : Identifier 'object' is not a data type\n"
+	if( bout.buffer != "script (3, 3) : Error   : Identifier 'object' is not a data type in global namespace\n"
 					   "script (4, 3) : Info    : Compiling void c::func()\n"
                        "script (5, 18) : Error   : Illegal operation on 'int&'\n" )
 	{
@@ -2784,7 +3016,7 @@ bool Test()
 		r = mod->Build();
 		if( r >= 0 || bout.buffer != "test (1, 6) : Info    : Compiling derp wtf\n"
 		                             "test (1, 12) : Error   : Can't implicitly convert from 'const int' to 'derp&'.\n"
-		                             "test (1, 6) : Error   : No appropriate opAssign method found in 'derp'\n" )
+		                             "test (1, 6) : Error   : No appropriate opAssign method found in 'derp' for value assignment\n" )
 		{
 			PRINTF("%s", bout.buffer.c_str());
 			TEST_FAILED;
@@ -3143,7 +3375,7 @@ bool Test()
 		r = mod->Build();
 		if( r >= 0 )
 			TEST_FAILED;
-		if( bout.buffer != "test (2, 20) : Error   : Data type can't be 'ITest'\n" )
+		if( bout.buffer != "test (2, 20) : Error   : Interface 'ITest' cannot be instantiated\n" )
 		{
 			PRINTF("%s", bout.buffer.c_str());
 			TEST_FAILED;
@@ -3314,8 +3546,8 @@ bool Test()
 			"    Foo() \n"
 			"    { \n"
 			"        Hoge h; \n"
-			"        Obj tmpObj = h.obj(); /* OK */ \n"
-			"        mObj = h.obj(); /* Build failed */ \n" // this should work
+			"        Obj tmpObj = h.obj(); \n"
+			"        mObj = h.obj(); \n" // this should work
 			"    } \n"
 			"    Obj mObj; \n"
 			"} \n";

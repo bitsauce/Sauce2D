@@ -1,5 +1,6 @@
 #include "utils.h"
 #include "../../../add_on/scriptgrid/scriptgrid.h"
+#include "../../../add_on/scriptany/scriptany.h"
 
 namespace Test_Addon_ScriptGrid
 {
@@ -17,6 +18,78 @@ bool Test()
 //	asIScriptContext *ctx;
 	asIScriptEngine *engine;
 //	asIScriptModule *mod;
+
+	// Test empty initialization list
+	// http://www.gamedev.net/topic/658849-empty-array-initialization/
+	{
+		engine = asCreateScriptEngine(ANGELSCRIPT_VERSION);
+		engine->SetMessageCallback(asMETHOD(COutStream, Callback), &out, asCALL_THISCALL);
+
+		RegisterScriptGrid(engine);
+
+		r = ExecuteString(engine, "grid<int> a = {};"); // Valid 0x0 grid
+		if( r != asEXECUTION_FINISHED )
+			TEST_FAILED;
+
+		r = ExecuteString(engine, "grid<int> a = {{}};"); // Valid 0x1 grid
+		if( r != asEXECUTION_FINISHED )
+			TEST_FAILED;
+
+		r = ExecuteString(engine, "grid<int> a = {{},{}};"); // Valid 0x2 grid
+		if( r != asEXECUTION_FINISHED )
+			TEST_FAILED;
+
+		engine->Release();
+	}
+
+	// Test grid object forcibly destroyed by garbage collector
+	// http://www.gamedev.net/topic/657955-a-quite-specific-bug/
+	{
+		engine = asCreateScriptEngine(ANGELSCRIPT_VERSION);
+		engine->SetMessageCallback(asMETHOD(COutStream, Callback), &out, asCALL_THISCALL);
+
+		RegisterScriptGrid(engine);
+		RegisterScriptAny(engine);
+		RegisterScriptArray(engine, false);
+
+		asIScriptModule *mod = engine->GetModule("test", asGM_ALWAYS_CREATE);
+		mod->AddScriptSection("test", 
+			"class B {} \n"
+			"class A \n"
+			"{ \n"
+			"	any a; \n"
+			"	grid<B> t(10, 10); \n"
+			"	A() \n"
+			"	{ \n"
+			"		a.store(@this); \n"
+			"	} \n"
+			"} \n"
+			"array<A@> arr; \n"
+			"void main() \n"
+			"{ \n"
+			"	arr.insertLast(@A()); \n"
+			"} \n");
+		r = mod->Build();
+		if( r < 0 )
+			TEST_FAILED;
+
+		// The type B is not really garbage collected
+		asIObjectType *t = mod->GetObjectTypeByDecl("B");
+		if( t->GetFlags() & asOBJ_GC )
+			TEST_FAILED;
+
+		// But the grid<B> type will be anyway since the template callback was evaluated before B's content was known
+		// TODO: run-time optimize: Re-evaluate the template callback after the B's content is fully known
+		t = mod->GetObjectTypeByDecl("grid<B>");
+		if( !(t->GetFlags() & asOBJ_GC) )
+			TEST_FAILED;
+
+		r = ExecuteString(engine, "main()", mod);
+		if( r != asEXECUTION_FINISHED )
+			TEST_FAILED;
+
+		engine->Release();
+	}
 
 	// Test resize
 	{

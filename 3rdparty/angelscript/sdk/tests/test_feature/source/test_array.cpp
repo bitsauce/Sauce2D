@@ -171,7 +171,7 @@ bool Test()
 	if( r != asEXECUTION_FINISHED )
 	{
 		if( r == asEXECUTION_EXCEPTION )
-			PrintException(ctx);
+			PRINTF("%s", GetExceptionInfo(ctx).c_str());
 
 		PRINTF("%s: Failed to execute script\n", TESTNAME);
 		TEST_FAILED;
@@ -212,7 +212,7 @@ bool Test()
 	}
 	if( r == asEXECUTION_EXCEPTION )
 	{
-		PrintException(ctx);
+		PRINTF("%s", GetExceptionInfo(ctx).c_str());
 	}
 	if( ctx ) ctx->Release();
 	ctx = 0;
@@ -234,7 +234,7 @@ bool Test()
 	}
 	if( r == asEXECUTION_EXCEPTION )
 	{
-		PrintException(ctx);
+		PRINTF("%s", GetExceptionInfo(ctx).c_str());
 	}
 
 	if( ctx ) ctx->Release();
@@ -247,7 +247,7 @@ bool Test()
 	r = ExecuteString(engine, "TestArrayInitList()", mod, ctx);
 	if( r != asEXECUTION_FINISHED ) TEST_FAILED;
 	if( r == asEXECUTION_EXCEPTION )
-		PrintException(ctx);
+		PRINTF("%s", GetExceptionInfo(ctx).c_str());
 
 	if( ctx ) ctx->Release();
 
@@ -346,7 +346,7 @@ bool Test()
 		r = ExecuteString(engine, "array<void> a;");
 		if( r != -1 )
 			TEST_FAILED;
-		if( bout.buffer != "ExecuteString (1, 7) : Error   : Can't instanciate template 'array' with subtype 'void'\n" )
+		if( bout.buffer != "ExecuteString (1, 7) : Error   : Can't instantiate template 'array' with subtype 'void'\n" )
 		{
 			PRINTF("%s", bout.buffer.c_str());
 			TEST_FAILED;

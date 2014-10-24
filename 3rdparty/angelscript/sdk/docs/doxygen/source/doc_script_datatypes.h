@@ -90,7 +90,7 @@ infinite, and NaN (Not-a-Number). For <code>float</code> NaN is represented by t
 
 \page doc_datatypes_arrays Arrays
 
-<b>Observe:</b> Arrays are only available in the scripts if the application registers the support for them. The syntax
+\note Arrays are only available in the scripts if the application registers the support for them. The syntax
 for using arrays may differ for the application you're working with so consult the application's manual
 for more details.
 
@@ -207,7 +207,7 @@ Script example:
 
 \page doc_datatypes_dictionary dictionary
 
-<b>Observe:</b> Dictionaries are only available in the scripts if the application registers the support for them. The syntax
+\note Dictionaries are only available in the scripts if the application registers the support for them. The syntax
 for using dictionaries may differ for the application you're working with so consult the application's manual
 for more details.
 
@@ -226,8 +226,9 @@ pairs can be added or removed dynamically, making the dictionary a good general 
   // Examine and access the values through get or set methods ...
   if( dict.exists('one') )
   {
-    bool found = dict.get('handle', \@handle);
-    if( found )
+    // get returns true if the stored type is compatible with the requested type
+    bool isValid = dict.get('handle', \@handle);
+    if( isValid )
     {
       dict.delete('object');
       dict.set('value', 1);
@@ -342,7 +343,7 @@ Object handle and array type modifiers can be combined to form handles to arrays
 
 \page doc_datatypes_strings Strings
 
-<b>Observe:</b> Strings are only available in the scripts if the application registers the support for them. The syntax
+\note Strings are only available in the scripts if the application registers the support for them. The syntax
 for using strings may differ for the application you're working with so consult the application's manual
 for more details.
 
@@ -503,7 +504,7 @@ Examples:
 
 \page doc_datatypes_ref ref
 
-<b>Observe:</b> ref is only available in the scripts if the application registers the support for it. 
+\note ref is only available in the scripts if the application registers the support for it. 
 
 \see \ref doc_addon_handle
 

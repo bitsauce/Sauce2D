@@ -166,6 +166,7 @@ protected:
 	void               WriteError(const asCString &scriptname, const asCString &msg, int r, int c);
 	void               WriteError(const asCString &msg, asCScriptCode *file, asCScriptNode *node);
 	void               WriteWarning(const asCString &scriptname, const asCString &msg, int r, int c);
+	void               WriteWarning(const asCString &msg, asCScriptCode *file, asCScriptNode *node);
 
 	bool               DoesGlobalPropertyExist(const char *prop, asSNameSpace *ns, asCGlobalProperty **outProp = 0, sGlobalVariableDescription **outDesc = 0, bool *isAppProp = 0);
 	asCGlobalProperty *GetGlobalProperty(const char *prop, asSNameSpace *ns, bool *isCompiled, bool *isPureConstant, asQWORD *constantValue, bool *isAppProp);
@@ -193,6 +194,7 @@ protected:
 protected:
 	friend class asCCompiler;
 
+	int                CheckForConflictsDueToDefaultArgs(asCScriptCode *script, asCScriptNode *node, asCScriptFunction *func, asCObjectType *objType);
 	int                GetNamespaceAndNameFromNode(asCScriptNode *n, asCScriptCode *script, asSNameSpace *implicitNs, asSNameSpace *&outNs, asCString &outName);
 	int                RegisterMixinClass(asCScriptNode *node, asCScriptCode *file, asSNameSpace *ns);
 	sMixinClass       *GetMixinClass(const char *name, asSNameSpace *ns);

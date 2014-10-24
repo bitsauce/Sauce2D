@@ -269,6 +269,19 @@ bool Test()
  	asIScriptEngine *engine;
 	const char *script;
 
+	// Testing the asOBJ_APP_ALIGN16 flag
+	if( strstr(asGetLibraryOptions(), "WIP_16BYTE_ALIGN") )
+	{
+		engine = asCreateScriptEngine(ANGELSCRIPT_VERSION);
+		engine->SetMessageCallback(asMETHOD(COutStream, Callback), &out, asCALL_THISCALL);
+
+		r = engine->RegisterObjectType("type16", 16, asOBJ_VALUE | asOBJ_POD | asOBJ_APP_FLOAT | asOBJ_APP_ALIGN16);
+		if( r < 0 )
+			TEST_FAILED;
+
+		engine->Release();
+	}
+
 	// Testing a variant type that supports holding both handles and value
 	{
 		engine = asCreateScriptEngine(ANGELSCRIPT_VERSION);
@@ -358,7 +371,7 @@ bool Test()
 		};
 
 #ifdef AS_CAN_USE_CPP11
-		asUINT appFlags = GetTypeTraits<vec3_t>();
+		asUINT appFlags = asGetTypeTraits<vec3_t>();
 #else
 		asUINT appFlags = asOBJ_APP_ARRAY;
 #endif
@@ -520,18 +533,18 @@ bool Test()
 
 #ifdef AS_CAN_USE_CPP11
 	// Test the automatic determination of flags for registering value types
-	if( GetTypeTraits<std::string>() != asOBJ_APP_CLASS_CDAK )
+	if( asGetTypeTraits<std::string>() != asOBJ_APP_CLASS_CDAK )
 		TEST_FAILED;
-	if( GetTypeTraits<void*>() != asOBJ_APP_PRIMITIVE )
+	if( asGetTypeTraits<void*>() != asOBJ_APP_PRIMITIVE )
 		TEST_FAILED;
-	if( GetTypeTraits<float>() != asOBJ_APP_FLOAT )
+	if( asGetTypeTraits<float>() != asOBJ_APP_FLOAT )
 		TEST_FAILED;
-	if( GetTypeTraits<double>() != asOBJ_APP_FLOAT )
+	if( asGetTypeTraits<double>() != asOBJ_APP_FLOAT )
 		TEST_FAILED;
-	if( GetTypeTraits<bool>() != asOBJ_APP_PRIMITIVE )
+	if( asGetTypeTraits<bool>() != asOBJ_APP_PRIMITIVE )
 		TEST_FAILED;
 	struct T {bool a;};
-	if( GetTypeTraits<T>() != asOBJ_APP_CLASS )
+	if( asGetTypeTraits<T>() != asOBJ_APP_CLASS )
 		TEST_FAILED;
 #endif
 
@@ -586,7 +599,7 @@ bool Test()
 		if( r >= 0 )
 			TEST_FAILED;
 
-		if( bout.buffer != "System function (1, 11) : Error   : Identifier 'type' is not a data type\n"
+		if( bout.buffer != "System function (1, 11) : Error   : Identifier 'type' is not a data type in global namespace\n"
 						   " (0, 0) : Error   : Failed in call to function 'RegisterGlobalFunction' with 'void func(type @+)' (Code: -10)\n" )
 		{
 			PRINTF("%s", bout.buffer.c_str());
@@ -773,7 +786,7 @@ bool Test()
 	r = ExecuteString(engine, "ref r1, r2; r1 = r2;");
 	if( r >= 0 )
 		TEST_FAILED;
-	if( bout.buffer != "ExecuteString (1, 16) : Error   : No appropriate opAssign method found in 'ref'\n" )
+	if( bout.buffer != "ExecuteString (1, 16) : Error   : No appropriate opAssign method found in 'ref' for value assignment\n" )
 	{
 		PRINTF("%s", bout.buffer.c_str());
 		TEST_FAILED;
@@ -846,7 +859,7 @@ bool Test()
 	r = ExecuteString(engine, "val v1, v2; v1 = v2;");
 	if( r >= 0 )
 		TEST_FAILED;
-	if( bout.buffer != "ExecuteString (1, 16) : Error   : No appropriate opAssign method found in 'val'\n" )
+	if( bout.buffer != "ExecuteString (1, 16) : Error   : No appropriate opAssign method found in 'val' for value assignment\n" )
 	{
 		PRINTF("%s", bout.buffer.c_str());
 		TEST_FAILED;
@@ -971,9 +984,9 @@ bool Test()
 		TEST_FAILED;
 	if( bout.buffer != "script (1, 1) : Info    : Compiling ref func(ref)\n"
 		               "script (1, 1) : Error   : Return type can't be 'ref'\n"
-					   "script (1, 1) : Error   : Parameter type can't be 'ref', because the type cannot be instanciated.\n"
+					   "script (1, 1) : Error   : Parameter type can't be 'ref', because the type cannot be instantiated.\n"
 					   "script (1, 23) : Error   : Data type can't be 'ref'\n"
-					   "script (1, 34) : Error   : No matching signatures to 'ref()'\n"
+					   "script (1, 34) : Error   : Data type can't be 'ref'\n"
 					   "script (1, 34) : Error   : Can't implicitly convert from 'const int' to 'ref'.\n" )
 	{
 		PRINTF("%s", bout.buffer.c_str());
@@ -995,8 +1008,8 @@ bool Test()
 	if( r >= 0 )
 		TEST_FAILED;
 	if( bout.buffer != "script (1, 1) : Info    : Compiling void func(ref&in, ref&out, ref&inout)\n"
-		               "script (1, 1) : Error   : Parameter type can't be 'ref&in', because the type cannot be instanciated.\n"
-					   "script (1, 1) : Error   : Parameter type can't be 'ref&out', because the type cannot be instanciated.\n" )
+		               "script (1, 1) : Error   : Parameter type can't be 'ref&in', because the type cannot be instantiated.\n"
+					   "script (1, 1) : Error   : Parameter type can't be 'ref&out', because the type cannot be instantiated.\n" )
 	{
 		PRINTF("%s", bout.buffer.c_str());
 		TEST_FAILED;
@@ -1841,7 +1854,7 @@ bool TestHandleType()
 		if( r != asEXECUTION_FINISHED )
 		{
 			if( r == asEXECUTION_EXCEPTION )
-				PrintException(ctx);
+				PRINTF("%s", GetExceptionInfo(ctx).c_str());
 			TEST_FAILED;
 		}
 		ctx->Release();
@@ -1865,7 +1878,7 @@ bool TestHandleType()
 			TEST_FAILED;
 
 		if( bout.buffer != "script (2, 1) : Info    : Compiling void main()\n"
-						   "script (5, 5) : Error   : No appropriate opAssign method found in 'ref'\n" )
+						   "script (5, 5) : Error   : No appropriate opAssign method found in 'ref' for value assignment\n" )
 		{
 			PRINTF("%s", bout.buffer.c_str());
 			TEST_FAILED;

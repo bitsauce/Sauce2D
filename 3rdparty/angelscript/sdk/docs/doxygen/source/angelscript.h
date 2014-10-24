@@ -63,9 +63,9 @@ BEGIN_AS_NAMESPACE
 
 // AngelScript version
 
-//! Version 2.29.0
-#define ANGELSCRIPT_VERSION        22900
-#define ANGELSCRIPT_VERSION_STRING "2.29.0"
+//! Version 2.29.1
+#define ANGELSCRIPT_VERSION        22901
+#define ANGELSCRIPT_VERSION_STRING "2.29.1"
 
 // Data types
 
@@ -189,6 +189,10 @@ enum asEEngineProp
 	asEP_COMPILER_WARNINGS                  = 19,
 	//! Disallow value assignment for reference types to avoid ambiguity. Default: false
 	asEP_DISALLOW_VALUE_ASSIGN_FOR_REF_TYPE = 20,
+	//! Change the script syntax for named arguments: 0 - no change, 1 - accept = but warn, 2 - accept = without warning. Default: 0
+	asEP_ALTER_SYNTAX_NAMED_ARGS            = 21,
+	//! When true, the / and /= operators will perform floating-point division (i.e. 1/2 = 0.5 instead of 0). Default: false
+	asEP_DISABLE_INTEGER_DIVISION           = 22,
 
 	asEP_LAST_PROPERTY
 };
@@ -306,7 +310,9 @@ enum asEObjTypeFlags
 	asOBJ_LIST_PATTERN               = (1<<25),
 	asOBJ_ENUM                       = (1<<26),
 	asOBJ_TEMPLATE_SUBTYPE           = (1<<27),
-	asOBJ_TYPEDEF                    = (1<<28)
+	asOBJ_TYPEDEF                    = (1<<28),
+	asOBJ_ABSTRACT                   = (1<<29),
+	asOBJ_APP_ALIGN16                = (1<<30)
 };
 
 // Behaviours
@@ -619,6 +625,7 @@ typedef void (*asRETURNCONTEXTFUNC_t)(asIScriptEngine *, asIScriptContext *, voi
 #if !defined(__GNUC__) || __GNUC__ > 4 || (__GNUC__ == 4 && __GNUC_MINOR__ >= 7)  // gnuc 4.7
 #if !(defined(__GNUC__) && defined(__cplusplus) && __cplusplus < 201103L) // g++ -std=c++11
 #if !defined(__SUNPRO_CC)
+//! \brief This macro is defined if the compiler supports the C++11 feature set
 #define AS_CAN_USE_CPP11 1
 #endif
 #endif
@@ -627,14 +634,11 @@ typedef void (*asRETURNCONTEXTFUNC_t)(asIScriptEngine *, asIScriptContext *, voi
 
 // This macro does basically the same thing as offsetof defined in stddef.h, but
 // GNUC should not complain about the usage as I'm not using 0 as the base pointer.
-//! \ingroup funcs
 //! \brief Returns the offset of an attribute in a struct
 #define asOFFSET(s,m) ((size_t)(&reinterpret_cast<s*>(100000)->m)-100000)
 
-//! \ingroup funcs
 //! \brief Returns an asSFuncPtr representing the function specified by the name
 #define asFUNCTION(f) asFunctionPtr(f)
-//! \ingroup funcs
 //! \brief Returns an asSFuncPtr representing the function specified by the name, parameter list, and return type
 #if (defined(_MSC_VER) && _MSC_VER <= 1200) || (defined(__BORLANDC__) && __BORLANDC__ < 0x590)
 // MSVC 6 has a bug that prevents it from properly compiling using the correct asFUNCTIONPR with operator >
@@ -672,7 +676,7 @@ struct asSFuncPtr
 		// The largest known method point is 20 bytes (MSVC 64bit),
 		// but with 8byte alignment this becomes 24 bytes. So we need
 		// to be able to store at least that much.
-		char dummy[25]; 
+		char dummy[25];
 		struct {asMETHOD_t   mthd; char dummy[25-sizeof(asMETHOD_t)];} m;
 		struct {asFUNCTION_t func; char dummy[25-sizeof(asFUNCTION_t)];} f;
 	} ptr;
@@ -698,10 +702,8 @@ template <typename T>
  #define AS_METHOD_AMBIGUITY_CAST(t) static_cast<t >
 #endif
 
-//! \ingroup funcs
 //! \brief Returns an asSFuncPtr representing the class method specified by class and method name.
 #define asMETHOD(c,m) asSMethodPtr<sizeof(void (c::*)())>::Convert((void (c::*)())(&c::m))
-//! \ingroup funcs
 //! \brief Returns an asSFuncPtr representing the class method specified by class, method name, parameter list, return type.
 #define asMETHODPR(c,m,p,r) asSMethodPtr<sizeof(void (c::*)())>::Convert(AS_METHOD_AMBIGUITY_CAST(r (c::*)p)(&c::m))
 
@@ -761,7 +763,7 @@ struct asSMessageInfo
   #else // statically linked library
     #define AS_API
   #endif
-#elif defined(__GNUC__) 
+#elif defined(__GNUC__)
   #if defined(ANGELSCRIPT_EXPORT)
     #define AS_API __attribute__((visibility ("default")))
   #else
@@ -916,6 +918,91 @@ extern "C"
 }
 #endif // ANGELSCRIPT_DLL_MANUAL_IMPORT
 
+// Determine traits of a type for registration of value types
+// Relies on C++11 features so it can not be used with non-compliant compilers
+#ifdef AS_CAN_USE_CPP11
+
+#if 0 // Doxygen doesn't like this
+END_AS_NAMESPACE
+#include <type_traits>
+BEGIN_AS_NAMESPACE
+#endif
+
+//! \brief Returns the appropriate flags for use with RegisterObjectType.
+//! \tparam T The type for which the flags should be determined
+//! \return The flags necessary to register this type as a value type
+//!
+//! \note This function is only availabe if the compiler supports C++11 feature set. Check existance with \#if \ref AS_CAN_USE_CPP11.
+//!
+//! This template function uses C++11 STL template functions to determine
+//! the appropriate flags to use when registering the desired type as a value
+//! type with \ref asIScriptEngine::RegisterObjectType.
+//!
+//! It is capable to determine all the \ref asEObjTypeFlags "asOBJ_APP_xxx" flags, except for 
+//! \ref asOBJ_APP_CLASS_ALLINTS, \ref asOBJ_APP_CLASS_ALLFLOATS, and \ref asOBJ_APP_CLASS_ALIGN8. 
+//! These flags must still be informed manually when needed.
+//!
+//! \see \ref doc_reg_val_2
+template<typename T>
+asUINT asGetTypeTraits()
+{
+#if defined(_MSC_VER) || defined(_LIBCPP_TYPE_TRAITS)
+	// MSVC & XCode/Clang
+	// C++11 compliant code
+	bool hasConstructor        = std::is_default_constructible<T>::value && !std::is_trivially_default_constructible<T>::value;
+	bool hasDestructor         = std::is_destructible<T>::value          && !std::is_trivially_destructible<T>::value;
+	bool hasAssignmentOperator = std::is_copy_assignable<T>::value       && !std::is_trivially_copy_assignable<T>::value;
+	bool hasCopyConstructor    = std::is_copy_constructible<T>::value    && !std::is_trivially_copy_constructible<T>::value;
+#elif defined(__GNUC__) && (__GNUC__ > 4 || (__GNUC__ == 4 && __GNUC_MINOR__ >= 8))
+	// gnuc 4.8+
+	// gnuc is using a mix of C++11 standard and pre-standard templates
+	bool hasConstructor        = std::is_default_constructible<T>::value && !std::has_trivial_default_constructor<T>::value;
+	bool hasDestructor         = std::is_destructible<T>::value          && !std::is_trivially_destructible<T>::value;
+	bool hasAssignmentOperator = std::is_copy_assignable<T>::value       && !std::has_trivial_copy_assign<T>::value;
+	bool hasCopyConstructor    = std::is_copy_constructible<T>::value    && !std::has_trivial_copy_constructor<T>::value;
+#else
+	// Not fully C++11 compliant. The has_trivial checks were used while the standard was still
+	// being elaborated, but were then removed in favor of the above is_trivially checks
+	// http://stackoverflow.com/questions/12702103/writing-code-that-works-when-has-trivial-destructor-is-defined-instead-of-is
+	// https://github.com/mozart/mozart2/issues/51
+	bool hasConstructor        = std::is_default_constructible<T>::value && !std::has_trivial_default_constructor<T>::value;
+	bool hasDestructor         = std::is_destructible<T>::value          && !std::has_trivial_destructor<T>::value;
+	bool hasAssignmentOperator = std::is_copy_assignable<T>::value       && !std::has_trivial_copy_assign<T>::value;
+	bool hasCopyConstructor    = std::is_copy_constructible<T>::value    && !std::has_trivial_copy_constructor<T>::value;
+#endif
+	bool isFloat     = std::is_floating_point<T>::value;
+	bool isPrimitive = std::is_integral<T>::value || std::is_pointer<T>::value || std::is_enum<T>::value;
+	bool isClass     = std::is_class<T>::value;
+	bool isArray     = std::is_array<T>::value;
+
+	if( isFloat )
+		return asOBJ_APP_FLOAT;
+	if( isPrimitive )
+		return asOBJ_APP_PRIMITIVE;
+
+	if( isClass )
+	{
+		asDWORD flags = asOBJ_APP_CLASS;
+		if( hasConstructor )
+			flags |= asOBJ_APP_CLASS_CONSTRUCTOR;
+		if( hasDestructor )
+			flags |= asOBJ_APP_CLASS_DESTRUCTOR;
+		if( hasAssignmentOperator )
+			flags |= asOBJ_APP_CLASS_ASSIGNMENT;
+		if( hasCopyConstructor )
+			flags |= asOBJ_APP_CLASS_COPY_CONSTRUCTOR;
+		return flags;
+	}
+
+	if( isArray )
+		return asOBJ_APP_ARRAY;
+
+	// Unknown type traits
+	return 0;
+}
+
+#endif // c++11
+
 // Interface declarations
 
 //! \brief The engine interface
@@ -1029,8 +1116,17 @@ public:
 	//! \{
 
 	//! \brief Sets the JIT compiler
+	//! \param[in] compiler A pointer to the JIT compiler
+	//! \return A negative value on error.
+	//! 
+	//! This method is used to set the JIT compiler. The engine
+	//! will automatically invoke the JIT compiler when it is set
+	//! after compiling scripts or loading pre-compiled byte code.
+	//! 
+	//! \see \ref doc_adv_jit
 	virtual int SetJITCompiler(asIJITCompiler *compiler) = 0;
 	//! \brief Returns the JIT compiler
+	//! \return Returns a pointer to the JIT compiler
 	virtual asIJITCompiler *GetJITCompiler() const = 0;
 	//! \}
 
@@ -1681,7 +1777,11 @@ public:
 	//! \param[in] type The object type
 	//! \return The weak ref flag, if the object supports weak references.
 	//!
-	//! The method doesn't increase the reference to the returned shared boolean.
+	//! As long as the weak ref flag is not set, the owning object is still alive. Once the weak ref flag
+	//! is set, the object is dead and should no longer be accessed. Check if the flag is set with the 
+	//! \ref asILockableSharedBool::Get method.
+	//!
+	//! This method doesn't increase the reference to the returned shared boolean.
 	virtual asILockableSharedBool *GetWeakRefFlagOfScriptObject(void *obj, const asIObjectType *type) const = 0;
 	//! \}
 
@@ -1708,7 +1808,7 @@ public:
 	//! \param[in] returnCtx The return context callback function
 	//! \param[in] param An optional parameter that will be passed to the callback
 	//! \return A negative value on error
-	//! \retval asINVALID_ARG One or both of the context functions are null
+	//! \retval asINVALID_ARG Only one of the context functions is informed
 	//!
 	//! This method can be used by the application to implement a context pool, 
 	//! or to perform custom configuration on the contexts that the engine uses internally.
@@ -2307,11 +2407,11 @@ public:
 	virtual int         UnbindAllImportedFunctions() = 0;
 	//! \}
 
-	// Bytecode saving and loading
-	//! \name Bytecode saving and loading
+	// Byte code saving and loading
+	//! \name Byte code saving and loading
 	//! \{
 
-	//! \brief Save compiled bytecode to a binary stream.
+	//! \brief Save compiled byte code to a binary stream.
 	//! \param[in] out The output stream.
 	//! \param[in] stripDebugInfo Set to true to skip saving the debug information.
 	//! \return A negative value on error.
@@ -2325,13 +2425,15 @@ public:
 	//!
 	//! \see \ref doc_adv_precompile
 	virtual int SaveByteCode(asIBinaryStream *out, bool stripDebugInfo = false) const = 0;
-	//! \brief Load pre-compiled bytecode from a binary stream.
+	//! \brief Load pre-compiled byte code from a binary stream.
 	//!
 	//! \param[in] in The input stream.
-	//! \param[out] wasDebugInfoStripped Set to true if the bytecode was saved without debug information.
+	//! \param[out] wasDebugInfoStripped Set to true if the byte code was saved without debug information.
 	//! \return A negative value on error.
 	//! \retval asINVALID_ARG The stream object wasn't specified.
 	//! \retval asBUILD_IN_PROGRESS Another thread is currently building.
+	//! \retval asOUT_OF_MEMORY The engine ran out of memory while loading the byte code.
+	//! \retval asERROR It was not possible to load the byte code.
 	//!
 	//! This method is used to load pre-compiled byte code from disk or memory. The application must
 	//! implement an object that inherits from \ref asIBinaryStream to provide the necessary stream operations.
@@ -2340,6 +2442,11 @@ public:
 	//! pre-compiled byte code is from a trusted source. The application should also make sure the
 	//! pre-compiled byte code is compatible with the current engine configuration, i.e. that the
 	//! engine has been configured in the same way as when the byte code was first compiled.
+	//!
+	//! If the method returns asERROR it is either because the byte code is incorrect, e.g. corrupted due to
+	//! disk failure, or it has been compiled with a different engine configuration. If possible the engine 
+	//! provides information about the type of error that caused the failure while loading the byte code to the
+	//! \ref asIScriptEngine::SetMessageCallback "message stream". 
 	//!
 	//! \see \ref doc_adv_precompile
 	virtual int LoadByteCode(asIBinaryStream *in, bool *wasDebugInfoStripped = 0) = 0;
@@ -2704,6 +2811,7 @@ public:
 	//! See \ref SetLineCallback for details on the calling convention.
 	virtual int                SetExceptionCallback(asSFuncPtr callback, void *obj, int callConv) = 0;
 	//! \brief Removes a previously registered callback.
+	//!
 	//! Removes a previously registered callback.
 	virtual void               ClearExceptionCallback() = 0;
 	//! \}
@@ -2742,6 +2850,7 @@ public:
 	//! \see \ref doc_debug
 	virtual int                SetLineCallback(asSFuncPtr callback, void *obj, int callConv) = 0;
 	//! \brief Removes a previously registered callback.
+	//!
 	//! Removes a previously registered callback.
 	virtual void               ClearLineCallback() = 0;
 	//! \brief Returns the size of the callstack, i.e. the number of functions that have yet to complete.
@@ -3013,7 +3122,7 @@ public:
 	//! \brief Gets the address to the memory where the return value should be placed.
 	//! \return A pointer to the memory where the return values is to be placed.
 	//!
-	//! The memory is not initialized, so if you're going to return a complex type by value,
+	//! The memory is not initialized, so if you're going to return a complex type by value
 	//! you shouldn't use the assignment operator to initialize it. Instead use the placement new
 	//! operator to call the type's copy constructor to perform the initialization.
 	//!
@@ -3461,7 +3570,7 @@ public:
 	//! \name Type id for function pointers
 	//! \{
 
-	// Type id for function pointers 
+	// Type id for function pointers
 	//! \brief Returns the type id representing a function pointer for this function
 	//! \return The type id that represents a function pointer for this function
 	virtual int              GetTypeId() const = 0;
@@ -3597,13 +3706,18 @@ public:
 	//! \brief Sets the value of the shared boolean
 	//! \param[in] val The new value
 	virtual void Set(bool val) = 0;
-	
+
 	// Thread management
 	//! \brief Locks the shared boolean
+	//!
 	//! If the boolean is already locked, then this method 
 	//! will wait until it is unlocked before returning.
+	//!
+	//! Unlock the shared boolean with a call to \ref Unlock
 	virtual void Lock() const = 0;
 	//! \brief Unlocks the shared boolean
+	//!
+	//! Unlock the shared boolean after a call to \ref Lock
 	virtual void Unlock() const = 0;
 
 protected:
@@ -3622,7 +3736,7 @@ inline asSFuncPtr asFunctionPtr(T func)
 	asSFuncPtr p(2);
 
 #ifdef AS_64BIT_PTR
-	// The size_t cast is to avoid a compiler warning with asFUNCTION(0) 
+	// The size_t cast is to avoid a compiler warning with asFUNCTION(0)
 	// on 64bit, as 0 is interpreted as a 32bit int value
 	p.ptr.f.func = reinterpret_cast<asFUNCTION_t>(size_t(func));
 #else
@@ -3718,9 +3832,9 @@ struct asSMethodPtr<SINGLE_PTR_SIZE+2*sizeof(int)>
 
 #if defined(_MSC_VER) && !defined(AS_64BIT_PTR)
 			// Method pointers for virtual inheritance is not supported,
-			// as it requires the location of the vbase table, which is 
+			// as it requires the location of the vbase table, which is
 			// only available to the C++ compiler, but not in the method
-			// pointer. 
+			// pointer.
 
 			// You can get around this by forward declaring the class and
 			// storing the sizeof its method pointer in a constant. Example:

@@ -15,6 +15,35 @@ bool Test()
 	asIScriptModule *mod;
 	asIScriptEngine *engine;
 
+	// Test old syntax
+	{
+		engine = asCreateScriptEngine(ANGELSCRIPT_VERSION);
+		engine->SetEngineProperty(asEP_ALTER_SYNTAX_NAMED_ARGS, 1); // warn
+
+		bout.buffer = "";
+		engine->SetMessageCallback(asMETHOD(CBufferedOutStream, Callback), &bout, asCALL_THISCALL);
+
+		mod = engine->GetModule("mod", asGM_ALWAYS_CREATE);
+		mod->AddScriptSection("test",
+			"void func(int val) {} \n"
+			"void main() { \n"
+			"  int val; \n"
+			"  func(val = 42); \n" // named argument. should warn
+			"} \n");
+		r = mod->Build();
+		if( r < 0 )
+			TEST_FAILED;
+
+		if( bout.buffer != "test (2, 1) : Info    : Compiling void main()\n"
+		                   "test (4, 12) : Warning : Detected named argument with old syntax\n" )
+		{
+			PRINTF("%s", bout.buffer.c_str());
+			TEST_FAILED;
+		}
+
+		engine->Release();
+	}
+
 	//Test named arguments for global functions
 	{
 		const char *script =
@@ -24,10 +53,10 @@ bool Test()
 			"\n"
 			"void test() {"
 			"  assert(func(4, 6, 8));\n"
-			"  assert(func(4, 6, c=8));\n"
-			"  assert(func(a=4, b=6, c=8));\n"
-			"  assert(func(a=4, c=8, b=6));\n"
-			"  assert(func(c=8, b=6, a=4));\n"
+			"  assert(func(4, 6, c: 8));\n"
+			"  assert(func(a: 4, b: 6, c: 8));\n"
+			"  assert(func(a: 4, c: 8, b: 6));\n"
+			"  assert(func(c: 8, b: 6, a: 4));\n"
 			"}\n";
 
 		engine = asCreateScriptEngine(ANGELSCRIPT_VERSION);
@@ -58,13 +87,13 @@ bool Test()
 			"void test() {"
 			"  assert(func());\n"
 			"  assert(func(4, 6));\n"
-			"  assert(func(a=4));\n"
-			"  assert(func(b=6));\n"
-			"  assert(func(c=8));\n"
-			"  assert(func(c=8, a=4));\n"
-			"  assert(func(a=4, b=6, c=8));\n"
-			"  assert(func(a=4, c=8, b=6));\n"
-			"  assert(func(c=8, b=6, a=4));\n"
+			"  assert(func(a:4));\n"
+			"  assert(func(b:6));\n"
+			"  assert(func(c:8));\n"
+			"  assert(func(c:8, a:4));\n"
+			"  assert(func(a:4, b:6, c:8));\n"
+			"  assert(func(a:4, c:8, b:6));\n"
+			"  assert(func(c:8, b:6, a:4));\n"
 			"}\n";
 
 		engine = asCreateScriptEngine(ANGELSCRIPT_VERSION);
@@ -98,13 +127,13 @@ bool Test()
 			"  Base o;\n"
 			"  assert(o.func());\n"
 			"  assert(o.func(4, 6));\n"
-			"  assert(o.func(a=4));\n"
-			"  assert(o.func(b=6));\n"
-			"  assert(o.func(c=8));\n"
-			"  assert(o.func(c=8, a=4));\n"
-			"  assert(o.func(a=4, b=6, c=8));\n"
-			"  assert(o.func(a=4, c=8, b=6));\n"
-			"  assert(o.func(c=8, b=6, a=4));\n"
+			"  assert(o.func(a:4));\n"
+			"  assert(o.func(b:6));\n"
+			"  assert(o.func(c:8));\n"
+			"  assert(o.func(c:8, a:4));\n"
+			"  assert(o.func(a:4, b:6, c:8));\n"
+			"  assert(o.func(a:4, c:8, b:6));\n"
+			"  assert(o.func(c:8, b:6, a:4));\n"
 			"}\n";
 
 		engine = asCreateScriptEngine(ANGELSCRIPT_VERSION);
@@ -144,23 +173,23 @@ bool Test()
 			"  Derived o;\n"
 			"  assert(o.func());\n"
 			"  assert(o.func(3, 5));\n"
-			"  assert(o.func(x=3));\n"
-			"  assert(o.func(y=5));\n"
-			"  assert(o.func(z=7));\n"
-			"  assert(o.func(z=7, x=3));\n"
-			"  assert(o.func(x=3, y=5, z=7));\n"
-			"  assert(o.func(x=3, z=7, y=5));\n"
-			"  assert(o.func(z=7, y=5, x=3));\n"
+			"  assert(o.func(x:3));\n"
+			"  assert(o.func(y:5));\n"
+			"  assert(o.func(z:7));\n"
+			"  assert(o.func(z:7, x:3));\n"
+			"  assert(o.func(x:3, y:5, z:7));\n"
+			"  assert(o.func(x:3, z:7, y:5));\n"
+			"  assert(o.func(z:7, y:5, x:3));\n"
 			"  Base@ asBase = o;\n"
 			"  assert(asBase.func());\n"
 			"  assert(asBase.func(3, 5));\n"
-			"  assert(asBase.func(a=3));\n"
-			"  assert(asBase.func(b=5));\n"
-			"  assert(asBase.func(c=7));\n"
-			"  assert(asBase.func(c=7, a=3));\n"
-			"  assert(asBase.func(a=3, b=5, c=7));\n"
-			"  assert(asBase.func(a=3, c=7, b=5));\n"
-			"  assert(asBase.func(c=7, b=5, a=3));\n"
+			"  assert(asBase.func(a:3));\n"
+			"  assert(asBase.func(b:5));\n"
+			"  assert(asBase.func(c:7));\n"
+			"  assert(asBase.func(c:7, a:3));\n"
+			"  assert(asBase.func(a:3, b:5, c:7));\n"
+			"  assert(asBase.func(a:3, c:7, b:5));\n"
+			"  assert(asBase.func(c:7, b:5, a:3));\n"
 			"}\n";
 
 		engine = asCreateScriptEngine(ANGELSCRIPT_VERSION);
@@ -194,7 +223,7 @@ bool Test()
 			"}\n"
 			"\n"
 			"void test() {"
-			"  func(b=6, 4, 8);\n"
+			"  func(b:6, 4, 8);\n"
 			"}\n");
 
 		r = mod->Build();
@@ -225,7 +254,7 @@ bool Test()
 			"}\n"
 			"\n"
 			"void test() {"
-			"  func(4, a=6);\n"
+			"  func(4, a:6);\n"
 			"}\n");
 
 		r = mod->Build();
@@ -261,7 +290,7 @@ bool Test()
 			"}\n"
 			"\n"
 			"void test() {"
-			"  func(a=4, a=6);\n"
+			"  func(a:4, a:6);\n"
 			"}\n");
 
 		r = mod->Build();

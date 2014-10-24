@@ -182,8 +182,36 @@ bool Test()
 	asIScriptContext *ctx;
 	asIScriptEngine *engine;
 
-	// TODO: 2.29.0: Test releasing the script engine while a script array is still alive
-	//               It must be gracefully handled, preferrably with an appropriate error message
+	// Test releasing the script engine while a script array is still alive
+	// It must be gracefully handled, preferrably with an appropriate error message
+	{
+		engine = asCreateScriptEngine(ANGELSCRIPT_VERSION);
+		engine->SetMessageCallback(asMETHOD(COutStream, Callback), &out, asCALL_THISCALL);
+
+		RegisterScriptArray(engine, false);
+
+		CScriptArray *arr = CScriptArray::Create(engine->GetObjectTypeByDecl("array<int>"));
+		
+		engine->Release();
+
+		arr->Release();
+	}
+
+
+	// Test empty initialization list
+	// http://www.gamedev.net/topic/658849-empty-array-initialization/
+	{
+		engine = asCreateScriptEngine(ANGELSCRIPT_VERSION);
+		engine->SetMessageCallback(asMETHOD(COutStream, Callback), &out, asCALL_THISCALL);
+
+		RegisterScriptArray(engine, false);
+
+		r = ExecuteString(engine, "array<int> a = {};");
+		if( r != asEXECUTION_FINISHED )
+			TEST_FAILED;
+
+		engine->Release();
+	}
 
 	// Test exception in constructor of value type
 	SKIP_ON_MAX_PORT
@@ -317,7 +345,7 @@ bool Test()
 		if( r != asEXECUTION_FINISHED )
 			TEST_FAILED;
 		if( r == asEXECUTION_EXCEPTION )
-			PrintException(ctx);
+			PRINTF("%s", GetExceptionInfo(ctx).c_str());
 		ctx->Release();	
 
 		// Test different signatures on opCmp and opEquals
@@ -362,7 +390,7 @@ bool Test()
 		if( r != asEXECUTION_FINISHED )
 			TEST_FAILED;
 		if( r == asEXECUTION_EXCEPTION )
-			PrintException(ctx);
+			PRINTF("%s", GetExceptionInfo(ctx).c_str());
 		ctx->Release();
 
 		// Multiple tests in one
@@ -379,7 +407,7 @@ bool Test()
 		if( r != asEXECUTION_FINISHED )
 		{
 			if( r == asEXECUTION_EXCEPTION )
-				PrintException(ctx);
+				PRINTF("%s", GetExceptionInfo(ctx).c_str());
 
 			PRINTF("%s: Failed to execute script\n", TESTNAME);
 			TEST_FAILED;
@@ -421,7 +449,7 @@ bool Test()
 		}
 		if( r == asEXECUTION_EXCEPTION )
 		{
-			PrintException(ctx);
+			PRINTF("%s", GetExceptionInfo(ctx).c_str());
 		}
 		if( ctx ) ctx->Release();
 		ctx = 0;
@@ -444,7 +472,7 @@ bool Test()
 		}
 		if( r == asEXECUTION_EXCEPTION )
 		{
-			PrintException(ctx);
+			PRINTF("%s", GetExceptionInfo(ctx).c_str());
 		}
 
 		if( ctx ) ctx->Release();
@@ -458,7 +486,7 @@ bool Test()
 		r = ExecuteString(engine, "TestArrayInitList()", mod, ctx);
 		if( r != asEXECUTION_FINISHED ) TEST_FAILED;
 		if( r == asEXECUTION_EXCEPTION )
-			PrintException(ctx);
+			PRINTF("%s", GetExceptionInfo(ctx).c_str());
 
 		if( ctx ) ctx->Release();
 
@@ -519,17 +547,22 @@ bool Test()
 
 		// Make sure it is possible to do multiple assignments with the array type
 		r = ExecuteString(engine, "array<int> a, b, c; a = b = c;");
-		if( r < 0 )
+		if( r != asEXECUTION_FINISHED )
 			TEST_FAILED;
 
 		// Must support syntax as: array<array<int>>, i.e. without white space between the closing angled brackets.
 		r = ExecuteString(engine, "array<array<int>> a(2); Assert( a.length() == 2 );");
-		if( r < 0 )
+		if( r != asEXECUTION_FINISHED )
 			TEST_FAILED;
 
 		// Must support arrays of handles
 		r = ExecuteString(engine, "array<array<int>@> a(1); @a[0] = @array<int>(4);");
-		if( r < 0 )
+		if( r != asEXECUTION_FINISHED )
+			TEST_FAILED;
+
+		// resize initializes the members to zero
+		r = ExecuteString(engine, "array<int> a; a.resize(2); Assert( a[1] == 0 ); \n");
+		if( r != asEXECUTION_FINISHED )
 			TEST_FAILED;
 
 		// Do not allow the instantiation of a template with a subtype that cannot be created
@@ -540,7 +573,7 @@ bool Test()
 		if( r >= 0 )
 			TEST_FAILED;
 		if( bout.buffer != "array (0, 0) : Error   : The subtype has no default factory\n"
-						   "ExecuteString (1, 7) : Error   : Can't instanciate template 'array' with subtype 'single'\n" )
+						   "ExecuteString (1, 7) : Error   : Can't instantiate template 'array' with subtype 'single'\n" )
 		{
 			PRINTF("%s", bout.buffer.c_str());
 			TEST_FAILED;
@@ -951,7 +984,7 @@ bool Test()
 		if( r > 0 ) 
 			TEST_FAILED;
 		if( bout.buffer != "array (0, 0) : Error   : The subtype has no default factory\n"
-						   "script (5, 7) : Error   : Can't instanciate template 'array' with subtype 'CTest'\n" )
+						   "script (5, 7) : Error   : Can't instantiate template 'array' with subtype 'CTest'\n" )
 		{
 			PRINTF("%s", bout.buffer.c_str());
 			TEST_FAILED;
@@ -1163,7 +1196,7 @@ bool Test()
 		if( r != asEXECUTION_FINISHED )
 			TEST_FAILED;
 		if( r == asEXECUTION_EXCEPTION )
-			PrintException(ctx);
+			PRINTF("%s", GetExceptionInfo(ctx).c_str());
 
 		ctx->Release();
 		

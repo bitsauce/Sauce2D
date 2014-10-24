@@ -150,6 +150,101 @@ bool Test()
 	CBufferedOutStream bout;
 	COutStream out;
 
+	// Test implicit cast in arg using the constructor
+	// TODO: Add this support (only for value types for now)
+	// http://www.gamedev.net/topic/660695-passing-strings-inline/
+/*	{
+		engine = asCreateScriptEngine(ANGELSCRIPT_VERSION);
+		engine->SetMessageCallback(asMETHOD(COutStream, Callback), &out, asCALL_THISCALL);
+
+		RegisterStdString(engine);
+
+		r = engine->RegisterObjectType("EventArg", 4, asOBJ_VALUE); assert( r >= 0 );
+		r = engine->RegisterObjectBehaviour("EventArg", asBEHAVE_CONSTRUCT, "void f(const string &in)", asFUNCTION(0), asCALL_GENERIC); assert( r >= 0 );
+		r = engine->RegisterObjectBehaviour("EventArg", asBEHAVE_CONSTRUCT, "void f(const float)", asFUNCTION(0), asCALL_GENERIC); assert( r >= 0 );
+		r = engine->RegisterObjectBehaviour("EventArg", asBEHAVE_CONSTRUCT, "void f(const EventArg &in)", asFUNCTION(0), asCALL_GENERIC); assert( r >= 0 );
+		r = engine->RegisterObjectBehaviour("EventArg", asBEHAVE_CONSTRUCT, "void f()", asFUNCTION(0), asCALL_GENERIC); assert( r >= 0 );
+		r = engine->RegisterObjectBehaviour("EventArg", asBEHAVE_DESTRUCT, "void f()", asFUNCTION(0), asCALL_GENERIC); assert( r >= 0 );
+
+		r = engine->RegisterGlobalFunction("void sendEvent(const uint, EventArg = EventArg(), EventArg = EventArg(), EventArg = EventArg(), EventArg = EventArg())", asFUNCTION(0), asCALL_GENERIC); assert( r >= 0 );
+
+		asIScriptModule *mod = engine->GetModule("test", asGM_ALWAYS_CREATE);
+		mod->AddScriptSection("test",
+			"void main() { \n"
+			"  sendEvent(123, 'string', 1.234f); \n"
+			"  string str = 'string'; \n"
+			"  sendEvent(123, str, 1.234f); \n"
+			"  EventArg a = 'string'; \n"
+			"} \n");
+		r = mod->Build();
+		if( r < 0 )
+			TEST_FAILED;
+
+		engine->Release();
+	} */
+
+	// Test bug fix for implicit conv and math operations
+	// http://www.gamedev.net/topic/661765-implicit-convert-math-bug/
+	{
+		engine = asCreateScriptEngine(ANGELSCRIPT_VERSION);
+		engine->SetMessageCallback(asMETHOD(COutStream, Callback), &out, asCALL_THISCALL);
+		engine->RegisterGlobalFunction("void assert(bool)", asFUNCTION(Assert), asCALL_GENERIC);
+
+		const char *script = 
+			"int x = 1;\n"
+			"class A\n"
+			"{\n"
+			"	int val;\n"
+			"	A(int x)\n"
+			"	{\n"
+			"		val = x;\n"
+			"	}\n"
+			"	int opImplConv()\n"
+			"	{\n"
+			"		return val;\n"
+			"	}\n"
+			"}\n"
+			"A myA(5);\n"
+			"void main()\n"
+			"{\n"
+			"	assert(myA + (x + 1) == myA + x + 1);\n"
+			"}\n";
+
+		asIScriptModule *mod = engine->GetModule("test", asGM_ALWAYS_CREATE);
+		mod->AddScriptSection("test", script);
+		r = mod->Build();
+		if( r < 0 )
+			TEST_FAILED;
+
+		r = ExecuteString(engine, "main()", mod);
+		if( r != asEXECUTION_FINISHED )
+			TEST_FAILED;
+
+		engine->Release();
+	}
+
+	// Test global var with implicit cast
+	// http://www.gamedev.net/topic/659415-implicit-downcast-not-works/
+	{
+		engine = asCreateScriptEngine(ANGELSCRIPT_VERSION);
+		engine->SetMessageCallback(asMETHOD(COutStream, Callback), &out, asCALL_THISCALL);
+
+		asIScriptModule *mod = engine->GetModule("test", asGM_ALWAYS_CREATE);
+		mod->AddScriptSection("test",
+			"class A \n"
+			"{ \n"
+			"} \n"
+			"class B : A \n"
+			"{ \n"
+			"} \n"
+			"A@ a = B(); \n");
+		r = mod->Build();
+		if( r < 0 )
+			TEST_FAILED;
+
+		engine->Release();
+	}
+
 	// Test problem reported by Amer Koleci
 	// It was causing assert failure as the compiler tried to release the same temporary variable twice
 	{
@@ -235,7 +330,7 @@ bool Test()
 	if( r != 0 )
 	{
 		if( r == 3 )
-			PrintException(ctx);
+			PRINTF("%s", GetExceptionInfo(ctx).c_str());
 		TEST_FAILED;
 	}
 	if( ctx ) ctx->Release();
@@ -552,7 +647,7 @@ bool Test()
 		if( r != asEXECUTION_FINISHED )
 			TEST_FAILED;
 		if( r == asEXECUTION_EXCEPTION )
-			PrintException(ctx);
+			PRINTF("%s", GetExceptionInfo(ctx).c_str());
 		ctx->Release();
 
 		// Various situations with ref casts on null pointers
@@ -748,6 +843,77 @@ bool Test()
 			"  x.dbl = 3.5; \n"
 			"  double y = x * 2; \n" // the implicit cast should choose double, since it has better precision
 			"  assert( y == 7 ); \n"
+			"} \n");
+		r = mod->Build();
+		if( r < 0 )
+			TEST_FAILED;
+
+		r = ExecuteString(engine, "main()", mod);
+		if( r != asEXECUTION_FINISHED ) 
+			TEST_FAILED;
+
+		engine->Release();
+	}
+
+	// Test opImplConv in script class
+	// Test math operator with primitive and object type with implicit cast to primitive
+	{
+		engine = asCreateScriptEngine(ANGELSCRIPT_VERSION);
+
+		engine->SetMessageCallback(asMETHOD(COutStream, Callback), &out, asCALL_THISCALL);
+
+		engine->RegisterGlobalFunction("void assert(bool)", asFUNCTION(Assert), asCALL_GENERIC);
+
+		asIScriptModule *mod = engine->GetModule("test", asGM_ALWAYS_CREATE);
+		mod->AddScriptSection("test",
+			"class type { \n"
+			"  double dbl; \n"
+			"  double opImplConv() { return dbl; } \n"
+			"  int opImplConv() { return int(dbl); } \n"
+			"} \n"
+			"void main() \n"
+			"{ \n"
+			"  type x; \n"
+			"  x.dbl = 3.5; \n"
+			"  double y = x * 2; \n" // the implicit cast should choose double, since it has better precision
+			"  assert( y == 7 ); \n"
+			"} \n");
+		r = mod->Build();
+		if( r < 0 )
+			TEST_FAILED;
+
+		r = ExecuteString(engine, "main()", mod);
+		if( r != asEXECUTION_FINISHED ) 
+			TEST_FAILED;
+
+		engine->Release();
+	}
+
+	// Test inheriting opConv and adding others
+	{
+		engine = asCreateScriptEngine(ANGELSCRIPT_VERSION);
+
+		engine->SetMessageCallback(asMETHOD(COutStream, Callback), &out, asCALL_THISCALL);
+
+		engine->RegisterGlobalFunction("void assert(bool)", asFUNCTION(Assert), asCALL_GENERIC);
+
+		asIScriptModule *mod = engine->GetModule("test", asGM_ALWAYS_CREATE);
+		mod->AddScriptSection("test",
+			"class base { \n"
+			"  double dbl; \n"
+			"  double opConv() { return dbl; } \n"
+			"} \n"
+			"class derived : base { \n"
+			"  int opConv() { return int(dbl); } \n"
+			"} \n"
+			"void main() \n"
+			"{ \n"
+			"  derived x; \n"
+			"  x.dbl = 3.5; \n"
+			"  double y = double(x) * 2; \n"
+			"  assert( y == 7 ); \n"
+			"  int z = int(x) * 2; \n"
+			"  assert( z == 6 ); \n"
 			"} \n");
 		r = mod->Build();
 		if( r < 0 )

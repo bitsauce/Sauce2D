@@ -208,6 +208,14 @@ bool TestStdString()
 	ExecuteString(engine, "print(1.2 + \"a\")");
 	if( printOutput != "1.2a") TEST_FAILED;
 
+	printOutput = "";
+	ExecuteString(engine, "print('' + -9223372036854775808)");
+	if( printOutput != "-9223372036854775808") TEST_FAILED;
+
+	printOutput = "";
+	ExecuteString(engine, "print(formatInt(-9223372036854775808, ''))");
+	if( printOutput != "-9223372036854775808") TEST_FAILED;
+
 	ExecuteString(engine, "StringByVal(\"test\", \"test\")");
 
 	mod = engine->GetModule(0, asGM_ALWAYS_CREATE);
@@ -315,7 +323,7 @@ bool TestStdString()
 		asIScriptContext *ctx = engine->CreateContext();
 		r = ExecuteString(engine, "save_settings();", mod, ctx);
 		if( r == asEXECUTION_EXCEPTION )
-			PrintException(ctx);
+			PRINTF("%s", GetExceptionInfo(ctx).c_str());
 		if( r != asEXECUTION_FINISHED )
 			TEST_FAILED;
 		ctx->Release();

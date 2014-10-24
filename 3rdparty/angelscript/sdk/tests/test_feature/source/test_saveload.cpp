@@ -332,12 +332,171 @@ public:
 
 bool TestAndrewPrice();
 
+static asIScriptFunction *g_func = 0;
+
 bool Test()
 {
 	int r;
 	COutStream out;
+	CBufferedOutStream bout;
 	asIScriptEngine* engine;
 	asIScriptModule* mod;
+
+	// Test save/load with funcdef and imported functions
+	// http://www.gamedev.net/topic/657621-using-global-funcdef-setter-with-imported-function-gives-assert-or-invalid-bytecode/
+	{
+		asIScriptEngine *engine = asCreateScriptEngine(ANGELSCRIPT_VERSION);
+		engine->SetMessageCallback(asMETHOD(COutStream, Callback), &out, asCALL_THISCALL);
+
+		struct T
+		{
+			static void set_funcdef_var(asIScriptFunction*f) { if( g_func ) g_func->Release(); g_func = f; }
+		};
+
+		const char *script =
+			"import void bar() from \"somewhere\";"
+			"void test1(){ @foo = test2; }"
+			"void test2(){ @foo = bar;   }";
+
+		engine->RegisterFuncdef( "void MyVoid()" );
+		engine->RegisterGlobalFunction( "void set_foo(MyVoid@)", asFUNCTION(T::set_funcdef_var), asCALL_CDECL );
+
+		asIScriptModule* module = engine->GetModule( "script", asGM_ALWAYS_CREATE );
+		module->AddScriptSection( "script", script );
+		if( module->Build() < 0 ) // assert (-DNDEBUG not present)
+			TEST_FAILED;
+
+		r = ExecuteString(engine, "test2()", module);
+		if( r != asEXECUTION_FINISHED )
+			TEST_FAILED;
+
+		if( g_func == 0 || string(g_func->GetName()) != "bar" )
+			TEST_FAILED;
+
+		asIScriptContext *ctx = engine->CreateContext();
+		ctx->Prepare(g_func);
+		r = ctx->Execute();
+		if( r != asEXECUTION_EXCEPTION ) // should fail since the imported function is not bound
+			TEST_FAILED;
+		if( string(ctx->GetExceptionString()) == "Unbound function called" )
+		ctx->Release();
+
+		CBytecodeStream bytecode("");
+		if( module->SaveByteCode( &bytecode ) < 0 )
+			TEST_FAILED;
+
+		asIScriptModule* module_bytecode = engine->GetModule( "script_bytecode", asGM_ALWAYS_CREATE );
+		if( module_bytecode->LoadByteCode( &bytecode ) < 0 ) // error (-DNDEBUG present)
+			TEST_FAILED;
+
+		if( g_func )
+		{
+			g_func->Release();
+			g_func = 0;
+		}
+
+		r = ExecuteString(engine, "test2()", module);
+		if( r != asEXECUTION_FINISHED )
+			TEST_FAILED;
+
+		if( g_func == 0 || string(g_func->GetName()) != "bar" )
+			TEST_FAILED;
+
+		if( g_func )
+		{
+			g_func->Release();
+			g_func = 0;
+		}
+
+		engine->Release();
+	}
+
+	// Test saving and loading with template in a namespace
+	// http://www.gamedev.net/topic/658862-loading-bytecode-bug/
+	{
+		asIScriptEngine *engine = asCreateScriptEngine(ANGELSCRIPT_VERSION);
+		engine->SetMessageCallback(asMETHOD(COutStream, Callback), &out, asCALL_THISCALL);
+
+		engine->SetDefaultNamespace( "reflection" );
+		engine->RegisterObjectType( "type", sizeof( 4 ), asOBJ_VALUE | asOBJ_POD | asOBJ_APP_CLASS );
+		engine->RegisterObjectType( "typeof<class T>", 0, asOBJ_REF | asOBJ_TEMPLATE | asOBJ_NOCOUNT);
+		engine->RegisterObjectBehaviour("typeof<T>", asBEHAVE_FACTORY, "typeof<T> @f(int&in)", asFUNCTION(0), asCALL_GENERIC);
+		engine->RegisterObjectBehaviour("typeof<T>", asBEHAVE_IMPLICIT_VALUE_CAST, "type f()", asFUNCTION(0), asCALL_GENERIC);
+		engine->SetDefaultNamespace( "" );
+
+		asIScriptModule *mod = engine->GetModule("mod", asGM_ALWAYS_CREATE);
+		mod->AddScriptSection("test",
+			"class A {} \n"
+			"void func() { \n"
+			"  reflection::type t = reflection::typeof<A>(); \n"
+			"} \n");
+		r = mod->Build();
+		if( r < 0 )
+			TEST_FAILED;
+
+		CBytecodeStream stream(__FILE__"1");
+		mod->SaveByteCode(&stream);
+
+		if( mod->LoadByteCode(&stream) != 0 )
+			TEST_FAILED;
+		
+		engine->Release();
+	}
+
+	// Test loading bytecode that tries to access objects that don't exist
+	// This test is designed to fail loading when loading the bytecode for 
+	// the a function, thus testing that the clean up is appropriate
+	{
+		asIScriptEngine *engine = asCreateScriptEngine(ANGELSCRIPT_VERSION);
+		engine->SetMessageCallback(asMETHOD(COutStream, Callback), &out, asCALL_THISCALL);
+
+		engine->SetDefaultNamespace( "reflection" );
+		engine->RegisterObjectType( "type", sizeof( 4 ), asOBJ_VALUE | asOBJ_POD | asOBJ_APP_CLASS );
+		engine->RegisterObjectType( "typeof<class T>", 0, asOBJ_REF | asOBJ_TEMPLATE | asOBJ_NOCOUNT);
+		engine->RegisterObjectBehaviour("typeof<T>", asBEHAVE_FACTORY, "typeof<T> @f(int&in)", asFUNCTION(0), asCALL_GENERIC);
+		engine->RegisterObjectBehaviour("typeof<T>", asBEHAVE_IMPLICIT_VALUE_CAST, "type f()", asFUNCTION(0), asCALL_GENERIC);
+		engine->SetDefaultNamespace( "" );
+
+		asIScriptModule *mod = engine->GetModule("mod", asGM_ALWAYS_CREATE);
+		mod->AddScriptSection("test",
+			"class A {} \n"
+			"void func() { \n"
+			"  reflection::type t = reflection::typeof<A>(); \n"
+			"} \n");
+		r = mod->Build();
+		if( r < 0 )
+			TEST_FAILED;
+
+		CBytecodeStream stream(__FILE__"1");
+		mod->SaveByteCode(&stream);
+
+		engine->Release();
+
+		// Recreate the engine without the template type
+		engine = asCreateScriptEngine(ANGELSCRIPT_VERSION);
+		engine->SetMessageCallback(asMETHOD(CBufferedOutStream, Callback), &bout, asCALL_THISCALL);
+
+		bout.buffer = "";
+		engine->SetDefaultNamespace( "reflection" );
+		engine->RegisterObjectType( "type", sizeof( 4 ), asOBJ_VALUE | asOBJ_POD | asOBJ_APP_CLASS );
+//		engine->RegisterObjectType( "typeof<class T>", 0, asOBJ_REF | asOBJ_TEMPLATE | asOBJ_NOCOUNT);
+//		engine->RegisterObjectBehaviour("typeof<T>", asBEHAVE_FACTORY, "typeof<T> @f(int&in)", asFUNCTION(0), asCALL_GENERIC);
+//		engine->RegisterObjectBehaviour("typeof<T>", asBEHAVE_IMPLICIT_VALUE_CAST, "type f()", asFUNCTION(0), asCALL_GENERIC);
+		engine->SetDefaultNamespace( "" );
+
+		mod = engine->GetModule("mod", asGM_ALWAYS_CREATE);
+		if( mod->LoadByteCode(&stream) >= 0 )
+			TEST_FAILED;
+		
+		if( bout.buffer != " (0, 0) : Error   : Template type 'typeof' doesn't exist\n"
+						   " (0, 0) : Error   : LoadByteCode failed. The bytecode is invalid. Number of bytes read from stream: 141\n" )
+		{
+			PRINTF("%s", bout.buffer.c_str());
+			TEST_FAILED;
+		}
+
+		engine->Release();
+	}
 
 	// Test saving and loading script with string literal
 	{
@@ -721,23 +880,23 @@ bool Test()
 		mod->SaveByteCode(&stream2, true);
 
 #ifndef STREAM_TO_FILE
-		if( stream.buffer.size() != 2445 )
+		if( stream.buffer.size() != 2488 )
 			PRINTF("The saved byte code is not of the expected size. It is %d bytes\n", stream.buffer.size());
 		asUINT zeroes = stream.CountZeroes();
-		if( zeroes != 532 )
+		if( zeroes != 575 )
 		{
 			PRINTF("The saved byte code contains a different amount of zeroes than the expected. Counted %d\n", zeroes);
 			// Mac OS X PPC has more zeroes, probably due to the bool type being 4 bytes
 		}
 		asDWORD crc32 = ComputeCRC32(&stream.buffer[0], asUINT(stream.buffer.size()));
-		if( crc32 != 0xF97C86D7 )
+		if( crc32 != 0x8BD3DACC )
 			PRINTF("The saved byte code has different checksum than the expected. Got 0x%X\n", crc32);
 
 		// Without debug info
-		if( stream2.buffer.size() != 2046 )
+		if( stream2.buffer.size() != 2086 )
 			PRINTF("The saved byte code without debug info is not of the expected size. It is %d bytes\n", stream2.buffer.size());
 		zeroes = stream2.CountZeroes();
-		if( zeroes != 421 )
+		if( zeroes != 461 )
 			PRINTF("The saved byte code without debug info contains a different amount of zeroes than the expected. Counted %d\n", zeroes);
 #endif
 		// Test loading without releasing the engine first
@@ -1009,7 +1168,7 @@ bool Test()
 			r = ExecuteString(engine, "g_inGame.Initialize(0);", mod, ctx);
 			if( r != asEXECUTION_FINISHED )
 			{
-				if( r == asEXECUTION_EXCEPTION ) PrintException(ctx);
+				if( r == asEXECUTION_EXCEPTION ) PRINTF("%s", GetExceptionInfo(ctx).c_str());
 				TEST_FAILED;
 			}
 			if( ctx ) ctx->Release();
@@ -1068,7 +1227,7 @@ bool Test()
 			r = ExecuteString(engine, "Initialize();", mod, ctx);
 			if( r != asEXECUTION_FINISHED )
 			{
-				if( r == asEXECUTION_EXCEPTION ) PrintException(ctx);
+				if( r == asEXECUTION_EXCEPTION ) PRINTF("%s", GetExceptionInfo(ctx).c_str());
 				TEST_FAILED;
 			}
 			if( ctx ) ctx->Release();
@@ -1643,8 +1802,8 @@ bool Test()
 		if( r >= 0 )
 			TEST_FAILED;
 
-		if( bout.buffer != " (0, 0) : Error   : Attempting to instanciate invalid template type 'tmpl<int>'\n"
-			               " (0, 0) : Error   : LoadByteCode failed. The bytecode is invalid. Number of bytes read from stream: 120\n" )
+		if( bout.buffer != " (0, 0) : Error   : Attempting to instantiate invalid template type 'tmpl<int>'\n"
+			               " (0, 0) : Error   : LoadByteCode failed. The bytecode is invalid. Number of bytes read from stream: 124\n" )
 		{
 			PRINTF("%s", bout.buffer.c_str());
 			TEST_FAILED;
@@ -1943,7 +2102,7 @@ bool TestAndrewPrice()
 			TEST_FAILED;
 
 		if( bout.buffer != " (0, 0) : Error   : Template type 'array' doesn't exist\n"
-			               " (0, 0) : Error   : LoadByteCode failed. The bytecode is invalid. Number of bytes read from stream: 14\n" )
+			               " (0, 0) : Error   : LoadByteCode failed. The bytecode is invalid. Number of bytes read from stream: 15\n" )
 		{
 			PRINTF("%s", bout.buffer.c_str());
 			TEST_FAILED;
@@ -1957,7 +2116,7 @@ bool TestAndrewPrice()
 			TEST_FAILED;
 
 		if( bout.buffer != " (0, 0) : Error   : Object type 'char_ptr' doesn't exist\n"
-						   " (0, 0) : Error   : LoadByteCode failed. The bytecode is invalid. Number of bytes read from stream: 22\n" )
+						   " (0, 0) : Error   : LoadByteCode failed. The bytecode is invalid. Number of bytes read from stream: 23\n" )
 		{
 			PRINTF("%s", bout.buffer.c_str());
 			TEST_FAILED;

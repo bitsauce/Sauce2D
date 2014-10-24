@@ -164,6 +164,36 @@ MyDualTmpl *MyDualTmpl_factory(asIObjectType *type)
 	return new MyDualTmpl(type);
 }
 
+// A value type as template
+class MyValueTmpl
+{
+public:
+	MyValueTmpl(asIObjectType *type) : ot(type) 
+	{ 
+		ot->AddRef(); 
+		isSet = false;
+	}
+	MyValueTmpl(asIObjectType *type, const MyValueTmpl &other) : ot(type)
+	{
+		ot->AddRef();
+		isSet = false;
+		assert( ot == other.ot );
+	}
+	~MyValueTmpl()
+	{ 
+		ot->Release(); 
+	}
+
+	std::string GetSubType() { isSet = true; return std::string(ot->GetEngine()->GetTypeDeclaration(ot->GetSubTypeId())); }
+
+	static void Construct(asIObjectType *type, void *mem) { new(mem) MyValueTmpl(type); }
+	static void CopyConstruct(asIObjectType *type, const MyValueTmpl &other, void *mem) { new(mem) MyValueTmpl(type, other); }
+	static void Destruct(MyValueTmpl *obj) { obj->~MyValueTmpl(); }
+
+	asIObjectType *ot;
+	bool isSet;
+};
+
 bool Test()
 {
 	RET_ON_MAX_PORT
@@ -172,6 +202,123 @@ bool Test()
 	int r;
 	COutStream out;
 	CBufferedOutStream bout;
+
+	// Use of second template in first template's arguments
+	// http://www.gamedev.net/topic/660932-variable-parameter-type-to-accept-only-handles-during-compile-also-more-template-woes/
+	{
+		asIScriptEngine *engine = asCreateScriptEngine(ANGELSCRIPT_VERSION);
+		engine->SetMessageCallback(asMETHOD(CBufferedOutStream, Callback), &bout, asCALL_THISCALL);
+		bout.buffer = "";
+
+		r = engine->RegisterObjectType("List<class T>", 0, asOBJ_REF | asOBJ_TEMPLATE | asOBJ_NOCOUNT); assert( r >= 0 );
+		r = engine->RegisterObjectBehaviour("List<T>", asBEHAVE_FACTORY, "List<T> @f(int&in)", asFUNCTION(0), asCALL_GENERIC); assert( r >= 0 );
+
+		r = engine->RegisterObjectType("List_iterator<class T2>", 0, asOBJ_REF | asOBJ_TEMPLATE | asOBJ_NOCOUNT); assert( r >= 0 );
+		r = engine->RegisterObjectBehaviour("List_iterator<T2>", asBEHAVE_FACTORY, "List_iterator<T2> @f(int&in, List<T2>&)", asFUNCTION(0), asCALL_GENERIC); assert( r >= 0 );
+		r = engine->RegisterObjectMethod("List_iterator<T2>", "void test(List<T2>&)", asFUNCTION(0), asCALL_GENERIC); assert( r >= 0 );
+
+		// Add a circular reference between the two template types
+		r = engine->RegisterObjectMethod("List<T>", "List_iterator<T> @begin()", asFUNCTION(0), asCALL_GENERIC); assert( r >= 0 );
+
+		r = engine->RegisterObjectType("Two_lists<class T1, class T2>", 0, asOBJ_REF | asOBJ_TEMPLATE | asOBJ_NOCOUNT); assert( r >= 0 );
+		r = engine->RegisterObjectBehaviour("Two_lists<T1,T2>", asBEHAVE_FACTORY, "Two_lists<T1,T2> @f(int&in)", asFUNCTION(0), asCALL_GENERIC); assert( r >= 0 );
+		r = engine->RegisterObjectMethod("Two_lists<T1,T2>", "void test(List<T1>&,List<T2>&)", asFUNCTION(0), asCALL_GENERIC); assert( r >= 0 );
+		
+		asIScriptModule *mod = engine->GetModule("Test",asGM_ALWAYS_CREATE);
+		mod->AddScriptSection("test", 
+			"void func() { \n"
+			"  List<int> list; \n"
+			"  List_iterator<int> @it = List_iterator<int>(list); \n"
+			"  it.test(list); \n"
+			"  @it = list.begin(); \n"
+			"  Two_lists<int,float> t; \n"
+			"  t.test(list, List<float>()); \n"
+			"} \n");
+		r = mod->Build();
+		if( r < 0 )
+			TEST_FAILED;
+
+		if( bout.buffer != "" )
+		{
+			PRINTF("%s", bout.buffer.c_str());
+			TEST_FAILED;
+		}
+
+		engine->Release();
+	}
+
+	// Properties in templates
+	{
+		asIScriptEngine *engine = asCreateScriptEngine(ANGELSCRIPT_VERSION);
+		engine->SetMessageCallback(asMETHOD(CBufferedOutStream, Callback), &bout, asCALL_THISCALL);
+		bout.buffer = "";
+		engine->RegisterGlobalFunction("void assert(bool)", asFUNCTION(Assert), asCALL_GENERIC);
+		RegisterStdString(engine);
+
+		r = engine->RegisterObjectType("MyValueTmpl<class T>", sizeof(MyValueTmpl), asOBJ_VALUE | asOBJ_TEMPLATE);
+		if( r < 0 ) TEST_FAILED;
+		r = engine->RegisterObjectBehaviour("MyValueTmpl<T>", asBEHAVE_CONSTRUCT, "void f(int&in)", asFUNCTION(MyValueTmpl::Construct), asCALL_CDECL_OBJLAST);
+		if( r < 0 ) TEST_FAILED;
+		r = engine->RegisterObjectBehaviour("MyValueTmpl<T>", asBEHAVE_CONSTRUCT, "void f(int&in, const MyValueTmpl<T> &in)", asFUNCTION(MyValueTmpl::CopyConstruct), asCALL_CDECL_OBJLAST);
+		if( r < 0 ) TEST_FAILED;
+		r = engine->RegisterObjectBehaviour("MyValueTmpl<T>", asBEHAVE_DESTRUCT, "void f()", asFUNCTION(MyValueTmpl::Destruct), asCALL_CDECL_OBJLAST);
+		if( r < 0 ) TEST_FAILED;
+		r = engine->RegisterObjectProperty("MyValueTmpl<T>", "bool isSet", asOFFSET(MyValueTmpl, isSet));
+		if( r < 0 ) TEST_FAILED;
+		r = engine->RegisterObjectMethod("MyValueTmpl<T>", "string GetSubType()", asMETHOD(MyValueTmpl, GetSubType), asCALL_THISCALL);
+		if( r < 0 ) TEST_FAILED;
+
+		r = ExecuteString(engine, "MyValueTmpl<int> t; \n"
+			"assert( t.isSet == false ); \n"
+			"t.GetSubType(); \n"
+			"assert( t.isSet == true ); \n");
+		if( r != asEXECUTION_FINISHED )
+			TEST_FAILED;
+
+		if( bout.buffer != "" )
+		{
+			PRINTF("%s", bout.buffer.c_str());
+			TEST_FAILED;
+		}
+
+		engine->Release();
+	}
+
+	// Value types can also be registered as templates
+	{
+		asIScriptEngine *engine = asCreateScriptEngine(ANGELSCRIPT_VERSION);
+		engine->SetMessageCallback(asMETHOD(CBufferedOutStream, Callback), &bout, asCALL_THISCALL);
+		bout.buffer = "";
+		engine->RegisterGlobalFunction("void assert(bool)", asFUNCTION(Assert), asCALL_GENERIC);
+		RegisterStdString(engine);
+
+		r = engine->RegisterObjectType("MyValueTmpl<class T>", sizeof(MyValueTmpl), asOBJ_VALUE | asOBJ_TEMPLATE);
+		if( r < 0 ) TEST_FAILED;
+		r = engine->RegisterObjectBehaviour("MyValueTmpl<T>", asBEHAVE_CONSTRUCT, "void f(int&in)", asFUNCTION(MyValueTmpl::Construct), asCALL_CDECL_OBJLAST);
+		if( r < 0 ) TEST_FAILED;
+		r = engine->RegisterObjectBehaviour("MyValueTmpl<T>", asBEHAVE_CONSTRUCT, "void f(int&in, const MyValueTmpl<T> &in)", asFUNCTION(MyValueTmpl::CopyConstruct), asCALL_CDECL_OBJLAST);
+		if( r < 0 ) TEST_FAILED;
+		r = engine->RegisterObjectBehaviour("MyValueTmpl<T>", asBEHAVE_DESTRUCT, "void f()", asFUNCTION(MyValueTmpl::Destruct), asCALL_CDECL_OBJLAST);
+		if( r < 0 ) TEST_FAILED;
+		r = engine->RegisterObjectMethod("MyValueTmpl<T>", "string GetSubType()", asMETHOD(MyValueTmpl, GetSubType), asCALL_THISCALL);
+		if( r < 0 ) TEST_FAILED;
+
+		r = ExecuteString(engine, 
+			"MyValueTmpl<int> t; \n"
+			"assert( t.GetSubType() == 'int' ); \n"
+			"MyValueTmpl<int> c(t); \n"
+			"assert( c.GetSubType() == 'int' ); \n");
+		if( r != asEXECUTION_FINISHED )
+			TEST_FAILED;
+
+		if( bout.buffer != "" )
+		{
+			PRINTF("%s", bout.buffer.c_str());
+			TEST_FAILED;
+		}
+
+		engine->Release();
+	}
 
 	// Test error messages when registering the template type incorrectly
 	{
@@ -613,7 +760,7 @@ bool Test()
 			TEST_FAILED;
 		}
 
-		if( bout.buffer != "ExecuteString (1, 8) : Error   : Can't instanciate template 'MyTmpl' with subtype 'int'\n" )
+		if( bout.buffer != "ExecuteString (1, 8) : Error   : Can't instantiate template 'MyTmpl' with subtype 'int'\n" )
 		{
 			PRINTF("%s", bout.buffer.c_str());
 			TEST_FAILED;
@@ -710,9 +857,9 @@ bool Test()
 		if( r >= 0 )
 			TEST_FAILED;
 		if( bout.buffer != "mod (1, 7) : Info    : Compiling T::T()\n"
-		                   "mod (1, 23) : Error   : No default constructor for object of type 'MyTmpl'.\n"
+						   "mod (1, 23) : Error   : No default constructor for object of type 'MyTmpl'.\n"
 						   "mod (2, 26) : Info    : Compiling S::S()\n"
-		                   "mod (2, 34) : Error   : No appropriate opAssign method found in 'MyTmpl'\n"
+						   "mod (2, 34) : Error   : No appropriate opAssign method found in 'MyTmpl' for value assignment\n"
 						   "mod (2, 23) : Error   : No default constructor for object of type 'MyTmpl'.\n" )
 		{
 			PRINTF("%s", bout.buffer.c_str());
@@ -735,7 +882,7 @@ bool Test()
 	// Reported by slicer4ever
 	// http://www.gamedev.net/topic/632288-registering-specialized-template-class/
 	{
-		engine = asCreateScriptEngine(ANGELSCRIPT_VERSION);
+		asIScriptEngine *engine = asCreateScriptEngine(ANGELSCRIPT_VERSION);
 		engine->SetMessageCallback(asMETHOD(COutStream, Callback), &out, asCALL_THISCALL);
 
 		r = engine->RegisterObjectType("ConvexHull", 0, asOBJ_REF|asOBJ_NOCOUNT);

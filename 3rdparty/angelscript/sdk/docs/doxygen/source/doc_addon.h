@@ -246,6 +246,9 @@ and \ref doc_adv_coroutine "co-routines".
 If the application doesn't need multiple contexts, i.e. all scripts that are executed 
 always complete before the next script is executed, then this class is not necessary.
 
+The context manager uses \ref asIScriptEngine::RequestContext to take advantage of any context
+callbacks registered with the engine, e.g. for debugging or pooling.
+
 Multiple context managers can be used, for example when you have a group of scripts controlling 
 in-game objects, and another group of scripts controlling GUI elements, then each of these groups
 may be managed by different context managers.
@@ -294,7 +297,8 @@ public:
   // Execute each script that is not currently sleeping. The function returns after 
   // each script has been executed once. The application should call this function
   // for each iteration of the message pump, or game loop, or whatever.
-  void ExecuteScripts();
+  // Returns the number of scripts still in execution.
+  int ExecuteScripts();
 
   // Put a script to sleep for a while
   void SetSleeping(asIScriptContext *ctx, asUINT milliSeconds);
@@ -410,7 +414,7 @@ public:
 
 \section doc_addon_array_4 C++ example
 
-This function shows how a script array can be instanciated 
+This function shows how a script array can be instantiated 
 from the application and then passed to the script.
 
 \code
@@ -427,7 +431,7 @@ CScriptArray *CreateArrayOfStrings()
     // The script array needs to know its type to properly handle the elements.
     // Note that the object type should be cached to avoid performance issues
     // if the function is called frequently.
-    asIObjectType* t = engine->GetObjectTypeById(engine->GetTypeIdByDecl("array<string>"));
+    asIObjectType* t = engine->GetObjectTypeByDecl("array<string>");
 
     // Create an array with the initial size of 3 elements
     CScriptArray* arr = CScriptArray::Create(t, 3);
@@ -1232,7 +1236,8 @@ public:
   //         <0 on error
   int AddSectionFromMemory(const char *sectionName,
                            const char *scriptCode, 
-                           unsigned int scriptLength = 0);
+                           unsigned int scriptLength = 0,
+                           int lineOffset = 0);
 
   // Build the added script sections
   int BuildModule();
@@ -1494,6 +1499,13 @@ int ExecuteString(asIScriptEngine *engine, const char *code, asIScriptModule *mo
 // The caller can optionally provide its own context, for example if a context should be reused.
 int ExecuteString(asIScriptEngine *engine, const char *code, void *ret, int retTypeId, asIScriptModule *mod = 0, asIScriptContext *ctx = 0);
 
+// Format the details of the script exception into a human readable text.
+// Whenever the asIScriptContext::Execute method returns asEXECUTION_EXCEPTION, the application 
+// can call this function to get more information about that exception in a human readable form.
+// The information obtained includes the current function, the script source section, 
+// program position in the source section, and the exception description itself.
+std::string GetExceptionInfo(asIScriptContext *ctx, bool showStack = false);
+
 // Write registered application interface to file.
 // This function creates a file with the configuration for the offline compiler, asbuild, in the samples.
 // If you wish to use the offline compiler you should call this function from you application after the 
@@ -1501,21 +1513,13 @@ int ExecuteString(asIScriptEngine *engine, const char *code, void *ret, int retT
 // file manually.
 int WriteConfigToFile(asIScriptEngine *engine, const char *filename);
 
-\todo WriteConfigToStream, ConfigEngineFromStream
+// Write the registered application interface to a text stream. 
+int WriteConfigToStream(asIScriptEngine *engine, std::ostream &strm); 
 
-// Print information on script exception to the standard output.
-// Whenever the asIScriptContext::Execute method returns asEXECUTION_EXCEPTION, the application 
-// can call this function to print some more information about that exception onto the standard
-// output. The information obtained includes the current function, the script source section, 
-// program position in the source section, and the exception description itself.
-void PrintException(asIScriptContext *ctx, bool printStack = false);
-
-// Determine the application type flags to use when registering the object type as a value type with 
-// AngelScript. The function is not capable of determining the flags that describes the content of the 
-// type though, so those flags must still be informed manually if needed. This template function will 
-// only compile correctly if the C++ compiler supports the C++11 standard. 
-template<typename T>
-asUINT GetTypeTraits();
+// Loads an interface from a text stream and configures the engine with it. This will not 
+// set the correct function pointers, so it is not possible to use this engine to execute
+// scripts, but it can be used to compile scripts and save the byte code.
+int ConfigEngineFromStream(asIScriptEngine *engine, std::istream &strm, const char *nameOfStream = "config");
 \endcode
 
 \section doc_addon_helpers_2 Example

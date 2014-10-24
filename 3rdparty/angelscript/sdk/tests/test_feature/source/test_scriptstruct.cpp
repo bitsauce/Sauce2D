@@ -367,6 +367,68 @@ bool Test()
 	// object while the asCSriptObject destructor is cleaning up the members
 	fail = ProjectClover::Test_main();
 
+
+	// Test abstract classes
+	{
+		engine = asCreateScriptEngine(ANGELSCRIPT_VERSION);
+
+		engine->SetMessageCallback(asMETHOD(CBufferedOutStream,Callback), &bout, asCALL_THISCALL);
+		bout.buffer = "";
+
+		asIScriptModule *mod = engine->GetModule("test", asGM_ALWAYS_CREATE);
+		mod->AddScriptSection("test",
+			"abstract class A {} \n"
+			"A a; \n"    // global variable can't instantiate the abstract class
+			"A @b; \n"); // as a handle it is ok
+		r = mod->Build();
+		if( r >= 0 )
+			TEST_FAILED;
+
+		if( bout.buffer != "test (2, 1) : Error   : Abstract class 'A' cannot be instantiated\n" )
+		{
+			PRINTF("%s", bout.buffer.c_str());
+			TEST_FAILED;
+		}
+
+		bout.buffer = "";
+		mod->AddScriptSection("test",
+			"abstract class A {} \n"
+			"void main() { \n"
+			"  A a; \n"      // local variable can't instantiate the abstract class
+			"  A @b; \n"     // as a handle it is ok
+			"  @b = A(); \n" // not ok
+			"} \n");
+		r = mod->Build();
+		if( r >= 0 )
+			TEST_FAILED;
+
+		if( bout.buffer != "test (2, 1) : Info    : Compiling void main()\n"
+						   "test (3, 5) : Error   : Abstract class 'A' cannot be instantiated\n"
+						   "test (5, 8) : Error   : Abstract class 'A' cannot be instantiated\n"
+						   "test (5, 8) : Error   : Can't implicitly convert from 'const int' to 'A@'.\n" )
+		{
+			PRINTF("%s", bout.buffer.c_str());
+			TEST_FAILED;
+		}
+
+		bout.buffer = "";
+		mod->AddScriptSection("test",
+			"abstract class A {} \n"
+			"class B : A {} \n" // inheriting from abstract class is ok
+			"B b; \n");
+		r = mod->Build();
+		if( r < 0 )
+			TEST_FAILED;
+
+		if( bout.buffer != "" )
+		{
+			PRINTF("%s", bout.buffer.c_str());
+			TEST_FAILED;
+		}
+
+		engine->Release();
+	}
+
 	// Test 
 	// Reported by Scott Bean
 	{
@@ -1166,7 +1228,7 @@ bool Test()
 		r = ExecuteString(engine, "TestStruct()", mod, ctx);
 		if( r != asEXECUTION_FINISHED ) 
 		{
-			if( r == asEXECUTION_EXCEPTION ) PrintException(ctx);
+			if( r == asEXECUTION_EXCEPTION ) PRINTF("%s", GetExceptionInfo(ctx).c_str());
 			TEST_FAILED;
 		}
 		if( ctx ) ctx->Release();
@@ -1455,7 +1517,7 @@ bool Test()
 		if( r != asEXECUTION_FINISHED )
 		{
 			if( r == asEXECUTION_EXCEPTION )
-				PrintException(ctx, true);
+				PRINTF("%s", GetExceptionInfo(ctx).c_str());
 			TEST_FAILED;
 		}
 		ctx->Release();
@@ -1493,8 +1555,8 @@ bool Test()
 		if( bout.buffer != "script (5, 1) : Info    : Compiling void func()\n"
 						   "script (7, 8) : Error   : No default constructor for object of type 'CBar'.\n"
 						   "script (9, 8) : Error   : No default constructor for object of type 'CBar'.\n"
-						   "script (9, 8) : Error   : No appropriate opAssign method found in 'CBar'\n"
-						   "script (10, 5) : Error   : No appropriate opAssign method found in 'CBar'\n"
+						   "script (9, 8) : Error   : No appropriate opAssign method found in 'CBar' for value assignment\n"
+						   "script (10, 5) : Error   : No appropriate opAssign method found in 'CBar' for value assignment\n"
 						   "script (11, 10) : Error   : No matching signatures to 'CBar()'\n"
 						   "script (11, 10) : Info    : Candidates are:\n"
 						   "script (11, 10) : Info    : CBar@ CBar(int a)\n" )
