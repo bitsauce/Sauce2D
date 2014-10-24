@@ -220,14 +220,21 @@ XTexture *XSprite::getTexture() const
 
 void XSprite::draw(XBatch *batch) const
 {
-	XVertex *vertices = new XVertex[4];
-	getVertices(vertices);
+	if(batch)
+	{
+		XVertex *vertices = new XVertex[4];
+		getVertices(vertices);
 
-	batch->setTexture(m_textureRegion.getTexture());
-	batch->setPrimitive(XBatch::PRIMITIVE_TRIANGLES);
-	batch->addVertices(vertices, 4, QUAD_INDICES, 6);
-	batch->release();
-	delete[] vertices;
+		batch->setTexture(m_textureRegion.getTexture());
+		batch->setPrimitive(XBatch::PRIMITIVE_TRIANGLES);
+		batch->addVertices(vertices, 4, QUAD_INDICES, 6);
+		batch->release();
+		delete[] vertices;
+	}
+	else
+	{
+		LOG("void XSprite::draw(): Cannot draw to 'null' batch.");
+	}
 }
 
 void XSprite::getVertices(XVertex *vertices) const

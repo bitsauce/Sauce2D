@@ -4878,7 +4878,9 @@ void asCCompiler::DeallocateVariable(int offset)
 	// because it was use before a formal declaration, in this case
 	// the offset is 0x7FFF
 
-	asASSERT(offset == 0x7FFF);
+	// <BITSAUCE>
+	//asASSERT(offset == 0x7FFF);
+	// </BITSAUCE>
 }
 
 void asCCompiler::ReleaseTemporaryVariable(asCTypeInfo &t, asCByteCode *bc)
