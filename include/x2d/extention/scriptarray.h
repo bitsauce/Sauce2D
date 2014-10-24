@@ -66,6 +66,8 @@ public:
 	void RemoveAt(asUINT index);
 	void InsertLast(void *value);
 	void RemoveLast();
+	void *getLast();
+	void *getFirst();
 	void SortAsc();
 	void SortDesc();
 	void SortAsc(asUINT startAt, asUINT count);

@@ -278,6 +278,8 @@ static void RegisterScriptArray_Native(asIScriptEngine *engine)
 	r = engine->RegisterObjectMethod("array<T>", "void removeAt(uint)", asMETHOD(XScriptArray, RemoveAt), asCALL_THISCALL); assert( r >= 0 );
 	r = engine->RegisterObjectMethod("array<T>", "void insertLast(const T&in)", asMETHOD(XScriptArray, InsertLast), asCALL_THISCALL); assert( r >= 0 );
 	r = engine->RegisterObjectMethod("array<T>", "void removeLast()", asMETHOD(XScriptArray, RemoveLast), asCALL_THISCALL); assert( r >= 0 );
+	r = engine->RegisterObjectMethod("array<T>", "T &last()", asMETHOD(XScriptArray, getLast), asCALL_THISCALL); assert( r >= 0 );
+	r = engine->RegisterObjectMethod("array<T>", "T &first()", asMETHOD(XScriptArray, getFirst), asCALL_THISCALL); assert( r >= 0 );
 	// TODO: Should length() and resize() be deprecated as the property accessors do the same thing?
 	r = engine->RegisterObjectMethod("array<T>", "uint length() const", asMETHOD(XScriptArray, GetSize), asCALL_THISCALL); assert( r >= 0 );
 	r = engine->RegisterObjectMethod("array<T>", "void reserve(uint)", asMETHOD(XScriptArray, Reserve), asCALL_THISCALL); assert( r >= 0 );
@@ -773,6 +775,16 @@ void XScriptArray::RemoveAt(asUINT index)
 void XScriptArray::RemoveLast()
 {
 	RemoveAt(buffer->numElements-1);
+}
+
+void *XScriptArray::getLast()
+{
+	return At(buffer->numElements-1);
+}
+
+void *XScriptArray::getFirst()
+{
+	return At(0);
 }
 
 // Return a pointer to the array element. Returns 0 if the index is out of bounds
