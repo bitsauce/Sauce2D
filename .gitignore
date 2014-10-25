@@ -9,6 +9,10 @@
 *.dll
 *.lib
 
+!3rdparty/openal/libs/*.lib
+!3rdparty/vld/lib/*.lib
+!3rdparty/vld/bin/*.dll
+
 # Exclude Visual Studio files
 *.sbr
 *.pch
@@ -29,6 +33,3 @@
 .svn
 AS_DEBUG
 3rdparty/RakNet
-
-# Exclude this...
-lib/vld-2.2.3/src/Debug/
