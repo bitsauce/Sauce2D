@@ -36,6 +36,12 @@ XConfig::XConfig() :
 {
 }
 
+#define AS_CHECK_RUNTIME_ERROR \
+		if(r != asEXECUTION_FINISHED) { \
+			LOG("\nAn run-time exception occured:"); \
+			PrintException(ctx, true); \
+		}
+
 //------------------------------------------------------------------------
 // Engine
 //------------------------------------------------------------------------
@@ -124,7 +130,7 @@ void XEngine::pushScene(asIScriptObject *object)
 		asIScriptContext *ctx = XScriptEngine::CreateContext();
 		int r = ctx->Prepare(hideFunc); assert(r >= 0);
 		r = ctx->SetObject(prevScene); assert(r >= 0);
-		r = ctx->Execute();
+		r = ctx->Execute(); AS_CHECK_RUNTIME_ERROR
 		r = ctx->Release();
 	}
 
@@ -146,7 +152,7 @@ void XEngine::pushScene(asIScriptObject *object)
 		asIScriptContext *ctx = XScriptEngine::CreateContext();
 		int r = ctx->Prepare(showFunc); assert(r >= 0);
 		r = ctx->SetObject(object); assert(r >= 0);
-		r = ctx->Execute();
+		r = ctx->Execute(); AS_CHECK_RUNTIME_ERROR
 		r = ctx->Release();
 	}
 }
@@ -163,7 +169,7 @@ void XEngine::popScene()
 		asIScriptContext *ctx = XScriptEngine::CreateContext();
 		int r = ctx->Prepare(hideFunc); assert(r >= 0);
 		r = ctx->SetObject(object); assert(r >= 0);
-		r = ctx->Execute();
+		r = ctx->Execute(); AS_CHECK_RUNTIME_ERROR
 		r = ctx->Release();
 
 		// Relese the ref held by the engine
@@ -189,7 +195,7 @@ void XEngine::popScene()
 			asIScriptContext *ctx = XScriptEngine::CreateContext();
 			int r = ctx->Prepare(showFunc); assert(r >= 0);
 			r = ctx->SetObject(nextScene); assert(r >= 0);
-			r = ctx->Execute();
+			r = ctx->Execute(); AS_CHECK_RUNTIME_ERROR
 			r = ctx->Release();
 		}
 	}
@@ -432,7 +438,7 @@ void XEngine::draw()
 		if(object) {
 			r = ctx->SetObject(object); assert(r >= 0);
 		}
-		r = ctx->Execute();
+		r = ctx->Execute(); AS_CHECK_RUNTIME_ERROR
 		r = ctx->Release();
 	}
 
@@ -454,15 +460,7 @@ void XEngine::update()
 		if(object) {
 			r = ctx->SetObject(object); assert(r >= 0);
 		}
-		r = ctx->Execute();
-
-		if(r != asEXECUTION_FINISHED)
-		{
-			// Print runtime exception message
-			const char *sectionName; int line;
-			ctx->GetExceptionLineNumber(&line, &sectionName);
-			LOG("Runtime exception '%s' occured in function '%s' in file '%s:%i'", ctx->GetExceptionString(), ctx->GetExceptionFunction()->GetDeclaration(), sectionName, line);
-		}
+		r = ctx->Execute(); AS_CHECK_RUNTIME_ERROR
 		r = ctx->Release();
 		
 		r = XScriptEngine::GetAngelScript()->GarbageCollect(asGC_ONE_STEP | asGC_DESTROY_GARBAGE); assert(r >= 0);

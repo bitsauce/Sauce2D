@@ -1648,16 +1648,13 @@ void asCContext::CallScriptFunction(asCScriptFunction *func)
 {
 	asASSERT( func->scriptData );
 
-	// <BITSAUCE>
-	// NOTE TO SELF: This might be the source of our inaccurate callstack problem
 	// Push the framepointer, function id and programCounter on the stack
-	m_currentFunction = func; // I moved it here so that PushCallState() feeds the correct
-	PushCallState();          // function to CallFuncBeginCallback()
+	PushCallState(); 
 	
 	// Update the current function and program position before increasing the stack
 	// so the exception handler will know what to do if there is a stack overflow
+	m_currentFunction = func;
 	m_regs.programPointer = m_currentFunction->scriptData->byteCode.AddressOf();
-	// </BITSAUCE>
 
 	PrepareScriptFunction();
 }

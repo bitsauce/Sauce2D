@@ -883,15 +883,15 @@ void PrintException(asIScriptContext *ctx, bool printStack)
 	if( ctx->GetState() != asEXECUTION_EXCEPTION ) return;
 
 	const asIScriptFunction *function = ctx->GetExceptionFunction();
-	printf("func: %s\n", function->GetDeclaration());
-	printf("modl: %s\n", function->GetModuleName());
-	printf("sect: %s\n", function->GetScriptSectionName());
-	printf("line: %d\n", ctx->GetExceptionLineNumber());
-	printf("desc: %s\n", ctx->GetExceptionString());
+	LOG("func: %s", function->GetDeclaration());
+	LOG("modl: %s", function->GetModuleName());
+	LOG("sect: %s", function->GetScriptSectionName());
+	LOG("line: %d", ctx->GetExceptionLineNumber());
+	LOG("desc: %s", ctx->GetExceptionString());
 
 	if( printStack )
 	{
-		printf("--- call stack ---\n");
+		LOG("--- call stack ---");
 		for( asUINT n = 1; n < ctx->GetCallstackSize(); n++ )
 		{
 			function = ctx->GetFunction(n);
@@ -899,20 +899,20 @@ void PrintException(asIScriptContext *ctx, bool printStack)
 			{
 				if( function->GetFuncType() == asFUNC_SCRIPT )
 				{
-					printf("%s (%d): %s\n", function->GetScriptSectionName(),
+					LOG("%s (%d): %s", function->GetScriptSectionName(),
 											ctx->GetLineNumber(n),
 											function->GetDeclaration());
 				}
 				else
 				{
 					// The context is being reused by the application for a nested call
-					printf("{...application...}: %s\n", function->GetDeclaration());
+					LOG("{...application...}: %s", function->GetDeclaration());
 				}
 			}
 			else
 			{
 				// The context is being reused by the script engine for a nested call
-				printf("{...script engine...}\n");
+				LOG("{...script engine...}");
 			}
 		}
 	}
