@@ -23,6 +23,7 @@
 *.opensdf
 *.sdf
 *.lastbuildstate
+*.unsuccessfulbuild
 
 # Exclude subversion control folders
 .svn
