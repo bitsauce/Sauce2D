@@ -13,7 +13,7 @@ Inherits Ref\+Type.
 \subsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-\hyperlink{class_sprite_a29de4e0fc43c90ee54630f821fae3f6d}{Sprite} (Texture\+Region @region)
+\hyperlink{class_sprite_a29de4e0fc43c90ee54630f821fae3f6d}{Sprite} (\hyperlink{class_texture_region}{Texture\+Region} @region)
 \item 
 \hyperlink{class_sprite_a1b68b64346a1c99280740e825de21ec8}{Sprite} (Texture @texture)
 \item 
@@ -25,7 +25,7 @@ void \hyperlink{class_sprite_a56199a8edb085342da44857635ec091a}{set\+Origin} (co
 \item 
 void \hyperlink{class_sprite_aad424b86963bde58e6f62074c4b2c037}{set\+Rotation} (const float rotation)
 \item 
-void \hyperlink{class_sprite_a8605a40678e4454062a6e4be6069d99f}{set\+Region} (Texture\+Region @region)
+void \hyperlink{class_sprite_a8605a40678e4454062a6e4be6069d99f}{set\+Region} (\hyperlink{class_texture_region}{Texture\+Region} @region)
 \item 
 Shape \hyperlink{class_sprite_aa303c8d552308024a59159da86603fa1}{get\+A\+A\+B\+B} () const 
 \item 
@@ -43,7 +43,7 @@ void \hyperlink{class_sprite_a157bcaff0e3fb4f62ed9ad139a27b0ad}{rotate} (const f
 \item 
 void \hyperlink{class_sprite_a6400777edb313463aac0a4b60dd1e011}{scale} (const float scl)
 \item 
-void \hyperlink{class_sprite_a5273752c722df11cbf6f61d7ef9e18bb}{draw} (Batch @batch)
+void \hyperlink{class_sprite_a5273752c722df11cbf6f61d7ef9e18bb}{draw} (\hyperlink{class_batch}{Batch} @batch)
 \end{DoxyCompactItemize}
 
 
@@ -55,7 +55,7 @@ A general purpose \hyperlink{class_sprite}{Sprite} class. Usefull for drawing sp
 \index{Sprite@{Sprite}!Sprite@{Sprite}}
 \subsubsection[{Sprite}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Sprite} (
 \begin{DoxyParamCaption}
-\item[{Texture\+Region @}]{region}
+\item[{{\bf Texture\+Region} @}]{region}
 \end{DoxyParamCaption}
 )}}\label{class_sprite_a29de4e0fc43c90ee54630f821fae3f6d}
 Creates a \hyperlink{class_sprite}{Sprite} object. 
@@ -82,7 +82,7 @@ Creates a \hyperlink{class_sprite}{Sprite} object.
 \index{draw@{draw}!Sprite@{Sprite}}
 \subsubsection[{draw}]{\setlength{\rightskip}{0pt plus 5cm}void draw (
 \begin{DoxyParamCaption}
-\item[{Batch @}]{batch}
+\item[{{\bf Batch} @}]{batch}
 \end{DoxyParamCaption}
 )}}\label{class_sprite_a5273752c722df11cbf6f61d7ef9e18bb}
 Draws the sprite to the given batch. The sprite will be drawn in it's current state. 
@@ -204,10 +204,10 @@ Sets the position of the \hyperlink{class_sprite}{Sprite}
 \index{set\+Region@{set\+Region}!Sprite@{Sprite}}
 \subsubsection[{set\+Region}]{\setlength{\rightskip}{0pt plus 5cm}void set\+Region (
 \begin{DoxyParamCaption}
-\item[{Texture\+Region @}]{region}
+\item[{{\bf Texture\+Region} @}]{region}
 \end{DoxyParamCaption}
 )}}\label{class_sprite_a8605a40678e4454062a6e4be6069d99f}
-Sets the Texture\+Region of which to draw this sprite with. 
+Sets the \hyperlink{class_texture_region}{Texture\+Region} of which to draw this sprite with. 
 \begin{DoxyParams}{Parameters}
 {\em region} & New texture region. \\
 \hline

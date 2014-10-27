@@ -1,7 +1,6 @@
 var searchData=
 [
-  ['popprofile',['popProfile',['../class_engine.html#abdc67701098d05bba11e9bc5424b69b0',1,'Engine']]],
-  ['popscene',['popScene',['../class_engine.html#a986825afe276e17d22b817f535a80423',1,'Engine']]],
-  ['pushprofile',['pushProfile',['../class_engine.html#a2a3ce17d6a14d2d724df172b8aca1cc1',1,'Engine']]],
-  ['pushscene',['pushScene',['../class_engine.html#aee05edca6334bc473a1ba1319152e39d',1,'Engine']]]
+  ['maximize',['maximize',['../class_window.html#a1aa481996525792213f28d91fbb4894b',1,'Window']]],
+  ['minimize',['minimize',['../class_window.html#a85ffaebe489c0ecf8051715ecf59babb',1,'Window']]],
+  ['move',['move',['../class_sprite.html#a8b25650441ad72d3c449494607d8dbda',1,'Sprite']]]
 ];

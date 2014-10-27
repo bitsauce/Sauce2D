@@ -41,6 +41,7 @@ int XMath::Register(asIScriptEngine *scriptEngine)
 	r = scriptEngine->RegisterObjectMethod("XMath", "int mod(const int, const int)", asMETHOD(XMath, mod), asCALL_THISCALL); AS_ASSERT
 	r = scriptEngine->RegisterObjectMethod("XMath", "uint ror(const uint, const uint)", asMETHOD(XMath, ror), asCALL_THISCALL); AS_ASSERT
 	r = scriptEngine->RegisterObjectMethod("XMath", "uint rol(const uint, const uint)", asMETHOD(XMath, rol), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("XMath", "float lerp(const float, const float, const float)", asMETHOD(XMath, lerp), asCALL_THISCALL); AS_ASSERT
 	
 	// Trigonometry
 	r = scriptEngine->RegisterObjectMethod("XMath", "float cos(const float)", asMETHOD(XMath, cos), asCALL_THISCALL); AS_ASSERT

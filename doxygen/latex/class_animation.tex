@@ -1,0 +1,54 @@
+\hypertarget{class_animation}{\section{Animation Class Reference}
+\label{class_animation}\index{Animation@{Animation}}
+}
+
+
+Helper class for drawing sprite animations.  
+
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_animation_a0e7dc33f4812b8300f16b6ac288a2e14}{Animation} (Texture $\ast$texture, const int rows, const int columns)
+\item 
+\hyperlink{class_texture_region}{Texture\+Region} \& \hyperlink{class_animation_a77c422431f386d39122f1c40588950fe}{get\+Key\+Frame} (int frame\+Index) const 
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Helper class for drawing sprite animations. 
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{class_animation_a0e7dc33f4812b8300f16b6ac288a2e14}{\index{Animation@{Animation}!Animation@{Animation}}
+\index{Animation@{Animation}!Animation@{Animation}}
+\subsubsection[{Animation}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Animation} (
+\begin{DoxyParamCaption}
+\item[{Texture $\ast$}]{texture, }
+\item[{const int}]{rows, }
+\item[{const int}]{columns}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{class_animation_a0e7dc33f4812b8300f16b6ac288a2e14}
+Creates the key frames for an animation using texture. 
+\begin{DoxyParams}{Parameters}
+{\em texture} & The texture to use for the animation. \\
+\hline
+{\em rows} & Number of frames per row. \\
+\hline
+{\em columns} & Number of frames per column. \\
+\hline
+\end{DoxyParams}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{class_animation_a77c422431f386d39122f1c40588950fe}{\index{Animation@{Animation}!get\+Key\+Frame@{get\+Key\+Frame}}
+\index{get\+Key\+Frame@{get\+Key\+Frame}!Animation@{Animation}}
+\subsubsection[{get\+Key\+Frame}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Texture\+Region}\& get\+Key\+Frame (
+\begin{DoxyParamCaption}
+\item[{int}]{frame\+Index}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}}\label{class_animation_a77c422431f386d39122f1c40588950fe}
+Get the \hyperlink{class_texture_region}{Texture\+Region} for the given frame. 
+\begin{DoxyParams}{Parameters}
+{\em frame\+Index} & Index of the frame. \\
+\hline
+\end{DoxyParams}

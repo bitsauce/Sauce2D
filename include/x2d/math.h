@@ -40,6 +40,7 @@ public:
 	int mod(const int a, const int b) { int r = a % b; return r < 0 ? r + b : r; }
 	uint ror(const uint a, const uint b);
 	uint rol(const uint a, const uint b);
+	float lerp(const float v0, const float v1, const float t) { return (1.0f-t)*v0 + t*v1; }
 
 	// Trigonometry
 	float cos(const float value) { return cosf(value); }

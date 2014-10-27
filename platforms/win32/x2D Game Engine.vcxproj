@@ -86,6 +86,9 @@ copy "..\..\3rdparty\vld\bin\Win32\Microsoft.DTfW.DHL.manifest" "..\..\build\$(P
       <AdditionalDependencies>ws2_32.lib;iphlpapi.lib;x2d.lib;openal32.lib;opengl32.lib;glew.lib;glu32.lib;angelscript.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>..\..\build\$(Platform)\$(Configuration)\;..\..\3rdparty\vld\lib\Win32;..\..\3rdparty\glew\lib;..\..\3rdparty\openal\libs;..\..\3rdparty\openal\libs\Win32;..\..\3rdparty\angelscript\sdk\angelscript\lib</AdditionalLibraryDirectories>
     </Link>
+    <PostBuildEvent>
+      <Command>copy "$(OutDir)$(TargetName)$(TargetExt)" "$(OutDir)x2d$(TargetExt)"</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ResourceCompile Include="resources.rc" />

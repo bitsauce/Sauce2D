@@ -39,6 +39,8 @@ public:
 	bool hasBuffer() const;
 	void clearBuffer();
 
+	void messageCallback(const asSMessageInfo *msg, void*);
+
 	static void Log(const char *msg, ...);
 
 protected:

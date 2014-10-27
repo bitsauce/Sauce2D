@@ -206,7 +206,7 @@ void ScriptValue::clear()
 
 // AngelScript callback function
 string messageCallback;
-void asMessageCallback(const asSMessageInfo *msg, void*)
+void XConsole::messageCallback(const asSMessageInfo *msg, void*)
 {
 	// Callback type
 	const char *type = "ERR";
@@ -222,19 +222,17 @@ void asMessageCallback(const asSMessageInfo *msg, void*)
 #else
 	sprintf(out, "%s (%d, %d) : %s : %s", msg->section, msg->row, msg->col, type, msg->message);
 #endif
-	/*if(msg->type == asMSGTYPE_ERROR)
-		ERR(str);
-	else if(msg->type == asMSGTYPE_WARNING)
-		iosystem::warn(str);
-	else if(msg->type == asMSGTYPE_INFORMATION)
-		LOG(str);*/
 	LOG("%s: %s", type, out);
 	
 	// Store or send message info
-	//if(XEngine::IsEnabled(XD_DEBUG))
-	//	XEngine::GetDebugger()->sendPacket(XD_COMPILE_PACKET, out);
-	//else
-		messageCallback += string(out);
+	if(m_engine->getDebugger())
+	{
+		m_engine->getDebugger()->sendPacket(XD_COMPILE_ERROR_PACKET, out);
+	}
+	else
+	{
+		::messageCallback += string(out);
+	}
 }
 
 // Compiles an angelscript module with name

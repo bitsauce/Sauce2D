@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['graphics',['Graphics',['../class_graphics.html',1,'']]]
+  ['batch',['Batch',['../class_batch.html',1,'']]]
 ];

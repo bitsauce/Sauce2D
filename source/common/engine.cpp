@@ -294,7 +294,7 @@ int XEngine::init(const XConfig &config)
 		m_scripts->s_gameEngine = this;
 
 		// Set the message callback to receive information on errors in human readable form.
-		int r = scriptEngine->SetMessageCallback(asFUNCTION(asMessageCallback), 0, asCALL_CDECL); assert( r >= 0 );
+		int r = scriptEngine->SetMessageCallback(asMETHOD(XConsole, messageCallback), m_console, asCALL_THISCALL); assert( r >= 0 );
 
 		// Register stuff
 		RegisterStdString(scriptEngine);
