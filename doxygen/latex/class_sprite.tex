@@ -15,29 +15,57 @@ Inherits Ref\+Type.
 \item 
 \hyperlink{class_sprite_a29de4e0fc43c90ee54630f821fae3f6d}{Sprite} (\hyperlink{class_texture_region}{Texture\+Region} @region)
 \item 
-\hyperlink{class_sprite_a1b68b64346a1c99280740e825de21ec8}{Sprite} (Texture @texture)
+\hyperlink{class_sprite_a1b68b64346a1c99280740e825de21ec8}{Sprite} (\hyperlink{class_texture}{Texture} @texture)
 \item 
-void \hyperlink{class_sprite_a5c42a8a652adfd7a2185229dfa8a2f99}{set\+Position} (const Vector2 \&position)
+void \hyperlink{class_sprite_a5c42a8a652adfd7a2185229dfa8a2f99}{set\+Position} (const \hyperlink{class_vector2}{Vector2} \&position)
 \item 
-void \hyperlink{class_sprite_a33fe51395aa3d372a16ccda8df5c7b12}{set\+Size} (const Vector2 \&size)
+void \hyperlink{class_sprite_a133841293df7a0780008d85e59b1df31}{set\+Position} (const float x, const float y)
 \item 
-void \hyperlink{class_sprite_a56199a8edb085342da44857635ec091a}{set\+Origin} (const Vector2 \&origin)
+void \hyperlink{class_sprite_a5bedef476f829d68dec5f67f9602e87a}{set\+X} (const float x)
+\item 
+void \hyperlink{class_sprite_a2d6ebc78c18b3208f0a8273fbc1850f5}{set\+Y} (const float y)
+\item 
+void \hyperlink{class_sprite_a33fe51395aa3d372a16ccda8df5c7b12}{set\+Size} (const \hyperlink{class_vector2}{Vector2} \&size)
+\item 
+void \hyperlink{class_sprite_aac25092845baff97e9bb62698826a0c0}{set\+Size} (const float width, const float height)
+\item 
+void \hyperlink{class_sprite_ad56841e9fb507722a51a5118cb44cf7f}{set\+Width} (const float width)
+\item 
+void \hyperlink{class_sprite_a5ecdfec7bba56cece063d846f4d43215}{set\+Height} (const float height)
+\item 
+void \hyperlink{class_sprite_a56199a8edb085342da44857635ec091a}{set\+Origin} (const \hyperlink{class_vector2}{Vector2} \&origin)
 \item 
 void \hyperlink{class_sprite_aad424b86963bde58e6f62074c4b2c037}{set\+Rotation} (const float rotation)
 \item 
 void \hyperlink{class_sprite_a8605a40678e4454062a6e4be6069d99f}{set\+Region} (\hyperlink{class_texture_region}{Texture\+Region} @region)
 \item 
-Shape \hyperlink{class_sprite_aa303c8d552308024a59159da86603fa1}{get\+A\+A\+B\+B} () const 
+void \hyperlink{class_sprite_aa935c4969fb8bf7aaddfee9cc7427cbc}{set\+Color} (const \hyperlink{class_vector4}{Vector4} \&color)
 \item 
-Vector2 \hyperlink{class_sprite_ab02f4333185e9ecd2830266cce22004d}{get\+Position} () const 
+\hyperlink{class_shape}{Shape} \hyperlink{class_sprite_aa303c8d552308024a59159da86603fa1}{get\+A\+A\+B\+B} () const 
 \item 
-Vector2 \hyperlink{class_sprite_a1db7848ab8886b382e56889c2a0195a4}{get\+Size} () const 
+\hyperlink{class_vector2}{Vector2} \hyperlink{class_sprite_ab02f4333185e9ecd2830266cce22004d}{get\+Position} () const 
 \item 
-Vector2 \hyperlink{class_sprite_ac7e4e3b1670311a87c63d5424ec27ea5}{get\+Origin} () const 
+float \hyperlink{class_sprite_a1460d72f81de90450f8e764a42b28c3c}{get\+X} () const 
 \item 
-Vector2 \hyperlink{class_sprite_a209c829098440c836e4fb10f41bb0aea}{get\+Center} () const 
+float \hyperlink{class_sprite_ad33dcf1271a60ebfa978e9b6749d39fc}{get\+Y} () const 
 \item 
-void \hyperlink{class_sprite_a8b25650441ad72d3c449494607d8dbda}{move} (const Vector2 \&move)
+\hyperlink{class_vector2}{Vector2} \hyperlink{class_sprite_a1db7848ab8886b382e56889c2a0195a4}{get\+Size} () const 
+\item 
+float \hyperlink{class_sprite_a1abb04c6637e0fca05587a36d9ea6b5e}{get\+Width} () const 
+\item 
+float \hyperlink{class_sprite_a3b2cb4054965bddd89e59e7bb2815f77}{get\+Height} () const 
+\item 
+\hyperlink{class_vector2}{Vector2} \hyperlink{class_sprite_ac7e4e3b1670311a87c63d5424ec27ea5}{get\+Origin} () const 
+\item 
+\hyperlink{class_vector2}{Vector2} \hyperlink{class_sprite_a209c829098440c836e4fb10f41bb0aea}{get\+Center} () const 
+\item 
+\hyperlink{class_vector4}{Vector4} \hyperlink{class_sprite_a6e71e684e6cfaede0262994897dcfbb4}{get\+Color} () const 
+\item 
+\hyperlink{class_texture_region}{Texture\+Region} \hyperlink{class_sprite_ae53811526e1d3cb0a3bb7c514a582c2f}{get\+Region} () const 
+\item 
+\hyperlink{class_texture}{Texture} $\ast$ \hyperlink{class_sprite_ae01540b88edcfdc565b5ec06709c6cdd}{get\+Texture} () const 
+\item 
+void \hyperlink{class_sprite_a8b25650441ad72d3c449494607d8dbda}{move} (const \hyperlink{class_vector2}{Vector2} \&move)
 \item 
 void \hyperlink{class_sprite_a157bcaff0e3fb4f62ed9ad139a27b0ad}{rotate} (const float angle)
 \item 
@@ -67,7 +95,7 @@ Creates a \hyperlink{class_sprite}{Sprite} object.
 \index{Sprite@{Sprite}!Sprite@{Sprite}}
 \subsubsection[{Sprite}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Sprite} (
 \begin{DoxyParamCaption}
-\item[{Texture @}]{texture}
+\item[{{\bf Texture} @}]{texture}
 \end{DoxyParamCaption}
 )}}\label{class_sprite_a1b68b64346a1c99280740e825de21ec8}
 Creates a \hyperlink{class_sprite}{Sprite} object. 
@@ -85,14 +113,14 @@ Creates a \hyperlink{class_sprite}{Sprite} object.
 \item[{{\bf Batch} @}]{batch}
 \end{DoxyParamCaption}
 )}}\label{class_sprite_a5273752c722df11cbf6f61d7ef9e18bb}
-Draws the sprite to the given batch. The sprite will be drawn in it's current state. 
+Draws the sprite to the given batch. The sprite will be drawn in its current state. 
 \begin{DoxyParams}{Parameters}
 {\em batch} & The batch which to draw this sprite to. \\
 \hline
 \end{DoxyParams}
 \hypertarget{class_sprite_aa303c8d552308024a59159da86603fa1}{\index{Sprite@{Sprite}!get\+A\+A\+B\+B@{get\+A\+A\+B\+B}}
 \index{get\+A\+A\+B\+B@{get\+A\+A\+B\+B}!Sprite@{Sprite}}
-\subsubsection[{get\+A\+A\+B\+B}]{\setlength{\rightskip}{0pt plus 5cm}Shape get\+A\+A\+B\+B (
+\subsubsection[{get\+A\+A\+B\+B}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Shape} get\+A\+A\+B\+B (
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
@@ -102,7 +130,7 @@ Returns a axis-\/aligned bounding box as a Shape-\/object.
 \end{DoxyReturn}
 \hypertarget{class_sprite_a209c829098440c836e4fb10f41bb0aea}{\index{Sprite@{Sprite}!get\+Center@{get\+Center}}
 \index{get\+Center@{get\+Center}!Sprite@{Sprite}}
-\subsubsection[{get\+Center}]{\setlength{\rightskip}{0pt plus 5cm}Vector2 get\+Center (
+\subsubsection[{get\+Center}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Vector2} get\+Center (
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
@@ -110,9 +138,26 @@ Returns a axis-\/aligned bounding box as a Shape-\/object.
 Gets the world-\/relative center of the sprite. \begin{DoxyReturn}{Returns}
 The world-\/relative center of the sprite. 
 \end{DoxyReturn}
-\hypertarget{class_sprite_ac7e4e3b1670311a87c63d5424ec27ea5}{\index{Sprite@{Sprite}!get\+Origin@{get\+Origin}}
+\hypertarget{class_sprite_a6e71e684e6cfaede0262994897dcfbb4}{\index{Sprite@{Sprite}!get\+Color@{get\+Color}}
+\index{get\+Color@{get\+Color}!Sprite@{Sprite}}
+\subsubsection[{get\+Color}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Vector4} get\+Color (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}\label{class_sprite_a6e71e684e6cfaede0262994897dcfbb4}
+Gets the color of the sprite. \begin{DoxyReturn}{Returns}
+A \hyperlink{class_vector4}{Vector4} where the colors are represented in the range \mbox{[}0, 1\mbox{]}. 
+\end{DoxyReturn}
+\hypertarget{class_sprite_a3b2cb4054965bddd89e59e7bb2815f77}{\index{Sprite@{Sprite}!get\+Height@{get\+Height}}
+\index{get\+Height@{get\+Height}!Sprite@{Sprite}}
+\subsubsection[{get\+Height}]{\setlength{\rightskip}{0pt plus 5cm}float get\+Height (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}\label{class_sprite_a3b2cb4054965bddd89e59e7bb2815f77}
+Gets the height of the sprite \hypertarget{class_sprite_ac7e4e3b1670311a87c63d5424ec27ea5}{\index{Sprite@{Sprite}!get\+Origin@{get\+Origin}}
 \index{get\+Origin@{get\+Origin}!Sprite@{Sprite}}
-\subsubsection[{get\+Origin}]{\setlength{\rightskip}{0pt plus 5cm}Vector2 get\+Origin (
+\subsubsection[{get\+Origin}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Vector2} get\+Origin (
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
@@ -122,7 +167,7 @@ The sprite-\/relative origin of the sprite.
 \end{DoxyReturn}
 \hypertarget{class_sprite_ab02f4333185e9ecd2830266cce22004d}{\index{Sprite@{Sprite}!get\+Position@{get\+Position}}
 \index{get\+Position@{get\+Position}!Sprite@{Sprite}}
-\subsubsection[{get\+Position}]{\setlength{\rightskip}{0pt plus 5cm}Vector2 get\+Position (
+\subsubsection[{get\+Position}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Vector2} get\+Position (
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
@@ -130,9 +175,16 @@ The sprite-\/relative origin of the sprite.
 Gets the current position of the sprite. \begin{DoxyReturn}{Returns}
 The current position of the sprite. 
 \end{DoxyReturn}
-\hypertarget{class_sprite_a1db7848ab8886b382e56889c2a0195a4}{\index{Sprite@{Sprite}!get\+Size@{get\+Size}}
+\hypertarget{class_sprite_ae53811526e1d3cb0a3bb7c514a582c2f}{\index{Sprite@{Sprite}!get\+Region@{get\+Region}}
+\index{get\+Region@{get\+Region}!Sprite@{Sprite}}
+\subsubsection[{get\+Region}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Texture\+Region} get\+Region (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}\label{class_sprite_ae53811526e1d3cb0a3bb7c514a582c2f}
+Gets the \hyperlink{class_texture_region}{Texture\+Region} currently used by this sprite \hypertarget{class_sprite_a1db7848ab8886b382e56889c2a0195a4}{\index{Sprite@{Sprite}!get\+Size@{get\+Size}}
 \index{get\+Size@{get\+Size}!Sprite@{Sprite}}
-\subsubsection[{get\+Size}]{\setlength{\rightskip}{0pt plus 5cm}Vector2 get\+Size (
+\subsubsection[{get\+Size}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Vector2} get\+Size (
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
@@ -140,11 +192,39 @@ The current position of the sprite.
 Gets the current size of the sprite. \begin{DoxyReturn}{Returns}
 The current size of the sprite. 
 \end{DoxyReturn}
-\hypertarget{class_sprite_a8b25650441ad72d3c449494607d8dbda}{\index{Sprite@{Sprite}!move@{move}}
+\hypertarget{class_sprite_ae01540b88edcfdc565b5ec06709c6cdd}{\index{Sprite@{Sprite}!get\+Texture@{get\+Texture}}
+\index{get\+Texture@{get\+Texture}!Sprite@{Sprite}}
+\subsubsection[{get\+Texture}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Texture}$\ast$ get\+Texture (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}\label{class_sprite_ae01540b88edcfdc565b5ec06709c6cdd}
+Gets the \hyperlink{class_texture}{Texture} currently used by this sprite \hypertarget{class_sprite_a1abb04c6637e0fca05587a36d9ea6b5e}{\index{Sprite@{Sprite}!get\+Width@{get\+Width}}
+\index{get\+Width@{get\+Width}!Sprite@{Sprite}}
+\subsubsection[{get\+Width}]{\setlength{\rightskip}{0pt plus 5cm}float get\+Width (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}\label{class_sprite_a1abb04c6637e0fca05587a36d9ea6b5e}
+Gets the width of the sprite \hypertarget{class_sprite_a1460d72f81de90450f8e764a42b28c3c}{\index{Sprite@{Sprite}!get\+X@{get\+X}}
+\index{get\+X@{get\+X}!Sprite@{Sprite}}
+\subsubsection[{get\+X}]{\setlength{\rightskip}{0pt plus 5cm}float get\+X (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}\label{class_sprite_a1460d72f81de90450f8e764a42b28c3c}
+Gets the current x position \hypertarget{class_sprite_ad33dcf1271a60ebfa978e9b6749d39fc}{\index{Sprite@{Sprite}!get\+Y@{get\+Y}}
+\index{get\+Y@{get\+Y}!Sprite@{Sprite}}
+\subsubsection[{get\+Y}]{\setlength{\rightskip}{0pt plus 5cm}float get\+Y (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}\label{class_sprite_ad33dcf1271a60ebfa978e9b6749d39fc}
+Gets the current y position \hypertarget{class_sprite_a8b25650441ad72d3c449494607d8dbda}{\index{Sprite@{Sprite}!move@{move}}
 \index{move@{move}!Sprite@{Sprite}}
 \subsubsection[{move}]{\setlength{\rightskip}{0pt plus 5cm}void move (
 \begin{DoxyParamCaption}
-\item[{const Vector2 \&}]{move}
+\item[{const {\bf Vector2} \&}]{move}
 \end{DoxyParamCaption}
 )}}\label{class_sprite_a8b25650441ad72d3c449494607d8dbda}
 Applies move to the position. 
@@ -176,11 +256,25 @@ Applies a scale to the sprite.
 {\em scl} & The scale which to apply to the sprite. \\
 \hline
 \end{DoxyParams}
-\hypertarget{class_sprite_a56199a8edb085342da44857635ec091a}{\index{Sprite@{Sprite}!set\+Origin@{set\+Origin}}
+\hypertarget{class_sprite_aa935c4969fb8bf7aaddfee9cc7427cbc}{\index{Sprite@{Sprite}!set\+Color@{set\+Color}}
+\index{set\+Color@{set\+Color}!Sprite@{Sprite}}
+\subsubsection[{set\+Color}]{\setlength{\rightskip}{0pt plus 5cm}void set\+Color (
+\begin{DoxyParamCaption}
+\item[{const {\bf Vector4} \&}]{color}
+\end{DoxyParamCaption}
+)}}\label{class_sprite_aa935c4969fb8bf7aaddfee9cc7427cbc}
+Sets the color to colorize this sprite with \hypertarget{class_sprite_a5ecdfec7bba56cece063d846f4d43215}{\index{Sprite@{Sprite}!set\+Height@{set\+Height}}
+\index{set\+Height@{set\+Height}!Sprite@{Sprite}}
+\subsubsection[{set\+Height}]{\setlength{\rightskip}{0pt plus 5cm}void set\+Height (
+\begin{DoxyParamCaption}
+\item[{const float}]{height}
+\end{DoxyParamCaption}
+)}}\label{class_sprite_a5ecdfec7bba56cece063d846f4d43215}
+Sets the height of the sprite \hypertarget{class_sprite_a56199a8edb085342da44857635ec091a}{\index{Sprite@{Sprite}!set\+Origin@{set\+Origin}}
 \index{set\+Origin@{set\+Origin}!Sprite@{Sprite}}
 \subsubsection[{set\+Origin}]{\setlength{\rightskip}{0pt plus 5cm}void set\+Origin (
 \begin{DoxyParamCaption}
-\item[{const Vector2 \&}]{origin}
+\item[{const {\bf Vector2} \&}]{origin}
 \end{DoxyParamCaption}
 )}}\label{class_sprite_a56199a8edb085342da44857635ec091a}
 Sets the origin of the \hyperlink{class_sprite}{Sprite}. The sprite will rotate around this point (relative to the sprite itself). 
@@ -192,22 +286,30 @@ Sets the origin of the \hyperlink{class_sprite}{Sprite}. The sprite will rotate 
 \index{set\+Position@{set\+Position}!Sprite@{Sprite}}
 \subsubsection[{set\+Position}]{\setlength{\rightskip}{0pt plus 5cm}void set\+Position (
 \begin{DoxyParamCaption}
-\item[{const Vector2 \&}]{position}
+\item[{const {\bf Vector2} \&}]{position}
 \end{DoxyParamCaption}
 )}}\label{class_sprite_a5c42a8a652adfd7a2185229dfa8a2f99}
-Sets the position of the \hyperlink{class_sprite}{Sprite} 
+Sets the position of the sprite 
 \begin{DoxyParams}{Parameters}
 {\em position} & New sprite position. \\
 \hline
 \end{DoxyParams}
-\hypertarget{class_sprite_a8605a40678e4454062a6e4be6069d99f}{\index{Sprite@{Sprite}!set\+Region@{set\+Region}}
+\hypertarget{class_sprite_a133841293df7a0780008d85e59b1df31}{\index{Sprite@{Sprite}!set\+Position@{set\+Position}}
+\index{set\+Position@{set\+Position}!Sprite@{Sprite}}
+\subsubsection[{set\+Position}]{\setlength{\rightskip}{0pt plus 5cm}void set\+Position (
+\begin{DoxyParamCaption}
+\item[{const float}]{x, }
+\item[{const float}]{y}
+\end{DoxyParamCaption}
+)}}\label{class_sprite_a133841293df7a0780008d85e59b1df31}
+Sets the position of the sprite \hypertarget{class_sprite_a8605a40678e4454062a6e4be6069d99f}{\index{Sprite@{Sprite}!set\+Region@{set\+Region}}
 \index{set\+Region@{set\+Region}!Sprite@{Sprite}}
 \subsubsection[{set\+Region}]{\setlength{\rightskip}{0pt plus 5cm}void set\+Region (
 \begin{DoxyParamCaption}
 \item[{{\bf Texture\+Region} @}]{region}
 \end{DoxyParamCaption}
 )}}\label{class_sprite_a8605a40678e4454062a6e4be6069d99f}
-Sets the \hyperlink{class_texture_region}{Texture\+Region} of which to draw this sprite with. 
+Sets the \hyperlink{class_texture_region}{Texture\+Region} of which to draw onto this sprite 
 \begin{DoxyParams}{Parameters}
 {\em region} & New texture region. \\
 \hline
@@ -228,11 +330,41 @@ Sets the rotation of the sprite. The sprite will rotate around it's origin (see 
 \index{set\+Size@{set\+Size}!Sprite@{Sprite}}
 \subsubsection[{set\+Size}]{\setlength{\rightskip}{0pt plus 5cm}void set\+Size (
 \begin{DoxyParamCaption}
-\item[{const Vector2 \&}]{size}
+\item[{const {\bf Vector2} \&}]{size}
 \end{DoxyParamCaption}
 )}}\label{class_sprite_a33fe51395aa3d372a16ccda8df5c7b12}
-Sets the size of the \hyperlink{class_sprite}{Sprite} 
+Sets the size of the sprite 
 \begin{DoxyParams}{Parameters}
 {\em size} & New sprite size. \\
 \hline
 \end{DoxyParams}
+\hypertarget{class_sprite_aac25092845baff97e9bb62698826a0c0}{\index{Sprite@{Sprite}!set\+Size@{set\+Size}}
+\index{set\+Size@{set\+Size}!Sprite@{Sprite}}
+\subsubsection[{set\+Size}]{\setlength{\rightskip}{0pt plus 5cm}void set\+Size (
+\begin{DoxyParamCaption}
+\item[{const float}]{width, }
+\item[{const float}]{height}
+\end{DoxyParamCaption}
+)}}\label{class_sprite_aac25092845baff97e9bb62698826a0c0}
+Sets the size of the sprite \hypertarget{class_sprite_ad56841e9fb507722a51a5118cb44cf7f}{\index{Sprite@{Sprite}!set\+Width@{set\+Width}}
+\index{set\+Width@{set\+Width}!Sprite@{Sprite}}
+\subsubsection[{set\+Width}]{\setlength{\rightskip}{0pt plus 5cm}void set\+Width (
+\begin{DoxyParamCaption}
+\item[{const float}]{width}
+\end{DoxyParamCaption}
+)}}\label{class_sprite_ad56841e9fb507722a51a5118cb44cf7f}
+Sets the width of the sprite \hypertarget{class_sprite_a5bedef476f829d68dec5f67f9602e87a}{\index{Sprite@{Sprite}!set\+X@{set\+X}}
+\index{set\+X@{set\+X}!Sprite@{Sprite}}
+\subsubsection[{set\+X}]{\setlength{\rightskip}{0pt plus 5cm}void set\+X (
+\begin{DoxyParamCaption}
+\item[{const float}]{x}
+\end{DoxyParamCaption}
+)}}\label{class_sprite_a5bedef476f829d68dec5f67f9602e87a}
+Sets the x position of the sprite \hypertarget{class_sprite_a2d6ebc78c18b3208f0a8273fbc1850f5}{\index{Sprite@{Sprite}!set\+Y@{set\+Y}}
+\index{set\+Y@{set\+Y}!Sprite@{Sprite}}
+\subsubsection[{set\+Y}]{\setlength{\rightskip}{0pt plus 5cm}void set\+Y (
+\begin{DoxyParamCaption}
+\item[{const float}]{y}
+\end{DoxyParamCaption}
+)}}\label{class_sprite_a2d6ebc78c18b3208f0a8273fbc1850f5}
+Sets the y position of the sprite 

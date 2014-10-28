@@ -11,12 +11,6 @@ Controls the flow of the engine.
 \item 
 void \hyperlink{class_engine_a358d2e2397ca11ccd17553e3c40e7901}{exit} ()
 \item 
-void \hyperlink{class_engine_af5ad29d634a54301cc7ce63490450dbb}{toggle\+Profiler} ()
-\item 
-void \hyperlink{class_engine_a2a3ce17d6a14d2d724df172b8aca1cc1}{push\+Profile} (const string \&name)
-\item 
-void \hyperlink{class_engine_abdc67701098d05bba11e9bc5424b69b0}{pop\+Profile} ()
-\item 
 void \hyperlink{class_engine_aee05edca6334bc473a1ba1319152e39d}{push\+Scene} (Scene $\ast$scene)
 \item 
 void \hyperlink{class_engine_a986825afe276e17d22b817f535a80423}{pop\+Scene} ()
@@ -41,33 +35,14 @@ Controls the flow of the engine.
 {}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily [inline]}}}\label{class_engine_a358d2e2397ca11ccd17553e3c40e7901}
-End the application. \hypertarget{class_engine_abdc67701098d05bba11e9bc5424b69b0}{\index{Engine@{Engine}!pop\+Profile@{pop\+Profile}}
-\index{pop\+Profile@{pop\+Profile}!Engine@{Engine}}
-\subsubsection[{pop\+Profile}]{\setlength{\rightskip}{0pt plus 5cm}void pop\+Profile (
-\begin{DoxyParamCaption}
-{}
-\end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily [inline]}}}\label{class_engine_abdc67701098d05bba11e9bc5424b69b0}
-Pops the profile on the top of the stack. \hypertarget{class_engine_a986825afe276e17d22b817f535a80423}{\index{Engine@{Engine}!pop\+Scene@{pop\+Scene}}
+Exit the application. \hypertarget{class_engine_a986825afe276e17d22b817f535a80423}{\index{Engine@{Engine}!pop\+Scene@{pop\+Scene}}
 \index{pop\+Scene@{pop\+Scene}!Engine@{Engine}}
 \subsubsection[{pop\+Scene}]{\setlength{\rightskip}{0pt plus 5cm}void pop\+Scene (
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily [inline]}}}\label{class_engine_a986825afe276e17d22b817f535a80423}
-Pops the current scene from the top of the stack. \hypertarget{class_engine_a2a3ce17d6a14d2d724df172b8aca1cc1}{\index{Engine@{Engine}!push\+Profile@{push\+Profile}}
-\index{push\+Profile@{push\+Profile}!Engine@{Engine}}
-\subsubsection[{push\+Profile}]{\setlength{\rightskip}{0pt plus 5cm}void push\+Profile (
-\begin{DoxyParamCaption}
-\item[{const string \&}]{name}
-\end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily [inline]}}}\label{class_engine_a2a3ce17d6a14d2d724df172b8aca1cc1}
-Pushes a profile using the given name to the profile stack tree. 
-\begin{DoxyParams}{Parameters}
-{\em name} & Profile node name \\
-\hline
-\end{DoxyParams}
-\hypertarget{class_engine_aee05edca6334bc473a1ba1319152e39d}{\index{Engine@{Engine}!push\+Scene@{push\+Scene}}
+Pops the current scene from the top of the stack. \hypertarget{class_engine_aee05edca6334bc473a1ba1319152e39d}{\index{Engine@{Engine}!push\+Scene@{push\+Scene}}
 \index{push\+Scene@{push\+Scene}!Engine@{Engine}}
 \subsubsection[{push\+Scene}]{\setlength{\rightskip}{0pt plus 5cm}void push\+Scene (
 \begin{DoxyParamCaption}
@@ -79,14 +54,7 @@ Pushes a Scene object to the scene stack.
 {\em scene} & A Scene object \\
 \hline
 \end{DoxyParams}
-\hypertarget{class_engine_af5ad29d634a54301cc7ce63490450dbb}{\index{Engine@{Engine}!toggle\+Profiler@{toggle\+Profiler}}
-\index{toggle\+Profiler@{toggle\+Profiler}!Engine@{Engine}}
-\subsubsection[{toggle\+Profiler}]{\setlength{\rightskip}{0pt plus 5cm}void toggle\+Profiler (
-\begin{DoxyParamCaption}
-{}
-\end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily [inline]}}}\label{class_engine_af5ad29d634a54301cc7ce63490450dbb}
-Toggles the profiler state. For more read our Profiling page. 
+
 
 \subsection{Member Data Documentation}
 \hypertarget{class_engine_ab33ce334382344871104873746995d5d}{\index{Engine@{Engine}!platform@{platform}}

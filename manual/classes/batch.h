@@ -4,4 +4,9 @@
 class Batch
 {
 public:
+	
+	/**
+	  * Creates an empty batch
+	  */
+	Batch();
 };

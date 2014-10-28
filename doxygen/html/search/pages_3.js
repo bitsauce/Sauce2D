@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['requirements',['Requirements',['../require.html',1,'get_started']]]
+  ['platforms',['Platforms',['../platforms.html',1,'about']]]
 ];

@@ -1,5 +1,9 @@
 var searchData=
 [
-  ['textureregion',['TextureRegion',['../class_texture_region.html#a89bb8b66d1ae4c63e4382f97e5634c6a',1,'TextureRegion::TextureRegion()'],['../class_texture_region.html#a774026718faac265657f04b514304862',1,'TextureRegion::TextureRegion(Texture *texture)'],['../class_texture_region.html#a022d7c52f955809eddbf142087390f41',1,'TextureRegion::TextureRegion(Texture *texture, const Vector2 &amp;uv0, const Vector2 &amp;uv1)'],['../class_texture_region.html#a6a88b03420dd5b746da29268a221e4e3',1,'TextureRegion::TextureRegion(Texture *texture, const float u0, const float v0, const float u1, const float v1)']]],
-  ['toggleprofiler',['toggleProfiler',['../class_engine.html#af5ad29d634a54301cc7ce63490450dbb',1,'Engine']]]
+  ['max',['max',['../class_math.html#a9b8ddb72bdde656da72d6cc2b3208499',1,'Math']]],
+  ['maximize',['maximize',['../class_window.html#a1aa481996525792213f28d91fbb4894b',1,'Window']]],
+  ['min',['min',['../class_math.html#a5496cc5ea15ad4aac8787dff54935f61',1,'Math']]],
+  ['minimize',['minimize',['../class_window.html#a85ffaebe489c0ecf8051715ecf59babb',1,'Window']]],
+  ['mod',['mod',['../class_math.html#a2fc083b5f0e05d3ae517746aec624206',1,'Math']]],
+  ['move',['move',['../class_sprite.html#a8b25650441ad72d3c449494607d8dbda',1,'Sprite']]]
 ];

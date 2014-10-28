@@ -1,7 +1,11 @@
 var get_started =
 [
-    [ "Requirements", "require.html", null ],
-    [ "Platforms", "platforms.html", null ],
-    [ "Using the Editor", "using_editor.html", null ],
-    [ "Using x2D", "using_x2d.html", null ]
+    [ "The Entry Point", "main.html", null ],
+    [ "Understanding the Game Loop", "gameloop.html", [
+      [ "Why is this separation needed?", "gameloop.html#why_step", null ]
+    ] ],
+    [ "Simple drawing", "drawing.html", null ],
+    [ "Getting input", "input.html", null ],
+    [ "Simple collision", "collision.html", null ],
+    [ "Sprite drawing", "sprites.html", null ]
 ];

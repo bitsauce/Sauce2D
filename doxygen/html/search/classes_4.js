@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['sprite',['Sprite',['../class_sprite.html',1,'']]]
+  ['math',['Math',['../class_math.html',1,'']]]
 ];

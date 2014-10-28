@@ -1,11 +1,75 @@
 Topics\+:
 \begin{DoxyItemize}
-\item \hyperlink{require}{Requirements}
-\item \hyperlink{platforms}{Platforms}
-\item \hyperlink{using_editor}{Using the Editor}
-\item \hyperlink{using_x2d}{Using x2\+D} 
-\end{DoxyItemize}\hypertarget{require}{}\section{Requirements}\label{require}
-x2\+D is a lightweight 2\+D engine, and can therefore run on almost any system that supports Open\+G\+L or Direct\+X. \hypertarget{platforms}{}\section{Platforms}\label{platforms}
-The aim of the x2\+D Game \hyperlink{class_engine}{Engine} is to realize the idea of \char`\"{}develop once, deploy anywhere\char`\"{}, while also allowing the full freedom to develop any type of game. \hypertarget{using_editor}{}\section{Using the Editor}\label{using_editor}
-This topic will tell you more about the features of the editor, and how to use them. \hypertarget{using_x2d}{}\section{Using x2\+D}\label{using_x2d}
-This topic will tell you more about the features of the x2d, and how to use them. 
+\item \hyperlink{main}{The Entry Point}
+\item \hyperlink{gameloop}{Understanding the Game Loop}
+\item \hyperlink{drawing}{Simple Srawing}
+\item \hyperlink{input}{Getting Input}
+\item \hyperlink{collision}{Simple Collision}
+\item \hyperlink{sprites}{Sprite Drawing} 
+\end{DoxyItemize}\hypertarget{main}{}\section{The Entry Point}\label{main}
+The entry point is a function required for the program to start. It is defined by declaring a global function called 'void main()' like follows\+:
+
+
+\begin{DoxyCode}
+\textcolor{keywordtype}{void} main()
+\{
+\}
+\end{DoxyCode}
+
+
+The function will only be invoked once at the start of the game, and is the first function to be called. Initialization and loading of assets should be done in this phase.
+
+As the game starts it will look for the file called 'main.\+as' in the game's root directory. From this file it is then possible to include other script files using the include directive (\#include \char`\"{}file\+\_\+name.\+as\char`\"{}). This way you can organize your code and classes into different files. \hypertarget{gameloop}{}\section{Understanding the Game Loop}\label{gameloop}
+Since games have different run-\/time requirements than most ordinary programs, they are often run in what is called a game loop. In x2\+D Game Engine, the game loop is separated into an update step, and a draw step.
+
+The script writer is required to implement these steps. This is done by defining a 'void update()' and a 'void draw()' globally as follows\+:
+
+
+\begin{DoxyCode}
+\textcolor{keywordtype}{void} update()
+\{
+    \textcolor{comment}{// YOUR UPDATE STEP HERE}
+\}
+
+\textcolor{keywordtype}{void} draw()
+\{
+    \textcolor{comment}{// YOUR DRAW STEP HERE}
+\}
+\end{DoxyCode}
+
+
+The update step is where most of the game logic should go. Movement of characters, physics simulations and updating animations are examples of what should go into the update step, rather than the draw step.
+
+The draw step is where all the drawing should happen, as this function is only called once per frame.\hypertarget{gameloop_why_step}{}\subsection{Why is this separation needed?}\label{gameloop_why_step}
+This has got to do with the fact that computer hardware is varied. On slow hardware we need to make sure the time runs equally fast as on fast hardware. This is done by calling the update step more, and the draw step less (hence why you might experience low F\+P\+S on slow hardware). In an ideal scenario, the update step will be called as often as the draw step. \hypertarget{drawing}{}\section{Simple drawing}\label{drawing}
+\hypertarget{input}{}\section{Getting input}\label{input}
+
+\begin{DoxyCode}
+\textcolor{keywordtype}{int} posX = 0;
+\textcolor{keywordtype}{int} posY = 0;
+
+\textcolor{keywordtype}{void} update()
+\{
+    \textcolor{keywordflow}{if}(Input.getKeyState(KEY\_UP))
+    \{
+        posY -= 10;
+    \}
+
+    \textcolor{keywordflow}{if}(Input.getKeyState(KEY\_DOWN))
+    \{
+        posY += 10;
+    \}
+
+    \textcolor{keywordflow}{if}(Input.getKeyState(KEY\_RIGHT))
+    \{
+        posX += 10;
+    \}
+
+    \textcolor{keywordflow}{if}(Input.getKeyState(KEY\_LEFT))
+    \{
+        posX -= 10;
+    \}
+\}
+\end{DoxyCode}
+ \hypertarget{collision}{}\section{Simple collision}\label{collision}
+\hypertarget{sprites}{}\section{Sprite drawing}\label{sprites}

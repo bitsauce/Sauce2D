@@ -2,14 +2,18 @@ var NAVTREE =
 [
   [ "x2D Game Engine", "index.html", [
     [ "Manual", "index.html", null ],
+    [ "About", "about.html", "about" ],
     [ "Getting Started", "get_started.html", "get_started" ],
+    [ "Advanced topics", "advanced_topics.html", null ],
     [ "Classes", null, [
       [ "Class List", "annotated.html", "annotated" ],
       [ "Class Index", "classes.html", null ],
       [ "Class Members", "functions.html", [
         [ "All", "functions.html", null ],
         [ "Functions", "functions_func.html", null ],
-        [ "Variables", "functions_vars.html", null ]
+        [ "Variables", "functions_vars.html", null ],
+        [ "Enumerations", "functions_enum.html", null ],
+        [ "Enumerator", "functions_eval.html", null ]
       ] ]
     ] ]
   ] ]
@@ -17,7 +21,7 @@ var NAVTREE =
 
 var NAVTREEINDEX =
 [
-"annotated.html"
+"about.html"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

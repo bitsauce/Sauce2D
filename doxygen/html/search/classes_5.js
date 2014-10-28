@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['textureregion',['TextureRegion',['../class_texture_region.html',1,'']]]
+  ['rect',['Rect',['../class_rect.html',1,'']]],
+  ['recti',['Recti',['../class_recti.html',1,'']]]
 ];

@@ -5,7 +5,7 @@ class Engine
 {
 public:
 	/**
-	  * End the application.
+	  * Exit the application.
 	  */
 	void exit() {}
 
@@ -18,22 +18,6 @@ public:
 	  * Current working directory.
 	  */
 	string workDir;
-
-	/**
-	  * Toggles the profiler state. For more read our Profiling page.
-	  */
-	void toggleProfiler() {}
-
-	/**
-	  * Pushes a profile using the given name to the profile stack tree.
-	  * \param name Profile node name
-	  */
-	void pushProfile(const string &name) {}
-
-	/**
-	  * Pops the profile on the top of the stack.
-	  */
-	void popProfile() {}
 
 	/**
 	  * Pushes a Scene object to the scene stack.

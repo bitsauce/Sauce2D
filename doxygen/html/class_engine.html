@@ -79,7 +79,7 @@ $(document).ready(function(){initNavTree('class_engine.html','');});
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Pages</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Enumerator</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Pages</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -105,12 +105,6 @@ $(document).ready(function(){initNavTree('class_engine.html','');});
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a358d2e2397ca11ccd17553e3c40e7901"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_engine.html#a358d2e2397ca11ccd17553e3c40e7901">exit</a> ()</td></tr>
 <tr class="separator:a358d2e2397ca11ccd17553e3c40e7901"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af5ad29d634a54301cc7ce63490450dbb"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_engine.html#af5ad29d634a54301cc7ce63490450dbb">toggleProfiler</a> ()</td></tr>
-<tr class="separator:af5ad29d634a54301cc7ce63490450dbb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2a3ce17d6a14d2d724df172b8aca1cc1"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_engine.html#a2a3ce17d6a14d2d724df172b8aca1cc1">pushProfile</a> (const string &amp;name)</td></tr>
-<tr class="separator:a2a3ce17d6a14d2d724df172b8aca1cc1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abdc67701098d05bba11e9bc5424b69b0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_engine.html#abdc67701098d05bba11e9bc5424b69b0">popProfile</a> ()</td></tr>
-<tr class="separator:abdc67701098d05bba11e9bc5424b69b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aee05edca6334bc473a1ba1319152e39d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_engine.html#aee05edca6334bc473a1ba1319152e39d">pushScene</a> (Scene *scene)</td></tr>
 <tr class="separator:aee05edca6334bc473a1ba1319152e39d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a986825afe276e17d22b817f535a80423"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_engine.html#a986825afe276e17d22b817f535a80423">popScene</a> ()</td></tr>
@@ -146,31 +140,7 @@ Public Attributes</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>End the application. </p>
-
-</div>
-</div>
-<a class="anchor" id="abdc67701098d05bba11e9bc5424b69b0"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">void popProfile </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>Pops the profile on the top of the stack. </p>
+<p>Exit the application. </p>
 
 </div>
 </div>
@@ -195,36 +165,6 @@ Public Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 <p>Pops the current scene from the top of the stack. </p>
-
-</div>
-</div>
-<a class="anchor" id="a2a3ce17d6a14d2d724df172b8aca1cc1"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">void pushProfile </td>
-          <td>(</td>
-          <td class="paramtype">const string &amp;&#160;</td>
-          <td class="paramname"><em>name</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>Pushes a profile using the given name to the profile stack tree. </p><dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">name</td><td>Profile node name </td></tr>
-  </table>
-  </dd>
-</dl>
 
 </div>
 </div>
@@ -255,30 +195,6 @@ Public Attributes</h2></td></tr>
   </table>
   </dd>
 </dl>
-
-</div>
-</div>
-<a class="anchor" id="af5ad29d634a54301cc7ce63490450dbb"></a>
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">void toggleProfiler </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>Toggles the profiler state. For more read our Profiling page. </p>
 
 </div>
 </div>
@@ -315,7 +231,7 @@ Public Attributes</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="class_engine.html">Engine</a></li>
-    <li class="footer">Generated on Mon Oct 27 2014 03:58:35 for x2D Game Engine by
+    <li class="footer">Generated on Tue Oct 28 2014 03:28:17 for x2D Game Engine by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.7 </li>
   </ul>
