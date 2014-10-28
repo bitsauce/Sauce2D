@@ -49,9 +49,6 @@ public:
 	};
 
 	// Global factories
-	static void					CreateContext(XRenderContext **context);
-	static XRenderContext*		CreateContext();
-	static void					DestroyContext(XRenderContext *context);
 	static XTexture*			CreateTexture(const XPixmap &pixmap);
 	static XTexture*			CreateTexture(const string &filePath);
 	static XTexture*			CreateTexture(const int width, const int height);
@@ -81,11 +78,7 @@ private:
 	int m_refreshRate;
 	float m_timeStep;
 
-	static vector<XRenderContext**> s_contextToCreate;
-	
 	virtual void					renderBatch(const XBatch &batch) = 0;
-	virtual XRenderContext*			createContext() = 0;
-	virtual void					destroyContext(XRenderContext *context) = 0;
 	virtual XTexture*				createTexture(const XPixmap &pixmap) = 0;
 	virtual XShader*				createShader(const string &vertFilePath, const string &fragFilePath) = 0;
 	virtual XVertexBufferObject*	createVertexBufferObject(const XVertexBuffer &buffer) = 0;

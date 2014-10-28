@@ -145,34 +145,24 @@ OpenGL::~OpenGL()
 {
 }
 
-XRenderContext *OpenGL::createContext()
+void OpenGL::createContext()
 {
-	// Create OpenGL context
-	GLcontext *context = new GLcontext(m_deviceContext);
-	if(m_contexts.size() > 0)
-	{
-		// Make sure resources are shared across threads
-		if(!wglShareLists(m_contexts.front()->m_context, context->m_context))
-			LOG("Error: %i", GetLastError());
-	}
+	// Create OpenGL rendering context
+	m_context = wglCreateContext(m_deviceContext);
 
-	// Add to list of context
-	m_contexts.push_back(context);
-
-	// Return id
-	return context;
+	// Make context current
+	wglMakeCurrent(m_deviceContext, m_context);
 }
 
-void OpenGL::destroyContext(XRenderContext *contextPtr)
+void OpenGL::destroyContext()
 {
-	GLcontext *context = (GLcontext*)contextPtr;
-	if(context)
+	if(m_context)
 	{
-		// Remove from context list
-		m_contexts.remove(context);
+		// Make the rendering context not current
+		wglMakeCurrent(NULL, NULL);
 
-		// Delete context
-		delete context;
+		// Delete the OpenGL rendering context
+		wglDeleteContext(m_context);
 	}
 }
 

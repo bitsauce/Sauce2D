@@ -7,38 +7,6 @@
 
 class Window;
 
-class GLcontext : public XRenderContext
-{
-	friend class OpenGL;
-	friend class Window;
-public:
-	GLcontext(HDC deviceContext) :
-		m_deviceContext(deviceContext)
-	{
-		// Create OpenGL rendering context
-		m_context = wglCreateContext(m_deviceContext);
-	}
-
-	void makeCurrent()
-	{
-		// Make context current
-		wglMakeCurrent(m_deviceContext, m_context);
-	}
-
-private:
-	~GLcontext()
-	{
-		// Make the rendering context not current
-		wglMakeCurrent(NULL, NULL);
-
-		// Delete the OpenGL rendering context
-		wglDeleteContext(m_context);
-	}
-
-	HGLRC m_context;
-	HDC m_deviceContext;
-};
-
 extern const int INT_SIZE;
 extern const int FLOAT_SIZE;
 
@@ -52,8 +20,8 @@ public:
 	~OpenGL();
 	void init(Window *window);
 
-	XRenderContext *createContext();
-	void destroyContext(XRenderContext *context);
+	void createContext();
+	void destroyContext();
 
 	void swapBuffers();
 
@@ -75,8 +43,8 @@ private:
 	XVertexBufferObject*	createVertexBufferObject(const XVertexBuffer &buffer);
 	XFrameBufferObject*		createFrameBufferObject();
 	bool					isSupported(Feature feature);
-
-	list<GLcontext*> m_contexts;
+	
+	HGLRC m_context;
 	HDC m_deviceContext;
 	float m_currentOrtho[6];
 	int m_currentViewport[4];

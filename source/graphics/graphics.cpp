@@ -30,9 +30,7 @@ Vector2 QUAD_TEXCOORD[4] = {
 	Vector2(0.0f, 0.0f)
 };
 
-vector<XRenderContext**> XGraphics::s_contextToCreate;
 XVertexFormat XVertexFormat::s_vct;
-mutex ctxmtx;
 
 AS_REG_SINGLETON(XGraphics)
 
@@ -85,23 +83,6 @@ float XGraphics::getTimeStep() const
 float XGraphics::getFPS() const
 {
 	return m_framesPerSecond;
-}
-
-void XGraphics::CreateContext(XRenderContext **context)
-{
-	ctxmtx.lock();
-	s_contextToCreate.push_back(context);
-	ctxmtx.unlock();
-}
-
-XRenderContext* XGraphics::CreateContext()
-{
-	return s_this->createContext();
-}
-
-void XGraphics::DestroyContext(XRenderContext *context)
-{
-	return s_this->destroyContext(context);
 }
 
 XTexture* XGraphics::CreateTexture(const XPixmap &pixmap)

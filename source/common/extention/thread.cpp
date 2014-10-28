@@ -150,18 +150,6 @@ void XThread::setContext(asIScriptContext *ctx)
 
 void CallFunction(XThread *thread)
 {
-	XRenderContext *context = 0;
-	XGraphics::CreateContext(&context);
-	bool hasContext = false;
-	while(!hasContext)
-	{
-		ctxmtx.lock();
-		hasContext = context != 0;
-		ctxmtx.unlock();
-	}
-
-	context->makeCurrent();
-	
 	// Create and set context
 	asIScriptContext *ctx = XScriptEngine::CreateContext();
 	thread->setContext(ctx);
@@ -169,8 +157,6 @@ void CallFunction(XThread *thread)
 	thread->setContext(0);
 
 	asThreadCleanup();
-	
-	XGraphics::DestroyContext(context);
 }
 
 void XThread::start()
