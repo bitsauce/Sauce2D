@@ -359,37 +359,19 @@ int XEngine::init(const XConfig &config)
 
 		// Find the function that is to be called.
 		asIScriptFunction* mainFunc = mod->GetFunctionByDecl("void main()");
-		asIScriptFunction* updateFunc = mod->GetFunctionByDecl("void update()");
-		asIScriptFunction* drawFunc = mod->GetFunctionByDecl("void draw()");
-		if(!mainFunc || !updateFunc || !drawFunc)
+		m_defaultUpdateFunc = mod->GetFunctionByDecl("void update()");
+		m_defaultDrawFunc = mod->GetFunctionByDecl("void draw()");
+
+		if(mainFunc)
 		{
-			// main/update/draw function(s) were not found, exit the application
-			LOG("Could not find 'void main()', 'void update()' and 'void draw()'. Please make sure these functions exists.");
-			return X2D_MISSING_MAIN;
+			LOG("Running void main()...");
+
+			// Create our context and run main
+			asIScriptContext* ctx = XScriptEngine::CreateContext();
+			r = ctx->Prepare(mainFunc); assert(r >= 0);
+			r = ctx->Execute(); AS_CHECK_RUNTIME_ERROR
+			r = ctx->Release();
 		}
-		m_defaultUpdateFunc = updateFunc;
-		m_defaultDrawFunc = drawFunc;
-
-		LOG("Running void main()...");
-
-		// Create our context and run main
-		asIScriptContext* ctx = XScriptEngine::CreateContext();
-		r = ctx->Prepare(mainFunc); assert(r >= 0);
-		r = ctx->Execute();
-
-		// Check for run-time error
-		if(r != asEXECUTION_FINISHED)
-		{
-			// Get exception section and line
-			const char *sectionName; int line;
-			ctx->GetExceptionLineNumber(&line, &sectionName);
-		
-			// Format output string
-			LOG("Run-time exception '%s' occured in function '%s' in file '%s:%i'",
-				ctx->GetExceptionString(), ctx->GetExceptionFunction()->GetDeclaration(), sectionName, line);
-			return X2D_RUNTIME_EXCEPTION;
-		}
-		r = ctx->Release();
 	
 		LOG("x2D Engine Initialized");
 		m_initialized = true;
