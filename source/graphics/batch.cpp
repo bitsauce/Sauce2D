@@ -198,34 +198,20 @@ void XBatch::clear()
 
 void XBatch::renderToTexture(XTexture *texture)
 {
-	if(!texture) {
-		LOG("XBatch.renderToTexture: Cannot render to 'null' texture.");
-		return;
-	}
+	if(texture)
+	{
+		if(!m_fbo)
+		{
+			m_fbo = XGraphics::CreateFrameBufferObject();
+		}
 
-	if(!m_fbo) {
-		m_fbo = XGraphics::CreateFrameBufferObject();
+		m_fbo->bind(texture);
+		draw();
+		m_fbo->unbind();
+		texture->release();
 	}
-
-	m_fbo->bind(texture);
-	draw();
-	m_fbo->unbind();
-	texture->release();
+	else
+	{
+		LOG("Batch::renderToTexture(): Cannot render to 'null' texture.");
+	}
 }
-
-/*void XBatch::makeStatic()
-{
-	if(!XGraphics::IsSupported(XGraphics::VertexBufferObjects)) {
-		AS_THROW("Tried to create a VBO whilst its not supported by the GPU!",);
-	}
-	for(StateVertexMap::iterator itr = m_buffers.begin(); itr != m_buffers.end(); ++itr) {
-		itr->second->vbo = XGraphics::CreateVertexBufferObject();
-		itr->second->vbo->upload(itr->second);
-	}
-	m_static = true;
-}
-
-bool XBatch::isStatic() const
-{
-	return m_static;
-}*/

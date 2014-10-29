@@ -163,6 +163,9 @@ void OpenGL::destroyContext()
 
 		// Delete the OpenGL rendering context
 		wglDeleteContext(m_context);
+
+		// Set to null
+		m_context = NULL;
 	}
 }
 

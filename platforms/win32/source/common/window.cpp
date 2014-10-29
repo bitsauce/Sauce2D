@@ -70,7 +70,7 @@ void Window::close()
 	}
 
 	// If we have a OpenGL context
-	m_graphics->destroyContext(m_glContext);
+	m_graphics->destroyContext();
 
 	// If we have a device context
 	if(m_deviceContext)
@@ -248,8 +248,7 @@ void Window::showWindow()
 		assert("Unable to create rendering context");
 
 	m_graphics->m_deviceContext = m_deviceContext = deviceContext;
-	m_glContext = (GLcontext*)m_graphics->createContext();
-	m_glContext->makeCurrent();
+	m_graphics->createContext();
 
 	// Setup window
 	ShowWindow(m_window, SW_SHOW);

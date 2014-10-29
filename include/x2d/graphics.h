@@ -4,7 +4,6 @@
 #include "config.h"
 #include "graphics/animation.h"
 #include "graphics/batch.h"
-#include "graphics/context.h"
 #include "graphics/font.h"
 #include "graphics/framebufferobject.h"
 #include "graphics/pixmap.h"
