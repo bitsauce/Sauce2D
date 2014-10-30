@@ -11,9 +11,11 @@ class XVertexBufferObject;
 class XDAPI XVertexBuffer
 {
 	friend class XBatch;
-	AS_DECL_REF
+	AS_DECL_VALUE
 public:
+	XVertexBuffer();
 	XVertexBuffer(const XVertexFormat &fmt);
+	XVertexBuffer(const XVertexBuffer &other);
 	~XVertexBuffer();
 
 	// Add vertices and indices to the batch
@@ -38,17 +40,19 @@ public:
 	void draw(XBatch *batch, XTexture *texture);
 	void clear();
 
-	XVertexBuffer *copy() const;
+	enum BufferType
+	{
+		RAW_BUFFER,
+		DYNAMIC_BUFFER,
+		STATIC_BUFFER
+	};
 
-	// Makes the batch static for increased performance (by using VBOs)
-	// Note: While its called static, modifyVertex will still modify the buffer
-	void makeStatic();
-	bool isStatic() const;
+	void setBufferType(const BufferType drawMode);
+	BufferType getBufferType() const;
 	
 	XVertexBuffer &operator=(const XVertexBuffer &other);
 
 private:
-	XVertexBuffer(const XVertexBuffer&);
 
 	// Buffer vertex format
 	XVertexFormat m_format;
@@ -62,10 +66,16 @@ private:
 	uint *m_indexData;
 	int m_indexCount;
 
-	// Static vbo
-	XVertexBufferObject *m_vbo;
+	// Buffer type
+	BufferType m_bufferType;
 
-	static XVertexBuffer *Factory(const XVertexFormat &fmt) { return new XVertexBuffer(fmt); }
+	// VBO object
+	XVertexBufferObject *m_vbo;
+	
+	static void Construct(XVertexBuffer *self) { new (self) XVertexBuffer(); }
+	static void FmtConstruct(const XVertexFormat &fmt, XVertexBuffer *self) { new (self) XVertexBuffer(fmt); }
+	static void CopyConstruct(const XVertexBuffer &other, XVertexBuffer *self) { new (self) XVertexBuffer(other); }
+	static void Destruct(XVertexBuffer *self) { self->~XVertexBuffer(); }
 };
 
 #endif // X2D_VERTEX_BUFFER_H

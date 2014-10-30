@@ -123,9 +123,9 @@ XShader* XGraphics::CreateShader(const string &vertFilePath, const string &fragF
 	return s_this->createShader(vertFilePath, fragFilePath);
 }
 
-XVertexBufferObject *XGraphics::CreateVertexBufferObject(XVertexBuffer *buffer)
+XVertexBufferObject *XGraphics::CreateVertexBufferObject(const XVertexBuffer &buffer)
 {
-	return s_this->createVertexBufferObject(*buffer);
+	return s_this->createVertexBufferObject(buffer);
 }
 
 XFrameBufferObject *XGraphics::CreateFrameBufferObject()

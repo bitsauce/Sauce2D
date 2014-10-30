@@ -231,7 +231,6 @@ private:
 };
 
 // AngelScript functions
-void asMessageCallback(const asSMessageInfo *msg, void *param);
 int  asCompileModule(const string &name);
 XDAPI XScriptArray *CreateArray(const string &type, const uint size);
 

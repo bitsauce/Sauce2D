@@ -14,7 +14,14 @@
 
 #include <x2d/x2d.h>
 
-static mutex GLmtx;
+GLenum toGLBufferType(const XVertexBuffer::BufferType value)
+{
+	switch(value) {
+	case XVertexBuffer::DYNAMIC_BUFFER:		return GL_DYNAMIC_DRAW;
+	case XVertexBuffer::STATIC_BUFFER:		return GL_STATIC_DRAW;
+	}
+	return GL_DYNAMIC_DRAW;
+}
 
 class GLvertexbuffer : public XVertexBufferObject
 {
@@ -29,10 +36,10 @@ public:
 
 		// Upload vertex data
 		glBindBuffer(GL_ARRAY_BUFFER, m_vboId);
-		glBufferData(GL_ARRAY_BUFFER, buffer.getVertexCount() * m_vertexFormat.getVertexSizeInBytes(), buffer.getVertexData(), GL_DYNAMIC_DRAW);
+		glBufferData(GL_ARRAY_BUFFER, buffer.getVertexCount() * m_vertexFormat.getVertexSizeInBytes(), buffer.getVertexData(), toGLBufferType(buffer.getBufferType()));
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_iboId);
-		glBufferData(GL_ELEMENT_ARRAY_BUFFER, buffer.getIndexCount() * sizeof(uint), buffer.getIndexData(), GL_DYNAMIC_DRAW);
+		glBufferData(GL_ELEMENT_ARRAY_BUFFER, buffer.getIndexCount() * sizeof(uint), buffer.getIndexData(), toGLBufferType(buffer.getBufferType()));
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 	}
 
@@ -329,13 +336,13 @@ void OpenGL::renderBatch(const XBatch &batch)
 			glBlendFunc(toGLBlend(state.srcBlendFunc), toGLBlend(state.dstBlendFunc));
 		}
 		
-		XVertexBuffer *buffer = itr->second;
-		XVertexFormat fmt = buffer->getVertexFormat();
-		if(!buffer->isStatic())
+		XVertexBuffer &buffer = itr->second;
+		XVertexFormat fmt = buffer.getVertexFormat();
+		if(buffer.getBufferType() == XVertexBuffer::RAW_BUFFER)
 		{
 			// Get vertices and vertex data
-			char *vertexData = buffer->getVertexData();
-			uint *indexData = buffer->getIndexData();
+			char *vertexData = buffer.getVertexData();
+			uint *indexData = buffer.getIndexData();
 			
 			// Set array pointers
 			int stride = fmt.getVertexSizeInBytes();
@@ -383,13 +390,13 @@ void OpenGL::renderBatch(const XBatch &batch)
 			}
 
 			// Draw batch
-			glDrawElements(toGLPrimitive(state.primitive), buffer->getIndexCount(), GL_UNSIGNED_INT, indexData);
+			glDrawElements(toGLPrimitive(state.primitive), buffer.getIndexCount(), GL_UNSIGNED_INT, indexData);
 		}
 		else
 		{
 			// Bind vertices and indices array
-			glBindBuffer(GL_ARRAY_BUFFER_ARB, ((GLvertexbuffer*)buffer->getVBO())->m_vboId);
-			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ((GLvertexbuffer*)buffer->getVBO())->m_iboId);
+			glBindBuffer(GL_ARRAY_BUFFER_ARB, ((GLvertexbuffer*)buffer.getVBO())->m_vboId);
+			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ((GLvertexbuffer*)buffer.getVBO())->m_iboId);
 			
 			// Set array pointers
 			int stride = fmt.getVertexSizeInBytes();
@@ -437,7 +444,7 @@ void OpenGL::renderBatch(const XBatch &batch)
 			}
 
 			// Draw vbo
-			glDrawElements(toGLPrimitive(state.primitive), buffer->getIndexCount(), GL_UNSIGNED_INT, 0);
+			glDrawElements(toGLPrimitive(state.primitive), buffer.getIndexCount(), GL_UNSIGNED_INT, 0);
 
 			// Reset vbo buffers
 			glBindBuffer(GL_ARRAY_BUFFER_ARB, 0);

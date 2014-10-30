@@ -53,7 +53,7 @@ public:
 	static XTexture*			CreateTexture(const int width, const int height);
 	static XTexture*			CreateTexture(const XTexture &texture);
 	static XShader*				CreateShader(const string &vertFilePath, const string &fragFilePath);
-	static XVertexBufferObject*	CreateVertexBufferObject(XVertexBuffer *buffer);
+	static XVertexBufferObject*	CreateVertexBufferObject(const XVertexBuffer &buffer);
 	static XFrameBufferObject*	CreateFrameBufferObject();
 	static bool					IsSupported(Feature feature);
 

@@ -38,6 +38,7 @@ class XDAPI XVertexFormat
 	friend class XGraphics;
 	friend class XVertex;
 	friend class XBatch;
+	friend class XVertexBuffer;
 	AS_DECL_POD
 public:
 	XVertexFormat();

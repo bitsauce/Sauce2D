@@ -10,13 +10,18 @@
 #include <x2d/engine.h>
 #include <x2d/graphics.h>
 
-AS_REG_REF(XVertexBuffer, "VertexBuffer")
+AS_REG_VALUE(XVertexBuffer, "VertexBuffer")
 
 int XVertexBuffer::Register(asIScriptEngine *scriptEngine)
 {
 	int r = 0;
 
-	r = scriptEngine->RegisterObjectBehaviour("VertexBuffer", asBEHAVE_FACTORY, "VertexBuffer @f(const VertexFormat &in)", asFUNCTION(Factory), asCALL_CDECL); AS_ASSERT
+	r = scriptEngine->RegisterEnum("BufferType"); AS_ASSERT
+	r = scriptEngine->RegisterEnumValue("BufferType", "RAW_BUFFER", RAW_BUFFER); AS_ASSERT
+	r = scriptEngine->RegisterEnumValue("BufferType", "DYNAMIC_BUFFER", DYNAMIC_BUFFER); AS_ASSERT
+	r = scriptEngine->RegisterEnumValue("BufferType", "STATIC_BUFFER", STATIC_BUFFER); AS_ASSERT
+	
+	r = scriptEngine->RegisterObjectBehaviour("VertexBuffer", asBEHAVE_CONSTRUCT, "void f(const VertexFormat &in)", asFUNCTION(FmtConstruct), asCALL_CDECL_OBJLAST); AS_ASSERT
 
 	r = scriptEngine->RegisterObjectMethod("VertexBuffer", "void draw(Batch@, Texture@)", asMETHOD(XVertexBuffer, draw), asCALL_THISCALL); AS_ASSERT
 	
@@ -26,11 +31,22 @@ int XVertexBuffer::Register(asIScriptEngine *scriptEngine)
 	r = scriptEngine->RegisterObjectMethod("VertexBuffer", "void modifyVertices(const int, array<Vertex> @vertices)", asMETHOD(XVertexBuffer, modifyVerticesAS), asCALL_THISCALL);
 	r = scriptEngine->RegisterObjectMethod("VertexBuffer", "array<Vertex> @getVertices(const int, const int) const", asMETHOD(XVertexBuffer, getVerticesAS), asCALL_THISCALL);
 
-	r = scriptEngine->RegisterObjectMethod("VertexBuffer", "void makeStatic()", asMETHOD(XVertexBuffer, makeStatic), asCALL_THISCALL); AS_ASSERT
-		
-	r = scriptEngine->RegisterObjectMethod("VertexBuffer", "VertexBuffer @copy() const", asMETHOD(XVertexBuffer, copy), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("VertexBuffer", "void setBufferType(const BufferType)", asMETHOD(XVertexBuffer, setBufferType), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("VertexBuffer", "BufferType getBufferType() const", asMETHOD(XVertexBuffer, getBufferType), asCALL_THISCALL); AS_ASSERT
 
 	return r;
+}
+
+XVertexBuffer::XVertexBuffer() :
+	m_format(XVertexFormat::s_vct),
+	m_vertexData(0),
+	m_vertexCount(0),
+	m_indexData(0),
+	m_indexCount(0),
+	m_bufferType(RAW_BUFFER),
+	m_vbo(0)
+{
+	m_vertexSize = m_format.getVertexSizeInBytes();
 }
 
 XVertexBuffer::XVertexBuffer(const XVertexFormat &fmt) :
@@ -39,9 +55,33 @@ XVertexBuffer::XVertexBuffer(const XVertexFormat &fmt) :
 	m_vertexCount(0),
 	m_indexData(0),
 	m_indexCount(0),
+	m_bufferType(RAW_BUFFER),
 	m_vbo(0)
 {
 	m_vertexSize = m_format.getVertexSizeInBytes();
+}
+
+XVertexBuffer::XVertexBuffer(const XVertexBuffer &other) :
+	m_format(XVertexFormat::s_vct),
+	m_bufferType(RAW_BUFFER),
+	m_vbo(0)
+{
+	// Set variables
+	m_format = other.m_format;
+
+	// Copy index data
+	m_indexCount = other.m_indexCount;
+	m_indexData = new uint[m_indexCount];
+	memcpy(m_indexData, other.m_indexData, m_indexCount * sizeof(uint));
+
+	// Copy vertex data
+	m_vertexCount = other.m_vertexCount;
+	m_vertexSize = other.m_vertexSize;
+	m_vertexData = new char[m_vertexCount * m_vertexSize];
+	memcpy(m_vertexData, other.m_vertexData, m_vertexCount * m_vertexSize);
+
+	// This will create our vbo
+	setBufferType(other.m_bufferType);
 }
 
 XVertexBuffer::~XVertexBuffer()
@@ -93,7 +133,7 @@ void XVertexBuffer::addVertices(XVertex *vertices, int vcount, uint *indices, in
 void XVertexBuffer::addVerticesAS(XScriptArray *vertices, XScriptArray *indices)
 {
 	XVertex *vx = new XVertex[vertices->GetSize()];
-	for(int i = 0; i < vertices->GetSize(); i++)
+	for(uint i = 0; i < vertices->GetSize(); i++)
 	{
 		vx[i] = *(XVertex*)vertices->At(i);
 	}
@@ -135,7 +175,7 @@ void XVertexBuffer::modifyVertices(const int idx, XVertex *vertex, const int cou
 void XVertexBuffer::modifyVerticesAS(const int idx, XScriptArray *vertices)
 {
 	XVertex *vx = new XVertex[vertices->GetSize()];
-	for(int i = 0; i < vertices->GetSize(); i++)
+	for(uint i = 0; i < vertices->GetSize(); i++)
 	{
 		vx[i] = *(XVertex*)vertices->At(i);
 	}
@@ -214,8 +254,7 @@ void XVertexBuffer::draw(XBatch *batch, XTexture *texture)
 
 		batch->setTexture(texture);
 		batch->setPrimitive(XBatch::PRIMITIVE_TRIANGLES);
-		addRef();
-		batch->setVertexBuffer(this);
+		batch->setVertexBuffer(*this);
 		batch->release();
 
 		if(texture)
@@ -243,26 +282,26 @@ void XVertexBuffer::clear()
 		delete m_vbo;
 		m_vbo = 0;
 	}
+	m_bufferType = RAW_BUFFER;
 }
 
-XVertexBuffer *XVertexBuffer::copy() const
+void XVertexBuffer::setBufferType(const BufferType type)
 {
-	XVertexBuffer *copy = new XVertexBuffer(m_format);
-	*copy = *this;
-	return copy;
-}
-
-void XVertexBuffer::makeStatic()
-{
-	if(!m_vbo)
+	if(type != m_bufferType)
 	{
-		m_vbo = XGraphics::CreateVertexBufferObject(this);
+		delete m_vbo;
+		m_vbo = 0;
+	}
+	m_bufferType = type;
+	if(m_bufferType != RAW_BUFFER && !m_vbo)
+	{
+		m_vbo = XGraphics::CreateVertexBufferObject(*this);
 	}
 }
 
-bool XVertexBuffer::isStatic() const
+XVertexBuffer::BufferType XVertexBuffer::getBufferType() const
 {
-	return m_vbo != 0;
+	return m_bufferType;
 }
 
 XVertexBuffer &XVertexBuffer::operator=(const XVertexBuffer &other)
@@ -271,7 +310,6 @@ XVertexBuffer &XVertexBuffer::operator=(const XVertexBuffer &other)
 
 	// Set variables
 	m_format = other.m_format;
-	m_vbo = other.m_vbo;
 
 	// Copy index data
 	m_indexCount = other.m_indexCount;
@@ -283,6 +321,9 @@ XVertexBuffer &XVertexBuffer::operator=(const XVertexBuffer &other)
 	m_vertexSize = other.m_vertexSize;
 	m_vertexData = new char[m_vertexCount * m_vertexSize];
 	memcpy(m_vertexData, other.m_vertexData, m_vertexCount * m_vertexSize);
+	
+	// This will create our VBO
+	setBufferType(other.m_bufferType);
 
 	return *this;
 }

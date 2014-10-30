@@ -65,7 +65,7 @@ public:
 	PrimitiveType getPrimitive() const;
 
 	// Add vertices
-	void setVertexBuffer(XVertexBuffer *buffer);
+	void setVertexBuffer(const XVertexBuffer &buffer);
 	void addVertices(XVertex *vertices, int vcount, uint *indices, int icount);
 
 	// Render-to-texture
@@ -109,7 +109,7 @@ public:
 protected:
 
 	// State-vertex map
-	map<State, XVertexBuffer*> m_buffers;
+	map<State, XVertexBuffer> m_buffers;
 
 	// Texture drawing order map
 	map<XTexture*, int> m_drawOrderMap;
@@ -128,6 +128,6 @@ protected:
 	static XBatch *Factory() { return new XBatch(); }
 };
 
-typedef map<XBatch::State, XVertexBuffer*> StateVertexMap;
+typedef map<XBatch::State, XVertexBuffer> StateVertexMap;
 
 #endif // X2D_BATCH_H

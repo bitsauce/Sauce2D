@@ -119,7 +119,7 @@ XBatch::PrimitiveType XBatch::getPrimitive() const
 	return m_state.primitive;
 }
 
-void XBatch::setVertexBuffer(XVertexBuffer *buffer)
+void XBatch::setVertexBuffer(const XVertexBuffer &buffer)
 {
 	// Get texture draw order
 	if(m_drawOrderMap.find(m_state.texture) == m_drawOrderMap.end())
@@ -130,11 +130,7 @@ void XBatch::setVertexBuffer(XVertexBuffer *buffer)
 	{
 		m_state.drawOrder = m_drawOrderMap[m_state.texture];
 	}
-	
-	if(m_buffers.find(m_state) != m_buffers.end())
-	{
-		m_buffers[m_state]->release();
-	}
+
 	m_buffers[m_state] = buffer;
 }
 
@@ -149,19 +145,8 @@ void XBatch::addVertices(XVertex *vertices, int vcount, uint *indices, int icoun
 	{
 		m_state.drawOrder = m_drawOrderMap[m_state.texture];
 	}
-
-	XVertexBuffer *buffer;
-	if(m_buffers.find(m_state) == m_buffers.end())
-	{
-		// Create new vertex buffer for this state
-		buffer = m_buffers[m_state] = new XVertexBuffer(XVertexFormat::s_vct);
-	}
-	else
-	{
-		buffer = m_buffers[m_state];
-	}
 	
-	buffer->addVertices(vertices, vcount, indices, icount);
+	m_buffers[m_state].addVertices(vertices, vcount, indices, icount);
 
 	//vertex.position = m_matrixStack.top() * Vector4(vertex.position.x, vertex.position.y, 0.0f, 1.0f);
 }
@@ -186,9 +171,7 @@ void XBatch::draw()
 
 void XBatch::clear()
 {
-	for(StateVertexMap::iterator itr = m_buffers.begin(); itr != m_buffers.end(); ++itr) {
-		itr->second->release();
-	}
+	m_projMatrix.identity();
 	m_buffers.clear();
 	m_drawOrderMap.clear();
 	setTexture(0);

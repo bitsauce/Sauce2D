@@ -111,13 +111,21 @@ void XConsole::Log(const char *msg, ...)
 	if(ctx)
 	{
 		const char *objName = ctx->GetFunction()->GetObjectName();
+		const char *funcName = ctx->GetFunction()->GetName();
 		if(objName)
 		{
-			CALL_LOG("%s::%s(): %s", objName, ctx->GetFunction()->GetName(), msg);
+			CALL_LOG("%s::%s(): %s", objName, funcName, msg);
 		}
 		else
 		{
-			CALL_LOG("%s(): %s", ctx->GetFunction()->GetName(), msg);
+			if(funcName)
+			{
+				CALL_LOG("%s(): %s", funcName, msg);
+			}
+			else
+			{
+				CALL_LOG("global(): %s", funcName, msg);
+			}
 		}
 	}
 	else
