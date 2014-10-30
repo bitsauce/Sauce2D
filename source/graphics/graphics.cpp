@@ -13,7 +13,7 @@
 XGraphics *XGraphics::s_this = 0;
 
 uint QUAD_INDICES[6] = {
-	0, 3, 1, 1, 3, 2
+	0, 3, 2, 0, 2, 1
 };
 
 Vector4 QUAD_VERTICES[4] = {
