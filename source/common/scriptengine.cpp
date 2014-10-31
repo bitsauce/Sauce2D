@@ -70,7 +70,10 @@ asIScriptContext *XScriptEngine::CreateContext()
 	if(s_gameEngine->getDebugger())
 	{
 		ctx->SetLineCallback(asMETHOD(XDebugger, lineCallback), s_gameEngine->getDebugger(), asCALL_THISCALL);
-		ctx->SetFuncCallback(asMETHOD(XDebugger, funcBeginCallback), asMETHOD(XDebugger, funcEndCallback), s_gameEngine->getDebugger(), asCALL_THISCALL);
+		if(s_gameEngine->getDebugger()->getProfiler()->isEnabled())
+		{
+			ctx->SetFuncCallback(asMETHOD(XDebugger, funcBeginCallback), asMETHOD(XDebugger, funcEndCallback), s_gameEngine->getDebugger(), asCALL_THISCALL);
+		}
 	}
 	return ctx;
 }

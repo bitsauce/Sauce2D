@@ -19,14 +19,8 @@ XDebugger::XDebugger() :
 	m_profiler.m_debugger = this;
 }
 
-// This mutex is necessary for making sure no other thread reads the async
-// packet before the thread awaiting it reads it.
-mutex sockmtx;
-
 bool XDebugger::sendPacket(XPacketType type, string data)
 {
-	//sockmtx.lock();
-
 	// Create packet
 	int packetSize = data.size() + 1;
 	char *packet = new char[packetSize + 1];
@@ -60,7 +54,6 @@ bool XDebugger::sendPacket(XPacketType type, string data)
 	}
 
 	delete[] packet;
-	//sockmtx.unlock();
 	return true;
 }
 

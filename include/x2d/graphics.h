@@ -60,10 +60,14 @@ public:
 	// Refresh rate
 	void setRefreshRate(const int hz);
 	int getRefreshRate() const;
-
+	
 	// Vsync
 	virtual void enableVsync()										{ NOT_IMPLEMENTED(enableVsync) }
 	virtual void disableVsync()										{ NOT_IMPLEMENTED(disableVsync) }
+
+	// Wireframe
+	virtual void enableWireframe()										{ NOT_IMPLEMENTED(enableWireframe) }
+	virtual void disableWireframe()										{ NOT_IMPLEMENTED(disableWireframe) }
 
 	// Time step & fps
 	float getTimeStep() const;

@@ -42,6 +42,10 @@ int XGraphics::Register(asIScriptEngine *scriptEngine)
 	r = scriptEngine->RegisterObjectMethod("XGraphics", "void enableVsync()", asMETHOD(XGraphics, enableVsync), asCALL_THISCALL); AS_ASSERT
 	r = scriptEngine->RegisterObjectMethod("XGraphics", "void disableVsync()", asMETHOD(XGraphics, disableVsync), asCALL_THISCALL); AS_ASSERT
 
+	// Wireframe
+	r = scriptEngine->RegisterObjectMethod("XGraphics", "void enableWireframe()", asMETHOD(XGraphics, enableWireframe), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("XGraphics", "void disableWireframe()", asMETHOD(XGraphics, disableWireframe), asCALL_THISCALL); AS_ASSERT
+
 	// Time delta
 	r = scriptEngine->RegisterObjectMethod("XGraphics", "float get_dt() const", asMETHOD(XGraphics, getTimeStep), asCALL_THISCALL); AS_ASSERT
 	r = scriptEngine->RegisterObjectMethod("XGraphics", "float get_FPS() const", asMETHOD(XGraphics, getFPS), asCALL_THISCALL); AS_ASSERT

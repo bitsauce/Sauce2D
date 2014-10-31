@@ -63,16 +63,9 @@ void XProfiler::pop()
 {
 	if(m_enabled)
 	{
-		if(m_currentNode)
-		{
-			m_currentNode->duration += m_timer->getElapsedTime() - m_currentNode->startTime;
-			m_currentNode->calls++;
-			m_currentNode = m_currentNode->parent;
-		}
-		else
-		{
-			LOG("XProfiler::pop() - No current node");
-		}
+		m_currentNode->duration += m_timer->getElapsedTime() - m_currentNode->startTime;
+		m_currentNode->calls++;
+		m_currentNode = m_currentNode->parent;
 	}
 }
 
@@ -114,6 +107,11 @@ void XProfiler::disable()
 	{
 		m_toggle = true;
 	}
+}
+
+bool XProfiler::isEnabled() const
+{
+	return m_enabled;
 }
 
 void XProfiler::stepBegin()

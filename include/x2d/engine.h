@@ -519,6 +519,7 @@ public:
 
 	void enable();
 	void disable();
+	bool isEnabled() const;
 
 	void push(const string &name);
 	void pop();

@@ -145,7 +145,6 @@ void OpenGL::init(Window *window)
 	glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
 
 	glPointSize(4);
-	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 }
 
 OpenGL::~OpenGL()
@@ -498,4 +497,15 @@ void OpenGL::enableVsync()
 void OpenGL::disableVsync()
 {
 	wglSwapIntervalEXT(0);
+}
+
+// Wireframe
+void OpenGL::enableWireframe()
+{
+	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+}
+	
+void OpenGL::disableWireframe()
+{
+	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 }
