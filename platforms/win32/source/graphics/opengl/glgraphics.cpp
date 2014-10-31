@@ -509,3 +509,15 @@ void OpenGL::disableWireframe()
 {
 	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 }
+
+// Alpha blending
+void OpenGL::enableAlphaBlending()
+{
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+}
+	
+void OpenGL::disableAlphaBlending()
+{
+	glDisable(GL_BLEND);
+}

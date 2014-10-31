@@ -31,6 +31,9 @@ public:
 	void enableWireframe();
 	void disableWireframe();
 
+	void enableAlphaBlending();
+	void disableAlphaBlending();
+
 	void setOrthoProjection(const float l, const float r, const float b, const float t, const float n, const float f);
 	void getOrthoProjection(float &l, float &r, float &b, float &t, float &n, float &f);
 	

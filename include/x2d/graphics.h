@@ -69,6 +69,10 @@ public:
 	virtual void enableWireframe()										{ NOT_IMPLEMENTED(enableWireframe) }
 	virtual void disableWireframe()										{ NOT_IMPLEMENTED(disableWireframe) }
 
+	// Alpha blending
+	virtual void enableAlphaBlending()										{ NOT_IMPLEMENTED(enableAlphaBlending) }
+	virtual void disableAlphaBlending()										{ NOT_IMPLEMENTED(disableAlphaBlending) }
+
 	// Time step & fps
 	float getTimeStep() const;
 	float getFPS() const;

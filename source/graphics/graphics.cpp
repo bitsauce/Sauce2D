@@ -45,6 +45,10 @@ int XGraphics::Register(asIScriptEngine *scriptEngine)
 	// Wireframe
 	r = scriptEngine->RegisterObjectMethod("XGraphics", "void enableWireframe()", asMETHOD(XGraphics, enableWireframe), asCALL_THISCALL); AS_ASSERT
 	r = scriptEngine->RegisterObjectMethod("XGraphics", "void disableWireframe()", asMETHOD(XGraphics, disableWireframe), asCALL_THISCALL); AS_ASSERT
+	
+	// Blending
+	r = scriptEngine->RegisterObjectMethod("XGraphics", "void enableAlphaBlending()", asMETHOD(XGraphics, enableAlphaBlending), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("XGraphics", "void disableAlphaBlending()", asMETHOD(XGraphics, disableAlphaBlending), asCALL_THISCALL); AS_ASSERT
 
 	// Time delta
 	r = scriptEngine->RegisterObjectMethod("XGraphics", "float get_dt() const", asMETHOD(XGraphics, getTimeStep), asCALL_THISCALL); AS_ASSERT
