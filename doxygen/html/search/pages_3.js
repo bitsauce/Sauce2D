@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['platforms',['Platforms',['../platforms.html',1,'about']]]
+  ['manual',['Manual',['../index.html',1,'']]]
 ];

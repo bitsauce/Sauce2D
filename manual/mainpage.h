@@ -18,7 +18,7 @@
 
 /** \page require Requirements
   *
-  * x2D is a lightweight 2D game engine and does therefore not rely on any external
+  * x2D is a light-weight 2D game engine and aims therefore not to rely on any external
   * packages to run. It will run on any system supporting OpenGL or DirectX.
   *
   */
@@ -45,7 +45,7 @@
 /** \page get_started Getting Started
   *
   * Topics:
-  * - \subpage main "The Entry Point"
+  * - \subpage hello_world "Hello World!"
   * - \subpage gameloop "Understanding the Game Loop"
   * - \subpage drawing "Simple Srawing"
   * - \subpage input "Getting Input"

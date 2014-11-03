@@ -39,7 +39,7 @@ public:
 	bool hasBuffer() const;
 	void clearBuffer();
 
-	void messageCallback(const asSMessageInfo *msg, void*);
+	void messageCallback(const asSMessageInfo *msg);
 
 	static void Log(const char *msg, ...);
 

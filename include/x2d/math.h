@@ -6,6 +6,7 @@
 #include "math/rect.h"
 #include "math/rectanglepacker.h"
 #include "math/vector.h"
+#include "math/random.h"
 
 #define PI 3.14159265359f
 
@@ -13,12 +14,6 @@ class XDAPI XMath
 {
 	AS_DECL_SINGLETON
 public:
-	// Psuedo-random numbers
-	void  seedRandom(const uint seed);
-	float getRandomFloat();
-	int   getRandomInt(int a, int b);
-	int   getRandomInt();
-
 	// Degrees/Radians
 	float radToDeg(const float rad);
 	float degToRad(const float deg);

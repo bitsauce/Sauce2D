@@ -144,14 +144,14 @@ XScriptArray* XScriptArray::Create(asIObjectType *ot)
 }
 
 // This optional callback is called when the template type is first used by the compiler.
-// It allows the application to validate if the template can be instanciated for the requested
+// It allows the application to validate if the template can be instantiated for the requested
 // subtype at compile time, instead of at runtime. The output argument dontGarbageCollect
 // allow the callback to tell the engine if the template instance type shouldn't be garbage collected,
 // i.e. no asOBJ_GC flag.
 static bool ScriptArrayTemplateCallback(asIObjectType *ot, bool &dontGarbageCollect)
 {
-	// Make sure the subtype can be instanciated with a default factory/constructor,
-	// otherwise we won't be able to instanciate the elements.
+	// Make sure the subtype can be instantiated with a default factory/constructor,
+	// otherwise we won't be able to instantiate the elements.
 	int typeId = ot->GetSubTypeId();
 	if( typeId == asTYPEID_VOID )
 		return false;
@@ -222,6 +222,39 @@ static bool ScriptArrayTemplateCallback(asIObjectType *ot, bool &dontGarbageColl
 		// Arrays with primitives cannot form circular references,
 		// thus there is no need to garbage collect them
 		dontGarbageCollect = true;
+	}
+	else
+	{
+		assert( typeId & asTYPEID_OBJHANDLE );
+
+		// It is not necessary to set the array as garbage collected for all handle types.
+		// If it is possible to determine that the handle cannot refer to an object type
+		// that can potentially form a circular reference with the array then it is not 
+		// necessary to make the array garbage collected.
+		asIObjectType *subtype = ot->GetEngine()->GetObjectTypeById(typeId);
+		asDWORD flags = subtype->GetFlags();
+		if( !(flags & asOBJ_GC) )
+		{
+			if( (flags & asOBJ_SCRIPT_OBJECT) )
+			{
+				// Even if a script class is by itself not garbage collected, it is possible
+				// that classes that derive from it may be, so it is not possible to know 
+				// that no circular reference can occur.
+				if( (flags & asOBJ_NOINHERIT) )
+				{
+					// A script class declared as final cannot be inherited from, thus
+					// we can be certain that the object cannot be garbage collected.
+					dontGarbageCollect = true;
+				}
+			}
+			else
+			{
+				// For application registered classes we assume the application knows
+				// what it is doing and don't mark the array as garbage collected unless
+				// the type is also garbage collected.
+				dontGarbageCollect = true;
+			}
+		}
 	}
 
 	// The type is ok
@@ -398,7 +431,8 @@ XScriptArray::XScriptArray(asIObjectType *ot, void *buf)
 		subTypeId &= ~asTYPEID_OBJHANDLE;
 
 		// Copy the handles into the internal buffer
-		memcpy(buffer->data, (((asUINT*)buf)+1), length * elementSize);
+		if( length > 0 )
+			memcpy(buffer->data, (((asUINT*)buf)+1), length * elementSize);
 
 		// For ref types we can do the same as for handles, as they are
 		// implicitly stored as handles.
@@ -663,8 +697,8 @@ void XScriptArray::Resize(int delta, asUINT at)
 		if( at < buffer->numElements )
 			memcpy(newBuffer->data + (at+delta)*elementSize, buffer->data + at*elementSize, (buffer->numElements-at)*elementSize);
 
-		if( subTypeId & asTYPEID_MASK_OBJECT )
-			Construct(newBuffer, at, at+delta);
+		// Initialize the new elements with default values
+		Construct(newBuffer, at, at+delta);
 
 		// Release the old buffer
 		userFree(buffer);
@@ -842,14 +876,9 @@ void XScriptArray::DeleteBuffer(SArrayBuffer *buf)
 // internal
 void XScriptArray::Construct(SArrayBuffer *buf, asUINT start, asUINT end)
 {
-	if( subTypeId & asTYPEID_OBJHANDLE )
+	if( (subTypeId & asTYPEID_MASK_OBJECT) && !(subTypeId & asTYPEID_OBJHANDLE) )
 	{
-		// Set all object handles to null
-		void *d = (void*)(buf->data + start * sizeof(void*));
-		memset(d, 0, (end-start)*sizeof(void*));
-	}
-	else if( subTypeId & asTYPEID_MASK_OBJECT )
-	{
+		// Create an object using the default constructor/factory for each element
 		void **max = (void**)(buf->data + end * sizeof(void*));
 		void **d = (void**)(buf->data + start * sizeof(void*));
 
@@ -870,6 +899,12 @@ void XScriptArray::Construct(SArrayBuffer *buf, asUINT start, asUINT end)
 				return;
 			}
 		}
+	}
+	else
+	{
+		// Set all elements to zero whether they are handles or primitives
+		void *d = (void*)(buf->data + start * elementSize);
+		memset(d, 0, (end-start)*elementSize);
 	}
 }
 

@@ -1649,8 +1649,8 @@ void asCContext::CallScriptFunction(asCScriptFunction *func)
 	asASSERT( func->scriptData );
 
 	// Push the framepointer, function id and programCounter on the stack
-	PushCallState(); 
-	
+	PushCallState();
+
 	// Update the current function and program position before increasing the stack
 	// so the exception handler will know what to do if there is a stack overflow
 	m_currentFunction = func;

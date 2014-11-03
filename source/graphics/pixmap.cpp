@@ -25,16 +25,6 @@ int XPixmap::Register(asIScriptEngine *scriptEngine)
 	return r;
 }
 
-void printContent(XPixmap &px)
-{
-	for(int y = 0; y < px.getHeight(); y++) {
-		for(int x = 0; x < px.getWidth(); x++) {
-			Vector4 c = px.getColor(x, y);
-			LOG("XPixmap[%i][%i]: (%f,%f,%f,%f)", y, x, c.getR(), c.getG(), c.getB(), c.getA());
-		}
-	}
-}
-
 XPixmap::XPixmap() :
 	m_width(0),
 	m_height(0),

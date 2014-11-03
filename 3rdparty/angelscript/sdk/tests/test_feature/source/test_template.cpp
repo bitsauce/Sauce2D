@@ -203,6 +203,31 @@ bool Test()
 	COutStream out;
 	CBufferedOutStream bout;
 
+	// Template callbacks must only be invoked after the types are fully constructed
+	// http://www.gamedev.net/topic/658982-funcdef-error/
+	{
+		asIScriptEngine *engine = asCreateScriptEngine(ANGELSCRIPT_VERSION);
+		engine->SetMessageCallback(asMETHOD(CBufferedOutStream, Callback), &bout, asCALL_THISCALL);
+		bout.buffer = "";
+
+		RegisterScriptArray(engine, false);
+
+		asIScriptModule *mod = engine->GetModule("test", asGM_ALWAYS_CREATE);
+		mod->AddScriptSection("test",
+			"class foo {} \n"
+			"funcdef void bar(array<foo>); \n");
+		r = mod->Build();
+		if( r < 0 )
+			TEST_FAILED;
+		if( bout.buffer != "" )
+		{
+			PRINTF("%s", bout.buffer.c_str());
+			TEST_FAILED;
+		}
+
+		engine->Release();
+	}
+
 	// Use of second template in first template's arguments
 	// http://www.gamedev.net/topic/660932-variable-parameter-type-to-accept-only-handles-during-compile-also-more-template-woes/
 	{
@@ -724,6 +749,79 @@ bool Test()
 	string decl = engine->GetTypeDeclaration(typeId);
 	if( decl != "MyTmpl<float>" )
 		TEST_FAILED;
+
+	// Attempting to registering the same template specialization twice should give proper error
+	// Attempting to register a template specialization when the template itself hasn't been registered should also give proper error
+	// http://www.gamedev.net/topic/662414-issue-in-registering-template-specialization/
+	engine->SetMessageCallback(asMETHOD(CBufferedOutStream,Callback), &bout, asCALL_THISCALL);
+	bout.buffer = "";
+	typeId = engine->GetTypeIdByDecl("MyTmpl<int>");
+	if( typeId < 0 )
+		TEST_FAILED;
+	r = engine->RegisterObjectType("MyTmpl<int>", 0, asOBJ_REF);
+	if( r != asNOT_SUPPORTED )
+		TEST_FAILED;
+	r = engine->RegisterObjectType("NoTmpl<int>", 0, asOBJ_REF);
+	if( r != asINVALID_NAME )
+		TEST_FAILED;
+	r = engine->RegisterObjectType("MyTmpl<float>", 0, asOBJ_REF);
+	if( r != asALREADY_REGISTERED )
+		TEST_FAILED;
+	if( bout.buffer != " (0, 0) : Error   : Cannot register template specialization. The template type instance 'MyTmpl<int>' has already been generated.\n"
+					   " (0, 0) : Error   : Failed in call to function 'RegisterObjectType' with 'MyTmpl<int>' (Code: -7)\n"
+					   " (0, 0) : Error   : Failed in call to function 'RegisterObjectType' with 'NoTmpl<int>' (Code: -8)\n"
+					   " (0, 0) : Error   : Failed in call to function 'RegisterObjectType' with 'MyTmpl<float>' (Code: -13)\n" )
+	{
+		PRINTF("%s", bout.buffer.c_str());
+		TEST_FAILED;
+	}
+
+	// Should give proper error if attempting to register anything for a type that has been generated from a template
+	bout.buffer = "";
+	r = engine->RegisterObjectBehaviour("MyTmpl<int>", asBEHAVE_CONSTRUCT, "MyTmpl<int> @f()", asFUNCTION(0), asCALL_GENERIC);
+	if( r != asINVALID_TYPE )
+		TEST_FAILED;
+	r = engine->RegisterObjectMethod("MyTmpl<int>", "void f()", asFUNCTION(0), asCALL_GENERIC);
+	if( r != asINVALID_TYPE )
+		TEST_FAILED;
+	r = engine->RegisterObjectProperty("MyTmpl<int>", "int p", 0);
+	if( r != asINVALID_TYPE )
+		TEST_FAILED;
+	if( bout.buffer != " (0, 0) : Error   : Failed in call to function 'RegisterObjectBehaviour' with 'MyTmpl<int>' and 'MyTmpl<int> @f()' (Code: -12)\n"
+					   " (0, 0) : Error   : Failed in call to function 'RegisterObjectMethod' with 'MyTmpl<int>' and 'void f()' (Code: -12)\n"
+					   " (0, 0) : Error   : Failed in call to function 'RegisterObjectProperty' with 'MyTmpl<int>' and 'int p' (Code: -12)\n" )
+	{
+		PRINTF("%s", bout.buffer.c_str());
+		TEST_FAILED;
+	}
+
+	engine->Release();
+
+	// Registering template specialization with related templates
+	// http://www.gamedev.net/topic/662414-issue-in-registering-template-specialization/
+	{
+		engine = asCreateScriptEngine(ANGELSCRIPT_VERSION);
+
+		engine->SetMessageCallback(asMETHOD(COutStream, Callback), &out, asCALL_THISCALL);
+
+		engine->RegisterObjectType("vector<class T>", 0, asOBJ_REF | asOBJ_NOCOUNT | asOBJ_TEMPLATE);
+		engine->RegisterObjectType("vector_iterator<class T>", 4, asOBJ_VALUE | asOBJ_TEMPLATE);
+		engine->RegisterObjectBehaviour("vector_iterator<T>", asBEHAVE_CONSTRUCT, "void f(int&in)", asFUNCTION(0), asCALL_GENERIC);
+		engine->RegisterObjectBehaviour("vector_iterator<T>", asBEHAVE_CONSTRUCT, "void f(int&in,vector<T> &)", asFUNCTION(0), asCALL_GENERIC);
+		engine->RegisterObjectMethod("vector<T>", "vector_iterator<T> begin()", asFUNCTION(0), asCALL_GENERIC);
+
+		r = engine->RegisterObjectType("vector<int8>", 0, asOBJ_REF);
+		if( r < 0 )
+			TEST_FAILED;
+		r = engine->RegisterObjectType("vector_iterator<int8>", 0, asOBJ_REF);
+		if( r < 0 )
+			TEST_FAILED;
+		r = engine->RegisterObjectMethod("vector<int8>", "vector_iterator<int8> @begin()", asFUNCTION(0), asCALL_GENERIC);
+		if( r < 0 )
+			TEST_FAILED;
+
+		engine->Release();
+	}
 	
 	// TODO: Test behaviours that take and return the template sub type
 	// TODO: Test behaviours that take and return the proper template instance type
@@ -738,7 +836,6 @@ bool Test()
 
 
 
-	engine->Release();
 
 	// Test that a proper error occurs if the instance of a template causes invalid data types, e.g. int@
 	{
@@ -760,7 +857,7 @@ bool Test()
 			TEST_FAILED;
 		}
 
-		if( bout.buffer != "ExecuteString (1, 8) : Error   : Can't instantiate template 'MyTmpl' with subtype 'int'\n" )
+		if( bout.buffer != "ExecuteString (1, 8) : Error   : Attempting to instantiate invalid template type 'MyTmpl<int>'\n" )
 		{
 			PRINTF("%s", bout.buffer.c_str());
 			TEST_FAILED;

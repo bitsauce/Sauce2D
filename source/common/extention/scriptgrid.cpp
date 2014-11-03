@@ -127,14 +127,14 @@ XScriptGrid *XScriptGrid::Create(asIObjectType *ot, asUINT w, asUINT h, void *de
 }
 
 // This optional callback is called when the template type is first used by the compiler.
-// It allows the application to validate if the template can be instanciated for the requested
+// It allows the application to validate if the template can be instantiated for the requested
 // subtype at compile time, instead of at runtime. The output argument dontGarbageCollect
 // allow the callback to tell the engine if the template instance type shouldn't be garbage collected,
 // i.e. no asOBJ_GC flag.
 static bool ScriptGridTemplateCallback(asIObjectType *ot, bool &dontGarbageCollect)
 {
-	// Make sure the subtype can be instanciated with a default factory/constructor,
-	// otherwise we won't be able to instanciate the elements.
+	// Make sure the subtype can be instantiated with a default factory/constructor,
+	// otherwise we won't be able to instantiate the elements.
 	int typeId = ot->GetSubTypeId();
 	if( typeId == asTYPEID_VOID )
 		return false;
@@ -205,6 +205,39 @@ static bool ScriptGridTemplateCallback(asIObjectType *ot, bool &dontGarbageColle
 		// Arrays with primitives cannot form circular references,
 		// thus there is no need to garbage collect them
 		dontGarbageCollect = true;
+	}
+	else
+	{
+		assert( typeId & asTYPEID_OBJHANDLE );
+
+		// It is not necessary to set the array as garbage collected for all handle types.
+		// If it is possible to determine that the handle cannot refer to an object type
+		// that can potentially form a circular reference with the array then it is not 
+		// necessary to make the array garbage collected.
+		asIObjectType *subtype = ot->GetEngine()->GetObjectTypeById(typeId);
+		asDWORD flags = subtype->GetFlags();
+		if( !(flags & asOBJ_GC) )
+		{
+			if( (flags & asOBJ_SCRIPT_OBJECT) )
+			{
+				// Even if a script class is by itself not garbage collected, it is possible
+				// that classes that derive from it may be, so it is not possible to know 
+				// that no circular reference can occur.
+				if( (flags & asOBJ_NOINHERIT) )
+				{
+					// A script class declared as final cannot be inherited from, thus
+					// we can be certain that the object cannot be garbage collected.
+					dontGarbageCollect = true;
+				}
+			}
+			else
+			{
+				// For application registered classes we assume the application knows
+				// what it is doing and don't mark the array as garbage collected unless
+				// the type is also garbage collected.
+				dontGarbageCollect = true;
+			}
+		}
 	}
 
 	// The type is ok
@@ -303,7 +336,8 @@ XScriptGrid::XScriptGrid(asIObjectType *ot, void *buf)
 			buf = (asUINT*)(buf)+1;
 
 			// Copy the line
-			memcpy(At(0,y), buf, width*elementSize);
+			if( width > 0 )
+				memcpy(At(0,y), buf, width*elementSize);
 
 			// Move to next line
 			buf = (char*)(buf) + width*elementSize;
@@ -324,7 +358,8 @@ XScriptGrid::XScriptGrid(asIObjectType *ot, void *buf)
 			buf = (asUINT*)(buf)+1;
 
 			// Copy the line
-			memcpy(At(0,y), buf, width*elementSize);
+			if( width > 0 )
+				memcpy(At(0,y), buf, width*elementSize);
 
 			// With object handles it is safe to clear the memory in the received buffer
 			// instead of increasing the ref count. It will save time both by avoiding the
@@ -354,7 +389,8 @@ XScriptGrid::XScriptGrid(asIObjectType *ot, void *buf)
 			buf = (asUINT*)(buf)+1;
 
 			// Copy the line
-			memcpy(At(0,y), buf, width*elementSize);
+			if( width > 0 )
+				memcpy(At(0,y), buf, width*elementSize);
 
 			// With object handles it is safe to clear the memory in the received buffer
 			// instead of increasing the ref count. It will save time both by avoiding the

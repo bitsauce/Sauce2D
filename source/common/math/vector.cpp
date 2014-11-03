@@ -30,8 +30,7 @@ int Vector2::Register(asIScriptEngine *scriptEngine)
 	r = scriptEngine->RegisterObjectBehaviour("Vector2", asBEHAVE_CONSTRUCT, "void f()", asFUNCTION(DefaultConstructor), asCALL_CDECL_OBJLAST); AS_ASSERT
 	r = scriptEngine->RegisterObjectBehaviour("Vector2", asBEHAVE_CONSTRUCT, "void f(float)", asFUNCTION(InitConstructor1), asCALL_CDECL_OBJLAST); AS_ASSERT
 	r = scriptEngine->RegisterObjectBehaviour("Vector2", asBEHAVE_CONSTRUCT, "void f(float, float)", asFUNCTION(InitConstructor2), asCALL_CDECL_OBJLAST); AS_ASSERT
-	r = scriptEngine->RegisterObjectBehaviour("Vector2", asBEHAVE_CONSTRUCT, "void f(const Vector2 &in)", asFUNCTION(CopyConstructor1), asCALL_CDECL_OBJLAST); AS_ASSERT
-	r = scriptEngine->RegisterObjectBehaviour("Vector2", asBEHAVE_CONSTRUCT, "void f(const Vector2i &in)", asFUNCTION(CopyConstructor2), asCALL_CDECL_OBJLAST); AS_ASSERT
+	r = scriptEngine->RegisterObjectBehaviour("Vector2", asBEHAVE_CONSTRUCT, "void f(const Vector2 &in)", asFUNCTION(CopyConstructor), asCALL_CDECL_OBJLAST); AS_ASSERT
 
 	// Register the operator overloads
 	r = scriptEngine->RegisterObjectMethod("Vector2", "Vector2 &opAddAssign(const Vector2 &in)", asMETHOD(Vector2, operator+=), asCALL_THISCALL); AS_ASSERT
@@ -44,6 +43,7 @@ int Vector2::Register(asIScriptEngine *scriptEngine)
 	r = scriptEngine->RegisterObjectMethod("Vector2", "Vector2 opMul(const float) const", asMETHODPR(Vector2, operator*, (const float) const, const Vector2), asCALL_THISCALL); AS_ASSERT
 	r = scriptEngine->RegisterObjectMethod("Vector2", "Vector2 opMul(const Vector2 &in) const", asMETHODPR(Vector2, operator*, (const Vector2&) const, const Vector2), asCALL_THISCALL); AS_ASSERT
 	r = scriptEngine->RegisterObjectMethod("Vector2", "Vector2 opDiv(const float) const", asMETHOD(Vector2, operator/), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("Vector2", "Vector2i opImplConv() const", asMETHOD(Vector2, operator Vector2i), asCALL_THISCALL); AS_ASSERT
 
 	// Register the object methods
 	r = scriptEngine->RegisterObjectMethod("Vector2", "void set(const float x, const float y)", asMETHOD(Vector2, set), asCALL_THISCALL); AS_ASSERT
@@ -74,8 +74,7 @@ int Vector2i::Register(asIScriptEngine *scriptEngine)
 
 	// Register the constructors
 	r = scriptEngine->RegisterObjectBehaviour("Vector2i", asBEHAVE_CONSTRUCT, "void f()", asFUNCTION(DefaultConstructor), asCALL_CDECL_OBJLAST); 
-	r = scriptEngine->RegisterObjectBehaviour("Vector2i", asBEHAVE_CONSTRUCT, "void f(const Vector2i &in)", asFUNCTION(CopyConstructor1), asCALL_CDECL_OBJLAST); AS_ASSERT
-	r = scriptEngine->RegisterObjectBehaviour("Vector2i", asBEHAVE_CONSTRUCT, "void f(const Vector2 &in)", asFUNCTION(CopyConstructor2), asCALL_CDECL_OBJLAST); AS_ASSERT
+	r = scriptEngine->RegisterObjectBehaviour("Vector2i", asBEHAVE_CONSTRUCT, "void f(const Vector2i &in)", asFUNCTION(CopyConstructor), asCALL_CDECL_OBJLAST); AS_ASSERT
 	r = scriptEngine->RegisterObjectBehaviour("Vector2i", asBEHAVE_CONSTRUCT, "void f(int)", asFUNCTION(InitConstructor1), asCALL_CDECL_OBJLAST); AS_ASSERT
 	r = scriptEngine->RegisterObjectBehaviour("Vector2i", asBEHAVE_CONSTRUCT, "void f(int, int)", asFUNCTION(InitConstructor2), asCALL_CDECL_OBJLAST); AS_ASSERT
 
@@ -89,6 +88,7 @@ int Vector2i::Register(asIScriptEngine *scriptEngine)
 	r = scriptEngine->RegisterObjectMethod("Vector2i", "Vector2i opSub(const Vector2i &in) const", asMETHOD(Vector2i, operator-), asCALL_THISCALL); AS_ASSERT
 	r = scriptEngine->RegisterObjectMethod("Vector2i", "Vector2i opMul(const float) const", asMETHOD(Vector2i, operator*), asCALL_THISCALL); AS_ASSERT
 	r = scriptEngine->RegisterObjectMethod("Vector2i", "Vector2i opDiv(const float) const", asMETHOD(Vector2i, operator/), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("Vector2i", "Vector2 opImplConv() const", asMETHOD(Vector2i, operator Vector2), asCALL_THISCALL); AS_ASSERT
 
 	// Register the object methods
 	r = scriptEngine->RegisterObjectMethod("Vector2i", "void set(const int x, const int y)", asMETHOD(Vector2i, set), asCALL_THISCALL); AS_ASSERT
@@ -118,18 +118,9 @@ int Vector3::Register(asIScriptEngine *scriptEngine)
 	r = scriptEngine->RegisterObjectProperty("Vector3", "int y", offsetof(Vector3, y)); AS_ASSERT
 	r = scriptEngine->RegisterObjectProperty("Vector3", "int z", offsetof(Vector3, z)); AS_ASSERT
 	
-	r = scriptEngine->RegisterObjectMethod("Vector3", "float get_r() const", asMETHOD(Vector3, getR), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("Vector3", "float get_g() const", asMETHOD(Vector3, getG), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("Vector3", "float get_b() const", asMETHOD(Vector3, getB), asCALL_THISCALL); AS_ASSERT
-
-	r = scriptEngine->RegisterObjectMethod("Vector3", "void set_r(const float)", asMETHOD(Vector3, setR), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("Vector3", "void set_g(const float)", asMETHOD(Vector3, setG), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("Vector3", "void set_b(const float)", asMETHOD(Vector3, setB), asCALL_THISCALL); AS_ASSERT
-	
 	// Register the constructors
 	r = scriptEngine->RegisterObjectBehaviour("Vector3", asBEHAVE_CONSTRUCT, "void f()", asFUNCTION(DefaultConstructor), asCALL_CDECL_OBJLAST); 
-	r = scriptEngine->RegisterObjectBehaviour("Vector3", asBEHAVE_CONSTRUCT, "void f(const Vector3 &in)", asFUNCTION(CopyConstructor1), asCALL_CDECL_OBJLAST); AS_ASSERT
-	r = scriptEngine->RegisterObjectBehaviour("Vector3", asBEHAVE_CONSTRUCT, "void f(const Vector2 &in)", asFUNCTION(CopyConstructor2), asCALL_CDECL_OBJLAST); AS_ASSERT
+	r = scriptEngine->RegisterObjectBehaviour("Vector3", asBEHAVE_CONSTRUCT, "void f(const Vector3 &in)", asFUNCTION(CopyConstructor), asCALL_CDECL_OBJLAST); AS_ASSERT
 	r = scriptEngine->RegisterObjectBehaviour("Vector3", asBEHAVE_CONSTRUCT, "void f(float)", asFUNCTION(InitConstructor1), asCALL_CDECL_OBJLAST); AS_ASSERT
 	r = scriptEngine->RegisterObjectBehaviour("Vector3", asBEHAVE_CONSTRUCT, "void f(float, float, float)", asFUNCTION(InitConstructor2), asCALL_CDECL_OBJLAST); AS_ASSERT
 
@@ -175,17 +166,9 @@ int Vector4::Register(asIScriptEngine *scriptEngine)
 	r = scriptEngine->RegisterObjectProperty("Vector4", "int z", offsetof(Vector4, z)); AS_ASSERT
 	r = scriptEngine->RegisterObjectProperty("Vector4", "int w", offsetof(Vector4, w)); AS_ASSERT
 
-	r = scriptEngine->RegisterObjectMethod("Vector4", "float get_r() const", asMETHOD(Vector4, getR), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("Vector4", "float get_g() const", asMETHOD(Vector4, getG), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("Vector4", "float get_b() const", asMETHOD(Vector4, getB), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("Vector4", "float get_a() const", asMETHOD(Vector4, getA), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("Vector4", "Vector3 get_rgb() const", asMETHOD(Vector4, getRGB), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("Vector4", "Vector3 get_xyz() const", asMETHOD(Vector4, getXYZ), asCALL_THISCALL); AS_ASSERT
 
-	r = scriptEngine->RegisterObjectMethod("Vector4", "void set_r(const float)", asMETHOD(Vector4, setR), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("Vector4", "void set_g(const float)", asMETHOD(Vector4, setG), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("Vector4", "void set_b(const float)", asMETHOD(Vector4, setB), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("Vector4", "void set_a(const float)", asMETHOD(Vector4, setA), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("Vector4", "void set_rgb(const Vector3 &in)", asMETHOD(Vector4, setRGB), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("Vector4", "void set_xyz(const Vector3 &in)", asMETHOD(Vector4, setXYZ), asCALL_THISCALL); AS_ASSERT
 
 	// Register the constructors
 	r = scriptEngine->RegisterObjectBehaviour("Vector4", asBEHAVE_CONSTRUCT, "void f()", asFUNCTION(DefaultConstructor), asCALL_CDECL_OBJLAST); 
@@ -244,19 +227,7 @@ Vector2::Vector2(const float x, const float y)
     this->y = y;
 }
 
-Vector2::Vector2(const Vector2i &v)
-{
-    this->x = (float)v.x;
-    this->y = (float)v.y;
-}
-
-Vector2::Vector2(const Vector3 &v)
-{
-    this->x = v.x;
-    this->y = v.y;
-}
-
-Vector2::Vector2(const Vector4 &v)
+Vector2::Vector2(const Vector2 &v)
 {
     this->x = v.x;
     this->y = v.y;
@@ -387,14 +358,18 @@ const Vector2 Vector2::operator/(const float scalar) const
     return Vector2(*this) /= scalar;
 }
  
-bool Vector2::operator== (const Vector2& v2) const
+bool Vector2::operator==(const Vector2& v2) const
 {
     return ((x == v2.x) && (y == v2.y));
 }
 
-// Vector2i
 
-int Vector2i::TypeId;
+Vector2::operator Vector2i() const
+{
+	return Vector2i((int)x, (int)y);
+}
+
+// Vector2i
 
 Vector2i::Vector2i(int xy)
 {
@@ -406,12 +381,6 @@ Vector2i::Vector2i(int x, int y)
 {
     this->x = x;
     this->y = y;
-}
-
-Vector2i::Vector2i(const Vector2 &v)
-{
-    this->x = (int)v.x;
-    this->y = (int)v.y;
 }
 
 // Setting
@@ -532,9 +501,14 @@ const Vector2i Vector2i::operator/(const float scalar) const
     return Vector2i(*this) /= scalar;
 }
  
-bool Vector2i::operator== (const Vector2i& v2) const
+bool Vector2i::operator==(const Vector2i& v2) const
 {
     return ((x == v2.x) && (y == v2.y));
+}
+
+Vector2i::operator Vector2() const
+{
+	return Vector2((float)x, (float)y);
 }
 
 //----------------------------------------------------------------------------
@@ -545,15 +519,10 @@ bool Vector2i::operator== (const Vector2i& v2) const
 
 void Vector2::DefaultConstructor(Vector2 *self)
 {
-	new(self) Vector2(0.0f);
+	new(self) Vector2();
 }
 
-void Vector2::CopyConstructor1(const Vector2 &other, Vector2 *self)
-{
-	new(self) Vector2(other);
-}
-
-void Vector2::CopyConstructor2(const Vector2i &other, Vector2 *self)
+void Vector2::CopyConstructor(const Vector2 &other, Vector2 *self)
 {
 	new(self) Vector2(other);
 }
@@ -575,12 +544,7 @@ void Vector2i::DefaultConstructor(Vector2i *self)
 	new(self) Vector2i(0);
 }
 
-void Vector2i::CopyConstructor1(const Vector2i &other, Vector2i *self)
-{
-	new(self) Vector2i(other);
-}
-
-void Vector2i::CopyConstructor2(const Vector2 &other, Vector2i *self)
+void Vector2i::CopyConstructor(const Vector2i &other, Vector2i *self)
 {
 	new(self) Vector2i(other);
 }
@@ -600,8 +564,6 @@ void Vector2i::InitConstructor2(int x, int y, Vector2i *self)
 // - A 3-dimentional vector class
 //-----------------------------------------------------
 
-int Vector3::TypeId;
-
 Vector3::Vector3(float xyz)
 {
 	x = xyz;
@@ -616,18 +578,11 @@ Vector3::Vector3(float x, float y, float z)
 	this->z = z;
 }
 
-Vector3::Vector3(const Vector4 &v)
+Vector3::Vector3(const Vector3 &other)
 {
-    this->x = v.x;
-    this->y = v.y;
-	this->z = v.z;
-}
-
-Vector3::Vector3(const Vector2 &v)
-{
-    this->x = v.x;
-    this->y = v.y;
-	this->z = 0.0f;
+    this->x = other.x;
+    this->y = other.y;
+	this->z = other.z;
 }
 
 //----------------------------------------------------------------------------
@@ -791,12 +746,7 @@ void Vector3::DefaultConstructor(Vector3 *self)
 	new(self) Vector3(0.0f);
 }
 
-void Vector3::CopyConstructor1(const Vector3 &other, Vector3 *self)
-{
-	new(self) Vector3(other);
-}
-
-void Vector3::CopyConstructor2(const Vector2 &other, Vector3 *self)
+void Vector3::CopyConstructor(const Vector3 &other, Vector3 *self)
 {
 	new(self) Vector3(other);
 }

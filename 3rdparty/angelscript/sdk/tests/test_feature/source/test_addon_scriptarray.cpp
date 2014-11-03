@@ -146,7 +146,16 @@ bool Test2();
 class ClassExceptionInConstructor
 {
 public:
-	ClassExceptionInConstructor() { throw std::exception(); }
+	ClassExceptionInConstructor()
+	{
+		if( !strstr(asGetLibraryOptions(), "AS_NO_EXCEPTIONS") )
+			throw std::exception();
+		else
+		{
+			asIScriptContext *ctx = asGetActiveContext();
+			if( ctx ) ctx->SetException("Caught an exception from the application");
+		}
+	}
 	~ClassExceptionInConstructor() {}
 	ClassExceptionInConstructor &operator=(const ClassExceptionInConstructor &) { return *this; }
 
@@ -573,7 +582,7 @@ bool Test()
 		if( r >= 0 )
 			TEST_FAILED;
 		if( bout.buffer != "array (0, 0) : Error   : The subtype has no default factory\n"
-						   "ExecuteString (1, 7) : Error   : Can't instantiate template 'array' with subtype 'single'\n" )
+						   "ExecuteString (1, 7) : Error   : Attempting to instantiate invalid template type 'array<single>'\n" )
 		{
 			PRINTF("%s", bout.buffer.c_str());
 			TEST_FAILED;
@@ -984,7 +993,7 @@ bool Test()
 		if( r > 0 ) 
 			TEST_FAILED;
 		if( bout.buffer != "array (0, 0) : Error   : The subtype has no default factory\n"
-						   "script (5, 7) : Error   : Can't instantiate template 'array' with subtype 'CTest'\n" )
+						   "script (5, 7) : Error   : Attempting to instantiate invalid template type 'array<CTest>'\n" )
 		{
 			PRINTF("%s", bout.buffer.c_str());
 			TEST_FAILED;
@@ -1200,6 +1209,40 @@ bool Test()
 
 		ctx->Release();
 		
+		engine->Release();
+	}
+
+	// Test that array of handles to final class won't be garbage collected 
+	{
+		engine = asCreateScriptEngine(ANGELSCRIPT_VERSION);
+		engine->SetMessageCallback(asMETHOD(COutStream, Callback), &out, asCALL_THISCALL);
+
+		RegisterScriptArray(engine, false);
+
+		asIScriptModule *mod = engine->GetModule("test", asGM_ALWAYS_CREATE);
+		mod->AddScriptSection("test",
+			"class A {} \n"
+			"final class B : A {} \n"
+			"array<A@> arrA; \n"
+			"array<B@> arrB; \n");
+		r = mod->Build();
+		if( r < 0 )
+			TEST_FAILED;
+
+		asIObjectType *arrAType = mod->GetObjectTypeByDecl("array<A@>");
+		asIObjectType *arrBType = mod->GetObjectTypeByDecl("array<B@>");
+
+		// array<A@> must be garbage collected since it is not possible to know that 
+		// array can't hold a handle to a type derived from A that might cause circular 
+		// reference with the array
+		if( (arrAType->GetFlags() & asOBJ_GC) == 0 )
+			TEST_FAILED;
+
+		// array<B@> must not be garbage collected since it is known that the array
+		// cannot form any circular reference with B.
+		if( (arrBType->GetFlags() & asOBJ_GC) != 0 )
+			TEST_FAILED;
+
 		engine->Release();
 	}
 

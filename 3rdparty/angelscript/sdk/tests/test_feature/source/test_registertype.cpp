@@ -7,11 +7,9 @@ namespace TestRegisterType
 void DummyFunc(asIScriptGeneric *) {}
 
 bool TestHandleType();
-
 bool TestIrrTypes();
-
 bool TestRefScoped();
-
+bool TestAlignedScoped();
 bool TestHelper();
 
 int g_widget;
@@ -210,7 +208,7 @@ public:
 		r = engine->RegisterObjectMethod("var", "var &opHndlAssign(const ?&in)", asMETHOD(CVariant, opHandleAssign), asCALL_THISCALL); assert( r >= 0 );
 
 		r = engine->RegisterObjectBehaviour("var", asBEHAVE_REF_CAST, "void f(?&out)", asMETHOD(CVariant, opCast), asCALL_THISCALL); assert( r >= 0 );
-		r = engine->RegisterObjectBehaviour("var", asBEHAVE_VALUE_CAST, "void f(?&out)", asMETHOD(CVariant, opConv), asCALL_THISCALL); assert( r >= 0 );
+		r = engine->RegisterObjectMethod("var", "void opConv(?&out)", asMETHOD(CVariant, opConv), asCALL_THISCALL); assert( r >= 0 );
 	}
 
 	static void Construct(void *mem)
@@ -261,6 +259,7 @@ static const asBehavior_t astrace_ObjectBehaviors[] =
 bool Test()
 {
 	bool fail = TestHelper();
+	fail = TestAlignedScoped() || fail;
 	fail = TestHandleType() || fail;
 	fail = TestIrrTypes() || fail;
 	int r = 0;
@@ -2030,6 +2029,109 @@ bool TestIrrTypes()
 	{
 		TEST_FAILED;
 	}
+
+	engine->Release();
+
+	return fail;
+}
+
+///===================================================================================================
+// http://www.gamedev.net/topic/662178-odd-behavior-with-globally-declared-scoped-reference-types-is-this-normal/
+
+class vec
+{
+public:
+	vec() : x(0), y(0), z(0), w(0) {}
+	vec(float _x, float _y, float _z) : x(_x), y(_y), z(_z), w(0) {}
+	vec(const vec &o) : x(o.x), y(o.y), z(o.z), w(o.w) {}
+	vec &operator=(const vec &o) { x = o.x; y = o.y; z = o.z; w = o.w; return *this; }
+
+	union {
+#ifdef _WIN32
+		__m128 v;
+#endif
+		struct {
+			float x, y, z, w;
+		};
+	};
+}
+#ifndef _WIN32
+__attribute__((aligned(16)))
+#endif
+;
+
+#if defined(__psp2__) || defined(__CELLOS_LV2__)
+	#define _aligned_malloc(s, a) memalign(a, s)
+	#define _aligned_free free
+#endif
+
+//these do lambda magic to allow the definition of wrappers inline
+#define WRAPFUNC(ret, args, body) asFUNCTION(static_cast<ret(*)args>([]args -> ret body))
+#define WRAPEXPR(ret, args, expr) WRAPFUNC(ret, args, {return expr;})
+
+void registerVec(asIScriptEngine *engine)
+{
+	int r = engine->RegisterObjectType("vec", 0, asOBJ_REF | asOBJ_SCOPED); assert(r >= 0);
+
+	// Allocate memory with proper alignment using _aligned_malloc. Free it with _aligned_free
+	// ref: http://msdn.microsoft.com/en-us/library/8z34s9c6.aspx
+	// TODO: With g++ use aligned_alloc/free instead: 
+	// ref http://linux.die.net/man/3/memalign 
+	r = engine->RegisterObjectBehaviour("vec", asBEHAVE_FACTORY, "vec @f()",							 WRAPEXPR(vec*, (), new(_aligned_malloc(sizeof(vec), __alignof(vec))) vec()), asCALL_CDECL); assert(r >= 0);
+	r = engine->RegisterObjectBehaviour("vec", asBEHAVE_FACTORY, "vec @f(const vec &in v)",				 WRAPEXPR(vec*, (const vec &o), new(_aligned_malloc(sizeof(vec), __alignof(vec))) vec(o)), asCALL_CDECL); assert(r >= 0);
+	r = engine->RegisterObjectBehaviour("vec", asBEHAVE_FACTORY, "vec @f(float nx, float nx, float nz)", WRAPEXPR(vec*, (float x, float y, float z), new(_aligned_malloc(sizeof(vec), __alignof(vec))) vec(x, y, z)), asCALL_CDECL); assert(r >= 0);
+	r = engine->RegisterObjectBehaviour("vec", asBEHAVE_RELEASE, "void f()",							 WRAPFUNC(void, (vec* t), {if(t) { t->~vec(); _aligned_free(t); }}), asCALL_CDECL_OBJLAST); assert(r >= 0);
+
+	r = engine->RegisterObjectMethod("vec", "vec &opAssign(const vec &in v)",	asMETHODPR(vec, operator =, (const vec&), vec&), asCALL_THISCALL); assert( r >= 0 );
+
+	r = engine->RegisterObjectProperty("vec", "float x", asOFFSET(vec, x)); assert( r >= 0 );
+	r = engine->RegisterObjectProperty("vec", "float y", asOFFSET(vec, y)); assert( r >= 0 );
+	r = engine->RegisterObjectProperty("vec", "float z", asOFFSET(vec, z)); assert( r >= 0 );
+}
+
+bool checkVec(vec &v)
+{
+	// Check the content
+	if( fabs(v.x - -74.256790f) >= 0.001f ) return false;
+	if( v.y != 0 ) return false;
+	if( fabs(v.z - 27.402715f) >= 0.001f ) return false;
+
+	// Check the memory alignment
+	if( __alignof(vec) != 16 ) return false;
+	if( (asPWORD(&v) & 0xF) != 0 ) return false;
+
+	return true;
+}
+
+bool TestAlignedScoped()
+{
+	bool fail = false;
+	COutStream out;
+
+	asIScriptEngine *engine = asCreateScriptEngine(ANGELSCRIPT_VERSION);
+	engine->SetMessageCallback(asMETHOD(COutStream, Callback), &out, asCALL_THISCALL);
+	registerVec(engine);
+
+	int r = engine->RegisterGlobalFunction("bool checkVec(const vec &in p)", asFUNCTION(checkVec), asCALL_CDECL); assert( r >= 0 );
+	engine->RegisterGlobalFunction("void assert(bool)", asFUNCTION(Assert), asCALL_GENERIC);
+
+	asIScriptModule *mod = engine->GetModule("test", asGM_ALWAYS_CREATE);
+	mod->AddScriptSection("test",
+		"vec g_pos = vec(-74.25679016113281f, 0.0f, 27.4027156829834f); \n"
+		"void loop() \n"
+		"{ \n"
+		"  vec l_pos = vec(-74.25679016113281f, 0.0f, 27.4027156829834f); \n"
+		"  assert( checkVec(l_pos) ); \n"
+		"  assert( checkVec(g_pos) ); \n"
+		"} \n");
+	// TODO: runtime optimize: The bytecode produced is not optimal. It should use the copy constructor to copy the global variable to a local variable
+	r = mod->Build();
+	if( r < 0 )
+		TEST_FAILED;
+
+	r = ExecuteString(engine, "loop()", mod);
+	if( r != asEXECUTION_FINISHED )
+		TEST_FAILED;
 
 	engine->Release();
 

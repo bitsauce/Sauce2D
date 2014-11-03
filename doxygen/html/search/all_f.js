@@ -1,10 +1,8 @@
 var searchData=
 [
-  ['understanding_20the_20game_20loop',['Understanding the Game Loop',['../gameloop.html',1,'get_started']]],
-  ['update',['update',['../class_texture.html#aa4132473d36bbba0211f20495b6f945f',1,'Texture']]],
-  ['updatesection',['updateSection',['../class_texture.html#a099e9e0a78063f4b6a7ddf8f57270f3e',1,'Texture']]],
-  ['using_20the_20editor',['Using the Editor',['../using_editor.html',1,'about']]],
-  ['using_20x2d',['Using x2D',['../using_x2d.html',1,'about']]],
-  ['uv0',['uv0',['../class_texture_region.html#a5cc46b970a98f4914a1a02f5e8fc74a9',1,'TextureRegion']]],
-  ['uv1',['uv1',['../class_texture_region.html#a33813851075ba1209a289d6b6be4004a',1,'TextureRegion']]]
+  ['tan',['tan',['../class_math.html#a7168417d8f47aa41084e47e1bf9d61b2',1,'Math']]],
+  ['texture',['Texture',['../class_texture.html',1,'Texture'],['../class_texture.html#ab80c17c96759a05e3b3931c3ba2b4179',1,'Texture::Texture(const string &amp;path)'],['../class_texture.html#a030e857c4f7c343ec37daa7f2cbab8ac',1,'Texture::Texture(const int width, const int height)'],['../class_texture.html#ac7b9dca5c1353a30373c07c465e91390',1,'Texture::Texture(const Pixmap &amp;pixmap)'],['../class_texture.html#a7a44f80c7050182de12601b457ecbe14',1,'Texture::Texture(const Texture *texture)']]],
+  ['texturefilter',['TextureFilter',['../class_texture.html#ac4b92e6b8c820ded95490092f8bfff74',1,'Texture']]],
+  ['textureregion',['TextureRegion',['../class_texture_region.html',1,'TextureRegion'],['../class_texture_region.html#a89bb8b66d1ae4c63e4382f97e5634c6a',1,'TextureRegion::TextureRegion()'],['../class_texture_region.html#a774026718faac265657f04b514304862',1,'TextureRegion::TextureRegion(Texture *texture)'],['../class_texture_region.html#a022d7c52f955809eddbf142087390f41',1,'TextureRegion::TextureRegion(Texture *texture, const Vector2 &amp;uv0, const Vector2 &amp;uv1)'],['../class_texture_region.html#a6a88b03420dd5b746da29268a221e4e3',1,'TextureRegion::TextureRegion(Texture *texture, const float u0, const float v0, const float u1, const float v1)']]],
+  ['texturewrapping',['TextureWrapping',['../class_texture.html#ab57ddfe4ab6794971da5963f80026824',1,'Texture']]]
 ];

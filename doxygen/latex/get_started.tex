@@ -1,25 +1,50 @@
 Topics\+:
 \begin{DoxyItemize}
-\item \hyperlink{main}{The Entry Point}
+\item \hyperlink{hello_world}{Hello World!}
 \item \hyperlink{gameloop}{Understanding the Game Loop}
 \item \hyperlink{drawing}{Simple Srawing}
 \item \hyperlink{input}{Getting Input}
 \item \hyperlink{collision}{Simple Collision}
 \item \hyperlink{sprites}{Sprite Drawing} 
-\end{DoxyItemize}\hypertarget{main}{}\section{The Entry Point}\label{main}
-The entry point is a function required for the program to start. It is defined by declaring a global function called 'void main()' like follows\+:
+\end{DoxyItemize}\hypertarget{hello_world}{}\section{Hello World!}\label{hello_world}
+\begin{DoxyNote}{Note}
+These tutorials assumes the reader knows the basics of O\+O\+P-\/programming.
+\end{DoxyNote}
+As an introduction to the x2\+D game engine, your first script will be the simple \char`\"{}output Hello World to the screen\char`\"{}.
+
+To accomplish this we will start of with creating a new file for our scripts. This file needs to be named 'main.\+as', and it has to be located in the same directory as our game executable, or alternatively in our game root directory. After we have created our 'main.\+as' file, we need to define a entry-\/point function. This is done by defining a global function called \char`\"{}void main()\char`\"{} like follows\+:
 
 
 \begin{DoxyCode}
 \textcolor{keywordtype}{void} main()
 \{
+        \textcolor{comment}{// ENTRY POINT BODY}
 \}
 \end{DoxyCode}
 
 
-The function will only be invoked once at the start of the game, and is the first function to be called. Initialization and loading of assets should be done in this phase.
+Now we need to actually output the string \char`\"{}\+Hello World\char`\"{} to the console. We do this by calling Console.\+log() with our desired output string as the parameter.
 
-As the game starts it will look for the file called 'main.\+as' in the game's root directory. From this file it is then possible to include other script files using the include directive (\#include \char`\"{}file\+\_\+name.\+as\char`\"{}). This way you can organize your code and classes into different files. \hypertarget{gameloop}{}\section{Understanding the Game Loop}\label{gameloop}
+Example code\+:
+
+
+\begin{DoxyCode}
+\textcolor{keywordtype}{void} main()
+\{
+        \textcolor{comment}{// Output "Hello World" to the console}
+        Console.log(\textcolor{stringliteral}{"Hello World"});
+\}
+\end{DoxyCode}
+
+
+\begin{DoxyNote}{Note}
+If the 'main.\+as' file is not present in the game root directory, the engine will produce an error.
+
+As the game starts it will look for a file called 'main.\+as' in the game root directory. From this file it is possible to include other script files using the include directive (\#include \char`\"{}file\+\_\+name.\+as\char`\"{}). This way you can organize your code and classes into different files.
+
+The \char`\"{}void main()\char`\"{} function will only be invoked once at the start of the game, and is the first function to be called. Initialization and loading of assets should be done in this phase. 
+\end{DoxyNote}
+\hypertarget{gameloop}{}\section{Understanding the Game Loop}\label{gameloop}
 Since games have different run-\/time requirements than most ordinary programs, they are often run in what is called a game loop. In x2\+D Game Engine, the game loop is separated into an update step, and a draw step.
 
 The script writer is required to implement these steps. This is done by defining a 'void update()' and a 'void draw()' globally as follows\+:

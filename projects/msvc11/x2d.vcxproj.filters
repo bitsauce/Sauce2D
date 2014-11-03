@@ -144,6 +144,9 @@
     <ClInclude Include="..\..\include\x2d\graphics\vertexbuffer.h">
       <Filter>include\graphics</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\include\x2d\math\random.h">
+      <Filter>include\math</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\source\audio\buffer.cpp">
@@ -283,6 +286,9 @@
     </ClCompile>
     <ClCompile Include="..\..\include\x2d\graphics\vertexbufferobject.h">
       <Filter>include\graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\common\math\random.cpp">
+      <Filter>source\common\math</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

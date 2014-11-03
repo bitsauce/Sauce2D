@@ -87,11 +87,11 @@ int CScriptBuilder::AddSectionFromFile(const char *filename)
 	return 0;
 }
 
-int CScriptBuilder::AddSectionFromMemory(const char *sectionName, const char *scriptCode, unsigned int scriptLength)
+int CScriptBuilder::AddSectionFromMemory(const char *sectionName, const char *scriptCode, unsigned int scriptLength, int lineOffset)
 {
 	if( IncludeIfNotAlreadyIncluded(sectionName) )
 	{
-		int r = ProcessScriptSection(scriptCode, scriptLength, sectionName);
+		int r = ProcessScriptSection(scriptCode, scriptLength, sectionName, lineOffset);
 		if( r < 0 )
 			return r;
 		else
@@ -160,13 +160,13 @@ int CScriptBuilder::LoadScriptSection(const char *filename)
 	}
 
 	// Process the script section even if it is zero length so that the name is registered
-	int r = ProcessScriptSection(conent.c_str(), conent.size(), filename);
+	int r = ProcessScriptSection(conent.c_str(), conent.size(), filename, 0);
 
 	// Return result
 	return r;
 }
 
-int CScriptBuilder::ProcessScriptSection(const char *script, unsigned int length, const char *sectionname)
+int CScriptBuilder::ProcessScriptSection(const char *script, unsigned int length, const char *sectionname, int lineOffset)
 {
 	vector<string> includes;
 
@@ -181,7 +181,7 @@ int CScriptBuilder::ProcessScriptSection(const char *script, unsigned int length
 	int nested = 0;
 	while( pos < modifiedScript.size() )
 	{
-		int len;
+		asUINT len = 0;
 		asETokenClass t = engine->ParseToken(&modifiedScript[pos], modifiedScript.size() - pos, &len);
 		if( t == asTC_UNKNOWN && modifiedScript[pos] == '#' && (pos + 1 < modifiedScript.size()) )
 		{
@@ -250,7 +250,7 @@ int CScriptBuilder::ProcessScriptSection(const char *script, unsigned int length
 	pos = 0;
 	while( pos < modifiedScript.size() )
 	{
-		int len;
+		asUINT len = 0;
 		asETokenClass t = engine->ParseToken(&modifiedScript[pos], modifiedScript.size() - pos, &len);
 		if( t == asTC_COMMENT || t == asTC_WHITESPACE )
 		{
@@ -419,7 +419,7 @@ int CScriptBuilder::ProcessScriptSection(const char *script, unsigned int length
 
 	// Build the actual script
 	engine->SetEngineProperty(asEP_COPY_SCRIPT_SECTIONS, true);
-	module->AddScriptSection(sectionname, modifiedScript.c_str(), modifiedScript.size());
+	module->AddScriptSection(sectionname, modifiedScript.c_str(), modifiedScript.size(), lineOffset);
 
 	if( includes.size() > 0 )
 	{
@@ -595,7 +595,7 @@ int CScriptBuilder::Build()
 
 int CScriptBuilder::SkipStatement(int pos)
 {
-	int len;
+	asUINT len = 0;
 
 	// Skip until ; or { whichever comes first
 	while( pos < (int)modifiedScript.length() && modifiedScript[pos] != ';' && modifiedScript[pos] != '{' )
@@ -634,7 +634,7 @@ int CScriptBuilder::SkipStatement(int pos)
 // Overwrite all code with blanks until the matching #endif
 int CScriptBuilder::ExcludeCode(int pos)
 {
-	int len;
+	asUINT len = 0;
 	int nested = 0;
 	while( pos < (int)modifiedScript.size() )
 	{
@@ -697,7 +697,7 @@ int CScriptBuilder::ExtractMetadataString(int pos, string &metadata)
 	pos += 1;
 
 	int level = 1;
-	int len;
+	asUINT len = 0;
 	while( level > 0 && pos < (int)modifiedScript.size() )
 	{
 		asETokenClass t = engine->ParseToken(&modifiedScript[pos], modifiedScript.size() - pos, &len);
@@ -731,7 +731,7 @@ int CScriptBuilder::ExtractDeclaration(int pos, string &declaration, int &type)
 	int start = pos;
 
 	std::string token;
-	int len = 0;
+	asUINT len = 0;
 	asETokenClass t = asTC_WHITESPACE;
 
 	// Skip white spaces and comments

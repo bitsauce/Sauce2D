@@ -225,6 +225,36 @@ bool Test()
 	COutStream out;
 	asIScriptModule *mod;
 
+	// Test that script class isn't marked as garbage collected needlessly
+	{
+		engine = asCreateScriptEngine(ANGELSCRIPT_VERSION);
+		engine->SetMessageCallback(asMETHOD(COutStream, Callback), &out, asCALL_THISCALL);
+		RegisterScriptArray(engine, false);
+
+		// class B is declared between A and C, since generally the classes are built in the order they are declared
+		mod = engine->GetModule("test", asGM_ALWAYS_CREATE);
+		mod->AddScriptSection("test",
+			"class A {} \n"							  // don't need garbage collection
+			"class B { array<A> a; array<C@> c; } \n" // don't need garbage collection
+			"final class C {} \n"					  // don't need garbage collection
+			);
+		r = mod->Build();
+		if( r < 0 )
+			TEST_FAILED;
+
+		asIObjectType *type = mod->GetObjectTypeByName("A");
+		if( type == 0 || (type->GetFlags() & asOBJ_GC) )
+			TEST_FAILED;
+		type = mod->GetObjectTypeByName("B");
+		if( type == 0 || (type->GetFlags() & asOBJ_GC) )
+			TEST_FAILED;
+		type = mod->GetObjectTypeByName("C");
+		if( type == 0 || (type->GetFlags() & asOBJ_GC) )
+			TEST_FAILED;
+
+		engine->Release();
+	}
+
 	// Warn if inner scope re-declares variable from outer scope
 	// http://www.gamedev.net/topic/660746-problem-with-random-float-value-on-android/
 	{
@@ -615,7 +645,7 @@ bool Test()
 	{
 		engine = asCreateScriptEngine(ANGELSCRIPT_VERSION);
 
-		int len;
+		asUINT len = 0;
 		if( engine->ParseToken("uintHello", 0, &len) != asTC_IDENTIFIER || len != 9 )
 			TEST_FAILED;
 
@@ -721,7 +751,7 @@ bool Test()
 			}
 		};
 		r = engine->RegisterObjectBehaviour( "string", asBEHAVE_FACTORY, "string @f(double)", asFUNCTION( helper::objectString_FactoryFromDouble ), asCALL_CDECL ); assert( r >= 0 );
-		r = engine->RegisterObjectBehaviour( "string", asBEHAVE_IMPLICIT_VALUE_CAST, "double f() const", asFUNCTION( helper::objectString_CastToDouble ), asCALL_CDECL_OBJLAST ); assert( r >= 0 );
+		r = engine->RegisterObjectMethod( "string", "double opImplConv() const", asFUNCTION( helper::objectString_CastToDouble ), asCALL_CDECL_OBJLAST ); assert( r >= 0 );
 
 		//r = engine->RegisterObjectMethod("dictionary", "void set(const string &in, const string &in)", asFUNCTION(0), asCALL_GENERIC);
 		//r = engine->RegisterObjectMethod("dictionary", "void get(const string &in, string &out)", asFUNCTION(0), asCALL_GENERIC);
@@ -1348,7 +1378,7 @@ bool Test()
 			TEST_FAILED;
 
 		if( bout.buffer != "array (0, 0) : Error   : The subtype has no default factory\n"
-						   "Test (2, 7) : Error   : Can't instantiate template 'array' with subtype 'C'\n" )
+						   "Test (2, 7) : Error   : Attempting to instantiate invalid template type 'array<C>'\n" )
 		{
 			PRINTF("%s", bout.buffer.c_str());
 			TEST_FAILED;

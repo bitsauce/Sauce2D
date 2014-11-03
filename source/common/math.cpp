@@ -53,61 +53,7 @@ int XMath::Register(asIScriptEngine *scriptEngine)
 	r = scriptEngine->RegisterObjectMethod("XMath", "float atan2(const float, const float)", asMETHOD(XMath, atan2), asCALL_THISCALL); AS_ASSERT
 	r = scriptEngine->RegisterObjectMethod("XMath", "float get_PI() const", asMETHOD(XMath, getPI), asCALL_THISCALL); AS_ASSERT
 
-	// Random
-	r = scriptEngine->RegisterObjectMethod("XMath", "void seedRandom(const uint)", asMETHOD(XMath, seedRandom), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("XMath", "int getRandomInt()", asMETHODPR(XMath, getRandomInt, (), int), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("XMath", "int getRandomInt(const int, const int)", asMETHODPR(XMath, getRandomInt, (int, int), int), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("XMath", "float getRandomFloat()", asMETHOD(XMath, getRandomFloat), asCALL_THISCALL); AS_ASSERT
-
 	return r;
-}
-
-float XMath::getRandomFloat()
-{
-#if defined(X2D_LINUX)
-	return (float)drand48();
-#elif defined(X2D_WINDOWS)
-	return (float)rand()/RAND_MAX;
-#endif
-}
-
-int XMath::getRandomInt()
-{
-#if defined(X2D_LINUX)
-	return (int)lrand48();
-#elif defined(X2D_WINDOWS)
-	return rand();
-#endif
-}
-
-int XMath::getRandomInt(int start, int end)
-{
-	// Start shouldn't be larger than end
-	if(start > end)
-	{
-		int temp = end;
-		end = start;
-		start = temp;
-	}
-	
-	// Only accept nubers small enought for our rand func
-	if(end > RAND_MAX)
-		return -1;
-
-#if defined(X2D_WINDOWS)
-	return (rand() % (end-start+1) + start);
-#else defined(X2D_LINUX)
-	return ((int)lrand48() % (end-start+1) + start);
-#endif
-}
-
-void XMath::seedRandom(const uint seed)
-{
-#if defined(X2D_WINDOWS)
-	srand(seed);
-#else defined(X2D_LINUX)
-	srand48(seed);
-#endif
 }
 
 float XMath::radToDeg(const float rad)

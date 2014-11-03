@@ -58,8 +58,8 @@ BEGIN_AS_NAMESPACE
 
 // AngelScript version
 
-#define ANGELSCRIPT_VERSION        22902
-#define ANGELSCRIPT_VERSION_STRING "2.29.2"
+#define ANGELSCRIPT_VERSION        23000
+#define ANGELSCRIPT_VERSION_STRING "2.30.0 WIP"
 
 // Data types
 
@@ -222,8 +222,11 @@ enum asEBehaviours
 	asBEHAVE_GET_WEAKREF_FLAG,
 
 	// Object operators
+#ifdef AS_DEPRECATED
+	// Deprecated since 2.30.0, 2014-10-24
 	asBEHAVE_VALUE_CAST,
 	asBEHAVE_IMPLICIT_VALUE_CAST,
+#endif
 	asBEHAVE_REF_CAST,
 	asBEHAVE_IMPLICIT_REF_CAST,
 	asBEHAVE_TEMPLATE_CALLBACK,
@@ -366,7 +369,7 @@ typedef unsigned int   asUINT;
     typedef long asINT64;
 #else
     typedef unsigned long asDWORD;
-  #if defined(__GNUC__) || defined(__MWERKS__) || defined(__SUNPRO_CC)
+  #if defined(__GNUC__) || defined(__MWERKS__) || defined(__SUNPRO_CC) || defined(__psp2__)
     typedef uint64_t asQWORD;
     typedef int64_t asINT64;
   #else
@@ -736,9 +739,10 @@ public:
 	virtual void                  *CreateScriptObjectCopy(void *obj, const asIObjectType *type) = 0;
 	virtual void                  *CreateUninitializedScriptObject(const asIObjectType *type) = 0;
 	virtual asIScriptFunction     *CreateDelegate(asIScriptFunction *func, void *obj) = 0;
-	virtual void                   AssignScriptObject(void *dstObj, void *srcObj, const asIObjectType *type) = 0;
+	virtual int                    AssignScriptObject(void *dstObj, void *srcObj, const asIObjectType *type) = 0;
 	virtual void                   ReleaseScriptObject(void *obj, const asIObjectType *type) = 0;
 	virtual void                   AddRefScriptObject(void *obj, const asIObjectType *type) = 0;
+	virtual int                    CastObject(void *obj, asIObjectType *fromType, asIObjectType *toType, void **newPtr, bool useOnlyImplicitCast = false) = 0;
 	virtual bool                   IsHandleCompatibleWithObject(void *obj, int objTypeId, int handleTypeId) const = 0;
 	virtual asILockableSharedBool *GetWeakRefFlagOfScriptObject(void *obj, const asIObjectType *type) const = 0;
 
@@ -748,7 +752,7 @@ public:
 	virtual int                    SetContextCallbacks(asREQUESTCONTEXTFUNC_t requestCtx, asRETURNCONTEXTFUNC_t returnCtx, void *param = 0) = 0;
 
 	// String interpretation
-	virtual asETokenClass ParseToken(const char *string, size_t stringLength = 0, int *tokenLength = 0) const = 0;
+	virtual asETokenClass ParseToken(const char *string, size_t stringLength = 0, asUINT *tokenLength = 0) const = 0;
 
 	// Garbage collection
 	virtual int  GarbageCollect(asDWORD flags = asGC_FULL_CYCLE, asUINT numIterations = 1) = 0;
@@ -974,8 +978,9 @@ class asIScriptObject
 {
 public:
 	// Memory management
-	virtual int AddRef() const = 0;
-	virtual int Release() const = 0;
+	virtual int                    AddRef() const = 0;
+	virtual int                    Release() const = 0;
+	virtual asILockableSharedBool *GetWeakRefFlag() const = 0;
 
 	// Type info
 	virtual int            GetTypeId() const = 0;

@@ -223,22 +223,10 @@ void CScriptHandle::Cast(void **outRef, int typeId)
 		engine->AddRefScriptObject(m_ref, m_type);
 		*outRef = m_ref;
 	}
-	else if( m_type->GetFlags() & asOBJ_SCRIPT_OBJECT )
+	else 
 	{
-		// Attempt a dynamic cast of the stored handle to the requested handle type
-		if( engine->IsHandleCompatibleWithObject(m_ref, m_type->GetTypeId(), typeId) )
-		{
-			// The script type is compatible so we can simply return the same pointer
-			engine->AddRefScriptObject(m_ref, m_type);
-			*outRef = m_ref;
-		}
-	}
-	else
-	{
-		// TODO: Check for the existance of a reference cast behaviour.
-		//       Both implicit and explicit casts may be used
-		//       Calling the reference cast behaviour may change the actual
-		//       pointer so the AddRef must be called on the new pointer
+		// CastObject will increment the refCount of the returned object if successful
+		engine->CastObject(m_ref, m_type, type, outRef);
 	}
 }
 
@@ -248,7 +236,12 @@ void RegisterScriptHandle_Native(asIScriptEngine *engine)
 {
 	int r;
 
+#if AS_CAN_USE_CPP11
+	// With C++11 it is possible to use asGetTypeTraits to automatically determine the flags that represent the C++ class
+	r = engine->RegisterObjectType("ref", sizeof(CScriptHandle), asOBJ_VALUE | asOBJ_ASHANDLE | asGetTypeTraits<CScriptHandle>()); assert( r >= 0 );
+#else
 	r = engine->RegisterObjectType("ref", sizeof(CScriptHandle), asOBJ_VALUE | asOBJ_ASHANDLE | asOBJ_APP_CLASS_CDAK); assert( r >= 0 );
+#endif
 	r = engine->RegisterObjectBehaviour("ref", asBEHAVE_CONSTRUCT, "void f()", asFUNCTIONPR(Construct, (CScriptHandle *), void), asCALL_CDECL_OBJFIRST); assert( r >= 0 );
 	r = engine->RegisterObjectBehaviour("ref", asBEHAVE_CONSTRUCT, "void f(const ref &in)", asFUNCTIONPR(Construct, (CScriptHandle *, const CScriptHandle &), void), asCALL_CDECL_OBJFIRST); assert( r >= 0 );
 	r = engine->RegisterObjectBehaviour("ref", asBEHAVE_CONSTRUCT, "void f(const ?&in)", asFUNCTIONPR(Construct, (CScriptHandle *, void *, int), void), asCALL_CDECL_OBJFIRST); assert( r >= 0 );

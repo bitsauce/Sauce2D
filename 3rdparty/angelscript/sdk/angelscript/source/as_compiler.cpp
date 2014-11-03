@@ -1505,11 +1505,11 @@ int asCCompiler::PrepareArgument(asCDataType *paramType, asSExprContext *ctx, as
 					// function, then it is enough that the variable is local to guarantee the lifetime.
 					if( !ctx->type.isTemporary && !(param.IsReadOnly() && ctx->type.isVariable) )
 					{
-						if( (ctx->type.dataType.GetObjectType()->flags & asOBJ_REF) && param.IsReadOnly() )
+						if( (ctx->type.dataType.GetObjectType()->flags & asOBJ_REF) && param.IsReadOnly() && !(ctx->type.dataType.GetObjectType()->flags & asOBJ_SCOPED) )
 						{
-							// If the object is a reference type, and the parameter is a const reference,
-							// then it is not necessary to make a copy of the object. The compiler just needs
-							// to hold a handle to guarantee the lifetime.
+							// If the object is a reference type (except scoped reference types), and the
+							// parameter is a const reference, then it is not necessary to make a copy of the
+							// object. The compiler just needs to hold a handle to guarantee the lifetime.
 
 							// Allocate a handle variable
 							dt.MakeHandle(true);
@@ -12423,6 +12423,9 @@ void asCCompiler::CompileMathOperator(asCScriptNode *node, asSExprContext *lctx,
 						v = as_powi(lctx->type.intValue, rctx->type.intValue, isOverflow);
 					else
 						v = as_powu(lctx->type.dwordValue, rctx->type.dwordValue, isOverflow);
+
+					if( isOverflow )
+						Error(TXT_POW_OVERFLOW, node);
 				}
 
 				ctx->type.SetConstantDW(lctx->type.dataType, v);
@@ -12469,6 +12472,9 @@ void asCCompiler::CompileMathOperator(asCScriptNode *node, asSExprContext *lctx,
 						v = as_powi64(asINT64(lctx->type.qwordValue), asINT64(rctx->type.qwordValue), isOverflow);
 					else
 						v = as_powu64(lctx->type.qwordValue, rctx->type.qwordValue, isOverflow);
+
+					if( isOverflow )
+						Error(TXT_POW_OVERFLOW, node);
 				}
 
 				ctx->type.SetConstantQW(lctx->type.dataType, v);
@@ -12502,7 +12508,12 @@ void asCCompiler::CompileMathOperator(asCScriptNode *node, asSExprContext *lctx,
 					v = fmodf(lctx->type.floatValue, rctx->type.floatValue);
 			}
 			else if( op == ttStarStar )
+			{
 				v = pow(lctx->type.floatValue, rctx->type.floatValue);
+
+				if( v == HUGE_VAL )
+					Error(TXT_POW_OVERFLOW, node);
+			}
 
 			ctx->type.SetConstantF(lctx->type.dataType, v);
 		}
@@ -12514,7 +12525,11 @@ void asCCompiler::CompileMathOperator(asCScriptNode *node, asSExprContext *lctx,
 				asASSERT(rctx->type.dataType.GetSizeInMemoryDWords() == 1);
 
 				if( op == ttStarStar || op == ttPowAssign )
+				{
 					v = pow(lctx->type.doubleValue, rctx->type.intValue);
+					if( v == HUGE_VAL )
+						Error(TXT_POW_OVERFLOW, node);
+				}
 				else
 					asASSERT(false);  // Should not be possible
 			}
@@ -12541,7 +12556,11 @@ void asCCompiler::CompileMathOperator(asCScriptNode *node, asSExprContext *lctx,
 						v = fmod(lctx->type.doubleValue, rctx->type.doubleValue);
 				}
 				else if( op == ttStarStar )
+				{
 					v = pow(lctx->type.doubleValue, rctx->type.doubleValue);
+					if( v == HUGE_VAL )
+						Error(TXT_POW_OVERFLOW, node);
+				}
 			}
 
 			ctx->type.SetConstantD(lctx->type.dataType, v);
@@ -13412,6 +13431,9 @@ void asCCompiler::CompileOperatorOnHandles(asCScriptNode *node, asSExprContext *
 			to = lctx->type.dataType;
 		else
 			to = rctx->type.dataType;
+
+		// Assume handle-to-const as it is not possible to convert handle-to-const to handle-to-non-const
+		to.MakeHandleToConst(true);
 	}
 
 	// Need to pop the value if it is a null constant

@@ -329,8 +329,6 @@ int XEngine::init(const XConfig &config)
 		//gameClient = new Client();
 		//gameServer = new Server();
 
-		srand((uint)time(0));
-
 		// Load plugins
 		LOG("Loading plugins...");
 		if(config.loadPluginsFunc != 0 && config.loadPluginsFunc(scriptEngine) < 0)

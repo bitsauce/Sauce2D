@@ -1,12 +1,9 @@
 var searchData=
 [
-  ['rect',['Rect',['../class_rect.html',1,'']]],
-  ['recti',['Recti',['../class_recti.html',1,'']]],
-  ['repeat',['REPEAT',['../class_texture.html#ab57ddfe4ab6794971da5963f80026824a972f3df9d279a3d3acc88bcbe4452d51',1,'Texture']]],
-  ['requirements',['Requirements',['../require.html',1,'about']]],
-  ['restore',['restore',['../class_window.html#afd3595051be2709847c2de4352f27cf5',1,'Window']]],
-  ['rol',['rol',['../class_math.html#af41b8fcc9b329f57f0478873633c9f08',1,'Math']]],
-  ['ror',['ror',['../class_math.html#aea730551885a893809bcdcc42ab65eab',1,'Math']]],
-  ['rotate',['rotate',['../class_sprite.html#a157bcaff0e3fb4f62ed9ad139a27b0ad',1,'Sprite']]],
-  ['round',['round',['../class_math.html#a0067f69c9af6ba8037855572fc628868',1,'Math']]]
+  ['pi',['PI',['../class_math.html#a4c43e2b8db2027e48251350d972a39c2',1,'Math']]],
+  ['platform',['platform',['../class_engine.html#ab33ce334382344871104873746995d5d',1,'Engine']]],
+  ['platforms',['Platforms',['../platforms.html',1,'about']]],
+  ['popscene',['popScene',['../class_engine.html#a986825afe276e17d22b817f535a80423',1,'Engine']]],
+  ['pow',['pow',['../class_math.html#a0178eda0ae56e84df2c1929863a07837',1,'Math']]],
+  ['pushscene',['pushScene',['../class_engine.html#aee05edca6334bc473a1ba1319152e39d',1,'Engine']]]
 ];

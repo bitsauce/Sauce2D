@@ -247,7 +247,7 @@ void XSprite::getVertices(XVertex *vertices) const
 
 	for(int i = 0; i < 4; i++)
 	{
-		Vector2 pos = mat * QUAD_VERTICES[i];
+		Vector2 pos = (mat * QUAD_VERTICES[i]).getXY();
 		vertices[i].set4f(VERTEX_POSITION, pos.x, pos.y);
 		vertices[i].set4ub(VERTEX_COLOR, m_color.x*255, m_color.y*255, m_color.z*255, m_color.w*255);
 	}

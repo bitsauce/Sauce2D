@@ -209,7 +209,7 @@ void ScriptValue::clear()
 
 // AngelScript callback function
 string messageCallback;
-void XConsole::messageCallback(const asSMessageInfo *msg, void*)
+void XConsole::messageCallback(const asSMessageInfo *msg)
 {
 	// Callback type
 	const char *type = "ERR";

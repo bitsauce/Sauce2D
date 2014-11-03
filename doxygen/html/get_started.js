@@ -1,6 +1,6 @@
 var get_started =
 [
-    [ "The Entry Point", "main.html", null ],
+    [ "Hello World!", "hello_world.html", null ],
     [ "Understanding the Game Loop", "gameloop.html", [
       [ "Why is this separation needed?", "gameloop.html#why_step", null ]
     ] ],

@@ -226,15 +226,77 @@ int asCBuilder::AddCode(const char *name, const char *code, int codeLength, int 
 	return 0;
 }
 
+void asCBuilder::EvaluateTemplateInstances(asUINT startIdx, bool keepSilent)
+{
+	// Backup the original message stream
+	bool                       msgCallback     = engine->msgCallback;
+	asSSystemFunctionInterface msgCallbackFunc = engine->msgCallbackFunc;
+	void                      *msgCallbackObj  = engine->msgCallbackObj;
+
+	// Set the new temporary message stream
+	asCOutputBuffer outBuffer;
+	if( keepSilent )
+		engine->SetMessageCallback(asMETHOD(asCOutputBuffer, Callback), &outBuffer, asCALL_THISCALL);
+
+	// Evaluate each of the template instances that have been created since the start of the build
+	// TODO: This is not exactly correct, since another thread may have created template instances in parallel
+	for( asUINT n = startIdx; n < engine->templateInstanceTypes.GetLength(); n++ )
+	{
+		bool dontGarbageCollect = false;
+		asCObjectType *tmpl = engine->templateInstanceTypes[n];
+		asCScriptFunction *callback = engine->scriptFunctions[tmpl->beh.templateCallback];
+		if( callback && !engine->CallGlobalFunctionRetBool(tmpl, &dontGarbageCollect, callback->sysFuncIntf, callback) )
+		{
+			asCString sub = tmpl->templateSubTypes[0].Format();
+			for( asUINT n = 1; n < tmpl->templateSubTypes.GetLength(); n++ )
+			{
+				sub += ",";
+				sub += tmpl->templateSubTypes[n].Format();
+			}
+			asCString str;
+			str.Format(TXT_INSTANCING_INVLD_TMPL_TYPE_s_s, tmpl->name.AddressOf(), sub.AddressOf());
+			WriteError(tmpl->scriptSectionIdx >= 0 ? engine->scriptSectionNames[tmpl->scriptSectionIdx]->AddressOf() : "", str, tmpl->declaredAt&0xFFFFF, (tmpl->declaredAt>>20)&0xFFF);
+		}
+		else
+		{
+			// If the callback said this template instance won't be garbage collected then remove the flag
+			if( dontGarbageCollect )
+				tmpl->flags &= ~asOBJ_GC;
+		}
+	}
+
+	// Restore message callback
+	if( keepSilent )
+	{
+		engine->msgCallback     = msgCallback;
+		engine->msgCallbackFunc = msgCallbackFunc;
+		engine->msgCallbackObj  = msgCallbackObj;
+	}
+}
+
 int asCBuilder::Build()
 {
 	Reset();
+
+	// The template callbacks must only be called after the subtypes have a known structure,
+	// otherwise the callback may think it is not possible to create the template instance, 
+	// even though it is.
+	// TODO: This flag shouldn't be set globally in the engine, as it would mean that another 
+	//       thread requesting a template instance in parallel to the compilation wouldn't 
+	//       evaluate the template instance. 
+	engine->deferValidationOfTemplateTypes = true;
+	asUINT numTempl = (asUINT)engine->templateInstanceTypes.GetLength();
 
 	ParseScripts();
 
 	// Compile the types first
 	CompileInterfaces();
-	CompileClasses();
+	CompileClasses(numTempl);
+
+	// Evaluate the template instances one last time, this time with error messages, as we know 
+	// all classes have been fully built and it is known which ones will need garbage collection.
+	EvaluateTemplateInstances(numTempl, false);
+	engine->deferValidationOfTemplateTypes = false;
 
 	// Then the global variables. Here the variables declared with auto
 	// will be resolved, so they can be accessed properly in the functions
@@ -2442,7 +2504,8 @@ void asCBuilder::CompileInterfaces()
 	}
 }
 
-void asCBuilder::CompileClasses()
+// numTempl is the number of template instances that existed in the engine before the build begun
+void asCBuilder::CompileClasses(asUINT numTempl)
 {
 	asUINT n;
 	asCArray<sClassDeclaration*> toValidate((int)classDeclarations.GetLength());
@@ -3027,6 +3090,8 @@ void asCBuilder::CompileClasses()
 	if( numErrors > 0 ) return;
 
 	// Verify which script classes can really form circular references, and mark only those as garbage collected.
+	// This must be done in the correct order, so that a class that contains another class isn't needlessly marked
+	// as garbage collected, just because the contained class was evaluated afterwards.
 
 	// TODO: runtime optimize: This algorithm can be further improved by checking the types that inherits from
 	//                         a base class. If the base class is not shared all the classes that derive from it
@@ -3037,92 +3102,170 @@ void asCBuilder::CompileClasses()
 	//                         existing module. However, the applications that want to use that should use a special
 	//                         build flag to not finalize the module.
 
+	asCArray<asCObjectType*> typesToValidate;
 	for( n = 0; n < classDeclarations.GetLength(); n++ )
 	{
+		// Existing shared classes won't need evaluating, nor interfaces
 		sClassDeclaration *decl = classDeclarations[n];
-
-		// Existing shared classes won't be re-evaluated
 		if( decl->isExistingShared ) continue;
+		if( decl->objType->IsInterface() ) continue;
 
-		asCObjectType *ot = decl->objType;
+		typesToValidate.PushLast(decl->objType);
+	}
+
+	asUINT numReevaluations = 0;
+	while( typesToValidate.GetLength() )
+	{
+		if( numReevaluations > typesToValidate.GetLength() )
+		{
+			// No types could be completely evaluated in the last iteration so 
+			// we consider the remaining types in the array as garbage collected
+			break;
+		}
+
+		asCObjectType *type = typesToValidate[0];
+		typesToValidate.RemoveIndex(0);
+
+		// If the type inherits from another type that is yet to be validated, then reinsert it at the end
+		if( type->derivedFrom && typesToValidate.Exists(type->derivedFrom) )
+		{
+			typesToValidate.PushLast(type);
+			numReevaluations++;
+			continue;
+		}
+
+		// If the type inherits from a known garbage collected type, then this type must also be garbage collected
+		if( type->derivedFrom && (type->derivedFrom->flags & asOBJ_GC) )
+		{
+			type->flags |= asOBJ_GC;
+			continue;
+		}
+
+		// Evaluate template instances (silently) before verifying each of the classes, since it is possible that
+		// a class will be marked as non-garbage collected, which in turn will mark the template instance that uses
+		// it as non-garbage collected, which in turn means the class that contains the array also do not have to be 
+		// garbage collected
+		EvaluateTemplateInstances(numTempl, true);
 
 		// Is there some path in which this structure is involved in circular references?
+		// If the type contains a member of a type that is yet to be validated, then reinsert it at the end
+		bool mustReevaluate = false;
 		bool gc = false;
-		for( asUINT p = 0; p < ot->properties.GetLength(); p++ )
+		for( asUINT p = 0; p < type->properties.GetLength(); p++ )
 		{
-			asCDataType dt = ot->properties[p]->type;
+			asCDataType dt = type->properties[p]->type;
 			if( !dt.IsObject() )
 				continue;
 
-			if( dt.IsObjectHandle() )
+			if( typesToValidate.Exists(dt.GetObjectType()) )
+				mustReevaluate = true;
+			else
 			{
-				// If it is known that the handle can't be involved in a circular reference
-				// then this object doesn't need to be marked as garbage collected.
-				asCObjectType *prop = dt.GetObjectType();
-
-				if( prop->flags & asOBJ_SCRIPT_OBJECT )
+				if( dt.IsTemplate() )
 				{
-					// For script objects, treat non-final classes as if they can contain references
-					// as it is not known what derived classes might do. For final types, check all
-					// properties to determine if any of those can cause a circular reference.
-					if( prop->flags & asOBJ_NOINHERIT )
+					// Check if any of the subtypes are yet to be evaluated
+					bool skip = false;
+					for( asUINT s = 0; s < dt.GetObjectType()->GetSubTypeCount(); s++ )
 					{
-						for( asUINT sp = 0; sp < prop->properties.GetLength(); sp++ )
+						asCObjectType *t = reinterpret_cast<asCObjectType*>(dt.GetObjectType()->GetSubType(s));
+						if( typesToValidate.Exists(t) )
 						{
-							asCDataType sdt = prop->properties[sp]->type;
+							mustReevaluate = true;
+							skip = true;
+							break;
+						}
+					}
+					if( skip )
+						continue;
+				}
 
-							if( sdt.IsObject() )
+				if( dt.IsObjectHandle() )
+				{
+					// If it is known that the handle can't be involved in a circular reference
+					// then this object doesn't need to be marked as garbage collected.
+					asCObjectType *prop = dt.GetObjectType();
+
+					if( prop->flags & asOBJ_SCRIPT_OBJECT )
+					{
+						// For script objects, treat non-final classes as if they can contain references
+						// as it is not known what derived classes might do. For final types, check all
+						// properties to determine if any of those can cause a circular reference with this
+						// class.
+						if( prop->flags & asOBJ_NOINHERIT )
+						{
+							for( asUINT sp = 0; sp < prop->properties.GetLength(); sp++ )
 							{
-								if( sdt.IsObjectHandle() )
+								asCDataType sdt = prop->properties[sp]->type;
+
+								if( sdt.IsObject() )
 								{
-									// TODO: runtime optimize: If the handle is again to a final class, then we can recursively check if the circular reference can occur
-									if( sdt.GetObjectType()->flags & (asOBJ_SCRIPT_OBJECT | asOBJ_GC) )
+									if( sdt.IsObjectHandle() )
 									{
+										// TODO: runtime optimize: If the handle is again to a final class, then we can recursively check if the circular reference can occur
+										if( sdt.GetObjectType()->flags & (asOBJ_SCRIPT_OBJECT | asOBJ_GC) )
+										{
+											gc = true;
+											break;
+										}
+									}
+									else if( sdt.GetObjectType()->flags & asOBJ_GC )
+									{
+										// TODO: runtime optimize: Just because the member type is a potential circle doesn't mean that this one is.
+										//                         Only if the object is of a type that can reference this type, either directly or indirectly
 										gc = true;
 										break;
 									}
 								}
-								else if( sdt.GetObjectType()->flags & asOBJ_GC )
-								{
-									// TODO: runtime optimize: Just because the member type is a potential circle doesn't mean that this one is.
-									//                         Only if the object is of a type that can reference this type, either directly or indirectly
-									gc = true;
-									break;
-								}
 							}
-						}
 
-						if( gc )
+							if( gc )
+								break;
+						}
+						else
+						{
+							// Assume it is garbage collected as it is not known at compile time what might inherit from this type
+							gc = true;
 							break;
+						}
 					}
-					else
+					else if( prop->flags & asOBJ_GC )
 					{
-						// Assume it is garbage collected as it is not known at compile time what might inherit from this type
+						// If a type is not a script object, adopt its GC flag
+						// TODO: runtime optimize: Just because an application registered class is garbage collected, doesn't mean it 
+						//                         can form a circular reference with this script class. Perhaps need a flag to tell
+						//                         if the script classes that contains the type should be garbage collected or not.
 						gc = true;
 						break;
 					}
 				}
-				else if( prop->flags & asOBJ_GC )
+				else if( dt.GetObjectType()->flags & asOBJ_GC )
 				{
-					// If a type is not a script object, adopt its GC flag
+					// TODO: runtime optimize: Just because the member type is a potential circle doesn't mean that this one is.
+					//                         Only if the object is of a type that can reference this type, either directly or indirectly
 					gc = true;
 					break;
 				}
 			}
-			else if( dt.GetObjectType()->flags & asOBJ_GC )
-			{
-				// TODO: runtime optimize: Just because the member type is a potential circle doesn't mean that this one is.
-				//                         Only if the object is of a type that can reference this type, either directly or indirectly
-				gc = true;
-				break;
-			}
+		}
+
+		// If the class wasn't found to require garbage collection, but it 
+		// contains another type that has yet to be evaluated then it must be 
+		// re-evaluated.
+		if( !gc && mustReevaluate )
+		{
+			typesToValidate.PushLast(type);
+			numReevaluations++;
+			continue;
 		}
 
 		// Update the flag in the object type
 		if( gc )
-			ot->flags |= asOBJ_GC;
+			type->flags |= asOBJ_GC;
 		else
-			ot->flags &= ~asOBJ_GC;
+			type->flags &= ~asOBJ_GC;
+
+		// Reset the counter
+		numReevaluations = 0;
 	}
 }
 
@@ -3893,7 +4036,7 @@ asCString asCBuilder::GetCleanExpressionString(asCScriptNode *node, asCScriptCod
 	asCString cleanStr;
 	for( asUINT n = 0; n < str.GetLength(); )
 	{
-		int len;
+		asUINT len = 0;
 		asETokenClass tok = engine->ParseToken(str.AddressOf() + n, str.GetLength() - n, &len);
 		if( tok != asTC_COMMENT && tok != asTC_WHITESPACE )
 		{
@@ -4846,12 +4989,26 @@ asCDataType asCBuilder::CreateDataTypeFromNode(asCScriptNode *node, asCScriptCod
 								// Need to find the correct object type
 								asCObjectType *otInstance = engine->GetTemplateInstanceType(ot, subTypes);
 
+								if( otInstance && otInstance->scriptSectionIdx < 0 )
+								{
+									// If this is the first time the template instance is used, store where it was declared from
+									otInstance->scriptSectionIdx = engine->GetScriptSectionNameIndex(file->name.AddressOf());
+									int row, column;
+									file->ConvertPosToRowCol(n->tokenPos, &row, &column);
+									otInstance->declaredAt = (row&0xFFFFF)|(column<<20);
+								}
+
 								if( !otInstance )
 								{
-									asCString msg;
-									// TODO: Should name all subtypes
-									msg.Format(TXT_CANNOT_INSTANTIATE_TEMPLATE_s_WITH_s, ot->name.AddressOf(), subTypes[0].Format().AddressOf());
-									WriteError(msg, file, n);
+									asCString sub = subTypes[0].Format();
+									for( asUINT s = 1; s < subTypes.GetLength(); s++ )
+									{
+										sub += ",";
+										sub += subTypes[s].Format();
+									}
+									asCString str;
+									str.Format(TXT_INSTANCING_INVLD_TMPL_TYPE_s_s, ot->name.AddressOf(), sub.AddressOf());
+									WriteError(str, file, n);
 								}
 
 								ot = otInstance;
