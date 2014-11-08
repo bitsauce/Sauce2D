@@ -161,10 +161,10 @@ int Vector4::Register(asIScriptEngine *scriptEngine)
 	int r = 0;
 
 	// Register the object properties
-	r = scriptEngine->RegisterObjectProperty("Vector4", "int x", offsetof(Vector4, x)); AS_ASSERT
-	r = scriptEngine->RegisterObjectProperty("Vector4", "int y", offsetof(Vector4, y)); AS_ASSERT
-	r = scriptEngine->RegisterObjectProperty("Vector4", "int z", offsetof(Vector4, z)); AS_ASSERT
-	r = scriptEngine->RegisterObjectProperty("Vector4", "int w", offsetof(Vector4, w)); AS_ASSERT
+	r = scriptEngine->RegisterObjectProperty("Vector4", "float x", offsetof(Vector4, x)); AS_ASSERT
+	r = scriptEngine->RegisterObjectProperty("Vector4", "float y", offsetof(Vector4, y)); AS_ASSERT
+	r = scriptEngine->RegisterObjectProperty("Vector4", "float z", offsetof(Vector4, z)); AS_ASSERT
+	r = scriptEngine->RegisterObjectProperty("Vector4", "float w", offsetof(Vector4, w)); AS_ASSERT
 
 	r = scriptEngine->RegisterObjectMethod("Vector4", "Vector3 get_xyz() const", asMETHOD(Vector4, getXYZ), asCALL_THISCALL); AS_ASSERT
 
@@ -188,7 +188,7 @@ int Vector4::Register(asIScriptEngine *scriptEngine)
 	r = scriptEngine->RegisterObjectMethod("Vector4", "Vector4 opDiv(const float) const", asMETHOD(Vector4, operator/), asCALL_THISCALL); AS_ASSERT
 
 	// Register the object methods
-	r = scriptEngine->RegisterObjectMethod("Vector4", "void set(const float x, const float y, const float z, const float w)", asMETHOD(Vector4, set), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("Vector4", "void set(const float, const float, const float, const float)", asMETHOD(Vector4, set), asCALL_THISCALL); AS_ASSERT
 	r = scriptEngine->RegisterObjectMethod("Vector4", "void rotate(const float)", asMETHOD(Vector4, rotate), asCALL_THISCALL); AS_ASSERT
 	r = scriptEngine->RegisterObjectMethod("Vector4", "Vector4 normalized() const", asMETHOD(Vector4, normalized), asCALL_THISCALL); AS_ASSERT
 	r = scriptEngine->RegisterObjectMethod("Vector4", "void normalize()", asMETHOD(Vector4, normalize), asCALL_THISCALL); AS_ASSERT
