@@ -2,6 +2,9 @@
 #include "skeleton.h"
 #include "animation.h"
 #include "event.h"
+#include "slot.h"
+#include "attachment.h"
+#include "bone.h"
 
 #include <spine/spine.h>
 #include <spine/extension.h>
@@ -46,6 +49,9 @@ int CreatePlugin(asIScriptEngine *scriptEngine)
 	r = scriptEngine->RegisterObjectType("spSkeleton", 0, asOBJ_REF); AS_ASSERT
 	r = scriptEngine->RegisterObjectType("spAnimation", 0, asOBJ_REF); AS_ASSERT
 	r = scriptEngine->RegisterObjectType("spAnimationStateData", 0, asOBJ_REF); AS_ASSERT
+	r = scriptEngine->RegisterObjectType("spSlot", 0, asOBJ_REF); AS_ASSERT
+	r = scriptEngine->RegisterObjectType("spRegionAttachment", 0, asOBJ_REF); AS_ASSERT
+	r = scriptEngine->RegisterObjectType("spBone", 0, asOBJ_REF); AS_ASSERT
 	r = spAnimationStateWrapper::TypeId = scriptEngine->RegisterObjectType("spAnimationState", 0, asOBJ_REF | asOBJ_GC); AS_ASSERT
 	r = spEventWrapper::TypeId = scriptEngine->RegisterObjectType("spEvent", 0, asOBJ_REF); AS_ASSERT
 
@@ -55,6 +61,8 @@ int CreatePlugin(asIScriptEngine *scriptEngine)
 	r = scriptEngine->RegisterObjectBehaviour("spSkeleton", asBEHAVE_ADDREF, "void f()", asMETHOD(spSkeletonWrapper, addRef), asCALL_THISCALL); AS_ASSERT
 	r = scriptEngine->RegisterObjectBehaviour("spSkeleton", asBEHAVE_RELEASE, "void f()", asMETHOD(spSkeletonWrapper, release), asCALL_THISCALL); AS_ASSERT
 	r = scriptEngine->RegisterObjectMethod("spSkeleton", "spAnimation @findAnimation(const string &in)", asMETHOD(spSkeletonWrapper, findAnimation), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("spSkeleton", "spSlot @findSlot(const string &in)", asMETHOD(spSkeletonWrapper, findSlot), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("spSkeleton", "spBone @findBone(const string &in)", asMETHOD(spSkeletonWrapper, findBone), asCALL_THISCALL); AS_ASSERT
 	r = scriptEngine->RegisterObjectMethod("spSkeleton", "void set_position(const Vector2 &in)", asMETHOD(spSkeletonWrapper, setPosition), asCALL_THISCALL); AS_ASSERT
 	r = scriptEngine->RegisterObjectMethod("spSkeleton", "Vector2 get_position() const", asMETHOD(spSkeletonWrapper, getPosition), asCALL_THISCALL); AS_ASSERT
 	r = scriptEngine->RegisterObjectMethod("spSkeleton", "void set_flipX(const bool)", asMETHOD(spSkeletonWrapper, setFlipX), asCALL_THISCALL); AS_ASSERT
@@ -73,6 +81,27 @@ int CreatePlugin(asIScriptEngine *scriptEngine)
 	r = scriptEngine->RegisterObjectMethod("spAnimation", "bool get_looping() const", asMETHOD(spAnimationWrapper, getLooping), asCALL_THISCALL); AS_ASSERT
 	r = scriptEngine->RegisterObjectMethod("spAnimation", "void apply(const float)", asMETHOD(spAnimationWrapper, apply), asCALL_THISCALL); AS_ASSERT
 	r = scriptEngine->RegisterObjectMethod("spAnimation", "void mix(const float, const float)", asMETHOD(spAnimationWrapper, mix), asCALL_THISCALL); AS_ASSERT
+	
+	r = scriptEngine->RegisterObjectBehaviour("spSlot", asBEHAVE_ADDREF, "void f()", asMETHOD(spSlotWrapper, addRef), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectBehaviour("spSlot", asBEHAVE_RELEASE, "void f()", asMETHOD(spSlotWrapper, release), asCALL_THISCALL); AS_ASSERT
+	
+	r = scriptEngine->RegisterObjectBehaviour("spRegionAttachment", asBEHAVE_FACTORY, "spRegionAttachment @f(const string &in, spSlot@)", asFUNCTION(spRegionAttachmentWrapper::Factory), asCALL_CDECL); AS_ASSERT
+	r = scriptEngine->RegisterObjectBehaviour("spRegionAttachment", asBEHAVE_ADDREF, "void f()", asMETHOD(spRegionAttachmentWrapper, addRef), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectBehaviour("spRegionAttachment", asBEHAVE_RELEASE, "void f()", asMETHOD(spRegionAttachmentWrapper, release), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("spRegionAttachment", "void set_position(const Vector2 &in)", asMETHOD(spRegionAttachmentWrapper, setPosition), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("spRegionAttachment", "void set_rotation(const float)", asMETHOD(spRegionAttachmentWrapper, setRotation), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("spRegionAttachment", "void set_scale(const Vector2 &in)", asMETHOD(spRegionAttachmentWrapper, setScale), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("spRegionAttachment", "void set_size(const Vector2 &in)", asMETHOD(spRegionAttachmentWrapper, setSize), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("spRegionAttachment", "void set_textureRegion(const TextureRegion &in)", asMETHOD(spRegionAttachmentWrapper, setTextureRegion), asCALL_THISCALL); AS_ASSERT
+	
+	r = scriptEngine->RegisterObjectBehaviour("spBone", asBEHAVE_ADDREF, "void f()", asMETHOD(spBoneWrapper, addRef), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectBehaviour("spBone", asBEHAVE_RELEASE, "void f()", asMETHOD(spBoneWrapper, release), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("spBone", "void set_position(const Vector2 &in)", asMETHOD(spBoneWrapper, setPosition), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("spBone", "void set_rotation(const float)", asMETHOD(spBoneWrapper, setRotation), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("spBone", "void set_scale(const Vector2 &in)", asMETHOD(spBoneWrapper, setScale), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("spBone", "Vector2 get_worldPosition() const", asMETHOD(spBoneWrapper, getWorldPosition), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("spBone", "float get_worldRotation() const", asMETHOD(spBoneWrapper, getWorldRotation), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("spBone", "Vector2 get_worldScale() const", asMETHOD(spBoneWrapper, getWorldScale), asCALL_THISCALL); AS_ASSERT
 
 	r = scriptEngine->RegisterEnum("spEventType"); AS_ASSERT
 	r = scriptEngine->RegisterEnumValue("spEventType", "SP_ANIMATION_START", SP_ANIMATION_START); AS_ASSERT

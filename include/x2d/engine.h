@@ -314,9 +314,9 @@ protected:
 // Mouse buttons
 enum XMouseButton
 {
-	X2D_LeftMouseButton,
-	X2D_MiddleMouseButton,
-	X2D_RightMouseButton
+	XD_MOUSE_LEFT,
+	XD_MOUSE_MIDDLE,
+	XD_MOUSE_RIGHT
 };
 
 // Virtual keys
@@ -370,9 +370,9 @@ enum XVirtualKey
 	XD_KEY_Z,
 
 	// Mouse keys
-	X2D_LeftMouse = 0x80,
-	X2D_RightMouse,
-	X2D_MiddleMouse,
+	XD_LMB = 0x80,
+	XD_RMB,
+	XD_WHEEL,
 
 	// Arrow keys
 	XD_KEY_Left,
@@ -436,6 +436,7 @@ class XDAPI XInput
 public:
 	AS_DECL_SINGLETON
 
+	XInput();
 	virtual ~XInput();
 
 	// Desktop cursor functions
@@ -461,7 +462,11 @@ public:
 	void charEvent(uint utf8char);
 	void keyPressed(const XVirtualKey key);
 	void keyReleased(const XVirtualKey key);
-	
+
+	// Mouse listener
+	void addMouseListener(asIScriptObject *object);
+	void mouseClick(const XMouseButton btn);
+
 	// Overloads
 	void setCursorPos(const int x, const int y) { setCursorPos(Vector2i(x, y)); }
 	void setCursorLimits(const int x, const int y, const int w, const int h) { setCursorLimits(Recti(x, y, w, h)); }
@@ -475,6 +480,9 @@ private:
 
 	map<XVirtualKey, KeyBind> m_keyBindings;
 	vector<asIScriptObject*> m_keyListeners;
+
+	vector<asIScriptObject*> m_clickListeners;
+	map<XMouseButton, bool> m_mousePressed;
 };
 
 
