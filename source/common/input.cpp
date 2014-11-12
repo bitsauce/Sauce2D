@@ -127,7 +127,8 @@ int XInput::Register(asIScriptEngine *scriptEngine)
 
 	// Mouse listener
 	r = scriptEngine->RegisterInterface("MouseListener"); AS_ASSERT
-	r = scriptEngine->RegisterInterfaceMethod("MouseListener", "void mouseClick(const MouseButton)"); AS_ASSERT
+	r = scriptEngine->RegisterInterfaceMethod("MouseListener", "void mouseClick(MouseButton)"); AS_ASSERT
+	r = scriptEngine->RegisterInterfaceMethod("MouseListener", "void mouseScroll(int)"); AS_ASSERT
 
 	// Desktop cursor
 	r = scriptEngine->RegisterObjectMethod("XInput", "void     setCursorPos(const Vector2i &in)", asMETHODPR(XInput, setCursorPos, (const Vector2i&), void), asCALL_THISCALL); AS_ASSERT
@@ -167,6 +168,11 @@ XInput::~XInput()
 		(*itr)->Release();
 	}
 	
+	for(vector<asIScriptObject*>::iterator itr = m_clickListeners.begin(); itr != m_clickListeners.end(); ++itr)
+	{
+		// Release mouse listeners
+		(*itr)->Release();
+	}
 }
 
 void XInput::bind(const XVirtualKey key, asIScriptFunction *function)
@@ -276,12 +282,28 @@ void XInput::mouseClick(const XMouseButton btn)
 	for(vector<asIScriptObject*>::iterator itr = m_clickListeners.begin(); itr != m_clickListeners.end(); ++itr)
 	{
 		asIObjectType *type = (*itr)->GetObjectType();
-		asIScriptFunction *func = type->GetMethodByDecl("void mouseClick(const MouseButton)");
+		asIScriptFunction *func = type->GetMethodByDecl("void mouseClick(MouseButton)");
 
 		asIScriptContext *ctx = XScriptEngine::CreateContext();
 		int r = ctx->Prepare(func); assert(r >= 0);
 		r = ctx->SetObject(*itr); assert(r >= 0);
 		r = ctx->SetArgDWord(0, btn); assert(r >= 0);
+		r = ctx->Execute();
+		r = ctx->Release();
+	}
+}
+
+void XInput::mouseScroll(const int dt)
+{
+	for(vector<asIScriptObject*>::iterator itr = m_clickListeners.begin(); itr != m_clickListeners.end(); ++itr)
+	{
+		asIObjectType *type = (*itr)->GetObjectType();
+		asIScriptFunction *func = type->GetMethodByDecl("void mouseScroll(int)");
+
+		asIScriptContext *ctx = XScriptEngine::CreateContext();
+		int r = ctx->Prepare(func); assert(r >= 0);
+		r = ctx->SetObject(*itr); assert(r >= 0);
+		r = ctx->SetArgDWord(0, dt); assert(r >= 0);
 		r = ctx->Execute();
 		r = ctx->Release();
 	}

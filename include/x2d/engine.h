@@ -466,6 +466,7 @@ public:
 	// Mouse listener
 	void addMouseListener(asIScriptObject *object);
 	void mouseClick(const XMouseButton btn);
+	void mouseScroll(const int dt);
 
 	// Overloads
 	void setCursorPos(const int x, const int y) { setCursorPos(Vector2i(x, y)); }

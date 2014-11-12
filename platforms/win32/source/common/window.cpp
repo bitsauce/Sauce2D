@@ -691,12 +691,8 @@ void Window::processEvents(UINT Message, WPARAM wParam, LPARAM lParam)
 
 		case WM_MOUSEWHEEL:
 		{
-			if(m_mouseWheelFunc) {
-				//int scrollDelta = (short)HIWORD(wParam);
-				//startScriptFuncCall(m_mouseWheelFunc);
-				//addScriptFuncArg(&scrollDelta, 4);
-				//endScriptFuncCall();
-			}
+			int scrollDelta = GET_WHEEL_DELTA_WPARAM(wParam) / WHEEL_DELTA; // should be float so that finer mousewheels dont bug out
+			m_input->mouseScroll(scrollDelta);
 		}
 		break;
 
