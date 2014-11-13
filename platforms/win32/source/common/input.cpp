@@ -45,9 +45,9 @@ XVirtualKey fromWinKey(uchar vk)
 {
 	switch(vk)
 	{
-	case VK_LBUTTON: return X2D_LeftMouse;
-	case VK_RBUTTON: return X2D_RightMouse; 
-	case VK_MBUTTON: return X2D_MiddleMouse; 
+	case VK_LBUTTON: return XD_LMB;
+	case VK_RBUTTON: return XD_RMB; 
+	case VK_MBUTTON: return XD_WHEEL; 
 	case VK_RIGHT: return XD_KEY_Right; 
 	case VK_DOWN: return XD_KEY_Down; 
 	case VK_LEFT: return XD_KEY_Left; 
@@ -105,9 +105,9 @@ uchar toWinKey(XVirtualKey key)
 	uchar vk = 0;
 	switch(key)
 	{
-	case X2D_LeftMouse:	vk = VK_LBUTTON; break;
-	case X2D_RightMouse: vk = VK_RBUTTON; break;
-	case X2D_MiddleMouse: vk = VK_MBUTTON; break;
+	case XD_LMB: vk = VK_LBUTTON; break;
+	case XD_RMB: vk = VK_RBUTTON; break;
+	case XD_WHEEL: vk = VK_MBUTTON; break;
 	case XD_KEY_Right: vk = VK_RIGHT; break;
 	case XD_KEY_Down: vk = VK_DOWN; break;
 	case XD_KEY_Left: vk = VK_LEFT; break;

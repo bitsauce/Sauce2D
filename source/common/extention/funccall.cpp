@@ -15,6 +15,7 @@ AS_REG_REF(XFuncCall, "FuncCall")
 int XFuncCall::Register(asIScriptEngine *scriptEngine)
 {
 	int r;
+
 	r = scriptEngine->RegisterObjectBehaviour("FuncCall", asBEHAVE_FACTORY, "FuncCall @f()", asFUNCTIONPR(XFuncCall::Factory, (), XFuncCall*), asCALL_CDECL); AS_ASSERT
 	r = scriptEngine->RegisterObjectBehaviour("FuncCall", asBEHAVE_FACTORY, "FuncCall @f(const string &in)", asFUNCTIONPR(XFuncCall::Factory, (const string&), XFuncCall*), asCALL_CDECL); AS_ASSERT
 	r = scriptEngine->RegisterObjectBehaviour("FuncCall", asBEHAVE_FACTORY, "FuncCall @f(?&in, const string &in)", asFUNCTIONPR(XFuncCall::Factory, (void*, int, const string&), XFuncCall*), asCALL_CDECL); AS_ASSERT

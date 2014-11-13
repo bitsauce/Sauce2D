@@ -118,13 +118,13 @@ void XConsole::Log(const char *msg, ...)
 		}
 		else
 		{
-			if(funcName)
+			if(strlen(funcName) > 0)
 			{
 				CALL_LOG("%s(): %s", funcName, msg);
 			}
 			else
 			{
-				CALL_LOG("global(): %s", funcName, msg);
+				CALL_LOG("global(): %s", msg);
 			}
 		}
 	}

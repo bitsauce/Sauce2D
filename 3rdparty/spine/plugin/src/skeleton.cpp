@@ -1,5 +1,7 @@
 #include "skeleton.h"
 #include "animation.h"
+#include "slot.h"
+#include "bone.h"
 #include <spine/extension.h>
 
 #ifndef SPINE_MESH_VERTEX_COUNT_MAX
@@ -18,13 +20,26 @@ spSkeletonWrapper::spSkeletonWrapper(spSkeletonData *data, spAtlas *atlas) :
 		spAnimation *anim = m_data->animations[i];
 		m_animations[anim->name] = new spAnimationWrapper(m_self, anim);
 	}
+	for(int i = 0; i < m_self->slotCount; i++) {
+		spSlot *slot = m_self->slots[i];
+		m_slots[slot->data->name] = new spSlotWrapper(slot);
+	}
+	for(int i = 0; i < m_self->boneCount; i++) {
+		spBone *bone = m_self->bones[i];
+		m_bones[bone->data->name] = new spBoneWrapper(bone);
+	}
 }
 
 spSkeletonWrapper::~spSkeletonWrapper()
 {
-	for(int i = 0; i < m_data->animationCount; i++) {
-		spAnimation *anim = m_data->animations[i];
-		m_animations[anim->name]->release();
+	for(map<string, spAnimationWrapper*>::iterator itr = m_animations.begin(); itr != m_animations.end(); ++itr) {
+		itr->second->release();
+	}
+	for(map<string, spSlotWrapper*>::iterator itr = m_slots.begin(); itr != m_slots.end(); ++itr) {
+		itr->second->release();
+	}
+	for(map<string, spBoneWrapper*>::iterator itr = m_bones.begin(); itr != m_bones.end(); ++itr) {
+		itr->second->release();
 	}
 	spAtlas_dispose(m_atlas);
 	spSkeleton_dispose(m_self);
@@ -36,6 +51,20 @@ spAnimationWrapper *spSkeletonWrapper::findAnimation(const string &name)
 	spAnimationWrapper *anim = m_animations.find(name) != m_animations.end() ? m_animations[name] : 0;
 	if(anim) anim->addRef();
 	return anim;
+}
+
+spSlotWrapper *spSkeletonWrapper::findSlot(const string &name)
+{
+	spSlotWrapper *slot = m_slots.find(name) != m_slots.end() ? m_slots[name] : 0;
+	if(slot) slot->addRef();
+	return slot;
+}
+
+spBoneWrapper *spSkeletonWrapper::findBone(const string &name)
+{
+	spBoneWrapper *bone = m_bones.find(name) != m_bones.end() ? m_bones[name] : 0;
+	if(bone) bone->addRef();
+	return bone;
 }
 
 void spSkeletonWrapper::setPosition(const Vector2 &pos)

@@ -5,6 +5,8 @@
 #include <spine/spine.h>
 
 class spAnimationWrapper;
+class spSlotWrapper;
+class spBoneWrapper;
 
 class spSkeletonWrapper
 {
@@ -13,6 +15,8 @@ public:
 	~spSkeletonWrapper();
 
 	spAnimationWrapper *findAnimation(const string &name);
+	spSlotWrapper *findSlot(const string &name);
+	spBoneWrapper *findBone(const string &name);
 
 	void setPosition(const Vector2 &pos);
 	Vector2 getPosition() const;
@@ -42,6 +46,8 @@ private:
 	spAtlas* m_atlas;
 	float *m_worldVertices;
 	map<string, spAnimationWrapper*> m_animations;
+	map<string, spSlotWrapper*> m_slots;
+	map<string, spBoneWrapper*> m_bones;
 };
 
 #endif // PLUGIN_SKELETON_H

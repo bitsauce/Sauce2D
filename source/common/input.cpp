@@ -18,15 +18,15 @@ int XInput::Register(asIScriptEngine *scriptEngine)
 
 	// Mouse buttons
 	r = scriptEngine->RegisterEnum("MouseButton"); AS_ASSERT
-	r = scriptEngine->RegisterEnumValue("MouseButton", "MOUSE_LEFT", X2D_LeftMouseButton); AS_ASSERT
-	r = scriptEngine->RegisterEnumValue("MouseButton", "MOUSE_RIGHT", X2D_RightMouseButton); AS_ASSERT
-	r = scriptEngine->RegisterEnumValue("MouseButton", "MOUSE_MIDDLE", X2D_MiddleMouseButton); AS_ASSERT
+	r = scriptEngine->RegisterEnumValue("MouseButton", "MOUSE_LEFT", XD_MOUSE_LEFT); AS_ASSERT
+	r = scriptEngine->RegisterEnumValue("MouseButton", "MOUSE_RIGHT", XD_MOUSE_RIGHT); AS_ASSERT
+	r = scriptEngine->RegisterEnumValue("MouseButton", "MOUSE_MIDDLE", XD_MOUSE_MIDDLE); AS_ASSERT
 	
 	// Virtual keys
 	r = scriptEngine->RegisterEnum("VirtualKey"); AS_ASSERT
-	r = scriptEngine->RegisterEnumValue("VirtualKey", "KEY_LMB", X2D_LeftMouse); AS_ASSERT // Left mouse button
-	r = scriptEngine->RegisterEnumValue("VirtualKey", "KEY_RMB", X2D_RightMouse); AS_ASSERT // Right mouse button
-	r = scriptEngine->RegisterEnumValue("VirtualKey", "KEY_MMB", X2D_MiddleMouse); AS_ASSERT // Any mouse button
+	r = scriptEngine->RegisterEnumValue("VirtualKey", "KEY_LMB", XD_LMB); AS_ASSERT // Left mouse button
+	r = scriptEngine->RegisterEnumValue("VirtualKey", "KEY_RMB", XD_RMB); AS_ASSERT // Right mouse button
+	r = scriptEngine->RegisterEnumValue("VirtualKey", "KEY_MMB", XD_WHEEL); AS_ASSERT // Any mouse button
 	r = scriptEngine->RegisterEnumValue("VirtualKey", "KEY_BACKSPACE", XD_KEY_BACKSPACE); AS_ASSERT // Backspace
 	r = scriptEngine->RegisterEnumValue("VirtualKey", "KEY_ESCAPE", XD_KEY_ESCAPE); AS_ASSERT
 	r = scriptEngine->RegisterEnumValue("VirtualKey", "KEY_TAB", XD_KEY_TAB); AS_ASSERT
@@ -125,6 +125,11 @@ int XInput::Register(asIScriptEngine *scriptEngine)
 	r = scriptEngine->RegisterInterfaceMethod("KeyboardListener", "void keyPressed(VirtualKey key)"); AS_ASSERT
 	r = scriptEngine->RegisterInterfaceMethod("KeyboardListener", "void keyReleased(VirtualKey key)"); AS_ASSERT
 
+	// Mouse listener
+	r = scriptEngine->RegisterInterface("MouseListener"); AS_ASSERT
+	r = scriptEngine->RegisterInterfaceMethod("MouseListener", "void mouseClick(MouseButton)"); AS_ASSERT
+	r = scriptEngine->RegisterInterfaceMethod("MouseListener", "void mouseScroll(int)"); AS_ASSERT
+
 	// Desktop cursor
 	r = scriptEngine->RegisterObjectMethod("XInput", "void     setCursorPos(const Vector2i &in)", asMETHODPR(XInput, setCursorPos, (const Vector2i&), void), asCALL_THISCALL); AS_ASSERT
 	r = scriptEngine->RegisterObjectMethod("XInput", "Vector2i getCursorPos() const", asMETHOD(XInput, getCursorPos), asCALL_THISCALL); AS_ASSERT
@@ -136,11 +141,17 @@ int XInput::Register(asIScriptEngine *scriptEngine)
 	r = scriptEngine->RegisterObjectMethod("XInput", "void unbind(const VirtualKey key)", asMETHOD(XInput, unbind), asCALL_THISCALL); AS_ASSERT
 	r = scriptEngine->RegisterObjectMethod("XInput", "void unbindAll()", asMETHOD(XInput, unbindAll), asCALL_THISCALL); AS_ASSERT
 	r = scriptEngine->RegisterObjectMethod("XInput", "void addKeyboardListener(KeyboardListener@)", asMETHOD(XInput, addKeyboardListener), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("XInput", "void addMouseListener(MouseListener@)", asMETHOD(XInput, addMouseListener), asCALL_THISCALL); AS_ASSERT
 
 	// General
 	r = scriptEngine->RegisterObjectMethod("XInput", "Vector2 get_position() const", asMETHOD(XInput, getPosition), asCALL_THISCALL); AS_ASSERT
 
 	return r;
+}
+
+XInput::XInput()
+{
+	m_mousePressed[XD_MOUSE_LEFT] = m_mousePressed[XD_MOUSE_RIGHT] = m_mousePressed[XD_MOUSE_MIDDLE] = true;
 }
 
 XInput::~XInput()
@@ -157,6 +168,11 @@ XInput::~XInput()
 		(*itr)->Release();
 	}
 	
+	for(vector<asIScriptObject*>::iterator itr = m_clickListeners.begin(); itr != m_clickListeners.end(); ++itr)
+	{
+		// Release mouse listeners
+		(*itr)->Release();
+	}
 }
 
 void XInput::bind(const XVirtualKey key, asIScriptFunction *function)
@@ -253,6 +269,46 @@ void XInput::keyReleased(const XVirtualKey key)
 	}
 }
 
+void XInput::addMouseListener(asIScriptObject *object)
+{
+	// Add keyboard listener
+	if(object) {
+		m_clickListeners.push_back(object);
+	}
+}
+
+void XInput::mouseClick(const XMouseButton btn)
+{
+	for(vector<asIScriptObject*>::iterator itr = m_clickListeners.begin(); itr != m_clickListeners.end(); ++itr)
+	{
+		asIObjectType *type = (*itr)->GetObjectType();
+		asIScriptFunction *func = type->GetMethodByDecl("void mouseClick(MouseButton)");
+
+		asIScriptContext *ctx = XScriptEngine::CreateContext();
+		int r = ctx->Prepare(func); assert(r >= 0);
+		r = ctx->SetObject(*itr); assert(r >= 0);
+		r = ctx->SetArgDWord(0, btn); assert(r >= 0);
+		r = ctx->Execute();
+		r = ctx->Release();
+	}
+}
+
+void XInput::mouseScroll(const int dt)
+{
+	for(vector<asIScriptObject*>::iterator itr = m_clickListeners.begin(); itr != m_clickListeners.end(); ++itr)
+	{
+		asIObjectType *type = (*itr)->GetObjectType();
+		asIScriptFunction *func = type->GetMethodByDecl("void mouseScroll(int)");
+
+		asIScriptContext *ctx = XScriptEngine::CreateContext();
+		int r = ctx->Prepare(func); assert(r >= 0);
+		r = ctx->SetObject(*itr); assert(r >= 0);
+		r = ctx->SetArgDWord(0, dt); assert(r >= 0);
+		r = ctx->Execute();
+		r = ctx->Release();
+	}
+}
+
 void XInput::checkBindings()
 {
 	// Iterate key bindings
@@ -267,8 +323,31 @@ void XInput::checkBindings()
 				XFuncCall(key.function).execute();
 			}
 			key.pressed = true;
-		}else{
+		}
+		else
+		{
 			key.pressed = false;
 		}
 	}
+
+	// LMB
+	if(!getKeyState(XD_LMB) && m_mousePressed[XD_MOUSE_LEFT])
+	{
+		mouseClick(XD_MOUSE_LEFT);
+	}
+	m_mousePressed[XD_MOUSE_LEFT] = getKeyState(XD_LMB);
+	
+	// RMB
+	if(!getKeyState(XD_RMB) && m_mousePressed[XD_MOUSE_RIGHT])
+	{
+		mouseClick(XD_MOUSE_RIGHT);
+	}
+	m_mousePressed[XD_MOUSE_RIGHT] = getKeyState(XD_RMB);
+	
+	// WHEEL
+	if(!getKeyState(XD_WHEEL) && m_mousePressed[XD_MOUSE_MIDDLE])
+	{
+		mouseClick(XD_MOUSE_MIDDLE);
+	}
+	m_mousePressed[XD_MOUSE_MIDDLE] = getKeyState(XD_WHEEL);
 }
