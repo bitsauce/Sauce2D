@@ -29,7 +29,7 @@ int XSprite::Register(asIScriptEngine *scriptEngine)
 	r = scriptEngine->RegisterObjectMethod("Sprite", "void setHeight(const float)", asMETHOD(XSprite, setHeight), asCALL_THISCALL); AS_ASSERT
 	r = scriptEngine->RegisterObjectMethod("Sprite", "void setOrigin(const Vector2 &in)", asMETHOD(XSprite, setOrigin), asCALL_THISCALL); AS_ASSERT
 	r = scriptEngine->RegisterObjectMethod("Sprite", "void setRotation(const float)", asMETHOD(XSprite, setRotation), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("Sprite", "void setRegion(const TextureRegion &in)", asMETHOD(XSprite, setRegion), asCALL_THISCALL); AS_ASSERT
+	r = scriptEngine->RegisterObjectMethod("Sprite", "void setRegion(const TextureRegion &in, const bool = false)", asMETHOD(XSprite, setRegion), asCALL_THISCALL); AS_ASSERT
 	r = scriptEngine->RegisterObjectMethod("Sprite", "void setColor(const Vector4 &in)", asMETHOD(XSprite, setColor), asCALL_THISCALL); AS_ASSERT
 	
 	r = scriptEngine->RegisterObjectMethod("Sprite", "Shape @getAABB() const", asMETHOD(XSprite, getAABB), asCALL_THISCALL); AS_ASSERT
@@ -123,9 +123,12 @@ void XSprite::setRotation(const float ang)
 	m_angle = ang;
 }
 
-void XSprite::setRegion(const XTextureRegion &textureRegion)
+void XSprite::setRegion(const XTextureRegion &textureRegion, const bool resize)
 {
 	m_textureRegion = textureRegion;
+	if(resize) {
+		m_size = m_textureRegion.getSize();
+	}
 }
 
 void XSprite::setColor(const Vector4 &color)

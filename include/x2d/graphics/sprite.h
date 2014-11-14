@@ -32,7 +32,7 @@ public:
 
 	void setOrigin(const Vector2 &origin);
 	void setRotation(const float ang);
-	void setRegion(const XTextureRegion &region);
+	void setRegion(const XTextureRegion &region, const bool resize = false);
 	void setColor(const Vector4 &color);
 
 	void move(const Vector2 &dt);
