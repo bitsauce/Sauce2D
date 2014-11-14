@@ -138,8 +138,8 @@ bool Rect::contains(const Rect &rect) const
 {
 	return getLeft() < rect.getRight() &&
 		getRight() > rect.getLeft() &&
-		getTop() < rect.getTop() &&
-		getBottom() > rect.getBottom();
+		getTop() < rect.getBottom() &&
+		getBottom() > rect.getTop();
 }
 
 //------------------------------------------------------------------------
