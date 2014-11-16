@@ -8,8 +8,6 @@ class XTexture;
 class XTextureRegion
 {
 public:
-	AS_DECL_POD
-	
 	XTextureRegion();
 	XTextureRegion(XTexture *texture, const Vector2 &uv0, const Vector2 &uv1);
 	XTextureRegion(XTexture *texture, const float u0, const float v0, const float u1, const float v1);

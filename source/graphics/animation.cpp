@@ -10,18 +10,6 @@
 #include <x2d/engine.h>
 #include <x2d/graphics.h>
 
-AS_REG_REF(XAnimation, "Animation")
-
-int XAnimation::Register(asIScriptEngine *scriptEngine)
-{
-	int r = 0;
-	
-	r = scriptEngine->RegisterObjectBehaviour("Animation", asBEHAVE_FACTORY, "Animation @f(Texture@, const int, const int)", asFUNCTIONPR(Factory, (XTexture*, const int, const int), XAnimation*), asCALL_CDECL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("Animation", "TextureRegion getKeyFrame(int frameIndex) const", asMETHOD(XAnimation, getKeyFrame), asCALL_THISCALL); AS_ASSERT
-
-	return r;
-}
-
 XAnimation::XAnimation(XTexture *texture, const int nRows, const int nColumns)
 {
 	// Make sure we're feed a texture
@@ -33,7 +21,6 @@ XAnimation::XAnimation(XTexture *texture, const int nRows, const int nColumns)
 	{
 		for(int x = 0; x < nColumns; x++)
 		{
-			texture->addRef();
 			m_textureRegions.push_back(
 				XTextureRegion(texture,
 					Vector2(float(x)/nColumns, float(y)/nRows),
@@ -41,9 +28,6 @@ XAnimation::XAnimation(XTexture *texture, const int nRows, const int nColumns)
 				);
 		}
 	}
-
-	// Release argument ref
-	texture->release();
 }
 
 XAnimation::~XAnimation()

@@ -89,38 +89,6 @@ Matrix3& Matrix3::invert()
 **	4x4 Matrix														**
 **********************************************************************/
 
-AS_REG_POD(Matrix4, "Matrix4")
-
-int Matrix4::Register(asIScriptEngine *scriptEngine)
-{
-	int r = 0;
-
-	// Register the constructors
-	r = scriptEngine->RegisterObjectBehaviour("Matrix4", asBEHAVE_CONSTRUCT, "void f()", asFUNCTION(Factory), asCALL_CDECL_OBJLAST); AS_ASSERT
-	//r = scriptEngine->RegisterObjectBehaviour("Matrix4", asBEHAVE_CONSTRUCT, "void f(grid<float> @data)", asFUNCTION(Factory), asCALL_CDECL_OBJLAST); AS_ASSERT
-
-	
-	r = scriptEngine->RegisterObjectMethod("Matrix4", "void identity()", asMETHOD(Matrix4, identityAS), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("Matrix4", "void translate(float, float, float)", asMETHODPR(Matrix4, translateAS, (float, float, float), void), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("Matrix4", "void translate(const Vector3 &in)", asMETHODPR(Matrix4, translateAS, (const Vector3&), void), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("Matrix4", "void rotate(float, float, float, float)", asMETHODPR(Matrix4, rotateAS, (float, float, float, float), void), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("Matrix4", "void rotate(float, const Vector3 &in)", asMETHODPR(Matrix4, rotateAS, (float, const Vector3&), void), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("Matrix4", "void scale(float)", asMETHODPR(Matrix4, scaleAS, (float), void), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("Matrix4", "void scale(float, float, float)", asMETHODPR(Matrix4, scaleAS, (float, float, float), void), asCALL_THISCALL); AS_ASSERT
-
-	return r;
-}
-
-void Matrix4::Factory(Matrix4 *self)
-{
-	new (self) Matrix4();
-}
-
-/*void Matrix4::Factory(Array *data, Matrix4 *self)
-{
-	new (self) Matrix4();
-}*/
-
 Matrix4& Matrix4::transpose()
 {
     std::swap(m[1],  m[4]);

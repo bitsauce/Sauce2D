@@ -14,8 +14,6 @@ class XDAPI XAudioManager
 {
 	friend class XEngine;
 public:
-	AS_DECL_SINGLETON
-		
 	// Listener position
 	virtual void setPosition(const Vector2&)	{ NOT_IMPLEMENTED(setPosition) }
 	virtual Vector2 getPosition() const			{ NOT_IMPLEMENTED_RET(getPosition, Vector2(0.0f)) }
@@ -56,8 +54,6 @@ public:
 	};
 
 public:
-	AS_DECL_POD
-
 	XAudioBuffer(void *data, uint size, uint frequency, Format format);
 	~XAudioBuffer();
 
@@ -79,8 +75,6 @@ private:
 class XAudioSource
 {
 public:
-	AS_DECL_REF
-
 	virtual ~XAudioSource() {}
 
 	virtual void play() { NOT_IMPLEMENTED(play) }

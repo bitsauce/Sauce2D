@@ -6,6 +6,5 @@
 #include "audio.h"
 #include "graphics.h"
 #include "math.h"
-#include "extention.h"
 
 #endif // X2D_H

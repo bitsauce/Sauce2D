@@ -76,7 +76,7 @@ void XProfiler::sendStats(Node *node)
 	ss << node->name; ss << ";";
 	ss << node->duration; ss << ";";
 	ss << node->calls;
-	m_debugger->sendPacket(XD_PUSH_NODE_PACKET, ss.str());
+	//m_debugger->sendPacket(XD_PUSH_NODE_PACKET, ss.str());
 
 	// Recursive call to children
 	for(map<string, Node*>::iterator itr = node->children.begin(); itr != node->children.end(); ++itr)
@@ -85,7 +85,7 @@ void XProfiler::sendStats(Node *node)
 	}
 	
 	// Pop stack level
-	m_debugger->sendPacket(XD_POP_NODE_PACKET);
+	//m_debugger->sendPacket(XD_POP_NODE_PACKET);
 
 	// Delete node
 	delete node;
@@ -128,7 +128,7 @@ void XProfiler::stepBegin()
 		sendStats(m_root);
 	
 		// Tell the profiler that a step was done
-		if(m_debugger->sendPacket(XD_STEP_DONE_PACKET))
+		//if(m_debugger->sendPacket(XD_STEP_DONE_PACKET))
 		{
 			// Toggle the profiler
 			if(m_toggle)

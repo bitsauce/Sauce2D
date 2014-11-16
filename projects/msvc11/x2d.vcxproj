@@ -22,17 +22,6 @@
     <ClInclude Include="..\..\include\x2d\audio.h" />
     <ClInclude Include="..\..\include\x2d\config.h" />
     <ClInclude Include="..\..\include\x2d\engine.h" />
-    <ClInclude Include="..\..\include\x2d\extention\funccall.h" />
-    <ClInclude Include="..\..\include\x2d\extention\iniparser.h" />
-    <ClInclude Include="..\..\include\x2d\extention\scriptany.h" />
-    <ClInclude Include="..\..\include\x2d\extention\scriptarray.h" />
-    <ClInclude Include="..\..\include\x2d\extention\scriptbuilder.h" />
-    <ClInclude Include="..\..\include\x2d\extention\scriptdictionary.h" />
-    <ClInclude Include="..\..\include\x2d\extention\scriptgrid.h" />
-    <ClInclude Include="..\..\include\x2d\extention\scripthelper.h" />
-    <ClInclude Include="..\..\include\x2d\extention\scriptstdstring.h" />
-    <ClInclude Include="..\..\include\x2d\extention\stringstream.h" />
-    <ClInclude Include="..\..\include\x2d\extention\thread.h" />
     <ClInclude Include="..\..\include\x2d\graphics.h" />
     <ClInclude Include="..\..\include\x2d\graphics\animation.h" />
     <ClInclude Include="..\..\include\x2d\graphics\batch.h" />
@@ -55,7 +44,6 @@
     <ClInclude Include="..\..\include\x2d\math\rect.h" />
     <ClInclude Include="..\..\include\x2d\math\rectanglepacker.h" />
     <ClInclude Include="..\..\include\x2d\math\vector.h" />
-    <ClInclude Include="..\..\include\x2d\extention.h" />
     <ClInclude Include="..\..\include\x2d\x2d.h" />
   </ItemGroup>
   <ItemGroup>
@@ -65,20 +53,7 @@
     <ClCompile Include="..\..\source\common\assetmanager.cpp" />
     <ClCompile Include="..\..\source\common\audiomanager.cpp" />
     <ClCompile Include="..\..\source\common\console.cpp" />
-    <ClCompile Include="..\..\source\common\debugger.cpp" />
     <ClCompile Include="..\..\source\common\engine.cpp" />
-    <ClCompile Include="..\..\source\common\extention\funccall.cpp" />
-    <ClCompile Include="..\..\source\common\extention\iniparser.cpp" />
-    <ClCompile Include="..\..\source\common\extention\scriptany.cpp" />
-    <ClCompile Include="..\..\source\common\extention\scriptarray.cpp" />
-    <ClCompile Include="..\..\source\common\extention\scriptbuilder.cpp" />
-    <ClCompile Include="..\..\source\common\extention\scriptdictionary.cpp" />
-    <ClCompile Include="..\..\source\common\extention\scriptgrid.cpp" />
-    <ClCompile Include="..\..\source\common\extention\scripthelper.cpp" />
-    <ClCompile Include="..\..\source\common\extention\scriptstdstring.cpp" />
-    <ClCompile Include="..\..\source\common\extention\scriptstdstring_utils.cpp" />
-    <ClCompile Include="..\..\source\common\extention\stringstream.cpp" />
-    <ClCompile Include="..\..\source\common\extention\thread.cpp" />
     <ClCompile Include="..\..\source\common\filesystem.cpp" />
     <ClCompile Include="..\..\source\common\input.cpp" />
     <ClCompile Include="..\..\source\common\math.cpp" />
@@ -88,7 +63,6 @@
     <ClCompile Include="..\..\source\common\math\rectanglepacker.cpp" />
     <ClCompile Include="..\..\source\common\math\vector.cpp" />
     <ClCompile Include="..\..\source\common\profiler.cpp" />
-    <ClCompile Include="..\..\source\common\scriptengine.cpp" />
     <ClCompile Include="..\..\source\common\timer.cpp" />
     <ClCompile Include="..\..\source\common\util.cpp" />
     <ClCompile Include="..\..\source\common\window.cpp" />
@@ -193,7 +167,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
-      <AdditionalIncludeDirectories>..\..\include;..\..\source;..\..\3rdparty\angelscript\sdk\angelscript\include;..\..\3rdparty\freeimage\source;..\..\3rdparty\freetype\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\include;..\..\source;..\..\3rdparty\freeimage\source;..\..\3rdparty\freetype\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Android'">
@@ -215,8 +189,8 @@
       <ExceptionHandling>Sync</ExceptionHandling>
     </ClCompile>
     <Link>
-      <AdditionalLibraryDirectories>..\..\3rdparty\angelscript\sdk\angelscript\lib;..\..\3rdparty\freeimage\lib;..\..\3rdparty\freetype\lib</AdditionalLibraryDirectories>
-      <AdditionalDependencies>angelscriptd.lib;freeimaged.lib;freetyped.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>..\..\3rdparty\freeimage\lib;..\..\3rdparty\freetype\lib</AdditionalLibraryDirectories>
+      <AdditionalDependencies>freeimaged.lib;freetyped.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>

@@ -36,8 +36,6 @@ class XDAPI XGraphics
 	friend class XEngine;
 	friend class XBatch;
 public:
-	AS_DECL_SINGLETON
-
 	XGraphics();
 	virtual ~XGraphics() {}
 

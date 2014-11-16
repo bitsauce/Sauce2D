@@ -5,7 +5,6 @@
 
 class XDAPI XRandom
 {
-	AS_DECL_POD
 public:
 	XRandom() :
 		m_seed((uint32_t)time(0))

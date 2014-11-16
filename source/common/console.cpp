@@ -12,25 +12,6 @@
 bool XConsole::s_initialized = false;
 XConsole *XConsole::s_this = 0;
 
-AS_REG_SINGLETON(XConsole)
-
-int XConsole::Register(asIScriptEngine *scriptEngine)
-{
-	int r;
-
-	r = scriptEngine->RegisterObjectMethod("XConsole", "void log(const string &in)", asMETHODPR(XConsole, log, (const string&), void), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("XConsole", "string getLog(const string &in) const", asMETHOD(XConsole, getLog), asCALL_THISCALL); AS_ASSERT
-
-	r = scriptEngine->RegisterObjectMethod("XConsole", "void clear()", asMETHOD(XConsole, clear), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("XConsole", "void export()", asMETHOD(XConsole, exportFile), asCALL_THISCALL); AS_ASSERT
-
-	r = scriptEngine->RegisterObjectMethod("XConsole", "string readBuffer()", asMETHOD(XConsole, readBuffer), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("XConsole", "bool hasBuffer() const", asMETHOD(XConsole, hasBuffer), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("XConsole", "void clearBuffer()", asMETHOD(XConsole, clearBuffer), asCALL_THISCALL); AS_ASSERT
-
-	return r;
-}
-
 XConsole::XConsole() :
 	m_engine(0), // Set by the engine
 	m_output(0)
@@ -75,9 +56,9 @@ void XConsole::call_log(const char *msg, va_list args)
 	}
 
 	// Send message to debugger
-	if(m_engine->getDebugger())
+	//if(m_engine->getDebugger())
 	{
-		m_engine->getDebugger()->sendPacket(XD_MESSAGE_PACKET, out);
+		//m_engine->getDebugger()->sendPacket(XD_MESSAGE_PACKET, out);
 	}
 
 	// Append to console buffer
@@ -107,31 +88,7 @@ void XConsole::Log(const char *msg, ...)
 	va_list args;
 	va_start(args, msg);
 
-	asIScriptContext *ctx = s_initialized ? asGetActiveContext() : 0;
-	if(ctx)
-	{
-		const char *objName = ctx->GetFunction()->GetObjectName();
-		const char *funcName = ctx->GetFunction()->GetName();
-		if(objName)
-		{
-			CALL_LOG("%s::%s(): %s", objName, funcName, msg);
-		}
-		else
-		{
-			if(strlen(funcName) > 0)
-			{
-				CALL_LOG("%s(): %s", funcName, msg);
-			}
-			else
-			{
-				CALL_LOG("global(): %s", msg);
-			}
-		}
-	}
-	else
-	{
-		CALL_LOG("%s", msg);
-	}
+	CALL_LOG("%s", msg);
 
 	va_end(args);
 }

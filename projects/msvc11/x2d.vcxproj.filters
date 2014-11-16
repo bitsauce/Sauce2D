@@ -22,14 +22,8 @@
     <Filter Include="include\math">
       <UniqueIdentifier>{11ab994e-9d47-4069-aa41-1236c6e983e0}</UniqueIdentifier>
     </Filter>
-    <Filter Include="include\extention">
-      <UniqueIdentifier>{667d959f-f807-49ba-b9dc-c882988425e0}</UniqueIdentifier>
-    </Filter>
     <Filter Include="include\graphics">
       <UniqueIdentifier>{095c17d4-bd34-4d01-a74d-31fe78f8ff43}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="source\common\extention">
-      <UniqueIdentifier>{779e3bf8-a7da-4fa6-9369-7a2d420020da}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -62,42 +56,6 @@
     </ClInclude>
     <ClInclude Include="..\..\include\x2d\math\matrix.h">
       <Filter>include\math</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\x2d\extention.h">
-      <Filter>include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\x2d\extention\funccall.h">
-      <Filter>include\extention</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\x2d\extention\iniparser.h">
-      <Filter>include\extention</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\x2d\extention\scriptany.h">
-      <Filter>include\extention</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\x2d\extention\scriptarray.h">
-      <Filter>include\extention</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\x2d\extention\scriptbuilder.h">
-      <Filter>include\extention</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\x2d\extention\scriptdictionary.h">
-      <Filter>include\extention</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\x2d\extention\scriptgrid.h">
-      <Filter>include\extention</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\x2d\extention\scripthelper.h">
-      <Filter>include\extention</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\x2d\extention\scriptstdstring.h">
-      <Filter>include\extention</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\x2d\extention\stringstream.h">
-      <Filter>include\extention</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\x2d\extention\thread.h">
-      <Filter>include\extention</Filter>
     </ClInclude>
     <ClInclude Include="..\..\include\x2d\graphics\pixmap.h">
       <Filter>include\graphics</Filter>
@@ -212,9 +170,6 @@
     <ClCompile Include="..\..\source\common\assetmanager.cpp">
       <Filter>source\common</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\source\common\debugger.cpp">
-      <Filter>source\common</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\source\common\filesystem.cpp">
       <Filter>source\common</Filter>
     </ClCompile>
@@ -222,9 +177,6 @@
       <Filter>source\common</Filter>
     </ClCompile>
     <ClCompile Include="..\..\source\common\profiler.cpp">
-      <Filter>source\common</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\common\scriptengine.cpp">
       <Filter>source\common</Filter>
     </ClCompile>
     <ClCompile Include="..\..\source\common\timer.cpp">
@@ -241,42 +193,6 @@
     </ClCompile>
     <ClCompile Include="..\..\source\common\math.cpp">
       <Filter>source\common</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\common\extention\funccall.cpp">
-      <Filter>source\common\extention</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\common\extention\iniparser.cpp">
-      <Filter>source\common\extention</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\common\extention\scriptany.cpp">
-      <Filter>source\common\extention</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\common\extention\scriptarray.cpp">
-      <Filter>source\common\extention</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\common\extention\scriptbuilder.cpp">
-      <Filter>source\common\extention</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\common\extention\scriptdictionary.cpp">
-      <Filter>source\common\extention</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\common\extention\scriptgrid.cpp">
-      <Filter>source\common\extention</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\common\extention\scripthelper.cpp">
-      <Filter>source\common\extention</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\common\extention\scriptstdstring.cpp">
-      <Filter>source\common\extention</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\common\extention\scriptstdstring_utils.cpp">
-      <Filter>source\common\extention</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\common\extention\stringstream.cpp">
-      <Filter>source\common\extention</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\common\extention\thread.cpp">
-      <Filter>source\common\extention</Filter>
     </ClCompile>
     <ClCompile Include="..\..\source\graphics\vertexbuffer.cpp">
       <Filter>source\graphics</Filter>

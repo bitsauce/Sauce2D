@@ -8,11 +8,8 @@
 //									2011-2014 (C)
 
 #include <x2d/engine.h>
-#include <x2d/extention.h>
 #include <x2d/graphics.h>
 #include <x2d/audio.h>
-
-#include <ctime>
 
 #ifdef X2D_LINUX
 #define MAX_PATH 256
@@ -36,47 +33,19 @@ XConfig::XConfig() :
 {
 }
 
-#define AS_CHECK_RUNTIME_ERROR \
-		if(r != asEXECUTION_FINISHED) { \
-			LOG("\nAn run-time exception occured:"); \
-			PrintException(ctx, true); \
-		}
-
 //------------------------------------------------------------------------
 // Engine
 //------------------------------------------------------------------------
-
-AS_REG_SINGLETON(XEngine)
 
 XEngine *CreateEngine()
 {
 	return new XEngine();
 }
 
-int XEngine::Register(asIScriptEngine *scriptEngine)
-{
-	int r = 0;
-	
-	// General
-	r = scriptEngine->RegisterObjectMethod("XEngine", "void exit()", asMETHOD(XEngine, exit), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("XEngine", "string get_platform() const", asMETHOD(XEngine, getPlatformString), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("XEngine", "string get_workDir() const", asMETHOD(XEngine, getWorkingDirectory), asCALL_THISCALL); AS_ASSERT
-	
-	// Scene
-	r = scriptEngine->RegisterObjectMethod("XEngine", "void pushScene(Scene@)", asMETHOD(XEngine, pushScene), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("XEngine", "void popScene()", asMETHOD(XEngine, popScene), asCALL_THISCALL); AS_ASSERT
-
-	return r;
-}
-
 XEngine::XEngine() :
 	m_debugger(0),
 	m_running(false),
 	m_paused(false),
-	m_defaultUpdateFunc(0),
-	m_defaultDrawFunc(0),
-	m_sceneUpdateFunc(0),
-	m_sceneDrawFunc(0),
 	m_initialized(false)
 {
 	s_this = this;
@@ -85,13 +54,12 @@ XEngine::XEngine() :
 XEngine::~XEngine()
 {
 	// Pop all scene objects
-	while(m_sceneStack.size() > 0)
+	/*while(m_sceneStack.size() > 0)
 	{
 		popScene();
-	}
+	}*/
 	
 	delete m_input;
-	delete m_scripts;
 	delete m_fileSystem;
 	delete m_graphics;
 	delete m_audio;
@@ -99,7 +67,6 @@ XEngine::~XEngine()
 	delete m_window;
 	delete m_math;
 	delete m_assetManager;
-	delete m_debugger;
 	delete m_console;
 }
 
@@ -118,7 +85,7 @@ string XEngine::getSaveDirectory() const
 	return m_saveDir;
 }
 
-void XEngine::pushScene(asIScriptObject *object)
+/*void XEngine::pushScene(Scene *scene)
 {
 	// Get previous scene
 	asIScriptObject *prevScene = m_sceneStack.size() > 0 ? m_sceneStack.top() : 0;
@@ -199,7 +166,7 @@ void XEngine::popScene()
 			r = ctx->Release();
 		}
 	}
-}
+}*/
 
 //------------------------------------------------------------------------
 // Run
@@ -235,6 +202,10 @@ int XEngine::init(const XConfig &config)
 	m_input = config.input;
 	m_assetManager = new XAssetManager;
 
+	m_mainFunc = config.main;
+	m_drawFunc = config.draw;
+	m_updateFunc = config.update;
+
 	// Set up stuff
 	//m_assetManager->s_this = m_assetManager;
 	m_fileSystem->s_this = m_fileSystem;
@@ -262,137 +233,41 @@ int XEngine::init(const XConfig &config)
 	{
 		m_math = new XMath;
 	}
-
-	// Setup debugger
-	if(m_debugger)
-	{
-		// Initialize debugger
-		m_debugger->m_engine = this;
-		if(!m_debugger->connect())
-		{
-			LOG("Failed to connect to external debugger");
-			killDebugger();
-		}
-		m_debugger->m_profiler.m_timer = m_timer;
-	}
 	
 	try
 	{
 		// Print application message
 		LOG("** x2D Game Engine **");
 	
-		// Create the script engine
-		LOG("Initializing AngelScript %s", ANGELSCRIPT_VERSION_STRING);
-		asIScriptEngine *scriptEngine = asCreateScriptEngine(ANGELSCRIPT_VERSION);
-		scriptEngine->SetEngineProperty(asEP_COMPILER_WARNINGS, 0);
-
 		m_console->s_initialized = true;
-	
-		// Create script manager
-		m_scripts = new XScriptEngine;
-		m_scripts->s_engine = scriptEngine;
-		m_scripts->s_gameEngine = this;
-
-		// Set the message callback to receive information on errors in human readable form.
-		int r = scriptEngine->SetMessageCallback(asMETHOD(XConsole, messageCallback), m_console, asCALL_THISCALL); assert( r >= 0 );
-
-		// Register stuff
-		RegisterStdString(scriptEngine);
-		RegisterScriptArray(scriptEngine, true);
-		RegisterStdStringUtils(scriptEngine);
-		RegisterScriptGrid(scriptEngine);
-		RegisterScriptAny(scriptEngine);
-		RegisterScriptDictionary(scriptEngine);
-
-		r = scriptEngine->RegisterInterface("Scene"); AS_ASSERT
-		r = scriptEngine->RegisterInterfaceMethod("Scene", "void show()"); AS_ASSERT
-		r = scriptEngine->RegisterInterfaceMethod("Scene", "void hide()"); AS_ASSERT
-		r = scriptEngine->RegisterInterfaceMethod("Scene", "void draw()"); AS_ASSERT
-		r = scriptEngine->RegisterInterfaceMethod("Scene", "void update()"); AS_ASSERT
-
-		// This will register all game objects
-		ClassRegister::Register(scriptEngine);
-	
-		// Register singleton objects
-		r = scriptEngine->RegisterGlobalProperty("XEngine Engine", this); AS_ASSERT
-		r = scriptEngine->RegisterGlobalProperty("XFileSystem FileSystem", m_fileSystem); AS_ASSERT
-		r = scriptEngine->RegisterGlobalProperty("XWindow Window", m_window); AS_ASSERT
-		r = scriptEngine->RegisterGlobalProperty("XInput Input", m_input); AS_ASSERT
-		r = scriptEngine->RegisterGlobalProperty("XMath Math", m_math); AS_ASSERT
-		r = scriptEngine->RegisterGlobalProperty("XScriptEngine Scripts", m_scripts); AS_ASSERT
-		r = scriptEngine->RegisterGlobalProperty("XGraphics Graphics", m_graphics); AS_ASSERT
-		r = scriptEngine->RegisterGlobalProperty("XAudioManager Audio", m_audio); AS_ASSERT
-		r = scriptEngine->RegisterGlobalProperty("XConsole Console", m_console); AS_ASSERT
-
-		// Create network managers
-		//initSockets();
-		//gameClient = new Client();
-		//gameServer = new Server();
 
 		// Load plugins
-		LOG("Loading plugins...");
+		/*
 		if(config.loadPluginsFunc != 0 && config.loadPluginsFunc(scriptEngine) < 0)
 		{
+			LOG("Loading plugins...");
 			return X2D_PLUGIN_LOAD_ERROR;
-		}
-
-		// Compile the AngelScript module
-		LOG("Compiling scripts...");
-		r = asCompileModule("GameModule");
-		if(r < 0)
-		{
-			// Script compilation failed
-			return X2D_COMPILE_FAILED;
-		}
-	
-		// Create the game module
-		asIScriptModule *mod = scriptEngine->GetModule("GameModule");
-		m_scripts->s_module = mod;
+		}*/
 
 		// Load events
-		if(config.loadEventsFunc != 0 && config.loadEventsFunc(scriptEngine) < 0)
+		/*if(config.loadEventsFunc != 0 && config.loadEventsFunc(scriptEngine) < 0)
 		{
 			return X2D_PLUGIN_LOAD_ERROR;
-		}
+		}*/
 
-		// Find the function that is to be called.
-		asIScriptFunction* mainFunc = mod->GetFunctionByDecl("void main()");
-		m_defaultUpdateFunc = mod->GetFunctionByDecl("void update()");
-		m_defaultDrawFunc = mod->GetFunctionByDecl("void draw()");
-
-		if(mainFunc)
-		{
-			LOG("Running void main()...");
-
-			// Create our context and run main
-			asIScriptContext* ctx = XScriptEngine::CreateContext();
-			r = ctx->Prepare(mainFunc); assert(r >= 0);
-			r = ctx->Execute(); AS_CHECK_RUNTIME_ERROR
-			r = ctx->Release();
-		}
+		m_mainFunc();
 	
 		LOG("x2D Engine Initialized");
 		m_initialized = true;
-	}catch(XException e)
+	}
+	catch(XException e)
 	{
 		LOG("An exception occured: %s", e.message().c_str());
 		return e.errorCode();
-	}catch(...)
+	}
+	catch(...)
 	{
-		asIScriptContext *ctx = asGetActiveContext();
-		if(ctx)
-		{
-			// Will probably never get here as long as AS_NO_EXCEPTION is not defined
-			const char *tmp;
-			int line = ctx->GetLineNumber(0, 0, &tmp);
-			LOG("Unknown exception occured while a script was running.");
-			if(tmp) {
-				LOG("LOC : %s (%i)", line, tmp);
-			}
-		}else
-		{
-			LOG("Unknown exception occured.");
-		}
+		LOG("Unknown exception occured.");
 		return X2D_UNKNOWN_EXCEPTION;
 	}
 	return X2D_OK;
@@ -400,43 +275,14 @@ int XEngine::init(const XConfig &config)
 
 void XEngine::draw()
 {
-	asIScriptObject *object = m_sceneStack.size() > 0 ? m_sceneStack.top() : 0;
-	asIScriptFunction *func = object != 0 ? m_sceneDrawFunc : m_defaultDrawFunc;
-	if(func)
-	{
-		// Call draw function
-		asIScriptContext *ctx = XScriptEngine::CreateContext();
-		int r = ctx->Prepare(func); assert(r >= 0);
-		if(object) {
-			r = ctx->SetObject(object); assert(r >= 0);
-		}
-		r = ctx->Execute(); AS_CHECK_RUNTIME_ERROR
-		r = ctx->Release();
-	}
-
+	m_drawFunc();
 	m_graphics->swapBuffers();
 }
 
 void XEngine::update()
 {
-	// Check all bindings
 	m_input->checkBindings();
-	
-	asIScriptObject *object = m_sceneStack.size() > 0 ? m_sceneStack.top() : 0;
-	asIScriptFunction *func = object != 0 ? m_sceneUpdateFunc : m_defaultUpdateFunc;
-	if(func)
-	{
-		// Call 'void update()'
-		asIScriptContext *ctx = XScriptEngine::CreateContext();
-		int r = ctx->Prepare(func); assert(r >= 0);
-		if(object) {
-			r = ctx->SetObject(object); assert(r >= 0);
-		}
-		r = ctx->Execute(); AS_CHECK_RUNTIME_ERROR
-		r = ctx->Release();
-		
-		r = XScriptEngine::GetAngelScript()->GarbageCollect(asGC_ONE_STEP | asGC_DESTROY_GARBAGE); assert(r >= 0);
-	}
+	m_updateFunc();
 }
 
 void XEngine::exit()
@@ -452,7 +298,7 @@ int XEngine::run()
 	{
 		// Setup game loop
 		m_timer->start();
-		float prevTime = m_timer->getElapsedTime() * 0.001;
+		float prevTime = m_timer->getElapsedTime() * 0.001f;
 		float acc = 0.0f;
 
 		// Fps sampling
@@ -466,10 +312,10 @@ int XEngine::run()
 		while(m_running)
 		{
 			// Step begin
-			if(m_debugger)
+			/*if(m_debugger)
 			{
 				m_debugger->getProfiler()->stepBegin();
-			}
+			}*/
 
 			// Process game events
 			m_window->processEvents();
@@ -479,7 +325,7 @@ int XEngine::run()
 				continue;
 
 			// Calculate time delta
-			const float currentTime = m_timer->getElapsedTime() * 0.001;
+			const float currentTime = m_timer->getElapsedTime() * 0.001f;
 			float deltaTime = currentTime - prevTime;
 			prevTime = currentTime;
 		
@@ -521,22 +367,7 @@ int XEngine::run()
 	}
 	catch(...)
 	{
-		asIScriptContext *ctx = asGetActiveContext();
-		if(ctx)
-		{
-			// Will probably never get here as long as AS_NO_EXCEPTION is not defined
-			const char *tmp;
-			int line = ctx->GetLineNumber(0, 0, &tmp);
-			LOG("Unknown exception occured while a script was running.");
-			if(tmp)
-			{
-				LOG("LOC : %s (%i)", line, tmp);
-			}
-		}
-		else
-		{
-			LOG("Unknown exception occured.");
-		}
+		LOG("Unknown exception occured.");
 		return X2D_UNKNOWN_EXCEPTION;
 	}
 

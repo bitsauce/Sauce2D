@@ -22,8 +22,6 @@ enum XTextureWrapping
 class XDAPI XTexture
 {
 public:
-	AS_DECL_REF
-
 	XTexture();
 	virtual ~XTexture() {}
 

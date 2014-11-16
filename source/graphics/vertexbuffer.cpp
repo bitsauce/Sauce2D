@@ -10,33 +10,6 @@
 #include <x2d/engine.h>
 #include <x2d/graphics.h>
 
-AS_REG_VALUE(XVertexBuffer, "VertexBuffer")
-
-int XVertexBuffer::Register(asIScriptEngine *scriptEngine)
-{
-	int r = 0;
-
-	r = scriptEngine->RegisterEnum("BufferType"); AS_ASSERT
-	r = scriptEngine->RegisterEnumValue("BufferType", "RAW_BUFFER", RAW_BUFFER); AS_ASSERT
-	r = scriptEngine->RegisterEnumValue("BufferType", "DYNAMIC_BUFFER", DYNAMIC_BUFFER); AS_ASSERT
-	r = scriptEngine->RegisterEnumValue("BufferType", "STATIC_BUFFER", STATIC_BUFFER); AS_ASSERT
-	
-	r = scriptEngine->RegisterObjectBehaviour("VertexBuffer", asBEHAVE_CONSTRUCT, "void f(const VertexFormat &in)", asFUNCTION(FmtConstruct), asCALL_CDECL_OBJLAST); AS_ASSERT
-
-	r = scriptEngine->RegisterObjectMethod("VertexBuffer", "void draw(Batch@, Texture@)", asMETHOD(XVertexBuffer, draw), asCALL_THISCALL); AS_ASSERT
-	
-	r = scriptEngine->RegisterObjectMethod("VertexBuffer", "VertexFormat getVertexFormat() const", asMETHOD(XVertexBuffer, getVertexFormat), asCALL_THISCALL);
-
-	r = scriptEngine->RegisterObjectMethod("VertexBuffer", "void addVertices(array<Vertex> @vertices, array<uint> @indices)", asMETHOD(XVertexBuffer, addVerticesAS), asCALL_THISCALL);
-	r = scriptEngine->RegisterObjectMethod("VertexBuffer", "void modifyVertices(const int, array<Vertex> @vertices)", asMETHOD(XVertexBuffer, modifyVerticesAS), asCALL_THISCALL);
-	r = scriptEngine->RegisterObjectMethod("VertexBuffer", "array<Vertex> @getVertices(const int, const int) const", asMETHOD(XVertexBuffer, getVerticesAS), asCALL_THISCALL);
-
-	r = scriptEngine->RegisterObjectMethod("VertexBuffer", "void setBufferType(const BufferType)", asMETHOD(XVertexBuffer, setBufferType), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("VertexBuffer", "BufferType getBufferType() const", asMETHOD(XVertexBuffer, getBufferType), asCALL_THISCALL); AS_ASSERT
-
-	return r;
-}
-
 XVertexBuffer::XVertexBuffer() :
 	m_format(XVertexFormat::s_vct),
 	m_vertexData(0),
@@ -130,19 +103,6 @@ void XVertexBuffer::addVertices(XVertex *vertices, int vcount, uint *indices, in
 	}
 }
 
-void XVertexBuffer::addVerticesAS(XScriptArray *vertices, XScriptArray *indices)
-{
-	XVertex *vx = new XVertex[vertices->GetSize()];
-	for(uint i = 0; i < vertices->GetSize(); i++)
-	{
-		vx[i] = *(XVertex*)vertices->At(i);
-	}
-	addVertices(vx, vertices->GetSize(), (uint*)indices->At(0), indices->GetSize());
-	vertices->Release();
-	indices->Release();
-	delete[] vx;
-}
-
 void XVertexBuffer::modifyVertices(const int idx, XVertex *vertex, const int count)
 {
 	if(idx >= 0 && idx < m_vertexCount)
@@ -172,18 +132,6 @@ void XVertexBuffer::modifyVertices(const int idx, XVertex *vertex, const int cou
 	}
 }
 
-void XVertexBuffer::modifyVerticesAS(const int idx, XScriptArray *vertices)
-{
-	XVertex *vx = new XVertex[vertices->GetSize()];
-	for(uint i = 0; i < vertices->GetSize(); i++)
-	{
-		vx[i] = *(XVertex*)vertices->At(i);
-	}
-	modifyVertices(idx, vx, vertices->GetSize());
-	vertices->Release();
-	delete[] vx;
-}
-
 XVertexFormat XVertexBuffer::getVertexFormat() const
 {
 	return m_format;
@@ -206,21 +154,6 @@ XVertex *XVertexBuffer::getVertices(const int idx, const int count) const
 		LOG("XVertex XVertexBuffer::getVertices(): Index out-of-bounds.");
 	}
 	return vertices;
-}
-
-XScriptArray *XVertexBuffer::getVerticesAS(const int idx, const int count) const
-{
-	XScriptArray *arr = 0;
-	XVertex *vertices = getVertices(idx, count);
-	if(vertices)
-	{
-		arr = CreateArray("Vertex", count);
-		for(int i = 0; i < count; i++)
-		{
-			*(XVertex*)arr->At(i) = vertices[i];
-		}
-	}
-	return arr;
 }
 
 char *XVertexBuffer::getVertexData() const
@@ -247,19 +180,19 @@ void XVertexBuffer::draw(XBatch *batch, XTexture *texture)
 {
 	if(batch)
 	{
-		if(texture)
+		//if(texture)
 		{
-			texture->addRef();
+			//texture->addRef();
 		}
 
 		batch->setTexture(texture);
 		batch->setPrimitive(XBatch::PRIMITIVE_TRIANGLES);
 		batch->setVertexBuffer(*this);
-		batch->release();
+		//batch->release();
 
-		if(texture)
+		//if(texture)
 		{
-			texture->release();
+			//texture->release();
 		}
 	}
 }

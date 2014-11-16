@@ -3,7 +3,6 @@
 
 #include "config.h"
 #include "math.h"
-#include "extention.h"
 
 #define LOG(str, ...) XConsole::Log(str, __VA_ARGS__)
 
@@ -23,8 +22,6 @@ class XDAPI XConsole
 {
 	friend class XEngine;
 public:
-	AS_DECL_SINGLETON
-
 	XConsole();
 	virtual ~XConsole();
 
@@ -38,8 +35,6 @@ public:
 	string readBuffer();
 	bool hasBuffer() const;
 	void clearBuffer();
-
-	void messageCallback(const asSMessageInfo *msg);
 
 	static void Log(const char *msg, ...);
 
@@ -103,8 +98,6 @@ public:
 class XDAPI XWindow
 {
 public:
-	AS_DECL_SINGLETON
-
 	virtual ~XWindow() {}
 
 	virtual void processEvents() { NOT_IMPLEMENTED(processEvents) }
@@ -113,7 +106,7 @@ public:
 	virtual void enableFullscreen()									{ NOT_IMPLEMENTED(enableFullscreen) }
 	virtual void disableFullscreen()								{ NOT_IMPLEMENTED(disableFullscreen) }
 	virtual bool isFullscreen() const								{ NOT_IMPLEMENTED_RET(isFullscreen, false) }
-	virtual XScriptArray* getResolutionList() const					{ NOT_IMPLEMENTED_RET(getResolutionList, 0) }
+	//virtual XScriptArray* getResolutionList() const					{ NOT_IMPLEMENTED_RET(getResolutionList, 0) }
 
 	// Window flags
 	virtual void enableResize()										{ NOT_IMPLEMENTED(enableResize) }
@@ -136,8 +129,6 @@ public:
 class XDAPI XTimer
 {
 public:
-	AS_DECL_SINGLETON
-
 	XTimer();
 	
 	// High-resolution timing
@@ -190,49 +181,9 @@ struct ScriptValue
 	void *value;
 };
 
-// A asIScriptEngine wrapper (mainly used by external plugins)
-class XDAPI XScriptEngine
-{
-	friend class XEngine;
-public:
-	AS_DECL_SINGLETON
-
-	XScriptEngine();
-	~XScriptEngine();
-
-	// Script classes
-	uint classCount() const;
-	int classIdByName(const string className) const;
-	string classNameById(const uint idx) const;
-	bool isClassName(const string className) const;
-	bool classDerivesFromName(const string class1, const string class2) const;
-	bool classDerivesFromId(const uint id1, const uint id2) const;
-
-	// Script objects
-	string objectClassName(void *obj, int typeId) const;
-
-	// Execute string
-	void executeString(const string &str) const;
-
-	// Serializing
-	void serialize(asIScriptObject *object, string &path);
-	void serialize(asIScriptObject *object, XStringStream &ss);
-	asIScriptObject *deserialize(string &path);
-	asIScriptObject *deserialize(XStringStream &ss);
-
-	static asIScriptContext *CreateContext();
-	static asIScriptEngine *GetAngelScript();
-	static asIScriptModule *GetModule();
-
-private:
-	static asIScriptEngine *s_engine;
-	static asIScriptModule *s_module;
-	static XEngine *s_gameEngine;
-};
-
 // AngelScript functions
 int  asCompileModule(const string &name);
-XDAPI XScriptArray *CreateArray(const string &type, const uint size);
+//XDAPI XScriptArray *CreateArray(const string &type, const uint size);
 
 /*********************************************************************
 **	File reader class												**
@@ -274,8 +225,6 @@ class XDAPI XFileSystem
 {
 	friend class XEngine;
 public:
-	AS_DECL_SINGLETON
-
 	// File buffers
 	bool readFile(string filePath, string &conent) const;
 	bool writeFile(string filePath, const string content) const;
@@ -283,8 +232,8 @@ public:
 	// OS spesifics
 	virtual bool fileExists(string &filePath) const;
 	// NOTE TO SELF: I might want to consider making a DirectoryIterator instead of using this function
-	virtual XScriptArray *listFiles(string &directory, const string &mask, const bool recursive) const		{ NOT_IMPLEMENTED_RET(listFiles, 0) }			// Optional
-	virtual XScriptArray *listFolders(string &directory, const string &mask, const bool recursive) const	{ NOT_IMPLEMENTED_RET(listFolders, 0) }			// Optional
+	//virtual XScriptArray *listFiles(string &directory, const string &mask, const bool recursive) const		{ NOT_IMPLEMENTED_RET(listFiles, 0) }			// Optional
+	//virtual XScriptArray *listFolders(string &directory, const string &mask, const bool recursive) const	{ NOT_IMPLEMENTED_RET(listFolders, 0) }			// Optional
 	virtual bool remove(string &path)																		{ NOT_IMPLEMENTED_RET(remove, false) }			// Optional
 
 	// System windows
@@ -434,8 +383,6 @@ enum XVirtualKey
 class XDAPI XInput
 {
 public:
-	AS_DECL_SINGLETON
-
 	XInput();
 	virtual ~XInput();
 
@@ -451,20 +398,20 @@ public:
 	virtual Vector2 getPosition() const 						{ NOT_IMPLEMENTED_RET(getPosition, Vector2(0.0f)) }
 
 	// Key binding
-	void bind(const XVirtualKey key, asIScriptFunction *func);
+	//void bind(const XVirtualKey key, asIScriptFunction *func);
 	void unbind(const XVirtualKey key);
 	void unbindAll();
 	void updateBindings();
 	void checkBindings();
 
 	// Keyboard listener
-	void addKeyboardListener(asIScriptObject *object);
+	//void addKeyboardListener(asIScriptObject *object);
 	void charEvent(uint utf8char);
 	void keyPressed(const XVirtualKey key);
 	void keyReleased(const XVirtualKey key);
 
 	// Mouse listener
-	void addMouseListener(asIScriptObject *object);
+	//void addMouseListener(asIScriptObject *object);
 	void mouseClick(const XMouseButton btn);
 	void mouseScroll(const int dt);
 
@@ -476,13 +423,13 @@ private:
 	struct KeyBind
 	{
 		bool pressed;
-		asIScriptFunction *function;
+		//asIScriptFunction *function;
 	};
 
 	map<XVirtualKey, KeyBind> m_keyBindings;
-	vector<asIScriptObject*> m_keyListeners;
+	//vector<asIScriptObject*> m_keyListeners;
 
-	vector<asIScriptObject*> m_clickListeners;
+	//vector<asIScriptObject*> m_clickListeners;
 	map<XMouseButton, bool> m_mousePressed;
 };
 
@@ -519,8 +466,6 @@ class XDAPI XProfiler
 	};
 
 public:
-	AS_DECL_SINGLETON
-
 	XProfiler();
 	virtual ~XProfiler();
 
@@ -571,73 +516,6 @@ enum XPacketType
 	XD_STEP_DONE_PACKET
 };
 
-class XDAPI XDebugger
-{
-	friend class XEngine;
-public:
-	XDebugger();
-	virtual ~XDebugger() {}
-
-	/*********************************************************************
-	**	Virtual part													**
-	**********************************************************************/
-	virtual bool connect()										{ NOT_IMPLEMENTED_RET(connect, false) }
-	virtual void disconnect()									{ NOT_IMPLEMENTED(disconnect) }
-	virtual bool send(const char *data, const int size)			{ NOT_IMPLEMENTED_RET(send, false) }
-	virtual bool recv(char *data, const int size)				{ NOT_IMPLEMENTED_RET(recv, false) }
-	virtual int  bytesReady()									{ NOT_IMPLEMENTED_RET(bytesReady, 0) }
-	
-	/*********************************************************************
-	**	Implemented part												**
-	**********************************************************************/
-	bool sendPacket(XPacketType type, string data = "");
-	bool recvPacket(string &data, bool blocking = true);
-	
-	void funcBeginCallback(asIScriptFunction *func);
-	void funcEndCallback(asIScriptFunction *func);
-	void lineCallback(asIScriptContext *ctx);
-	bool isBreakpoint(asIScriptContext *ctx);
-	void takeCommands(asIScriptContext *ctx);
-
-	XProfiler *getProfiler() { return &m_profiler; }
-
-private:
-	enum Command
-	{
-		NoCommand = 0x00,
-		Continue,
-		Interupt,
-		StepOver,
-		StepInto,
-		StepOut,
-		AddBreakpoint,
-		RemoveBreakpoint
-	};
-
-	// Breakpoint struct
-	struct Breakpoint
-	{
-		string file;
-		int line;
-        bool operator==(const Breakpoint &other)
-		{
-            return file == other.file && line == other.line;
-        }
-	};
-	
-	uint m_prevStackSize;
-	asIScriptFunction *m_prevFunc;
-	asIScriptFunction *m_prevSystemFunc;
-
-	Command m_command;
-	list<Breakpoint> m_breakpoints;
-
-	XProfiler m_profiler;
-	XEngine *m_engine;
-
-	string m_packet;
-};
-
 /*********************************************************************
 **	Exception class													**
 **********************************************************************/
@@ -668,8 +546,9 @@ private:
 /*********************************************************************
 **	Engine config													**
 **********************************************************************/
-typedef int (*LoadPluginsFunc)(asIScriptEngine*);
-typedef int (*LoadEventsFunc)(asIScriptEngine*);
+typedef int (*LoadPluginsFunc)();
+typedef int (*LoadEventsFunc)();
+typedef void (*TestFunc)();
 
 class XAudioManager;
 class XGraphics;
@@ -722,6 +601,8 @@ struct XDAPI XConfig
 	// Load events
 	LoadEventsFunc loadEventsFunc;
 
+	TestFunc draw, update, main;
+
 	// Engine timer object (required)
 	XTimer*			timer;
 
@@ -750,8 +631,6 @@ struct XDAPI XConfig
 class XDAPI XEngine
 {
 public:
-	AS_DECL_SINGLETON
-
 	XEngine();
 	~XEngine();
 
@@ -777,13 +656,8 @@ public:
 	string getSaveDirectory() const;
 
 	// Scene
-	void pushScene(asIScriptObject *object);
+	void pushScene(/*asIScriptObject *object*/);
 	void popScene();
-
-	// Debugger
-	void setDebugger(XDebugger *debugger) { m_debugger = debugger; }
-	XDebugger *getDebugger() const { return m_debugger; }
-	void killDebugger() { XDebugger *dbg = m_debugger; m_debugger = 0; delete dbg; }
 
 	// Exceptions
 	void exception(XRetCode errorCode, const char* message);
@@ -805,7 +679,6 @@ private:
 	XAudioManager*	m_audio;
 	XDebugger*		m_debugger;
 	XTimer*			m_timer;
-	XScriptEngine*	m_scripts;
 	XConsole*		m_console;
 	XWindow*		m_window;
 	XMath*			m_math;
@@ -825,13 +698,10 @@ private:
 	bool m_initialized;
 
 	// Scene stack
-	stack<asIScriptObject*> m_sceneStack;
+	//stack<asIScriptObject*> m_sceneStack;
 
-	// Event functions
-	asIScriptFunction *m_defaultUpdateFunc;
-	asIScriptFunction *m_defaultDrawFunc;
-	asIScriptFunction *m_sceneUpdateFunc;
-	asIScriptFunction *m_sceneDrawFunc;
+	// Test
+	TestFunc m_mainFunc, m_drawFunc, m_updateFunc;
 
 	static XEngine *s_this;
 };

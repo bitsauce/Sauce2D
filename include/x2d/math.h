@@ -12,7 +12,6 @@
 
 class XDAPI XMath
 {
-	AS_DECL_SINGLETON
 public:
 	// Degrees/Radians
 	float radToDeg(const float rad);

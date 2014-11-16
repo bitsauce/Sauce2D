@@ -1,4 +1,3 @@
-AngelScript 2.29.0
 FreeType 2.4.8
 GLEW 1.10.0
 OpenAL 1.1

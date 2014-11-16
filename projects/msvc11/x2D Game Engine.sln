@@ -1,10 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Express 2012 for Windows Desktop
+# Visual Studio 2012
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "x2d", "x2d.vcxproj", "{F3F25B49-2C6B-4FF0-98FB-47695DF70B8A}"
 	ProjectSection(ProjectDependencies) = postProject
 		{55AE3D72-7DE6-F19F-AEF2-9AE8CA26CF3D} = {55AE3D72-7DE6-F19F-AEF2-9AE8CA26CF3D}
-		{39E6AF97-6BA3-4A72-8C61-BCEBF214EBFD} = {39E6AF97-6BA3-4A72-8C61-BCEBF214EBFD}
 		{B39ED2B3-D53A-4077-B957-930979A3577D} = {B39ED2B3-D53A-4077-B957-930979A3577D}
 		{78B079BD-9FC7-4B9E-B4A6-96DA0F00248B} = {78B079BD-9FC7-4B9E-B4A6-96DA0F00248B}
 	EndProjectSection
@@ -33,8 +32,6 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "OpenEXR", "..\..\3rdparty\freeimage\Source\OpenEXR\OpenEXR.2008.vcxproj", "{17A4874B-0606-4687-90B6-F91F8CB3B8AF}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ZLib", "..\..\3rdparty\freeimage\Source\ZLib\ZLib.2008.vcxproj", "{33134F61-C1AD-4B6F-9CEA-503A9F140C52}"
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "angelscript", "..\..\3rdparty\angelscript\sdk\angelscript\projects\msvc2012\angelscript.vcxproj", "{39E6AF97-6BA3-4A72-8C61-BCEBF214EBFD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -162,16 +159,6 @@ Global
 		{33134F61-C1AD-4B6F-9CEA-503A9F140C52}.Release|Win32.Build.0 = Release|Win32
 		{33134F61-C1AD-4B6F-9CEA-503A9F140C52}.Release|x64.ActiveCfg = Release|x64
 		{33134F61-C1AD-4B6F-9CEA-503A9F140C52}.Release|x64.Build.0 = Release|x64
-		{39E6AF97-6BA3-4A72-8C61-BCEBF214EBFD}.Debug|Android.ActiveCfg = Debug|Win32
-		{39E6AF97-6BA3-4A72-8C61-BCEBF214EBFD}.Debug|Win32.ActiveCfg = Debug|Win32
-		{39E6AF97-6BA3-4A72-8C61-BCEBF214EBFD}.Debug|Win32.Build.0 = Debug|Win32
-		{39E6AF97-6BA3-4A72-8C61-BCEBF214EBFD}.Debug|x64.ActiveCfg = Debug|x64
-		{39E6AF97-6BA3-4A72-8C61-BCEBF214EBFD}.Debug|x64.Build.0 = Debug|x64
-		{39E6AF97-6BA3-4A72-8C61-BCEBF214EBFD}.Release|Android.ActiveCfg = Release|Win32
-		{39E6AF97-6BA3-4A72-8C61-BCEBF214EBFD}.Release|Win32.ActiveCfg = Release|Win32
-		{39E6AF97-6BA3-4A72-8C61-BCEBF214EBFD}.Release|Win32.Build.0 = Release|Win32
-		{39E6AF97-6BA3-4A72-8C61-BCEBF214EBFD}.Release|x64.ActiveCfg = Release|x64
-		{39E6AF97-6BA3-4A72-8C61-BCEBF214EBFD}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

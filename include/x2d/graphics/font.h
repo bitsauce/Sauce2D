@@ -8,8 +8,6 @@ class XTextureAtlas;
 class XFont
 {
 public:
-	AS_DECL_REF
-
 	XFont(const string &path, const uint size);
 	~XFont();
 

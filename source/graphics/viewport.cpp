@@ -10,15 +10,6 @@
 #include <x2d/engine.h>
 #include <x2d/graphics.h>
 
-AS_REG_REF(XViewport, "Viewport")
-
-int XViewport::Register(asIScriptEngine *scriptEngine)
-{
-	int r = 0;
-
-	return r;
-}
-
 XViewport::XViewport(const Recti &view)
 {
 }

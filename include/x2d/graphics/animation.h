@@ -9,8 +9,6 @@ class XTextureRegion;
 class XAnimation
 {
 public:
-	AS_DECL_REF
-
 	XAnimation(XTexture *texture, const int nRows, const int nColumns);
 	~XAnimation();
 

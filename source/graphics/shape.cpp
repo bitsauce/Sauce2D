@@ -10,25 +10,6 @@
 #include <x2d/engine.h>
 #include <x2d/graphics.h>
 
-AS_REG_REF(XShape, "Shape")
-
-int XShape::Register(asIScriptEngine *scriptEngine)
-{
-	int r = 0;
-	
-	//r = scriptEngine->RegisterObjectBehaviour("Shape", asBEHAVE_FACTORY, "Shape @f()", asFUNCTIONPR(Factory, (), XShape*), asCALL_CDECL); AS_ASSERT
-	r = scriptEngine->RegisterObjectBehaviour("Shape", asBEHAVE_FACTORY, "Shape @f(const Rect &in)", asFUNCTIONPR(Factory, (const Rect&), XShape*), asCALL_CDECL); AS_ASSERT
-	r = scriptEngine->RegisterObjectBehaviour("Shape", asBEHAVE_FACTORY, "Shape @f(const Vector2 &in, const float, const int)", asFUNCTIONPR(Factory, (const Vector2&, const float, const int), XShape*), asCALL_CDECL); AS_ASSERT
-	//r = scriptEngine->RegisterObjectBehaviour("Shape", asBEHAVE_FACTORY, "Shape @f(const array<Vector2> &in)", asFUNCTIONPR(Factory, (const XScriptArray&), XShape*), asCALL_CDECL); AS_ASSERT
-	
-	r = scriptEngine->RegisterObjectMethod("Shape", "void setFillColor(const Vector4 &in)", asMETHOD(XShape, setFillColor), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("Shape", "void setFillTexture(Texture @texture)", asMETHOD(XShape, setFillTexture), asCALL_THISCALL); AS_ASSERT
-
-	r = scriptEngine->RegisterObjectMethod("Shape", "void draw(Batch @batch)", asMETHOD(XShape, draw), asCALL_THISCALL); AS_ASSERT
-
-	return r;
-}
-
 XShape::XShape() :
 	m_fillColor(1.0f),
 	m_fillTexture(0),
@@ -120,9 +101,9 @@ XShape::XShape(const XVertex *vertices, const int vertCount) :
 
 XShape::~XShape()
 {
-	if(m_fillTexture) {
-		m_fillTexture->release();
-	}
+	//if(m_fillTexture) {
+	//	m_fillTexture->release();
+	//}
 	delete[] m_vertices;
 }
 
@@ -152,9 +133,9 @@ void XShape::setFillColor(const Vector4 &color)
 
 void XShape::setFillTexture(XTexture* texture)
 {
-	if(m_fillTexture) {
-		m_fillTexture->release();
-	}
+	//if(m_fillTexture) {
+	//	m_fillTexture->release();
+	//}
 	m_fillTexture = texture;
 }
 
@@ -185,14 +166,14 @@ void XShape::draw(XBatch *batch)
 		m_vertices[i].set4ub(VERTEX_COLOR, m_fillColor.x*255, m_fillColor.y*255, m_fillColor.z*255, m_fillColor.w*255);
 	}
 	
-	if(m_fillTexture)
+	//if(m_fillTexture)
 	{
-		m_fillTexture->addRef();
+		//m_fillTexture->addRef();
 	}
 	batch->setTexture(m_fillTexture);
 	batch->setPrimitive(XBatch::PRIMITIVE_TRIANGLES);
 	batch->addVertices(m_vertices, m_vertCount, m_indices.data(), m_indices.size());
-	batch->release();
+	//batch->release();
 }
 
 bool XShape::validate()
@@ -216,9 +197,4 @@ XShape XShape::intersect(const XShape &XShape)
 {
 	// TODO
 	return *this;
-}
-
-static XShape *Factory(const XScriptArray& arr)
-{
-	return 0;
 }

@@ -9,14 +9,6 @@
 
 #include <x2d/audio.h>
 
-AS_REG_POD(XAudioBuffer, "AudioBuffer")
-
-int XAudioBuffer::Register(asIScriptEngine *scriptEngine)
-{
-	int r = 0;
-	return r;
-}
-
 XAudioBuffer::XAudioBuffer(void *data, uint size, uint frequency, Format format) :
 	m_frequency(frequency),
 	m_format(format)

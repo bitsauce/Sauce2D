@@ -10,21 +10,6 @@
 #include <x2d/engine.h>
 #include <x2d/graphics.h>
 
-AS_REG_POD(XPixmap, "Pixmap")
-
-int XPixmap::Register(asIScriptEngine *scriptEngine)
-{
-	int r = 0;
-	
-	r = scriptEngine->RegisterObjectBehaviour("Pixmap", asBEHAVE_CONSTRUCT, "void f(Pixmap &in)", asFUNCTIONPR(Factory, (XPixmap&, XPixmap*), void), asCALL_CDECL_OBJLAST); AS_ASSERT
-	r = scriptEngine->RegisterObjectBehaviour("Pixmap", asBEHAVE_CONSTRUCT, "void f(const int, const int)", asFUNCTIONPR(Factory, (const int, const int, XPixmap*), void), asCALL_CDECL_OBJLAST); AS_ASSERT
-	r = scriptEngine->RegisterObjectBehaviour("Pixmap", asBEHAVE_CONSTRUCT, "void f(const int, const int, const array<Vector4> &in)", asFUNCTIONPR(Factory, (const int, const int, XScriptArray&, XPixmap*), void), asCALL_CDECL_OBJLAST); AS_ASSERT
-
-	r = scriptEngine->RegisterObjectMethod("Pixmap", "void exportToFile(const string &in) const", asMETHOD(XPixmap, exportToFile), asCALL_THISCALL);
-
-	return r;
-}
-
 XPixmap::XPixmap() :
 	m_width(0),
 	m_height(0),
@@ -40,25 +25,6 @@ XPixmap::XPixmap(const int width, const int height, const Vector4 *pixels) :
 	if(width >= 0 && height >= 0) {
 		m_data = new Vector4[width*height];
 		memcpy(m_data, pixels, width*height*sizeof(Vector4));
-	}else{
-		m_data = 0;
-	}
-}
-
-XPixmap::XPixmap(const int width, const int height, const XScriptArray &pixels) :
-	m_width(width),
-	m_height(height)
-{
-	// Copy pixels
-	if(width >= 0 && height >= 0) {
-		m_data = new Vector4[width*height];
-		int i = 0;
-		for(int y = 0; y < height; y++) {
-			for(int x = 0; x < width; x++) {
-				m_data[i] = *(Vector4*)pixels.At(i);
-				i++;
-			}
-		}
 	}else{
 		m_data = 0;
 	}

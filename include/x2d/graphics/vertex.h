@@ -39,7 +39,6 @@ class XDAPI XVertexFormat
 	friend class XVertex;
 	friend class XBatch;
 	friend class XVertexBuffer;
-	AS_DECL_POD
 public:
 	XVertexFormat();
 	XVertexFormat(const XVertexFormat &other);
@@ -53,7 +52,7 @@ public:
 	uint getAttributeOffset(const XVertexAttribute attrib) const;
 	
 	XVertex *createVertices(const int count) const;
-	XScriptArray *createVerticesAS(const int count) const;
+	//XScriptArray *createVerticesAS(const int count) const;
 	
 	XVertexFormat &operator=(const XVertexFormat &other);
 	bool operator==(const XVertexFormat &other);
@@ -92,7 +91,6 @@ private:
 **********************************************************************/
 class XDAPI XVertex
 {
-	AS_DECL_VALUE
 public:
 	XVertex();
 	XVertex(const XVertex &other);

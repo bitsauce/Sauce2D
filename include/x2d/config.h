@@ -58,7 +58,8 @@
 	#include <sstream>
 	#include <thread>
 	#include <mutex>
-#elif X2D_LINUX
+	#include <assert.h>
+#elif X2D_UNIX
 	#include <sys/socket.h>
 	#include <netinet/in.h>
 	#include <fcntl.h>
@@ -155,74 +156,6 @@ namespace util
 }
 
 /*********************************************************************
-**	AngelScript header												**
-**********************************************************************/
-#include <angelscript.h>
-
-/*********************************************************************
-**	A class register for automatic class-to-script registration		**
-**********************************************************************/
-class ClassRegister
-{
-public:
-    typedef int (*RegisterScriptClassFunc)(asIScriptEngine*);
-    typedef int (*DeclareScriptClassFunc)(asIScriptEngine*);
-
-	static int Register(asIScriptEngine *scriptEngine)
-    {
-		// Error value
-		int i = 0;
-		
-		// Register all script classes
-		for(list<DeclareScriptClassFunc>::iterator itr = classesToDeclare().begin(); itr != classesToDeclare().end(); ++itr)
-		{
-			if((i = (*itr)(scriptEngine)) < 0)
-			{
-				// An error occured while declaring a class
-				return i;
-			}
-		}
-
-		// Register all script classes
-		for(list<RegisterScriptClassFunc>::iterator itr = classesToRegister().begin(); itr != classesToRegister().end(); ++itr)
-		{
-			if((i = (*itr)(scriptEngine)) < 0)
-			{
-				// An error occured while registering a class
-				return i;
-			}
-		}
-		return i;
-    }
-
-    struct Registerer
-    {
-        explicit Registerer(DeclareScriptClassFunc declFunc, RegisterScriptClassFunc regFunc)
-        {
-			classesToDeclare().push_back(declFunc);
-			classesToRegister().push_back(regFunc);
-        }
-
-	private:
-		// Don't allow copying of registrars
-		Registerer(const Registerer &) {}
-    };
-
-private:
-    static list<DeclareScriptClassFunc> &classesToDeclare()
-	{
-		static list<DeclareScriptClassFunc> lst;
-		return lst;
-	}
-
-    static list<RegisterScriptClassFunc> &classesToRegister()
-	{
-		static list<RegisterScriptClassFunc> lst;
-		return lst;
-	}
-};
-
-/*********************************************************************
 **	Simple reference counter										**
 **********************************************************************/
 class RefCounter
@@ -240,12 +173,12 @@ public:
 
 	void add()
 	{
-		asAtomicInc(refCount);
+		++refCount;
 	}
 
 	int release()
 	{
-		return asAtomicDec(refCount);
+		return --refCount;
 	}
 
 	int get() const
@@ -256,115 +189,6 @@ public:
 private:
 	int refCount;
 };
-
-/*********************************************************************
-**	AngelScript macros												**
-**********************************************************************/
-
-#ifdef X2D_DEBUG
-#include <assert.h>
-#define AS_ASSERT assert(r >= 0);
-#else
-#define AS_ASSERT if(r < 0) return r;
-#endif
-
-#define AS_THROW(msg, ret)								\
-	asIScriptContext *ctx = asGetActiveContext();		\
-	if(ctx) {											\
-		ctx->SetException(msg);							\
-	}else{												\
-		throw XException(X2D_RUNTIME_EXCEPTION, msg);	\
-	} return ret
-
-#define AS_DECL_REF																		\
-	private:																			\
-	RefCounter refCounter;																\
-	static ClassRegister::Registerer s_basereg;											\
-	static int Declare(asIScriptEngine *scriptEngine);									\
-	static int Register(asIScriptEngine *scriptEngine);									\
-	static int s_typeId;																\
-	public:																				\
-	virtual void addRef() { refCounter.add(); }											\
-	virtual void release() { if(refCounter.release() == 0) delete this; }				\
-	static int GetTypeId() { return s_typeId; }
-
-#define AS_REG_REF(clazz, name)														    \
-	ClassRegister::Registerer clazz::s_basereg(&clazz::Declare, &clazz::Register);		\
-	int clazz::s_typeId = 0;															\
-	int clazz::Declare(asIScriptEngine *scriptEngine)									\
-	{																					\
-		int r = s_typeId = scriptEngine->RegisterObjectType(name, 0, asOBJ_REF);		\
-						AS_ASSERT														\
-		r = scriptEngine->RegisterObjectBehaviour(name, asBEHAVE_ADDREF, "void f()",    \
-						asMETHOD(clazz, addRef), asCALL_THISCALL); AS_ASSERT			\
-		r = scriptEngine->RegisterObjectBehaviour(name, asBEHAVE_RELEASE, "void f()",   \
-						asMETHOD(clazz, release), asCALL_THISCALL); AS_ASSERT			\
-		return r;																		\
-	}
-
-#define AS_DECL_POD																		\
-	private:																			\
-	static ClassRegister::Registerer s_basereg;											\
-	static int Declare(asIScriptEngine *scriptEngine);									\
-	static int Register(asIScriptEngine *scriptEngine);									\
-	static int s_typeId;																\
-	public:																				\
-	static int GetTypeId() { return s_typeId; }
-
-#define AS_REG_POD(clazz, name)															\
-	ClassRegister::Registerer clazz::s_basereg(&clazz::Declare, &clazz::Register);		\
-	int clazz::s_typeId = 0;															\
-	int clazz::Declare(asIScriptEngine *scriptEngine)									\
-	{																					\
-		int r = s_typeId = scriptEngine->RegisterObjectType(name, sizeof(clazz),		\
-						asOBJ_VALUE | asOBJ_POD | asOBJ_APP_CLASS_CDAK); AS_ASSERT		\
-		return r;																		\
-	}
-
-#define AS_DECL_VALUE																	\
-	private:																			\
-	static ClassRegister::Registerer s_basereg;											\
-	static int Declare(asIScriptEngine *scriptEngine);									\
-	static int Register(asIScriptEngine *scriptEngine);									\
-	static int s_typeId;																\
-	public:																				\
-	static int GetTypeId() { return s_typeId; }
-
-#define AS_REG_VALUE(clazz, name)														\
-	ClassRegister::Registerer clazz::s_basereg(&clazz::Declare, &clazz::Register);		\
-	int clazz::s_typeId = 0;															\
-	int clazz::Declare(asIScriptEngine *scriptEngine)									\
-	{																					\
-		int r = s_typeId = scriptEngine->RegisterObjectType(name, sizeof(clazz),		\
-						asOBJ_VALUE | asOBJ_APP_CLASS_CDAK); AS_ASSERT					\
-		r = scriptEngine->RegisterObjectBehaviour(name, asBEHAVE_CONSTRUCT, "void f()", \
-						asFUNCTION(Construct), asCALL_CDECL_OBJLAST); AS_ASSERT			\
-		r = scriptEngine->RegisterObjectBehaviour(name, asBEHAVE_CONSTRUCT,				\
-						"void f(const " name " &in)", asFUNCTION(CopyConstruct),		\
-						asCALL_CDECL_OBJLAST); AS_ASSERT								\
-		r = scriptEngine->RegisterObjectBehaviour(name, asBEHAVE_DESTRUCT, "void f()",  \
-						asFUNCTION(Destruct), asCALL_CDECL_OBJLAST); AS_ASSERT			\
-		r = scriptEngine->RegisterObjectMethod(name,									\
-						name " &opAssign(const "name" &in)", asMETHOD(clazz, operator=),\
-						asCALL_THISCALL); AS_ASSERT										\
-		return r;																		\
-	}
-
-#define AS_DECL_SINGLETON																\
-	private:																			\
-	static ClassRegister::Registerer s_basereg;											\
-	static int Declare(asIScriptEngine *scriptEngine);									\
-	static int Register(asIScriptEngine *scriptEngine);									\
-	public:
-
-#define AS_REG_SINGLETON(clazz)															\
-	ClassRegister::Registerer clazz::s_basereg(&clazz::Declare, &clazz::Register);		\
-	int clazz::Declare(asIScriptEngine *scriptEngine)									\
-	{																					\
-		int r = scriptEngine->RegisterObjectType(#clazz, 0, asOBJ_REF | asOBJ_NOHANDLE);\
-		AS_ASSERT																		\
-		return r;																		\
-	}
 
 #define TUPLE_CMP(a, b) \
 	if(a < b) return true; \

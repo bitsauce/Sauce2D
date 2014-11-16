@@ -18,8 +18,6 @@ class Recti;
 class XDAPI Rect
 {
 public:
-	AS_DECL_POD
-
 	Rect();
 	Rect(const Recti &r);
 	Rect(Vector2 pos, Vector2 size);
@@ -72,8 +70,6 @@ public:
 class XDAPI Recti
 {
 public:
-	AS_DECL_POD
-
 	Recti();
 	Recti(const Rect &r);
 	Recti(Vector2i pos, Vector2i size);

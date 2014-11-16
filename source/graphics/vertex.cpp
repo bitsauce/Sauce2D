@@ -14,36 +14,6 @@
 **	Vertex format													**
 **********************************************************************/
 
-AS_REG_POD(XVertexFormat, "VertexFormat")
-
-int XVertexFormat::Register(asIScriptEngine *scriptEngine)
-{
-	int r = 0;
-	
-	// Vertex attributes
-	r = scriptEngine->RegisterEnum("VertexAttribute"); AS_ASSERT
-	r = scriptEngine->RegisterEnumValue("VertexAttribute", "VERTEX_POSITION", VERTEX_POSITION); AS_ASSERT
-	r = scriptEngine->RegisterEnumValue("VertexAttribute", "VERTEX_COLOR", VERTEX_COLOR); AS_ASSERT
-	r = scriptEngine->RegisterEnumValue("VertexAttribute", "VERTEX_TEX_COORD", VERTEX_TEX_COORD); AS_ASSERT
-	//r = scriptEngine->RegisterEnumValue("VertexAttribute", "VERTEX_NORMAL", VERTEX_NORMAL); AS_ASSERT
-
-	// Data types
-	r = scriptEngine->RegisterEnum("DataType"); AS_ASSERT
-	r = scriptEngine->RegisterEnumValue("DataType", "FLOAT", XD_FLOAT); AS_ASSERT
-	r = scriptEngine->RegisterEnumValue("DataType", "UINT", XD_UINT); AS_ASSERT
-	r = scriptEngine->RegisterEnumValue("DataType", "INT", XD_INT); AS_ASSERT
-	r = scriptEngine->RegisterEnumValue("DataType", "USHORT", XD_USHORT); AS_ASSERT
-	r = scriptEngine->RegisterEnumValue("DataType", "SHORT", XD_SHORT); AS_ASSERT
-	r = scriptEngine->RegisterEnumValue("DataType", "UBYTE", XD_UBYTE); AS_ASSERT
-	r = scriptEngine->RegisterEnumValue("DataType", "BYTE", XD_BYTE); AS_ASSERT
-	
-	r = scriptEngine->RegisterObjectBehaviour("VertexFormat", asBEHAVE_CONSTRUCT, "void f()", asFUNCTION(Construct), asCALL_CDECL_OBJLAST); AS_ASSERT
-
-	r = scriptEngine->RegisterObjectMethod("VertexFormat", "void set(const VertexAttribute, const int, const DataType = FLOAT)", asMETHOD(XVertexFormat, set), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("VertexFormat", "array<Vertex> @createVertices(const int)", asMETHOD(XVertexFormat, createVerticesAS), asCALL_THISCALL); AS_ASSERT
-	return r;
-}
-
 XVertexFormat::XVertexFormat() :
 	m_vertexByteSize(0)
 {
@@ -130,16 +100,6 @@ XVertex *XVertexFormat::createVertices(const int count) const
 	return vertices;
 }
 
-XScriptArray *XVertexFormat::createVerticesAS(const int count) const
-{
-	XScriptArray *arr = CreateArray("Vertex", count);
-	for(int i = 0; i < count; i++)
-	{
-		((XVertex*)arr->At(i))->setFormat(*this);
-	}
-	return arr;
-}
-
 XVertexFormat &XVertexFormat::operator=(const XVertexFormat &other)
 {
 	for(int i = 0; i < VERTEX_ATTRIB_MAX; i++)
@@ -163,24 +123,6 @@ bool XVertexFormat::operator==(const XVertexFormat &other)
 /*********************************************************************
 **	Vertex															**
 **********************************************************************/
-
-AS_REG_VALUE(XVertex, "Vertex")
-
-int XVertex::Register(asIScriptEngine *scriptEngine)
-{
-	int r = 0;
-
-	r = scriptEngine->RegisterObjectMethod("Vertex", "void setFormat(const VertexFormat &in)", asMETHOD(XVertex, setFormat), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("Vertex", "void set4f(const VertexAttribute, const float v0, const float v1 = 0.0f, const float v2 = 0.0f, const float v3 = 0.0f)", asMETHOD(XVertex, set4f), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("Vertex", "void set4ui(const VertexAttribute, const uint v0, const uint v1 = 0, const uint v2 = 0, const uint v3 = 0)", asMETHOD(XVertex, set4ui), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("Vertex", "void set4i(const VertexAttribute, const int v0, const int v1 = 0, const int v2 = 0, const int v3 = 0)", asMETHOD(XVertex, set4i), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("Vertex", "void set4us(const VertexAttribute, const uint16 v0, const uint16 v1 = 0, const uint16 v2 = 0, const uint16 v3 = 0)", asMETHOD(XVertex, set4us), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("Vertex", "void set4s(const VertexAttribute, const int16 v0, const int16 v1 = 0, const int16 v2 = 0, const int16 v3 = 0)", asMETHOD(XVertex, set4s), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("Vertex", "void set4ub(const VertexAttribute, const uint8 v0, const uint8 v1 = 0, const uint8 v2 = 0, const uint8 v3 = 0)", asMETHOD(XVertex, set4ub), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("Vertex", "void set4b(const VertexAttribute, const int8 v0, const int8 v1 = 0, const int8 v2 = 0, const int8 v3 = 0)", asMETHOD(XVertex, set4b), asCALL_THISCALL); AS_ASSERT
-
-	return r;
-}
 
 XVertex::XVertex() :
 	m_data(0),

@@ -6,12 +6,9 @@
 class XDAPI XPixmap
 {
 public:
-	AS_DECL_POD
-
 	XPixmap();
 	XPixmap(const int width, const int height);
 	XPixmap(const int width, const int height, const Vector4 *pixels);
-	XPixmap(const int width, const int height, const XScriptArray &pixels);
 	XPixmap(const XPixmap& other);
 	~XPixmap();
 
@@ -34,12 +31,6 @@ private:
 	Vector4 *m_data;
 	int m_width;
 	int m_height;
-	
-	static void Factory(XPixmap &other, XPixmap *self) { new (self) XPixmap(other); }
-	static void Factory(const int width, const int height, XPixmap *self) { new (self) XPixmap(width, height); }
-	static void Factory(const int width, const int height, XScriptArray &arr, XPixmap *self) {
-		new (self) XPixmap(width, height, arr);
-	}
 };
 
 #endif // X2D_PIXMAP_H

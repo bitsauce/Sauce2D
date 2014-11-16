@@ -20,22 +20,6 @@
 #include <freetype/fttrigon.h>
 #include <freetype/ftsnames.h>
 
-AS_REG_REF(XFont, "Font")
-
-int XFont::Register(asIScriptEngine *scriptEngine)
-{
-	int r = 0;
-
-	r = scriptEngine->RegisterObjectBehaviour("Font", asBEHAVE_FACTORY, "Font @f(const string &in, const int)", asFUNCTIONPR(Factory, (string&, const uint), XFont*), asCALL_CDECL); AS_ASSERT
-
-	r = scriptEngine->RegisterObjectMethod("Font", "float getStringWidth(const string &in)", asMETHOD(XFont, getStringWidth), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("Font", "float getStringHeight(const string &in)", asMETHOD(XFont, getStringHeight), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("Font", "void setColor(const Vector4 &in)", asMETHOD(XFont, setColor), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("Font", "void draw(Batch @batch, const Vector2 &in, const string &in)", asMETHOD(XFont, draw), asCALL_THISCALL); AS_ASSERT
-
-	return r;
-}
-
 bool getFontFile(string &fontName)
 {
 	HKEY hkey;
@@ -110,9 +94,9 @@ XFont::XFont(const string &path, const uint size) :
 
 XFont::~XFont()
 {
-	if(m_atlas) {
-		m_atlas->release();
-	}
+	//if(m_atlas) {
+	//	m_atlas->release();
+	//}
 }
 
 void XFont::load(const string &filePath, const uint size)
@@ -296,7 +280,7 @@ void XFont::draw(XBatch *batch, const Vector2 &pos, const string &str)
 		currentPos.x += metrics.advance.x - metrics.bearing.x;
 	}
 	delete[] vertices;
-	batch->release();
+	//batch->release();
 }
 
 XFont *XFont::Factory(string &fontName, const uint size)

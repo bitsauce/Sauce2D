@@ -16,8 +16,6 @@ class XDAPI XBatch
 {
 	friend class OpenGL;
 public:
-	AS_DECL_REF
-
 	XBatch();
 	virtual ~XBatch();
 	
@@ -124,7 +122,7 @@ protected:
 	// Current batch state
 	State m_state;
 	
-	void addVerticesAS(XScriptArray *vertices, XScriptArray *indices);
+	//void addVerticesAS(XScriptArray *vertices, XScriptArray *indices);
 	static XBatch *Factory() { return new XBatch(); }
 };
 

@@ -6,8 +6,6 @@
 class XViewport
 {
 public:
-	AS_DECL_REF
-
 	XViewport(const Recti &view);
 	XViewport(const int x, const int y, const int w, const int h);
 

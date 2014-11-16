@@ -9,19 +9,6 @@
 
 #include <x2d/engine.h>
 
-AS_REG_SINGLETON(XTimer)
-
-int XTimer::Register(asIScriptEngine *scriptEngine)
-{
-	int r = 0;
-
-	// Timer
-	r = scriptEngine->RegisterObjectMethod("XTimer", "uint64 getTickCount() const", asMETHOD(XTimer, getTickCount), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectProperty("XTimer", "const int ticksPerSec", offsetof(XTimer, m_ticksPerSec)); AS_ASSERT
-	
-	return r;
-}
-
 XTimer::XTimer() :
 	m_ticksPerSec(CLOCKS_PER_SEC)
 {

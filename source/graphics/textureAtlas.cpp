@@ -14,25 +14,6 @@
 
 // TDOD: Add a border option to the texture atlas (usefull for fixing font bleeding)
 
-AS_REG_REF(XTextureAtlas, "TextureAtlas")
-
-int XTextureAtlas::Register(asIScriptEngine *scriptEngine)
-{
-	int r = 0;
-	
-	r = scriptEngine->RegisterObjectBehaviour("TextureAtlas", asBEHAVE_FACTORY, "TextureAtlas @f()", asFUNCTIONPR(Factory, (), XTextureAtlas*), asCALL_CDECL); AS_ASSERT
-	r = scriptEngine->RegisterObjectBehaviour("TextureAtlas", asBEHAVE_FACTORY, "TextureAtlas @f(array<Texture@>@, const int border = 1)", asFUNCTIONPR(Factory, (XScriptArray*, const int), XTextureAtlas*), asCALL_CDECL); AS_ASSERT
-	r = scriptEngine->RegisterObjectBehaviour("TextureAtlas", asBEHAVE_FACTORY, "TextureAtlas @f(array<Pixmap>@, const int border = 1)", asFUNCTIONPR(Factory, (XScriptArray*, const int), XTextureAtlas*), asCALL_CDECL); AS_ASSERT
-
-	r = scriptEngine->RegisterObjectMethod("TextureAtlas", "TextureRegion get(const int) const", asMETHODPR(XTextureAtlas, get, (const int) const, XTextureRegion), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("TextureAtlas", "TextureRegion get(const int, const Vector2 &in, const Vector2 &in) const", asMETHODPR(XTextureAtlas, get, (const int, const Vector2&, const Vector2&) const, XTextureRegion), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("TextureAtlas", "TextureRegion get(const int, const float, const float, const float, const float) const", asMETHODPR(XTextureAtlas, get, (const int, const float, const float, const float, const float) const, XTextureRegion), asCALL_THISCALL); AS_ASSERT
-	
-	r = scriptEngine->RegisterObjectMethod("TextureAtlas", "Texture @getTexture() const", asMETHOD(XTextureAtlas, getTexture), asCALL_THISCALL); AS_ASSERT
-	
-	return r;
-}
-
 XTextureAtlas::XTextureAtlas() :
 	m_border(1)
 {
@@ -65,7 +46,7 @@ XTextureAtlas::~XTextureAtlas()
 	for(vector<RectanglePacker::Rectangle>::iterator itr = m_result.rectangles.begin(); itr != m_result.rectangles.end(); ++itr) {
 		delete (AtlasPage*)(*itr).getData();
 	}
-	m_atlas->release();
+	//m_atlas->release();
 }
 
 void XTextureAtlas::init(const vector<XPixmap> &pixmaps)
@@ -93,7 +74,7 @@ void XTextureAtlas::init(const vector<XPixmap> &pixmaps)
 void XTextureAtlas::add(XTexture *texture)
 {
 	add(texture->getPixmap());
-	texture->release();
+	//texture->release();
 }
 
 void XTextureAtlas::add(const XPixmap &pixmap)
@@ -121,7 +102,7 @@ XTextureRegion XTextureAtlas::get(const int index, const Vector2 &uv0, const Vec
 	// TODO: Optimization: The texture regions can be precalculated in update() to save time
 	// Get texture region
 	const RectanglePacker::Rectangle &rect = m_result.rectangles[index];
-	m_atlas->addRef();
+	//m_atlas->addRef();
 	return XTextureRegion(m_atlas,
 		((rect.x+m_border) + (rect.width-m_border*2)*uv0.x)/ATLAS_SIZE, ((rect.y+m_border) + (rect.height-m_border*2)*uv0.y)/ATLAS_SIZE,
 		((rect.x+m_border) + (rect.width-m_border*2)*uv1.x)/ATLAS_SIZE, ((rect.y+m_border) + (rect.height-m_border*2)*uv1.y)/ATLAS_SIZE
@@ -135,7 +116,7 @@ XTextureRegion XTextureAtlas::get(const int index, const float u0, const float v
 
 XTexture *XTextureAtlas::getTexture() const
 {
-	m_atlas->addRef();
+	//m_atlas->addRef();
 	return m_atlas;
 }
 
@@ -169,32 +150,4 @@ void XTextureAtlas::update()
 	sort(m_result.rectangles.begin(), m_result.rectangles.end(), sortResult);
 
 	m_atlas->updatePixmap(XPixmap(ATLAS_SIZE, ATLAS_SIZE, (Vector4*)pixels));
-}
-
-XTextureAtlas *XTextureAtlas::Factory()
-{
-	return new XTextureAtlas();
-}
-
-XTextureAtlas *XTextureAtlas::Factory(XScriptArray *arr, const int border)
-{
-	XTextureAtlas *atlas = 0;
-	if(arr->GetElementTypeName() == "Texture")
-	{
-		vector<XTexture*> textures;
-		for(uint i = 0; i < arr->GetSize(); i++) {
-			textures.push_back(*(XTexture**)arr->At(i));
-		}
-		atlas = new XTextureAtlas(textures, border);
-	}else if(arr->GetElementTypeName() == "Pixmap")
-	{
-		vector<XPixmap> pixmaps;
-		for(uint i = 0; i < arr->GetSize(); i++) {
-			pixmaps.push_back(*(XPixmap*)arr->At(i));
-		}
-		atlas = new XTextureAtlas(pixmaps, border);
-	}
-
-	arr->Release();
-	return atlas;
 }

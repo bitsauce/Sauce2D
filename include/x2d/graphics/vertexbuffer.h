@@ -11,7 +11,6 @@ class XVertexBufferObject;
 class XDAPI XVertexBuffer
 {
 	friend class XBatch;
-	AS_DECL_VALUE
 public:
 	XVertexBuffer();
 	XVertexBuffer(const XVertexFormat &fmt);
@@ -20,14 +19,14 @@ public:
 
 	// Add vertices and indices to the batch
 	void addVertices(XVertex *vertices, int vcount, uint *indices, int icount);
-	void addVerticesAS(XScriptArray *vertices, XScriptArray *indices);
+	//void addVerticesAS(XScriptArray *vertices, XScriptArray *indices);
 	void modifyVertices(const int idx, XVertex *vertex, const int count);
-	void modifyVerticesAS(const int idx, XScriptArray *vertices);
+	//void modifyVerticesAS(const int idx, XScriptArray *vertices);
 
 	// Get vertex/vertex count
 	XVertexFormat getVertexFormat() const;
 	XVertex *getVertices(const int idx, const int count) const;
-	XScriptArray *getVerticesAS(const int idx, const int count) const;
+	//XScriptArray *getVerticesAS(const int idx, const int count) const;
 	char *getVertexData() const;
 	int getVertexCount() const;
 

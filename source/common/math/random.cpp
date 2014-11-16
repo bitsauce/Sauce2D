@@ -10,28 +10,6 @@
 
 #include <x2d/math.h>
 
-AS_REG_POD(XRandom, "Random")
-
-int XRandom::Register(asIScriptEngine *scriptEngine)
-{
-	int r = 0;
-	
-	r = scriptEngine->RegisterObjectBehaviour("Random", asBEHAVE_CONSTRUCT, "void f()", asFUNCTION(DefaultConstructor), asCALL_CDECL_OBJLAST); AS_ASSERT
-		
-	r = scriptEngine->RegisterObjectMethod("Random", "void setSeed(uint)", asMETHOD(XRandom, setSeed), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("Random", "double nextDouble()", asMETHODPR(XRandom, nextDouble, (), double), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("Random", "double nextDouble(double)", asMETHODPR(XRandom, nextDouble, (double), double), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("Random", "double nextDouble(double, double)", asMETHODPR(XRandom, nextDouble, (double, double), double), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("Random", "uint nextInt()", asMETHODPR(XRandom, nextInt, (), uint), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("Random", "uint nextInt(uint)", asMETHODPR(XRandom, nextInt, (uint), uint), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("Random", "uint nextInt(uint, uint)", asMETHODPR(XRandom, nextInt, (uint, uint), uint), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("Random", "double getDouble(uint = 0) const", asMETHOD(XRandom, getDouble), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("Random", "uint getInt(uint = 0) const", asMETHOD(XRandom, getInt), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("Random", "bool chance(uint, uint)", asMETHOD(XRandom, chance), asCALL_THISCALL); AS_ASSERT
-
-	return r;
-}
-
 void XRandom::setSeed(uint32_t seed)
 {
 	m_seed = seed;

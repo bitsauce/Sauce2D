@@ -10,8 +10,6 @@ class XDAPI XShape
 {
 	friend class XSprite;
 public:
-	AS_DECL_REF
-
 	XShape();
 	XShape(const Rect &rect);
 	XShape(const Vector2 &center, const float radius, const int vertCount = -1);
@@ -43,11 +41,6 @@ private:
 	int m_vertCount;
 	vector<uint> m_indices;
 	int m_index;
-	
-	static XShape *Factory() { return new XShape(); }
-	static XShape *Factory(const Rect& rect) { return new XShape(rect); }
-	static XShape *Factory(const Vector2& center, const float radius, const int vertCount) { return new XShape(center, radius, vertCount); }
-	static XShape *Factory(const XScriptArray& arr);
 };
 
 #endif // X2D_SHAPE_H

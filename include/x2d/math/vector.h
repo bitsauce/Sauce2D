@@ -17,8 +17,6 @@ class Vector4;
 class XDAPI Vector2
 {
 public:
-	AS_DECL_POD
-
 	// Constructor
     Vector2(const float xy = 0.0f);
     Vector2(const float d[2]);
@@ -70,8 +68,6 @@ public:
 class XDAPI Vector2i
 {
 public:
-	AS_DECL_POD
-
 	// Constructor
     Vector2i(int xy = 0.0f);
     Vector2i(int x, int y);
@@ -135,8 +131,6 @@ public:
 class XDAPI Vector3
 {
 public:
-	AS_DECL_POD
-
 	// Constructor
     Vector3(float xyz = 0.0f);
     Vector3(float x, float y, float z);
@@ -214,8 +208,6 @@ public:
 class XDAPI Vector4
 {
 public:
-	AS_DECL_POD
-
 	// Constructor
     Vector4(float xyzw = 0.0f);
     Vector4(float x, float y, float z, float w);

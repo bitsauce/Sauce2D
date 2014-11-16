@@ -10,23 +10,7 @@
 #include <x2d/engine.h>
 #include <x2d/audio.h>
 
-AS_REG_SINGLETON(XAudioManager)
-
 XAudioManager *XAudioManager::s_this = 0;
-
-int XAudioManager::Register(asIScriptEngine *scriptEngine)
-{
-	int r = 0;
-	
-	r = scriptEngine->RegisterObjectMethod("XAudioManager", "void set_position(const Vector2 &in)", asMETHOD(XAudioManager, setPosition), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("XAudioManager", "Vector2 get_position() const", asMETHOD(XAudioManager, getPosition), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("XAudioManager", "void set_velocity(const Vector2 &in)", asMETHOD(XAudioManager, setVelocity), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("XAudioManager", "Vector2 get_velocity() const", asMETHOD(XAudioManager, getVelocity), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("XAudioManager", "void set_orientation(const Vector3 &in)", asMETHOD(XAudioManager, setOrientation), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("XAudioManager", "Vector3 get_orientation() const", asMETHOD(XAudioManager, getOrientation), asCALL_THISCALL); AS_ASSERT
-
-	return r;
-}
 
 XAudioSource *XAudioManager::CreateSource(XAudioBuffer *buffer)
 {

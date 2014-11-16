@@ -12,11 +12,6 @@ class XSprite
 {
 	friend class XSpriteBatch;
 public:
-	AS_DECL_REF
-
-	/**
-	  * Constructor taking a texture for the sprite to use.
-	  */
 	XSprite(const XTextureRegion &region);
 	~XSprite();
 	

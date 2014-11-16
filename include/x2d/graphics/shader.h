@@ -8,8 +8,6 @@ class XTexture;
 class XDAPI XShader
 {
 public:
-	AS_DECL_REF
-
 	virtual ~XShader() {}
 	
 	virtual void setUniform1i(const string &name, const int v0) = 0;

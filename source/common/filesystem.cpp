@@ -11,23 +11,6 @@
 
 XFileSystem *XFileSystem::s_this = 0;
 
-AS_REG_SINGLETON(XFileSystem)
-
-int XFileSystem::Register(asIScriptEngine *scriptEngine)
-{
-	int r = 0;
-
-	r = scriptEngine->RegisterObjectMethod("XFileSystem", "bool fileExists(string &in) const", asMETHOD(XFileSystem, fileExists), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("XFileSystem", "array<string>@ listFiles(string &in, const string &in, const bool recursive = false) const", asMETHOD(XFileSystem, listFiles), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("XFileSystem", "array<string>@ listFolders(string &in, const string &in, const bool recursive = false) const", asMETHOD(XFileSystem, listFolders), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("XFileSystem", "bool remove(string &in)", asMETHOD(XFileSystem, remove), asCALL_THISCALL); AS_ASSERT
-	
-	r = scriptEngine->RegisterObjectMethod("XFileSystem", "string showSaveDialog() const", asMETHOD(XFileSystem, showSaveDialog), asCALL_THISCALL); AS_ASSERT
-	r = scriptEngine->RegisterObjectMethod("XFileSystem", "string showOpenDialog() const", asMETHOD(XFileSystem, showOpenDialog), asCALL_THISCALL); AS_ASSERT
-
-	return r;
-}
-
 bool XFileSystem::ReadFile(string path, string &content)
 {
 	util::toAbsoluteFilePath(path);

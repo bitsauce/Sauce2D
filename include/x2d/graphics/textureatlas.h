@@ -8,7 +8,6 @@
 
 class XTextureAtlas
 {
-	AS_DECL_REF
 public:
 	XTextureAtlas();
 	XTextureAtlas(vector<XTexture*> textures, const int border = 1);
@@ -62,9 +61,6 @@ private:
 	int m_size;
 	bool m_initialized;
 	int m_border;
-
-	static XTextureAtlas *Factory();
-	static XTextureAtlas *Factory(XScriptArray *arr, const int border);
 };
 
 #endif // X2D_TEXTURE_ATLAS_H
