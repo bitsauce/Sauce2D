@@ -15,7 +15,7 @@ public:
 	float getStringHeight(const string &str);
 	void setColor(const Vector4 &color);
 	void draw(XBatch *batch, const Vector2 &pos, const string &str);
-	//void renderToTexture(XTexture *texture);
+	XTexture *XFont::renderToTexture(const string &text, const uint padding = 2);
 
 	struct CharMetrics
 	{

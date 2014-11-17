@@ -295,3 +295,15 @@ void XFont::draw(XBatch *batch, const Vector2 &pos, const string &str)
 	delete[] vertices;
 	//batch->release();
 }
+
+XTexture *XFont::renderToTexture(const string &text, const uint padding)
+{
+	XTexture *texture = new XTexture(getStringWidth(text) + padding, getStringHeight(text) + padding);
+
+	XBatch batch;
+	setColor(Vector4(1.0f));
+	draw(&batch, Vector2(padding/2.0f, padding/2.0f), text);
+	batch.renderToTexture(texture);
+
+	return texture;
+}
