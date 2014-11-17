@@ -212,7 +212,7 @@ protected:
 };
 
 /*********************************************************************
-**	Input class														**
+**	Input class [static]											**
 **********************************************************************/
 
 // Mouse buttons
@@ -340,60 +340,82 @@ class XDAPI XInput
 	friend class XWindow;
 
 public:
-	XInput();
-	~XInput();
-
 	// Desktop cursor functions
-	void     setCursorPos(const Vector2i &pos);
-	Vector2i getCursorPos() const;
-	void     setCursorLimits(const Recti &area);
+	static void     setCursorPos(const Vector2i &pos);
+	static Vector2i getCursorPos();
+	static void     setCursorLimits(const Recti &area);
 
 	// Key state function
-	bool getKeyState(const XVirtualKey key) const;
+	static bool getKeyState(const XVirtualKey key);
 
 	// General position
-	Vector2 getPosition() const;
+	static Vector2 getPosition();
 
 	// Key binding
-	//void bind(const XVirtualKey key, asIScriptFunction *func);
-	void unbind(const XVirtualKey key);
-	void unbindAll();
-	void updateBindings();
-	void checkBindings();
+	static void bind(const XVirtualKey key, delegate<void()> *function);
+	static void unbind(const XVirtualKey key);
+	static void resetBindings();
+	static void updateBindings();
+	static void checkBindings();
 
 	// Keyboard listener
-	//void addKeyboardListener(asIScriptObject *object);
-	void charEvent(uint utf8char);
-	void keyPressed(const XVirtualKey key);
-	void keyReleased(const XVirtualKey key);
+	//static void addKeyboardListener(XKeyboardListener *object);
+	static void charEvent(uint utf8char);
+	static void keyPressed(const XVirtualKey key);
+	static void keyReleased(const XVirtualKey key);
 
 	// Mouse listener
-	//void addMouseListener(asIScriptObject *object);
-	void mouseClick(const XMouseButton btn);
-	void mouseScroll(const int dt);
+	//static void addMouseListener(XMouseListener *object);
+	//static void mouseClick(const XMouseButton btn); // This doesn't make any sence unless we specify a click-rectangle
+	static void mouseScroll(const int dt);
 
 	// Overloads
-	void setCursorPos(const int x, const int y) { setCursorPos(Vector2i(x, y)); }
-	void setCursorLimits(const int x, const int y, const int w, const int h) { setCursorLimits(Recti(x, y, w, h)); }
+	static void setCursorPos(const int x, const int y) { setCursorPos(Vector2i(x, y)); }
+	static void setCursorLimits(const int x, const int y, const int w, const int h) { setCursorLimits(Recti(x, y, w, h)); }
 
 private:
+
+	// Key bind
 	struct KeyBind
 	{
 		bool pressed;
-		//asIScriptFunction *function;
+		delegate<void()> function;
 	};
 
-	map<XVirtualKey, KeyBind> m_keyBindings;
-	//vector<asIScriptObject*> m_keyListeners;
+	// Keyboard listener
+	static map<XVirtualKey, KeyBind> s_keyBindings;
+	static vector<delegate<void()>> s_keyListeners;
 
-	//vector<asIScriptObject*> m_clickListeners;
-	map<XMouseButton, bool> m_mousePressed;
+	// Mouse listener
+	static map<XMouseButton, bool> s_mousePressed;
+	static vector<delegate<void()>> s_mouseListeners;
 
-	Vector2 m_position;
+	// Cursor position
+	static Vector2 s_position;
 };
 
 extern XVirtualKey fromWinKey(uchar key);
 extern uchar toWinKey(XVirtualKey key);
+
+/*********************************************************************
+**	Scene interface													**
+**********************************************************************/
+
+class XScene
+{
+	friend class XEngine;
+private:
+	virtual void showEvent() {}
+	virtual void hideEvent() {}
+
+	virtual void drawEvent() {}
+	virtual void updateEvent() {}
+
+	virtual void resizeEvent() {}
+	
+	//virtual void keyboardEvent() {}
+	//virtual void mouseEvent() {}
+};
 
 /*********************************************************************
 **	Profiler														**
@@ -457,79 +479,55 @@ private:
 **********************************************************************/
 class XDAPI XWindow
 {
-	SINGLETON_DECL(XWindow)
-
+	friend class XGraphics;
 public:
-	XWindow(XEngine *engine, XInput *input, XGraphics *graphics);
-	~XWindow();
-
-	void processEvents();
-	void processEvents(UINT Message, WPARAM wParam, LPARAM lParam);
-	void close();
-	void show();
+	static void processEvents();
+	static void processEvents(UINT Message, WPARAM wParam, LPARAM lParam);
+	static void close();
+	static void show();
 	
-	void enableFullscreen();
-	void disableFullscreen();
-	bool isFullscreen() const;
+	static void enableFullscreen();
+	static void disableFullscreen();
+	static bool isFullscreen();
 	//XScriptArray *getResolutionList() const;
 
-	void enableResize();
-	void disableResize();
-	bool hasFocus();
+	static void enableResize();
+	static void disableResize();
+	static bool hasFocus();
 	
 	// Window actions
-	void setPosition(const Vector2i &pos);
-	Vector2i getPosition() const;
-	void setSize(const Vector2i &size);
-	Vector2i getSize() const;
-	void minimize();
-	void maximize();
-	void restore();
-
-	// Vsync
-	void enableVsync();
-	void disableVsync();
-
-	static Vector2i GetSize();
+	static void setPosition(const Vector2i &pos);
+	static Vector2i getPosition();
+	static void setSize(const Vector2i &size);
+	static Vector2i getSize();
+	static void minimize();
+	static void maximize();
+	static void restore();
 
 private:
-
-	// Engine handle
-	XEngine *m_engine;
-
-	// Gfx handle
-	XGraphics *m_graphics;
-	XInput *m_input;
-	
 	// The window handle
-	HWND m_window;
+	static HWND s_window;
 
 	// The window device context
-    HDC m_deviceContext;
-
-	// The opengl rendering context
-	class GLcontext *m_glContext;
+	static HDC s_deviceContext;
 	
 	// The event message
-    MSG m_message;
-
-	// The previous update time
-	DWORD m_previousTime;
+	static MSG s_message;
 
 	// Cached list of resolutions
-	vector<Vector2i> m_resolutions;
+	static vector<Vector2i> s_resolutions;
 
 	// Window focus
-	bool m_focus;
+	static bool s_focus;
 
 	// Window size
-	Vector2i m_size;
+	static Vector2i s_size;
 
 	// Window fullscreen state
-	bool m_fullscreen;
+	static bool s_fullscreen;
 	
 	// Window procedure callback
-    static LRESULT CALLBACK OnEvent(HWND Handle, UINT Message, WPARAM wParam, LPARAM lParam);
+	static LRESULT CALLBACK OnEvent(HWND Handle, UINT Message, WPARAM wParam, LPARAM lParam);
 };
 
 /*********************************************************************
@@ -586,7 +584,7 @@ struct XDAPI XConfig
 	const char*		workDir;
 
 	// Game loop functions
-	VoidFunc		draw, update, main;
+	VoidFunc		draw, update, main, end;
 };
 
 /*********************************************************************
@@ -605,68 +603,54 @@ public:
 	int run();
 	
 	// Exit game
-	void exit();
+	static void exit();
+	static void pause() { s_paused = true; }
+	static void resume() { s_paused = false; }
 
 	// Exception
 	//virtual void exception(const xdRetCode) = 0;
 
-	// Platform string
-	string getPlatformString() const;
-
-	// Working directory
-	string getWorkingDirectory() const;
-
-	// Save directory
-	string getSaveDirectory() const;
-
 	// Scene
-	void pushScene(/*asIScriptObject *object*/);
-	void popScene();
+	static void pushScene(XScene *scene);
+	static void popScene();
 
 	// Exceptions
 	void exception(XRetCode errorCode, const char* message);
 
 	// Static functions
-	static bool IsEnabled(const XEngineFlag flag) { return (s_this->m_flags & flag) != 0; }
-	static string GetWorkingDirectory() { return s_this->m_workDir; }
-	static string GetSaveDirectory() { return s_this->m_saveDir; }
+	static bool isEnabled(const XEngineFlag flag) { return (s_flags & flag) != 0; }
+	static string getWorkingDirectory() { return s_workDir; }
+	static string getSaveDirectory() { return s_saveDir; }
 
 private:
-	int m_flags;
+	
+	// State
+	static bool s_initialized;
+	static bool s_paused;
+	static bool s_running;
+	static int s_flags;
 
-	string m_workDir;
-	string m_saveDir;
+	// System dirs
+	static string s_workDir;
+	static string s_saveDir;
 	
 	XFileSystem*	m_fileSystem;
 	XGraphics*		m_graphics;
 	XAudioManager*	m_audio;
-	XDebugger*		m_debugger;
 	XTimer*			m_timer;
 	XConsole*		m_console;
-	XWindow*		m_window;
 	XMath*			m_math;
-	XInput*			m_input;
 	XAssetManager*	m_assetManager;
 
 	// Game loop
 	void draw();
 	void update();
-	void pause() { m_paused = true; }
-	void resume() { m_paused = false; }
-	void close() { m_running = false; }
-	
-	// State
-	bool m_running;
-	bool m_paused;
-	bool m_initialized;
 
 	// Scene stack
-	//stack<asIScriptObject*> m_sceneStack;
+	static stack<XScene*> s_sceneStack;
 
 	// Game loop
-	VoidFunc m_mainFunc, m_drawFunc, m_updateFunc;
-
-	static XEngine *s_this;
+	VoidFunc m_mainFunc, m_drawFunc, m_updateFunc, m_endFunc;
 };
 
 XDAPI XEngine *CreateEngine();

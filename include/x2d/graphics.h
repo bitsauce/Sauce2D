@@ -19,7 +19,7 @@
 #include "graphics/viewport.h"
 
 /*********************************************************************
-**	Graphics														**
+**	Graphics class [static]											**
 **********************************************************************/
 
 class XTexture;
@@ -37,13 +37,7 @@ class XDAPI XGraphics
 	friend class XBatch;
 	friend class XWindow;
 
-	SINGLETON_DECL(XGraphics)
-
 public:
-	XGraphics();
-	~XGraphics();
-
-	void init(XWindow *window);
 
 	enum Feature
 	{
@@ -51,60 +45,58 @@ public:
 		FrameBufferObjects
 	};
 
-	// Rendering context
-	void createContext();
-	void destroyContext();
-
 	// Orthographic projection
-	void setOrthoProjection(const float l, const float r, const float b, const float t, const float n, const float f);
-	void getOrthoProjection(float &l, float &r, float &b, float &t, float &n, float &f);
+	static void setOrthoProjection(const float l, const float r, const float b, const float t, const float n, const float f);
+	static void getOrthoProjection(float &l, float &r, float &b, float &t, float &n, float &f);
 	
 	// Viewports
-	void setViewport(const Recti&);
-	void setViewport(const Vector2i&, Vector2i&);
-	void setViewport(const int, const int, const int, const int);
-	void getViewport(int &x, int &y, int &w, int &h);
+	static void setViewport(const Recti&);
+	static void setViewport(const Vector2i&, Vector2i&);
+	static void setViewport(const int, const int, const int, const int);
+	static void getViewport(int &x, int &y, int &w, int &h);
 
 	// Refresh rate
-	void setRefreshRate(const int hz);
-	int getRefreshRate() const;
+	static void setRefreshRate(const int hz);
+	static int getRefreshRate();
 	
 	// Vsync
-	void enableVsync();
-	void disableVsync();
+	static void enableVsync();
+	static void disableVsync();
 
 	// Wireframe
-	void enableWireframe();
-	void disableWireframe();
+	static void enableWireframe();
+	static void disableWireframe();
 
 	// Alpha blending
-	void enableAlphaBlending();
-	void disableAlphaBlending();
+	static void enableAlphaBlending();
+	static void disableAlphaBlending();
 
 	// Time step & fps
-	float getTimeStep() const;
-	float getFPS() const;
+	static float getTimeStep();
+	static float getFPS();
 
 	// Swap buffers
-	void swapBuffers();
+	static void swapBuffers();
 
-	static void SetOrthoProjection(const float l, const float r, const float b, const float t, const float n, const float f) { SINGLETON_OBJECT->setOrthoProjection(l, r, b, t, n, f); }
-	static void GetOrthoProjection(float &l, float &r, float &b, float &t, float &n, float &f) { SINGLETON_OBJECT->getOrthoProjection(l, r, b, t, n, f); }
-	static void SetViewport(const Recti &r) { SINGLETON_OBJECT->setViewport(r); }
-	static void GetViewport(int &x, int &y, int &w, int &h) { SINGLETON_OBJECT->getViewport(x, y, w, h); }
+	// Rendering
+	static void renderBatch(const XBatch &batch);
+	static bool isSupported(Feature feature);
 
 protected:
-	HGLRC m_context;
-	HDC m_deviceContext;
-	float m_currentOrtho[6];
-	int m_currentViewport[4];
+	// Init
+	static void init();
 
-	float m_framesPerSecond;
-	int m_refreshRate;
-	float m_timeStep;
+	// Rendering context
+	static void createContext();
+	static void destroyContext();
 
-	void renderBatch(const XBatch &batch);
-	bool isSupported(Feature feature);
+	static HGLRC s_context;
+	static float s_currentOrtho[6];
+	static int s_currentViewport[4];
+
+	static float s_framesPerSecond;
+	static int s_refreshRate;
+	static float s_timeStep;
 };
 
 #endif // X2D_GRAPHICS_H

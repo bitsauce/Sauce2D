@@ -82,14 +82,27 @@ inline int next_p2(int a)
 	return rval;
 }
 
-XFont::XFont(const string &path, const uint size) :
+XFont::XFont(string &fontName, const uint size) :
 	m_color(1.0f),
 	m_atlas(0),
 	m_size(0),
 	m_lineSize(0),
 	m_Msize(0)
 {
-	load(path, size);
+	// Check if we can find the XFont in the local directories
+	util::toAbsoluteFilePath(fontName);
+	if(!util::fileExists(fontName))
+	{
+		// Loop throught the registry to find the file by XFont name
+		if(!getFontFile(fontName))
+		{
+			LOG("Font '%s' not found!", fontName);
+			return;
+		}
+	}
+
+	// Load font
+	load(fontName, size);
 }
 
 XFont::~XFont()
@@ -281,20 +294,4 @@ void XFont::draw(XBatch *batch, const Vector2 &pos, const string &str)
 	}
 	delete[] vertices;
 	//batch->release();
-}
-
-XFont *XFont::Factory(string &fontName, const uint size)
-{
-	// Check if we can find the XFont in the local directories
-	util::toAbsoluteFilePath(fontName);
-	if(!util::fileExists(fontName))
-	{
-		// Loop throught the registry to find the file by XFont name
-		if(!getFontFile(fontName))
-		{
-			LOG("Font '%s' not found!", fontName);
-			return 0;
-		}
-	}
-	return new XFont(fontName, size);
 }

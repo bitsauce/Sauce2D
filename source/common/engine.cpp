@@ -15,8 +15,6 @@
 #define MAX_PATH 256
 #endif
 
-XEngine *XEngine::s_this = 0;
-
 XConfig::XConfig() :
 	flags(0),
 	workDir(""),
@@ -35,126 +33,73 @@ XEngine *CreateEngine()
 	return new XEngine();
 }
 
-XEngine::XEngine() :
-	m_debugger(0),
-	m_running(false),
-	m_paused(false),
-	m_initialized(false)
+bool XEngine::s_initialized = false;
+bool XEngine::s_paused = false;
+bool XEngine::s_running = false;
+int XEngine::s_flags = 0;
+stack<XScene*> XEngine::s_sceneStack;
+
+// System dirs
+string XEngine::s_workDir;
+string XEngine::s_saveDir;
+
+XEngine::XEngine()
 {
-	s_this = this;
 }
 
 XEngine::~XEngine()
 {
 	// Pop all scene objects
-	/*while(m_sceneStack.size() > 0)
+	while(s_sceneStack.size() > 0)
 	{
 		popScene();
-	}*/
+	}
 	
-	delete m_input;
 	delete m_fileSystem;
 	delete m_graphics;
 	delete m_audio;
 	delete m_timer;
-	delete m_window;
 	delete m_math;
 	delete m_assetManager;
 	delete m_console;
 }
 
-string XEngine::getWorkingDirectory() const
+void XEngine::pushScene(XScene *scene)
 {
-	return m_workDir;
-}
-
-string XEngine::getSaveDirectory() const
-{
-	return m_saveDir;
-}
-
-/*void XEngine::pushScene(Scene *scene)
-{
-	// Get previous scene
-	asIScriptObject *prevScene = m_sceneStack.size() > 0 ? m_sceneStack.top() : 0;
-
+	// Hide previous scene
+	XScene *prevScene = s_sceneStack.size() > 0 ? s_sceneStack.top() : 0;
 	if(prevScene)
 	{
-		// Call hide on previous scene
-		asIScriptFunction *hideFunc = prevScene->GetObjectType()->GetMethodByDecl("void hide()");
-		asIScriptContext *ctx = XScriptEngine::CreateContext();
-		int r = ctx->Prepare(hideFunc); assert(r >= 0);
-		r = ctx->SetObject(prevScene); assert(r >= 0);
-		r = ctx->Execute(); AS_CHECK_RUNTIME_ERROR
-		r = ctx->Release();
+		prevScene->hideEvent();
 	}
 
 	// Add scene to stack
-	m_sceneStack.push(object);
+	s_sceneStack.push(scene);
 
-	// Clear garbage
-	int r = XScriptEngine::GetAngelScript()->GarbageCollect(asGC_FULL_CYCLE | asGC_DESTROY_GARBAGE); assert(r >= 0);
-
-	if(object)
+	// Show new scene
+	if(scene)
 	{
-		// Cache draw and update functions
-		asIObjectType *objectType = object->GetObjectType();
-		m_sceneDrawFunc = objectType->GetMethodByDecl("void draw()");
-		m_sceneUpdateFunc = objectType->GetMethodByDecl("void update()");
-
-		// Call show func
-		asIScriptFunction *showFunc = objectType->GetMethodByDecl("void show()");
-		asIScriptContext *ctx = XScriptEngine::CreateContext();
-		int r = ctx->Prepare(showFunc); assert(r >= 0);
-		r = ctx->SetObject(object); assert(r >= 0);
-		r = ctx->Execute(); AS_CHECK_RUNTIME_ERROR
-		r = ctx->Release();
+		scene->showEvent();
 	}
 }
 
 void XEngine::popScene()
 {
-	if(m_sceneStack.size() > 0)
+	// Make sure there is a scene to pop
+	if(s_sceneStack.size() == 0) return;
+
+	// Hide and pop topmost scene
+	XScene *scene = s_sceneStack.top();
+	scene->hideEvent();
+	s_sceneStack.pop();
+
+	// Show next scene
+	XScene *nextScene = s_sceneStack.size() > 0 ? s_sceneStack.top() : 0;
+	if(nextScene)
 	{
-		// Get topmost scene
-		asIScriptObject *object = m_sceneStack.top();
-
-		// Call hide func on scene
-		asIScriptFunction *hideFunc = object->GetObjectType()->GetMethodByDecl("void hide()");
-		asIScriptContext *ctx = XScriptEngine::CreateContext();
-		int r = ctx->Prepare(hideFunc); assert(r >= 0);
-		r = ctx->SetObject(object); assert(r >= 0);
-		r = ctx->Execute(); AS_CHECK_RUNTIME_ERROR
-		r = ctx->Release();
-
-		// Relese the ref held by the engine
-		if(object) object->Release();
-
-		// Pop scene
-		m_sceneStack.pop();
-		
-		// Clear garbage
-		r = XScriptEngine::GetAngelScript()->GarbageCollect(asGC_FULL_CYCLE | asGC_DESTROY_GARBAGE); assert(r >= 0);
-
-		// Get next scene
-		asIScriptObject *nextScene = m_sceneStack.size() > 0 ? m_sceneStack.top() : 0;
-		if(nextScene)
-		{
-			// Cache draw and update functions
-			asIObjectType *objectType = nextScene->GetObjectType();
-			m_sceneDrawFunc = objectType->GetMethodByDecl("void draw()");
-			m_sceneUpdateFunc = objectType->GetMethodByDecl("void update()");
-
-			// Call show on topmost scene
-			asIScriptFunction *showFunc = objectType->GetMethodByDecl("void show()");
-			asIScriptContext *ctx = XScriptEngine::CreateContext();
-			int r = ctx->Prepare(showFunc); assert(r >= 0);
-			r = ctx->SetObject(nextScene); assert(r >= 0);
-			r = ctx->Execute(); AS_CHECK_RUNTIME_ERROR
-			r = ctx->Release();
-		}
+		nextScene->showEvent();
 	}
-}*/
+}
 
 #include <direct.h> // for _getcw()
 #include <ShlObj.h>
@@ -198,19 +143,19 @@ int XEngine::init(const XConfig &config)
 	}
 
 	// Set platform string and program dir
-	m_flags = config.flags;
+	s_flags = config.flags;
 
-	m_workDir = config.workDir;
-	replace(m_workDir.begin(), m_workDir.end(), '\\', '/');
-	util::toDirectoryPath(m_workDir);
+	s_workDir = config.workDir;
+	replace(s_workDir.begin(), s_workDir.end(), '\\', '/');
+	util::toDirectoryPath(s_workDir);
 
-	m_saveDir = getSaveDir();
-	replace(m_saveDir.begin(), m_saveDir.end(), '\\', '/');
-	util::toDirectoryPath(m_saveDir);
+	s_saveDir = getSaveDir();
+	replace(s_saveDir.begin(), s_saveDir.end(), '\\', '/');
+	util::toDirectoryPath(s_saveDir);
 	
 	m_console = new XConsole();
 	m_fileSystem = new XFileSystem();
-	if(IsEnabled(XD_EXPORT_LOG))
+	if(isEnabled(XD_EXPORT_LOG))
 	{
 		m_console->m_output = new XFileWriter(util::getAbsoluteFilePath(":/console.log"));
 	}
@@ -219,17 +164,17 @@ int XEngine::init(const XConfig &config)
 	m_graphics = new XGraphics();
 	m_audio = new XAudioManager();
 	m_math = new XMath();
-	m_input = new XInput();
 	m_assetManager = new XAssetManager;
 
 	m_mainFunc = config.main;
 	m_drawFunc = config.draw;
 	m_updateFunc = config.update;
+	m_endFunc = config.end;
 
 	m_console->m_engine = this;
 
-	m_window = new XWindow(this, m_input, m_graphics);
-	m_graphics->init(m_window);
+	XWindow::show();
+	XGraphics::init();
 
 	if(!m_math)
 	{
@@ -260,7 +205,7 @@ int XEngine::init(const XConfig &config)
 		m_mainFunc();
 	
 		LOG("x2D Engine Initialized");
-		m_initialized = true;
+		s_initialized = true;
 	}
 	catch(XException e)
 	{
@@ -277,24 +222,38 @@ int XEngine::init(const XConfig &config)
 
 void XEngine::draw()
 {
-	m_drawFunc();
+	if(s_sceneStack.size() > 0)
+	{
+		s_sceneStack.top()->drawEvent(); // TODO: The current scene can be cached to avoid redundant top() calls
+	}
+	else
+	{
+		m_drawFunc();
+	}
 	m_graphics->swapBuffers();
 }
 
 void XEngine::update()
 {
-	m_input->checkBindings();
-	m_updateFunc();
+	XInput::checkBindings();
+	if(s_sceneStack.size() > 0)
+	{
+		s_sceneStack.top()->updateEvent();
+	}
+	else
+	{
+		m_updateFunc();
+	}
 }
 
 void XEngine::exit()
 {
-	m_running = false;
+	s_running = false;
 }
 
 int XEngine::run()
 {
-	assert(m_initialized);
+	assert(s_initialized);
 
 	try
 	{
@@ -308,10 +267,10 @@ int XEngine::run()
 		float fpsSamples[numFpsSamples];
 		int currFpsSample = 0;
 
-		m_running = true;
+		s_running = true;
 
 		// Game loop
-		while(m_running)
+		while(s_running)
 		{
 			// Step begin
 			/*if(m_debugger)
@@ -320,10 +279,10 @@ int XEngine::run()
 			}*/
 
 			// Process game events
-			m_window->processEvents();
+			XWindow::processEvents();
 
 			// Check if game is paused or out of focus
-			if(m_paused)// || !m_focus)
+			if(s_paused || !XWindow::hasFocus())
 				continue;
 
 			// Calculate time delta
@@ -337,11 +296,11 @@ int XEngine::run()
 		
 			// Apply time delta to acc
 			acc += deltaTime;
-			while(acc >= m_graphics->m_timeStep)
+			while(acc >= XGraphics::s_timeStep)
 			{
 				// Update the game
 				update();
-				acc -= m_graphics->m_timeStep;
+				acc -= XGraphics::s_timeStep;
 			}
 
 			// Draw the game
@@ -357,7 +316,7 @@ int XEngine::run()
 			{
 				float fps = 0.0f;
 				for(int i = 0; i < numFpsSamples; i++) fps += fpsSamples[i];
-				m_graphics->m_framesPerSecond = (float)int(fps/numFpsSamples);
+				XGraphics::s_framesPerSecond = (float)int(fps/numFpsSamples);
 				currFpsSample = 0;
 			}
 		}
@@ -374,6 +333,8 @@ int XEngine::run()
 	}
 
 	LOG("Exiting x2D Engine...");
+
+	m_endFunc();
 
 	// Return OK
 	return X2D_OK;

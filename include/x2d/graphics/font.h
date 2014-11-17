@@ -5,16 +5,17 @@
 
 class XTextureAtlas;
 
-class XFont
+class XDAPI XFont
 {
 public:
-	XFont(const string &path, const uint size);
+	XFont(string &fontName, const uint size);
 	~XFont();
 
 	float getStringWidth(const string &str);
 	float getStringHeight(const string &str);
 	void setColor(const Vector4 &color);
 	void draw(XBatch *batch, const Vector2 &pos, const string &str);
+	//void renderToTexture(XTexture *texture);
 
 	struct CharMetrics
 	{
@@ -53,8 +54,6 @@ private:
 
 	// Font character metrics
 	vector<CharMetrics> m_metrics;
-
-	static XFont *Factory(string &fontName, const uint size);
 };
 
 #endif // X2D_FONT_H

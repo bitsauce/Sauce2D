@@ -111,11 +111,6 @@ void XBatch::addVertices(XVertex *vertices, int vcount, uint *indices, int icoun
 	//vertex.position = m_matrixStack.top() * Vector4(vertex.position.x, vertex.position.y, 0.0f, 1.0f);
 }
 
-void XBatch::draw()
-{
-	XGraphics::s_this->renderBatch(*this);
-}
-
 void XBatch::clear()
 {
 	m_projMatrix.identity();
@@ -136,7 +131,7 @@ void XBatch::renderToTexture(XTexture *texture)
 		}
 
 		m_fbo->bind(texture);
-		draw();
+		XGraphics::renderBatch(*this);
 		m_fbo->unbind();
 		//texture->release();
 	}

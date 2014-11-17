@@ -103,10 +103,10 @@ string util::asciiToStr(const uchar value)
 string util::getAbsoluteFilePath(const string &path)
 {
 	if(path.substr(0, 2) == ":/") {
-		return XEngine::GetWorkingDirectory() + path.substr(2, string::npos);
+		return XEngine::getWorkingDirectory() + path.substr(2, string::npos);
 	}
 	if(path.substr(0, 7) == "saves:/") {
-		return XEngine::GetSaveDirectory() + path.substr(7, string::npos);
+		return XEngine::getSaveDirectory() + path.substr(7, string::npos);
 	}
 	return path;
 }

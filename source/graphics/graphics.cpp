@@ -10,8 +10,6 @@
 #include <x2d/engine.h>
 #include <x2d/graphics.h>
 
-XGraphics *XGraphics::s_this = 0;
-
 uint QUAD_INDICES[6] = {
 	0, 3, 2, 0, 2, 1
 };
@@ -32,40 +30,40 @@ Vector2 QUAD_TEXCOORD[4] = {
 
 XVertexFormat XVertexFormat::s_vct;
 
-XGraphics::XGraphics() :
-	m_framesPerSecond(0.0f)
-{
-	setRefreshRate(60);
 
-	XVertexFormat::s_vct.set(VERTEX_POSITION, 2);
-	XVertexFormat::s_vct.set(VERTEX_COLOR, 4, XD_UBYTE);
-	XVertexFormat::s_vct.set(VERTEX_TEX_COORD, 2);
-}
+
+HGLRC XGraphics::s_context = 0;
+float XGraphics::s_currentOrtho[6];
+int XGraphics::s_currentViewport[4];
+	
+float XGraphics::s_framesPerSecond = 0.0f;
+int XGraphics::s_refreshRate;
+float XGraphics::s_timeStep;
 
 void XGraphics::setRefreshRate(const int hz)
 {
 	if(hz == 0)
 	{
-		LOG("appSetRefreshRate() refresh rate cannot be 0");
+		LOG("XGraphics::setRefreshRate() refresh rate cannot be 0");
 		return;
 	}
-	m_timeStep = 1.0f/hz;
-	m_refreshRate = hz;
+	s_timeStep = 1.0f/hz;
+	s_refreshRate = hz;
 }
 
-int XGraphics::getRefreshRate() const
+int XGraphics::getRefreshRate()
 {
-	return m_refreshRate;
+	return s_refreshRate;
 }
 
-float XGraphics::getTimeStep() const
+float XGraphics::getTimeStep()
 {
-	return m_timeStep;
+	return s_timeStep;
 }
 
-float XGraphics::getFPS() const
+float XGraphics::getFPS()
 {
-	return m_framesPerSecond;
+	return s_framesPerSecond;
 }
 
 /*
@@ -89,33 +87,44 @@ bool XGraphics::IsSupported(Feature feature)
 	return s_this->isSupported(feature);
 }*/
 
-
-void XGraphics::init(XWindow *window)
+void XGraphics::init()
 {
 	// Init glew
 	//glewExperimental = true;
-	if(glewInit() != GLEW_OK)
+	if(glewInit() != GLEW_OK) {
 		assert("GLEW did not initialize!");
+	}
 
-	// TODO: Do better extention handling. LOG will crash because xdEngine isn't initialized
 	// Check if non-power of two textures are supported
-	//if(!GLEW_ARB_texture_non_power_of_two)
-	//	LOG("WARNING: NPOT is not supported on this card!");
+	if(!GLEW_ARB_texture_non_power_of_two) {
+		LOG("WARNING: NPOT is not supported on this card!");
+	}
 
 	// Check if FBOs are supported
-	//if(!GLEW_EXT_framebuffer_object)
-	//	LOG("WARNING: FBO is not supported on this card!");
-
+	if(!GLEW_EXT_framebuffer_object) {
+		LOG("WARNING: FBO is not supported on this card!");
+	}
 
 	// Check if PBOs are supported
-	//if(!GLEW_EXT_pixel_buffer_object)
-	//	LOG("WARNING: PBO is not supported on this card!");
+	if(!GLEW_EXT_pixel_buffer_object) {
+		LOG("WARNING: PBO is not supported on this card!");
+	}
 
 	// Check if (changing) v-sync (state) is supported
-	//if(!WGLEW_EXT_swap_control)
-	//	LOG("WARNING: VSYNC is not supported on this card!");
+	if(!WGLEW_EXT_swap_control) {
+		LOG("WARNING: VSYNC is not supported on this card!");
+	}
+	
+	// Setup default vertex format
+	XVertexFormat::s_vct.set(VERTEX_POSITION, 2);
+	XVertexFormat::s_vct.set(VERTEX_COLOR, 4, XD_UBYTE);
+	XVertexFormat::s_vct.set(VERTEX_TEX_COORD, 2);
 
-	Vector2i size = window->getSize();
+	// Set refresh rate
+	setRefreshRate(60);
+
+	// Setup viewport
+	Vector2i size = XWindow::getSize();
 	setOrthoProjection(0.0f, (float)size.x, (float)size.y, 0.0f, -1.0f, 1.0f);
 	setViewport(Recti(0, 0, size.x, size.y));
 
@@ -138,37 +147,33 @@ void XGraphics::init(XWindow *window)
 	glPointSize(4);
 }
 
-XGraphics::~XGraphics()
-{
-}
-
 void XGraphics::createContext()
 {
 	// Create XGraphics rendering context
-	m_context = wglCreateContext(m_deviceContext);
+	s_context = wglCreateContext(XWindow::s_deviceContext);
 
 	// Make context current
-	wglMakeCurrent(m_deviceContext, m_context);
+	wglMakeCurrent(XWindow::s_deviceContext, s_context);
 }
 
 void XGraphics::destroyContext()
 {
-	if(m_context)
+	if(s_context)
 	{
 		// Make the rendering context not current
 		wglMakeCurrent(NULL, NULL);
 
 		// Delete the XGraphics rendering context
-		wglDeleteContext(m_context);
+		wglDeleteContext(s_context);
 
 		// Set to null
-		m_context = NULL;
+		s_context = NULL;
 	}
 }
 
 void XGraphics::swapBuffers()
 {
-	SwapBuffers(m_deviceContext);
+	SwapBuffers(XWindow::s_deviceContext);
 	glClear(GL_COLOR_BUFFER_BIT);
 }
 
@@ -178,18 +183,18 @@ void XGraphics::setViewport(const Recti &rect)
 	glViewport(rect.getX(), rect.getY(), rect.getWidth(), rect.getHeight());
 
 	// Store viewport
-	m_currentViewport[0] = rect.getX();
-	m_currentViewport[1] = rect.getY();
-	m_currentViewport[2] = rect.getWidth();
-	m_currentViewport[3] = rect.getHeight();
+	s_currentViewport[0] = rect.getX();
+	s_currentViewport[1] = rect.getY();
+	s_currentViewport[2] = rect.getWidth();
+	s_currentViewport[3] = rect.getHeight();
 }
 
 void XGraphics::getViewport(int &x, int &y, int &w, int &h)
 {
-	x = m_currentViewport[0];
-	y = m_currentViewport[1];
-	w = m_currentViewport[2];
-	h = m_currentViewport[3];
+	x = s_currentViewport[0];
+	y = s_currentViewport[1];
+	w = s_currentViewport[2];
+	h = s_currentViewport[3];
 }
 
 void XGraphics::setOrthoProjection(const float l, const float r, const float b, const float t, const float n, const float f)
@@ -202,23 +207,23 @@ void XGraphics::setOrthoProjection(const float l, const float r, const float b, 
 	glLoadIdentity();
 
 	// Store orthographic projection
-	m_currentOrtho[0] = l;
-	m_currentOrtho[1] = r;
-	m_currentOrtho[2] = b;
-	m_currentOrtho[3] = t;
-	m_currentOrtho[4] = n;
-	m_currentOrtho[5] = f;
+	s_currentOrtho[0] = l;
+	s_currentOrtho[1] = r;
+	s_currentOrtho[2] = b;
+	s_currentOrtho[3] = t;
+	s_currentOrtho[4] = n;
+	s_currentOrtho[5] = f;
 }
 
 void XGraphics::getOrthoProjection(float &l, float &r, float &b, float &t, float &n, float &f)
 {
 	// Get orthographic projection
-	l = m_currentOrtho[0];
-	r = m_currentOrtho[1];
-	b = m_currentOrtho[2];
-	t = m_currentOrtho[3];
-	n = m_currentOrtho[4];
-	f = m_currentOrtho[5];
+	l = s_currentOrtho[0];
+	r = s_currentOrtho[1];
+	b = s_currentOrtho[2];
+	t = s_currentOrtho[3];
+	n = s_currentOrtho[4];
+	f = s_currentOrtho[5];
 }
 
 const int INT_SIZE = sizeof(GLint);

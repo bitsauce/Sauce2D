@@ -10,6 +10,13 @@
 #include <x2d/engine.h>
 
 // TODO: Refactor. This class is a mess
+map<XVirtualKey, XInput::KeyBind> XInput::s_keyBindings;
+vector<delegate<void()>> XInput::s_keyListeners;
+	
+map<XMouseButton, bool> XInput::s_mousePressed;
+vector<delegate<void()>> XInput::s_mouseListeners;
+
+Vector2 XInput::s_position;
 
 XVirtualKey fromWinKey(uchar vk)
 {
@@ -131,14 +138,14 @@ uchar toWinKey(XVirtualKey key)
 	return vk;
 }
 
-XInput::XInput()
+/*XInput::init()
 {
-	m_mousePressed[XD_MOUSE_LEFT] = m_mousePressed[XD_MOUSE_RIGHT] = m_mousePressed[XD_MOUSE_MIDDLE] = true;
+	s_mousePressed[XD_MOUSE_LEFT] = s_mousePressed[XD_MOUSE_RIGHT] = s_mousePressed[XD_MOUSE_MIDDLE] = true;
 }
 
 XInput::~XInput()
 {
-	/*for(map<XVirtualKey, KeyBind>::iterator itr = m_keyBindings.begin(); itr != m_keyBindings.end(); ++itr)
+	for(map<XVirtualKey, KeyBind>::iterator itr = m_keyBindings.begin(); itr != m_keyBindings.end(); ++itr)
 	{
 		// Release all function handles
 		itr->second.function->Release();
@@ -154,45 +161,32 @@ XInput::~XInput()
 	{
 		// Release mouse listeners
 		(*itr)->Release();
-	}*/
-}
-
-/*void XInput::bind(const XVirtualKey key, asIScriptFunction *function)
-{
-	// If key is already bound, release its function handle
-	if(m_keyBindings.find(key) != m_keyBindings.end())
-	{
-		// Relese function ref
-		m_keyBindings[key].function->Release();
-
-		// If there is no function
-		if(!function)
-		{
-			// Remove key binding
-			m_keyBindings.erase(key);
-		}
 	}
+}*/
 
+void XInput::bind(const XVirtualKey key, delegate<void()> *function)
+{
 	if(function)
 	{
 		// Bind function to key
-		m_keyBindings[key].function = function;
-		m_keyBindings[key].pressed = false;
+		s_keyBindings[key].function = *function;
+		s_keyBindings[key].pressed = false;
 	}
-}*/
+	else if(s_keyBindings.find(key) != s_keyBindings.end())
+	{
+		// Remove key binding
+		s_keyBindings.erase(key);
+	}
+}
 
 void XInput::unbind(const XVirtualKey key)
 {
 	bind(key, 0);
 }
 
-void XInput::unbindAll()
+void XInput::resetBindings()
 {
-	// Release all function handles
-	for(map<XVirtualKey, KeyBind>::iterator itr = m_keyBindings.begin(); itr != m_keyBindings.end(); ++itr) {
-		//itr->second.function->Release();
-	}
-	m_keyBindings.clear();
+	s_keyBindings.clear();
 }
 
 /*void XInput::addKeyboardListener(asIScriptObject *object)
@@ -205,50 +199,17 @@ void XInput::unbindAll()
 
 void XInput::charEvent(uint utf8char)
 {
-	/*for(vector<asIScriptObject*>::iterator itr = m_keyListeners.begin(); itr != m_keyListeners.end(); ++itr)
-	{
-		asIObjectType *type = (*itr)->GetObjectType();
-		asIScriptFunction *func = type->GetMethodByDecl("void charEvent(uint)");
 
-		asIScriptContext *ctx = XScriptEngine::CreateContext();
-		int r = ctx->Prepare(func); assert(r >= 0);
-		r = ctx->SetObject(*itr); assert(r >= 0);
-		r = ctx->SetArgDWord(0, utf8char); assert(r >= 0);
-		r = ctx->Execute();
-		r = ctx->Release();
-	}*/
 }
 
 void XInput::keyPressed(const XVirtualKey key)
 {
-	/*for(vector<asIScriptObject*>::iterator itr = m_keyListeners.begin(); itr != m_keyListeners.end(); ++itr)
-	{
-		asIObjectType *type = (*itr)->GetObjectType();
-		asIScriptFunction *func = type->GetMethodByDecl("void keyPressed(VirtualKey)");
 
-		asIScriptContext *ctx = XScriptEngine::CreateContext();
-		int r = ctx->Prepare(func); assert(r >= 0);
-		r = ctx->SetObject(*itr); assert(r >= 0);
-		r = ctx->SetArgDWord(0, key); assert(r >= 0);
-		r = ctx->Execute();
-		r = ctx->Release();
-	}*/
 }
 
 void XInput::keyReleased(const XVirtualKey key)
 {
-	/*for(vector<asIScriptObject*>::iterator itr = m_keyListeners.begin(); itr != m_keyListeners.end(); ++itr)
-	{
-		asIObjectType *type = (*itr)->GetObjectType();
-		asIScriptFunction *func = type->GetMethodByDecl("void keyReleased(VirtualKey)");
 
-		asIScriptContext *ctx = XScriptEngine::CreateContext();
-		int r = ctx->Prepare(func); assert(r >= 0);
-		r = ctx->SetObject(*itr); assert(r >= 0);
-		r = ctx->SetArgDWord(0, key); assert(r >= 0);
-		r = ctx->Execute();
-		r = ctx->Release();
-	}*/
 }
 
 /*void XInput::addMouseListener(asIScriptObject *object)
@@ -259,42 +220,15 @@ void XInput::keyReleased(const XVirtualKey key)
 	}
 }*/
 
-void XInput::mouseClick(const XMouseButton btn)
-{
-	/*for(vector<asIScriptObject*>::iterator itr = m_clickListeners.begin(); itr != m_clickListeners.end(); ++itr)
-	{
-		asIObjectType *type = (*itr)->GetObjectType();
-		asIScriptFunction *func = type->GetMethodByDecl("void mouseClick(MouseButton)");
-
-		asIScriptContext *ctx = XScriptEngine::CreateContext();
-		int r = ctx->Prepare(func); assert(r >= 0);
-		r = ctx->SetObject(*itr); assert(r >= 0);
-		r = ctx->SetArgDWord(0, btn); assert(r >= 0);
-		r = ctx->Execute();
-		r = ctx->Release();
-	}*/
-}
-
 void XInput::mouseScroll(const int dt)
 {
-	/*for(vector<asIScriptObject*>::iterator itr = m_clickListeners.begin(); itr != m_clickListeners.end(); ++itr)
-	{
-		asIObjectType *type = (*itr)->GetObjectType();
-		asIScriptFunction *func = type->GetMethodByDecl("void mouseScroll(int)");
 
-		asIScriptContext *ctx = XScriptEngine::CreateContext();
-		int r = ctx->Prepare(func); assert(r >= 0);
-		r = ctx->SetObject(*itr); assert(r >= 0);
-		r = ctx->SetArgDWord(0, dt); assert(r >= 0);
-		r = ctx->Execute();
-		r = ctx->Release();
-	}*/
 }
 
 void XInput::checkBindings()
 {
 	// Iterate key bindings
-	for(map<XVirtualKey, KeyBind>::iterator itr = m_keyBindings.begin(); itr != m_keyBindings.end(); ++itr)
+	for(map<XVirtualKey, KeyBind>::iterator itr = s_keyBindings.begin(); itr != s_keyBindings.end(); ++itr)
 	{
 		KeyBind &key = itr->second;
 		if(getKeyState(itr->first))
@@ -302,7 +236,7 @@ void XInput::checkBindings()
 			if(!key.pressed)
 			{
 				// Key was pressed, call function
-				//XFuncCall(key.function).execute();
+				key.function();
 			}
 			key.pressed = true;
 		}
@@ -311,30 +245,9 @@ void XInput::checkBindings()
 			key.pressed = false;
 		}
 	}
-
-	// LMB
-	if(!getKeyState(XD_LMB) && m_mousePressed[XD_MOUSE_LEFT])
-	{
-		mouseClick(XD_MOUSE_LEFT);
-	}
-	m_mousePressed[XD_MOUSE_LEFT] = getKeyState(XD_LMB);
-	
-	// RMB
-	if(!getKeyState(XD_RMB) && m_mousePressed[XD_MOUSE_RIGHT])
-	{
-		mouseClick(XD_MOUSE_RIGHT);
-	}
-	m_mousePressed[XD_MOUSE_RIGHT] = getKeyState(XD_RMB);
-	
-	// WHEEL
-	if(!getKeyState(XD_WHEEL) && m_mousePressed[XD_MOUSE_MIDDLE])
-	{
-		mouseClick(XD_MOUSE_MIDDLE);
-	}
-	m_mousePressed[XD_MOUSE_MIDDLE] = getKeyState(XD_WHEEL);
 }
 
-Vector2i XInput::getCursorPos() const
+Vector2i XInput::getCursorPos()
 {
 	POINT p;
 	GetCursorPos(&p);
@@ -356,12 +269,12 @@ void XInput::setCursorLimits(const Recti &area)
 	ClipCursor(&rect);
 }
 
-Vector2 XInput::getPosition() const
+Vector2 XInput::getPosition()
 {
-	return m_position;
+	return s_position;
 }
 
-bool XInput::getKeyState(const XVirtualKey key) const
+bool XInput::getKeyState(const XVirtualKey key)
 {
 	return /*Window::hasFocus() &&*/ (GetKeyState(toWinKey(key)) & 0x80) != 0;
 }

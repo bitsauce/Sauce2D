@@ -53,7 +53,7 @@ void XConsole::call_log(const char *msg, va_list args)
 #endif
 	
 	// Append message to log file
-	if(XEngine::IsEnabled(XD_EXPORT_LOG))
+	if(XEngine::isEnabled(XD_EXPORT_LOG))
 	{
 		m_output->append(out);
 		m_output->append("\n");

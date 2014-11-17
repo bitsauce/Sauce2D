@@ -51,6 +51,7 @@
 	#include <cmath>
 	#include <assert.h>
 	#include <algorithm>
+	#include <functional>
 	#include <map>
 	#include <set>
 	#include <stack>
@@ -91,6 +92,7 @@ typedef unsigned int uint;
 typedef uintptr_t uintptr;
 typedef unsigned char uchar;
 typedef unsigned long ulong;
+#define delegate function
 
 /*********************************************************************
 **	Engine return codes												**

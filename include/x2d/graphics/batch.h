@@ -69,8 +69,7 @@ public:
 	// Render-to-texture
 	void renderToTexture(XTexture *texture);
 
-	// Draw/clear
-	virtual void draw();
+	// Clear
 	virtual void clear();
 	
 	struct State
