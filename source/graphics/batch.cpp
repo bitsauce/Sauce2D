@@ -132,7 +132,7 @@ void XBatch::renderToTexture(XTexture *texture)
 	{
 		if(!m_fbo)
 		{
-			m_fbo = XGraphics::CreateFrameBufferObject();
+			m_fbo = new XFrameBufferObject();
 		}
 
 		m_fbo->bind(texture);
@@ -142,6 +142,6 @@ void XBatch::renderToTexture(XTexture *texture)
 	}
 	else
 	{
-		LOG("Batch::renderToTexture(): Cannot render to 'null' texture.");
+		LOG("XBatch::renderToTexture(): Cannot render to 'null' texture.");
 	}
 }

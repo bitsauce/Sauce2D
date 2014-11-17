@@ -8,9 +8,16 @@ class XTexture;
 class XDAPI XFrameBufferObject
 {
 public:
+	XFrameBufferObject();
+	~XFrameBufferObject();
 
-	virtual void bind(XTexture *texture) = 0;
-	virtual void unbind() = 0;
+	void bind(XTexture *texture);
+	void unbind();
+
+private:
+	GLuint m_id;
+	float m_ortho[6];
+	int m_viewport[4];
 };
 
 #endif // X2D_FRAME_BUFFER_H

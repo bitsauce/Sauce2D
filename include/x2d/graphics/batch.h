@@ -14,7 +14,7 @@ class XVertexBuffer;
 **********************************************************************/
 class XDAPI XBatch
 {
-	friend class OpenGL;
+	friend class XGraphics;
 public:
 	XBatch();
 	virtual ~XBatch();

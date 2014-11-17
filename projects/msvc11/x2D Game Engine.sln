@@ -8,11 +8,6 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "x2d", "x2d.vcxproj", "{F3F2
 		{78B079BD-9FC7-4B9E-B4A6-96DA0F00248B} = {78B079BD-9FC7-4B9E-B4A6-96DA0F00248B}
 	EndProjectSection
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "x2D Game Engine", "..\..\platforms\win32\x2D Game Engine.vcxproj", "{B781FFBE-67AB-4B3D-92D7-9C9D89A36CC0}"
-	ProjectSection(ProjectDependencies) = postProject
-		{F3F25B49-2C6B-4FF0-98FB-47695DF70B8A} = {F3F25B49-2C6B-4FF0-98FB-47695DF70B8A}
-	EndProjectSection
-EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "freetype", "..\..\3rdparty\freetype\projects\msvc11\freetype.vcxproj", "{78B079BD-9FC7-4B9E-B4A6-96DA0F00248B}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "glew", "..\..\3rdparty\glew\projects\msvc11\glew.vcxproj", "{55AE3D72-7DE6-F19F-AEF2-9AE8CA26CF3D}"
@@ -51,14 +46,6 @@ Global
 		{F3F25B49-2C6B-4FF0-98FB-47695DF70B8A}.Release|Win32.ActiveCfg = Release|Win32
 		{F3F25B49-2C6B-4FF0-98FB-47695DF70B8A}.Release|Win32.Build.0 = Release|Win32
 		{F3F25B49-2C6B-4FF0-98FB-47695DF70B8A}.Release|x64.ActiveCfg = Release|Win32
-		{B781FFBE-67AB-4B3D-92D7-9C9D89A36CC0}.Debug|Android.ActiveCfg = Debug|Win32
-		{B781FFBE-67AB-4B3D-92D7-9C9D89A36CC0}.Debug|Win32.ActiveCfg = Debug|Win32
-		{B781FFBE-67AB-4B3D-92D7-9C9D89A36CC0}.Debug|Win32.Build.0 = Debug|Win32
-		{B781FFBE-67AB-4B3D-92D7-9C9D89A36CC0}.Debug|x64.ActiveCfg = Debug|Win32
-		{B781FFBE-67AB-4B3D-92D7-9C9D89A36CC0}.Release|Android.ActiveCfg = Release|Win32
-		{B781FFBE-67AB-4B3D-92D7-9C9D89A36CC0}.Release|Win32.ActiveCfg = Release|Win32
-		{B781FFBE-67AB-4B3D-92D7-9C9D89A36CC0}.Release|Win32.Build.0 = Release|Win32
-		{B781FFBE-67AB-4B3D-92D7-9C9D89A36CC0}.Release|x64.ActiveCfg = Release|Win32
 		{78B079BD-9FC7-4B9E-B4A6-96DA0F00248B}.Debug|Android.ActiveCfg = Debug|Win32
 		{78B079BD-9FC7-4B9E-B4A6-96DA0F00248B}.Debug|Win32.ActiveCfg = Debug|Win32
 		{78B079BD-9FC7-4B9E-B4A6-96DA0F00248B}.Debug|Win32.Build.0 = Debug|Win32

@@ -9,13 +9,15 @@
 
 #include <x2d/engine.h>
 
+SINGLETON_DEF(XConsole)
+
 bool XConsole::s_initialized = false;
-XConsole *XConsole::s_this = 0;
 
 XConsole::XConsole() :
 	m_engine(0), // Set by the engine
 	m_output(0)
 {
+	SINGLETON_ASSERT
 }
 
 XConsole::~XConsole()
@@ -45,7 +47,10 @@ void XConsole::call_log(const char *msg, va_list args)
 #endif
 
 	// System log
-	syslog(out);
+#ifdef X2D_WINDOWS
+	OutputDebugString(msg);
+	OutputDebugString("\n");
+#endif
 	
 	// Append message to log file
 	if(XEngine::IsEnabled(XD_EXPORT_LOG))

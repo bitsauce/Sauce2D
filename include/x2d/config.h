@@ -59,6 +59,10 @@
 	#include <thread>
 	#include <mutex>
 	#include <assert.h>
+	#include <fstream>
+	#include <sstream>
+	#include <GL/glew.h>
+	#include <GL/wglew.h>
 #elif X2D_UNIX
 	#include <sys/socket.h>
 	#include <netinet/in.h>
@@ -189,6 +193,23 @@ public:
 private:
 	int refCount;
 };
+
+/*********************************************************************
+**	Macros															**
+**********************************************************************/
+
+#define SINGLETON_DECL(clazz) \
+	private: \
+		static clazz *s_this;
+
+#define SINGLETON_DEF(clazz) \
+	clazz *clazz::s_this = 0; \
+
+#define SINGLETON_ASSERT \
+		assert(s_this == 0); \
+		s_this = this;
+
+#define SINGLETON_OBJECT s_this
 
 #define TUPLE_CMP(a, b) \
 	if(a < b) return true; \

@@ -228,7 +228,7 @@ void XVertexBuffer::setBufferType(const BufferType type)
 	m_bufferType = type;
 	if(m_bufferType != RAW_BUFFER && !m_vbo)
 	{
-		m_vbo = XGraphics::CreateVertexBufferObject(*this);
+		m_vbo = new XVertexBufferObject(*this);
 	}
 }
 

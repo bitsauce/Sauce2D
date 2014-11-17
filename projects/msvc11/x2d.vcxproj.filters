@@ -105,6 +105,9 @@
     <ClInclude Include="..\..\include\x2d\math\random.h">
       <Filter>include\math</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\include\x2d\graphics\vertexbufferobject.h">
+      <Filter>include\graphics</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\source\audio\buffer.cpp">
@@ -188,9 +191,6 @@
     <ClCompile Include="..\..\source\common\window.cpp">
       <Filter>source\common</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\source\common\audiomanager.cpp">
-      <Filter>source\common</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\source\common\math.cpp">
       <Filter>source\common</Filter>
     </ClCompile>
@@ -200,11 +200,17 @@
     <ClCompile Include="..\..\source\graphics\vertex.cpp">
       <Filter>source\graphics</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\include\x2d\graphics\vertexbufferobject.h">
-      <Filter>include\graphics</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\source\common\math\random.cpp">
       <Filter>source\common\math</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\audio\audio.cpp">
+      <Filter>source\audio</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\graphics\vertexbufferobject.cpp">
+      <Filter>source\graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\graphics\framebufferobject.cpp">
+      <Filter>source\graphics</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

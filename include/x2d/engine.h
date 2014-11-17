@@ -17,13 +17,18 @@ class XFileSystem;
 class XFileReader;
 class XFileWriter;
 class XDebugger;
+class XAudioManager;
+class XGraphics;
 
 class XDAPI XConsole
 {
 	friend class XEngine;
+
+	SINGLETON_DECL(XConsole);
+
 public:
 	XConsole();
-	virtual ~XConsole();
+	~XConsole();
 
 	void log(const string &msg);
 	void logf(const char *msg, ...);
@@ -38,9 +43,6 @@ public:
 
 	static void Log(const char *msg, ...);
 
-protected:
-	virtual void syslog(const string &msg) {}
-
 private:
 	void call_log(const char *msg, va_list args);
 
@@ -51,7 +53,6 @@ private:
 	XFileWriter *m_output;
 	
 	static bool s_initialized;
-	static XConsole *s_this;
 };
 
 /*********************************************************************
@@ -93,37 +94,6 @@ public:
 };
 
 /*********************************************************************
-**	Window class													**
-**********************************************************************/
-class XDAPI XWindow
-{
-public:
-	virtual ~XWindow() {}
-
-	virtual void processEvents() { NOT_IMPLEMENTED(processEvents) }
-
-	// Virtual window functions
-	virtual void enableFullscreen()									{ NOT_IMPLEMENTED(enableFullscreen) }
-	virtual void disableFullscreen()								{ NOT_IMPLEMENTED(disableFullscreen) }
-	virtual bool isFullscreen() const								{ NOT_IMPLEMENTED_RET(isFullscreen, false) }
-	//virtual XScriptArray* getResolutionList() const					{ NOT_IMPLEMENTED_RET(getResolutionList, 0) }
-
-	// Window flags
-	virtual void enableResize()										{ NOT_IMPLEMENTED(enableResize) }
-	virtual void disableResize()									{ NOT_IMPLEMENTED(disableResize) }
-	virtual bool hasFocus()											{ NOT_IMPLEMENTED_RET(hasFocus, true) }
-
-	// Window actions
-	virtual void     setPosition(const Vector2i &pos)				{ NOT_IMPLEMENTED(move) }
-	virtual Vector2i getPosition() const							{ NOT_IMPLEMENTED_RET(pos, Vector2i(0)) }
-	virtual void     setSize(const Vector2i &size)					{ NOT_IMPLEMENTED(resize) }
-	virtual Vector2i getSize() const								{ NOT_IMPLEMENTED_RET(size, Vector2i(0)) }
-	virtual void	 minimize()										{ NOT_IMPLEMENTED(minimize) }
-	virtual void	 maximize()										{ NOT_IMPLEMENTED(maximize) }
-	virtual void	 restore()										{ NOT_IMPLEMENTED(restore) }
-};
-
-/*********************************************************************
 **	Event handler													**
 **********************************************************************/
 class XDAPI XTimer
@@ -132,15 +102,20 @@ public:
 	XTimer();
 	
 	// High-resolution timing
-	virtual void  start()					= 0;
-	virtual void  stop()					= 0;
-	virtual float getElapsedTime() const	= 0;
+	void  start();
+	void  stop();
+	float getElapsedTime() const;
 
 	// System clock
 	void getTicksPerSecond();
 	long getTickCount() const;
 
 private:
+	LARGE_INTEGER m_frequency;
+	LARGE_INTEGER m_start;
+	LARGE_INTEGER m_end;
+	bool m_running;
+	
 	int m_ticksPerSec;
 };
 
@@ -163,42 +138,23 @@ public:
 };
 
 /*********************************************************************
-**	Script engine													**
-**********************************************************************/
-
-class XStringStream;
-
-struct ScriptValue
-{
-	ScriptValue();
-	~ScriptValue();
-
-	void set(void *value, int typeId);
-	void clear();
-
-	bool valid;
-	int typeId;
-	void *value;
-};
-
-// AngelScript functions
-int  asCompileModule(const string &name);
-//XDAPI XScriptArray *CreateArray(const string &type, const uint size);
-
-/*********************************************************************
 **	File reader class												**
 **********************************************************************/
 class XDAPI XFileReader
 {
 public:
-	virtual ~XFileReader() {}
+	XFileReader(const string &path);
+	~XFileReader();
 
-	virtual bool isOpen() = 0;
-	virtual bool isEOF() = 0;
-	virtual void close() = 0;
+	bool isOpen();
+	bool isEOF();
+	void close();
 
-	virtual string readLine() = 0;
-	virtual string readAll() = 0;
+	string readLine();
+	string readAll();
+
+private:
+	ifstream stream;
 };
 
 /*********************************************************************
@@ -207,15 +163,19 @@ public:
 class XDAPI XFileWriter
 {
 public:
-	virtual ~XFileWriter() {}
+	XFileWriter(const string &path);
+	~XFileWriter();
 
-	virtual bool isOpen() = 0;
-	virtual void close() = 0;
+	bool isOpen();
+	void close();
 
-	virtual void clear() = 0;
-	virtual void append(const char* data, const int length) = 0;
+	void clear();
+	void append(const char* data, const int length);
 	void append(const string &str) { append(str.data(), str.size()); }
-	virtual void flush() = 0;
+	void flush();
+
+private:
+	ofstream stream;
 };
 
 /*********************************************************************
@@ -224,25 +184,23 @@ public:
 class XDAPI XFileSystem
 {
 	friend class XEngine;
+
+	SINGLETON_DECL(XFileSystem)
 public:
 	// File buffers
 	bool readFile(string filePath, string &conent) const;
 	bool writeFile(string filePath, const string content) const;
 
-	// OS spesifics
-	virtual bool fileExists(string &filePath) const;
+	// OS specifics
+	bool fileExists(string &filePath) const;
 	// NOTE TO SELF: I might want to consider making a DirectoryIterator instead of using this function
 	//virtual XScriptArray *listFiles(string &directory, const string &mask, const bool recursive) const		{ NOT_IMPLEMENTED_RET(listFiles, 0) }			// Optional
 	//virtual XScriptArray *listFolders(string &directory, const string &mask, const bool recursive) const	{ NOT_IMPLEMENTED_RET(listFolders, 0) }			// Optional
-	virtual bool remove(string &path)																		{ NOT_IMPLEMENTED_RET(remove, false) }			// Optional
+	bool remove(string &path)																		{ NOT_IMPLEMENTED_RET(remove, false) }			// Optional
 
 	// System windows
-	virtual string showSaveDialog(const string &file, const string &ext, const string &title, const string &folder) const	{ NOT_IMPLEMENTED_RET(showSaveDialog, "") }				// Optional
-	virtual string showOpenDialog(const string &file, const string &ext, const string &title, const string &folder) const	{ NOT_IMPLEMENTED_RET(showOpenDialog, "") }				// Optional
-
-	// Static factories
-	static XFileWriter *CreateFileWriter(const string &filePath) { return s_this->createFileWriter(filePath); }
-	static XFileReader *CreateFileReader(const string &filePath) { return s_this->createFileReader(filePath); }
+	string showSaveDialog(const string &file, const string &ext, const string &title, const string &folder) const	{ NOT_IMPLEMENTED_RET(showSaveDialog, "") }				// Optional
+	string showOpenDialog(const string &file, const string &ext, const string &title, const string &folder) const	{ NOT_IMPLEMENTED_RET(showOpenDialog, "") }				// Optional
 
 	// Static functions
 	static bool ReadFile(string path, string &content);
@@ -250,10 +208,7 @@ public:
 	static bool MakeDir(string path);
 
 protected:
-	static XFileSystem *s_this;
-	virtual XFileWriter *createFileWriter(const string &filePath) = 0;
-	virtual XFileReader *createFileReader(const string &filePath) = 0;
-	virtual bool makeDir(const string &path) = 0;
+	bool makeDir(const string &path);
 };
 
 /*********************************************************************
@@ -382,20 +337,22 @@ enum XVirtualKey
 
 class XDAPI XInput
 {
+	friend class XWindow;
+
 public:
 	XInput();
-	virtual ~XInput();
+	~XInput();
 
 	// Desktop cursor functions
-	virtual void     setCursorPos(const Vector2i &pos)			{ NOT_IMPLEMENTED(setCursorPos) }
-	virtual Vector2i getCursorPos() const						{ NOT_IMPLEMENTED_RET(getCursorPos, Vector2i(0)) }
-	virtual void     setCursorLimits(const Recti &area)			{ NOT_IMPLEMENTED(setCursorLimits) }
+	void     setCursorPos(const Vector2i &pos);
+	Vector2i getCursorPos() const;
+	void     setCursorLimits(const Recti &area);
 
 	// Key state function
-	virtual bool getKeyState(const XVirtualKey key) const		{ NOT_IMPLEMENTED_RET(getKeyState, false) }
+	bool getKeyState(const XVirtualKey key) const;
 
 	// General position
-	virtual Vector2 getPosition() const 						{ NOT_IMPLEMENTED_RET(getPosition, Vector2(0.0f)) }
+	Vector2 getPosition() const;
 
 	// Key binding
 	//void bind(const XVirtualKey key, asIScriptFunction *func);
@@ -431,8 +388,12 @@ private:
 
 	//vector<asIScriptObject*> m_clickListeners;
 	map<XMouseButton, bool> m_mousePressed;
+
+	Vector2 m_position;
 };
 
+extern XVirtualKey fromWinKey(uchar key);
+extern uchar toWinKey(XVirtualKey key);
 
 /*********************************************************************
 **	Profiler														**
@@ -492,28 +453,83 @@ private:
 };
 
 /*********************************************************************
-**	Default Debugger												**
+**	Window class													**
 **********************************************************************/
-
-// Packet types
-enum XPacketType
+class XDAPI XWindow
 {
-    XD_NULL_PACKET = 0x00,
+	SINGLETON_DECL(XWindow)
 
-    // Information packets
-    XD_ACK_PACKET,
-    XD_MESSAGE_PACKET,
-    XD_COMPILE_ERROR_PACKET,
+public:
+	XWindow(XEngine *engine, XInput *input, XGraphics *graphics);
+	~XWindow();
 
-    // Programflow packets
-    XD_BREAK_PACKET,
+	void processEvents();
+	void processEvents(UINT Message, WPARAM wParam, LPARAM lParam);
+	void close();
+	void show();
+	
+	void enableFullscreen();
+	void disableFullscreen();
+	bool isFullscreen() const;
+	//XScriptArray *getResolutionList() const;
 
-    // Profiler packets
-    XD_START_PROFILER,
-    XD_STOP_PROFILER,
-	XD_PUSH_NODE_PACKET,
-	XD_POP_NODE_PACKET,
-	XD_STEP_DONE_PACKET
+	void enableResize();
+	void disableResize();
+	bool hasFocus();
+	
+	// Window actions
+	void setPosition(const Vector2i &pos);
+	Vector2i getPosition() const;
+	void setSize(const Vector2i &size);
+	Vector2i getSize() const;
+	void minimize();
+	void maximize();
+	void restore();
+
+	// Vsync
+	void enableVsync();
+	void disableVsync();
+
+	static Vector2i GetSize();
+
+private:
+
+	// Engine handle
+	XEngine *m_engine;
+
+	// Gfx handle
+	XGraphics *m_graphics;
+	XInput *m_input;
+	
+	// The window handle
+	HWND m_window;
+
+	// The window device context
+    HDC m_deviceContext;
+
+	// The opengl rendering context
+	class GLcontext *m_glContext;
+	
+	// The event message
+    MSG m_message;
+
+	// The previous update time
+	DWORD m_previousTime;
+
+	// Cached list of resolutions
+	vector<Vector2i> m_resolutions;
+
+	// Window focus
+	bool m_focus;
+
+	// Window size
+	Vector2i m_size;
+
+	// Window fullscreen state
+	bool m_fullscreen;
+	
+	// Window procedure callback
+    static LRESULT CALLBACK OnEvent(HWND Handle, UINT Message, WPARAM wParam, LPARAM lParam);
 };
 
 /*********************************************************************
@@ -546,12 +562,7 @@ private:
 /*********************************************************************
 **	Engine config													**
 **********************************************************************/
-typedef int (*LoadPluginsFunc)();
-typedef int (*LoadEventsFunc)();
-typedef void (*TestFunc)();
-
-class XAudioManager;
-class XGraphics;
+typedef void (*VoidFunc)();
 
 struct XDAPI XConfig
 {
@@ -559,70 +570,23 @@ struct XDAPI XConfig
 
 	bool isValid() const
 	{
-		return strlen(platform) > 0 && strlen(workDir) > 0 &&
-			fileSystem != 0 && timer != 0 && input != 0 &&
-			graphics != 0 && audio != 0;
+		return draw && update && main;
 	}
 
 	void operator=(const XConfig &other)
 	{
 		flags = other.flags;
-		platform = other.platform;
 		workDir = other.workDir;
-		saveDir = other.saveDir;
-		loadPluginsFunc = other.loadPluginsFunc;
-		timer = other.timer;
-		fileSystem = other.fileSystem;
-		window = other.window;
-		input = other.input;
-		graphics = other.graphics;
-		audio = other.audio;
-		console = other.console;
 	}
 
 	// Engine running flags (optional)
 	int				flags;
 
-	// Platform string (required)
-	const char*		platform;
-
 	// Engine working directory (required)
 	const char*		workDir;
 
-	// System save directory (optional)
-	const char*		saveDir;
-
-	// Syster user directory (optional)
-	const char*		userDir;
-
-	// Plugin load function (optional)
-	LoadPluginsFunc	loadPluginsFunc;
-
-	// Load events
-	LoadEventsFunc loadEventsFunc;
-
-	TestFunc draw, update, main;
-
-	// Engine timer object (required)
-	XTimer*			timer;
-
-	// File system manager (required)
-	XFileSystem*	fileSystem;
-
-	// Game window manager (optional)
-	XWindow*		window;
-
-	// Input class (required)
-	XInput*			input;
-
-	// Graphics manager (required)
-	XGraphics*		graphics;
-
-	// Audio manager (required)
-	XAudioManager*	audio;
-
-	// Game console (optional)
-	XConsole*		console;
+	// Game loop functions
+	VoidFunc		draw, update, main;
 };
 
 /*********************************************************************
@@ -670,7 +634,6 @@ public:
 private:
 	int m_flags;
 
-	string m_platformString;
 	string m_workDir;
 	string m_saveDir;
 	
@@ -700,8 +663,8 @@ private:
 	// Scene stack
 	//stack<asIScriptObject*> m_sceneStack;
 
-	// Test
-	TestFunc m_mainFunc, m_drawFunc, m_updateFunc;
+	// Game loop
+	VoidFunc m_mainFunc, m_drawFunc, m_updateFunc;
 
 	static XEngine *s_this;
 };

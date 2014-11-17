@@ -21,33 +21,53 @@ enum XTextureWrapping
 
 class XDAPI XTexture
 {
+	friend class XFrameBufferObject;
+	friend class XGraphics;
+	friend class XShader;
 public:
 	XTexture();
-	virtual ~XTexture() {}
+	XTexture(const string &path);
+	XTexture(const XPixmap &pixmap);
+	XTexture(const uint width, const uint height, const Vector4 &color = Vector4(0.0f));
+	XTexture(const XTexture &other);
+	~XTexture();
+
+	void init(const XPixmap &pixmap);
 
 	// Mipmapping
-	virtual void enableMipmaps() = 0;
-	virtual void disableMipmaps() = 0;
-	virtual bool isMipmapsEnabled() const = 0;
+	void enableMipmaps();
+	void disableMipmaps();
+	bool isMipmapsEnabled() const;
 
 	// Texture filtering
-	virtual void setFiltering(const XTextureFilter filter) = 0;
-	virtual XTextureFilter getFiltering() const = 0;
+	void setFiltering(const XTextureFilter filter);
+	XTextureFilter getFiltering() const;
 	
 	// Texture wrapping
-	virtual void setWrapping(const XTextureWrapping wrapping) = 0;
-	virtual XTextureWrapping getWrapping() const = 0;
+	void setWrapping(const XTextureWrapping wrapping);
+	XTextureWrapping getWrapping() const;
 
 	// Size
-	virtual int getWidth() const = 0;
-	virtual int getHeight() const = 0;
+	int getWidth() const;
+	int getHeight() const;
 	Vector2i getSize() const { return Vector2i(getWidth(), getHeight()); }
 
 	// Pixmap (texture data)
-	virtual XPixmap getPixmap() const = 0;
-	virtual void updatePixmap(const XPixmap &pixmap) = 0;
-	virtual void updatePixmap(const int x, const int y, const XPixmap &pixmap) = 0;
-	virtual void clear() = 0;
+	XPixmap getPixmap() const;
+	void updatePixmap(const XPixmap &pixmap);
+	void updatePixmap(const int x, const int y, const XPixmap &pixmap);
+	void clear();
+
+private:
+	void updateFiltering();
+
+	GLuint m_id;
+	GLint m_filter;
+	GLint m_wrapping;
+	bool m_mipmaps;
+	bool m_mipmapsGenerated;
+	GLsizei m_width;
+	GLsizei m_height;
 };
 
 #endif // X2D_TEXTURE_H

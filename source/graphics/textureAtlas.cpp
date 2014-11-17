@@ -52,7 +52,7 @@ XTextureAtlas::~XTextureAtlas()
 void XTextureAtlas::init(const vector<XPixmap> &pixmaps)
 {
 	// Create a texture for the atlas
-	m_atlas = XGraphics::CreateTexture(ATLAS_SIZE, ATLAS_SIZE);
+	m_atlas = new XTexture(ATLAS_SIZE, ATLAS_SIZE);
 	m_texturePacker.setMaxWidth(ATLAS_SIZE);
 
 	// Set as uninitialized

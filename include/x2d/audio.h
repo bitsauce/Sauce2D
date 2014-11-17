@@ -3,6 +3,21 @@
 
 #include "engine.h"
 
+#include <al.h>
+#include <alc.h>
+
+#ifdef X2D_DEBUG
+	#define AL_ASSERT \
+		{ \
+			ALenum error = alGetError(); \
+			if(error != AL_NO_ERROR) { \
+				LOG("OpenAL error: '%X'", error); \
+			} \
+		}
+#else
+	#define AL_ASSERT
+#endif
+
 /*********************************************************************
 **	Abstract Audio Manager											**
 **********************************************************************/
@@ -12,30 +27,25 @@ class XAudioBuffer;
 
 class XDAPI XAudioManager
 {
+	SINGLETON_DECL(XAudioManager)
+
 	friend class XEngine;
+
 public:
+	XAudioManager();
+	~XAudioManager();
+
 	// Listener position
-	virtual void setPosition(const Vector2&)	{ NOT_IMPLEMENTED(setPosition) }
-	virtual Vector2 getPosition() const			{ NOT_IMPLEMENTED_RET(getPosition, Vector2(0.0f)) }
+	void setPosition(const Vector2 &position);
+	Vector2 getPosition() const;
 
 	// Listener velocity
-	virtual void setVelocity(const Vector2&)	{ NOT_IMPLEMENTED(setVelocity) }
-	virtual Vector2 getVelocity() const			{ NOT_IMPLEMENTED_RET(getVelocity, Vector2(0.0f)) }
+	void setVelocity(const Vector2&);
+	Vector2 getVelocity() const;
 
 	// Listener orientation
-	virtual void setOrientation(const Vector3&) { NOT_IMPLEMENTED(setOrientation) }
-	virtual Vector3 getOrientation() const		{ NOT_IMPLEMENTED_RET(getOrientation, Vector3(0.0f)) }
-	
-	// Global factories
-	static XAudioSource *CreateSource(XAudioBuffer *buffer);
-	static XAudioSource *CreateSource(const string &path);
-
-private:
-	// XAudioManager instance
-	static XAudioManager *s_this;
-
-	// Virtual factory functions
-	virtual XAudioSource *createSource(XAudioBuffer *buffer) = 0;
+	void setOrientation(const Vector3&);
+	Vector3 getOrientation() const;
 };
 
 /*********************************************************************
@@ -72,27 +82,32 @@ private:
 /*********************************************************************
 **	Audio source													**
 **********************************************************************/
-class XAudioSource
+class XDAPI XAudioSource
 {
 public:
-	virtual ~XAudioSource() {}
+	XAudioSource(XAudioBuffer *buffer);
+	~XAudioSource();
 
-	virtual void play() { NOT_IMPLEMENTED(play) }
-	virtual void stop() { NOT_IMPLEMENTED(stop) }
-	virtual void playOnce() { setLooping(false); play(); }
+	void play();
+	void stop();
+	void playOnce() { setLooping(false); play(); }
 
-	virtual bool isPlaying() const { NOT_IMPLEMENTED_RET(isPlaying, false) }
+	bool isPlaying() const;
 
-	virtual void setPosition(const Vector2&)	{ NOT_IMPLEMENTED(setPosition) }
-	virtual Vector2 getPosition() const			{ NOT_IMPLEMENTED_RET(getPosition, Vector2(0.0f)) }
-	virtual void setVelocity(const Vector2&)	{ NOT_IMPLEMENTED(setVelocity) }
-	virtual Vector2 getVelocity() const			{ NOT_IMPLEMENTED_RET(getVelocity, Vector2(0.0f)) }
-	virtual void setLooping(const bool)			{ NOT_IMPLEMENTED(setLooping) }
-	virtual bool getLooping() const				{ NOT_IMPLEMENTED_RET(getLooping, false) }
-	virtual void setGain(const float)			{ NOT_IMPLEMENTED(setGain) }
-	virtual float getGain() const				{ NOT_IMPLEMENTED_RET(getGain, 0.0f) }
-	virtual void setPitch(const float)			{ NOT_IMPLEMENTED(setPitch) }
-	virtual float getPitch() const				{ NOT_IMPLEMENTED_RET(getPitch, 0.0f) }
+	void setPosition(const Vector2&);
+	Vector2 getPosition() const;
+	void setVelocity(const Vector2&);
+	Vector2 getVelocity() const;
+	void setLooping(const bool);
+	bool getLooping() const;
+	void setGain(const float);
+	float getGain() const;
+	void setPitch(const float);
+	float getPitch() const;
+
+private:
+	ALuint m_sourceId;
+	ALuint m_bufferId;
 };
 
 #endif // X2D_AUDIO_H

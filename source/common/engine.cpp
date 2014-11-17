@@ -19,17 +19,10 @@ XEngine *XEngine::s_this = 0;
 
 XConfig::XConfig() :
 	flags(0),
-	platform(""),
 	workDir(""),
-	saveDir(""),
-	loadPluginsFunc(0),
-	timer(0),
-	input(0),
-	window(0),
-	fileSystem(0),
-	graphics(0),
-	audio(0),
-	console(0)
+	draw(0),
+	update(0),
+	main(0)
 {
 }
 
@@ -68,11 +61,6 @@ XEngine::~XEngine()
 	delete m_math;
 	delete m_assetManager;
 	delete m_console;
-}
-
-string XEngine::getPlatformString() const
-{
-	return m_platformString;
 }
 
 string XEngine::getWorkingDirectory() const
@@ -168,6 +156,36 @@ void XEngine::popScene()
 	}
 }*/
 
+#include <direct.h> // for _getcw()
+#include <ShlObj.h>
+
+// Convert a wide Unicode string to an UTF8 string
+string utf8_encode(const wstring &wstr)
+{
+    int size_needed = WideCharToMultiByte(CP_UTF8, 0, &wstr[0], (int)wstr.size(), NULL, 0, NULL, NULL);
+    string strTo( size_needed, 0 );
+    WideCharToMultiByte(CP_UTF8, 0, &wstr[0], (int)wstr.size(), &strTo[0], size_needed, NULL, NULL);
+    return strTo;
+}
+
+// Convert an UTF8 string to a wide Unicode String
+wstring utf8_decode(const string &str)
+{
+    int size_needed = MultiByteToWideChar(CP_UTF8, 0, &str[0], (int)str.size(), NULL, 0);
+    wstring wstrTo( size_needed, 0 );
+    MultiByteToWideChar(CP_UTF8, 0, &str[0], (int)str.size(), &wstrTo[0], size_needed);
+    return wstrTo;
+}
+
+string getSaveDir()
+{
+	wchar_t *path;
+	SHGetKnownFolderPath(FOLDERID_SavedGames, 0, 0, &path);
+	string str = utf8_encode(path);
+	CoTaskMemFree(path);
+	return str;
+}
+
 //------------------------------------------------------------------------
 // Run
 //------------------------------------------------------------------------
@@ -180,54 +198,38 @@ int XEngine::init(const XConfig &config)
 	}
 
 	// Set platform string and program dir
-	//applyConfig(config);
 	m_flags = config.flags;
-	m_platformString = config.platform;
 
 	m_workDir = config.workDir;
 	replace(m_workDir.begin(), m_workDir.end(), '\\', '/');
 	util::toDirectoryPath(m_workDir);
 
-	m_saveDir = config.saveDir;
+	m_saveDir = getSaveDir();
 	replace(m_saveDir.begin(), m_saveDir.end(), '\\', '/');
 	util::toDirectoryPath(m_saveDir);
+	
+	m_console = new XConsole();
+	m_fileSystem = new XFileSystem();
+	if(IsEnabled(XD_EXPORT_LOG))
+	{
+		m_console->m_output = new XFileWriter(util::getAbsoluteFilePath(":/console.log"));
+	}
 
-	m_timer = config.timer;
-	m_fileSystem = config.fileSystem;
-	m_graphics = config.graphics;
-	m_audio = config.audio;
-	m_console = config.console;
-	m_window = config.window;
-	m_math = new XMath;
-	m_input = config.input;
+	m_timer = new XTimer();
+	m_graphics = new XGraphics();
+	m_audio = new XAudioManager();
+	m_math = new XMath();
+	m_input = new XInput();
 	m_assetManager = new XAssetManager;
 
 	m_mainFunc = config.main;
 	m_drawFunc = config.draw;
 	m_updateFunc = config.update;
 
-	// Set up stuff
-	//m_assetManager->s_this = m_assetManager;
-	m_fileSystem->s_this = m_fileSystem;
-	m_graphics->s_this = m_graphics;
-	m_audio->s_this = m_audio;
-
-	if(!m_console)
-	{
-		m_console = new XConsole;
-	}
-	m_console->s_this = m_console;
 	m_console->m_engine = this;
-	
-	if(IsEnabled(XD_EXPORT_LOG))
-	{
-		m_console->m_output = XFileSystem::CreateFileWriter(util::getAbsoluteFilePath(":/console.log"));
-	}
 
-	if(!m_window)
-	{
-		m_window = new XWindow;
-	}
+	m_window = new XWindow(this, m_input, m_graphics);
+	m_graphics->init(m_window);
 
 	if(!m_math)
 	{

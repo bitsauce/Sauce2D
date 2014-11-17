@@ -35,9 +35,15 @@ class XDAPI XGraphics
 {
 	friend class XEngine;
 	friend class XBatch;
+	friend class XWindow;
+
+	SINGLETON_DECL(XGraphics)
+
 public:
 	XGraphics();
-	virtual ~XGraphics() {}
+	~XGraphics();
+
+	void init(XWindow *window);
 
 	enum Feature
 	{
@@ -45,52 +51,60 @@ public:
 		FrameBufferObjects
 	};
 
-	// Global factories
-	static XTexture*			CreateTexture(const XPixmap &pixmap);
-	static XTexture*			CreateTexture(const string &filePath);
-	static XTexture*			CreateTexture(const int width, const int height);
-	static XTexture*			CreateTexture(const XTexture &texture);
-	static XShader*				CreateShader(const string &vertFilePath, const string &fragFilePath);
-	static XVertexBufferObject*	CreateVertexBufferObject(const XVertexBuffer &buffer);
-	static XFrameBufferObject*	CreateFrameBufferObject();
-	static bool					IsSupported(Feature feature);
+	// Rendering context
+	void createContext();
+	void destroyContext();
+
+	// Orthographic projection
+	void setOrthoProjection(const float l, const float r, const float b, const float t, const float n, const float f);
+	void getOrthoProjection(float &l, float &r, float &b, float &t, float &n, float &f);
+	
+	// Viewports
+	void setViewport(const Recti&);
+	void setViewport(const Vector2i&, Vector2i&);
+	void setViewport(const int, const int, const int, const int);
+	void getViewport(int &x, int &y, int &w, int &h);
 
 	// Refresh rate
 	void setRefreshRate(const int hz);
 	int getRefreshRate() const;
 	
 	// Vsync
-	virtual void enableVsync()										{ NOT_IMPLEMENTED(enableVsync) }
-	virtual void disableVsync()										{ NOT_IMPLEMENTED(disableVsync) }
+	void enableVsync();
+	void disableVsync();
 
 	// Wireframe
-	virtual void enableWireframe()										{ NOT_IMPLEMENTED(enableWireframe) }
-	virtual void disableWireframe()										{ NOT_IMPLEMENTED(disableWireframe) }
+	void enableWireframe();
+	void disableWireframe();
 
 	// Alpha blending
-	virtual void enableAlphaBlending()										{ NOT_IMPLEMENTED(enableAlphaBlending) }
-	virtual void disableAlphaBlending()										{ NOT_IMPLEMENTED(disableAlphaBlending) }
+	void enableAlphaBlending();
+	void disableAlphaBlending();
 
 	// Time step & fps
 	float getTimeStep() const;
 	float getFPS() const;
 
 	// Swap buffers
-	virtual void swapBuffers() = 0;
+	void swapBuffers();
 
-private:
+	static void SetOrthoProjection(const float l, const float r, const float b, const float t, const float n, const float f) { SINGLETON_OBJECT->setOrthoProjection(l, r, b, t, n, f); }
+	static void GetOrthoProjection(float &l, float &r, float &b, float &t, float &n, float &f) { SINGLETON_OBJECT->getOrthoProjection(l, r, b, t, n, f); }
+	static void SetViewport(const Recti &r) { SINGLETON_OBJECT->setViewport(r); }
+	static void GetViewport(int &x, int &y, int &w, int &h) { SINGLETON_OBJECT->getViewport(x, y, w, h); }
+
+protected:
+	HGLRC m_context;
+	HDC m_deviceContext;
+	float m_currentOrtho[6];
+	int m_currentViewport[4];
+
 	float m_framesPerSecond;
 	int m_refreshRate;
 	float m_timeStep;
 
-	virtual void					renderBatch(const XBatch &batch) = 0;
-	virtual XTexture*				createTexture(const XPixmap &pixmap) = 0;
-	virtual XShader*				createShader(const string &vertFilePath, const string &fragFilePath) = 0;
-	virtual XVertexBufferObject*	createVertexBufferObject(const XVertexBuffer &buffer) = 0;
-	virtual XFrameBufferObject*		createFrameBufferObject() = 0;
-	virtual bool					isSupported(Feature feature) = 0;
-
-	static XGraphics *s_this;
+	void renderBatch(const XBatch &batch);
+	bool isSupported(Feature feature);
 };
 
 #endif // X2D_GRAPHICS_H

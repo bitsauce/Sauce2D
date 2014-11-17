@@ -37,6 +37,7 @@
     <ClInclude Include="..\..\include\x2d\graphics\textureRegion.h" />
     <ClInclude Include="..\..\include\x2d\graphics\vertex.h" />
     <ClInclude Include="..\..\include\x2d\graphics\vertexbuffer.h" />
+    <ClInclude Include="..\..\include\x2d\graphics\vertexbufferobject.h" />
     <ClInclude Include="..\..\include\x2d\graphics\viewport.h" />
     <ClInclude Include="..\..\include\x2d\math.h" />
     <ClInclude Include="..\..\include\x2d\math\matrix.h" />
@@ -47,11 +48,10 @@
     <ClInclude Include="..\..\include\x2d\x2d.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\include\x2d\graphics\vertexbufferobject.h" />
+    <ClCompile Include="..\..\source\audio\audio.cpp" />
     <ClCompile Include="..\..\source\audio\buffer.cpp" />
     <ClCompile Include="..\..\source\audio\source.cpp" />
     <ClCompile Include="..\..\source\common\assetmanager.cpp" />
-    <ClCompile Include="..\..\source\common\audiomanager.cpp" />
     <ClCompile Include="..\..\source\common\console.cpp" />
     <ClCompile Include="..\..\source\common\engine.cpp" />
     <ClCompile Include="..\..\source\common\filesystem.cpp" />
@@ -69,6 +69,7 @@
     <ClCompile Include="..\..\source\graphics\animation.cpp" />
     <ClCompile Include="..\..\source\graphics\batch.cpp" />
     <ClCompile Include="..\..\source\graphics\font.cpp" />
+    <ClCompile Include="..\..\source\graphics\framebufferobject.cpp" />
     <ClCompile Include="..\..\source\graphics\graphics.cpp" />
     <ClCompile Include="..\..\source\graphics\pixmap.cpp" />
     <ClCompile Include="..\..\source\graphics\shader.cpp" />
@@ -79,6 +80,7 @@
     <ClCompile Include="..\..\source\graphics\textureRegion.cpp" />
     <ClCompile Include="..\..\source\graphics\vertex.cpp" />
     <ClCompile Include="..\..\source\graphics\vertexbuffer.cpp" />
+    <ClCompile Include="..\..\source\graphics\vertexbufferobject.cpp" />
     <ClCompile Include="..\..\source\graphics\viewport.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
@@ -167,7 +169,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
-      <AdditionalIncludeDirectories>..\..\include;..\..\source;..\..\3rdparty\freeimage\source;..\..\3rdparty\freetype\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\include;..\..\source;..\..\3rdparty\freeimage\source;..\..\3rdparty\freetype\include;..\..\3rdparty\openal\include;..\..\3rdparty\glew\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Android'">
@@ -189,11 +191,11 @@
       <ExceptionHandling>Sync</ExceptionHandling>
     </ClCompile>
     <Link>
-      <AdditionalLibraryDirectories>..\..\3rdparty\freeimage\lib;..\..\3rdparty\freetype\lib</AdditionalLibraryDirectories>
-      <AdditionalDependencies>freeimaged.lib;freetyped.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>..\..\3rdparty\freeimage\lib;..\..\3rdparty\freetype\lib;..\..\3rdparty\openal\libs\Win32;..\..\3rdparty\glew\lib</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
+      <AdditionalDependencies>openal32.lib;freetype.lib;freeimage.lib;opengl32.lib;glewd.lib;glu32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <Lib>
       <AdditionalDependencies>glew32_d.lib;ws2_32.lib;IPHlpAPI.lib;freetype248_d.lib;OpenAL32.lib;libpng15_d.lib;angelscriptd.lib;%(AdditionalDependencies)</AdditionalDependencies>
