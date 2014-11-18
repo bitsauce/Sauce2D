@@ -5,7 +5,7 @@
 
 class XTexture;
 
-class XTextureRegion
+class XDAPI XTextureRegion
 {
 public:
 	XTextureRegion();

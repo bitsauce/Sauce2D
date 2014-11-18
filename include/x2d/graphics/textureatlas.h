@@ -6,7 +6,7 @@
 #include "pixmap.h"
 #include "textureRegion.h"
 
-class XTextureAtlas
+class XDAPI XTextureAtlas
 {
 public:
 	XTextureAtlas();

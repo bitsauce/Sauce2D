@@ -6,7 +6,7 @@
 class XTexture;
 class XTextureRegion;
 
-class XAnimation
+class XDAPI XAnimation
 {
 public:
 	XAnimation(XTexture *texture, const int nRows, const int nColumns);

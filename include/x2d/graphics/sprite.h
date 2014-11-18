@@ -8,7 +8,7 @@ class XTexture;
 class XBatch;
 class XShape;
 
-class XSprite
+class XDAPI XSprite
 {
 	friend class XSpriteBatch;
 public:
