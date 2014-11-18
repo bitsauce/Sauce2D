@@ -124,7 +124,7 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <OutDir>..\..\build\$(Platform)\$(Configuration)\</OutDir>
+    <OutDir>$(ProjectDir)..\..\build\$(Platform)\$(Configuration)\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Android'">
     <OutDir>$(SolutionDir)..\..\build\$(Platform)\$(Configuration)\</OutDir>
@@ -169,7 +169,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
-      <AdditionalIncludeDirectories>..\..\include;..\..\source;..\..\3rdparty\freeimage\source;..\..\3rdparty\freetype\include;..\..\3rdparty\openal\include;..\..\3rdparty\glew\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\include;$(ProjectDir)..\..\source;$(ProjectDir)..\..\3rdparty\freeimage\source;$(ProjectDir)..\..\3rdparty\freetype\include;$(ProjectDir)..\..\3rdparty\openal\include;$(ProjectDir)..\..\3rdparty\glew\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Android'">
@@ -182,7 +182,7 @@
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <WarningLevel>Level4</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>X2D_EXPORT;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>X2D_EXPORT;X2D_USE_GL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -191,11 +191,11 @@
       <ExceptionHandling>Sync</ExceptionHandling>
     </ClCompile>
     <Link>
-      <AdditionalLibraryDirectories>..\..\3rdparty\freeimage\lib;..\..\3rdparty\freetype\lib;..\..\3rdparty\openal\libs\Win32;..\..\3rdparty\glew\lib</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(ProjectDir)..\..\3rdparty\freeimage\lib;$(ProjectDir)..\..\3rdparty\freetype\lib;$(ProjectDir)..\..\3rdparty\openal\libs\Win32;$(ProjectDir)..\..\3rdparty\glew\lib</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
-      <AdditionalDependencies>openal32.lib;freetype.lib;freeimage.lib;opengl32.lib;glewd.lib;glu32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>openal32.lib;freetyped.lib;freeimaged.lib;opengl32.lib;glewd.lib;glu32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <Lib>
       <AdditionalDependencies>glew32_d.lib;ws2_32.lib;IPHlpAPI.lib;freetype248_d.lib;OpenAL32.lib;libpng15_d.lib;angelscriptd.lib;%(AdditionalDependencies)</AdditionalDependencies>
