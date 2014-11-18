@@ -54,6 +54,8 @@ XEngine::~XEngine()
 	{
 		popScene();
 	}
+
+	m_endFunc();
 	
 	delete m_fileSystem;
 	delete m_graphics;
@@ -333,8 +335,6 @@ int XEngine::run()
 	}
 
 	LOG("Exiting x2D Engine...");
-
-	m_endFunc();
 
 	// Return OK
 	return X2D_OK;

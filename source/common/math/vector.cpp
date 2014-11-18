@@ -39,6 +39,12 @@ Vector2::Vector2(const Vector2 &v)
     this->y = v.y;
 }
 
+Vector2::Vector2(const Vector2i &v)
+{
+    this->x = v.x;
+    this->y = v.y;
+}
+
 void Vector2::set(const float x, const float y)
 {
     this->x = x;
@@ -128,14 +134,28 @@ Vector2& Vector2::operator*=(const float scalar)
     y *= scalar;
     return *this;
 }
- 
+
+Vector2 &Vector2::operator*=(const Vector2 &v2)
+{
+    x *= v2.x;
+    y *= v2.y;
+    return *this;
+}
+
 Vector2& Vector2::operator/=(const float scalar)
 {
     x /= scalar;
     y /= scalar;
     return *this;
 }
- 
+
+Vector2& Vector2::operator/=(const Vector2 &v2)
+{
+    x /= v2.x;
+    y /= v2.y;
+    return *this;
+}
+
 const Vector2 Vector2::operator+(const Vector2 &v2) const
 {
     return Vector2(*this) += v2;
@@ -153,26 +173,22 @@ const Vector2 Vector2::operator*(const float scalar) const
 
 const Vector2 Vector2::operator*(const Vector2 &v2) const
 {
-    Vector2 v1(*this);
-	v1.x *= v2.x;
-	v1.y *= v2.y;
-	return v1;
+	return  Vector2(*this) *= v2;
 }
- 
+
 const Vector2 Vector2::operator/(const float scalar) const
 {
     return Vector2(*this) /= scalar;
 }
- 
+
+const Vector2 Vector2::operator/(const Vector2 &v2) const
+{
+    return Vector2(*this) /= v2;
+}
+
 bool Vector2::operator==(const Vector2& v2) const
 {
     return ((x == v2.x) && (y == v2.y));
-}
-
-
-Vector2::operator Vector2i() const
-{
-	return Vector2i((int)x, (int)y);
 }
 
 // Vector2i
@@ -187,6 +203,12 @@ Vector2i::Vector2i(int x, int y)
 {
     this->x = x;
     this->y = y;
+}
+
+Vector2i::Vector2i(const Vector2 &v)
+{
+    this->x = v.x;
+    this->y = v.y;
 }
 
 // Setting
@@ -310,11 +332,6 @@ const Vector2i Vector2i::operator/(const float scalar) const
 bool Vector2i::operator==(const Vector2i& v2) const
 {
     return ((x == v2.x) && (y == v2.y));
-}
-
-Vector2i::operator Vector2() const
-{
-	return Vector2((float)x, (float)y);
 }
 
 //----------------------------------------------------------------------------

@@ -82,7 +82,7 @@ inline int next_p2(int a)
 	return rval;
 }
 
-XFont::XFont(string &fontName, const uint size) :
+XFont::XFont(string fontName, const uint size) :
 	m_color(1.0f),
 	m_atlas(0),
 	m_size(0),
@@ -107,9 +107,7 @@ XFont::XFont(string &fontName, const uint size) :
 
 XFont::~XFont()
 {
-	//if(m_atlas) {
-	//	m_atlas->release();
-	//}
+	delete m_atlas;
 }
 
 void XFont::load(const string &filePath, const uint size)

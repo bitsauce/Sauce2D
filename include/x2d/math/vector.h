@@ -22,6 +22,7 @@ public:
     Vector2(const float d[2]);
     Vector2(const float x, const float y);
 	Vector2(const Vector2 &v);
+	Vector2(const Vector2i &v);
  
 	// Setting
 	void set(const float x, const float y);
@@ -44,14 +45,16 @@ public:
     Vector2& operator+=(const Vector2& v2);
     Vector2& operator-=(const Vector2& v2);
     Vector2& operator*=(const float scalar);
+    Vector2& operator*=(const Vector2 &v2);
     Vector2& operator/=(const float scalar);
+    Vector2& operator/=(const Vector2 &v2);
     const Vector2 operator+(const Vector2 &v2) const;
     const Vector2 operator-(const Vector2 &v2) const;
     const Vector2 operator*(const float scalar) const;
 	const Vector2 operator*(const Vector2 &v2) const;
     const Vector2 operator/(const float scalar) const;
+    const Vector2 operator/(const Vector2 &v2) const;
     bool operator==(const Vector2& v2) const;
-	operator Vector2i() const;
 
 public:
 
@@ -71,6 +74,7 @@ public:
 	// Constructor
     Vector2i(int xy = 0.0f);
     Vector2i(int x, int y);
+	Vector2i(const Vector2 &v);
  
 	// Setting
 	void set(const int x, const int y);
@@ -99,7 +103,6 @@ public:
     const Vector2i operator*(const float scalar) const;
     const Vector2i operator/(const float scalar) const;
     bool operator==(const Vector2i& v2) const;
-	operator Vector2() const;
 
 	bool operator<(const Vector2i& v2) const
 	{

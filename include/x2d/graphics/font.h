@@ -8,7 +8,7 @@ class XTextureAtlas;
 class XDAPI XFont
 {
 public:
-	XFont(string &fontName, const uint size);
+	XFont(string fontName, const uint size);
 	~XFont();
 
 	float getStringWidth(const string &str);
