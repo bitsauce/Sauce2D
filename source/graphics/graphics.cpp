@@ -450,11 +450,6 @@ void XGraphics::renderBatch(const XBatch &batch)
 		}
 	}
 	glLoadIdentity();
-
-	// Disable client state
-	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
-	glDisableClientState(GL_COLOR_ARRAY);
-	glDisableClientState(GL_VERTEX_ARRAY);
 }
 
 bool XGraphics::isSupported(Feature feature)

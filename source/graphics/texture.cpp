@@ -10,48 +10,48 @@
 #include <x2d/engine.h>
 #include <x2d/graphics.h>
 
-GLint enumToGL(const XTextureFilter filter)
+GLint enumToGL(const XTexture::TextureFilter filter)
 {
 	switch(filter)
 	{
-	case xdNearest: return GL_NEAREST;
-	case xdLinear: return GL_LINEAR;
+	case XTexture::NEAREST: return GL_NEAREST;
+	case XTexture::LINEAR: return GL_LINEAR;
 	}
 	return 0;
 }
 
-XTextureFilter enumFromGL(const GLint filter)
+XTexture::TextureFilter enumFromGL(const GLint filter)
 {
 	switch(filter)
 	{
-	case GL_NEAREST: return xdNearest;
-	case GL_LINEAR: return xdLinear;
+	case GL_NEAREST: return XTexture::NEAREST;
+	case GL_LINEAR: return XTexture::LINEAR;
 	}
-	return XTextureFilter(0);
+	return XTexture::TextureFilter(0);
 }
 
-GLint wrapToGL(const XTextureWrapping wrapping)
+GLint wrapToGL(const XTexture::TextureWrapping wrapping)
 {
 	switch(wrapping)
 	{
-	case CLAMP_TO_BORDER: return GL_CLAMP_TO_BORDER;
-	case CLAMP_TO_EDGE: return GL_CLAMP_TO_EDGE;
-	case REPEAT: return GL_REPEAT;
-	case MIRRORED_REPEAT: return GL_MIRRORED_REPEAT;
+	case XTexture::CLAMP_TO_BORDER: return GL_CLAMP_TO_BORDER;
+	case XTexture::CLAMP_TO_EDGE: return GL_CLAMP_TO_EDGE;
+	case XTexture::REPEAT: return GL_REPEAT;
+	case XTexture::MIRRORED_REPEAT: return GL_MIRRORED_REPEAT;
 	}
 	return GL_CLAMP_TO_BORDER;
 }
 
-XTextureWrapping wrapFromGL(const GLint wrapping)
+XTexture::TextureWrapping wrapFromGL(const GLint wrapping)
 {
 	switch(wrapping)
 	{
-	case GL_CLAMP_TO_BORDER: return CLAMP_TO_BORDER;
-	case GL_CLAMP_TO_EDGE: return CLAMP_TO_EDGE;
-	case GL_REPEAT: return REPEAT;
-	case GL_MIRRORED_REPEAT: return MIRRORED_REPEAT;
+	case GL_CLAMP_TO_BORDER: return XTexture::CLAMP_TO_BORDER;
+	case GL_CLAMP_TO_EDGE: return XTexture::CLAMP_TO_EDGE;
+	case GL_REPEAT: return XTexture::REPEAT;
+	case GL_MIRRORED_REPEAT: return XTexture::MIRRORED_REPEAT;
 	}
-	return CLAMP_TO_BORDER;
+	return XTexture::CLAMP_TO_BORDER;
 }
 
 XTexture::XTexture(const XPixmap &pixmap)
@@ -61,7 +61,7 @@ XTexture::XTexture(const XPixmap &pixmap)
 
 XTexture::XTexture(const string &path)
 {
-	XPixmap *pixmap = XAssetManager::LoadPixmap(path);
+	XPixmap *pixmap = XAssetManager::loadImage(path);
 	if(pixmap)
 	{
 		init(*pixmap);
@@ -73,9 +73,11 @@ XTexture::XTexture(const string &path)
 	delete pixmap;
 }
 	
-XTexture::XTexture(const uint width, const uint height, const Vector4 &color)
+XTexture::XTexture(const uint width, const uint height, const XColor &color)
 {
-	init(XPixmap(width, height/*, color*/));
+	XPixmap pixmap(width, height);
+	pixmap.fill(color);
+	init(pixmap);
 }
 	
 XTexture::XTexture(const XTexture &texture)
@@ -128,7 +130,7 @@ void XTexture::disableMipmaps()
 	}
 }
 
-void XTexture::setFiltering(const XTextureFilter filter)
+void XTexture::setFiltering(const TextureFilter filter)
 {
 	GLint glfilter = enumToGL(filter);
 	if(m_filter != glfilter)
@@ -142,12 +144,12 @@ void XTexture::setFiltering(const XTextureFilter filter)
 	}
 }
 
-XTextureFilter XTexture::getFiltering() const
+XTexture::TextureFilter XTexture::getFiltering() const
 {
 	return enumFromGL(m_filter);
 }
 
-void XTexture::setWrapping(const XTextureWrapping wrapping)
+void XTexture::setWrapping(const TextureWrapping wrapping)
 {
 	GLint glwrapping = wrapToGL(wrapping);
 	if(m_wrapping != glwrapping)
@@ -157,7 +159,7 @@ void XTexture::setWrapping(const XTextureWrapping wrapping)
 	}
 }
 
-XTextureWrapping XTexture::getWrapping() const
+XTexture::TextureWrapping XTexture::getWrapping() const
 {
 	return wrapFromGL(m_wrapping);
 }
@@ -165,9 +167,9 @@ XTextureWrapping XTexture::getWrapping() const
 XPixmap XTexture::getPixmap() const
 {
 	// Get texture data
-	Vector4 *data = new Vector4[m_width*m_height];
+	uchar *data = new uchar[m_width*m_height*4];
 	glBindTexture(GL_TEXTURE_2D, m_id);
-	glGetTexImage(GL_TEXTURE_2D, 0, GL_RGBA, GL_FLOAT, (GLvoid*)data);
+	glGetTexImage(GL_TEXTURE_2D, 0, GL_RGBA, GL_UNSIGNED_BYTE, (GLvoid*)data);
 	glBindTexture(GL_TEXTURE_2D, 0);
 
 	// Copy data to pixmap
@@ -184,7 +186,7 @@ void XTexture::updatePixmap(const XPixmap &pixmap)
 
 	// Set default filtering
 	glBindTexture(GL_TEXTURE_2D, m_id);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, (GLsizei)m_width, (GLsizei)m_height, 0, GL_RGBA, GL_FLOAT, (const GLvoid*)pixmap.getData());
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, (GLsizei)m_width, (GLsizei)m_height, 0, GL_RGBA, GL_UNSIGNED_BYTE, (const GLvoid*)pixmap.getData());
 	glBindTexture(GL_TEXTURE_2D, 0);
 
 	// Regenerate mipmaps
@@ -199,7 +201,7 @@ void XTexture::updatePixmap(const int x, const int y, const XPixmap &pixmap)
 {
 	// Set default filtering
 	glBindTexture(GL_TEXTURE_2D, m_id);
-	glTexSubImage2D(GL_TEXTURE_2D, 0, (GLint)x, (GLint)y, (GLsizei)pixmap.getWidth(), (GLsizei)pixmap.getHeight(), GL_RGBA, GL_FLOAT, (const GLvoid*)pixmap.getData());
+	glTexSubImage2D(GL_TEXTURE_2D, 0, (GLint)x, (GLint)y, (GLsizei)pixmap.getWidth(), (GLsizei)pixmap.getHeight(), GL_RGBA, GL_UNSIGNED_BYTE, (const GLvoid*)pixmap.getData());
 	glBindTexture(GL_TEXTURE_2D, 0);
 
 	// Regenerate mipmaps
@@ -232,12 +234,12 @@ void XTexture::updateFiltering()
 	glBindTexture(GL_TEXTURE_2D, 0);
 }
 
-int XTexture::getWidth() const
+uint XTexture::getWidth() const
 {
-	return (int)m_width;
+	return m_width;
 }
 
-int XTexture::getHeight() const
+uint XTexture::getHeight() const
 {
-	return (int)m_height;
+	return m_height;
 }

@@ -7,30 +7,30 @@ class XDAPI XPixmap
 {
 public:
 	XPixmap();
-	XPixmap(const int width, const int height);
-	XPixmap(const int width, const int height, const Vector4 *pixels);
+	XPixmap(const uint width, const uint height);
+	XPixmap(const uint width, const uint height, const uchar *data);
 	XPixmap(const XPixmap& other);
 	~XPixmap();
 
-	int getWidth() const;
-	int getHeight() const;
+	uint getWidth() const;
+	uint getHeight() const;
 
-	Vector4 getColor(const int x, const int y) const;
-	void setColor(const int x, const int y, const Vector4 &color);
+	XColor getColor(const uint x, const uint y) const;
+	void setColor(const uint x, const uint y, const XColor &color);
 
-	void fill(const Vector4 &color);
+	void fill(const XColor &color);
 	void clear();
 
 	void exportToFile(const string &path) const;
 
-	const float *getData() const;
+	const uchar *getData() const;
 
 	//Pixmap &operator=(Pixmap &other);
 
 private:
-	Vector4 *m_data;
-	int m_width;
-	int m_height;
+	uchar *m_data;
+	uint m_width;
+	uint m_height;
 };
 
 #endif // X2D_PIXMAP_H

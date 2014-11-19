@@ -297,15 +297,15 @@ Vector2i& Vector2i::operator-=(const Vector2i& v2)
  
 Vector2i& Vector2i::operator*=(const float scalar)
 {
-    x *= (int)scalar;
-    y *= (int)scalar;
+    x *= scalar;
+    y *= scalar;
     return *this;
 }
  
 Vector2i& Vector2i::operator/=(const float scalar)
 {
-    x /= (int)scalar;
-    y /= (int)scalar;
+    x /= scalar;
+    y /= scalar;
     return *this;
 }
  

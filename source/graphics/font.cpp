@@ -83,7 +83,7 @@ inline int next_p2(int a)
 }
 
 XFont::XFont(string fontName, const uint size) :
-	m_color(1.0f),
+	m_color(0, 0, 0, 255),
 	m_atlas(0),
 	m_size(0),
 	m_lineSize(0),
@@ -173,7 +173,7 @@ void XFont::load(const string &filePath, const uint size)
 			for(uint x = 0; x < width; x++)
 			{
 				uchar c = bitmap.buffer[x + (height-y-1)*width];
-				pixmap.setColor(x, y, Vector4(1.0f, 1.0f, 1.0f, c/255.0f));
+				pixmap.setColor(x, y, XColor(255, 255, 255, c));
 			}
 		}
 		pixmaps.push_back(pixmap);
@@ -228,7 +228,7 @@ float XFont::getStringHeight(const string &str)
 	return height;
 }
 
-void XFont::setColor(const Vector4 &color)
+void XFont::setColor(const XColor &color)
 {
 	m_color = color;
 }
@@ -270,19 +270,19 @@ void XFont::draw(XBatch *batch, const Vector2 &pos, const string &str)
 		XTextureRegion region = m_atlas->get(ch);
 
 		vertices[0].set4f(VERTEX_POSITION, currentPos.x, currentPos.y + (m_Msize - metrics.size.y) - metrics.advance.y);
-		vertices[0].set4ub(VERTEX_COLOR, m_color.x*255, m_color.y*255, m_color.z*255, m_color.w*255);
+		vertices[0].set4ub(VERTEX_COLOR, m_color.r, m_color.g, m_color.b, m_color.a);
 		vertices[0].set4f(VERTEX_TEX_COORD, region.uv0.x, region.uv1.y);
 
 		vertices[1].set4f(VERTEX_POSITION, currentPos.x + metrics.size.x, currentPos.y + (m_Msize - metrics.size.y) - metrics.advance.y);
-		vertices[1].set4ub(VERTEX_COLOR, m_color.x*255, m_color.y*255, m_color.z*255, m_color.w*255);
+		vertices[1].set4ub(VERTEX_COLOR, m_color.r, m_color.g, m_color.b, m_color.a);
 		vertices[1].set4f(VERTEX_TEX_COORD, region.uv1.x, region.uv1.y);
 		
 		vertices[2].set4f(VERTEX_POSITION, currentPos.x + metrics.size.x, currentPos.y + (m_Msize - metrics.size.y) - metrics.advance.y + metrics.size.y);
-		vertices[2].set4ub(VERTEX_COLOR, m_color.x*255, m_color.y*255, m_color.z*255, m_color.w*255);
+		vertices[2].set4ub(VERTEX_COLOR, m_color.r, m_color.g, m_color.b, m_color.a);
 		vertices[2].set4f(VERTEX_TEX_COORD, region.uv1.x, region.uv0.y);
 		
 		vertices[3].set4f(VERTEX_POSITION, currentPos.x, currentPos.y + (m_Msize - metrics.size.y) - metrics.advance.y + metrics.size.y);
-		vertices[3].set4ub(VERTEX_COLOR, m_color.x*255, m_color.y*255, m_color.z*255, m_color.w*255);
+		vertices[3].set4ub(VERTEX_COLOR, m_color.r, m_color.g, m_color.b, m_color.a);
 		vertices[3].set4f(VERTEX_TEX_COORD, region.uv0.x, region.uv0.y);
 		
 		batch->addVertices(vertices, 4, QUAD_INDICES, 6);
@@ -299,7 +299,6 @@ XTexture *XFont::renderToTexture(const string &text, const uint padding)
 	XTexture *texture = new XTexture(getStringWidth(text) + padding, getStringHeight(text) + padding);
 
 	XBatch batch;
-	setColor(Vector4(1.0f));
 	draw(&batch, Vector2(padding/2.0f, padding/2.0f), text);
 	batch.renderToTexture(texture);
 

@@ -127,7 +127,7 @@ bool sortResult(RectanglePacker::Rectangle r1, RectanglePacker::Rectangle r2)
 
 void XTextureAtlas::update()
 {
-	float *pixels = new float[ATLAS_SIZE*ATLAS_SIZE*4];
+	uchar *pixels = new uchar[ATLAS_SIZE*ATLAS_SIZE*4];
 	memset(pixels, 0, ATLAS_SIZE*ATLAS_SIZE*4);
 
 	const RectanglePacker::Result result = m_texturePacker.pack();
@@ -141,7 +141,7 @@ void XTextureAtlas::update()
 			{
 				int dataPos = ((rect.x + x + m_border) + ((rect.y + y + m_border) * ATLAS_SIZE)) * 4;
 				int pagePos = (x + y * pixmap->getWidth()) * 4;
-				memcpy(&pixels[dataPos], &pixmap->getData()[pagePos], sizeof(float) * 4);
+				memcpy(pixels + dataPos, pixmap->getData() + pagePos, 4);
 			}
 		}
 	}
@@ -149,5 +149,5 @@ void XTextureAtlas::update()
 
 	sort(m_result.rectangles.begin(), m_result.rectangles.end(), sortResult);
 
-	m_atlas->updatePixmap(XPixmap(ATLAS_SIZE, ATLAS_SIZE, (Vector4*)pixels));
+	m_atlas->updatePixmap(XPixmap(ATLAS_SIZE, ATLAS_SIZE, pixels));
 }

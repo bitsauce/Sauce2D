@@ -10,6 +10,14 @@
 
 #define PI 3.14159265359f
 
+struct XDAPI XColor
+{
+	XColor(uchar v = 0) { r = g = b = a = v; }
+	XColor(uchar r, uchar g, uchar b, uchar a) { this->r = r; this->g = g; this->b = b; this->a = a; }
+
+	uchar r, g, b, a;
+};
+
 class XDAPI XMath
 {
 public:

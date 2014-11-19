@@ -4,6 +4,7 @@
 #include "../engine.h"
 
 class XTextureAtlas;
+struct XColor;
 
 class XDAPI XFont
 {
@@ -13,7 +14,7 @@ public:
 
 	float getStringWidth(const string &str);
 	float getStringHeight(const string &str);
-	void setColor(const Vector4 &color);
+	void setColor(const XColor &color);
 	void draw(XBatch *batch, const Vector2 &pos, const string &str);
 	XTexture *XFont::renderToTexture(const string &text, const uint padding = 2);
 
@@ -38,7 +39,7 @@ private:
 	bool isValidChar(uchar ch) { return ch >= 0 && ch < 128; }
 
 	// Font color
-	Vector4 m_color;
+	XColor m_color;
 
 	// Font texture atlas
 	XTextureAtlas *m_atlas;

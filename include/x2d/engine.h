@@ -62,7 +62,7 @@ private:
 // Image formats
 enum XImageFormat
 {
-	UNKNOWN_IMAGE_TYPE,
+	ANY_IMAGE_TYPE,
 	PNG_IMAGE_TYPE,
 	BMP_IMAGE_TYPE,
 	DDS_IMAGE_TYPE,
@@ -74,23 +74,21 @@ enum XImageFormat
 // Sound formats
 enum XSoundFormat
 {
-	UNKNOWN_SOUND_TYPE,
+	ANY_SOUND_TYPE,
 	WAV_SOUND_TYPE,
 	MP3_SOUND_TYPE,
 	OGG_SOUND_TYPE
 };
 
-class XAudioBuffer;
 class XPixmap;
+//class XSound;
 
 class XDAPI XAssetManager
 {
 public:
-	static XPixmap *LoadPixmap(string filePath, const XImageFormat format = UNKNOWN_IMAGE_TYPE);
-	static void SavePixmap(string filePath, XPixmap *pixmap, const XImageFormat format = UNKNOWN_IMAGE_TYPE);
-
-	static XAudioBuffer *LoadSound(string filePath, const XSoundFormat format = UNKNOWN_SOUND_TYPE);
-	static void SaveSound(string filePath, XAudioBuffer *buffer, const XSoundFormat format = UNKNOWN_SOUND_TYPE);
+	static XPixmap *loadImage(string path, const XImageFormat format = ANY_IMAGE_TYPE);
+	//static XSound *loadSound(string path, const XSoundFormat = ANY_SOUND_TYPE);
+private:
 };
 
 /*********************************************************************

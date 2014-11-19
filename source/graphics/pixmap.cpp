@@ -17,27 +17,33 @@ XPixmap::XPixmap() :
 {
 }
 
-XPixmap::XPixmap(const int width, const int height, const Vector4 *pixels) :
+XPixmap::XPixmap(const uint width, const uint height, const uchar *data) :
 	m_width(width),
 	m_height(height)
 {
 	// Copy pixels
-	if(width >= 0 && height >= 0) {
-		m_data = new Vector4[width*height];
-		memcpy(m_data, pixels, width*height*sizeof(Vector4));
-	}else{
+	if(width >= 0 && height >= 0)
+	{
+		m_data = new uchar[width*height*4];
+		memcpy(m_data, data, width*height*4);
+	}
+	else
+	{
 		m_data = 0;
 	}
 }
 
-XPixmap::XPixmap(const int width, const int height) :
+XPixmap::XPixmap(const uint width, const uint height) :
 	m_width(width),
 	m_height(height)
 {
 	// Create empty XPixmap
-	if(width >= 0 && height >= 0) {
-		m_data = new Vector4[width*height];
-	}else{
+	if(width >= 0 && height >= 0)
+	{
+		m_data = new uchar[width*height*4];
+	}
+	else
+	{
 		m_data = 0;
 	}
 }
@@ -48,9 +54,11 @@ XPixmap::XPixmap(const XPixmap &other)
 	m_height = other.m_height;
 	if(other.m_data)
 	{
-		m_data = new Vector4[m_width*m_height];
-		memcpy(m_data, other.m_data, m_width*m_height*sizeof(Vector4));
-	}else{
+		m_data = new uchar[m_width*m_height*4];
+		memcpy(m_data, other.m_data, m_width*m_height*4);
+	}
+	else
+	{
 		m_data = 0;
 	}
 }
@@ -68,40 +76,61 @@ XPixmap::~XPixmap()
 	delete[] m_data;
 }
 
-const float *XPixmap::getData() const
+const uchar *XPixmap::getData() const
 {
-	return (const float*)m_data;
+	return m_data;
 }
 
-int XPixmap::getWidth() const
+uint XPixmap::getWidth() const
 {
 	return m_width;
 }
 
-int XPixmap::getHeight() const
+uint XPixmap::getHeight() const
 {
 	return m_height;
 }
 
-Vector4 XPixmap::getColor(const int x, const int y) const
+XColor XPixmap::getColor(const uint x, const uint y) const
 {
-	if(x >= 0 && x < m_width && y >= 0 && y < m_height)
+	XColor color;
+	if(x < m_width && y < m_height)
 	{
-		return m_data[x+y*m_width];
-	}else{
+		memcpy(&color, m_data + (x + y*m_width) * 4, 4);
+	}
+	else
+	{
 		//warn("");
 	}
-	return Vector4();
+	return color;
 }
 
-void XPixmap::setColor(const int x, const int y, const Vector4 &color)
+void XPixmap::setColor(const uint x, const uint y, const XColor &color)
 {
-	if(x >= 0 && x < m_width && y >= 0 && y < m_height)
+	if(x < m_width && y < m_height)
 	{
-		m_data[x+y*m_width] = color;
-	}else{
+		memcpy(m_data + (x + y*m_width) * 4, &color, 4);
+	}
+	else
+	{
 		//warn("");
 	}
+}
+
+void XPixmap::fill(const XColor &color)
+{
+	for(uint y = 0; y < m_height; ++y)
+	{
+		for(uint x = 0; x < m_width; ++x)
+		{
+			memcpy(m_data + (x + y*m_width) * 4, &color, 4);
+		}
+	}
+}
+
+void XPixmap::clear()
+{
+	fill(XColor(0));
 }
 
 void XPixmap::exportToFile(const string &path) const

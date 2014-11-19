@@ -12,20 +12,15 @@
 #include <x2d/audio.h>
 #include <freeimage.h>
 
-uint read(void *buffer, uint size, uint count, fi_handle handle)
+XPixmap *XAssetManager::loadImage(string path, const XImageFormat format)
 {
-	return fread(buffer, size, count, (FILE*)handle);
-}
-
-// Load image from assets
-XPixmap *XAssetManager::LoadPixmap(string filePath, const XImageFormat format)
-{
+	// Load texture from file
 	XPixmap *pixmap = 0;
-	if(format == UNKNOWN_IMAGE_TYPE)
+	if(format == ANY_IMAGE_TYPE)
 	{
 		// Load asset as a image
 		string content;
-		if(XFileSystem::ReadFile(filePath, content))
+		if(XFileSystem::ReadFile(path, content))
 		{
 			// Attach the binary data to a memory stream
 			FIMEMORY *hmem = FreeImage_OpenMemory((uchar*)content.c_str(), content.size());
@@ -37,7 +32,7 @@ XPixmap *XAssetManager::LoadPixmap(string filePath, const XImageFormat format)
 			FIBITMAP *bitmap = FreeImage_LoadFromMemory(fif, hmem, 0);
 
 			// Convert all non-32bpp bitmaps to 32bpp bitmaps
-			// TODO: I should add support for loading different types of bit depth into graphics memory
+			// TODO: I should add support for loading different bpps into graphics memory
 			if(FreeImage_GetBPP(bitmap) != 32)
 			{
 				FIBITMAP *newBitmap = FreeImage_ConvertTo32Bits(bitmap);
@@ -48,15 +43,15 @@ XPixmap *XAssetManager::LoadPixmap(string filePath, const XImageFormat format)
 			// Create pixmap
 			uint width = FreeImage_GetWidth(bitmap), height = FreeImage_GetHeight(bitmap);
 			BYTE *data = FreeImage_GetBits(bitmap);
-			float *pixels = new float[width*height*4];
+			uchar *pixels = new uchar[width*height*4];
 			for(uint i = 0; i < width*height; i++) // BGRA to RGBA
 			{
-				pixels[i*4+0] = data[i*4+2]/255.0f;
-				pixels[i*4+1] = data[i*4+1]/255.0f;
-				pixels[i*4+2] = data[i*4+0]/255.0f;
-				pixels[i*4+3] = data[i*4+3]/255.0f;
+				pixels[i*4+0] = data[i*4+2];
+				pixels[i*4+1] = data[i*4+1];
+				pixels[i*4+2] = data[i*4+0];
+				pixels[i*4+3] = data[i*4+3];
 			}
-			pixmap = new XPixmap(width, height, (Vector4*)pixels);
+			pixmap = new XPixmap(width, height, pixels);
 		
 			// Close the memory stream
 			FreeImage_Unload(bitmap);
@@ -65,20 +60,20 @@ XPixmap *XAssetManager::LoadPixmap(string filePath, const XImageFormat format)
 		else
 		{
 			// Unable to read file
-			LOG("XAssetManager::LoadPixmap() - Unable to read file '%s'", filePath);
+			LOG("XAssetManager::LoadPixmap() - Unable to read file '%s'", path);
 		}
 	}
 	return pixmap;
 }
 
-void XAssetManager::SavePixmap(string filePath, XPixmap *pixmap, const XImageFormat format)
+/*void XAssetManager::SavePixmap(string filePath, XPixmap *pixmap, const XImageFormat format)
 {
 	FIBITMAP *bitmap = FreeImage_ConvertFromRawBits((BYTE*)pixmap->getData(), pixmap->getWidth(), pixmap->getHeight(), pixmap->getWidth() * 4, 32, FI_RGBA_RED_MASK, FI_RGBA_GREEN_MASK, FI_RGBA_BLUE_MASK, false);
 		
 	// For now, let's just save everything as png
 	util::toAbsoluteFilePath(filePath);
 	FreeImage_Save(FIF_PNG, bitmap, filePath.c_str());
-}
+}*/
 
 #define WAV_LOAD_ERROR 0
 
@@ -109,7 +104,7 @@ static unsigned long readByte32(const unsigned char buffer[4])
 //  -  Alut source code: static BufferData *loadWavFile (InputStream *stream)
 //     http://www.openal.org/repos/openal/tags/freealut_1_1_0/alut/alut/src/alutLoader.c
 
-XAudioBuffer *XAssetManager::LoadSound(string filePath, const XSoundFormat )
+/*XSound *XAssetManager::getSound(string filePath, const XSoundFormat)
 {
 	// For now we're loading all sounds as WAV files
 	const unsigned int BUFFER_SIZE = 32768;     // 32 KB buffers
@@ -284,4 +279,4 @@ XAudioBuffer *XAssetManager::LoadSound(string filePath, const XSoundFormat )
 	f = NULL;
 	
 	return new XAudioBuffer(data.data(), data.size(), freq, format);
-}
+}*/
