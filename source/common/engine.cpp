@@ -62,7 +62,7 @@ XEngine::~XEngine()
 	delete m_audio;
 	delete m_timer;
 	delete m_math;
-	delete m_assetManager;
+	//xd::ResourceManager::clear();
 	delete m_console;
 }
 
@@ -166,7 +166,6 @@ int XEngine::init(const XConfig &config)
 	m_graphics = new XGraphics();
 	m_audio = new XAudioManager();
 	m_math = new XMath();
-	m_assetManager = new XAssetManager;
 
 	m_mainFunc = config.main;
 	m_drawFunc = config.draw;

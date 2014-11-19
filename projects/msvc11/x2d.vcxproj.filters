@@ -108,6 +108,9 @@
     <ClInclude Include="..\..\include\x2d\graphics\vertexbufferobject.h">
       <Filter>include\graphics</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\include\x2d\resourcemanager.h">
+      <Filter>include</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\source\audio\buffer.cpp">
@@ -170,9 +173,6 @@
     <ClCompile Include="..\..\source\common\math\rect.cpp">
       <Filter>source\common\math</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\source\common\assetmanager.cpp">
-      <Filter>source\common</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\source\common\filesystem.cpp">
       <Filter>source\common</Filter>
     </ClCompile>
@@ -211,6 +211,9 @@
     </ClCompile>
     <ClCompile Include="..\..\source\graphics\framebufferobject.cpp">
       <Filter>source\graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\common\resourcemanager.cpp">
+      <Filter>source\common</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

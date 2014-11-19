@@ -14,7 +14,6 @@ class XDAPI XTexture
 public:
 	XTexture();
 	XTexture(const uint width, const uint height, const XColor &color = XColor(0));
-	XTexture(const string &path);
 	XTexture(const XPixmap &pixmap);
 	XTexture(const XTexture &other);
 	~XTexture();
@@ -55,6 +54,8 @@ public:
 	void updatePixmap(const int x, const int y, const XPixmap &pixmap);
 	void clear();
 
+	static xd::Resource<XTexture> loadResource(const string &name);
+
 private:
 	void init(const XPixmap &pixmap);
 	void updateFiltering();
@@ -70,5 +71,7 @@ private:
 	uint m_width;
 	uint m_height;
 };
+
+template XDAPI class xd::Resource<XTexture>;
 
 #endif // X2D_TEXTURE_H

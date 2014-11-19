@@ -9,7 +9,6 @@ struct XColor;
 class XDAPI XFont
 {
 public:
-	XFont(string fontName, const uint size);
 	~XFont();
 
 	float getStringWidth(const string &str);
@@ -33,9 +32,11 @@ public:
 		Vector2i size;
 	};
 
+	static xd::Resource<XFont> loadResource(const string &name);
+
 private:
 	// Load font using TrueType 2
-	void load(const string &fontFile, const uint size);
+	XFont(const string &fontFile, const uint size);
 	bool isValidChar(uchar ch) { return ch >= 0 && ch < 128; }
 
 	// Font color
@@ -56,5 +57,7 @@ private:
 	// Font character metrics
 	vector<CharMetrics> m_metrics;
 };
+
+template XDAPI class xd::Resource<XFont>;
 
 #endif // X2D_FONT_H

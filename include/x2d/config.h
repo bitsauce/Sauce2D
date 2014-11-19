@@ -162,41 +162,6 @@ namespace util
 }
 
 /*********************************************************************
-**	Simple reference counter										**
-**********************************************************************/
-class RefCounter
-{
-public:
-	RefCounter() :
-		refCount(1)
-	{
-	}
-	
-	RefCounter(const RefCounter &) :
-		refCount(1)
-	{
-	}
-
-	void add()
-	{
-		++refCount;
-	}
-
-	int release()
-	{
-		return --refCount;
-	}
-
-	int get() const
-	{
-		return refCount;
-	}
-
-private:
-	int refCount;
-};
-
-/*********************************************************************
 **	Macros															**
 **********************************************************************/
 

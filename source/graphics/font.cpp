@@ -82,36 +82,15 @@ inline int next_p2(int a)
 	return rval;
 }
 
-XFont::XFont(string fontName, const uint size) :
+XFont::XFont(const string &filePath, const uint size) :
 	m_color(0, 0, 0, 255),
 	m_atlas(0),
 	m_size(0),
 	m_lineSize(0),
 	m_Msize(0)
 {
-	// Check if we can find the XFont in the local directories
-	util::toAbsoluteFilePath(fontName);
-	if(!util::fileExists(fontName))
-	{
-		// Loop throught the registry to find the file by XFont name
-		if(!getFontFile(fontName))
-		{
-			LOG("Font '%s' not found!", fontName);
-			return;
-		}
-	}
-
-	// Load font
-	load(fontName, size);
-}
-
-XFont::~XFont()
-{
-	delete m_atlas;
-}
-
-void XFont::load(const string &filePath, const uint size)
-{
+	// Load font from file
+	//
 	// Create and initialize a FreeType library
 	FT_Library library;
 	FT_Error error;
@@ -121,15 +100,15 @@ void XFont::load(const string &filePath, const uint size)
 		return;
 	}
 
-	// Load the XFont information from file
+	// Load font information from file
 	FT_Face face;
 	if((error = FT_New_Face(library, filePath.c_str(), 0, &face)) != 0)
 	{
-		LOG("XFont::load - Failed load XFont data (error code: %i)", error);
+		LOG("XFont::load - Failed load font data (error code: %i)", error);
 		return;
 	}
 
-	// Setup XFont characters
+	// Setup font characters
 	m_metrics.resize(128);
 	m_size = size;
 
@@ -141,7 +120,7 @@ void XFont::load(const string &filePath, const uint size)
 		return;
 	}
 
-	// Load bitmap data for each of the character of the XFont
+	// Load bitmap data for each of the character of the font
 	vector<XPixmap> pixmaps;
 	for(uchar ch = 0; ch < 128; ch++)
 	{
@@ -202,6 +181,33 @@ void XFont::load(const string &filePath, const uint size)
 	// Clean up FreeType
 	FT_Done_Face(face);
 	FT_Done_FreeType(library);
+}
+
+XFont::~XFont()
+{
+	delete m_atlas;
+}
+
+xd::Resource<XFont> XFont::loadResource(const string &name)
+{
+	// Get name and size
+	uint size = util::strToInt(name.substr(name.find_last_of(' ') + 1));
+	string filePath = name.substr(0, name.find_last_of(' '));
+
+	// Check if we can find the font in the local directories
+	util::toAbsoluteFilePath(filePath);
+	if(!util::fileExists(filePath))
+	{
+		// Loop throught the registry to find the file by font name
+		
+		if(!getFontFile(filePath))
+		{
+			LOG("Font '%s' not found!", name);
+			return xd::Resource<XFont>(0);
+		}
+	}
+
+	return xd::Resource<XFont>(new XFont(filePath, size));
 }
 
 float XFont::getStringWidth(const string &str)
@@ -296,11 +302,15 @@ void XFont::draw(XBatch *batch, const Vector2 &pos, const string &str)
 
 XTexture *XFont::renderToTexture(const string &text, const uint padding)
 {
-	XTexture *texture = new XTexture(getStringWidth(text) + padding, getStringHeight(text) + padding);
+	XTexture *texture = new XTexture((uint)ceil(getStringWidth(text)) + padding, (uint)ceil(getStringHeight(text)) + padding);
+
+	XGraphics::disableAlphaBlending();
 
 	XBatch batch;
 	draw(&batch, Vector2(padding/2.0f, padding/2.0f), text);
 	batch.renderToTexture(texture);
+
+	XGraphics::enableAlphaBlending();
 
 	return texture;
 }

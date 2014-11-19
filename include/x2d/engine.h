@@ -3,6 +3,7 @@
 
 #include "config.h"
 #include "math.h"
+#include "resourcemanager.h"
 
 #define LOG(str, ...) XConsole::Log(str, __VA_ARGS__)
 
@@ -53,42 +54,6 @@ private:
 	XFileWriter *m_output;
 	
 	static bool s_initialized;
-};
-
-/*********************************************************************
-**	Asset manager													**
-**********************************************************************/
-
-// Image formats
-enum XImageFormat
-{
-	ANY_IMAGE_TYPE,
-	PNG_IMAGE_TYPE,
-	BMP_IMAGE_TYPE,
-	DDS_IMAGE_TYPE,
-	PSD_IMAGE_TYPE,
-	TGA_IMAGE_TYPE,
-	JPG_IMAGE_TYPE
-};
-
-// Sound formats
-enum XSoundFormat
-{
-	ANY_SOUND_TYPE,
-	WAV_SOUND_TYPE,
-	MP3_SOUND_TYPE,
-	OGG_SOUND_TYPE
-};
-
-class XPixmap;
-//class XSound;
-
-class XDAPI XAssetManager
-{
-public:
-	static XPixmap *loadImage(string path, const XImageFormat format = ANY_IMAGE_TYPE);
-	//static XSound *loadSound(string path, const XSoundFormat = ANY_SOUND_TYPE);
-private:
 };
 
 /*********************************************************************
@@ -638,7 +603,6 @@ private:
 	XTimer*			m_timer;
 	XConsole*		m_console;
 	XMath*			m_math;
-	XAssetManager*	m_assetManager;
 
 	// Game loop
 	void draw();

@@ -10,61 +10,8 @@
 #include <x2d/engine.h>
 #include <x2d/graphics.h>
 #include <x2d/audio.h>
-#include <freeimage.h>
 
-XPixmap *XAssetManager::loadImage(string path, const XImageFormat format)
-{
-	// Load texture from file
-	XPixmap *pixmap = 0;
-	if(format == ANY_IMAGE_TYPE)
-	{
-		// Load asset as a image
-		string content;
-		if(XFileSystem::ReadFile(path, content))
-		{
-			// Attach the binary data to a memory stream
-			FIMEMORY *hmem = FreeImage_OpenMemory((uchar*)content.c_str(), content.size());
-		
-			// Get the file type
-			FREE_IMAGE_FORMAT fif = FreeImage_GetFileTypeFromMemory(hmem);
-		
-			// Load an image from the memory stream
-			FIBITMAP *bitmap = FreeImage_LoadFromMemory(fif, hmem, 0);
-
-			// Convert all non-32bpp bitmaps to 32bpp bitmaps
-			// TODO: I should add support for loading different bpps into graphics memory
-			if(FreeImage_GetBPP(bitmap) != 32)
-			{
-				FIBITMAP *newBitmap = FreeImage_ConvertTo32Bits(bitmap);
-				FreeImage_Unload(bitmap);
-				bitmap = newBitmap;
-			}
-			
-			// Create pixmap
-			uint width = FreeImage_GetWidth(bitmap), height = FreeImage_GetHeight(bitmap);
-			BYTE *data = FreeImage_GetBits(bitmap);
-			uchar *pixels = new uchar[width*height*4];
-			for(uint i = 0; i < width*height; i++) // BGRA to RGBA
-			{
-				pixels[i*4+0] = data[i*4+2];
-				pixels[i*4+1] = data[i*4+1];
-				pixels[i*4+2] = data[i*4+0];
-				pixels[i*4+3] = data[i*4+3];
-			}
-			pixmap = new XPixmap(width, height, pixels);
-		
-			// Close the memory stream
-			FreeImage_Unload(bitmap);
-			FreeImage_CloseMemory(hmem);
-		}
-		else
-		{
-			// Unable to read file
-			LOG("XAssetManager::LoadPixmap() - Unable to read file '%s'", path);
-		}
-	}
-	return pixmap;
-}
+map<string, void*> xd::ResourceManager::s_resources;
 
 /*void XAssetManager::SavePixmap(string filePath, XPixmap *pixmap, const XImageFormat format)
 {

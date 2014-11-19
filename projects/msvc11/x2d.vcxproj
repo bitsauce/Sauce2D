@@ -45,13 +45,14 @@
     <ClInclude Include="..\..\include\x2d\math\rect.h" />
     <ClInclude Include="..\..\include\x2d\math\rectanglepacker.h" />
     <ClInclude Include="..\..\include\x2d\math\vector.h" />
+    <ClInclude Include="..\..\include\x2d\resourcemanager.h" />
     <ClInclude Include="..\..\include\x2d\x2d.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\source\audio\audio.cpp" />
     <ClCompile Include="..\..\source\audio\buffer.cpp" />
     <ClCompile Include="..\..\source\audio\source.cpp" />
-    <ClCompile Include="..\..\source\common\assetmanager.cpp" />
+    <ClCompile Include="..\..\source\common\resourcemanager.cpp" />
     <ClCompile Include="..\..\source\common\console.cpp" />
     <ClCompile Include="..\..\source\common\engine.cpp" />
     <ClCompile Include="..\..\source\common\filesystem.cpp" />

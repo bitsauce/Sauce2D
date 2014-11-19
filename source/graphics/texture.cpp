@@ -58,20 +58,6 @@ XTexture::XTexture(const XPixmap &pixmap)
 {
 	init(pixmap);
 }
-
-XTexture::XTexture(const string &path)
-{
-	XPixmap *pixmap = XAssetManager::loadImage(path);
-	if(pixmap)
-	{
-		init(*pixmap);
-	}
-	else
-	{
-		LOG("XTexture::XTexture() - Unable to load image file '%s'", path.c_str());
-	}
-	delete pixmap;
-}
 	
 XTexture::XTexture(const uint width, const uint height, const XColor &color)
 {
@@ -242,4 +228,58 @@ uint XTexture::getWidth() const
 uint XTexture::getHeight() const
 {
 	return m_height;
+}
+
+#include <freeimage.h>
+
+xd::Resource<XTexture> XTexture::loadResource(const string &name)
+{
+	// Load texture from file
+	XTexture *texture = 0;
+
+	// Load asset as a image
+	string content;
+	if(XFileSystem::ReadFile(/*XResourceManager::getFileByName(name)*/name, content))
+	{
+		// Attach the binary data to a memory stream
+		FIMEMORY *hmem = FreeImage_OpenMemory((uchar*)content.c_str(), content.size());
+		
+		// Get the file type
+		FREE_IMAGE_FORMAT fif = FreeImage_GetFileTypeFromMemory(hmem);
+		
+		// Load an image from the memory stream
+		FIBITMAP *bitmap = FreeImage_LoadFromMemory(fif, hmem, 0);
+
+		// Convert all non-32bpp bitmaps to 32bpp bitmaps
+		// TODO: I should add support for loading different bpps into graphics memory
+		if(FreeImage_GetBPP(bitmap) != 32)
+		{
+			FIBITMAP *newBitmap = FreeImage_ConvertTo32Bits(bitmap);
+			FreeImage_Unload(bitmap);
+			bitmap = newBitmap;
+		}
+			
+		// Create pixmap
+		uint width = FreeImage_GetWidth(bitmap), height = FreeImage_GetHeight(bitmap);
+		BYTE *data = FreeImage_GetBits(bitmap);
+		uchar *pixels = new uchar[width*height*4];
+		for(uint i = 0; i < width*height; i++) // BGRA to RGBA
+		{
+			pixels[i*4+0] = data[i*4+2];
+			pixels[i*4+1] = data[i*4+1];
+			pixels[i*4+2] = data[i*4+0];
+			pixels[i*4+3] = data[i*4+3];
+		}
+		texture = new XTexture(XPixmap(width, height, pixels));
+		
+		// Close the memory stream
+		FreeImage_Unload(bitmap);
+		FreeImage_CloseMemory(hmem);
+	}
+	else
+	{
+		// Unable to read file
+		LOG("XTextureLoader::load() - Unable to read file '%s'", name);
+	}
+	return xd::Resource<XTexture>(texture);
 }
