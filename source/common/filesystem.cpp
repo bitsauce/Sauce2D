@@ -78,6 +78,60 @@ void XFileWriter::clear()
 	stream.clear();
 }
 
+namespace xd
+{
+FileSystemIterator::FileSystemIterator(string path, const string &mask, const int flags)
+{
+	// Create output array
+	util::toAbsoluteFilePath(path);
+	util::toDirectoryPath(path);
+
+	// Get search path
+	string searchPath = path + mask;
+		
+	// Find first file
+	WIN32_FIND_DATA fdata;
+	HANDLE hFind = FindFirstFile(searchPath.c_str(), &fdata);
+
+	// Check if the search was successful
+	if(hFind != INVALID_HANDLE_VALUE)
+	{
+		do {
+			wchar_t filename[MAX_PATH];
+			mbstowcs_s(0, filename, fdata.cFileName, 1024);
+
+			if(wcscmp(filename, L".") != 0 && wcscmp(filename, L"..") != 0)
+			{
+				if((fdata.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY) != 0 && (flags & DIRECTORIES) != 0)
+				{
+					m_files.push_back(path + fdata.cFileName + "/");
+				}
+				else if((flags & FILES) != 0)
+				{
+					m_files.push_back(path + fdata.cFileName);
+				}
+			}
+		}
+		while (FindNextFile(hFind, &fdata) != 0);
+	}
+
+	FindClose(hFind);
+
+	m_itr = m_files.begin();
+}
+
+bool FileSystemIterator::hasNext() const
+{
+	return m_itr != m_files.end();
+}
+
+string &FileSystemIterator::next()
+{
+	return *m_itr;
+}
+
+}
+
 void XFileWriter::append(const char* data, const int length)
 {
 	stream << data;

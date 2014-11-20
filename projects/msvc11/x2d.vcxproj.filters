@@ -111,6 +111,9 @@
     <ClInclude Include="..\..\include\x2d\resourcemanager.h">
       <Filter>include</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\include\x2d\iniparser.h">
+      <Filter>include</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\source\audio\buffer.cpp">
@@ -213,6 +216,9 @@
       <Filter>source\graphics</Filter>
     </ClCompile>
     <ClCompile Include="..\..\source\common\resourcemanager.cpp">
+      <Filter>source\common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\common\iniparser.cpp">
       <Filter>source\common</Filter>
     </ClCompile>
   </ItemGroup>

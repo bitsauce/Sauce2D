@@ -38,6 +38,8 @@ bool XEngine::s_paused = false;
 bool XEngine::s_running = false;
 int XEngine::s_flags = 0;
 stack<XScene*> XEngine::s_sceneStack;
+XScene *XEngine::s_showScene = 0;
+XScene *XEngine::s_hideScene = 0;
 
 // System dirs
 string XEngine::s_workDir;
@@ -52,7 +54,9 @@ XEngine::~XEngine()
 	// Pop all scene objects
 	while(s_sceneStack.size() > 0)
 	{
-		popScene();
+		XScene *scene = s_sceneStack.top();
+		if(scene) scene->hideEvent();
+		s_sceneStack.pop();
 	}
 
 	m_endFunc();
@@ -68,21 +72,12 @@ XEngine::~XEngine()
 
 void XEngine::pushScene(XScene *scene)
 {
-	// Hide previous scene
-	XScene *prevScene = s_sceneStack.size() > 0 ? s_sceneStack.top() : 0;
-	if(prevScene)
-	{
-		prevScene->hideEvent();
-	}
+	// Show and hide scenes
+	s_showScene = scene;
+	s_hideScene = s_sceneStack.size() > 0 ? s_sceneStack.top() : 0;
 
 	// Add scene to stack
 	s_sceneStack.push(scene);
-
-	// Show new scene
-	if(scene)
-	{
-		scene->showEvent();
-	}
 }
 
 void XEngine::popScene()
@@ -91,16 +86,11 @@ void XEngine::popScene()
 	if(s_sceneStack.size() == 0) return;
 
 	// Hide and pop topmost scene
-	XScene *scene = s_sceneStack.top();
-	scene->hideEvent();
+	s_hideScene = s_sceneStack.top();
 	s_sceneStack.pop();
 
 	// Show next scene
-	XScene *nextScene = s_sceneStack.size() > 0 ? s_sceneStack.top() : 0;
-	if(nextScene)
-	{
-		nextScene->showEvent();
-	}
+	s_showScene = s_sceneStack.size() > 0 ? s_sceneStack.top() : 0;
 }
 
 #include <direct.h> // for _getcw()
@@ -284,7 +274,22 @@ int XEngine::run()
 
 			// Check if game is paused or out of focus
 			if(s_paused || !XWindow::hasFocus())
+			{
 				continue;
+			}
+
+			// Show new scene before hiding current scene to keep common resources alive
+			if(s_showScene)
+			{
+				s_showScene->showEvent();
+				s_showScene = 0;
+			}
+			
+			if(s_hideScene)
+			{
+				s_hideScene->hideEvent();
+				s_hideScene = 0;
+			}
 
 			// Calculate time delta
 			const float currentTime = m_timer->getElapsedTime() * 0.001f;

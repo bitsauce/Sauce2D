@@ -39,6 +39,7 @@
     <ClInclude Include="..\..\include\x2d\graphics\vertexbuffer.h" />
     <ClInclude Include="..\..\include\x2d\graphics\vertexbufferobject.h" />
     <ClInclude Include="..\..\include\x2d\graphics\viewport.h" />
+    <ClInclude Include="..\..\include\x2d\iniparser.h" />
     <ClInclude Include="..\..\include\x2d\math.h" />
     <ClInclude Include="..\..\include\x2d\math\matrix.h" />
     <ClInclude Include="..\..\include\x2d\math\random.h" />
@@ -52,6 +53,7 @@
     <ClCompile Include="..\..\source\audio\audio.cpp" />
     <ClCompile Include="..\..\source\audio\buffer.cpp" />
     <ClCompile Include="..\..\source\audio\source.cpp" />
+    <ClCompile Include="..\..\source\common\iniparser.cpp" />
     <ClCompile Include="..\..\source\common\resourcemanager.cpp" />
     <ClCompile Include="..\..\source\common\console.cpp" />
     <ClCompile Include="..\..\source\common\engine.cpp" />

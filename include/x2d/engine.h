@@ -4,6 +4,7 @@
 #include "config.h"
 #include "math.h"
 #include "resourcemanager.h"
+#include "iniparser.h"
 
 #define LOG(str, ...) XConsole::Log(str, __VA_ARGS__)
 
@@ -141,6 +142,34 @@ private:
 	ofstream stream;
 };
 
+namespace xd
+{
+/*********************************************************************
+**	File writer class												**
+**********************************************************************/
+class XDAPI FileSystemIterator
+{
+public:
+	FileSystemIterator(string path, const string &mask, const int flags);
+	//~FileSystemIterator();
+
+	enum Flag
+	{
+		DIRECTORIES = 1 << 1,
+		FILES = 1 << 2
+	};
+	
+	bool hasNext() const;
+	string &next();
+
+	operator bool() const { return hasNext(); }
+
+private:
+	vector<string> m_files;
+	vector<string>::iterator m_itr;
+};
+}
+
 /*********************************************************************
 **	File system class												**
 **********************************************************************/
@@ -242,10 +271,10 @@ enum XVirtualKey
 	XD_WHEEL,
 
 	// Arrow keys
-	XD_KEY_Left,
-	XD_KEY_Up,
-	XD_KEY_Right,
-	XD_KEY_Down,
+	XD_KEY_LEFT,
+	XD_KEY_UP,
+	XD_KEY_RIGHT,
+	XD_KEY_DOWN,
 
 	// Special keys
 	XD_KEY_Shift,
@@ -264,7 +293,7 @@ enum XVirtualKey
 	XD_KEY_Home,
 	XD_KEY_Snapshot,
 	XD_KEY_Insert,
-	XD_KEY_Delete,
+	XD_KEY_DELETE,
 
 	// Numpad keys
 	XD_KEY_Numpad0,
@@ -315,7 +344,7 @@ public:
 	static Vector2 getPosition();
 
 	// Key binding
-	static void bind(const XVirtualKey key, delegate<void()> *function);
+	static void bind(const XVirtualKey key, function<void()> function);
 	static void unbind(const XVirtualKey key);
 	static void resetBindings();
 	static void updateBindings();
@@ -342,16 +371,16 @@ private:
 	struct KeyBind
 	{
 		bool pressed;
-		delegate<void()> function;
+		function<void()> function;
 	};
 
 	// Keyboard listener
 	static map<XVirtualKey, KeyBind> s_keyBindings;
-	static vector<delegate<void()>> s_keyListeners;
+	static vector<function<void()>> s_keyListeners;
 
 	// Mouse listener
 	static map<XMouseButton, bool> s_mousePressed;
-	static vector<delegate<void()>> s_mouseListeners;
+	static vector<function<void()>> s_mouseListeners;
 
 	// Cursor position
 	static Vector2 s_position;
@@ -596,6 +625,10 @@ private:
 	// System dirs
 	static string s_workDir;
 	static string s_saveDir;
+
+	// Scene swap
+	static XScene *s_showScene;
+	static XScene *s_hideScene;
 	
 	XFileSystem*	m_fileSystem;
 	XGraphics*		m_graphics;

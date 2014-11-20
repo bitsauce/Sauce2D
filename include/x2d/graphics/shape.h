@@ -19,9 +19,9 @@ public:
 	//void addVertex(const Vertex &vertex);
 	//void addVertices(const vector<Vertex> &vertices);
 
-	void setFillColor(const Vector4 &color);
+	void setFillColor(const XColor &color);
 	void setFillTexture(XTexture* texture);
-	void setPenColor(const Vector4 &color);
+	void setPenColor(const XColor &color);
 	void setPenSize(const float size);
 
 	void draw(XBatch *batch);
@@ -33,9 +33,9 @@ public:
 private:
 	bool validate();
 
-	Vector4 m_fillColor;
+	XColor m_fillColor;
 	XTexture *m_fillTexture;
-	Vector4 m_penColor;
+	XColor m_penColor;
 	float m_penSize;
 	XVertex *m_vertices;
 	int m_vertCount;

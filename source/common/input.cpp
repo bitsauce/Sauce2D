@@ -25,10 +25,10 @@ XVirtualKey fromWinKey(uchar vk)
 	case VK_LBUTTON: return XD_LMB;
 	case VK_RBUTTON: return XD_RMB; 
 	case VK_MBUTTON: return XD_WHEEL; 
-	case VK_RIGHT: return XD_KEY_Right; 
-	case VK_DOWN: return XD_KEY_Down; 
-	case VK_LEFT: return XD_KEY_Left; 
-	case VK_UP: return XD_KEY_Up;
+	case VK_RIGHT: return XD_KEY_RIGHT; 
+	case VK_DOWN: return XD_KEY_DOWN;
+	case VK_LEFT: return XD_KEY_LEFT; 
+	case VK_UP: return XD_KEY_UP;
 	case VK_SHIFT: return XD_KEY_Shift; 
 	case VK_LSHIFT: return XD_KEY_LeftShift; 
 	case VK_RSHIFT: return XD_KEY_RightShift; 
@@ -45,7 +45,7 @@ XVirtualKey fromWinKey(uchar vk)
 	case VK_HOME: return XD_KEY_Home; 
 	case VK_SNAPSHOT: return XD_KEY_Snapshot; 
 	case VK_INSERT: return XD_KEY_Insert; 
-	case VK_DELETE: return XD_KEY_Delete; 
+	case VK_DELETE: return XD_KEY_DELETE; 
 	case VK_NUMPAD0: return XD_KEY_Numpad0; 
 	case VK_NUMPAD1: return XD_KEY_Numpad1; 
 	case VK_NUMPAD2: return XD_KEY_Numpad2; 
@@ -85,10 +85,10 @@ uchar toWinKey(XVirtualKey key)
 	case XD_LMB: vk = VK_LBUTTON; break;
 	case XD_RMB: vk = VK_RBUTTON; break;
 	case XD_WHEEL: vk = VK_MBUTTON; break;
-	case XD_KEY_Right: vk = VK_RIGHT; break;
-	case XD_KEY_Down: vk = VK_DOWN; break;
-	case XD_KEY_Left: vk = VK_LEFT; break;
-	case XD_KEY_Up: vk = VK_UP; break;
+	case XD_KEY_RIGHT: vk = VK_RIGHT; break;
+	case XD_KEY_DOWN: vk = VK_DOWN; break;
+	case XD_KEY_LEFT: vk = VK_LEFT; break;
+	case XD_KEY_UP: vk = VK_UP; break;
 	case XD_KEY_Shift: vk = VK_SHIFT; break;
 	case XD_KEY_LeftShift: vk = VK_LSHIFT; break;
 	case XD_KEY_RightShift: vk = VK_RSHIFT; break;
@@ -105,7 +105,7 @@ uchar toWinKey(XVirtualKey key)
 	case XD_KEY_Home: vk = VK_HOME; break;
 	case XD_KEY_Snapshot: vk = VK_SNAPSHOT; break;
 	case XD_KEY_Insert: vk = VK_INSERT; break;
-	case XD_KEY_Delete: vk = VK_DELETE; break;
+	case XD_KEY_DELETE: vk = VK_DELETE; break;
 	case XD_KEY_Numpad0: vk = VK_NUMPAD0; break;
 	case XD_KEY_Numpad1: vk = VK_NUMPAD1; break;
 	case XD_KEY_Numpad2: vk = VK_NUMPAD2; break;
@@ -164,12 +164,12 @@ XInput::~XInput()
 	}
 }*/
 
-void XInput::bind(const XVirtualKey key, delegate<void()> *function)
+void XInput::bind(const XVirtualKey key, function<void()> function)
 {
 	if(function)
 	{
 		// Bind function to key
-		s_keyBindings[key].function = *function;
+		s_keyBindings[key].function = function;
 		s_keyBindings[key].pressed = false;
 	}
 	else if(s_keyBindings.find(key) != s_keyBindings.end())
@@ -181,7 +181,7 @@ void XInput::bind(const XVirtualKey key, delegate<void()> *function)
 
 void XInput::unbind(const XVirtualKey key)
 {
-	bind(key, 0);
+	bind(key, function<void()>());
 }
 
 void XInput::resetBindings()

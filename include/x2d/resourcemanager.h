@@ -136,9 +136,14 @@ public:
 	template<typename T>
 	static Resource<T> get(const string &name)
 	{
-		if(s_resources.find(name) != s_resources.end())
+		// NOTE TO SELF: I need to notify the resource manager of resources that have been deleted so I can remove it from s_resources.
+		if(s_resources.find(name) != s_resources.end()) {
 			return *(Resource<T>*)s_resources[name];
-		return T::loadResource(name);
+		}
+
+		Resource<T> resource = T::loadResource(name);
+		s_resources[name] = new Resource<T>(resource);
+		return resource;
 	}
 private:
 	static map<string, void*> s_resources;

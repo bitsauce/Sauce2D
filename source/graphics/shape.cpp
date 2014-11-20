@@ -126,7 +126,7 @@ void XShape::addVertices(const vector<Vertex> &vertices)
 	}
 }*/
 
-void XShape::setFillColor(const Vector4 &color)
+void XShape::setFillColor(const XColor &color)
 {
 	m_fillColor = color;
 }
@@ -139,7 +139,7 @@ void XShape::setFillTexture(XTexture* texture)
 	m_fillTexture = texture;
 }
 
-void XShape::setPenColor(const Vector4 &color)
+void XShape::setPenColor(const XColor &color)
 {
 	m_penColor = color;
 }
@@ -163,7 +163,7 @@ void XShape::draw(XBatch *batch)
 	// Set vertex colors
 	for(uint i = 0; i < m_vertCount; i++)
 	{
-		m_vertices[i].set4ub(VERTEX_COLOR, m_fillColor.x*255, m_fillColor.y*255, m_fillColor.z*255, m_fillColor.w*255);
+		m_vertices[i].set4ub(VERTEX_COLOR, m_fillColor.r, m_fillColor.g, m_fillColor.b, m_fillColor.a);
 	}
 	
 	//if(m_fillTexture)
