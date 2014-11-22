@@ -7,7 +7,7 @@
 /*********************************************************************
 **	2x2 Matrix														**
 **********************************************************************/
-class Matrix2
+class XDAPI Matrix2
 {
 public:
     // Constructors
@@ -193,7 +193,7 @@ inline std::ostream& operator<<(std::ostream& os, const Matrix2& m)
 /*********************************************************************
 **	3x3 Matrix														**
 **********************************************************************/
-class Matrix3
+class XDAPI Matrix3
 {
 public:
     // constructors
@@ -408,7 +408,7 @@ inline std::ostream& operator<<(std::ostream& os, const Matrix3& m)
 /*********************************************************************
 **	4x4 Matrix														**
 **********************************************************************/
-class Matrix4
+class XDAPI Matrix4
 {
 public:
     // constructors

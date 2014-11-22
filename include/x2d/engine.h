@@ -138,6 +138,9 @@ public:
 	void append(const string &str) { append(str.data(), str.size()); }
 	void flush();
 
+	bool operator!() const { return !stream; }
+	XFileWriter &operator<<(int i) { stream << i; }
+
 private:
 	ofstream stream;
 };
