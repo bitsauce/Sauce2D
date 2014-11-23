@@ -137,9 +137,13 @@ public:
 	void append(const char* data, const int length);
 	void append(const string &str) { append(str.data(), str.size()); }
 	void flush();
+	
+    // define an operator<< to take in std::endl
+    XFileWriter &operator<<(basic_ostream<char, std::char_traits<char> >& (*fp)(basic_ostream<char, std::char_traits<char> >&)) { stream << fp; return *this; }
 
 	bool operator!() const { return !stream; }
-	XFileWriter &operator<<(int i) { stream << i; }
+	XFileWriter &operator<<(int i) { stream << i; return *this; }
+	XFileWriter &operator<<(char c) { stream << c; return *this; }
 
 private:
 	ofstream stream;
@@ -330,6 +334,17 @@ enum XVirtualKey
 	XD_KEY_Equals
 };
 
+namespace xd
+{
+class KeyboardListener
+{
+public:
+	virtual void keyPressEvent(const XVirtualKey key) { }
+	virtual void keyReleaseEvent(const XVirtualKey key) { }
+	virtual void charEvent(const wchar_t c) { }
+};
+}
+
 class XDAPI XInput
 {
 	friend class XWindow;
@@ -354,8 +369,8 @@ public:
 	static void checkBindings();
 
 	// Keyboard listener
-	//static void addKeyboardListener(XKeyboardListener *object);
-	static void charEvent(uint utf8char);
+	static void addKeyboardListener(xd::KeyboardListener *object);
+	static void charEvent(const wchar_t c);
 	static void keyPressed(const XVirtualKey key);
 	static void keyReleased(const XVirtualKey key);
 
@@ -379,7 +394,7 @@ private:
 
 	// Keyboard listener
 	static map<XVirtualKey, KeyBind> s_keyBindings;
-	static vector<function<void()>> s_keyListeners;
+	static vector<xd::KeyboardListener*> s_keyListeners;
 
 	// Mouse listener
 	static map<XMouseButton, bool> s_mousePressed;

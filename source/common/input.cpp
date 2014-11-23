@@ -11,7 +11,7 @@
 
 // TODO: Refactor. This class is a mess
 map<XVirtualKey, XInput::KeyBind> XInput::s_keyBindings;
-vector<delegate<void()>> XInput::s_keyListeners;
+vector<xd::KeyboardListener*> XInput::s_keyListeners;
 	
 map<XMouseButton, bool> XInput::s_mousePressed;
 vector<delegate<void()>> XInput::s_mouseListeners;
@@ -189,27 +189,37 @@ void XInput::resetBindings()
 	s_keyBindings.clear();
 }
 
-/*void XInput::addKeyboardListener(asIScriptObject *object)
+void XInput::addKeyboardListener(xd::KeyboardListener *object)
 {
 	// Add keyboard listener
-	if(object) {
-		m_keyListeners.push_back(object);
+	if(object)
+	{
+		s_keyListeners.push_back(object);
 	}
-}*/
+}
 
-void XInput::charEvent(uint utf8char)
+void XInput::charEvent(const wchar_t c)
 {
-
+	for(vector<xd::KeyboardListener*>::iterator itr = s_keyListeners.begin(); itr != s_keyListeners.end(); ++itr)
+	{
+		(*itr)->charEvent(c);
+	}
 }
 
 void XInput::keyPressed(const XVirtualKey key)
 {
-
+	for(vector<xd::KeyboardListener*>::iterator itr = s_keyListeners.begin(); itr != s_keyListeners.end(); ++itr)
+	{
+		(*itr)->keyPressEvent(key);
+	}
 }
 
 void XInput::keyReleased(const XVirtualKey key)
 {
-
+	for(vector<xd::KeyboardListener*>::iterator itr = s_keyListeners.begin(); itr != s_keyListeners.end(); ++itr)
+	{
+		(*itr)->keyReleaseEvent(key);
+	}
 }
 
 /*void XInput::addMouseListener(asIScriptObject *object)

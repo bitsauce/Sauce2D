@@ -127,7 +127,9 @@ bool FileSystemIterator::hasNext() const
 
 string &FileSystemIterator::next()
 {
-	return *m_itr;
+	string &str = *m_itr;
+	++m_itr;
+	return str; // *m_itr++;
 }
 
 }

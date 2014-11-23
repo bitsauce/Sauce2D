@@ -575,7 +575,7 @@ void XWindow::processEvents(UINT Message, WPARAM wParam, LPARAM lParam)
 		break;
 
 		case WM_CHAR:
-			XInput::charEvent((uint)wParam);
+			XInput::charEvent((wchar_t)wParam);
 		break;
     }
 }
