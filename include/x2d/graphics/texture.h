@@ -54,7 +54,7 @@ public:
 	void updatePixmap(const int x, const int y, const XPixmap &pixmap);
 	void clear();
 
-	static xd::Resource<XTexture> loadResource(const string &name);
+	static shared_ptr<XTexture> loadResource(const string &name);
 
 private:
 	void init(const XPixmap &pixmap);
@@ -72,6 +72,6 @@ private:
 	uint m_height;
 };
 
-template XDAPI class xd::Resource<XTexture>;
+template XDAPI class shared_ptr<XTexture>;
 
 #endif // X2D_TEXTURE_H

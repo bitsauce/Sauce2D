@@ -3,6 +3,7 @@
 
 #include "../engine.h"
 #include "vertex.h"
+#include "vertexbuffer.h"
 
 class XTexture;
 class XShader;
@@ -47,6 +48,9 @@ public:
 	void setProjectionMatrix(const Matrix4 &projmat);
 	Matrix4 getProjectionMatrix() const;
 
+	void pushMatrix(const Matrix4 &mat);
+	void popMatrix();
+
 	// Blend func
 	void setBlendFunc(const BlendFunc src, const BlendFunc dst);
 
@@ -55,15 +59,15 @@ public:
 	XShader *getShader() const;
 
 	// Get/set texture
-	void setTexture(XTexture *texture);
-	XTexture *getTexture() const;
+	void setTexture(const shared_ptr<XTexture> &texture);
+	shared_ptr<XTexture> getTexture() const;
 
 	// Get/set primitive type
 	void setPrimitive(PrimitiveType primitive);
 	PrimitiveType getPrimitive() const;
 
 	// Add vertices
-	void setVertexBuffer(const XVertexBuffer &buffer);
+	void addVertexBuffer(const XVertexBuffer &buffer);
 	void addVertices(XVertex *vertices, int vcount, uint *indices, int icount);
 
 	// Render-to-texture
@@ -75,56 +79,49 @@ public:
 	struct State
 	{
 		State() :
-			drawOrder(0),
 			primitive(PRIMITIVE_TRIANGLES),
 			texture(0),
 			srcBlendFunc(BLEND_SRC_ALPHA),
 			dstBlendFunc(BLEND_ONE_MINUS_SRC_ALPHA),
-			shader(0)
+			shader(0),
+			projMat()
 		{
 		}
 
-		bool operator<(const State &other) const
+		bool operator!=(const State &other) const
 		{
-			TUPLE_CMP(this->drawOrder, other.drawOrder);
-			TUPLE_CMP(this->primitive, other.primitive);
-			TUPLE_CMP(this->texture, other.texture);
-			TUPLE_CMP(this->srcBlendFunc, other.srcBlendFunc);
-			TUPLE_CMP(this->dstBlendFunc, other.dstBlendFunc);
-			TUPLE_CMP(this->shader, other.shader);
-			return false;
+			return this->primitive != other.primitive || this->projMat != other.projMat ||
+				this->texture.get() != other.texture.get() || this->srcBlendFunc != other.srcBlendFunc ||
+				this->dstBlendFunc != other.dstBlendFunc || this->shader != other.shader;
 		}
 
-		int drawOrder;
 		PrimitiveType primitive;
-		XTexture *texture;
+		shared_ptr<XTexture> texture;
 		BlendFunc srcBlendFunc;
 		BlendFunc dstBlendFunc;
 		XShader *shader;
+		Matrix4 projMat;
+	};
+
+	struct VertexBufferState
+	{
+		State state;
+		XVertexBuffer buffer;
 	};
 
 protected:
 
 	// State-vertex map
-	map<State, XVertexBuffer> m_buffers;
-
-	// Texture drawing order map
-	map<XTexture*, int> m_drawOrderMap;
+	vector<VertexBufferState> m_buffers;
 
 	// Frame buffer object (for render-to-texture)
 	XFrameBufferObject *m_fbo;
 
-	// Projection matrix
-	Matrix4 m_projMatrix;
-	//vector<Matrix4> m_matrixStack;
+	// Matrix stack
+	stack<Matrix4> m_matrixStack;
 
 	// Current batch state
-	State m_state;
-	
-	//void addVerticesAS(XScriptArray *vertices, XScriptArray *indices);
-	static XBatch *Factory() { return new XBatch(); }
+	State m_state, m_prevState;
 };
-
-typedef map<XBatch::State, XVertexBuffer> StateVertexMap;
 
 #endif // X2D_BATCH_H

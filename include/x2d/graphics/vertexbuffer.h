@@ -36,7 +36,7 @@ public:
 	XVertexBufferObject *getVBO() const { return m_vbo; }
 
 	// Draw vertex buffer
-	void draw(XBatch *batch, XTexture *texture);
+	void draw(XBatch *batch, const shared_ptr<XTexture> &texture);
 	void clear();
 
 	enum BufferType

@@ -20,7 +20,7 @@ public:
 	//void addVertices(const vector<Vertex> &vertices);
 
 	void setFillColor(const XColor &color);
-	void setFillTexture(XTexture* texture);
+	void setFillTexture(const shared_ptr<XTexture> &texture);
 	void setPenColor(const XColor &color);
 	void setPenSize(const float size);
 
@@ -34,7 +34,7 @@ private:
 	bool validate();
 
 	XColor m_fillColor;
-	XTexture *m_fillTexture;
+	shared_ptr<XTexture> m_fillTexture;
 	XColor m_penColor;
 	float m_penSize;
 	XVertex *m_vertices;

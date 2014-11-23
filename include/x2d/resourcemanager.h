@@ -30,119 +30,20 @@ enum XSoundFormat
 	MP3_SOUND_TYPE,
 	OGG_SOUND_TYPE
 };*/
-	
-class XDAPI RefCounter
-{
-public:
-	RefCounter() :
-		refCount(1)
-	{
-	}
-	
-	RefCounter(const RefCounter &) :
-		refCount(1)
-	{
-	}
-
-	void addRef()
-	{
-		++refCount;
-	}
-
-	int release()
-	{
-		return --refCount;
-	}
-
-	int get() const
-	{
-		return refCount;
-	}
-
-private:
-	int refCount;
-};
-
-class XPixmap;
-//class XSound;
-
-template<typename T>
-class XDAPI Resource
-{
-public:
-	Resource(T *res) :
-		m_resourceObject(res)
-	{
-		m_refCounter = new RefCounter();
-		m_refCounter->addRef();
-	}
-
-	Resource(const Resource<T> &other) :
-		m_resourceObject(other.m_resourceObject),
-		m_refCounter(other.m_refCounter)
-	{
-		m_refCounter->addRef();
-	}
-
-	~Resource()
-	{
-		if(m_refCounter->release() == 0)
-		{
-			delete m_resourceObject;
-			delete m_refCounter;
-		}
-	}
-
-	T &operator*()
-	{
-		return *m_resourceObject;
-	}
-
-	T *operator->()
-	{
-		return m_resourceObject;
-	}
-
-	Resource<T> &operator=(const Resource<T> &other)
-	{
-		if(this != &other)
-		{
-			if(m_refCounter->release() == 0)
-			{
-				delete m_resourceObject;
-				delete m_refCounter;
-			}
-
-			m_resourceObject = other.m_resourceObject;
-			m_refCounter = other.m_refCounter;
-			m_refCounter->release();
-		}
-		return *this;
-	}
-
-	operator T*() const
-	{
-		return m_resourceObject;
-	}
-
-private:
-	T *m_resourceObject;
-	RefCounter *m_refCounter;
-};
 
 class XDAPI ResourceManager
 {
 public:
 	template<typename T>
-	static Resource<T> get(const string &name)
+	static shared_ptr<T> get(const string &name)
 	{
 		// NOTE TO SELF: I need to notify the resource manager of resources that have been deleted so I can remove it from s_resources.
 		if(s_resources.find(name) != s_resources.end()) {
-			return *(Resource<T>*)s_resources[name];
+			return *(shared_ptr<T>*)s_resources[name];
 		}
 
-		Resource<T> resource = T::loadResource(name);
-		s_resources[name] = new Resource<T>(resource);
+		shared_ptr<T> resource = T::loadResource(name);
+		s_resources[name] = new shared_ptr<T>(resource);
 		return resource;
 	}
 private:

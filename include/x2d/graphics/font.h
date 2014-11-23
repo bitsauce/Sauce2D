@@ -32,7 +32,7 @@ public:
 		Vector2i size;
 	};
 
-	static xd::Resource<XFont> loadResource(const string &name);
+	static shared_ptr<XFont> loadResource(const string &name);
 
 private:
 	// Load font using TrueType 2
@@ -58,6 +58,6 @@ private:
 	vector<CharMetrics> m_metrics;
 };
 
-template XDAPI class xd::Resource<XFont>;
+template XDAPI class shared_ptr<XFont>;
 
 #endif // X2D_FONT_H

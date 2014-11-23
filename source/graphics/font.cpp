@@ -188,7 +188,7 @@ XFont::~XFont()
 	delete m_atlas;
 }
 
-xd::Resource<XFont> XFont::loadResource(const string &name)
+shared_ptr<XFont> XFont::loadResource(const string &name)
 {
 	// Get name and size
 	uint size = util::strToInt(name.substr(name.find_last_of(' ') + 1));
@@ -203,11 +203,11 @@ xd::Resource<XFont> XFont::loadResource(const string &name)
 		if(!getFontFile(filePath))
 		{
 			LOG("Font '%s' not found!", name);
-			return xd::Resource<XFont>(0);
+			return shared_ptr<XFont>(0);
 		}
 	}
 
-	return xd::Resource<XFont>(new XFont(filePath, size));
+	return shared_ptr<XFont>(new XFont(filePath, size));
 }
 
 float XFont::getStringWidth(const string &str)

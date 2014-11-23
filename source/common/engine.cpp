@@ -66,7 +66,7 @@ XEngine::~XEngine()
 	delete m_audio;
 	delete m_timer;
 	delete m_math;
-	//xd::ResourceManager::clear();
+	//shared_ptrManager::clear();
 	delete m_console;
 }
 

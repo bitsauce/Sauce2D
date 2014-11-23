@@ -10,12 +10,8 @@
 #include <x2d/engine.h>
 #include <x2d/graphics.h>
 
-XAnimation::XAnimation(XTexture *texture, const int nRows, const int nColumns)
+XAnimation::XAnimation(shared_ptr<XTexture> &texture, const int nRows, const int nColumns)
 {
-	// Make sure we're feed a texture
-	if(texture == 0)
-		return;
-
 	// Create texture regions
 	for(int y = 0; y < nRows; y++)
 	{

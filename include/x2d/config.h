@@ -62,6 +62,7 @@
 	#include <assert.h>
 	#include <fstream>
 	#include <sstream>
+	#include <memory>
 	#include <GL/glew.h>
 	#include <GL/wglew.h>
 #elif X2D_UNIX

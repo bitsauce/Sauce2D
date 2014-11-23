@@ -17,14 +17,21 @@ XTextureRegion::XTextureRegion() :
 {
 }
 
-XTextureRegion::XTextureRegion(XTexture *texture, const Vector2 &uv0, const Vector2 &uv1) :
+XTextureRegion::XTextureRegion(const shared_ptr<XTexture> &texture) :
+	uv0(0.0f),
+	uv1(1.0f),
+	texture(texture)
+{
+}
+
+XTextureRegion::XTextureRegion(const shared_ptr<XTexture> &texture, const Vector2 &uv0, const Vector2 &uv1) :
 	uv0(uv0),
 	uv1(uv1),
 	texture(texture)
 {
 }
 
-XTextureRegion::XTextureRegion(XTexture *texture, const float u0, const float v0, const float u1, const float v1) :
+XTextureRegion::XTextureRegion(const shared_ptr<XTexture> &texture, const float u0, const float v0, const float u1, const float v1) :
 	uv0(u0, v0),
 	uv1(u1, v1),
 	texture(texture)
@@ -47,16 +54,7 @@ XTextureRegion &XTextureRegion::operator=(const XTextureRegion &other)
 	
 	uv0 = other.uv0;
 	uv1 = other.uv1;
-	if(texture != other.texture)
-	{
-		//if(texture) {
-		//	texture->release();
-		//}
-		texture = other.texture;
-		//if(texture) {
-		//	texture->addRef();
-		//}
-	}
+	texture = other.texture;
 	
 	return *this;
 }
@@ -68,7 +66,7 @@ XTextureRegion::~XTextureRegion()
 	//}
 }
 
-void XTextureRegion::setTexture(XTexture *texture)
+void XTextureRegion::setTexture(const shared_ptr<XTexture> &texture)
 {
 	//if(this->texture) {
 	//	this->texture->release();
@@ -76,7 +74,7 @@ void XTextureRegion::setTexture(XTexture *texture)
 	this->texture = texture;
 }
 
-XTexture *XTextureRegion::getTexture() const
+shared_ptr<XTexture> XTextureRegion::getTexture() const
 {
 	//if(texture) {
 	//	texture->addRef();

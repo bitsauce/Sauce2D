@@ -232,7 +232,7 @@ uint XTexture::getHeight() const
 
 #include <freeimage.h>
 
-xd::Resource<XTexture> XTexture::loadResource(const string &name)
+shared_ptr<XTexture> XTexture::loadResource(const string &name)
 {
 	// Load texture from file
 	XTexture *texture = 0;
@@ -281,5 +281,5 @@ xd::Resource<XTexture> XTexture::loadResource(const string &name)
 		// Unable to read file
 		LOG("XTextureLoader::load() - Unable to read file '%s'", name);
 	}
-	return xd::Resource<XTexture>(texture);
+	return shared_ptr<XTexture>(texture);
 }

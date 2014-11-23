@@ -29,43 +29,48 @@ void XBatch::setBlendFunc(const BlendFunc src, const BlendFunc dst)
 
 void XBatch::setProjectionMatrix(const Matrix4 &projmat)
 {
-	m_projMatrix = projmat;
+	while(!m_matrixStack.empty()) m_matrixStack.pop();
+	m_matrixStack.push(projmat);
+	m_state.projMat = projmat;
 }
 
 Matrix4 XBatch::getProjectionMatrix() const
 {
-	return m_projMatrix;
+	if(m_matrixStack.empty()) return Matrix4();
+	return m_matrixStack.top();
+}
+
+void XBatch::pushMatrix(const Matrix4 &mat)
+{
+	if(m_matrixStack.empty()) m_matrixStack.push(mat);
+	else m_matrixStack.push(m_matrixStack.top() * mat);
+	m_state.projMat = m_matrixStack.top();
+}
+
+void XBatch::popMatrix()
+{
+	if(m_matrixStack.empty()) return;
+	m_matrixStack.pop();
+	m_state.projMat = !m_matrixStack.empty() ? m_matrixStack.top() : Matrix4();
 }
 
 void XBatch::setShader(XShader *shader)
 {
-	//if(m_state.shader) {
-	//	m_state.shader->release();
-	//}
 	m_state.shader = shader;
 }
 
 XShader *XBatch::getShader() const
 {
-	//if(m_state.shader) {
-	//	m_state.shader->addRef();
-	//}
 	return m_state.shader;
 }
 
-void XBatch::setTexture(XTexture *texture)
+void XBatch::setTexture(const shared_ptr<XTexture> &texture)
 {
-	//if(m_state.texture) {
-	//	m_state.texture->release();
-	//}
 	m_state.texture = texture;
 }
 
-XTexture *XBatch::getTexture() const
+shared_ptr<XTexture> XBatch::getTexture() const
 {
-	//if(m_state.texture) {
-	//	m_state.texture->addRef();
-	//}
 	return m_state.texture;
 }
 
@@ -79,43 +84,37 @@ XBatch::PrimitiveType XBatch::getPrimitive() const
 	return m_state.primitive;
 }
 
-void XBatch::setVertexBuffer(const XVertexBuffer &buffer)
+void XBatch::addVertexBuffer(const XVertexBuffer &buffer)
 {
-	// Get texture draw order
-	if(m_drawOrderMap.find(m_state.texture) == m_drawOrderMap.end())
-	{
-		m_state.drawOrder = m_drawOrderMap[m_state.texture] = m_drawOrderMap.size();
-	}
-	else
-	{
-		m_state.drawOrder = m_drawOrderMap[m_state.texture];
-	}
-
-	m_buffers[m_state] = buffer;
+	// Add buffer
+	VertexBufferState vbs;
+	vbs.buffer = buffer;
+	vbs.state = m_state;
+	m_buffers.push_back(vbs);
 }
 
 void XBatch::addVertices(XVertex *vertices, int vcount, uint *indices, int icount)
 {
 	// Get texture draw order
-	if(m_drawOrderMap.find(m_state.texture) == m_drawOrderMap.end())
+	if(m_buffers.empty() || m_prevState != m_state)
 	{
-		m_state.drawOrder = m_drawOrderMap[m_state.texture] = m_drawOrderMap.size();
+		VertexBufferState vbs;
+		vbs.buffer = XVertexBuffer();
+		vbs.state = m_state;
+		m_buffers.push_back(vbs);
+		m_prevState = m_state;
 	}
-	else
-	{
-		m_state.drawOrder = m_drawOrderMap[m_state.texture];
-	}
-	
-	m_buffers[m_state].addVertices(vertices, vcount, indices, icount);
+
+	// Add vertices
+	m_buffers.back().buffer.addVertices(vertices, vcount, indices, icount);
 
 	//vertex.position = m_matrixStack.top() * Vector4(vertex.position.x, vertex.position.y, 0.0f, 1.0f);
 }
 
 void XBatch::clear()
 {
-	m_projMatrix.identity();
 	m_buffers.clear();
-	m_drawOrderMap.clear();
+	setProjectionMatrix(Matrix4());
 	setTexture(0);
 	setShader(0);
 	setBlendFunc(BLEND_SRC_ALPHA, BLEND_ONE_MINUS_SRC_ALPHA);
@@ -133,7 +132,6 @@ void XBatch::renderToTexture(XTexture *texture)
 		m_fbo->bind(texture);
 		XGraphics::renderBatch(*this);
 		m_fbo->unbind();
-		//texture->release();
 	}
 	else
 	{

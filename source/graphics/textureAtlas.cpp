@@ -15,13 +15,15 @@
 // TDOD: Add a border option to the texture atlas (usefull for fixing font bleeding)
 
 XTextureAtlas::XTextureAtlas() :
-	m_border(1)
+	m_border(1),
+	m_texture(0)
 {
 	init(vector<XPixmap>());
 }
 
 XTextureAtlas::XTextureAtlas(vector<XTexture*> textures, const int border) :
-	m_border(border)
+	m_border(border),
+	m_texture(0)
 {
 	vector<XPixmap> pixmaps;
 	for(vector<XTexture*>::iterator itr = textures.begin(); itr != textures.end(); ++itr)
@@ -36,7 +38,8 @@ XTextureAtlas::XTextureAtlas(vector<XTexture*> textures, const int border) :
 }
 
 XTextureAtlas::XTextureAtlas(vector<XPixmap> &pixmaps, const int border) :
-	m_border(border)
+	m_border(border),
+	m_texture(0)
 {
 	init(pixmaps);
 }
@@ -52,7 +55,7 @@ XTextureAtlas::~XTextureAtlas()
 void XTextureAtlas::init(const vector<XPixmap> &pixmaps)
 {
 	// Create a texture for the atlas
-	m_atlas = new XTexture(ATLAS_SIZE, ATLAS_SIZE);
+	m_texture = shared_ptr<XTexture>(new XTexture(ATLAS_SIZE, ATLAS_SIZE));
 	m_texturePacker.setMaxWidth(ATLAS_SIZE);
 
 	// Set as uninitialized
@@ -96,14 +99,13 @@ XTextureRegion XTextureAtlas::get(const int index, const Vector2 &uv0, const Vec
 {
 	// Validate index
 	if(index < 0 || index >= m_size) {
-		return XTextureRegion(0, Vector2(0.0f), Vector2(1.0f));
+		return XTextureRegion(shared_ptr<XTexture>(0), Vector2(0.0f), Vector2(1.0f));
 	}
 
 	// TODO: Optimization: The texture regions can be precalculated in update() to save time
 	// Get texture region
 	const RectanglePacker::Rectangle &rect = m_result.rectangles[index];
-	//m_atlas->addRef();
-	return XTextureRegion(m_atlas,
+	return XTextureRegion(m_texture,
 		((rect.x+m_border) + (rect.width-m_border*2)*uv0.x)/ATLAS_SIZE, ((rect.y+m_border) + (rect.height-m_border*2)*uv0.y)/ATLAS_SIZE,
 		((rect.x+m_border) + (rect.width-m_border*2)*uv1.x)/ATLAS_SIZE, ((rect.y+m_border) + (rect.height-m_border*2)*uv1.y)/ATLAS_SIZE
 		);
@@ -114,10 +116,9 @@ XTextureRegion XTextureAtlas::get(const int index, const float u0, const float v
 	return get(index, Vector2(u0, v0), Vector2(u1, v1));
 }
 
-XTexture *XTextureAtlas::getTexture() const
+shared_ptr<XTexture> XTextureAtlas::getTexture() const
 {
-	//m_atlas->addRef();
-	return m_atlas;
+	return m_texture;
 }
 
 bool sortResult(RectanglePacker::Rectangle r1, RectanglePacker::Rectangle r2)
@@ -149,5 +150,5 @@ void XTextureAtlas::update()
 
 	sort(m_result.rectangles.begin(), m_result.rectangles.end(), sortResult);
 
-	m_atlas->updatePixmap(XPixmap(ATLAS_SIZE, ATLAS_SIZE, pixels));
+	m_texture->updatePixmap(XPixmap(ATLAS_SIZE, ATLAS_SIZE, pixels));
 }

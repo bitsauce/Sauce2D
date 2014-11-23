@@ -275,13 +275,13 @@ GLenum toGLType(const XDataType value)
 void XGraphics::renderBatch(const XBatch &batch)
 {
 	// Get buffers
-	StateVertexMap buffers = batch.m_buffers;
-	Matrix4 mat = batch.m_projMatrix;
-	glLoadMatrixf(mat.getTranspose());
-
-	for(StateVertexMap::iterator itr = buffers.begin(); itr != buffers.end(); ++itr)
+	vector<XBatch::VertexBufferState> buffers = batch.m_buffers;
+	for(vector<XBatch::VertexBufferState>::iterator itr = buffers.begin(); itr != buffers.end(); ++itr)
 	{
-		const XBatch::State &state = itr->first;
+		XBatch::State &state = (*itr).state;
+		
+		glLoadMatrixf(state.projMat.getTranspose());
+
 		if(state.shader)
 		{
 			// Enable shader
@@ -334,7 +334,7 @@ void XGraphics::renderBatch(const XBatch &batch)
 			glBlendFunc(toGLBlend(state.srcBlendFunc), toGLBlend(state.dstBlendFunc));
 		}
 		
-		XVertexBuffer &buffer = itr->second;
+		const XVertexBuffer &buffer = (*itr).buffer;
 		XVertexFormat fmt = buffer.getVertexFormat();
 		if(buffer.getBufferType() == XVertexBuffer::RAW_BUFFER)
 		{
@@ -449,7 +449,6 @@ void XGraphics::renderBatch(const XBatch &batch)
 			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 		}
 	}
-	glLoadIdentity();
 }
 
 bool XGraphics::isSupported(Feature feature)

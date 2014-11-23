@@ -131,11 +131,8 @@ void XShape::setFillColor(const XColor &color)
 	m_fillColor = color;
 }
 
-void XShape::setFillTexture(XTexture* texture)
+void XShape::setFillTexture(const shared_ptr<XTexture> &texture)
 {
-	//if(m_fillTexture) {
-	//	m_fillTexture->release();
-	//}
 	m_fillTexture = texture;
 }
 
@@ -165,11 +162,7 @@ void XShape::draw(XBatch *batch)
 	{
 		m_vertices[i].set4ub(VERTEX_COLOR, m_fillColor.r, m_fillColor.g, m_fillColor.b, m_fillColor.a);
 	}
-	
-	//if(m_fillTexture)
-	{
-		//m_fillTexture->addRef();
-	}
+
 	batch->setTexture(m_fillTexture);
 	batch->setPrimitive(XBatch::PRIMITIVE_TRIANGLES);
 	batch->addVertices(m_vertices, m_vertCount, m_indices.data(), m_indices.size());

@@ -49,7 +49,7 @@ public:
 	float getRotation() const;
 	Vector4 getColor() const;
 	XTextureRegion getRegion() const;
-	XTexture *getTexture() const;
+	shared_ptr<XTexture> getTexture() const;
 
 	void draw(XBatch *batch) const;
 
@@ -63,9 +63,6 @@ private:
 
 	// Returns the transformed vertices
 	void getVertices(XVertex *vertices) const;
-
-	static XSprite *Factory(const XTextureRegion &region) { return new XSprite(region); }
-	static XSprite *Factory(XTexture *texture);
 };
 
 #endif // X2D_SPRITE_H

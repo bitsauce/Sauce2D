@@ -10,11 +10,6 @@
 #include <x2d/engine.h>
 #include <x2d/graphics.h>
 
-XSprite *XSprite::Factory(XTexture *texture)
-{
-	return new XSprite(XTextureRegion(texture, Vector2(0.0f), Vector2(1.0f)));
-}
-
 XSprite::XSprite(const XTextureRegion &region) :
 	m_textureRegion(region),
 	m_position(0.0f),
@@ -172,7 +167,7 @@ XTextureRegion XSprite::getRegion() const
 	return m_textureRegion;
 }
 
-XTexture *XSprite::getTexture() const
+shared_ptr<XTexture> XSprite::getTexture() const
 {
 	return m_textureRegion.getTexture();
 }

@@ -23,7 +23,7 @@ public:
 	XTextureRegion get(const int index, const Vector2 &uv0, const Vector2 &uv1) const;
 	XTextureRegion get(const int index, const float u0, const float v0, const float u1, const float v1) const;
 
-	XTexture *getTexture() const;
+	shared_ptr<XTexture> getTexture() const;
 	
 	struct AtlasPage
 	{
@@ -55,7 +55,7 @@ public:
 private:
 	void init(const vector<XPixmap> &pixmaps);
 
-	XTexture *m_atlas;
+	shared_ptr<XTexture> m_texture;
 	RectanglePacker m_texturePacker;
 	RectanglePacker::Result m_result;
 	int m_size;
