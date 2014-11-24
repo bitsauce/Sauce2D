@@ -142,7 +142,7 @@
     <LinkIncremental>true</LinkIncremental>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <OutDir>..\..\build\$(Platform)\$(Configuration)\</OutDir>
+    <OutDir>$(ProjectDir)..\..\build\$(Platform)\$(Configuration)\</OutDir>
     <LinkIncremental>false</LinkIncremental>
     <IntDir>$(Configuration)\</IntDir>
   </PropertyGroup>
@@ -233,7 +233,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
-      <AdditionalIncludeDirectories>..\..\include;..\..\source;..\..\3rdparty\angelscript\sdk\angelscript\include;..\..\3rdparty\freeimage\source;..\..\3rdparty\freetype\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\include;$(ProjectDir)..\..\source;$(ProjectDir)..\..\3rdparty\freeimage\source;$(ProjectDir)..\..\3rdparty\freetype\include;$(ProjectDir)..\..\3rdparty\openal\include;$(ProjectDir)..\..\3rdparty\glew\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Android'">
@@ -245,7 +245,7 @@
     <ClCompile>
       <WarningLevel>Level4</WarningLevel>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>X2D_EXPORT;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>X2D_EXPORT;X2D_USE_GL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <Optimization>Full</Optimization>
@@ -254,8 +254,8 @@
       <WholeProgramOptimization>true</WholeProgramOptimization>
     </ClCompile>
     <Link>
-      <AdditionalLibraryDirectories>..\..\3rdparty\angelscript\sdk\angelscript\lib;..\..\3rdparty\freeimage\lib;..\..\3rdparty\freetype\lib</AdditionalLibraryDirectories>
-      <AdditionalDependencies>angelscript.lib;freetype.lib;freeimage.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(ProjectDir)..\..\3rdparty\freeimage\lib;$(ProjectDir)..\..\3rdparty\freetype\lib;$(ProjectDir)..\..\3rdparty\openal\libs\Win32;$(ProjectDir)..\..\3rdparty\glew\lib</AdditionalLibraryDirectories>
+      <AdditionalDependencies>openal32.lib;freetype.lib;freeimage.lib;opengl32.lib;glew.lib;glu32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <GenerateDebugInformation>
       </GenerateDebugInformation>
     </Link>

@@ -14,7 +14,7 @@ map<XVirtualKey, XInput::KeyBind> XInput::s_keyBindings;
 vector<xd::KeyboardListener*> XInput::s_keyListeners;
 	
 map<XMouseButton, bool> XInput::s_mousePressed;
-vector<delegate<void()>> XInput::s_mouseListeners;
+vector<xd::MouseListener*> XInput::s_mouseListeners;
 
 Vector2 XInput::s_position;
 
@@ -222,17 +222,20 @@ void XInput::keyReleased(const XVirtualKey key)
 	}
 }
 
-/*void XInput::addMouseListener(asIScriptObject *object)
+void XInput::addMouseListener(xd::MouseListener *object)
 {
 	// Add keyboard listener
 	if(object) {
-		m_clickListeners.push_back(object);
+		s_mouseListeners.push_back(object);
 	}
-}*/
+}
 
 void XInput::mouseScroll(const int dt)
 {
-
+	for(vector<xd::MouseListener*>::iterator itr = s_mouseListeners.begin(); itr != s_mouseListeners.end(); ++itr)
+	{
+		(*itr)->mouseWheelEvent(dt);
+	}
 }
 
 void XInput::checkBindings()

@@ -336,12 +336,18 @@ enum XVirtualKey
 
 namespace xd
 {
-class KeyboardListener
+class XDAPI KeyboardListener
 {
 public:
 	virtual void keyPressEvent(const XVirtualKey key) { }
 	virtual void keyReleaseEvent(const XVirtualKey key) { }
 	virtual void charEvent(const wchar_t c) { }
+};
+
+class XDAPI MouseListener
+{
+public:
+	virtual void mouseWheelEvent(const int dt) { }
 };
 }
 
@@ -375,7 +381,7 @@ public:
 	static void keyReleased(const XVirtualKey key);
 
 	// Mouse listener
-	//static void addMouseListener(XMouseListener *object);
+	static void addMouseListener(xd::MouseListener *object);
 	//static void mouseClick(const XMouseButton btn); // This doesn't make any sence unless we specify a click-rectangle
 	static void mouseScroll(const int dt);
 
@@ -398,7 +404,7 @@ private:
 
 	// Mouse listener
 	static map<XMouseButton, bool> s_mousePressed;
-	static vector<function<void()>> s_mouseListeners;
+	static vector<xd::MouseListener*> s_mouseListeners;
 
 	// Cursor position
 	static Vector2 s_position;
