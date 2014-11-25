@@ -176,16 +176,6 @@ int XVertexBuffer::getIndexCount() const
 	return m_indexCount;
 }
 
-void XVertexBuffer::draw(XBatch *batch, const shared_ptr<XTexture> &texture)
-{
-	if(batch)
-	{
-		batch->setTexture(texture);
-		batch->setPrimitive(XBatch::PRIMITIVE_TRIANGLES);
-		batch->addVertexBuffer(*this);
-	}
-}
-
 void XVertexBuffer::clear()
 {
 	// Clear vertex data

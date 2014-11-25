@@ -84,7 +84,7 @@ XBatch::PrimitiveType XBatch::getPrimitive() const
 	return m_state.primitive;
 }
 
-void XBatch::addVertexBuffer(const XVertexBuffer &buffer)
+void XBatch::addVertexBuffer(const shared_ptr<XVertexBuffer> &buffer)
 {
 	// Add buffer
 	VertexBufferState vbs;
@@ -99,14 +99,14 @@ void XBatch::addVertices(XVertex *vertices, int vcount, uint *indices, int icoun
 	if(m_buffers.empty() || m_prevState != m_state)
 	{
 		VertexBufferState vbs;
-		vbs.buffer = XVertexBuffer();
+		vbs.buffer = shared_ptr<XVertexBuffer>(new XVertexBuffer());
 		vbs.state = m_state;
 		m_buffers.push_back(vbs);
 		m_prevState = m_state;
 	}
 
 	// Add vertices
-	m_buffers.back().buffer.addVertices(vertices, vcount, indices, icount);
+	m_buffers.back().buffer->addVertices(vertices, vcount, indices, icount);
 
 	//vertex.position = m_matrixStack.top() * Vector4(vertex.position.x, vertex.position.y, 0.0f, 1.0f);
 }

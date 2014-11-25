@@ -67,7 +67,7 @@ public:
 	PrimitiveType getPrimitive() const;
 
 	// Add vertices
-	void addVertexBuffer(const XVertexBuffer &buffer);
+	void addVertexBuffer(const shared_ptr<XVertexBuffer> &buffer);
 	void addVertices(XVertex *vertices, int vcount, uint *indices, int icount);
 
 	// Render-to-texture
@@ -106,7 +106,7 @@ public:
 	struct VertexBufferState
 	{
 		State state;
-		XVertexBuffer buffer;
+		shared_ptr<XVertexBuffer> buffer;
 	};
 
 protected:

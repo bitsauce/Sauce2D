@@ -334,13 +334,13 @@ void XGraphics::renderBatch(const XBatch &batch)
 			glBlendFunc(toGLBlend(state.srcBlendFunc), toGLBlend(state.dstBlendFunc));
 		}
 		
-		const XVertexBuffer &buffer = (*itr).buffer;
-		XVertexFormat fmt = buffer.getVertexFormat();
-		if(buffer.getBufferType() == XVertexBuffer::RAW_BUFFER)
+		const XVertexBuffer *buffer = (*itr).buffer.get();
+		XVertexFormat fmt = buffer->getVertexFormat();
+		if(buffer->getBufferType() == XVertexBuffer::RAW_BUFFER)
 		{
 			// Get vertices and vertex data
-			char *vertexData = buffer.getVertexData();
-			uint *indexData = buffer.getIndexData();
+			char *vertexData = buffer->getVertexData();
+			uint *indexData = buffer->getIndexData();
 			
 			// Set array pointers
 			int stride = fmt.getVertexSizeInBytes();
@@ -388,13 +388,13 @@ void XGraphics::renderBatch(const XBatch &batch)
 			}
 
 			// Draw batch
-			glDrawElements(toGLPrimitive(state.primitive), buffer.getIndexCount(), GL_UNSIGNED_INT, indexData);
+			glDrawElements(toGLPrimitive(state.primitive), buffer->getIndexCount(), GL_UNSIGNED_INT, indexData);
 		}
 		else
 		{
 			// Bind vertices and indices array
-			glBindBuffer(GL_ARRAY_BUFFER_ARB, buffer.getVBO()->m_vboId);
-			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, buffer.getVBO()->m_iboId);
+			glBindBuffer(GL_ARRAY_BUFFER_ARB, buffer->getVBO()->m_vboId);
+			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, buffer->getVBO()->m_iboId);
 			
 			// Set array pointers
 			int stride = fmt.getVertexSizeInBytes();
@@ -442,7 +442,7 @@ void XGraphics::renderBatch(const XBatch &batch)
 			}
 
 			// Draw vbo
-			glDrawElements(toGLPrimitive(state.primitive), buffer.getIndexCount(), GL_UNSIGNED_INT, 0);
+			glDrawElements(toGLPrimitive(state.primitive), buffer->getIndexCount(), GL_UNSIGNED_INT, 0);
 
 			// Reset vbo buffers
 			glBindBuffer(GL_ARRAY_BUFFER_ARB, 0);
