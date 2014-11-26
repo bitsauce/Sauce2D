@@ -10,7 +10,7 @@ class XDAPI XTextureAtlas
 {
 public:
 	XTextureAtlas();
-	XTextureAtlas(vector<XTexture*> textures, const int border = 1);
+	XTextureAtlas(vector<shared_ptr<XTexture>> textures, const int border = 1);
 	XTextureAtlas(vector<XPixmap> &pixmaps, const int border = 1);
 	~XTextureAtlas();
 

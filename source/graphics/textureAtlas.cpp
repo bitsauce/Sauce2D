@@ -21,12 +21,12 @@ XTextureAtlas::XTextureAtlas() :
 	init(vector<XPixmap>());
 }
 
-XTextureAtlas::XTextureAtlas(vector<XTexture*> textures, const int border) :
+XTextureAtlas::XTextureAtlas(vector<shared_ptr<XTexture>> textures, const int border) :
 	m_border(border),
 	m_texture(0)
 {
 	vector<XPixmap> pixmaps;
-	for(vector<XTexture*>::iterator itr = textures.begin(); itr != textures.end(); ++itr)
+	for(vector<shared_ptr<XTexture>>::iterator itr = textures.begin(); itr != textures.end(); ++itr)
 	{
 		if(*itr)
 		{
