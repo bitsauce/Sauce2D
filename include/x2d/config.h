@@ -53,6 +53,7 @@
 	#include <algorithm>
 	#include <functional>
 	#include <map>
+	#include <unordered_map>
 	#include <set>
 	#include <stack>
 	#include <exception>

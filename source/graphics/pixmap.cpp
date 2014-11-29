@@ -37,10 +37,11 @@ XPixmap::XPixmap(const uint width, const uint height) :
 	m_width(width),
 	m_height(height)
 {
-	// Create empty XPixmap
+	// Create empty pixmap
 	if(width >= 0 && height >= 0)
 	{
 		m_data = new uchar[width*height*4];
+		memset(m_data, 0, width*height*4);
 	}
 	else
 	{

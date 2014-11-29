@@ -86,6 +86,8 @@ XBatch::PrimitiveType XBatch::getPrimitive() const
 
 void XBatch::addVertexBuffer(const shared_ptr<XVertexBuffer> &buffer)
 {
+	if(!buffer) return;
+
 	// Add buffer
 	VertexBufferState vbs;
 	vbs.buffer = buffer;

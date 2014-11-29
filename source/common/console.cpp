@@ -48,7 +48,7 @@ void XConsole::call_log(const char *msg, va_list args)
 
 	// System log
 #ifdef X2D_WINDOWS
-	OutputDebugString(msg);
+	OutputDebugString(out.c_str());
 	OutputDebugString("\n");
 #endif
 	
