@@ -34,7 +34,7 @@ public:
 	void rotate(const float ang);
 	void scale(const float);
 	
-	XShape *getAABB() const;
+	void getAABB(Vector2 *points) const;
 
 	Vector2 getPosition() const;
 	float getX() const;

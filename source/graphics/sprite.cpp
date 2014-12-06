@@ -102,14 +102,18 @@ void XSprite::scale(const float scl)
 	m_size *= scl;
 }
 
-XShape *XSprite::getAABB() const
+void XSprite::getAABB(Vector2 *points) const
 {
-	XVertex *vertices = new XVertex[4];
-	getVertices(vertices);
+	Matrix4 mat;
+	mat.scale(m_size.x, m_size.y, 1.0f);
+	mat.translate(-m_origin.x, -m_origin.y, 0.0f);
+	mat.rotateZ(m_angle);
+	mat.translate(m_position.x + m_origin.x, m_position.y + m_origin.y, 0.0f);
 
-	XShape *shape = new XShape(vertices, 4);
-	delete[] vertices;
-	return shape;
+	for(uint i = 0; i < 4; i++)
+	{
+		points[i] = (mat * QUAD_VERTICES[i]).getXY();
+	}
 }
 
 Vector2 XSprite::getPosition() const
