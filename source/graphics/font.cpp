@@ -300,9 +300,9 @@ void XFont::draw(XBatch *batch, const Vector2 &pos, const string &str)
 	//batch->release();
 }
 
-XTexture *XFont::renderToTexture(const string &text, const uint padding)
+shared_ptr<XTexture> XFont::renderToTexture(const string &text, const uint padding)
 {
-	XTexture *texture = new XTexture((uint)ceil(getStringWidth(text)) + padding, (uint)ceil(getStringHeight(text)) + padding);
+	shared_ptr<XTexture> texture = shared_ptr<XTexture>(new XTexture((uint)ceil(getStringWidth(text)) + padding, (uint)ceil(getStringHeight(text)) + padding));
 
 	XGraphics::disableAlphaBlending();
 

@@ -20,7 +20,7 @@ XFrameBufferObject::~XFrameBufferObject()
 	glDeleteFramebuffers(1, &m_id);
 }
 
-void XFrameBufferObject::bind(XTexture *texture)
+void XFrameBufferObject::bind(shared_ptr<XTexture> texture)
 {
 	glBindFramebuffer(GL_FRAMEBUFFER, m_id);
 	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, texture->m_id, 0);

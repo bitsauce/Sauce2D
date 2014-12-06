@@ -11,18 +11,18 @@
 #include <x2d/graphics.h>
 
 XShape::XShape() :
-	m_fillColor(1.0f),
+	m_fillColor(255),
 	m_fillTexture(0),
-	m_penColor(1.0f),
+	m_penColor(255),
 	m_penSize(1.0f),
 	m_index(0)
 {
 }
 
 XShape::XShape(const Rect &rect) :
-	m_fillColor(1.0f),
+	m_fillColor(255),
 	m_fillTexture(0),
-	m_penColor(1.0f),
+	m_penColor(255),
 	m_penSize(1.0f),
 	m_index(0)
 {
@@ -56,9 +56,9 @@ XShape::XShape(const Rect &rect) :
 }
 
 XShape::XShape(const Vector2 &center, const float radius, const int vertCount) :
-	m_fillColor(1.0f),
+	m_fillColor(255),
 	m_fillTexture(0),
-	m_penColor(1.0f),
+	m_penColor(255),
 	m_penSize(1.0f),
 	m_index(0)
 {
@@ -88,9 +88,9 @@ XShape::XShape(const Vector2 &center, const float radius, const int vertCount) :
 }
 
 XShape::XShape(const XVertex *vertices, const int vertCount) :
-	m_fillColor(1.0f),
+	m_fillColor(255),
 	m_fillTexture(0),
-	m_penColor(1.0f),
+	m_penColor(255),
 	m_penSize(1.0f),
 	m_index(0)
 {

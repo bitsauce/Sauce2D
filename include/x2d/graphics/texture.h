@@ -54,6 +54,8 @@ public:
 	void updatePixmap(const int x, const int y, const XPixmap &pixmap);
 	void clear();
 
+	void exportToFile(string path);
+
 	static shared_ptr<XTexture> loadResource(const string &name);
 
 private:

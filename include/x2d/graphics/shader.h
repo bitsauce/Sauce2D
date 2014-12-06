@@ -21,8 +21,10 @@ public:
 	void setUniform2f(const string &name, const float v0, const float v1);
 	void setUniform3f(const string &name, const float v0, const float v1, const float v2);
 	void setUniform4f(const string &name, const float v0, const float v1, const float v2, const float v3);
-	void setSampler2D(const string &name, XTexture *texture);
+	void setSampler2D(const string &name, shared_ptr<XTexture> texture);
 	
+	static shared_ptr<XShader> loadResource(const string &name);
+
 private:
 	
 	// Uniform struct
@@ -48,5 +50,7 @@ private:
 	GLint m_id;
 	map<string, Uniform*> m_uniforms;
 };
+
+template XDAPI class shared_ptr<XShader>;
 
 #endif // X2D_SHADER_H

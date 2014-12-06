@@ -176,14 +176,11 @@ void XSprite::draw(XBatch *batch) const
 {
 	if(batch)
 	{
-		XVertex *vertices = new XVertex[4];
+		XVertex vertices[4];
 		getVertices(vertices);
-
 		batch->setTexture(m_textureRegion.getTexture());
 		batch->setPrimitive(XBatch::PRIMITIVE_TRIANGLES);
 		batch->addVertices(vertices, 4, QUAD_INDICES, 6);
-		//batch->release();
-		delete[] vertices;
 	}
 	else
 	{

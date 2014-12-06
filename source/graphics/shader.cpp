@@ -50,7 +50,7 @@ XShader::XShader(const string &vertFilePath, const string &fragFilePath)
     glGetShaderiv(vertShader, GL_INFO_LOG_LENGTH, &logLength);
 
 	// Get error log
-    char* compileLog = new char[logLength];
+    char *compileLog = new char[logLength];
     glGetShaderInfoLog(vertShader, logLength, NULL, compileLog);
 
 	// Print shader error to console
@@ -71,6 +71,8 @@ XShader::XShader(const string &vertFilePath, const string &fragFilePath)
     glGetShaderiv(fragShader, GL_INFO_LOG_LENGTH, &logLength);
 
 	// Get error log
+	delete[] compileLog;
+	compileLog = new char[logLength];
     glGetShaderInfoLog(fragShader, logLength, NULL, compileLog);
 
 	// Print shader error to console
@@ -276,7 +278,7 @@ void XShader::setUniform4f(const string &name, const float v0, const float v1, c
 	}
 }
 
-void XShader::setSampler2D(const string &name, XTexture *texture)
+void XShader::setSampler2D(const string &name, shared_ptr<XTexture> texture)
 {
 	// TODO: We should actually store a handle to the texture object to avoid it being destroyed
 	if(m_uniforms.find(name) != m_uniforms.end())
@@ -293,4 +295,10 @@ void XShader::setSampler2D(const string &name, XTexture *texture)
 	//if(texture != 0) {
 	//	texture->release();
 	//}
+}
+
+
+shared_ptr<XShader> XShader::loadResource(const string &name)
+{
+	return shared_ptr<XShader>(new XShader(name + ".vert", name + ".frag"));
 }

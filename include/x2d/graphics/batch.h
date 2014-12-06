@@ -55,8 +55,8 @@ public:
 	void setBlendFunc(const BlendFunc src, const BlendFunc dst);
 
 	// Get/set shader
-	void setShader(XShader *shader);
-	XShader *getShader() const;
+	void setShader(shared_ptr<XShader> shader);
+	shared_ptr<XShader> getShader() const;
 
 	// Get/set texture
 	void setTexture(const shared_ptr<XTexture> &texture);
@@ -71,7 +71,7 @@ public:
 	void addVertices(XVertex *vertices, int vcount, uint *indices, int icount);
 
 	// Render-to-texture
-	void renderToTexture(XTexture *texture);
+	void renderToTexture(shared_ptr<XTexture> texture);
 
 	// Clear
 	virtual void clear();
@@ -99,7 +99,7 @@ public:
 		shared_ptr<XTexture> texture;
 		BlendFunc srcBlendFunc;
 		BlendFunc dstBlendFunc;
-		XShader *shader;
+		shared_ptr<XShader> shader;
 		Matrix4 projMat;
 	};
 

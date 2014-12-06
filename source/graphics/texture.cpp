@@ -232,6 +232,21 @@ uint XTexture::getHeight() const
 
 #include <freeimage.h>
 
+void XTexture::exportToFile(string path)
+{
+	// Get texture data
+	uchar *data = new uchar[m_width*m_height*4];
+	glBindTexture(GL_TEXTURE_2D, m_id);
+	glGetTexImage(GL_TEXTURE_2D, 0, GL_BGRA, GL_UNSIGNED_BYTE, (GLvoid*)data);
+	glBindTexture(GL_TEXTURE_2D, 0);
+
+	FIBITMAP *bitmap = FreeImage_ConvertFromRawBits(data, m_width, m_height, m_width * 4, 32, FI_RGBA_RED_MASK, FI_RGBA_GREEN, FI_RGBA_BLUE, false);
+	util::toAbsoluteFilePath(path);
+	FreeImage_Save(FIF_PNG, bitmap, path.c_str(), PNG_DEFAULT); // For now, let's just save everything as png
+
+	delete[] data;
+}
+
 shared_ptr<XTexture> XTexture::loadResource(const string &name)
 {
 	// Load texture from file

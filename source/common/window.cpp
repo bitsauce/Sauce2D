@@ -27,6 +27,7 @@ vector<Vector2i> XWindow::s_resolutions;
 bool XWindow::s_focus = false;
 Vector2i XWindow::s_size = Vector2i(0);
 bool XWindow::s_fullscreen = false;
+list<xd::WindowListener*> XWindow::s_windowListeners;
 
 void XWindow::close()
 {
@@ -449,6 +450,16 @@ Vector2i XWindow::getSize()
 	return s_size;
 }
 
+void XWindow::addWindowListener(xd::WindowListener *listener)
+{
+	s_windowListeners.push_back(listener);
+}
+
+void XWindow::removeWindowListener(xd::WindowListener *listener)
+{
+	s_windowListeners.remove(listener);
+}
+
 //--------------------------------------------------------------------
 // Event loop
 //--------------------------------------------------------------------
@@ -505,6 +516,19 @@ void XWindow::processEvents(UINT Message, WPARAM wParam, LPARAM lParam)
 			s_size.set(LOWORD(lParam), HIWORD(lParam));
 			XGraphics::setOrthoProjection(0.0f, (float)s_size.x, (float)s_size.y, 0.0f, -1.0f, 1.0f);
 			XGraphics::setViewport(Recti(0, 0, s_size.x, s_size.y));
+			for(list<xd::WindowListener*>::iterator itr = s_windowListeners.begin(); itr != s_windowListeners.end(); ++itr)
+			{
+				(*itr)->resizeEvent(s_size.x, s_size.y);
+			}
+		}
+		break;
+
+		case WM_MOVE:
+		{
+			/*for(list<xd::WindowListener*>::iterator itr = s_windowListeners.begin(); itr != s_windowListeners.end(); ++itr)
+			{
+				(*itr)->moveEvent(s_size.x, s_size.y);
+			}*/
 		}
 		break;
 

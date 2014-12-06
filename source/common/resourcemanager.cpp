@@ -13,15 +13,6 @@
 
 map<string, void*> xd::ResourceManager::s_resources;
 
-/*void XAssetManager::SavePixmap(string filePath, XPixmap *pixmap, const XImageFormat format)
-{
-	FIBITMAP *bitmap = FreeImage_ConvertFromRawBits((BYTE*)pixmap->getData(), pixmap->getWidth(), pixmap->getHeight(), pixmap->getWidth() * 4, 32, FI_RGBA_RED_MASK, FI_RGBA_GREEN_MASK, FI_RGBA_BLUE_MASK, false);
-		
-	// For now, let's just save everything as png
-	util::toAbsoluteFilePath(filePath);
-	FreeImage_Save(FIF_PNG, bitmap, filePath.c_str());
-}*/
-
 #define WAV_LOAD_ERROR 0
 
  // buffer is always in big endian!

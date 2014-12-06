@@ -493,6 +493,19 @@ private:
 /*********************************************************************
 **	Window class													**
 **********************************************************************/
+
+namespace xd
+{
+class WindowListener
+{
+	friend class XWindow;
+protected:
+	virtual void resizeEvent(uint width, uint height) {}
+	virtual void moveEvent(uint x, uint y) {}
+	//virtual void 
+};
+}
+
 class XDAPI XWindow
 {
 	friend class XGraphics;
@@ -520,6 +533,9 @@ public:
 	static void maximize();
 	static void restore();
 
+	static void addWindowListener(xd::WindowListener *listener);
+	static void removeWindowListener(xd::WindowListener *listener);
+
 private:
 	// The window handle
 	static HWND s_window;
@@ -541,6 +557,9 @@ private:
 
 	// Window fullscreen state
 	static bool s_fullscreen;
+
+	// Window listeners
+	static list<xd::WindowListener*> s_windowListeners;
 	
 	// Window procedure callback
 	static LRESULT CALLBACK OnEvent(HWND Handle, UINT Message, WPARAM wParam, LPARAM lParam);

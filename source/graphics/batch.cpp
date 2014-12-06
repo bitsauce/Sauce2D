@@ -54,12 +54,12 @@ void XBatch::popMatrix()
 	m_state.projMat = !m_matrixStack.empty() ? m_matrixStack.top() : Matrix4();
 }
 
-void XBatch::setShader(XShader *shader)
+void XBatch::setShader(shared_ptr<XShader> shader)
 {
 	m_state.shader = shader;
 }
 
-XShader *XBatch::getShader() const
+shared_ptr<XShader> XBatch::getShader() const
 {
 	return m_state.shader;
 }
@@ -122,7 +122,7 @@ void XBatch::clear()
 	setBlendFunc(BLEND_SRC_ALPHA, BLEND_ONE_MINUS_SRC_ALPHA);
 }
 
-void XBatch::renderToTexture(XTexture *texture)
+void XBatch::renderToTexture(shared_ptr<XTexture> texture)
 {
 	if(texture)
 	{

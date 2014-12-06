@@ -285,7 +285,7 @@ void XGraphics::renderBatch(const XBatch &batch)
 		if(state.shader)
 		{
 			// Enable shader
-			XShader *shader = state.shader;
+			shared_ptr<XShader> shader = state.shader;
 			glUseProgram(shader->m_id);
 			GLuint target = 0;
 

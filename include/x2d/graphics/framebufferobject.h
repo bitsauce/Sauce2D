@@ -11,7 +11,7 @@ public:
 	XFrameBufferObject();
 	~XFrameBufferObject();
 
-	void bind(XTexture *texture);
+	void bind(shared_ptr<XTexture> texture);
 	void unbind();
 
 private:
