@@ -4,16 +4,19 @@
 #include "../engine.h"
 #include "textureRegion.h"
 
-class XTexture;
-class XBatch;
-class XShape;
-
-class XDAPI XSprite
+namespace xd
 {
-	friend class XSpriteBatch;
+
+class Texture2D;
+class Batch;
+class Shape;
+
+class XDAPI Sprite
+{
+	friend class SpriteBatch;
 public:
-	XSprite(const XTextureRegion &region);
-	~XSprite();
+	Sprite(const TextureRegion &region);
+	~Sprite();
 	
 	void setPosition(const Vector2 &pos);
 	void setPosition(const float x, const float y);
@@ -27,7 +30,7 @@ public:
 
 	void setOrigin(const Vector2 &origin);
 	void setRotation(const float ang);
-	void setRegion(const XTextureRegion &region, const bool resize = false);
+	void setRegion(const TextureRegion &region, const bool resize = false);
 	void setColor(const Vector4 &color);
 
 	void move(const Vector2 &dt);
@@ -48,13 +51,13 @@ public:
 	Vector2 getCenter() const;
 	float getRotation() const;
 	Vector4 getColor() const;
-	XTextureRegion getRegion() const;
-	shared_ptr<XTexture> getTexture() const;
+	TextureRegion getRegion() const;
+	Texture2DPtr getTexture() const;
 
-	void draw(XBatch *batch) const;
+	void draw(Batch *batch) const;
 
 private:
-	XTextureRegion m_textureRegion;
+	TextureRegion m_textureRegion;
 	Vector2 m_position;
 	Vector2 m_size;
 	Vector2 m_origin;
@@ -62,7 +65,9 @@ private:
 	Vector4 m_color;
 
 	// Returns the transformed vertices
-	void getVertices(XVertex *vertices) const;
+	void getVertices(Vertex *vertices) const;
 };
+
+}
 
 #endif // X2D_SPRITE_H

@@ -40,7 +40,7 @@ void XWindow::close()
 	}
 
 	// If we have a OpenGL context
-	XGraphics::destroyContext();
+	xd::Graphics::destroyContext();
 
 	// If we have a device context
 	if(s_deviceContext)
@@ -203,7 +203,7 @@ void XWindow::show()
 	if(!SetPixelFormat(s_deviceContext, pixelFormat, &pfd))			
 		assert("Unable to create rendering context");
 
-	XGraphics::createContext();
+	xd::Graphics::createContext();
 
 	// Setup window
 	ShowWindow(s_window, SW_SHOW);
@@ -514,8 +514,8 @@ void XWindow::processEvents(UINT Message, WPARAM wParam, LPARAM lParam)
 		{
 			// Resize viewport
 			s_size.set(LOWORD(lParam), HIWORD(lParam));
-			XGraphics::setOrthoProjection(0.0f, (float)s_size.x, (float)s_size.y, 0.0f, -1.0f, 1.0f);
-			XGraphics::setViewport(Recti(0, 0, s_size.x, s_size.y));
+			xd::Graphics::setOrthoProjection(0.0f, (float)s_size.x, (float)s_size.y, 0.0f, -1.0f, 1.0f);
+			xd::Graphics::setViewport(Recti(0, 0, s_size.x, s_size.y));
 			for(list<xd::WindowListener*>::iterator itr = s_windowListeners.begin(); itr != s_windowListeners.end(); ++itr)
 			{
 				(*itr)->resizeEvent(s_size.x, s_size.y);

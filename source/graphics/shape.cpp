@@ -10,7 +10,10 @@
 #include <x2d/engine.h>
 #include <x2d/graphics.h>
 
-XShape::XShape() :
+namespace xd
+{
+
+Shape::Shape() :
 	m_fillColor(255),
 	m_fillTexture(0),
 	m_penColor(255),
@@ -19,14 +22,14 @@ XShape::XShape() :
 {
 }
 
-XShape::XShape(const Rect &rect) :
+Shape::Shape(const Rect &rect) :
 	m_fillColor(255),
 	m_fillTexture(0),
 	m_penColor(255),
 	m_penSize(1.0f),
 	m_index(0)
 {
-	m_vertices = new XVertex[4]; 
+	m_vertices = new Vertex[4]; 
 
 	m_vertices[0].set4ub(VERTEX_COLOR, 255, 255, 255, 255);
 	m_vertices[1].set4ub(VERTEX_COLOR, 255, 255, 255, 255);
@@ -55,14 +58,14 @@ XShape::XShape(const Rect &rect) :
 	m_vertCount = 4;
 }
 
-XShape::XShape(const Vector2 &center, const float radius, const int vertCount) :
+Shape::Shape(const Vector2 &center, const float radius, const int vertCount) :
 	m_fillColor(255),
 	m_fillTexture(0),
 	m_penColor(255),
 	m_penSize(1.0f),
 	m_index(0)
 {
-	m_vertices = new XVertex[vertCount];
+	m_vertices = new Vertex[vertCount];
 	
 	m_vertices[0].set4f(VERTEX_POSITION, center.x, center.y);
 	m_vertices[0].set4ub(VERTEX_COLOR, 255, 255, 255, 255);
@@ -87,7 +90,7 @@ XShape::XShape(const Vector2 &center, const float radius, const int vertCount) :
 	m_vertCount = vertCount;
 }
 
-XShape::XShape(const XVertex *vertices, const int vertCount) :
+Shape::Shape(const Vertex *vertices, const int vertCount) :
 	m_fillColor(255),
 	m_fillTexture(0),
 	m_penColor(255),
@@ -95,11 +98,11 @@ XShape::XShape(const XVertex *vertices, const int vertCount) :
 	m_index(0)
 {
 	// TODO: implement
-	//memcpy(m_vertices, vertices, vertCount * sizeof(XVertex));
+	//memcpy(m_vertices, vertices, vertCount * sizeof(Vertex));
 	//m_index = vertCount;
 }
 
-XShape::~XShape()
+Shape::~Shape()
 {
 	//if(m_fillTexture) {
 	//	m_fillTexture->release();
@@ -107,7 +110,7 @@ XShape::~XShape()
 	delete[] m_vertices;
 }
 
-/*void XShape::addVertex(const Vertex &vertex)
+/*void Shape::addVertex(const Vertex &vertex)
 {
 	m_vertices.push_back(vertex);
 	if(++m_index > 2) {
@@ -117,7 +120,7 @@ XShape::~XShape()
 	}
 }
 
-void XShape::addVertices(const vector<Vertex> &vertices)
+void Shape::addVertices(const vector<Vertex> &vertices)
 {
 	//if(m_vertices.size() % 3 == 0) LOG("Somethings wrong");
 
@@ -126,34 +129,34 @@ void XShape::addVertices(const vector<Vertex> &vertices)
 	}
 }*/
 
-void XShape::setFillColor(const XColor &color)
+void Shape::setFillColor(const Color &color)
 {
 	m_fillColor = color;
 }
 
-void XShape::setFillTexture(const shared_ptr<XTexture> &texture)
+void Shape::setFillTexture(const xd::Texture2DPtr &texture)
 {
 	m_fillTexture = texture;
 }
 
-void XShape::setPenColor(const XColor &color)
+void Shape::setPenColor(const Color &color)
 {
 	m_penColor = color;
 }
 
-void XShape::setPenSize(const float size)
+void Shape::setPenSize(const float size)
 {
 	m_penSize = size;
 }
 
-void XShape::draw(XBatch *batch)
+void Shape::draw(Batch *batch)
 {
 	if(!validate())
 		return;
 
 	if(!batch)
 	{
-		LOG("void XShape::draw(): Can not draw to 'null' batch");
+		LOG("void Shape::draw(): Can not draw to 'null' batch");
 		return;
 	}
 
@@ -164,30 +167,32 @@ void XShape::draw(XBatch *batch)
 	}
 
 	batch->setTexture(m_fillTexture);
-	batch->setPrimitive(XBatch::PRIMITIVE_TRIANGLES);
+	batch->setPrimitive(Batch::PRIMITIVE_TRIANGLES);
 	batch->addVertices(m_vertices, m_vertCount, m_indices.data(), m_indices.size());
 	//batch->release();
 }
 
-bool XShape::validate()
+bool Shape::validate()
 {
 	return true;
 }
 
-XShape XShape::merge(const XShape &XShape)
+Shape Shape::merge(const Shape &Shape)
 {
 	// TODO
 	return *this;
 }
 
-XShape XShape::subtract(const XShape &XShape)
+Shape Shape::subtract(const Shape &Shape)
 {
 	// TODO
 	return *this;
 }
 
-XShape XShape::intersect(const XShape &XShape)
+Shape Shape::intersect(const Shape &Shape)
 {
 	// TODO
 	return *this;
+}
+
 }

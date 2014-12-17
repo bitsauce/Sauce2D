@@ -3,19 +3,25 @@
 
 #include "../engine.h"
 
-class XTextureAtlas;
-struct XColor;
+namespace xd
+{
 
-class XDAPI XFont
+class Font;
+struct Color;
+class TextureAtlas;
+
+typedef shared_ptr<Font> FontPtr;
+
+class XDAPI Font
 {
 public:
-	~XFont();
+	~Font();
 
 	float getStringWidth(const string &str);
 	float getStringHeight(const string &str);
-	void setColor(const XColor &color);
-	void draw(XBatch *batch, const Vector2 &pos, const string &str);
-	shared_ptr<XTexture> renderToTexture(const string &text, const uint padding = 2);
+	void setColor(const Color &color);
+	void draw(Batch *batch, const Vector2 &pos, const string &str);
+	Texture2DPtr renderToTexture(const string &text, const uint padding = 2);
 
 	struct CharMetrics
 	{
@@ -32,18 +38,18 @@ public:
 		Vector2i size;
 	};
 
-	static shared_ptr<XFont> loadResource(const string &name);
+	static FontPtr loadResource(const string &name);
 
 private:
 	// Load font using TrueType 2
-	XFont(const string &fontFile, const uint size);
+	Font(const string &fontFile, const uint size);
 	bool isValidChar(uchar ch) { return ch >= 0 && ch < 128; }
 
 	// Font color
-	XColor m_color;
+	Color m_color;
 
 	// Font texture atlas
-	XTextureAtlas *m_atlas;
+	TextureAtlas *m_atlas;
 
 	// Font size (px)
 	int m_size;
@@ -58,6 +64,8 @@ private:
 	vector<CharMetrics> m_metrics;
 };
 
-template XDAPI class shared_ptr<XFont>;
+template XDAPI class shared_ptr<Font>;
+
+}
 
 #endif // X2D_FONT_H

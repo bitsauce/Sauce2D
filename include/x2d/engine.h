@@ -20,7 +20,7 @@ class XFileReader;
 class XFileWriter;
 class XDebugger;
 class XAudioManager;
-class XGraphics;
+class Graphics;
 
 class XDAPI XConsole
 {
@@ -498,17 +498,19 @@ namespace xd
 {
 class WindowListener
 {
-	friend class XWindow;
+	friend class ::XWindow;
 protected:
 	virtual void resizeEvent(uint width, uint height) {}
 	virtual void moveEvent(uint x, uint y) {}
 	//virtual void 
 };
+
+class Graphics;
 }
 
 class XDAPI XWindow
 {
-	friend class XGraphics;
+	friend class xd::Graphics;
 public:
 	static void processEvents();
 	static void processEvents(UINT Message, WPARAM wParam, LPARAM lParam);
@@ -674,7 +676,7 @@ private:
 	static XScene *s_hideScene;
 	
 	XFileSystem*	m_fileSystem;
-	XGraphics*		m_graphics;
+	xd::Graphics*	m_graphics;
 	XAudioManager*	m_audio;
 	XTimer*			m_timer;
 	XConsole*		m_console;

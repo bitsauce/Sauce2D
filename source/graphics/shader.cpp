@@ -13,7 +13,10 @@
 const int INT_SIZE = sizeof(GLint);
 const int FLOAT_SIZE = sizeof(GLfloat);
 
-XShader::XShader(const string &vertFilePath, const string &fragFilePath)
+namespace xd
+{
+
+Shader::Shader(const string &vertFilePath, const string &fragFilePath)
 {
 	// Create vertex and fragment shaders
     GLuint vertShader = glCreateShader(GL_VERTEX_SHADER);
@@ -147,14 +150,14 @@ XShader::XShader(const string &vertFilePath, const string &fragFilePath)
 	}
 }
 
-XShader::~XShader()
+Shader::~Shader()
 {
 	for(map<string, Uniform*>::iterator itr = m_uniforms.begin(); itr != m_uniforms.end(); ++itr) {
 		delete itr->second;
 	}
 }
 
-void XShader::setUniform1i(const string &name, const int v0)
+void Shader::setUniform1i(const string &name, const int v0)
 {
 	if(m_uniforms.find(name) != m_uniforms.end())
 	{
@@ -168,7 +171,7 @@ void XShader::setUniform1i(const string &name, const int v0)
 	}
 }
 
-void XShader::setUniform2i(const string &name, const int v0, const int v1)
+void Shader::setUniform2i(const string &name, const int v0, const int v1)
 {
 	if(m_uniforms.find(name) != m_uniforms.end())
 	{
@@ -183,7 +186,7 @@ void XShader::setUniform2i(const string &name, const int v0, const int v1)
 	}
 }
 
-void XShader::setUniform3i(const string &name, const int v0, const int v1, const int v2)
+void Shader::setUniform3i(const string &name, const int v0, const int v1, const int v2)
 {
 	if(m_uniforms.find(name) != m_uniforms.end())
 	{
@@ -199,7 +202,7 @@ void XShader::setUniform3i(const string &name, const int v0, const int v1, const
 	}
 }
 
-void XShader::setUniform4i(const string &name, const int v0, const int v1, const int v2, const int v3)
+void Shader::setUniform4i(const string &name, const int v0, const int v1, const int v2, const int v3)
 {
 	if(m_uniforms.find(name) != m_uniforms.end())
 	{
@@ -216,7 +219,7 @@ void XShader::setUniform4i(const string &name, const int v0, const int v1, const
 	}
 }
 
-void XShader::setUniform1f(const string &name, const float v0)
+void Shader::setUniform1f(const string &name, const float v0)
 {
 	if(m_uniforms.find(name) != m_uniforms.end())
 	{
@@ -230,7 +233,7 @@ void XShader::setUniform1f(const string &name, const float v0)
 	}
 }
 
-void XShader::setUniform2f(const string &name, const float v0, const float v1)
+void Shader::setUniform2f(const string &name, const float v0, const float v1)
 {
 	if(m_uniforms.find(name) != m_uniforms.end())
 	{
@@ -245,7 +248,7 @@ void XShader::setUniform2f(const string &name, const float v0, const float v1)
 	}
 }
 
-void XShader::setUniform3f(const string &name, const float v0, const float v1, const float v2)
+void Shader::setUniform3f(const string &name, const float v0, const float v1, const float v2)
 {
 	if(m_uniforms.find(name) != m_uniforms.end())
 	{
@@ -261,7 +264,7 @@ void XShader::setUniform3f(const string &name, const float v0, const float v1, c
 	}
 }
 
-void XShader::setUniform4f(const string &name, const float v0, const float v1, const float v2, const float v3)
+void Shader::setUniform4f(const string &name, const float v0, const float v1, const float v2, const float v3)
 {
 	if(m_uniforms.find(name) != m_uniforms.end())
 	{
@@ -278,7 +281,7 @@ void XShader::setUniform4f(const string &name, const float v0, const float v1, c
 	}
 }
 
-void XShader::setSampler2D(const string &name, shared_ptr<XTexture> texture)
+void Shader::setSampler2D(const string &name, xd::Texture2DPtr texture)
 {
 	// TODO: We should actually store a handle to the texture object to avoid it being destroyed
 	if(m_uniforms.find(name) != m_uniforms.end())
@@ -298,7 +301,9 @@ void XShader::setSampler2D(const string &name, shared_ptr<XTexture> texture)
 }
 
 
-shared_ptr<XShader> XShader::loadResource(const string &name)
+ShaderPtr Shader::loadResource(const string &name)
 {
-	return shared_ptr<XShader>(new XShader(name + ".vert", name + ".frag"));
+	return ShaderPtr(new Shader(name + ".vert", name + ".frag"));
+}
+
 }

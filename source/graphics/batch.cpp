@@ -10,81 +10,84 @@
 #include <x2d/engine.h>
 #include <x2d/graphics.h>
 
-XBatch::XBatch() :
-	m_fbo(0)
+namespace xd
+{
+
+Batch::Batch() :
+	m_renderTarget(nullptr)
 {
 }
 
-XBatch::~XBatch()
+Batch::~Batch()
 {
-	delete m_fbo;
+	delete m_renderTarget;
 	clear();
 }
 
-void XBatch::setBlendFunc(const BlendFunc src, const BlendFunc dst)
+void Batch::setBlendFunc(const BlendFunc src, const BlendFunc dst)
 {
 	m_state.srcBlendFunc = src;
 	m_state.dstBlendFunc = dst;
 }
 
-void XBatch::setProjectionMatrix(const Matrix4 &projmat)
+void Batch::setProjectionMatrix(const Matrix4 &projmat)
 {
 	while(!m_matrixStack.empty()) m_matrixStack.pop();
 	m_matrixStack.push(projmat);
 	m_state.projMat = projmat;
 }
 
-Matrix4 XBatch::getProjectionMatrix() const
+Matrix4 Batch::getProjectionMatrix() const
 {
 	if(m_matrixStack.empty()) return Matrix4();
 	return m_matrixStack.top();
 }
 
-void XBatch::pushMatrix(const Matrix4 &mat)
+void Batch::pushMatrix(const Matrix4 &mat)
 {
 	if(m_matrixStack.empty()) m_matrixStack.push(mat);
 	else m_matrixStack.push(m_matrixStack.top() * mat);
 	m_state.projMat = m_matrixStack.top();
 }
 
-void XBatch::popMatrix()
+void Batch::popMatrix()
 {
 	if(m_matrixStack.empty()) return;
 	m_matrixStack.pop();
 	m_state.projMat = !m_matrixStack.empty() ? m_matrixStack.top() : Matrix4();
 }
 
-void XBatch::setShader(shared_ptr<XShader> shader)
+void Batch::setShader(ShaderPtr shader)
 {
 	m_state.shader = shader;
 }
 
-shared_ptr<XShader> XBatch::getShader() const
+ShaderPtr Batch::getShader() const
 {
 	return m_state.shader;
 }
 
-void XBatch::setTexture(const shared_ptr<XTexture> &texture)
+void Batch::setTexture(const xd::Texture2DPtr &texture)
 {
 	m_state.texture = texture;
 }
 
-shared_ptr<XTexture> XBatch::getTexture() const
+xd::Texture2DPtr Batch::getTexture() const
 {
 	return m_state.texture;
 }
 
-void XBatch::setPrimitive(PrimitiveType primitive)
+void Batch::setPrimitive(PrimitiveType primitive)
 {
 	m_state.primitive = primitive;
 }
 
-XBatch::PrimitiveType XBatch::getPrimitive() const
+Batch::PrimitiveType Batch::getPrimitive() const
 {
 	return m_state.primitive;
 }
 
-void XBatch::addVertexBuffer(const shared_ptr<XVertexBuffer> &buffer)
+void Batch::addVertexBuffer(const shared_ptr<VertexBuffer> &buffer)
 {
 	if(!buffer) return;
 
@@ -95,13 +98,13 @@ void XBatch::addVertexBuffer(const shared_ptr<XVertexBuffer> &buffer)
 	m_buffers.push_back(vbs);
 }
 
-void XBatch::addVertices(XVertex *vertices, int vcount, uint *indices, int icount)
+void Batch::addVertices(Vertex *vertices, int vcount, uint *indices, int icount)
 {
 	// Get texture draw order
 	if(m_buffers.empty() || m_prevState != m_state)
 	{
 		VertexBufferState vbs;
-		vbs.buffer = shared_ptr<XVertexBuffer>(new XVertexBuffer());
+		vbs.buffer = shared_ptr<VertexBuffer>(new VertexBuffer());
 		vbs.state = m_state;
 		m_buffers.push_back(vbs);
 		m_prevState = m_state;
@@ -113,7 +116,7 @@ void XBatch::addVertices(XVertex *vertices, int vcount, uint *indices, int icoun
 	//vertex.position = m_matrixStack.top() * Vector4(vertex.position.x, vertex.position.y, 0.0f, 1.0f);
 }
 
-void XBatch::clear()
+void Batch::clear()
 {
 	m_buffers.clear();
 	setProjectionMatrix(Matrix4());
@@ -122,21 +125,23 @@ void XBatch::clear()
 	setBlendFunc(BLEND_SRC_ALPHA, BLEND_ONE_MINUS_SRC_ALPHA);
 }
 
-void XBatch::renderToTexture(shared_ptr<XTexture> texture)
+void Batch::renderToTexture(Texture2DPtr texture)
 {
 	if(texture)
 	{
-		if(!m_fbo)
+		if(!m_renderTarget)
 		{
-			m_fbo = new XFrameBufferObject();
+			m_renderTarget = new RenderTarget2D();
 		}
 
-		m_fbo->bind(texture);
-		XGraphics::renderBatch(*this);
-		m_fbo->unbind();
+		m_renderTarget->bind(texture);
+		Graphics::renderBatch(*this);
+		m_renderTarget->unbind();
 	}
 	else
 	{
-		LOG("XBatch::renderToTexture(): Cannot render to 'null' texture.");
+		LOG("Batch::renderToTexture(): Cannot render to 'null' texture.");
 	}
+}
+
 }

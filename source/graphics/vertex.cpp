@@ -10,16 +10,18 @@
 #include <x2d/engine.h>
 #include <x2d/graphics.h>
 
+namespace xd {
+
 /*********************************************************************
 **	Vertex format													**
 **********************************************************************/
 
-XVertexFormat::XVertexFormat() :
+VertexFormat::VertexFormat() :
 	m_vertexByteSize(0)
 {
 }
 
-XVertexFormat::XVertexFormat(const XVertexFormat &other)
+VertexFormat::VertexFormat(const VertexFormat &other)
 {
 	for(int i = 0; i < VERTEX_ATTRIB_MAX; i++)
 	{
@@ -28,7 +30,7 @@ XVertexFormat::XVertexFormat(const XVertexFormat &other)
 	m_vertexByteSize = other.m_vertexByteSize;
 }
 
-void XVertexFormat::set(const XVertexAttribute attrib, const int size, const XDataType dataType)
+void VertexFormat::set(const VertexAttribute attrib, const int size, const DataType dataType)
 {
 	if(size >= 0 && size <= 4)
 	{
@@ -38,7 +40,7 @@ void XVertexFormat::set(const XVertexAttribute attrib, const int size, const XDa
 		m_vertexByteSize = 0;
 		for(int i = 0; i < VERTEX_ATTRIB_MAX; i++)
 		{
-			XVertexAttribute at = XVertexAttribute(i);
+			VertexAttribute at = VertexAttribute(i);
 			if(isAttributeEnabled(at))
 			{
 				m_attributes[at].offset = m_vertexByteSize;
@@ -61,38 +63,38 @@ void XVertexFormat::set(const XVertexAttribute attrib, const int size, const XDa
 	}
 	else
 	{
-		LOG("XVertexFormat::set(): Size must be in the range [0, 4].");
+		LOG("VertexFormat::set(): Size must be in the range [0, 4].");
 	}
 }
 
-int XVertexFormat::getElementCount(const XVertexAttribute attrib) const
+int VertexFormat::getElementCount(const VertexAttribute attrib) const
 {
 	return m_attributes[attrib].elementCount;
 }
 
-XDataType XVertexFormat::getDataType(const XVertexAttribute attrib) const
+DataType VertexFormat::getDataType(const VertexAttribute attrib) const
 {
 	return m_attributes[attrib].dataType;
 }
 
-uint XVertexFormat::getVertexSizeInBytes() const
+uint VertexFormat::getVertexSizeInBytes() const
 {
 	return m_vertexByteSize;
 }
 
-uint XVertexFormat::getAttributeOffset(const XVertexAttribute attrib) const
+uint VertexFormat::getAttributeOffset(const VertexAttribute attrib) const
 {
 	return m_attributes[attrib].offset;
 }
 
-bool XVertexFormat::isAttributeEnabled(const XVertexAttribute attrib) const
+bool VertexFormat::isAttributeEnabled(const VertexAttribute attrib) const
 {
 	return m_attributes[attrib].elementCount != 0;
 }
 
-XVertex *XVertexFormat::createVertices(const int count) const
+Vertex *VertexFormat::createVertices(const int count) const
 {
-	XVertex *vertices = new XVertex[count];
+	Vertex *vertices = new Vertex[count];
 	for(int i = 0; i < count; i++)
 	{
 		vertices[i].setFormat(*this);
@@ -100,7 +102,7 @@ XVertex *XVertexFormat::createVertices(const int count) const
 	return vertices;
 }
 
-XVertexFormat &XVertexFormat::operator=(const XVertexFormat &other)
+VertexFormat &VertexFormat::operator=(const VertexFormat &other)
 {
 	for(int i = 0; i < VERTEX_ATTRIB_MAX; i++)
 	{
@@ -110,7 +112,7 @@ XVertexFormat &XVertexFormat::operator=(const XVertexFormat &other)
 	return *this;
 }
 
-bool XVertexFormat::operator==(const XVertexFormat &other)
+bool VertexFormat::operator==(const VertexFormat &other)
 {
 	for(int i = 0; i < VERTEX_ATTRIB_MAX; i++)
 	{
@@ -124,14 +126,14 @@ bool XVertexFormat::operator==(const XVertexFormat &other)
 **	Vertex															**
 **********************************************************************/
 
-XVertex::XVertex() :
+Vertex::Vertex() :
 	m_data(0),
-	m_format(XVertexFormat::s_vct)
+	m_format(VertexFormat::s_vct)
 {
 	setFormat(m_format);
 }
 
-XVertex::XVertex(const XVertex &other) :
+Vertex::Vertex(const Vertex &other) :
 	m_data(0),
 	m_format(other.m_format)
 {
@@ -139,19 +141,19 @@ XVertex::XVertex(const XVertex &other) :
 	memcpy(m_data, other.m_data, m_format.getVertexSizeInBytes());
 }
 
-XVertex::XVertex(const XVertexFormat &fmt) :
+Vertex::Vertex(const VertexFormat &fmt) :
 	m_data(0),
 	m_format(fmt)
 {
 	setFormat(fmt);
 }
 
-XVertex::~XVertex()
+Vertex::~Vertex()
 {
 	delete[] m_data;
 }
 
-void XVertex::setFormat(const XVertexFormat &fmt)
+void Vertex::setFormat(const VertexFormat &fmt)
 {
 	delete[] m_data;
 	m_data = new char[m_format.getVertexSizeInBytes()];
@@ -159,12 +161,12 @@ void XVertex::setFormat(const XVertexFormat &fmt)
 	m_format = fmt;
 }
 
-XVertexFormat XVertex::getFormat() const
+VertexFormat Vertex::getFormat() const
 {
 	return m_format;
 }
 
-void XVertex::set4f(const XVertexAttribute attrib, const float v0, const float v1, const float v2, const float v3)
+void Vertex::set4f(const VertexAttribute attrib, const float v0, const float v1, const float v2, const float v3)
 {
 	if(m_format.isAttributeEnabled(attrib))
 	{
@@ -178,11 +180,11 @@ void XVertex::set4f(const XVertexAttribute attrib, const float v0, const float v
 	}
 	else
 	{
-		LOG("void XVertex::set(): Attribute not enabled with the current vertex format.");
+		LOG("void Vertex::set(): Attribute not enabled with the current vertex format.");
 	}
 }
 
-void XVertex::set4ui(const XVertexAttribute attrib, const uint v0, const uint v1, const uint v2, const uint v3)
+void Vertex::set4ui(const VertexAttribute attrib, const uint v0, const uint v1, const uint v2, const uint v3)
 {
 	if(m_format.isAttributeEnabled(attrib))
 	{
@@ -196,11 +198,11 @@ void XVertex::set4ui(const XVertexAttribute attrib, const uint v0, const uint v1
 	}
 	else
 	{
-		LOG("void XVertex::set(): Attribute not enabled with the current vertex format.");
+		LOG("void Vertex::set(): Attribute not enabled with the current vertex format.");
 	}
 }
 
-void XVertex::set4i(const XVertexAttribute attrib, const int v0, const int v1, const int v2, const int v3)
+void Vertex::set4i(const VertexAttribute attrib, const int v0, const int v1, const int v2, const int v3)
 {
 	if(m_format.isAttributeEnabled(attrib))
 	{
@@ -214,11 +216,11 @@ void XVertex::set4i(const XVertexAttribute attrib, const int v0, const int v1, c
 	}
 	else
 	{
-		LOG("void XVertex::set(): Attribute not enabled with the current vertex format.");
+		LOG("void Vertex::set(): Attribute not enabled with the current vertex format.");
 	}
 }
 
-void XVertex::set4us(const XVertexAttribute attrib, const ushort v0, const ushort v1, const ushort v2, const ushort v3)
+void Vertex::set4us(const VertexAttribute attrib, const ushort v0, const ushort v1, const ushort v2, const ushort v3)
 {
 	if(m_format.isAttributeEnabled(attrib))
 	{
@@ -232,11 +234,11 @@ void XVertex::set4us(const XVertexAttribute attrib, const ushort v0, const ushor
 	}
 	else
 	{
-		LOG("void XVertex::set(): Attribute not enabled with the current vertex format.");
+		LOG("void Vertex::set(): Attribute not enabled with the current vertex format.");
 	}
 }
 
-void XVertex::set4s(const XVertexAttribute attrib, const short v0, const short v1, const short v2, const short v3)
+void Vertex::set4s(const VertexAttribute attrib, const short v0, const short v1, const short v2, const short v3)
 {
 	if(m_format.isAttributeEnabled(attrib))
 	{
@@ -250,11 +252,11 @@ void XVertex::set4s(const XVertexAttribute attrib, const short v0, const short v
 	}
 	else
 	{
-		LOG("void XVertex::set(): Attribute not enabled with the current vertex format.");
+		LOG("void Vertex::set(): Attribute not enabled with the current vertex format.");
 	}
 }
 
-void XVertex::set4ub(const XVertexAttribute attrib, const uchar v0, const uchar v1, const uchar v2, const uchar v3)
+void Vertex::set4ub(const VertexAttribute attrib, const uchar v0, const uchar v1, const uchar v2, const uchar v3)
 {
 	if(m_format.isAttributeEnabled(attrib))
 	{
@@ -268,11 +270,11 @@ void XVertex::set4ub(const XVertexAttribute attrib, const uchar v0, const uchar 
 	}
 	else
 	{
-		LOG("void XVertex::set(): Attribute not enabled with the current vertex format.");
+		LOG("void Vertex::set(): Attribute not enabled with the current vertex format.");
 	}
 }
 
-void XVertex::set4b(const XVertexAttribute attrib, const char v0, const char v1, const char v2, const char v3)
+void Vertex::set4b(const VertexAttribute attrib, const char v0, const char v1, const char v2, const char v3)
 {
 	if(m_format.isAttributeEnabled(attrib))
 	{
@@ -286,21 +288,21 @@ void XVertex::set4b(const XVertexAttribute attrib, const char v0, const char v1,
 	}
 	else
 	{
-		LOG("void XVertex::set(): Attribute not enabled with the current vertex format.");
+		LOG("void Vertex::set(): Attribute not enabled with the current vertex format.");
 	}
 }
 
-void XVertex::setData(const char *data) const
+void Vertex::setData(const char *data) const
 {
 	memcpy(m_data, data, m_format.getVertexSizeInBytes());
 }
 
-void XVertex::getData(char *data) const
+void Vertex::getData(char *data) const
 {
 	memcpy(data, m_data, m_format.getVertexSizeInBytes());
 }
 
-XVertex &XVertex::operator=(const XVertex &other)
+Vertex &Vertex::operator=(const Vertex &other)
 {
 	m_format = other.m_format;
 
@@ -311,11 +313,11 @@ XVertex &XVertex::operator=(const XVertex &other)
 	return *this;
 }
 
-void XVertex::print()
+void Vertex::print()
 {
 	for(int i = 0; i < VERTEX_ATTRIB_MAX; i++)
 	{
-		XVertexAttribute attrib = XVertexAttribute(i);
+		VertexAttribute attrib = VertexAttribute(i);
 		if(m_format.isAttributeEnabled(attrib))
 		{
 			LOG("Attrib: %i", attrib);
@@ -345,4 +347,6 @@ void XVertex::print()
 			LOG("%s", ss.str().c_str());
 		}
 	}
+}
+
 }

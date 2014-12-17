@@ -6,9 +6,12 @@
 #include "vector.h"
 #include "rect.h"
 
+namespace xd
+{
+
 class XDAPI RectanglePacker
 {
-	friend class XTextureAtlas;
+	friend class TextureAtlas;
 public:
 	RectanglePacker() :
 		m_maxWidth(2048)
@@ -86,5 +89,7 @@ private:
 	vector<Rectangle> m_rectangles;
 	int m_maxWidth;
 };
+
+}
 
 #endif // X2D_RECTANGLE_PACKER_H

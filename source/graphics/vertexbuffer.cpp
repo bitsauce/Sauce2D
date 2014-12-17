@@ -10,8 +10,10 @@
 #include <x2d/engine.h>
 #include <x2d/graphics.h>
 
-XVertexBuffer::XVertexBuffer() :
-	m_format(XVertexFormat::s_vct),
+namespace xd {
+
+VertexBuffer::VertexBuffer() :
+	m_format(VertexFormat::s_vct),
 	m_vertexData(0),
 	m_vertexCount(0),
 	m_indexData(0),
@@ -22,7 +24,7 @@ XVertexBuffer::XVertexBuffer() :
 	m_vertexSize = m_format.getVertexSizeInBytes();
 }
 
-XVertexBuffer::XVertexBuffer(const XVertexFormat &fmt) :
+VertexBuffer::VertexBuffer(const VertexFormat &fmt) :
 	m_format(fmt),
 	m_vertexData(0),
 	m_vertexCount(0),
@@ -34,8 +36,8 @@ XVertexBuffer::XVertexBuffer(const XVertexFormat &fmt) :
 	m_vertexSize = m_format.getVertexSizeInBytes();
 }
 
-XVertexBuffer::XVertexBuffer(const XVertexBuffer &other) :
-	m_format(XVertexFormat::s_vct),
+VertexBuffer::VertexBuffer(const VertexBuffer &other) :
+	m_format(VertexFormat::s_vct),
 	m_bufferType(RAW_BUFFER),
 	m_vbo(0)
 {
@@ -57,16 +59,16 @@ XVertexBuffer::XVertexBuffer(const XVertexBuffer &other) :
 	setBufferType(other.m_bufferType);
 }
 
-XVertexBuffer::~XVertexBuffer()
+VertexBuffer::~VertexBuffer()
 {
 	clear();
 }
 
-void XVertexBuffer::addVertices(XVertex *vertices, int vcount, uint *indices, int icount)
+void VertexBuffer::addVertices(Vertex *vertices, int vcount, uint *indices, int icount)
 {
 	if(m_vbo)
 	{
-		LOG("XBatch::addVertices(): Cannot add vertices to a static batch.");
+		LOG("Batch::addVertices(): Cannot add vertices to a static batch.");
 		return;
 	}
 	
@@ -99,11 +101,11 @@ void XVertexBuffer::addVertices(XVertex *vertices, int vcount, uint *indices, in
 	}
 	else
 	{
-		LOG("void XVertexBuffer::addVertices(): Vertex format mismatch.");
+		LOG("void VertexBuffer::addVertices(): Vertex format mismatch.");
 	}
 }
 
-void XVertexBuffer::modifyVertices(const int idx, XVertex *vertex, const int count)
+void VertexBuffer::modifyVertices(const int idx, Vertex *vertex, const int count)
 {
 	if(idx >= 0 && idx < m_vertexCount)
 	{
@@ -123,26 +125,26 @@ void XVertexBuffer::modifyVertices(const int idx, XVertex *vertex, const int cou
 		}
 		else
 		{
-			LOG("void XVertexBuffer::modifyVertices(): Vertex format mismatch.");
+			LOG("void VertexBuffer::modifyVertices(): Vertex format mismatch.");
 		}
 	}
 	else
 	{
-		LOG("void XVertexBuffer::modifyVertices(): Index out-of-bounds.");
+		LOG("void VertexBuffer::modifyVertices(): Index out-of-bounds.");
 	}
 }
 
-XVertexFormat XVertexBuffer::getVertexFormat() const
+VertexFormat VertexBuffer::getVertexFormat() const
 {
 	return m_format;
 }
 
-XVertex *XVertexBuffer::getVertices(const int idx, const int count) const
+Vertex *VertexBuffer::getVertices(const int idx, const int count) const
 {
-	XVertex *vertices = 0;
+	Vertex *vertices = 0;
 	if(idx >= 0 && idx + count <= m_vertexCount)
 	{
-		vertices = new XVertex[count];
+		vertices = new Vertex[count];
 		for(int i = 0; i < count; i++)
 		{
 			vertices[i].setFormat(m_format);
@@ -151,32 +153,32 @@ XVertex *XVertexBuffer::getVertices(const int idx, const int count) const
 	}
 	else
 	{
-		LOG("XVertex XVertexBuffer::getVertices(): Index out-of-bounds.");
+		LOG("Vertex VertexBuffer::getVertices(): Index out-of-bounds.");
 	}
 	return vertices;
 }
 
-char *XVertexBuffer::getVertexData() const
+char *VertexBuffer::getVertexData() const
 {
 	return m_vertexData;
 }
 
-int XVertexBuffer::getVertexCount() const
+int VertexBuffer::getVertexCount() const
 {
 	return m_vertexCount;
 }
 
-uint *XVertexBuffer::getIndexData() const
+uint *VertexBuffer::getIndexData() const
 {
 	return m_indexData;
 }
 
-int XVertexBuffer::getIndexCount() const
+int VertexBuffer::getIndexCount() const
 {
 	return m_indexCount;
 }
 
-void XVertexBuffer::clear()
+void VertexBuffer::clear()
 {
 	// Clear vertex data
 	delete[] m_vertexData;
@@ -197,7 +199,7 @@ void XVertexBuffer::clear()
 	m_bufferType = RAW_BUFFER;
 }
 
-void XVertexBuffer::setBufferType(const BufferType type)
+void VertexBuffer::setBufferType(const BufferType type)
 {
 	if(type != m_bufferType)
 	{
@@ -207,16 +209,16 @@ void XVertexBuffer::setBufferType(const BufferType type)
 	m_bufferType = type;
 	if(m_bufferType != RAW_BUFFER && !m_vbo)
 	{
-		m_vbo = new XVertexBufferObject(*this);
+		m_vbo = new VertexBufferObject(*this);
 	}
 }
 
-XVertexBuffer::BufferType XVertexBuffer::getBufferType() const
+VertexBuffer::BufferType VertexBuffer::getBufferType() const
 {
 	return m_bufferType;
 }
 
-XVertexBuffer &XVertexBuffer::operator=(const XVertexBuffer &other)
+VertexBuffer &VertexBuffer::operator=(const VertexBuffer &other)
 {
 	clear();
 
@@ -238,4 +240,6 @@ XVertexBuffer &XVertexBuffer::operator=(const XVertexBuffer &other)
 	setBufferType(other.m_bufferType);
 
 	return *this;
+}
+
 }

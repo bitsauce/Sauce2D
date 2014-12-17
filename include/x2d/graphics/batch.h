@@ -4,21 +4,24 @@
 #include "../engine.h"
 #include "vertex.h"
 #include "vertexbuffer.h"
+#include "texture.h"
+#include "shader.h"
 
-class XTexture;
-class XShader;
-class XFrameBufferObject;
-class XVertexBuffer;
+namespace xd
+{
+
+class FrameBufferObject;
+class VertexBuffer;
 
 /*********************************************************************
 **	Batch															**
 **********************************************************************/
-class XDAPI XBatch
+class XDAPI Batch
 {
-	friend class XGraphics;
+	friend class Graphics;
 public:
-	XBatch();
-	virtual ~XBatch();
+	Batch();
+	virtual ~Batch();
 	
 	// Blend func enum
 	enum BlendFunc
@@ -55,23 +58,23 @@ public:
 	void setBlendFunc(const BlendFunc src, const BlendFunc dst);
 
 	// Get/set shader
-	void setShader(shared_ptr<XShader> shader);
-	shared_ptr<XShader> getShader() const;
+	void setShader(ShaderPtr shader);
+	ShaderPtr getShader() const;
 
 	// Get/set texture
-	void setTexture(const shared_ptr<XTexture> &texture);
-	shared_ptr<XTexture> getTexture() const;
+	void setTexture(const Texture2DPtr &texture);
+	Texture2DPtr getTexture() const;
 
 	// Get/set primitive type
 	void setPrimitive(PrimitiveType primitive);
 	PrimitiveType getPrimitive() const;
 
 	// Add vertices
-	void addVertexBuffer(const shared_ptr<XVertexBuffer> &buffer);
-	void addVertices(XVertex *vertices, int vcount, uint *indices, int icount);
+	void addVertexBuffer(const shared_ptr<VertexBuffer> &buffer);
+	void addVertices(Vertex *vertices, int vcount, uint *indices, int icount);
 
 	// Render-to-texture
-	void renderToTexture(shared_ptr<XTexture> texture);
+	void renderToTexture(Texture2DPtr texture);
 
 	// Clear
 	virtual void clear();
@@ -96,17 +99,17 @@ public:
 		}
 
 		PrimitiveType primitive;
-		shared_ptr<XTexture> texture;
+		Texture2DPtr texture;
 		BlendFunc srcBlendFunc;
 		BlendFunc dstBlendFunc;
-		shared_ptr<XShader> shader;
+		ShaderPtr shader;
 		Matrix4 projMat;
 	};
 
 	struct VertexBufferState
 	{
 		State state;
-		shared_ptr<XVertexBuffer> buffer;
+		shared_ptr<VertexBuffer> buffer;
 	};
 
 protected:
@@ -114,8 +117,8 @@ protected:
 	// State-vertex map
 	vector<VertexBufferState> m_buffers;
 
-	// Frame buffer object (for render-to-texture)
-	XFrameBufferObject *m_fbo;
+	// Render target (for render-to-texture)
+	RenderTarget2D *m_renderTarget;
 
 	// Matrix stack
 	stack<Matrix4> m_matrixStack;
@@ -123,5 +126,7 @@ protected:
 	// Current batch state
 	State m_state, m_prevState;
 };
+
+}
 
 #endif // X2D_BATCH_H

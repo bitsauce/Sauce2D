@@ -2,21 +2,23 @@
 #define X2D_TEXTURE_REGION_H
 
 #include "../engine.h"
+#include "texture.h"
 
-class XTexture;
+namespace xd
+{
 
-class XDAPI XTextureRegion
+class XDAPI TextureRegion
 {
 public:
-	XTextureRegion();
-	XTextureRegion(const shared_ptr<XTexture> &resource);
-	XTextureRegion(const shared_ptr<XTexture> &resource, const Vector2 &uv0, const Vector2 &uv1);
-	XTextureRegion(const shared_ptr<XTexture> &resource, const float u0, const float v0, const float u1, const float v1);
-	XTextureRegion(const XTextureRegion &other);
-	~XTextureRegion();
+	TextureRegion();
+	TextureRegion(const Texture2DPtr &resource);
+	TextureRegion(const Texture2DPtr &resource, const Vector2 &uv0, const Vector2 &uv1);
+	TextureRegion(const Texture2DPtr &resource, const float u0, const float v0, const float u1, const float v1);
+	TextureRegion(const TextureRegion &other);
+	~TextureRegion();
 
-	void setTexture(const shared_ptr<XTexture> &texture);
-	shared_ptr<XTexture> getTexture() const;
+	void setTexture(const Texture2DPtr &texture);
+	Texture2DPtr getTexture() const;
 
 	Vector2i getSize() const;
 
@@ -26,10 +28,12 @@ public:
 	Vector2 uv0;
 	Vector2 uv1;
 
-	XTextureRegion &operator=(const XTextureRegion &other);
+	TextureRegion &operator=(const TextureRegion &other);
 
 private:
-	shared_ptr<XTexture> texture;
+	Texture2DPtr texture;
 };
+
+}
 
 #endif // X2D_TEXTURE_REGION_H

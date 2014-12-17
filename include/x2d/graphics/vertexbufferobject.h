@@ -4,21 +4,25 @@
 #include "../engine.h"
 #include "vertex.h"
 
-class XVertexBuffer;
+namespace xd {
 
-class XDAPI XVertexBufferObject
+class VertexBuffer;
+
+class XDAPI VertexBufferObject
 {
-	friend class XGraphics;
+	friend class Graphics;
 public:
-	XVertexBufferObject(const XVertexBuffer &buffer);
-	~XVertexBufferObject();
+	VertexBufferObject(const VertexBuffer &buffer);
+	~VertexBufferObject();
 
 	void update(const int offset, const char *data, const int count);
 
 private:
 	GLuint m_vboId;
 	GLuint m_iboId;
-	XVertexFormat m_vertexFormat;
+	VertexFormat m_vertexFormat;
 };
+
+}
 
 #endif // X2D_VERTEX_BUFFER_OBJECT_H

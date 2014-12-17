@@ -41,7 +41,7 @@ bool getFontFile(string &fontName)
 		ulong datatype = REG_SZ;
 		while(RegEnumValue(hkey, i++, value, &valsize, 0, &datatype, data, &datasize) == ERROR_SUCCESS)
 		{
-			// Get name of XFont
+			// Get name of Font
 			string valstr = value;
 			valstr = valstr.substr(0, valstr.find_first_of('(')-1);
 
@@ -82,7 +82,9 @@ inline int next_p2(int a)
 	return rval;
 }
 
-XFont::XFont(const string &filePath, const uint size) :
+namespace xd {
+
+Font::Font(const string &filePath, const uint size) :
 	m_color(0, 0, 0, 255),
 	m_atlas(0),
 	m_size(0),
@@ -96,7 +98,7 @@ XFont::XFont(const string &filePath, const uint size) :
 	FT_Error error;
 	if((error = FT_Init_FreeType(&library)) != 0)
 	{
-		LOG("XFont::load - Failed to initialize FreeType 2 (error code: %i)", error);
+		LOG("Font::load - Failed to initialize FreeType 2 (error code: %i)", error);
 		return;
 	}
 
@@ -104,7 +106,7 @@ XFont::XFont(const string &filePath, const uint size) :
 	FT_Face face;
 	if((error = FT_New_Face(library, filePath.c_str(), 0, &face)) != 0)
 	{
-		LOG("XFont::load - Failed load font data (error code: %i)", error);
+		LOG("Font::load - Failed load font data (error code: %i)", error);
 		return;
 	}
 
@@ -116,25 +118,25 @@ XFont::XFont(const string &filePath, const uint size) :
 	//if(error = FT_Set_Char_Size(face, size << 6, size << 6, 96, 96))
 	if((error = FT_Set_Pixel_Sizes(face, size, size)) != 0)
 	{
-		LOG("XFont::load - Failed to set pixel size (error code: %i)", error);
+		LOG("Font::load - Failed to set pixel size (error code: %i)", error);
 		return;
 	}
 
 	// Load bitmap data for each of the character of the font
-	vector<XPixmap> pixmaps;
+	vector<Pixmap> pixmaps;
 	for(uchar ch = 0; ch < 128; ch++)
 	{
 		// Load the glyph for our character
 		if((error = FT_Load_Glyph(face, FT_Get_Char_Index(face, ch), FT_LOAD_DEFAULT)) != 0)
 		{
-			LOG("XFont::load - Failed to load glyph '%c' (error code: %i)", ch, error);
+			LOG("Font::load - Failed to load glyph '%c' (error code: %i)", ch, error);
 			return;
 		}
 
 		// Render glyph to bitmap
 		if((error = FT_Render_Glyph(face->glyph, FT_RENDER_MODE_NORMAL)) != 0)
 		{
-			LOG("XFont::load - Failed to get glyph '%c' (error code: %i)", ch, error);
+			LOG("Font::load - Failed to get glyph '%c' (error code: %i)", ch, error);
 			return;
 		}
 
@@ -146,13 +148,13 @@ XFont::XFont(const string &filePath, const uint size) :
 		uint height = bitmap.rows;
 
 		// Allocate memory for texture data
-		XPixmap pixmap(width, height);
+		Pixmap pixmap(width, height);
 		for(uint y = 0; y < height; y++)
 		{ 
 			for(uint x = 0; x < width; x++)
 			{
 				uchar c = bitmap.buffer[x + (height-y-1)*width];
-				pixmap.setColor(x, y, XColor(255, 255, 255, c));
+				pixmap.setColor(x, y, Color(255, 255, 255, c));
 			}
 		}
 		pixmaps.push_back(pixmap);
@@ -175,20 +177,20 @@ XFont::XFont(const string &filePath, const uint size) :
 	m_lineSize = face->height >> 6;
 	m_Msize = m_metrics['M'].size.y;
 
-	// Create XFont atlas
-	m_atlas = new XTextureAtlas(pixmaps);
+	// Create Font atlas
+	m_atlas = new xd::TextureAtlas(pixmaps);
 
 	// Clean up FreeType
 	FT_Done_Face(face);
 	FT_Done_FreeType(library);
 }
 
-XFont::~XFont()
+Font::~Font()
 {
 	delete m_atlas;
 }
 
-shared_ptr<XFont> XFont::loadResource(const string &name)
+FontPtr Font::loadResource(const string &name)
 {
 	// Get name and size
 	uint size = util::strToInt(name.substr(name.find_last_of(' ') + 1));
@@ -203,14 +205,14 @@ shared_ptr<XFont> XFont::loadResource(const string &name)
 		if(!getFontFile(filePath))
 		{
 			LOG("Font '%s' not found!", name);
-			return shared_ptr<XFont>(0);
+			return FontPtr(0);
 		}
 	}
 
-	return shared_ptr<XFont>(new XFont(filePath, size));
+	return FontPtr(new Font(filePath, size));
 }
 
-float XFont::getStringWidth(const string &str)
+float Font::getStringWidth(const string &str)
 {
 	float width = 0.0f;
 	for(uint i = 0; i < str.size(); i++)
@@ -223,7 +225,7 @@ float XFont::getStringWidth(const string &str)
 	return width;
 }
 
-float XFont::getStringHeight(const string &str)
+float Font::getStringHeight(const string &str)
 {
 	float height = (float)m_lineSize;
 	for(uint i = 0; i < str.size(); i++)
@@ -234,22 +236,22 @@ float XFont::getStringHeight(const string &str)
 	return height;
 }
 
-void XFont::setColor(const XColor &color)
+void Font::setColor(const Color &color)
 {
 	m_color = color;
 }
 
-void XFont::draw(XBatch *batch, const Vector2 &pos, const string &str)
+void Font::draw(Batch *batch, const Vector2 &pos, const string &str)
 {
 	// Get current position
 	Vector2 currentPos = pos;
 
 	// Setup batch
 	batch->setTexture(m_atlas->getTexture());
-	batch->setPrimitive(XBatch::PRIMITIVE_TRIANGLES);
+	batch->setPrimitive(Batch::PRIMITIVE_TRIANGLES);
 
 	// Draw string
-	XVertex *vertices = new XVertex[4];
+	Vertex *vertices = new Vertex[4];
 	for(uint i = 0; i < str.size(); i++)
 	{
 		// Check for new line
@@ -273,7 +275,7 @@ void XFont::draw(XBatch *batch, const Vector2 &pos, const string &str)
 		currentPos.x += metrics.bearing.x;
 		
 		// Draw char
-		XTextureRegion region = m_atlas->get(ch);
+		xd::TextureRegion region = m_atlas->get(ch);
 
 		vertices[0].set4f(VERTEX_POSITION, currentPos.x, currentPos.y + (m_Msize - metrics.size.y) - metrics.advance.y);
 		vertices[0].set4ub(VERTEX_COLOR, m_color.r, m_color.g, m_color.b, m_color.a);
@@ -300,17 +302,19 @@ void XFont::draw(XBatch *batch, const Vector2 &pos, const string &str)
 	//batch->release();
 }
 
-shared_ptr<XTexture> XFont::renderToTexture(const string &text, const uint padding)
+xd::Texture2DPtr Font::renderToTexture(const string &text, const uint padding)
 {
-	shared_ptr<XTexture> texture = shared_ptr<XTexture>(new XTexture((uint)ceil(getStringWidth(text)) + padding, (uint)ceil(getStringHeight(text)) + padding));
+	xd::Texture2DPtr texture = xd::Texture2DPtr(new xd::Texture2D((uint)ceil(getStringWidth(text)) + padding, (uint)ceil(getStringHeight(text)) + padding));
 
-	XGraphics::disableAlphaBlending();
+	Graphics::disableAlphaBlending();
 
-	XBatch batch;
+	Batch batch;
 	draw(&batch, Vector2(padding/2.0f, padding/2.0f), text);
 	batch.renderToTexture(texture);
 
-	XGraphics::enableAlphaBlending();
+	Graphics::enableAlphaBlending();
 
 	return texture;
+}
+
 }

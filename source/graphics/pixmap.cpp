@@ -10,14 +10,16 @@
 #include <x2d/engine.h>
 #include <x2d/graphics.h>
 
-XPixmap::XPixmap() :
+namespace xd {
+
+Pixmap::Pixmap() :
 	m_width(0),
 	m_height(0),
 	m_data(0)
 {
 }
 
-XPixmap::XPixmap(const uint width, const uint height, const uchar *data) :
+Pixmap::Pixmap(const uint width, const uint height, const uchar *data) :
 	m_width(width),
 	m_height(height)
 {
@@ -33,7 +35,7 @@ XPixmap::XPixmap(const uint width, const uint height, const uchar *data) :
 	}
 }
 
-XPixmap::XPixmap(const uint width, const uint height) :
+Pixmap::Pixmap(const uint width, const uint height) :
 	m_width(width),
 	m_height(height)
 {
@@ -49,7 +51,7 @@ XPixmap::XPixmap(const uint width, const uint height) :
 	}
 }
 
-XPixmap::XPixmap(const XPixmap &other)
+Pixmap::Pixmap(const Pixmap &other)
 {
 	m_width = other.m_width;
 	m_height = other.m_height;
@@ -64,7 +66,7 @@ XPixmap::XPixmap(const XPixmap &other)
 	}
 }
 
-/*XPixmap &XPixmap::operator=(XPixmap &other)
+/*Pixmap &Pixmap::operator=(Pixmap &other)
 {
 	swap(m_data, other.m_data);
 	swap(m_width, other.m_width);
@@ -72,29 +74,29 @@ XPixmap::XPixmap(const XPixmap &other)
 	return *this;
 }*/
 
-XPixmap::~XPixmap()
+Pixmap::~Pixmap()
 {
 	delete[] m_data;
 }
 
-const uchar *XPixmap::getData() const
+const uchar *Pixmap::getData() const
 {
 	return m_data;
 }
 
-uint XPixmap::getWidth() const
+uint Pixmap::getWidth() const
 {
 	return m_width;
 }
 
-uint XPixmap::getHeight() const
+uint Pixmap::getHeight() const
 {
 	return m_height;
 }
 
-XColor XPixmap::getColor(const uint x, const uint y) const
+Color Pixmap::getColor(const uint x, const uint y) const
 {
-	XColor color;
+	Color color;
 	if(x < m_width && y < m_height)
 	{
 		memcpy(&color, m_data + (x + y*m_width) * 4, 4);
@@ -106,7 +108,7 @@ XColor XPixmap::getColor(const uint x, const uint y) const
 	return color;
 }
 
-void XPixmap::setColor(const uint x, const uint y, const XColor &color)
+void Pixmap::setColor(const uint x, const uint y, const Color &color)
 {
 	if(x < m_width && y < m_height)
 	{
@@ -118,7 +120,7 @@ void XPixmap::setColor(const uint x, const uint y, const XColor &color)
 	}
 }
 
-void XPixmap::fill(const XColor &color)
+void Pixmap::fill(const Color &color)
 {
 	for(uint y = 0; y < m_height; ++y)
 	{
@@ -129,13 +131,15 @@ void XPixmap::fill(const XColor &color)
 	}
 }
 
-void XPixmap::clear()
+void Pixmap::clear()
 {
-	fill(XColor(0));
+	fill(Color(0));
 }
 
-void XPixmap::exportToFile(const string &path) const
+void Pixmap::exportToFile(const string &path) const
 {
 	// TODO: REFACTORING
 	//XAssetManager::SavePixmap(path, (uchar*)m_data, m_width, m_height);
+}
+
 }

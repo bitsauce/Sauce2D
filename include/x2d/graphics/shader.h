@@ -3,15 +3,21 @@
 
 #include "../engine.h"
 
-class XTexture;
-
-class XDAPI XShader
+namespace xd
 {
-	friend class XGraphics;
-	friend class XTexture;
+
+class Shader;
+class Texture2D;
+
+typedef shared_ptr<Shader> ShaderPtr;
+
+class XDAPI Shader
+{
+	friend class Graphics;
+	friend class Texture2D;
 public:
-	XShader(const string &vertFilePath, const string &fragFilePath);
-	~XShader();
+	Shader(const string &vertFilePath, const string &fragFilePath);
+	~Shader();
 	
 	void setUniform1i(const string &name, const int v0);
 	void setUniform2i(const string &name, const int v0, const int v1);
@@ -21,9 +27,9 @@ public:
 	void setUniform2f(const string &name, const float v0, const float v1);
 	void setUniform3f(const string &name, const float v0, const float v1, const float v2);
 	void setUniform4f(const string &name, const float v0, const float v1, const float v2, const float v3);
-	void setSampler2D(const string &name, shared_ptr<XTexture> texture);
+	void setSampler2D(const string &name, xd::Texture2DPtr texture);
 	
-	static shared_ptr<XShader> loadResource(const string &name);
+	static ShaderPtr loadResource(const string &name);
 
 private:
 	
@@ -51,6 +57,8 @@ private:
 	map<string, Uniform*> m_uniforms;
 };
 
-template XDAPI class shared_ptr<XShader>;
+template XDAPI class shared_ptr<Shader>;
+
+}
 
 #endif // X2D_SHADER_H

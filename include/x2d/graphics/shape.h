@@ -4,43 +4,48 @@
 #include "../engine.h"
 #include "batch.h"
 
-class XTexture;
-
-class XDAPI XShape
+namespace xd
 {
-	friend class XSprite;
+
+class Texture2D;
+
+class XDAPI Shape
+{
+	friend class Sprite;
 public:
-	XShape();
-	XShape(const Rect &rect);
-	XShape(const Vector2 &center, const float radius, const int vertCount = -1);
-	XShape(const XVertex *vertices, const int vertCount);
-	~XShape();
+	Shape();
+	Shape(const Rect &rect);
+	Shape(const Vector2 &center, const float radius, const int vertCount = -1);
+	Shape(const Vertex *vertices, const int vertCount);
+	~Shape();
 
 	//void addVertex(const Vertex &vertex);
 	//void addVertices(const vector<Vertex> &vertices);
 
-	void setFillColor(const XColor &color);
-	void setFillTexture(const shared_ptr<XTexture> &texture);
-	void setPenColor(const XColor &color);
+	void setFillColor(const Color &color);
+	void setFillTexture(const Texture2DPtr &texture);
+	void setPenColor(const Color &color);
 	void setPenSize(const float size);
 
-	void draw(XBatch *batch);
+	void draw(Batch *batch);
 
-	XShape merge(const XShape &shape); // union
-	XShape subtract(const XShape &shape);
-	XShape intersect(const XShape &shape);
+	Shape merge(const Shape &shape); // union
+	Shape subtract(const Shape &shape);
+	Shape intersect(const Shape &shape);
 
 private:
 	bool validate();
 
-	XColor m_fillColor;
-	shared_ptr<XTexture> m_fillTexture;
-	XColor m_penColor;
+	Color m_fillColor;
+	Texture2DPtr m_fillTexture;
+	Color m_penColor;
 	float m_penSize;
-	XVertex *m_vertices;
+	Vertex *m_vertices;
 	int m_vertCount;
 	vector<uint> m_indices;
 	int m_index;
 };
+
+}
 
 #endif // X2D_SHAPE_H

@@ -3,20 +3,26 @@
 
 #include "../engine.h"
 
-class XPixmap;
-struct XColor;
 
-class XDAPI XTexture
+namespace xd
 {
-	friend class XFrameBufferObject;
-	friend class XGraphics;
-	friend class XShader;
+	
+class Texture2D;
+class Pixmap;
+
+typedef shared_ptr<Texture2D> Texture2DPtr;
+
+class XDAPI Texture2D
+{
+	friend class RenderTarget2D;
+	friend class Graphics;
+	friend class Shader;
 public:
-	XTexture();
-	XTexture(const uint width, const uint height, const XColor &color = XColor(0));
-	XTexture(const XPixmap &pixmap);
-	XTexture(const XTexture &other);
-	~XTexture();
+	Texture2D();
+	Texture2D(const uint width, const uint height, const Color &color = Color(0));
+	Texture2D(const Pixmap &pixmap);
+	Texture2D(const Texture2D &other);
+	~Texture2D();
 
 	// Mipmapping
 	void enableMipmaps();
@@ -49,17 +55,17 @@ public:
 	Vector2i getSize() const { return Vector2i(getWidth(), getHeight()); }
 
 	// Pixmap (texture data)
-	XPixmap getPixmap() const;
-	void updatePixmap(const XPixmap &pixmap);
-	void updatePixmap(const int x, const int y, const XPixmap &pixmap);
+	Pixmap getPixmap() const;
+	void updatePixmap(const Pixmap &pixmap);
+	void updatePixmap(const int x, const int y, const Pixmap &pixmap);
 	void clear();
 
 	void exportToFile(string path);
 
-	static shared_ptr<XTexture> loadResource(const string &name);
+	static Texture2DPtr loadResource(const string &name);
 
 private:
-	void init(const XPixmap &pixmap);
+	void init(const Pixmap &pixmap);
 	void updateFiltering();
 
 	GLuint m_id;
@@ -74,6 +80,8 @@ private:
 	uint m_height;
 };
 
-template XDAPI class shared_ptr<XTexture>;
+template XDAPI class shared_ptr<Texture2D>;
+
+}
 
 #endif // X2D_TEXTURE_H

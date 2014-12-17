@@ -10,31 +10,32 @@
 
 #define PI 3.14159265359f
 
-struct XDAPI XColor
+namespace xd
 {
-	XColor(uchar v = 0) { r = g = b = a = v; }
-	XColor(uchar r, uchar g, uchar b, uchar a = 255) { this->r = r; this->g = g; this->b = b; this->a = a; }
+
+struct XDAPI Color
+{
+	Color(uchar v = 0) { r = g = b = a = v; }
+	Color(uchar r, uchar g, uchar b, uchar a = 255) { this->r = r; this->g = g; this->b = b; this->a = a; }
 	
-	XColor &operator+(const XColor &c)
+	Color &operator+(const Color &c)
 	{
 		r += c.r; g += c.g; b += c.b; a += c.a;
 		return *this;
 	}
 
-	XColor &operator*(const XColor &c)
+	Color &operator*(const Color &c)
 	{
 		r *= c.r; g *= c.g; b *= c.b; a *= c.a;
 		return *this;
 	}
 
-	XColor &operator*(const float c)
-	{
-		r *= c; g *= c; b *= c; a *= c;
-		return *this;
-	}
+	Color &operator*(const float c);
 
 	uchar r, g, b, a;
 };
+
+}
 
 class XDAPI XMath
 {

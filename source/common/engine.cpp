@@ -157,7 +157,7 @@ int XEngine::init(const XConfig &config)
 	}
 
 	m_timer = new XTimer();
-	m_graphics = new XGraphics();
+	m_graphics = new xd::Graphics();
 	m_audio = new XAudioManager();
 	m_math = new XMath();
 
@@ -169,7 +169,7 @@ int XEngine::init(const XConfig &config)
 	m_console->m_engine = this;
 
 	XWindow::show();
-	XGraphics::init();
+	xd::Graphics::init();
 
 	if(!m_math)
 	{
@@ -306,11 +306,11 @@ int XEngine::run()
 		
 			// Apply time delta to acc
 			acc += deltaTime;
-			while(acc >= XGraphics::s_timeStep)
+			while(acc >= xd::Graphics::s_timeStep)
 			{
 				// Update the game
 				update();
-				acc -= XGraphics::s_timeStep;
+				acc -= xd::Graphics::s_timeStep;
 			}
 
 			// Draw the game
@@ -326,7 +326,7 @@ int XEngine::run()
 			{
 				float fps = 0.0f;
 				for(int i = 0; i < numFpsSamples; i++) fps += fpsSamples[i];
-				XGraphics::s_framesPerSecond = (float)int(fps/numFpsSamples);
+				xd::Graphics::s_framesPerSecond = (float)int(fps/numFpsSamples);
 				currFpsSample = 0;
 			}
 		}

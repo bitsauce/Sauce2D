@@ -2,16 +2,18 @@
 #define X2D_FRAME_BUFFER_H
 
 #include "../engine.h"
+#include "texture.h"
 
-class XTexture;
+namespace xd
+{
 
-class XDAPI XFrameBufferObject
+class XDAPI RenderTarget2D
 {
 public:
-	XFrameBufferObject();
-	~XFrameBufferObject();
+	RenderTarget2D();
+	~RenderTarget2D();
 
-	void bind(shared_ptr<XTexture> texture);
+	void bind(Texture2DPtr texture);
 	void unbind();
 
 private:
@@ -19,5 +21,7 @@ private:
 	float m_ortho[6];
 	int m_viewport[4];
 };
+
+}
 
 #endif // X2D_FRAME_BUFFER_H

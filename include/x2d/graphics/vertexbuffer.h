@@ -3,29 +3,31 @@
 
 #include "../engine.h"
 
+namespace xd {
+
 /*********************************************************************
 **	Vertex buffer													**
 **********************************************************************/
-class XVertexBufferObject;
+class VertexBufferObject;
 
-class XDAPI XVertexBuffer
+class XDAPI VertexBuffer
 {
-	friend class XBatch;
+	friend class Batch;
 public:
-	XVertexBuffer();
-	XVertexBuffer(const XVertexFormat &fmt);
-	XVertexBuffer(const XVertexBuffer &other);
-	~XVertexBuffer();
+	VertexBuffer();
+	VertexBuffer(const VertexFormat &fmt);
+	VertexBuffer(const VertexBuffer &other);
+	~VertexBuffer();
 
 	// Add vertices and indices to the batch
-	void addVertices(XVertex *vertices, int vcount, uint *indices, int icount);
+	void addVertices(Vertex *vertices, int vcount, uint *indices, int icount);
 	//void addVerticesAS(XScriptArray *vertices, XScriptArray *indices);
-	void modifyVertices(const int idx, XVertex *vertex, const int count);
+	void modifyVertices(const int idx, Vertex *vertex, const int count);
 	//void modifyVerticesAS(const int idx, XScriptArray *vertices);
 
 	// Get vertex/vertex count
-	XVertexFormat getVertexFormat() const;
-	XVertex *getVertices(const int idx, const int count) const;
+	VertexFormat getVertexFormat() const;
+	Vertex *getVertices(const int idx, const int count) const;
 	//XScriptArray *getVerticesAS(const int idx, const int count) const;
 	char *getVertexData() const;
 	int getVertexCount() const;
@@ -33,7 +35,7 @@ public:
 	uint *getIndexData() const;
 	int getIndexCount() const;
 
-	XVertexBufferObject *getVBO() const { return m_vbo; }
+	VertexBufferObject *getVBO() const { return m_vbo; }
 
 	// Clear vertex buffer
 	void clear();
@@ -48,12 +50,12 @@ public:
 	void setBufferType(const BufferType drawMode);
 	BufferType getBufferType() const;
 	
-	XVertexBuffer &operator=(const XVertexBuffer &other);
+	VertexBuffer &operator=(const VertexBuffer &other);
 
 private:
 
 	// Buffer vertex format
-	XVertexFormat m_format;
+	VertexFormat m_format;
 	int m_vertexSize;
 
 	// Vertices
@@ -68,12 +70,14 @@ private:
 	BufferType m_bufferType;
 
 	// VBO object
-	XVertexBufferObject *m_vbo;
+	VertexBufferObject *m_vbo;
 	
-	static void Construct(XVertexBuffer *self) { new (self) XVertexBuffer(); }
-	static void FmtConstruct(const XVertexFormat &fmt, XVertexBuffer *self) { new (self) XVertexBuffer(fmt); }
-	static void CopyConstruct(const XVertexBuffer &other, XVertexBuffer *self) { new (self) XVertexBuffer(other); }
-	static void Destruct(XVertexBuffer *self) { self->~XVertexBuffer(); }
+	static void Construct(VertexBuffer *self) { new (self) VertexBuffer(); }
+	static void FmtConstruct(const VertexFormat &fmt, VertexBuffer *self) { new (self) VertexBuffer(fmt); }
+	static void CopyConstruct(const VertexBuffer &other, VertexBuffer *self) { new (self) VertexBuffer(other); }
+	static void Destruct(VertexBuffer *self) { self->~VertexBuffer(); }
 };
+
+}
 
 #endif // X2D_VERTEX_BUFFER_H

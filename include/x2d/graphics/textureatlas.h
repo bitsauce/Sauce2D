@@ -6,28 +6,31 @@
 #include "pixmap.h"
 #include "textureRegion.h"
 
-class XDAPI XTextureAtlas
+namespace xd
+{
+
+class XDAPI TextureAtlas
 {
 public:
-	XTextureAtlas();
-	XTextureAtlas(vector<shared_ptr<XTexture>> textures, const int border = 1);
-	XTextureAtlas(vector<XPixmap> &pixmaps, const int border = 1);
-	~XTextureAtlas();
+	TextureAtlas();
+	TextureAtlas(vector<Texture2DPtr> textures, const int border = 1);
+	TextureAtlas(vector<Pixmap> &pixmaps, const int border = 1);
+	~TextureAtlas();
 
-	void add(XTexture *texture);
-	void add(const XPixmap &pixmap);
+	void add(Texture2D *texture);
+	void add(const Pixmap &pixmap);
 
 	void update();
 
-	XTextureRegion get(const int index) const;
-	XTextureRegion get(const int index, const Vector2 &uv0, const Vector2 &uv1) const;
-	XTextureRegion get(const int index, const float u0, const float v0, const float u1, const float v1) const;
+	TextureRegion get(const int index) const;
+	TextureRegion get(const int index, const Vector2 &uv0, const Vector2 &uv1) const;
+	TextureRegion get(const int index, const float u0, const float v0, const float u1, const float v1) const;
 
-	shared_ptr<XTexture> getTexture() const;
+	Texture2DPtr getTexture() const;
 	
 	struct AtlasPage
 	{
-		AtlasPage(const XPixmap &pixmap, int index) :
+		AtlasPage(const Pixmap &pixmap, int index) :
 			pixmap(pixmap),
 			index(index)
 		{
@@ -37,7 +40,7 @@ public:
 		{
 		}
 
-		const XPixmap *getPixmap() const
+		const Pixmap *getPixmap() const
 		{
 			return &pixmap;
 		}
@@ -48,19 +51,21 @@ public:
 		}
 
 	private:
-		XPixmap pixmap;
+		Pixmap pixmap;
 		int index;
 	};
 
 private:
-	void init(const vector<XPixmap> &pixmaps);
+	void init(const vector<Pixmap> &pixmaps);
 
-	shared_ptr<XTexture> m_texture;
+	Texture2DPtr m_texture;
 	RectanglePacker m_texturePacker;
 	RectanglePacker::Result m_result;
 	int m_size;
 	bool m_initialized;
 	int m_border;
 };
+
+}
 
 #endif // X2D_TEXTURE_ATLAS_H

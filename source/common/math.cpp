@@ -9,6 +9,14 @@
 
 #include <x2d/math.h>
 
+namespace xd {
+Color &Color::operator*(const float c)
+{
+	r *= c; g *= c; b *= c; a *= c;
+	return *this;
+}
+}
+
 float XMath::radToDeg(const float rad)
 {
 	return rad*(180.0f/PI);

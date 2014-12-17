@@ -10,6 +10,8 @@
 
 #include <x2d/math.h>
 
+namespace xd {
+
 bool heightSort(RectanglePacker::Rectangle i, RectanglePacker::Rectangle j)
 {
 	return i.height > j.height;
@@ -127,4 +129,6 @@ void RectanglePacker::addRect(const Rectangle rect)
 void RectanglePacker::clearRects()
 {
 	m_rectangles.clear();
+}
+
 }

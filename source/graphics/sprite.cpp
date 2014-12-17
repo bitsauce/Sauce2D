@@ -10,7 +10,9 @@
 #include <x2d/engine.h>
 #include <x2d/graphics.h>
 
-XSprite::XSprite(const XTextureRegion &region) :
+namespace xd {
+
+Sprite::Sprite(const TextureRegion &region) :
 	m_textureRegion(region),
 	m_position(0.0f),
 	m_size(region.getSize()),
@@ -20,61 +22,61 @@ XSprite::XSprite(const XTextureRegion &region) :
 {
 }
 
-XSprite::~XSprite()
+Sprite::~Sprite()
 {
 }
 
-void XSprite::setPosition(const Vector2 &pos)
+void Sprite::setPosition(const Vector2 &pos)
 {
 	m_position = pos;
 }
 
-void XSprite::setPosition(const float x, const float y)
+void Sprite::setPosition(const float x, const float y)
 {
 	m_position.set(x, y);
 }
 
-void XSprite::setX(const float x)
+void Sprite::setX(const float x)
 {
 	m_position.x = x;
 }
 
-void XSprite::setY(const float y)
+void Sprite::setY(const float y)
 {
 	m_position.y = y;
 }
 
-void XSprite::setSize(const Vector2 &size)
+void Sprite::setSize(const Vector2 &size)
 {
 	m_size = size;
 }
 
-void XSprite::setSize(const float w, const float h)
+void Sprite::setSize(const float w, const float h)
 {
 	m_size.set(w, h);
 }
 
-void XSprite::setWidth(const float w)
+void Sprite::setWidth(const float w)
 {
 	m_size.x = w;
 }
 
-void XSprite::setHeight(const float h)
+void Sprite::setHeight(const float h)
 {
 	m_size.y = h;
 }
 
-void XSprite::setOrigin(const Vector2 &origin)
+void Sprite::setOrigin(const Vector2 &origin)
 {
 	m_origin = origin;
 }
 
-void XSprite::setRotation(const float ang)
+void Sprite::setRotation(const float ang)
 {
 	m_angle = ang;
 }
 
-void XSprite::setRegion(const XTextureRegion &textureRegion, const bool resize)
+void Sprite::setRegion(const TextureRegion &textureRegion, const bool resize)
 {
 	m_textureRegion = textureRegion;
 	if(resize) {
@@ -82,27 +84,27 @@ void XSprite::setRegion(const XTextureRegion &textureRegion, const bool resize)
 	}
 }
 
-void XSprite::setColor(const Vector4 &color)
+void Sprite::setColor(const Vector4 &color)
 {
 	m_color = color;
 }
 
-void XSprite::move(const Vector2 &dt)
+void Sprite::move(const Vector2 &dt)
 {
 	m_position += dt;
 }
 
-void XSprite::rotate(const float ang)
+void Sprite::rotate(const float ang)
 {
 	m_angle += ang;
 }
 
-void XSprite::scale(const float scl)
+void Sprite::scale(const float scl)
 {
 	m_size *= scl;
 }
 
-void XSprite::getAABB(Vector2 *points) const
+void Sprite::getAABB(Vector2 *points) const
 {
 	Matrix4 mat;
 	mat.scale(m_size.x, m_size.y, 1.0f);
@@ -116,83 +118,83 @@ void XSprite::getAABB(Vector2 *points) const
 	}
 }
 
-Vector2 XSprite::getPosition() const
+Vector2 Sprite::getPosition() const
 {
 	return m_position;
 }
 
-float XSprite::getX() const
+float Sprite::getX() const
 {
 	return m_position.x;
 }
 
-float XSprite::getY() const
+float Sprite::getY() const
 {
 	return m_position.y;
 }
 
-Vector2 XSprite::getSize() const
+Vector2 Sprite::getSize() const
 {
 	return m_size;
 }
 
-float XSprite::getWidth() const
+float Sprite::getWidth() const
 {
 	return m_size.x;
 }
 
-float XSprite::getHeight() const
+float Sprite::getHeight() const
 {
 	return m_size.y;
 }
 
-Vector2 XSprite::getOrigin() const
+Vector2 Sprite::getOrigin() const
 {
 	return m_origin;
 }
 
-Vector2 XSprite::getCenter() const
+Vector2 Sprite::getCenter() const
 {
 	return m_position + (m_size/2.0f);
 }
 
-float XSprite::getRotation() const
+float Sprite::getRotation() const
 {
 	return m_angle;
 }
 
-Vector4 XSprite::getColor() const
+Vector4 Sprite::getColor() const
 {
 	return m_color;
 }
 
-XTextureRegion XSprite::getRegion() const
+TextureRegion Sprite::getRegion() const
 {
 	return m_textureRegion;
 }
 
-shared_ptr<XTexture> XSprite::getTexture() const
+Texture2DPtr Sprite::getTexture() const
 {
 	return m_textureRegion.getTexture();
 }
 
-void XSprite::draw(XBatch *batch) const
+void Sprite::draw(Batch *batch) const
 {
 	if(batch)
 	{
-		XVertex vertices[4];
+		Vertex vertices[4];
 		getVertices(vertices);
 		batch->setTexture(m_textureRegion.getTexture());
-		batch->setPrimitive(XBatch::PRIMITIVE_TRIANGLES);
+		batch->setPrimitive(Batch::PRIMITIVE_TRIANGLES);
 		batch->addVertices(vertices, 4, QUAD_INDICES, 6);
 	}
 	else
 	{
-		LOG("void XSprite::draw(): Cannot draw to 'null' batch.");
+		LOG("void Sprite::draw(): Cannot draw to 'null' batch.");
 	}
 }
 
-void XSprite::getVertices(XVertex *vertices) const
+void Sprite::getVertices(Vertex *vertices) const
 {
 	Matrix4 mat;
 	mat.scale(m_size.x, m_size.y, 1.0f);
@@ -211,4 +213,6 @@ void XSprite::getVertices(XVertex *vertices) const
 	vertices[1].set4f(VERTEX_TEX_COORD, m_textureRegion.uv1.x, m_textureRegion.uv1.y);
 	vertices[2].set4f(VERTEX_TEX_COORD, m_textureRegion.uv1.x, m_textureRegion.uv0.y);
 	vertices[3].set4f(VERTEX_TEX_COORD, m_textureRegion.uv0.x, m_textureRegion.uv0.y);
+}
+
 }

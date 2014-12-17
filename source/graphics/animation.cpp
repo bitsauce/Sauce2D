@@ -10,7 +10,10 @@
 #include <x2d/engine.h>
 #include <x2d/graphics.h>
 
-XAnimation::XAnimation(shared_ptr<XTexture> &texture, const int nRows, const int nColumns)
+namespace xd
+{
+
+Animation::Animation(Texture2DPtr &texture, const int nRows, const int nColumns)
 {
 	// Create texture regions
 	for(int y = 0; y < nRows; y++)
@@ -18,7 +21,7 @@ XAnimation::XAnimation(shared_ptr<XTexture> &texture, const int nRows, const int
 		for(int x = 0; x < nColumns; x++)
 		{
 			m_textureRegions.push_back(
-				XTextureRegion(texture,
+				TextureRegion(texture,
 					Vector2(float(x)/nColumns, float(y)/nRows),
 					Vector2(float(x+1)/nColumns, float(y+1)/nRows))
 				);
@@ -26,12 +29,14 @@ XAnimation::XAnimation(shared_ptr<XTexture> &texture, const int nRows, const int
 	}
 }
 
-XAnimation::~XAnimation()
+Animation::~Animation()
 {
 	m_textureRegions.clear();
 }
 
-XTextureRegion XAnimation::getKeyFrame(int frameIndex)
+TextureRegion Animation::getKeyFrame(int frameIndex)
 {
 	return m_textureRegions[frameIndex];
+}
+
 }

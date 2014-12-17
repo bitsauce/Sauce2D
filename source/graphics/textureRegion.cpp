@@ -10,35 +10,38 @@
 #include <x2d/engine.h>
 #include <x2d/graphics.h>
 
-XTextureRegion::XTextureRegion() :
+namespace xd
+{
+
+TextureRegion::TextureRegion() :
 	uv0(0.0f),
 	uv1(1.0f),
 	texture(0)
 {
 }
 
-XTextureRegion::XTextureRegion(const shared_ptr<XTexture> &texture) :
+TextureRegion::TextureRegion(const Texture2DPtr &texture) :
 	uv0(0.0f),
 	uv1(1.0f),
 	texture(texture)
 {
 }
 
-XTextureRegion::XTextureRegion(const shared_ptr<XTexture> &texture, const Vector2 &uv0, const Vector2 &uv1) :
+TextureRegion::TextureRegion(const Texture2DPtr &texture, const Vector2 &uv0, const Vector2 &uv1) :
 	uv0(uv0),
 	uv1(uv1),
 	texture(texture)
 {
 }
 
-XTextureRegion::XTextureRegion(const shared_ptr<XTexture> &texture, const float u0, const float v0, const float u1, const float v1) :
+TextureRegion::TextureRegion(const Texture2DPtr &texture, const float u0, const float v0, const float u1, const float v1) :
 	uv0(u0, v0),
 	uv1(u1, v1),
 	texture(texture)
 {
 }
 
-XTextureRegion::XTextureRegion(const XTextureRegion &other) :
+TextureRegion::TextureRegion(const TextureRegion &other) :
 	uv0(0.0f),
 	uv1(0.0f),
 	texture(0)
@@ -46,7 +49,7 @@ XTextureRegion::XTextureRegion(const XTextureRegion &other) :
 	*this = other;
 }
 
-XTextureRegion &XTextureRegion::operator=(const XTextureRegion &other)
+TextureRegion &TextureRegion::operator=(const TextureRegion &other)
 {
 	if(this == &other) {
 		return *this;
@@ -59,14 +62,14 @@ XTextureRegion &XTextureRegion::operator=(const XTextureRegion &other)
 	return *this;
 }
 
-XTextureRegion::~XTextureRegion()
+TextureRegion::~TextureRegion()
 {
 	//if(texture) {
 		//texture->release();
 	//}
 }
 
-void XTextureRegion::setTexture(const shared_ptr<XTexture> &texture)
+void TextureRegion::setTexture(const Texture2DPtr &texture)
 {
 	//if(this->texture) {
 	//	this->texture->release();
@@ -74,7 +77,7 @@ void XTextureRegion::setTexture(const shared_ptr<XTexture> &texture)
 	this->texture = texture;
 }
 
-shared_ptr<XTexture> XTextureRegion::getTexture() const
+Texture2DPtr TextureRegion::getTexture() const
 {
 	//if(texture) {
 	//	texture->addRef();
@@ -82,7 +85,7 @@ shared_ptr<XTexture> XTextureRegion::getTexture() const
 	return texture;
 }
 
-Vector2i XTextureRegion::getSize() const
+Vector2i TextureRegion::getSize() const
 {
 	return texture != 0 ? Vector2i(
 		int(texture->getWidth()*uv1.x - texture->getWidth()*uv0.x),
@@ -90,14 +93,16 @@ Vector2i XTextureRegion::getSize() const
 		) : Vector2i(0);
 }
 	
-void XTextureRegion::setRegion(const Vector2 &uv0, const Vector2 &uv1)
+void TextureRegion::setRegion(const Vector2 &uv0, const Vector2 &uv1)
 {
 	this->uv0 = uv0;
 	this->uv1 = uv1;
 }
 
-void XTextureRegion::setRegion(const float u0, const float v0, const float u1, const float v1)
+void TextureRegion::setRegion(const float u0, const float v0, const float u1, const float v1)
 {
 	uv0.set(u0, v0);
 	uv1.set(u1, v1);
+}
+
 }

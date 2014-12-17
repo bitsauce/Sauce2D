@@ -10,73 +10,75 @@
 #include <x2d/engine.h>
 #include <x2d/graphics.h>
 
-GLint enumToGL(const XTexture::TextureFilter filter)
+namespace xd {
+
+GLint enumToGL(const Texture2D::TextureFilter filter)
 {
 	switch(filter)
 	{
-	case XTexture::NEAREST: return GL_NEAREST;
-	case XTexture::LINEAR: return GL_LINEAR;
+	case Texture2D::NEAREST: return GL_NEAREST;
+	case Texture2D::LINEAR: return GL_LINEAR;
 	}
 	return 0;
 }
 
-XTexture::TextureFilter enumFromGL(const GLint filter)
+Texture2D::TextureFilter enumFromGL(const GLint filter)
 {
 	switch(filter)
 	{
-	case GL_NEAREST: return XTexture::NEAREST;
-	case GL_LINEAR: return XTexture::LINEAR;
+	case GL_NEAREST: return Texture2D::NEAREST;
+	case GL_LINEAR: return Texture2D::LINEAR;
 	}
-	return XTexture::TextureFilter(0);
+	return Texture2D::TextureFilter(0);
 }
 
-GLint wrapToGL(const XTexture::TextureWrapping wrapping)
+GLint wrapToGL(const Texture2D::TextureWrapping wrapping)
 {
 	switch(wrapping)
 	{
-	case XTexture::CLAMP_TO_BORDER: return GL_CLAMP_TO_BORDER;
-	case XTexture::CLAMP_TO_EDGE: return GL_CLAMP_TO_EDGE;
-	case XTexture::REPEAT: return GL_REPEAT;
-	case XTexture::MIRRORED_REPEAT: return GL_MIRRORED_REPEAT;
+	case Texture2D::CLAMP_TO_BORDER: return GL_CLAMP_TO_BORDER;
+	case Texture2D::CLAMP_TO_EDGE: return GL_CLAMP_TO_EDGE;
+	case Texture2D::REPEAT: return GL_REPEAT;
+	case Texture2D::MIRRORED_REPEAT: return GL_MIRRORED_REPEAT;
 	}
 	return GL_CLAMP_TO_BORDER;
 }
 
-XTexture::TextureWrapping wrapFromGL(const GLint wrapping)
+Texture2D::TextureWrapping wrapFromGL(const GLint wrapping)
 {
 	switch(wrapping)
 	{
-	case GL_CLAMP_TO_BORDER: return XTexture::CLAMP_TO_BORDER;
-	case GL_CLAMP_TO_EDGE: return XTexture::CLAMP_TO_EDGE;
-	case GL_REPEAT: return XTexture::REPEAT;
-	case GL_MIRRORED_REPEAT: return XTexture::MIRRORED_REPEAT;
+	case GL_CLAMP_TO_BORDER: return Texture2D::CLAMP_TO_BORDER;
+	case GL_CLAMP_TO_EDGE: return Texture2D::CLAMP_TO_EDGE;
+	case GL_REPEAT: return Texture2D::REPEAT;
+	case GL_MIRRORED_REPEAT: return Texture2D::MIRRORED_REPEAT;
 	}
-	return XTexture::CLAMP_TO_BORDER;
+	return Texture2D::CLAMP_TO_BORDER;
 }
 
-XTexture::XTexture(const XPixmap &pixmap)
+Texture2D::Texture2D(const Pixmap &pixmap)
 {
 	init(pixmap);
 }
 	
-XTexture::XTexture(const uint width, const uint height, const XColor &color)
+Texture2D::Texture2D(const uint width, const uint height, const Color &color)
 {
-	XPixmap pixmap(width, height);
+	Pixmap pixmap(width, height);
 	pixmap.fill(color);
 	init(pixmap);
 }
 	
-XTexture::XTexture(const XTexture &texture)
+Texture2D::Texture2D(const Texture2D &texture)
 {
 	init(texture.getPixmap());
 }
 
-XTexture::~XTexture()
+Texture2D::~Texture2D()
 {
 	glDeleteTextures(1, &m_id);
 }
 
-void XTexture::init(const XPixmap &pixmap)
+void Texture2D::init(const Pixmap &pixmap)
 {
 	// Create an empty texture
 	glGenTextures(1, &m_id);
@@ -90,7 +92,7 @@ void XTexture::init(const XPixmap &pixmap)
 	updatePixmap(pixmap);
 }
 
-void XTexture::enableMipmaps()
+void Texture2D::enableMipmaps()
 {
 	if(!m_mipmaps)
 	{
@@ -103,7 +105,7 @@ void XTexture::enableMipmaps()
 	}
 }
 
-void XTexture::disableMipmaps()
+void Texture2D::disableMipmaps()
 {
 	if(m_mipmaps)
 	{
@@ -116,7 +118,7 @@ void XTexture::disableMipmaps()
 	}
 }
 
-void XTexture::setFiltering(const TextureFilter filter)
+void Texture2D::setFiltering(const TextureFilter filter)
 {
 	GLint glfilter = enumToGL(filter);
 	if(m_filter != glfilter)
@@ -130,12 +132,12 @@ void XTexture::setFiltering(const TextureFilter filter)
 	}
 }
 
-XTexture::TextureFilter XTexture::getFiltering() const
+Texture2D::TextureFilter Texture2D::getFiltering() const
 {
 	return enumFromGL(m_filter);
 }
 
-void XTexture::setWrapping(const TextureWrapping wrapping)
+void Texture2D::setWrapping(const TextureWrapping wrapping)
 {
 	GLint glwrapping = wrapToGL(wrapping);
 	if(m_wrapping != glwrapping)
@@ -145,12 +147,12 @@ void XTexture::setWrapping(const TextureWrapping wrapping)
 	}
 }
 
-XTexture::TextureWrapping XTexture::getWrapping() const
+Texture2D::TextureWrapping Texture2D::getWrapping() const
 {
 	return wrapFromGL(m_wrapping);
 }
 
-XPixmap XTexture::getPixmap() const
+Pixmap Texture2D::getPixmap() const
 {
 	// Get texture data
 	uchar *data = new uchar[m_width*m_height*4];
@@ -159,12 +161,12 @@ XPixmap XTexture::getPixmap() const
 	glBindTexture(GL_TEXTURE_2D, 0);
 
 	// Copy data to pixmap
-	XPixmap pixmap(m_width, m_height, data);
+	Pixmap pixmap(m_width, m_height, data);
 	delete[] data;
 	return pixmap;
 }
 
-void XTexture::updatePixmap(const XPixmap &pixmap)
+void Texture2D::updatePixmap(const Pixmap &pixmap)
 {
 	// Store dimentions
 	m_width = pixmap.getWidth();
@@ -183,7 +185,7 @@ void XTexture::updatePixmap(const XPixmap &pixmap)
 	updateFiltering();
 }
 
-void XTexture::updatePixmap(const int x, const int y, const XPixmap &pixmap)
+void Texture2D::updatePixmap(const int x, const int y, const Pixmap &pixmap)
 {
 	// Set default filtering
 	glBindTexture(GL_TEXTURE_2D, m_id);
@@ -198,14 +200,14 @@ void XTexture::updatePixmap(const int x, const int y, const XPixmap &pixmap)
 	updateFiltering();
 }
 
-void XTexture::clear()
+void Texture2D::clear()
 {
 	glBindTexture(GL_TEXTURE_2D, m_id);
 	glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, m_width, m_height, GL_BGRA, GL_UNSIGNED_BYTE, vector<GLubyte>(m_width*m_height*4, 0).data());
 	glBindTexture(GL_TEXTURE_2D, 0);
 }
 
-void XTexture::updateFiltering()
+void Texture2D::updateFiltering()
 {
 	if(m_mipmaps && !m_mipmapsGenerated)
 	{
@@ -220,19 +222,19 @@ void XTexture::updateFiltering()
 	glBindTexture(GL_TEXTURE_2D, 0);
 }
 
-uint XTexture::getWidth() const
+uint Texture2D::getWidth() const
 {
 	return m_width;
 }
 
-uint XTexture::getHeight() const
+uint Texture2D::getHeight() const
 {
 	return m_height;
 }
 
 #include <freeimage.h>
 
-void XTexture::exportToFile(string path)
+void Texture2D::exportToFile(string path)
 {
 	// Get texture data
 	uchar *data = new uchar[m_width*m_height*4];
@@ -247,10 +249,10 @@ void XTexture::exportToFile(string path)
 	delete[] data;
 }
 
-shared_ptr<XTexture> XTexture::loadResource(const string &name)
+Texture2DPtr Texture2D::loadResource(const string &name)
 {
 	// Load texture from file
-	XTexture *texture = 0;
+	Texture2D *texture = 0;
 
 	// Load asset as a image
 	string content;
@@ -285,7 +287,7 @@ shared_ptr<XTexture> XTexture::loadResource(const string &name)
 			pixels[i*4+2] = data[i*4+0];
 			pixels[i*4+3] = data[i*4+3];
 		}
-		texture = new XTexture(XPixmap(width, height, pixels));
+		texture = new Texture2D(Pixmap(width, height, pixels));
 		
 		// Close the memory stream
 		FreeImage_Unload(bitmap);
@@ -294,7 +296,9 @@ shared_ptr<XTexture> XTexture::loadResource(const string &name)
 	else
 	{
 		// Unable to read file
-		LOG("XTextureLoader::load() - Unable to read file '%s'", name);
+		LOG("Texture2DLoader::load() - Unable to read file '%s'", name);
 	}
-	return shared_ptr<XTexture>(texture);
+	return Texture2DPtr(texture);
+}
+
 }

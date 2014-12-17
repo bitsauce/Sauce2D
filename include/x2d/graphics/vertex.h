@@ -3,10 +3,13 @@
 
 #include "../engine.h"
 
+namespace xd
+{
+
 /*********************************************************************
 **	Data types														**
 **********************************************************************/
-enum XDataType
+enum DataType
 {
 	XD_FLOAT,
 	XD_UINT,
@@ -20,7 +23,7 @@ enum XDataType
 /*********************************************************************
 **	Vertex attributes												**
 **********************************************************************/
-enum XVertexAttribute
+enum VertexAttribute
 {
 	VERTEX_POSITION,
 	VERTEX_COLOR,
@@ -32,33 +35,33 @@ enum XVertexAttribute
 /*********************************************************************
 **	Vertex format													**
 **********************************************************************/
-class XVertex;
-class XDAPI XVertexFormat
+class Vertex;
+class XDAPI VertexFormat
 {
-	friend class XGraphics;
-	friend class XVertex;
-	friend class XBatch;
-	friend class XVertexBuffer;
+	friend class Graphics;
+	friend class Vertex;
+	friend class Batch;
+	friend class VertexBuffer;
 public:
-	XVertexFormat();
-	XVertexFormat(const XVertexFormat &other);
+	VertexFormat();
+	VertexFormat(const VertexFormat &other);
 
-	void set(const XVertexAttribute attrib, const int size, const XDataType = XD_FLOAT);
-	int getElementCount(const XVertexAttribute attrib) const;
-	XDataType getDataType(const XVertexAttribute attrib) const;
-	bool isAttributeEnabled(const XVertexAttribute attrib) const;
+	void set(const VertexAttribute attrib, const int size, const DataType = XD_FLOAT);
+	int getElementCount(const VertexAttribute attrib) const;
+	DataType getDataType(const VertexAttribute attrib) const;
+	bool isAttributeEnabled(const VertexAttribute attrib) const;
 
 	uint getVertexSizeInBytes() const;
-	uint getAttributeOffset(const XVertexAttribute attrib) const;
+	uint getAttributeOffset(const VertexAttribute attrib) const;
 	
-	XVertex *createVertices(const int count) const;
+	Vertex *createVertices(const int count) const;
 	//XScriptArray *createVerticesAS(const int count) const;
 	
-	XVertexFormat &operator=(const XVertexFormat &other);
-	bool operator==(const XVertexFormat &other);
+	VertexFormat &operator=(const VertexFormat &other);
+	bool operator==(const VertexFormat &other);
 
 protected:
-	static XVertexFormat s_vct; // Position, color, texture coord
+	static VertexFormat s_vct; // Position, color, texture coord
 
 private:
 	struct Attribute
@@ -71,7 +74,7 @@ private:
 		}
 
 		int elementCount;
-		XDataType dataType;
+		DataType dataType;
 		uint offset;
 		
 		bool operator!=(const Attribute &other)
@@ -83,46 +86,48 @@ private:
 	Attribute m_attributes[VERTEX_ATTRIB_MAX];
 	uint m_vertexByteSize;
 
-	static void Construct(XVertexFormat *self) { new (self) XVertexFormat(); }
+	static void Construct(VertexFormat *self) { new (self) VertexFormat(); }
 };
 
 /*********************************************************************
 **	Vertex															**
 **********************************************************************/
-class XDAPI XVertex
+class XDAPI Vertex
 {
 public:
-	XVertex();
-	XVertex(const XVertex &other);
-	XVertex(const XVertexFormat &fmt);
-	~XVertex();
+	Vertex();
+	Vertex(const Vertex &other);
+	Vertex(const VertexFormat &fmt);
+	~Vertex();
 	
 	void clear();
 
-	void setFormat(const XVertexFormat &fmt);
-	XVertexFormat getFormat() const;
+	void setFormat(const VertexFormat &fmt);
+	VertexFormat getFormat() const;
 	// TODO: Add set3* set2* set*
-	void set4f(const XVertexAttribute attrib, const float v0, const float v1 = 0.0f, const float v2 = 0.0f, const float v3 = 0.0f);
-	void set4ui(const XVertexAttribute attrib, const uint v0, const uint v1 = 0, const uint v2 = 0, const uint v3 = 0);
-	void set4i(const XVertexAttribute attrib, const int v0, const int v1 = 0, const int v2 = 0, const int v3 = 0);
-	void set4us(const XVertexAttribute attrib, const ushort v0, const ushort v1 = 0, const ushort v2 = 0, const ushort v3 = 0);
-	void set4s(const XVertexAttribute attrib, const short v0, const short v1 = 0, const short v2 = 0, const short v3 = 0);
-	void set4ub(const XVertexAttribute attrib, const uchar v0, const uchar v1 = 0, const uchar v2 = 0, const uchar v3 = 0);
-	void set4b(const XVertexAttribute attrib, const char v0, const char v1 = 0, const char v2 = 0, const char v3 = 0);
+	void set4f(const VertexAttribute attrib, const float v0, const float v1 = 0.0f, const float v2 = 0.0f, const float v3 = 0.0f);
+	void set4ui(const VertexAttribute attrib, const uint v0, const uint v1 = 0, const uint v2 = 0, const uint v3 = 0);
+	void set4i(const VertexAttribute attrib, const int v0, const int v1 = 0, const int v2 = 0, const int v3 = 0);
+	void set4us(const VertexAttribute attrib, const ushort v0, const ushort v1 = 0, const ushort v2 = 0, const ushort v3 = 0);
+	void set4s(const VertexAttribute attrib, const short v0, const short v1 = 0, const short v2 = 0, const short v3 = 0);
+	void set4ub(const VertexAttribute attrib, const uchar v0, const uchar v1 = 0, const uchar v2 = 0, const uchar v3 = 0);
+	void set4b(const VertexAttribute attrib, const char v0, const char v1 = 0, const char v2 = 0, const char v3 = 0);
 	void setData(const char *data) const;
 	void getData(char *data) const;
 	
-	XVertex &operator=(const XVertex &other);
+	Vertex &operator=(const Vertex &other);
 
 	void print();
 
 private:
 	char *m_data;
-	XVertexFormat m_format;
+	VertexFormat m_format;
 
-	static void Construct(XVertex *self) { new (self) XVertex(); }
-	static void CopyConstruct(const XVertex &other, XVertex *self) { new (self) XVertex(other); }
-	static void Destruct(XVertex *self) { self->~XVertex(); }
+	static void Construct(Vertex *self) { new (self) Vertex(); }
+	static void CopyConstruct(const Vertex &other, Vertex *self) { new (self) Vertex(other); }
+	static void Destruct(Vertex *self) { self->~Vertex(); }
 };
+
+}
 
 #endif // X2D_VERTEX_H

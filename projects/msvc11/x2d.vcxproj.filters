@@ -90,9 +90,6 @@
     <ClInclude Include="..\..\include\x2d\graphics\font.h">
       <Filter>include\graphics</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\x2d\graphics\framebufferobject.h">
-      <Filter>include\graphics</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\include\x2d\graphics\context.h">
       <Filter>include\graphics</Filter>
     </ClInclude>
@@ -113,6 +110,9 @@
     </ClInclude>
     <ClInclude Include="..\..\include\x2d\iniparser.h">
       <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\x2d\graphics\rendertarget.h">
+      <Filter>include\graphics</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

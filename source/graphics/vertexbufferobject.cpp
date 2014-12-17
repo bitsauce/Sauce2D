@@ -10,16 +10,18 @@
 #include <x2d/engine.h>
 #include <x2d/graphics.h>
 
-GLenum toGLBufferType(const XVertexBuffer::BufferType value)
+namespace xd {
+
+GLenum toGLBufferType(const VertexBuffer::BufferType value)
 {
 	switch(value) {
-	case XVertexBuffer::DYNAMIC_BUFFER:		return GL_DYNAMIC_DRAW;
-	case XVertexBuffer::STATIC_BUFFER:		return GL_STATIC_DRAW;
+	case VertexBuffer::DYNAMIC_BUFFER:		return GL_DYNAMIC_DRAW;
+	case VertexBuffer::STATIC_BUFFER:		return GL_STATIC_DRAW;
 	}
 	return GL_DYNAMIC_DRAW;
 }
 
-XVertexBufferObject::XVertexBufferObject(const XVertexBuffer &buffer) :
+VertexBufferObject::VertexBufferObject(const VertexBuffer &buffer) :
 	m_vertexFormat(buffer.getVertexFormat())
 {
 	// Generate buffers
@@ -35,15 +37,17 @@ XVertexBufferObject::XVertexBufferObject(const XVertexBuffer &buffer) :
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 }
 
-XVertexBufferObject::~XVertexBufferObject()
+VertexBufferObject::~VertexBufferObject()
 {
 	glDeleteBuffers(1, &m_vboId);
 	glDeleteBuffers(1, &m_iboId);
 }
 
-void XVertexBufferObject::update(const int offset, const char *data, const int count)
+void VertexBufferObject::update(const int offset, const char *data, const int count)
 {
 	glBindBuffer(GL_ARRAY_BUFFER, m_vboId);
 	glBufferSubData(GL_ARRAY_BUFFER, offset * m_vertexFormat.getVertexSizeInBytes(), count * m_vertexFormat.getVertexSizeInBytes(), data);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
+}
+
 }

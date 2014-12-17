@@ -10,33 +10,37 @@
 #include <x2d/engine.h>
 #include <x2d/graphics.h>
 
-XFrameBufferObject::XFrameBufferObject()
+namespace xd {
+
+RenderTarget2D::RenderTarget2D()
 {
 	glGenFramebuffers(1, &m_id);
 }
 
-XFrameBufferObject::~XFrameBufferObject()
+RenderTarget2D::~RenderTarget2D()
 {
 	glDeleteFramebuffers(1, &m_id);
 }
 
-void XFrameBufferObject::bind(shared_ptr<XTexture> texture)
+void RenderTarget2D::bind(xd::Texture2DPtr texture)
 {
 	glBindFramebuffer(GL_FRAMEBUFFER, m_id);
 	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, texture->m_id, 0);
 
-	XGraphics::getOrthoProjection(m_ortho[0], m_ortho[1], m_ortho[2], m_ortho[3], m_ortho[4], m_ortho[5]);
-	XGraphics::getViewport(m_viewport[0], m_viewport[1], m_viewport[2], m_viewport[3]);
+	Graphics::getOrthoProjection(m_ortho[0], m_ortho[1], m_ortho[2], m_ortho[3], m_ortho[4], m_ortho[5]);
+	Graphics::getViewport(m_viewport[0], m_viewport[1], m_viewport[2], m_viewport[3]);
 		
 	int w = texture->getWidth(), h = texture->getHeight();
-	XGraphics::setOrthoProjection(0.0f, (float)w, (float)h, 0.0f, m_ortho[4], m_ortho[5]);
-	XGraphics::setViewport(Recti(0, 0, w, h));
+	Graphics::setOrthoProjection(0.0f, (float)w, (float)h, 0.0f, m_ortho[4], m_ortho[5]);
+	Graphics::setViewport(Recti(0, 0, w, h));
 }
 
-void XFrameBufferObject::unbind()
+void RenderTarget2D::unbind()
 {
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
-	XGraphics::setOrthoProjection(m_ortho[0], m_ortho[1], m_ortho[2], m_ortho[3], m_ortho[4], m_ortho[5]);
-	XGraphics::setViewport(Recti(m_viewport[0], m_viewport[1], m_viewport[2], m_viewport[3]));
+	Graphics::setOrthoProjection(m_ortho[0], m_ortho[1], m_ortho[2], m_ortho[3], m_ortho[4], m_ortho[5]);
+	Graphics::setViewport(Recti(m_viewport[0], m_viewport[1], m_viewport[2], m_viewport[3]));
+}
+
 }

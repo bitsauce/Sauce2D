@@ -3,22 +3,25 @@
 
 #include "../engine.h"
 
-class XDAPI XPixmap
+namespace xd
+{
+
+class XDAPI Pixmap
 {
 public:
-	XPixmap();
-	XPixmap(const uint width, const uint height);
-	XPixmap(const uint width, const uint height, const uchar *data);
-	XPixmap(const XPixmap& other);
-	~XPixmap();
+	Pixmap();
+	Pixmap(const uint width, const uint height);
+	Pixmap(const uint width, const uint height, const uchar *data);
+	Pixmap(const Pixmap& other);
+	~Pixmap();
 
 	uint getWidth() const;
 	uint getHeight() const;
 
-	XColor getColor(const uint x, const uint y) const;
-	void setColor(const uint x, const uint y, const XColor &color);
+	Color getColor(const uint x, const uint y) const;
+	void setColor(const uint x, const uint y, const Color &color);
 
-	void fill(const XColor &color);
+	void fill(const Color &color);
 	void clear();
 
 	void exportToFile(const string &path) const;
@@ -32,5 +35,7 @@ private:
 	uint m_width;
 	uint m_height;
 };
+
+}
 
 #endif // X2D_PIXMAP_H

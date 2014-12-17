@@ -5,7 +5,7 @@
 #include "graphics/animation.h"
 #include "graphics/batch.h"
 #include "graphics/font.h"
-#include "graphics/framebufferobject.h"
+#include "graphics/rendertarget.h"
 #include "graphics/pixmap.h"
 #include "graphics/shader.h"
 #include "graphics/shape.h"
@@ -22,19 +22,17 @@
 **	Graphics class [static]											**
 **********************************************************************/
 
-class XTexture;
-class XShader;
-class XFrameBufferObject;
-class XVertexBufferObject;
+namespace xd
+{
 
 XDAPI extern uint QUAD_INDICES[6];
 XDAPI extern Vector4 QUAD_VERTICES[4];
 XDAPI extern Vector2 QUAD_TEXCOORD[4];
 
-class XDAPI XGraphics
+class XDAPI Graphics
 {
 	friend class XEngine;
-	friend class XBatch;
+	friend class Batch;
 	friend class XWindow;
 
 public:
@@ -79,7 +77,7 @@ public:
 	static void swapBuffers();
 
 	// Rendering
-	static void renderBatch(const XBatch &batch);
+	static void renderBatch(const Batch &batch);
 	static bool isSupported(Feature feature);
 
 protected:
@@ -98,5 +96,7 @@ protected:
 	static int s_refreshRate;
 	static float s_timeStep;
 };
+
+}
 
 #endif // X2D_GRAPHICS_H

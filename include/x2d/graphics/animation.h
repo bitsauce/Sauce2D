@@ -2,20 +2,25 @@
 #define X2D_ANIMATION_H
 
 #include "../engine.h"
+#include "texture.h"
 
-class XTexture;
-class XTextureRegion;
+namespace xd
+{
 
-class XDAPI XAnimation
+class TextureRegion;
+
+class XDAPI Animation
 {
 public:
-	XAnimation(shared_ptr<XTexture> &texture, const int nRows, const int nColumns);
-	~XAnimation();
+	Animation(Texture2DPtr &texture, const int nRows, const int nColumns);
+	~Animation();
 
-	XTextureRegion getKeyFrame(int frameIndex);
+	TextureRegion getKeyFrame(int frameIndex);
 
 private:
-	vector<XTextureRegion> m_textureRegions;
+	vector<TextureRegion> m_textureRegions;
 };
+
+}
 
 #endif // X2D_ANIMATION_H
