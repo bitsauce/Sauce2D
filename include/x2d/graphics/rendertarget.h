@@ -6,20 +6,29 @@
 
 namespace xd
 {
+class GraphicsDevice;
+struct PixelFormat;
 
 class XDAPI RenderTarget2D
 {
 public:
-	RenderTarget2D();
+	RenderTarget2D(GraphicsDevice *gd, const uint width, const uint height, const uint targetCount, const PixelFormat &fmt);
 	~RenderTarget2D();
 
-	void bind(Texture2DPtr texture);
+private:
+	void bind();
 	void unbind();
 
-private:
 	GLuint m_id;
 	float m_ortho[6];
 	int m_viewport[4];
+	GLenum *m_buffers;
+
+	uint m_width, m_height;
+	GraphicsDevice *m_graphicsDevice;
+
+	uint m_textureCount;
+	Texture2DPtr *m_textures;
 };
 
 }

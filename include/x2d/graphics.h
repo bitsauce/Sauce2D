@@ -2,6 +2,7 @@
 #define X2D_GRAPHICS_H
 
 #include "config.h"
+#include "graphics/graphicsdevice.h"
 #include "graphics/animation.h"
 #include "graphics/batch.h"
 #include "graphics/font.h"
@@ -42,16 +43,6 @@ public:
 		VertexBufferObjects,
 		FrameBufferObjects
 	};
-
-	// Orthographic projection
-	static void setOrthoProjection(const float l, const float r, const float b, const float t, const float n, const float f);
-	static void getOrthoProjection(float &l, float &r, float &b, float &t, float &n, float &f);
-	
-	// Viewports
-	static void setViewport(const Recti&);
-	static void setViewport(const Vector2i&, Vector2i&);
-	static void setViewport(const int, const int, const int, const int);
-	static void getViewport(int &x, int &y, int &w, int &h);
 
 	// Refresh rate
 	static void setRefreshRate(const int hz);

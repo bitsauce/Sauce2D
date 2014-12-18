@@ -14,14 +14,22 @@ class GameManager
 public:
 	static void main()
 	{
+		shadowMapTexture = xd::Texture2DPtr(new xd::Texture2D());
+		colorMapTarget = xd::RenderTarget2D(4); // 4 = layers/attachment count
 	}
 
 	static void update()
 	{
 	}
 
-	static void draw()
+	static void draw(xd::GraphicsDevice &graphicsDevice)
 	{
+		graphicsDevice.setRenderTarget(colorMapTarget);
+		graphicsDevice.clear(xd::GraphicsDevice::DEPTH_BUFFER, COLOR_BLACK);
+
+		// Draw scene
+
+		graphicsDevice.setRenderTarget(normalMapTarget);
 	}
 	
 	static void exit()
@@ -29,8 +37,16 @@ public:
 	}
 
 private:
-	xd::TexturePtr texture;
+	static xd::Texture2DPtr shadowMapTexture;
+	static xd::Texture2DPtr colorMapTexture;
+	static xd::Texture2DPtr normalMapTexture;
+	static xd::Texture2DPtr depthMapTexture;
 };
+
+xd::Texture2DPtr GameManager::shadowMapTexture = nullptr;
+xd::Texture2DPtr GameManager::colorMapTexture = nullptr;
+xd::Texture2DPtr GameManager::normalMapTexture = nullptr;
+xd::Texture2DPtr GameManager::depthMapTexture = nullptr;
 
 // Win32 entry point
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, INT)
