@@ -13,7 +13,7 @@ typedef shared_ptr<Shader> ShaderPtr;
 
 class XDAPI Shader
 {
-	friend class Graphics;
+	friend class GraphicsContext;
 	friend class Texture2D;
 public:
 	Shader(const string &vertFilePath, const string &fragFilePath);

@@ -506,6 +506,7 @@ protected:
 };
 
 class Graphics;
+class GraphicsContext;
 }
 
 class XDAPI XWindow
@@ -560,6 +561,9 @@ private:
 	// Window fullscreen state
 	static bool s_fullscreen;
 
+	// Windows graphics device
+	static xd::GraphicsContext *s_graphicsContext;
+
 	// Window listeners
 	static list<xd::WindowListener*> s_windowListeners;
 	
@@ -597,22 +601,9 @@ private:
 /*********************************************************************
 **	Engine config													**
 **********************************************************************/
-typedef void (*VoidFunc)();
-
 struct XDAPI XConfig
 {
 	XConfig();
-
-	bool isValid() const
-	{
-		return draw && update && main;
-	}
-
-	void operator=(const XConfig &other)
-	{
-		flags = other.flags;
-		workDir = other.workDir;
-	}
 
 	// Engine running flags (optional)
 	int				flags;
@@ -621,7 +612,8 @@ struct XDAPI XConfig
 	const char*		workDir;
 
 	// Game loop functions
-	VoidFunc		draw, update, main, end;
+	function<void()> update, main, stepBegin, stepEnd, end;
+	function<void(xd::GraphicsContext &)> draw;
 };
 
 /*********************************************************************
@@ -690,7 +682,8 @@ private:
 	static stack<XScene*> s_sceneStack;
 
 	// Game loop
-	VoidFunc m_mainFunc, m_drawFunc, m_updateFunc, m_endFunc;
+	function<void()> m_mainFunc, m_updateFunc, m_stepBeginFunc, m_stepEndFunc, m_endFunc;
+	function<void(xd::GraphicsContext&)> m_drawFunc;
 };
 
 XDAPI XEngine *CreateEngine();

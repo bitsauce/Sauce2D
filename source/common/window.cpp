@@ -28,6 +28,7 @@ bool XWindow::s_focus = false;
 Vector2i XWindow::s_size = Vector2i(0);
 bool XWindow::s_fullscreen = false;
 list<xd::WindowListener*> XWindow::s_windowListeners;
+xd::GraphicsContext *XWindow::s_graphicsContext = nullptr;
 
 void XWindow::close()
 {
@@ -514,8 +515,7 @@ void XWindow::processEvents(UINT Message, WPARAM wParam, LPARAM lParam)
 		{
 			// Resize viewport
 			s_size.set(LOWORD(lParam), HIWORD(lParam));
-			xd::Graphics::setOrthoProjection(0.0f, (float)s_size.x, (float)s_size.y, 0.0f, -1.0f, 1.0f);
-			xd::Graphics::setViewport(Recti(0, 0, s_size.x, s_size.y));
+			s_graphicsContext->resizeViewport(s_size.x, s_size.y);
 			for(list<xd::WindowListener*>::iterator itr = s_windowListeners.begin(); itr != s_windowListeners.end(); ++itr)
 			{
 				(*itr)->resizeEvent(s_size.x, s_size.y);
@@ -579,7 +579,7 @@ void XWindow::processEvents(UINT Message, WPARAM wParam, LPARAM lParam)
 			// Set cursor pos
 			int x = GET_X_LPARAM(lParam);
 			int y = GET_Y_LPARAM(lParam);
-			XInput::s_position.set(x, y);
+			XInput::s_position.set((float)x, (float)y);
 		}
 		break;
 

@@ -6,17 +6,30 @@
 namespace xd
 {
 
+// Pixel formats
+enum PixelFormat
+{
+	ALPHA = GL_ALPHA,
+	LUMINANCE = GL_LUMINANCE,
+	LUMINANCE_ALPHA = GL_LUMINANCE_ALPHA,
+	RGB = GL_RGB,
+	RGBA = GL_RGBA
+};
+
+extern size_t getPixelFormatSize(const PixelFormat format);
+
 class XDAPI Pixmap
 {
 public:
-	Pixmap();
-	Pixmap(const uint width, const uint height);
-	Pixmap(const uint width, const uint height, const uchar *data);
+	Pixmap(const PixelFormat format = RGBA);
+	Pixmap(const uint width, const uint height, const PixelFormat format = RGBA);
+	Pixmap(const uint width, const uint height, const uchar *data, const PixelFormat format = RGBA);
 	Pixmap(const Pixmap& other);
 	~Pixmap();
 
 	uint getWidth() const;
 	uint getHeight() const;
+	PixelFormat getFormat() const;
 
 	Color getColor(const uint x, const uint y) const;
 	void setColor(const uint x, const uint y, const Color &color);
@@ -34,6 +47,8 @@ private:
 	uchar *m_data;
 	uint m_width;
 	uint m_height;
+	PixelFormat m_format;
+	uint m_pixelSize;
 };
 
 }

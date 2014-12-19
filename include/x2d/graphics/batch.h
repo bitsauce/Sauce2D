@@ -18,7 +18,7 @@ class VertexBuffer;
 **********************************************************************/
 class XDAPI Batch
 {
-	friend class Graphics;
+	friend class GraphicsContext;
 public:
 	Batch();
 	virtual ~Batch();

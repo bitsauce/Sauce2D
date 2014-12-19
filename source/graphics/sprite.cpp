@@ -18,7 +18,7 @@ Sprite::Sprite(const TextureRegion &region) :
 	m_size(region.getSize()),
 	m_origin(0.0f),
 	m_angle(0.0f),
-	m_color(1.0f)
+	m_color(255)
 {
 }
 
@@ -84,7 +84,7 @@ void Sprite::setRegion(const TextureRegion &textureRegion, const bool resize)
 	}
 }
 
-void Sprite::setColor(const Vector4 &color)
+void Sprite::setColor(const Color &color)
 {
 	m_color = color;
 }
@@ -163,7 +163,7 @@ float Sprite::getRotation() const
 	return m_angle;
 }
 
-Vector4 Sprite::getColor() const
+Color Sprite::getColor() const
 {
 	return m_color;
 }
@@ -206,7 +206,7 @@ void Sprite::getVertices(Vertex *vertices) const
 	{
 		Vector2 pos = (mat * QUAD_VERTICES[i]).getXY();
 		vertices[i].set4f(VERTEX_POSITION, pos.x, pos.y);
-		vertices[i].set4ub(VERTEX_COLOR, m_color.x*255, m_color.y*255, m_color.z*255, m_color.w*255);
+		vertices[i].set4ub(VERTEX_COLOR, m_color.r, m_color.g, m_color.b, m_color.a);
 	}
 
 	vertices[0].set4f(VERTEX_TEX_COORD, m_textureRegion.uv0.x, m_textureRegion.uv1.y);

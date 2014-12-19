@@ -17,10 +17,7 @@
 
 XConfig::XConfig() :
 	flags(0),
-	workDir(""),
-	draw(0),
-	update(0),
-	main(0)
+	workDir("")
 {
 }
 
@@ -66,7 +63,6 @@ XEngine::~XEngine()
 	delete m_audio;
 	delete m_timer;
 	delete m_math;
-	//shared_ptrManager::clear();
 	delete m_console;
 }
 
@@ -128,12 +124,6 @@ string getSaveDir()
 //------------------------------------------------------------------------
 int XEngine::init(const XConfig &config)
 {
-	// Make sure the config is valid
-	if(!config.isValid())
-	{
-		return X2D_INVALID_CONFIG;
-	}
-
 	// Set platform string and program dir
 	s_flags = config.flags;
 
@@ -160,6 +150,8 @@ int XEngine::init(const XConfig &config)
 	m_mainFunc = config.main;
 	m_drawFunc = config.draw;
 	m_updateFunc = config.update;
+	m_stepBeginFunc = config.stepBegin;
+	m_stepEndFunc = config.stepEnd;
 	m_endFunc = config.end;
 
 	m_console->m_engine = this;
@@ -178,20 +170,6 @@ int XEngine::init(const XConfig &config)
 		LOG("** x2D Game Engine **");
 	
 		m_console->s_initialized = true;
-
-		// Load plugins
-		/*
-		if(config.loadPluginsFunc != 0 && config.loadPluginsFunc(scriptEngine) < 0)
-		{
-			LOG("Loading plugins...");
-			return X2D_PLUGIN_LOAD_ERROR;
-		}*/
-
-		// Load events
-		/*if(config.loadEventsFunc != 0 && config.loadEventsFunc(scriptEngine) < 0)
-		{
-			return X2D_PLUGIN_LOAD_ERROR;
-		}*/
 
 		m_mainFunc();
 	
@@ -213,28 +191,14 @@ int XEngine::init(const XConfig &config)
 
 void XEngine::draw()
 {
-	if(s_sceneStack.size() > 0)
-	{
-		s_sceneStack.top()->drawEvent(); // TODO: The current scene can be cached to avoid redundant top() calls
-	}
-	else
-	{
-		m_drawFunc();
-	}
+	m_drawFunc(m_graphics->s_graphicsContext);
 	m_graphics->swapBuffers();
 }
 
 void XEngine::update()
 {
 	XInput::checkBindings();
-	if(s_sceneStack.size() > 0)
-	{
-		s_sceneStack.top()->updateEvent();
-	}
-	else
-	{
-		m_updateFunc();
-	}
+	m_updateFunc();
 }
 
 void XEngine::exit()
@@ -263,12 +227,6 @@ int XEngine::run()
 		// Game loop
 		while(s_running)
 		{
-			// Step begin
-			/*if(m_debugger)
-			{
-				m_debugger->getProfiler()->stepBegin();
-			}*/
-
 			// Process game events
 			XWindow::processEvents();
 
@@ -277,6 +235,9 @@ int XEngine::run()
 			{
 				continue;
 			}
+
+			// Step begin
+			if(m_stepBeginFunc) m_stepBeginFunc();
 
 			// Show new scene before hiding current scene to keep common resources alive
 			if(s_showScene)
@@ -325,6 +286,8 @@ int XEngine::run()
 				xd::Graphics::s_framesPerSecond = (float)int(fps/numFpsSamples);
 				currFpsSample = 0;
 			}
+
+			if(m_stepEndFunc) m_stepEndFunc();
 		}
 	}
 	catch(XException e)

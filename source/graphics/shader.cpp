@@ -283,7 +283,6 @@ void Shader::setUniform4f(const string &name, const float v0, const float v1, co
 
 void Shader::setSampler2D(const string &name, xd::Texture2DPtr texture)
 {
-	// TODO: We should actually store a handle to the texture object to avoid it being destroyed
 	if(m_uniforms.find(name) != m_uniforms.end())
 	{
 		Uniform *uniform = m_uniforms[name];

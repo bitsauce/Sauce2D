@@ -10,7 +10,7 @@ class VertexBuffer;
 
 class XDAPI VertexBufferObject
 {
-	friend class Graphics;
+	friend class GraphicsContext;
 public:
 	VertexBufferObject(const VertexBuffer &buffer);
 	~VertexBufferObject();

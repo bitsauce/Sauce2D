@@ -56,15 +56,20 @@ Texture2D::TextureWrapping wrapFromGL(const GLint wrapping)
 	return Texture2D::CLAMP_TO_BORDER;
 }
 
-Texture2D::Texture2D(const Pixmap &pixmap)
+Texture2D::Texture2D(const PixelFormat format)
 {
-	init(pixmap);
+	init(Pixmap(format));
 }
 	
-Texture2D::Texture2D(const uint width, const uint height, const Color &color)
+Texture2D::Texture2D(const uint width, const uint height, const Color &color, const PixelFormat format)
 {
-	Pixmap pixmap(width, height);
+	Pixmap pixmap(width, height, format);
 	pixmap.fill(color);
+	init(pixmap);
+}
+
+Texture2D::Texture2D(const Pixmap &pixmap)
+{
 	init(pixmap);
 }
 	
@@ -152,16 +157,16 @@ Texture2D::TextureWrapping Texture2D::getWrapping() const
 	return wrapFromGL(m_wrapping);
 }
 
-Pixmap Texture2D::getPixmap() const
+Pixmap Texture2D::getPixmap(const PixelFormat format) const
 {
 	// Get texture data
-	uchar *data = new uchar[m_width*m_height*4];
+	uchar *data = new uchar[m_width * m_height * getPixelFormatSize(format)];
 	glBindTexture(GL_TEXTURE_2D, m_id);
 	glGetTexImage(GL_TEXTURE_2D, 0, GL_RGBA, GL_UNSIGNED_BYTE, (GLvoid*)data);
 	glBindTexture(GL_TEXTURE_2D, 0);
 
 	// Copy data to pixmap
-	Pixmap pixmap(m_width, m_height, data);
+	Pixmap pixmap(m_width, m_height, data, format);
 	delete[] data;
 	return pixmap;
 }
@@ -174,7 +179,7 @@ void Texture2D::updatePixmap(const Pixmap &pixmap)
 
 	// Set default filtering
 	glBindTexture(GL_TEXTURE_2D, m_id);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, (GLsizei)m_width, (GLsizei)m_height, 0, GL_RGBA, GL_UNSIGNED_BYTE, (const GLvoid*)pixmap.getData());
+	glTexImage2D(GL_TEXTURE_2D, 0, pixmap.getFormat(), (GLsizei)m_width, (GLsizei)m_height, 0, pixmap.getFormat(), GL_UNSIGNED_BYTE, (const GLvoid*)pixmap.getData());
 	glBindTexture(GL_TEXTURE_2D, 0);
 
 	// Regenerate mipmaps

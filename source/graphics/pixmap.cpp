@@ -12,22 +12,37 @@
 
 namespace xd {
 
-Pixmap::Pixmap() :
+size_t getPixelFormatSize(const PixelFormat format)
+{
+	switch(format) {
+		case ALPHA: return 1;
+		case LUMINANCE: return 1;
+		case LUMINANCE_ALPHA: return 2;
+		case RGB: return 3;
+		case RGBA: return 4;
+	}
+	return 0;
+}
+
+Pixmap::Pixmap(const PixelFormat format) :
 	m_width(0),
 	m_height(0),
-	m_data(0)
+	m_data(0),
+	m_format(format)
 {
 }
 
-Pixmap::Pixmap(const uint width, const uint height, const uchar *data) :
+Pixmap::Pixmap(const uint width, const uint height, const uchar *data, const PixelFormat format) :
 	m_width(width),
-	m_height(height)
+	m_height(height),
+	m_format(format)
 {
 	// Copy pixels
+	m_pixelSize = getPixelFormatSize(m_format);
 	if(width >= 0 && height >= 0)
 	{
-		m_data = new uchar[width*height*4];
-		memcpy(m_data, data, width*height*4);
+		m_data = new uchar[width * height * m_pixelSize];
+		memcpy(m_data, data, width * height * m_pixelSize);
 	}
 	else
 	{
@@ -35,15 +50,17 @@ Pixmap::Pixmap(const uint width, const uint height, const uchar *data) :
 	}
 }
 
-Pixmap::Pixmap(const uint width, const uint height) :
+Pixmap::Pixmap(const uint width, const uint height, const PixelFormat format) :
 	m_width(width),
-	m_height(height)
+	m_height(height),
+	m_format(format)
 {
 	// Create empty pixmap
+	m_pixelSize = getPixelFormatSize(m_format);
 	if(width >= 0 && height >= 0)
 	{
-		m_data = new uchar[width*height*4];
-		memset(m_data, 0, width*height*4);
+		m_data = new uchar[width * height * m_pixelSize];
+		memset(m_data, 0, width * height * m_pixelSize);
 	}
 	else
 	{
@@ -55,10 +72,12 @@ Pixmap::Pixmap(const Pixmap &other)
 {
 	m_width = other.m_width;
 	m_height = other.m_height;
+	m_format = other.m_format;
+	m_pixelSize = getPixelFormatSize(m_format);
 	if(other.m_data)
 	{
-		m_data = new uchar[m_width*m_height*4];
-		memcpy(m_data, other.m_data, m_width*m_height*4);
+		m_data = new uchar[m_width * m_height * m_pixelSize];
+		memcpy(m_data, other.m_data, m_width*m_height*m_pixelSize);
 	}
 	else
 	{
@@ -94,12 +113,17 @@ uint Pixmap::getHeight() const
 	return m_height;
 }
 
+PixelFormat Pixmap::getFormat() const
+{
+	return m_format;
+}
+
 Color Pixmap::getColor(const uint x, const uint y) const
 {
 	Color color;
 	if(x < m_width && y < m_height)
 	{
-		memcpy(&color, m_data + (x + y*m_width) * 4, 4);
+		memcpy(&color, m_data + (x + y*m_width) * m_pixelSize, 4);
 	}
 	else
 	{
@@ -112,7 +136,7 @@ void Pixmap::setColor(const uint x, const uint y, const Color &color)
 {
 	if(x < m_width && y < m_height)
 	{
-		memcpy(m_data + (x + y*m_width) * 4, &color, 4);
+		memcpy(m_data + (x + y*m_width) * m_pixelSize, &color, m_pixelSize);
 	}
 	else
 	{
@@ -126,7 +150,7 @@ void Pixmap::fill(const Color &color)
 	{
 		for(uint x = 0; x < m_width; ++x)
 		{
-			memcpy(m_data + (x + y*m_width) * 4, &color, 4);
+			memcpy(m_data + (x + y*m_width) * m_pixelSize, &color, m_pixelSize);
 		}
 	}
 }

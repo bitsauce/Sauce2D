@@ -161,7 +161,7 @@ void Shape::draw(Batch *batch)
 	}
 
 	// Set vertex colors
-	for(uint i = 0; i < m_vertCount; i++)
+	for(int i = 0; i < m_vertCount; i++)
 	{
 		m_vertices[i].set4ub(VERTEX_COLOR, m_fillColor.r, m_fillColor.g, m_fillColor.b, m_fillColor.a);
 	}

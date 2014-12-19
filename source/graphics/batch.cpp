@@ -129,14 +129,14 @@ void Batch::renderToTexture(Texture2DPtr texture)
 {
 	if(texture)
 	{
-		if(!m_renderTarget)
+		/*if(!m_renderTarget)
 		{
-			m_renderTarget = new RenderTarget2D();
+			m_renderTarget = new RenderTarget2D(, texture->getWidth(), texture->getHeight(), 1, );
 		}
 
 		m_renderTarget->bind(texture);
 		Graphics::renderBatch(*this);
-		m_renderTarget->unbind();
+		m_renderTarget->unbind();*/
 	}
 	else
 	{

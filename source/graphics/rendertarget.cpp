@@ -12,10 +12,9 @@
 
 namespace xd {
 
-RenderTarget2D::RenderTarget2D(GraphicsDevice *gd, const uint width, const uint height, const uint count, const PixelFormat &fmt) :
+RenderTarget2D::RenderTarget2D(const uint width, const uint height, const uint count, const PixelFormat fmt) :
 	m_width(width),
 	m_height(height),
-	m_graphicsDevice(gd),
 	m_textureCount(count)
 {
 	// Generate framebuffer
@@ -26,7 +25,7 @@ RenderTarget2D::RenderTarget2D(GraphicsDevice *gd, const uint width, const uint 
 	m_buffers = new GLenum[m_textureCount];
 	for(uint i = 0; i < m_textureCount; ++i)
 	{
-		m_textures[i] = Texture2DPtr(new Texture2D(width, height));
+		m_textures[i] = Texture2DPtr(new Texture2D(width, height, Color(0, 0, 0, 0), fmt));
 		m_buffers[i] = GL_COLOR_ATTACHMENT0 + i;
 	}
 }
@@ -34,6 +33,8 @@ RenderTarget2D::RenderTarget2D(GraphicsDevice *gd, const uint width, const uint 
 RenderTarget2D::~RenderTarget2D()
 {
 	glDeleteFramebuffers(1, &m_id);
+	delete[] m_textures;
+	delete[] m_buffers;
 }
 
 void RenderTarget2D::bind()
@@ -45,21 +46,11 @@ void RenderTarget2D::bind()
 		glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0 + i, GL_TEXTURE_2D, m_textures[i]->m_id, 0);
 	}
 	glDrawBuffers(m_textureCount, m_buffers);
-
-	// Setup viewport and projection
-	m_graphicsDevice->getOrthoProjection(m_ortho[0], m_ortho[1], m_ortho[2], m_ortho[3], m_ortho[4], m_ortho[5]);
-	m_graphicsDevice->getViewport(m_viewport[0], m_viewport[1], m_viewport[2], m_viewport[3]);
-		
-	m_graphicsDevice->setOrthoProjection(0.0f, (float)m_width, (float)m_height, 0.0f, m_ortho[4], m_ortho[5]);
-	m_graphicsDevice->setViewport(Recti(0, 0, m_width, m_height));
 }
 
 void RenderTarget2D::unbind()
 {
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
-
-	m_graphicsDevice->setOrthoProjection(m_ortho[0], m_ortho[1], m_ortho[2], m_ortho[3], m_ortho[4], m_ortho[5]);
-	m_graphicsDevice->setViewport(Recti(m_viewport[0], m_viewport[1], m_viewport[2], m_viewport[3]));
 }
 
 }

@@ -90,9 +90,6 @@
     <ClInclude Include="..\..\include\x2d\graphics\font.h">
       <Filter>include\graphics</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\x2d\graphics\context.h">
-      <Filter>include\graphics</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\include\x2d\graphics\vertex.h">
       <Filter>include\graphics</Filter>
     </ClInclude>
@@ -112,6 +109,9 @@
       <Filter>include</Filter>
     </ClInclude>
     <ClInclude Include="..\..\include\x2d\graphics\rendertarget.h">
+      <Filter>include\graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\x2d\graphics\graphicscontext.h">
       <Filter>include\graphics</Filter>
     </ClInclude>
   </ItemGroup>
@@ -212,14 +212,17 @@
     <ClCompile Include="..\..\source\graphics\vertexbufferobject.cpp">
       <Filter>source\graphics</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\source\graphics\framebufferobject.cpp">
-      <Filter>source\graphics</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\source\common\resourcemanager.cpp">
       <Filter>source\common</Filter>
     </ClCompile>
     <ClCompile Include="..\..\source\common\iniparser.cpp">
       <Filter>source\common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\graphics\rendertarget.cpp">
+      <Filter>source\graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\graphics\graphicsContext.cpp">
+      <Filter>source\graphics</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

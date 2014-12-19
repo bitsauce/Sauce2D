@@ -31,7 +31,7 @@ public:
 	void setOrigin(const Vector2 &origin);
 	void setRotation(const float ang);
 	void setRegion(const TextureRegion &region, const bool resize = false);
-	void setColor(const Vector4 &color);
+	void setColor(const Color &color);
 
 	void move(const Vector2 &dt);
 	void rotate(const float ang);
@@ -50,7 +50,7 @@ public:
 	Vector2 getOrigin() const;
 	Vector2 getCenter() const;
 	float getRotation() const;
-	Vector4 getColor() const;
+	Color getColor() const;
 	TextureRegion getRegion() const;
 	Texture2DPtr getTexture() const;
 
@@ -62,7 +62,7 @@ private:
 	Vector2 m_size;
 	Vector2 m_origin;
 	float m_angle;
-	Vector4 m_color;
+	Color m_color;
 
 	// Returns the transformed vertices
 	void getVertices(Vertex *vertices) const;

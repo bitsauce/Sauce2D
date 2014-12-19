@@ -1,8 +1,5 @@
-#ifndef X2D_GRAPHICS_H
-#define X2D_GRAPHICS_H
-
 #include "config.h"
-#include "graphics/graphicsdevice.h"
+#include "graphics/graphicscontext.h"
 #include "graphics/animation.h"
 #include "graphics/batch.h"
 #include "graphics/font.h"
@@ -18,6 +15,9 @@
 #include "graphics/vertexbuffer.h"
 #include "graphics/vertexbufferobject.h"
 #include "graphics/viewport.h"
+
+#ifndef X2D_GRAPHICS_H
+#define X2D_GRAPHICS_H
 
 /*********************************************************************
 **	Graphics class [static]											**
@@ -68,7 +68,6 @@ public:
 	static void swapBuffers();
 
 	// Rendering
-	static void renderBatch(const Batch &batch);
 	static bool isSupported(Feature feature);
 
 protected:
@@ -80,12 +79,12 @@ protected:
 	static void destroyContext();
 
 	static HGLRC s_context;
-	static float s_currentOrtho[6];
-	static int s_currentViewport[4];
 
 	static float s_framesPerSecond;
 	static int s_refreshRate;
 	static float s_timeStep;
+
+	static GraphicsContext s_graphicsContext;
 };
 
 }

@@ -2,24 +2,21 @@
 #define X2D_TEXTURE_H
 
 #include "../engine.h"
+#include "pixmap.h"
 
-
-namespace xd
-{
+namespace xd {
 	
 class Texture2D;
-class Pixmap;
-
 typedef shared_ptr<Texture2D> Texture2DPtr;
 
 class XDAPI Texture2D
 {
 	friend class RenderTarget2D;
-	friend class Graphics;
+	friend class GraphicsContext;
 	friend class Shader;
 public:
-	Texture2D();
-	Texture2D(const uint width, const uint height, const Color &color = Color(0));
+	Texture2D(const PixelFormat format = RGBA);
+	Texture2D(const uint width, const uint height, const Color &color = Color(0), const PixelFormat format = RGBA);
 	Texture2D(const Pixmap &pixmap);
 	Texture2D(const Texture2D &other);
 	~Texture2D();
@@ -35,6 +32,7 @@ public:
 		NEAREST,
 		LINEAR
 	};
+
 	void setFiltering(const TextureFilter filter);
 	TextureFilter getFiltering() const;
 	
@@ -46,6 +44,7 @@ public:
 		REPEAT,
 		MIRRORED_REPEAT
 	};
+
 	void setWrapping(const TextureWrapping wrapping);
 	TextureWrapping getWrapping() const;
 
@@ -55,7 +54,7 @@ public:
 	Vector2i getSize() const { return Vector2i(getWidth(), getHeight()); }
 
 	// Pixmap (texture data)
-	Pixmap getPixmap() const;
+	Pixmap getPixmap(const PixelFormat format = RGBA) const;
 	void updatePixmap(const Pixmap &pixmap);
 	void updatePixmap(const int x, const int y, const Pixmap &pixmap);
 	void clear();
