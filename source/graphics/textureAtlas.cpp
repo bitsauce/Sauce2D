@@ -102,13 +102,13 @@ TextureRegion TextureAtlas::get(const int index, const Vector2 &uv0, const Vecto
 {
 	// Validate index
 	if(index < 0 || index >= m_size) {
-		return TextureRegion(Texture2DPtr(0), Vector2(0.0f), Vector2(1.0f));
+		return TextureRegion(Vector2(0.0f), Vector2(1.0f));
 	}
 
 	// TODO: Optimization: The texture regions can be precalculated in update() to save time
 	// Get texture region
 	const RectanglePacker::Rectangle &rect = m_result.rectangles[index];
-	return TextureRegion(m_texture,
+	return TextureRegion(
 		((rect.x+m_border) + (rect.width-m_border*2)*uv0.x)/ATLAS_SIZE, ((rect.y+m_border) + (rect.height-m_border*2)*uv0.y)/ATLAS_SIZE,
 		((rect.x+m_border) + (rect.width-m_border*2)*uv1.x)/ATLAS_SIZE, ((rect.y+m_border) + (rect.height-m_border*2)*uv1.y)/ATLAS_SIZE
 		);

@@ -24,9 +24,10 @@
     <ClInclude Include="..\..\include\x2d\engine.h" />
     <ClInclude Include="..\..\include\x2d\graphics.h" />
     <ClInclude Include="..\..\include\x2d\graphics\animation.h" />
-    <ClInclude Include="..\..\include\x2d\graphics\batch.h" />
+    <ClInclude Include="..\..\include\x2d\graphics\blendState.h" />
+    <ClInclude Include="..\..\include\x2d\graphics\spriteBatch.h" />
     <ClInclude Include="..\..\include\x2d\graphics\font.h" />
-    <ClInclude Include="..\..\include\x2d\graphics\graphicscontext.h" />
+    <ClInclude Include="..\..\include\x2d\graphics\graphicsContext.h" />
     <ClInclude Include="..\..\include\x2d\graphics\rendertarget.h" />
     <ClInclude Include="..\..\include\x2d\graphics\pixmap.h" />
     <ClInclude Include="..\..\include\x2d\graphics\shader.h" />
@@ -37,7 +38,6 @@
     <ClInclude Include="..\..\include\x2d\graphics\textureRegion.h" />
     <ClInclude Include="..\..\include\x2d\graphics\vertex.h" />
     <ClInclude Include="..\..\include\x2d\graphics\vertexbuffer.h" />
-    <ClInclude Include="..\..\include\x2d\graphics\vertexbufferobject.h" />
     <ClInclude Include="..\..\include\x2d\graphics\viewport.h" />
     <ClInclude Include="..\..\include\x2d\iniparser.h" />
     <ClInclude Include="..\..\include\x2d\math.h" />
@@ -70,10 +70,11 @@
     <ClCompile Include="..\..\source\common\util.cpp" />
     <ClCompile Include="..\..\source\common\window.cpp" />
     <ClCompile Include="..\..\source\graphics\animation.cpp" />
-    <ClCompile Include="..\..\source\graphics\batch.cpp" />
+    <ClCompile Include="..\..\source\graphics\blendState.cpp" />
+    <ClCompile Include="..\..\source\graphics\spriteBatch.cpp" />
     <ClCompile Include="..\..\source\graphics\font.cpp" />
     <ClCompile Include="..\..\source\graphics\graphicsContext.cpp" />
-    <ClCompile Include="..\..\source\graphics\rendertarget.cpp" />
+    <ClCompile Include="..\..\source\graphics\renderTarget.cpp" />
     <ClCompile Include="..\..\source\graphics\graphics.cpp" />
     <ClCompile Include="..\..\source\graphics\pixmap.cpp" />
     <ClCompile Include="..\..\source\graphics\shader.cpp" />
@@ -83,8 +84,7 @@
     <ClCompile Include="..\..\source\graphics\textureAtlas.cpp" />
     <ClCompile Include="..\..\source\graphics\textureRegion.cpp" />
     <ClCompile Include="..\..\source\graphics\vertex.cpp" />
-    <ClCompile Include="..\..\source\graphics\vertexbuffer.cpp" />
-    <ClCompile Include="..\..\source\graphics\vertexbufferobject.cpp" />
+    <ClCompile Include="..\..\source\graphics\vertexBuffer.cpp" />
     <ClCompile Include="..\..\source\graphics\viewport.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

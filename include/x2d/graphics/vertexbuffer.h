@@ -5,79 +5,115 @@
 
 namespace xd {
 
+class Vertex;
+
 /*********************************************************************
 **	Vertex buffer													**
 **********************************************************************/
-class VertexBufferObject;
-
 class XDAPI VertexBuffer
 {
-	friend class Batch;
+	friend class GraphicsContext;
 public:
-	VertexBuffer();
-	VertexBuffer(const VertexFormat &fmt);
-	VertexBuffer(const VertexBuffer &other);
-	~VertexBuffer();
-
 	// Add vertices and indices to the batch
-	void addVertices(Vertex *vertices, int vcount, uint *indices, int icount);
-	//void addVerticesAS(XScriptArray *vertices, XScriptArray *indices);
-	void modifyVertices(const int idx, Vertex *vertex, const int count);
-	//void modifyVerticesAS(const int idx, XScriptArray *vertices);
+	void setData(const Vertex *vertices, const uint vertexCount);
+	char *getData() const;
 
-	// Get vertex/vertex count
+	// Get vertex/vertex format/vertex count
 	VertexFormat getVertexFormat() const;
-	Vertex *getVertices(const int idx, const int count) const;
-	//XScriptArray *getVerticesAS(const int idx, const int count) const;
-	char *getVertexData() const;
-	int getVertexCount() const;
+	uint getSize() const { return m_size; }
 
-	uint *getIndexData() const;
-	int getIndexCount() const;
-
-	VertexBufferObject *getVBO() const { return m_vbo; }
-
-	// Clear vertex buffer
-	void clear();
+protected:
 
 	enum BufferType
 	{
-		RAW_BUFFER,
-		DYNAMIC_BUFFER,
-		STATIC_BUFFER
+		STATIC_BUFFER = GL_STATIC_DRAW,
+		DYNAMIC_BUFFER = GL_DYNAMIC_DRAW
 	};
 
-	void setBufferType(const BufferType drawMode);
-	BufferType getBufferType() const;
-	
-	VertexBuffer &operator=(const VertexBuffer &other);
+	VertexBuffer(const BufferType type);
+	~VertexBuffer();
+
+	// Buffer ID
+	GLuint m_id;
+
+	// Vertex format
+	VertexFormat m_format;
 
 private:
-
-	// Buffer vertex format
-	VertexFormat m_format;
-	int m_vertexSize;
-
-	// Vertices
-	char *m_vertexData;
-	int m_vertexCount;
-
-	// Indices
-	uint *m_indexData;
-	int m_indexCount;
-
 	// Buffer type
-	BufferType m_bufferType;
+	BufferType m_type;
 
-	// VBO object
-	VertexBufferObject *m_vbo;
-	
-	static void Construct(VertexBuffer *self) { new (self) VertexBuffer(); }
-	static void FmtConstruct(const VertexFormat &fmt, VertexBuffer *self) { new (self) VertexBuffer(fmt); }
-	static void CopyConstruct(const VertexBuffer &other, VertexBuffer *self) { new (self) VertexBuffer(other); }
-	static void Destruct(VertexBuffer *self) { self->~VertexBuffer(); }
+	// Size
+	uint m_size;
 };
 
+class XDAPI DynamicVertexBuffer : public VertexBuffer
+{
+public:
+	DynamicVertexBuffer();
+	DynamicVertexBuffer(const Vertex *vertices, const uint vertexCount);
+
+	void modifyData(const uint startIdx, Vertex *vertex, const uint vertexCount);
+};
+
+class XDAPI StaticVertexBuffer : public VertexBuffer
+{
+public:
+	StaticVertexBuffer();
+	StaticVertexBuffer(const Vertex *vertices, const uint vertexCount);
+};
+
+/*********************************************************************
+**	Index buffer													**
+**********************************************************************/
+class XDAPI IndexBuffer
+{
+	friend class GraphicsContext;
+public:
+	// Add vertices and indices to the batch
+	void setData(const uint *indices, const uint indexCount);
+	char *getData() const;
+
+	// Get size
+	uint getSize() const { return m_size; }
+
+protected:
+
+	enum BufferType
+	{
+		STATIC_BUFFER = GL_STATIC_DRAW,
+		DYNAMIC_BUFFER = GL_DYNAMIC_DRAW
+	};
+
+	IndexBuffer(const BufferType type);
+	~IndexBuffer();
+
+	// Buffer ID
+	GLuint m_id;
+
+private:
+	// Buffer type
+	BufferType m_type;
+
+	// Size
+	uint m_size;
+};
+
+class XDAPI DynamicIndexBuffer : public IndexBuffer
+{
+public:
+	DynamicIndexBuffer();
+	DynamicIndexBuffer(const uint *vertices, const uint indexCount);
+
+	void modifyData(const uint startIdx, uint *indices, const uint indexCount);
+};
+
+class XDAPI StaticIndexBuffer : public IndexBuffer
+{
+public:
+	StaticIndexBuffer();
+	StaticIndexBuffer(const uint *vertices, const uint indexCount);
+};
 }
 
 #endif // X2D_VERTEX_BUFFER_H

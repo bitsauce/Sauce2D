@@ -12,126 +12,36 @@
 
 namespace xd {
 
-VertexBuffer::VertexBuffer() :
-	m_format(VertexFormat::s_vct),
-	m_vertexData(0),
-	m_vertexCount(0),
-	m_indexData(0),
-	m_indexCount(0),
-	m_bufferType(RAW_BUFFER),
-	m_vbo(0)
+VertexBuffer::VertexBuffer(const BufferType type) :
+	m_format(),
+	m_type(type)
 {
-	m_vertexSize = m_format.getVertexSizeInBytes();
-}
-
-VertexBuffer::VertexBuffer(const VertexFormat &fmt) :
-	m_format(fmt),
-	m_vertexData(0),
-	m_vertexCount(0),
-	m_indexData(0),
-	m_indexCount(0),
-	m_bufferType(RAW_BUFFER),
-	m_vbo(0)
-{
-	m_vertexSize = m_format.getVertexSizeInBytes();
-}
-
-VertexBuffer::VertexBuffer(const VertexBuffer &other) :
-	m_format(VertexFormat::s_vct),
-	m_bufferType(RAW_BUFFER),
-	m_vbo(0)
-{
-	// Set variables
-	m_format = other.m_format;
-
-	// Copy index data
-	m_indexCount = other.m_indexCount;
-	m_indexData = new uint[m_indexCount];
-	memcpy(m_indexData, other.m_indexData, m_indexCount * sizeof(uint));
-
-	// Copy vertex data
-	m_vertexCount = other.m_vertexCount;
-	m_vertexSize = other.m_vertexSize;
-	m_vertexData = new char[m_vertexCount * m_vertexSize];
-	memcpy(m_vertexData, other.m_vertexData, m_vertexCount * m_vertexSize);
-
-	// This will create our vbo
-	setBufferType(other.m_bufferType);
+	glGenBuffers(1, &m_id);
 }
 
 VertexBuffer::~VertexBuffer()
 {
-	clear();
+	glDeleteBuffers(1, &m_id);
 }
 
-void VertexBuffer::addVertices(Vertex *vertices, int vcount, uint *indices, int icount)
+void VertexBuffer::setData(const Vertex *vertices, const uint vertexCount)
 {
-	if(m_vbo)
+	// Get vertex data
+	m_format = vertices->getFormat();
+	char *vertexData = new char[vertexCount * m_format.getVertexSizeInBytes()];
+	for(uint i = 0; i < vertexCount; ++i)
 	{
-		LOG("Batch::addVertices(): Cannot add vertices to a static batch.");
-		return;
+		vertices[i].getData(vertexData + i * m_format.getVertexSizeInBytes());
 	}
-	
-	if(vertices->getFormat() == m_format)
-	{
-		// Store index offset
-		int ioffset = m_vertexCount;
 
-		// Append vertex data
-		char *newVertexData = new char[(m_vertexCount + vcount) * m_vertexSize];
-		memcpy(newVertexData, m_vertexData, m_vertexCount * m_vertexSize);
-		for(int i = 0; i < vcount; i++)
-		{
-			vertices[i].getData(newVertexData + (m_vertexCount + i) * m_vertexSize);
-		}
-		m_vertexCount += vcount;
-		delete[] m_vertexData;
-		m_vertexData = newVertexData;
-	
-		// Append index data
-		uint *newIndexData = new uint[m_indexCount + icount];
-		memcpy(newIndexData, m_indexData, m_indexCount * sizeof(uint));
-		for(int i = 0; i < icount; i++)
-		{
-			newIndexData[m_indexCount + i] = indices[i] + ioffset;
-		}
-		m_indexCount += icount;
-		delete[] m_indexData;
-		m_indexData = newIndexData;
-	}
-	else
-	{
-		LOG("void VertexBuffer::addVertices(): Vertex format mismatch.");
-	}
-}
+	// Upload vertex data
+	glBindBuffer(GL_ARRAY_BUFFER, m_id);
+	glBufferData(GL_ARRAY_BUFFER, vertexCount * m_format.getVertexSizeInBytes(), vertexData, m_type);
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
 
-void VertexBuffer::modifyVertices(const int idx, Vertex *vertex, const int count)
-{
-	if(idx >= 0 && idx < m_vertexCount)
-	{
-		if(vertex->getFormat() == m_format)
-		{
-			// Modify vertex data
-			for(int i = 0; i < count; i++)
-			{
-				vertex[i].getData(m_vertexData + (idx + i) * m_vertexSize);
-			}
+	delete[] vertexData;
 
-			// Upload to VBO
-			if(m_vbo)
-			{
-				m_vbo->update(idx, m_vertexData + idx * m_vertexSize, count);
-			}
-		}
-		else
-		{
-			LOG("void VertexBuffer::modifyVertices(): Vertex format mismatch.");
-		}
-	}
-	else
-	{
-		LOG("void VertexBuffer::modifyVertices(): Index out-of-bounds.");
-	}
+	m_size = vertexCount;
 }
 
 VertexFormat VertexBuffer::getVertexFormat() const
@@ -139,107 +49,97 @@ VertexFormat VertexBuffer::getVertexFormat() const
 	return m_format;
 }
 
-Vertex *VertexBuffer::getVertices(const int idx, const int count) const
+DynamicVertexBuffer::DynamicVertexBuffer() :
+	VertexBuffer(DYNAMIC_BUFFER)
 {
-	Vertex *vertices = 0;
-	if(idx >= 0 && idx + count <= m_vertexCount)
+}
+
+DynamicVertexBuffer::DynamicVertexBuffer(const Vertex *vertices, const uint vertexCount) :
+	VertexBuffer(DYNAMIC_BUFFER)
+{
+	setData(vertices, vertexCount);
+}
+
+void DynamicVertexBuffer::modifyData(const uint startIdx, Vertex *vertices, const uint vertexCount)
+{
+	if(!(m_format == vertices->getFormat())) return;
+
+	// Get vertex data
+	char *vertexData = new char[vertexCount * m_format.getVertexSizeInBytes()];
+	for(uint i = 0; i < vertexCount; ++i)
 	{
-		vertices = new Vertex[count];
-		for(int i = 0; i < count; i++)
-		{
-			vertices[i].setFormat(m_format);
-			vertices[i].setData(m_vertexData + (idx + i) * m_vertexSize);
-		}
+		vertices[i].getData(vertexData + i * m_format.getVertexSizeInBytes());
 	}
-	else
-	{
-		LOG("Vertex VertexBuffer::getVertices(): Index out-of-bounds.");
-	}
-	return vertices;
+
+	glBindBuffer(GL_ARRAY_BUFFER, m_id);
+	glBufferSubData(GL_ARRAY_BUFFER, startIdx * getVertexFormat().getVertexSizeInBytes(), vertexCount * getVertexFormat().getVertexSizeInBytes(), vertexData);
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+	delete[] vertexData;
 }
 
-char *VertexBuffer::getVertexData() const
+StaticVertexBuffer::StaticVertexBuffer() :
+	VertexBuffer(STATIC_BUFFER)
 {
-	return m_vertexData;
 }
 
-int VertexBuffer::getVertexCount() const
+StaticVertexBuffer::StaticVertexBuffer(const Vertex *vertices, const uint vertexCount) :
+	VertexBuffer(STATIC_BUFFER)
 {
-	return m_vertexCount;
+	setData(vertices, vertexCount);
 }
 
-uint *VertexBuffer::getIndexData() const
+
+// -------------------------------------------------------------------------------------
+
+IndexBuffer::IndexBuffer(const BufferType type) :
+	m_type(type)
 {
-	return m_indexData;
+	glGenBuffers(1, &m_id);
 }
 
-int VertexBuffer::getIndexCount() const
+IndexBuffer::~IndexBuffer()
 {
-	return m_indexCount;
+	glDeleteBuffers(1, &m_id);
 }
 
-void VertexBuffer::clear()
+void IndexBuffer::setData(const uint *indices, const uint indexCount)
 {
-	// Clear vertex data
-	delete[] m_vertexData;
-	m_vertexData = 0;
-	m_vertexCount = 0;
-
-	// Clear index data
-	delete[] m_indexData;
-	m_indexData = 0;
-	m_indexCount = 0;
-
-	// Delete vbo
-	if(m_vbo)
-	{
-		delete m_vbo;
-		m_vbo = 0;
-	}
-	m_bufferType = RAW_BUFFER;
-}
-
-void VertexBuffer::setBufferType(const BufferType type)
-{
-	if(type != m_bufferType)
-	{
-		delete m_vbo;
-		m_vbo = 0;
-	}
-	m_bufferType = type;
-	if(m_bufferType != RAW_BUFFER && !m_vbo)
-	{
-		m_vbo = new VertexBufferObject(*this);
-	}
-}
-
-VertexBuffer::BufferType VertexBuffer::getBufferType() const
-{
-	return m_bufferType;
-}
-
-VertexBuffer &VertexBuffer::operator=(const VertexBuffer &other)
-{
-	clear();
-
-	// Set variables
-	m_format = other.m_format;
-
-	// Copy index data
-	m_indexCount = other.m_indexCount;
-	m_indexData = new uint[m_indexCount];
-	memcpy(m_indexData, other.m_indexData, m_indexCount * sizeof(uint));
-
-	// Copy vertex data
-	m_vertexCount = other.m_vertexCount;
-	m_vertexSize = other.m_vertexSize;
-	m_vertexData = new char[m_vertexCount * m_vertexSize];
-	memcpy(m_vertexData, other.m_vertexData, m_vertexCount * m_vertexSize);
+	// Upload index data
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_id);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, indexCount * sizeof(uint), indices, m_type);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 	
-	// This will create our VBO
-	setBufferType(other.m_bufferType);
+	m_size = indexCount;
+}
 
-	return *this;
+DynamicIndexBuffer::DynamicIndexBuffer() :
+	IndexBuffer(DYNAMIC_BUFFER)
+{
+}
+
+DynamicIndexBuffer::DynamicIndexBuffer(const uint *indices, const uint indexCount) :
+	IndexBuffer(DYNAMIC_BUFFER)
+{
+	setData(indices, indexCount);
+}
+
+void DynamicIndexBuffer::modifyData(const uint startIdx, uint *indices, const uint indexCount)
+{
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_id);
+	glBufferSubData(GL_ELEMENT_ARRAY_BUFFER, startIdx * sizeof(uint), indexCount * sizeof(uint), indices);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+}
+
+StaticIndexBuffer::StaticIndexBuffer() :
+	IndexBuffer(STATIC_BUFFER)
+{
+}
+
+StaticIndexBuffer::StaticIndexBuffer(const uint *indices, const uint indexCount) :
+	IndexBuffer(STATIC_BUFFER)
+{
+	setData(indices, indexCount);
 }
 
 }

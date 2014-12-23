@@ -2,7 +2,6 @@
 #define X2D_SHAPE_H
 
 #include "../engine.h"
-#include "batch.h"
 
 namespace xd
 {
@@ -27,7 +26,7 @@ public:
 	void setPenColor(const Color &color);
 	void setPenSize(const float size);
 
-	void draw(Batch *batch);
+	//void draw(Batch *batch);
 
 	Shape merge(const Shape &shape); // union
 	Shape subtract(const Shape &shape);

@@ -12,13 +12,15 @@
 
 namespace xd {
 
-Sprite::Sprite(const TextureRegion &region) :
+Sprite::Sprite(const Texture2DPtr texture, const Rect &rectangle, const Vector2 &origin, const float angle, const TextureRegion &region, const Color &color, const float depth) :
+	m_texture(texture),
 	m_textureRegion(region),
-	m_position(0.0f),
-	m_size(region.getSize()),
-	m_origin(0.0f),
-	m_angle(0.0f),
-	m_color(255)
+	m_position(rectangle.position),
+	m_size(rectangle.size),
+	m_origin(origin),
+	m_angle(angle),
+	m_color(color),
+	m_depth(depth)
 {
 }
 
@@ -79,8 +81,12 @@ void Sprite::setRotation(const float ang)
 void Sprite::setRegion(const TextureRegion &textureRegion, const bool resize)
 {
 	m_textureRegion = textureRegion;
-	if(resize) {
-		m_size = m_textureRegion.getSize();
+	if(resize)
+	{
+		m_size = m_texture != 0 ? Vector2i(
+			int(m_texture->getWidth()*m_textureRegion.uv1.x - m_texture->getWidth()*m_textureRegion.uv0.x),
+			int(m_texture->getHeight()*m_textureRegion.uv1.y - m_texture->getHeight()*m_textureRegion.uv0.y)
+			) : Vector2i(0);
 	}
 }
 
@@ -175,26 +181,10 @@ TextureRegion Sprite::getRegion() const
 
 Texture2DPtr Sprite::getTexture() const
 {
-	return m_textureRegion.getTexture();
+	return m_texture;
 }
 
-void Sprite::draw(Batch *batch) const
-{
-	if(batch)
-	{
-		Vertex vertices[4];
-		getVertices(vertices);
-		batch->setTexture(m_textureRegion.getTexture());
-		batch->setPrimitive(Batch::PRIMITIVE_TRIANGLES);
-		batch->addVertices(vertices, 4, QUAD_INDICES, 6);
-	}
-	else
-	{
-		LOG("void Sprite::draw(): Cannot draw to 'null' batch.");
-	}
-}
-
-void Sprite::getVertices(Vertex *vertices) const
+void Sprite::getVertices(Vertex *vertices, uint *indices, const uint indexOffset) const
 {
 	Matrix4 mat;
 	mat.scale(m_size.x, m_size.y, 1.0f);
@@ -213,6 +203,13 @@ void Sprite::getVertices(Vertex *vertices) const
 	vertices[1].set4f(VERTEX_TEX_COORD, m_textureRegion.uv1.x, m_textureRegion.uv1.y);
 	vertices[2].set4f(VERTEX_TEX_COORD, m_textureRegion.uv1.x, m_textureRegion.uv0.y);
 	vertices[3].set4f(VERTEX_TEX_COORD, m_textureRegion.uv0.x, m_textureRegion.uv0.y);
+	
+	indices[0] = indexOffset + QUAD_INDICES[0];
+	indices[1] = indexOffset + QUAD_INDICES[1];
+	indices[2] = indexOffset + QUAD_INDICES[2];
+	indices[3] = indexOffset + QUAD_INDICES[3];
+	indices[4] = indexOffset + QUAD_INDICES[4];
+	indices[5] = indexOffset + QUAD_INDICES[5];
 }
 
 }

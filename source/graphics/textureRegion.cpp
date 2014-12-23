@@ -15,36 +15,24 @@ namespace xd
 
 TextureRegion::TextureRegion() :
 	uv0(0.0f),
-	uv1(1.0f),
-	texture(0)
+	uv1(1.0f)
 {
 }
-
-TextureRegion::TextureRegion(const Texture2DPtr &texture) :
-	uv0(0.0f),
-	uv1(1.0f),
-	texture(texture)
-{
-}
-
-TextureRegion::TextureRegion(const Texture2DPtr &texture, const Vector2 &uv0, const Vector2 &uv1) :
+TextureRegion::TextureRegion(const Vector2 &uv0, const Vector2 &uv1) :
 	uv0(uv0),
-	uv1(uv1),
-	texture(texture)
+	uv1(uv1)
 {
 }
 
-TextureRegion::TextureRegion(const Texture2DPtr &texture, const float u0, const float v0, const float u1, const float v1) :
+TextureRegion::TextureRegion(const float u0, const float v0, const float u1, const float v1) :
 	uv0(u0, v0),
-	uv1(u1, v1),
-	texture(texture)
+	uv1(u1, v1)
 {
 }
 
 TextureRegion::TextureRegion(const TextureRegion &other) :
 	uv0(0.0f),
-	uv1(0.0f),
-	texture(0)
+	uv1(0.0f)
 {
 	*this = other;
 }
@@ -57,40 +45,12 @@ TextureRegion &TextureRegion::operator=(const TextureRegion &other)
 	
 	uv0 = other.uv0;
 	uv1 = other.uv1;
-	texture = other.texture;
 	
 	return *this;
 }
 
 TextureRegion::~TextureRegion()
 {
-	//if(texture) {
-		//texture->release();
-	//}
-}
-
-void TextureRegion::setTexture(const Texture2DPtr &texture)
-{
-	//if(this->texture) {
-	//	this->texture->release();
-	//}
-	this->texture = texture;
-}
-
-Texture2DPtr TextureRegion::getTexture() const
-{
-	//if(texture) {
-	//	texture->addRef();
-	//}
-	return texture;
-}
-
-Vector2i TextureRegion::getSize() const
-{
-	return texture != 0 ? Vector2i(
-		int(texture->getWidth()*uv1.x - texture->getWidth()*uv0.x),
-		int(texture->getHeight()*uv1.y - texture->getHeight()*uv0.y)
-		) : Vector2i(0);
 }
 	
 void TextureRegion::setRegion(const Vector2 &uv0, const Vector2 &uv1)

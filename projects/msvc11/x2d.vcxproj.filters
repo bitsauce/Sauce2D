@@ -84,9 +84,6 @@
     <ClInclude Include="..\..\include\x2d\graphics\animation.h">
       <Filter>include\graphics</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\x2d\graphics\batch.h">
-      <Filter>include\graphics</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\include\x2d\graphics\font.h">
       <Filter>include\graphics</Filter>
     </ClInclude>
@@ -99,9 +96,6 @@
     <ClInclude Include="..\..\include\x2d\math\random.h">
       <Filter>include\math</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\x2d\graphics\vertexbufferobject.h">
-      <Filter>include\graphics</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\include\x2d\resourcemanager.h">
       <Filter>include</Filter>
     </ClInclude>
@@ -111,7 +105,13 @@
     <ClInclude Include="..\..\include\x2d\graphics\rendertarget.h">
       <Filter>include\graphics</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\x2d\graphics\graphicscontext.h">
+    <ClInclude Include="..\..\include\x2d\graphics\blendState.h">
+      <Filter>include\graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\x2d\graphics\spriteBatch.h">
+      <Filter>include\graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\x2d\graphics\graphicsContext.h">
       <Filter>include\graphics</Filter>
     </ClInclude>
   </ItemGroup>
@@ -132,9 +132,6 @@
       <Filter>source\graphics</Filter>
     </ClCompile>
     <ClCompile Include="..\..\source\graphics\animation.cpp">
-      <Filter>source\graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\graphics\batch.cpp">
       <Filter>source\graphics</Filter>
     </ClCompile>
     <ClCompile Include="..\..\source\graphics\font.cpp">
@@ -197,9 +194,6 @@
     <ClCompile Include="..\..\source\common\math.cpp">
       <Filter>source\common</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\source\graphics\vertexbuffer.cpp">
-      <Filter>source\graphics</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\source\graphics\vertex.cpp">
       <Filter>source\graphics</Filter>
     </ClCompile>
@@ -209,19 +203,25 @@
     <ClCompile Include="..\..\source\audio\audio.cpp">
       <Filter>source\audio</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\source\graphics\vertexbufferobject.cpp">
-      <Filter>source\graphics</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\source\common\resourcemanager.cpp">
       <Filter>source\common</Filter>
     </ClCompile>
     <ClCompile Include="..\..\source\common\iniparser.cpp">
       <Filter>source\common</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\source\graphics\rendertarget.cpp">
+    <ClCompile Include="..\..\source\graphics\graphicsContext.cpp">
       <Filter>source\graphics</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\source\graphics\graphicsContext.cpp">
+    <ClCompile Include="..\..\source\graphics\blendState.cpp">
+      <Filter>source\graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\graphics\vertexBuffer.cpp">
+      <Filter>source\graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\graphics\spriteBatch.cpp">
+      <Filter>source\graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\graphics\renderTarget.cpp">
       <Filter>source\graphics</Filter>
     </ClCompile>
   </ItemGroup>

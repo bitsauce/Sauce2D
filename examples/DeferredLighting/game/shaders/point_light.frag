@@ -23,7 +23,6 @@ void main()
     pixelPosition.x = u_screenWidth * v_texCoord.x;
     pixelPosition.y = u_screenHeight * v_texCoord.y;
     pixelPosition.z = depth;
-    //pixelPosition.w = 1.0f;
  
 	vec3 lightDirection = u_lightPosition - pixelPosition;
 	float distance = u_lightStrength / length(u_lightPosition - pixelPosition);
@@ -32,5 +31,5 @@ void main()
 	float coneAttenuation = clamp(1.0 - length(lightDirection) / u_lightRadius, 0.0, 1.0);
 
 	vec3 shading = distance * amount * coneAttenuation * u_lightColor;
-    gl_FragColor = vec4(shading.r, shading.g, shading.b, 1.0);
+    gl_FragColor = vec4(shading, 1.0);
 }

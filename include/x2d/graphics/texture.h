@@ -29,8 +29,8 @@ public:
 	// Texture filtering
 	enum TextureFilter
 	{
-		NEAREST,
-		LINEAR
+		NEAREST = GL_NEAREST,
+		LINEAR = GL_LINEAR
 	};
 
 	void setFiltering(const TextureFilter filter);
@@ -39,10 +39,10 @@ public:
 	// Texture wrapping
 	enum TextureWrapping
 	{
-		CLAMP_TO_BORDER,
-		CLAMP_TO_EDGE,
-		REPEAT,
-		MIRRORED_REPEAT
+		CLAMP_TO_BORDER = GL_CLAMP_TO_BORDER,
+		CLAMP_TO_EDGE = GL_CLAMP_TO_EDGE,
+		REPEAT = GL_REPEAT,
+		MIRRORED_REPEAT = GL_MIRRORED_REPEAT
 	};
 
 	void setWrapping(const TextureWrapping wrapping);

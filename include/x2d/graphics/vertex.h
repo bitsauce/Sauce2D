@@ -11,13 +11,13 @@ namespace xd
 **********************************************************************/
 enum DataType
 {
-	XD_FLOAT,
-	XD_UINT,
-	XD_INT,
-	XD_USHORT,
-	XD_SHORT,
-	XD_UBYTE,
-	XD_BYTE
+	XD_FLOAT = GL_FLOAT,
+	XD_UINT = GL_UNSIGNED_INT,
+	XD_INT = GL_INT,
+	XD_USHORT = GL_UNSIGNED_SHORT,
+	XD_SHORT = GL_SHORT,
+	XD_UBYTE = GL_UNSIGNED_BYTE,
+	XD_BYTE = GL_BYTE
 };
 
 /*********************************************************************
@@ -40,7 +40,6 @@ class XDAPI VertexFormat
 {
 	friend class Graphics;
 	friend class Vertex;
-	friend class Batch;
 	friend class VertexBuffer;
 public:
 	VertexFormat();

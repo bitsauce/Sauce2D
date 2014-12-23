@@ -149,7 +149,7 @@ void Shape::setPenSize(const float size)
 	m_penSize = size;
 }
 
-void Shape::draw(Batch *batch)
+/*void Shape::draw(Batch *batch)
 {
 	if(!validate())
 		return;
@@ -170,7 +170,7 @@ void Shape::draw(Batch *batch)
 	batch->setPrimitive(Batch::PRIMITIVE_TRIANGLES);
 	batch->addVertices(m_vertices, m_vertCount, m_indices.data(), m_indices.size());
 	//batch->release();
-}
+}*/
 
 bool Shape::validate()
 {

@@ -73,6 +73,8 @@ void Graphics::init()
 	if(glewInit() != GLEW_OK) {
 		assert("GLEW did not initialize!");
 	}
+	
+	LOG("** Using GPU: %s **", glGetString(GL_VENDOR));
 
 	// Check if non-power of two textures are supported
 	if(!GLEW_ARB_texture_non_power_of_two) {
@@ -186,18 +188,6 @@ void Graphics::enableWireframe()
 void Graphics::disableWireframe()
 {
 	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-}
-
-// Alpha blending
-void Graphics::enableAlphaBlending()
-{
-	glEnable(GL_BLEND);
-	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-}
-	
-void Graphics::disableAlphaBlending()
-{
-	glDisable(GL_BLEND);
 }
 
 }

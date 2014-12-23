@@ -5,7 +5,10 @@ namespace xd {
 GraphicsContext::GraphicsContext() :
 	m_width(0),
 	m_height(0),
-	m_renderTarget(nullptr)
+	m_renderTarget(nullptr),
+	m_shader(nullptr),
+	m_texture(nullptr),
+	m_blendState(BlendState::PRESET_ALPHA_BLEND)
 {
 }
 
@@ -17,6 +20,19 @@ void GraphicsContext::enable(const Capability cap)
 void GraphicsContext::disable(const Capability cap)
 {
 	glDisable(cap);
+}
+
+void GraphicsContext::clear(const uint mask, const Color &fillColor)
+{
+	if(mask & COLOR_BUFFER) glClearColor(fillColor.r/255.0f, fillColor.g/255.0f, fillColor.b/255.0f, fillColor.a/255.0f);
+	if(mask & DEPTH_BUFFER) glClearDepth(fillColor.r/255.0f);
+	if(mask & ACCUM_BUFFER) glClearAccum(fillColor.r/255.0f, fillColor.g/255.0f, fillColor.b/255.0f, fillColor.a/255.0f);
+	if(mask & STENCIL_BUFFER) glClearStencil(fillColor.r/255.0f);
+	glClear(mask);
+	if(mask & COLOR_BUFFER) glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+	if(mask & DEPTH_BUFFER) glClearDepth(0.0f);
+	if(mask & ACCUM_BUFFER) glClearAccum(0.0f, 0.0f, 0.0f, 0.0f);
+	if(mask & STENCIL_BUFFER) glClearStencil(0.0f);
 }
 
 void GraphicsContext::setRenderTarget(RenderTarget2D *renderTarget)
@@ -44,7 +60,61 @@ void GraphicsContext::setRenderTarget(RenderTarget2D *renderTarget)
 		}
 	}
 }
-	
+
+void GraphicsContext::setProjectionMatrix(const Matrix4 &projmat)
+{
+	while(!m_matrixStack.empty()) m_matrixStack.pop();
+	m_matrixStack.push(projmat);
+}
+
+Matrix4 GraphicsContext::getProjectionMatrix() const
+{
+	if(m_matrixStack.empty()) return Matrix4();
+	return m_matrixStack.top();
+}
+
+void GraphicsContext::pushMatrix(const Matrix4 &mat)
+{
+	if(m_matrixStack.empty()) m_matrixStack.push(mat);
+	else m_matrixStack.push(m_matrixStack.top() * mat);
+}
+
+void GraphicsContext::popMatrix()
+{
+	if(m_matrixStack.empty()) return;
+	m_matrixStack.pop();
+}
+
+void GraphicsContext::setTexture(const Texture2DPtr texture)
+{
+	m_texture = texture;
+}
+
+Texture2DPtr GraphicsContext::getTexture() const
+{
+	return m_texture;
+}
+
+void GraphicsContext::setShader(const ShaderPtr shader)
+{
+	m_shader = shader;
+}
+
+ShaderPtr GraphicsContext::getShader() const
+{
+	return m_shader;
+}
+
+void GraphicsContext::setBlendState(const BlendState &blendState)
+{
+	m_blendState = blendState;
+}
+
+BlendState GraphicsContext::getBlendState()
+{
+	return m_blendState;
+}
+
 // Orthographic projection
 void GraphicsContext::resizeViewport(const uint w, const uint h)
 {
@@ -63,229 +133,332 @@ void GraphicsContext::resizeViewport(const uint w, const uint h)
 	glViewport(0, 0, m_width, m_height);
 }
 
-const int INT_SIZE = sizeof(GLint);
-const int FLOAT_SIZE = sizeof(GLfloat);
-const int VERTEX_SIZE = sizeof(Vertex);
-
-GLenum toGLBlend(const Batch::BlendFunc value)
+void GraphicsContext::setupContext()
 {
-	switch(value) {
-	case Batch::BLEND_ZERO:				return GL_ZERO;
-	case Batch::BLEND_ONE:					return GL_ONE;
-	case Batch::BLEND_SRC_COLOR:			return GL_SRC_COLOR;
-	case Batch::BLEND_ONE_MINUS_SRC_COLOR:	return GL_ONE_MINUS_SRC_COLOR;
-	case Batch::BLEND_DST_COLOR:			return GL_DST_COLOR;
-	case Batch::BLEND_ONE_MINUS_DST_COLOR:	return GL_ONE_MINUS_DST_COLOR;
-	case Batch::BLEND_SRC_ALPHA:			return GL_SRC_ALPHA;
-	case Batch::BLEND_ONE_MINUS_SRC_ALPHA:	return GL_ONE_MINUS_SRC_ALPHA;
-	case Batch::BLEND_DST_ALPHA:			return GL_DST_ALPHA;
-	case Batch::BLEND_ONE_MINUS_DST_ALPHA:	return GL_ONE_MINUS_DST_ALPHA;
-	case Batch::BLEND_SRC_ALPHA_SATURATE:	return GL_SRC_ALPHA_SATURATE;
-	}
-	return GL_ZERO;
-}
+	// Set projection matrix
+	glLoadMatrixf((m_matrixStack.empty() ? Matrix4() : m_matrixStack.top()).getTranspose());
 
-GLenum toGLPrimitive(const Batch::PrimitiveType value)
-{
-	switch(value) {
-	case Batch::PRIMITIVE_POINTS:		return GL_POINTS;
-	case Batch::PRIMITIVE_LINES:		return GL_LINES;
-	case Batch::PRIMITIVE_TRIANGLES:	return GL_TRIANGLES;
-	}
-	return GL_TRIANGLES;
-}
-
-GLenum toGLType(const DataType value)
-{
-	switch(value) {
-	case XD_FLOAT:		return GL_FLOAT;
-	case XD_UINT:		return GL_UNSIGNED_INT;
-	case XD_INT:		return GL_INT;
-	case XD_USHORT:		return GL_UNSIGNED_SHORT;
-	case XD_SHORT:		return GL_SHORT;
-	case XD_UBYTE:		return GL_UNSIGNED_BYTE;
-	case XD_BYTE:		return GL_BYTE;
-	}
-	return GL_FLOAT;
-}
-
-void GraphicsContext::renderBatch(const Batch &batch)
-{
-	// Get buffers
-	vector<Batch::VertexBufferState> buffers = batch.m_buffers;
-	for(vector<Batch::VertexBufferState>::iterator itr = buffers.begin(); itr != buffers.end(); ++itr)
+	// Set blend func
+	glBlendFuncSeparate(m_blendState.m_src,  m_blendState.m_dst, m_blendState.m_alphaSrc, m_blendState.m_alphaDst);
+	
+	// Do we have a shader?
+	if(m_shader)
 	{
-		Batch::State &state = (*itr).state;
-		
-		glLoadMatrixf(state.projMat.getTranspose());
+		// Enable shader
+		glUseProgram(m_shader->m_id);
+		GLuint target = 0;
 
-		if(state.shader)
+		// Set all uniforms
+		for(map<string, Shader::Uniform*>::iterator itr = m_shader->m_uniforms.begin(); itr != m_shader->m_uniforms.end(); ++itr)
 		{
-			// Enable shader
-			ShaderPtr shader = state.shader;
-			glUseProgram(shader->m_id);
-			GLuint target = 0;
-
-			// Set all uniforms
-			for(map<string, Shader::Uniform*>::iterator itr = shader->m_uniforms.begin(); itr != shader->m_uniforms.end(); ++itr)
+			const Shader::Uniform *uniform = itr->second;
+			switch(uniform->type)
 			{
-				const Shader::Uniform *uniform = itr->second;
-				switch(uniform->type)
+			case GL_INT: glUniform1i(uniform->loc, ((GLint*)uniform->data)[0]); break;
+			case GL_INT_VEC2: glUniform2i(uniform->loc, ((GLint*)uniform->data)[0], ((GLint*)uniform->data)[1]); break;
+			case GL_INT_VEC3: glUniform3i(uniform->loc, ((GLint*)uniform->data)[0], ((GLint*)uniform->data)[1], ((GLint*)uniform->data)[2]); break;
+			case GL_INT_VEC4: glUniform4i(uniform->loc, ((GLint*)uniform->data)[0], ((GLint*)uniform->data)[1], ((GLint*)uniform->data)[2], ((GLint*)uniform->data)[3]); break;
+			case GL_FLOAT: glUniform1f(uniform->loc, ((GLfloat*)uniform->data)[0]); break;
+			case GL_FLOAT_VEC2: glUniform2f(uniform->loc, ((GLfloat*)uniform->data)[0], ((GLfloat*)uniform->data)[1]); break;
+			case GL_FLOAT_VEC3: glUniform3f(uniform->loc, ((GLfloat*)uniform->data)[0], ((GLfloat*)uniform->data)[1], ((GLfloat*)uniform->data)[2]); break;
+			case GL_FLOAT_VEC4: glUniform4f(uniform->loc, ((GLfloat*)uniform->data)[0], ((GLfloat*)uniform->data)[1], ((GLfloat*)uniform->data)[2], ((GLfloat*)uniform->data)[3]); break;
+			case GL_SAMPLER_2D:
 				{
-				case GL_INT: glUniform1i(uniform->loc, ((GLint*)uniform->data)[0]); break;
-				case GL_INT_VEC2: glUniform2i(uniform->loc, ((GLint*)uniform->data)[0], ((GLint*)uniform->data)[1]); break;
-				case GL_INT_VEC3: glUniform3i(uniform->loc, ((GLint*)uniform->data)[0], ((GLint*)uniform->data)[1], ((GLint*)uniform->data)[2]); break;
-				case GL_INT_VEC4: glUniform4i(uniform->loc, ((GLint*)uniform->data)[0], ((GLint*)uniform->data)[1], ((GLint*)uniform->data)[2], ((GLint*)uniform->data)[3]); break;
-				case GL_FLOAT: glUniform1f(uniform->loc, ((GLfloat*)uniform->data)[0]); break;
-				case GL_FLOAT_VEC2: glUniform2f(uniform->loc, ((GLfloat*)uniform->data)[0], ((GLfloat*)uniform->data)[1]); break;
-				case GL_FLOAT_VEC3: glUniform3f(uniform->loc, ((GLfloat*)uniform->data)[0], ((GLfloat*)uniform->data)[1], ((GLfloat*)uniform->data)[2]); break;
-				case GL_FLOAT_VEC4: glUniform4f(uniform->loc, ((GLfloat*)uniform->data)[0], ((GLfloat*)uniform->data)[1], ((GLfloat*)uniform->data)[2], ((GLfloat*)uniform->data)[3]); break;
-				case GL_SAMPLER_2D:
-					{
-						glActiveTexture(GL_TEXTURE0+target);
-						glBindTexture(GL_TEXTURE_2D, ((GLuint*)uniform->data)[0]);
-						glUniform1i(uniform->loc, target++);
-					}
-					break;
+					glActiveTexture(GL_TEXTURE0+target);
+					glBindTexture(GL_TEXTURE_2D, ((GLuint*)uniform->data)[0]);
+					glUniform1i(uniform->loc, target++);
 				}
+				break;
 			}
-		}
-		else
-		{
-			// Disable shader
-			glUseProgram(0);
-
-			// Set texture unit 0
-			glActiveTexture(GL_TEXTURE0);
-			if(state.texture)
-			{
-				glBindTexture(GL_TEXTURE_2D, state.texture->m_id);
-			}
-			else
-			{
-				glBindTexture(GL_TEXTURE_2D, 0);
-			}
-
-			// Set blend func
-			//glBlendFuncSeparate(state->srcBlendColor, state->dstBlendColor, state->srcBlendAlpha, state->dstBlendAlpha);
-			glBlendFunc(toGLBlend(state.srcBlendFunc), toGLBlend(state.dstBlendFunc));
-		}
-		
-		const VertexBuffer *buffer = (*itr).buffer.get();
-		VertexFormat fmt = buffer->getVertexFormat();
-		if(buffer->getBufferType() == VertexBuffer::RAW_BUFFER)
-		{
-			// Get vertices and vertex data
-			char *vertexData = buffer->getVertexData();
-			uint *indexData = buffer->getIndexData();
-			
-			// Set array pointers
-			int stride = fmt.getVertexSizeInBytes();
-			for(int i = 0; i < VERTEX_ATTRIB_MAX; i++)
-			{
-				VertexAttribute attrib = VertexAttribute(i);
-				switch(attrib)
-				{
-					case VERTEX_POSITION:
-						if(fmt.isAttributeEnabled(attrib))
-						{
-							glEnableClientState(GL_VERTEX_ARRAY);
-							glVertexPointer(fmt.getElementCount(attrib), toGLType(fmt.getDataType(attrib)), stride, vertexData + fmt.getAttributeOffset(attrib));
-						}
-						else
-						{
-							glDisableClientState(GL_VERTEX_ARRAY);
-						}
-						break;
-
-					case VERTEX_COLOR:
-						if(fmt.isAttributeEnabled(attrib))
-						{
-							glEnableClientState(GL_COLOR_ARRAY);
-							glColorPointer(fmt.getElementCount(attrib), toGLType(fmt.getDataType(attrib)), stride, vertexData + fmt.getAttributeOffset(attrib));
-						}
-						else
-						{
-							glDisableClientState(GL_COLOR_ARRAY);
-						}
-						break;
-
-					case VERTEX_TEX_COORD:
-						if(fmt.isAttributeEnabled(attrib))
-						{
-							glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-							glTexCoordPointer(fmt.getElementCount(attrib), toGLType(fmt.getDataType(attrib)), stride, vertexData + fmt.getAttributeOffset(attrib));
-						}
-						else
-						{
-							glDisableClientState(GL_TEXTURE_COORD_ARRAY);
-						}
-						break;
-				}
-			}
-
-			// Draw batch
-			glDrawElements(toGLPrimitive(state.primitive), buffer->getIndexCount(), GL_UNSIGNED_INT, indexData);
-		}
-		else
-		{
-			// Bind vertices and indices array
-			glBindBuffer(GL_ARRAY_BUFFER_ARB, buffer->getVBO()->m_vboId);
-			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, buffer->getVBO()->m_iboId);
-			
-			// Set array pointers
-			int stride = fmt.getVertexSizeInBytes();
-			for(int i = 0; i < VERTEX_ATTRIB_MAX; i++)
-			{
-				VertexAttribute attrib = VertexAttribute(i);
-				switch(attrib)
-				{
-					case VERTEX_POSITION:
-						if(fmt.isAttributeEnabled(attrib))
-						{
-							glEnableClientState(GL_VERTEX_ARRAY);
-							glVertexPointer(fmt.getElementCount(attrib), toGLType(fmt.getDataType(attrib)), stride, (void*)fmt.getAttributeOffset(attrib));
-						}
-						else
-						{
-							glDisableClientState(GL_VERTEX_ARRAY);
-						}
-						break;
-
-					case VERTEX_COLOR:
-						if(fmt.isAttributeEnabled(attrib))
-						{
-							glEnableClientState(GL_COLOR_ARRAY);
-							glColorPointer(fmt.getElementCount(attrib), toGLType(fmt.getDataType(attrib)), stride, (void*)fmt.getAttributeOffset(attrib));
-						}
-						else
-						{
-							glDisableClientState(GL_COLOR_ARRAY);
-						}
-						break;
-
-					case VERTEX_TEX_COORD:
-						if(fmt.isAttributeEnabled(attrib))
-						{
-							glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-							glTexCoordPointer(fmt.getElementCount(attrib), toGLType(fmt.getDataType(attrib)), stride, (void*)fmt.getAttributeOffset(attrib));
-						}
-						else
-						{
-							glDisableClientState(GL_TEXTURE_COORD_ARRAY);
-						}
-						break;
-				}
-			}
-
-			// Draw vbo
-			glDrawElements(toGLPrimitive(state.primitive), buffer->getIndexCount(), GL_UNSIGNED_INT, 0);
-
-			// Reset vbo buffers
-			glBindBuffer(GL_ARRAY_BUFFER_ARB, 0);
-			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 		}
 	}
+	else
+	{
+		// Disable shaders
+		glUseProgram(0);
+
+		// Activate texture slot 0
+		glActiveTexture(GL_TEXTURE0);
+
+		// Bind texture
+		glBindTexture(GL_TEXTURE_2D, (m_texture ? m_texture->m_id : 0));
+	}
 }
+
+void GraphicsContext::drawIndexedPrimitives(const PrimitiveType type, const Vertex *vertices, const uint vertexCount, const uint *indices, const uint indexCount)
+{
+	setupContext();
+
+	// Get vertices and vertex data
+	VertexFormat fmt = vertices->getFormat();
+	char *vertexData = new char[vertexCount * fmt.getVertexSizeInBytes()];
+	for(uint i = 0; i < vertexCount; ++i)
+	{
+		vertices[i].getData(vertexData + i * fmt.getVertexSizeInBytes());
+	}
+			
+	// Set array pointers
+	int stride = fmt.getVertexSizeInBytes();
+	for(int i = 0; i < VERTEX_ATTRIB_MAX; i++)
+	{
+		VertexAttribute attrib = VertexAttribute(i);
+		switch(attrib)
+		{
+			case VERTEX_POSITION:
+				if(fmt.isAttributeEnabled(attrib))
+				{
+					glEnableClientState(GL_VERTEX_ARRAY);
+					glVertexPointer(fmt.getElementCount(attrib), fmt.getDataType(attrib), stride, vertexData + fmt.getAttributeOffset(attrib));
+				}
+				else
+				{
+					glDisableClientState(GL_VERTEX_ARRAY);
+				}
+				break;
+
+			case VERTEX_COLOR:
+				if(fmt.isAttributeEnabled(attrib))
+				{
+					glEnableClientState(GL_COLOR_ARRAY);
+					glColorPointer(fmt.getElementCount(attrib), fmt.getDataType(attrib), stride, vertexData + fmt.getAttributeOffset(attrib));
+				}
+				else
+				{
+					glDisableClientState(GL_COLOR_ARRAY);
+				}
+				break;
+
+			case VERTEX_TEX_COORD:
+				if(fmt.isAttributeEnabled(attrib))
+				{
+					glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+					glTexCoordPointer(fmt.getElementCount(attrib), fmt.getDataType(attrib), stride, vertexData + fmt.getAttributeOffset(attrib));
+				}
+				else
+				{
+					glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+				}
+				break;
+		}
+	}
+
+	glDrawElements(type, indexCount, GL_UNSIGNED_INT, indices);
+}
+
+void GraphicsContext::drawIndexedPrimitives(const PrimitiveType type, const VertexBuffer *vbo, const IndexBuffer *ibo)
+{
+	setupContext();
+
+	// Bind vertices and indices array
+	glBindBuffer(GL_ARRAY_BUFFER, vbo->m_id);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo->m_id);
+			
+	// Set array pointers
+	VertexFormat fmt = vbo->getVertexFormat();
+	int stride = fmt.getVertexSizeInBytes();
+	for(int i = 0; i < VERTEX_ATTRIB_MAX; i++)
+	{
+		VertexAttribute attrib = VertexAttribute(i);
+		switch(attrib)
+		{
+			case VERTEX_POSITION:
+				if(fmt.isAttributeEnabled(attrib))
+				{
+					glEnableClientState(GL_VERTEX_ARRAY);
+					glVertexPointer(fmt.getElementCount(attrib), fmt.getDataType(attrib), stride, (void*)fmt.getAttributeOffset(attrib));
+				}
+				else
+				{
+					glDisableClientState(GL_VERTEX_ARRAY);
+				}
+				break;
+
+			case VERTEX_COLOR:
+				if(fmt.isAttributeEnabled(attrib))
+				{
+					glEnableClientState(GL_COLOR_ARRAY);
+					glColorPointer(fmt.getElementCount(attrib), fmt.getDataType(attrib), stride, (void*)fmt.getAttributeOffset(attrib));
+				}
+				else
+				{
+					glDisableClientState(GL_COLOR_ARRAY);
+				}
+				break;
+
+			case VERTEX_TEX_COORD:
+				if(fmt.isAttributeEnabled(attrib))
+				{
+					glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+					glTexCoordPointer(fmt.getElementCount(attrib), fmt.getDataType(attrib), stride, (void*)fmt.getAttributeOffset(attrib));
+				}
+				else
+				{
+					glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+				}
+				break;
+		}
+	}
+
+	// Draw vbo
+	glDrawElements(type, ibo->getSize(), GL_UNSIGNED_INT, 0);
+
+	// Reset vbo buffers
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+}
+
+void GraphicsContext::drawPrimitives(const PrimitiveType type, const Vertex *vertices, const uint vertexCount)
+{
+	setupContext();
+
+	// Get vertices and vertex data
+	VertexFormat fmt = vertices->getFormat();
+	char *vertexData = new char[vertexCount * fmt.getVertexSizeInBytes()];
+	for(uint i = 0; i < vertexCount; ++i)
+	{
+		vertices[i].getData(vertexData + i * fmt.getVertexSizeInBytes());
+	}
+			
+	// Set array pointers
+	int stride = fmt.getVertexSizeInBytes();
+	for(int i = 0; i < VERTEX_ATTRIB_MAX; i++)
+	{
+		VertexAttribute attrib = VertexAttribute(i);
+		switch(attrib)
+		{
+			case VERTEX_POSITION:
+				if(fmt.isAttributeEnabled(attrib))
+				{
+					glEnableClientState(GL_VERTEX_ARRAY);
+					glVertexPointer(fmt.getElementCount(attrib), fmt.getDataType(attrib), stride, vertexData + fmt.getAttributeOffset(attrib));
+				}
+				else
+				{
+					glDisableClientState(GL_VERTEX_ARRAY);
+				}
+				break;
+
+			case VERTEX_COLOR:
+				if(fmt.isAttributeEnabled(attrib))
+				{
+					glEnableClientState(GL_COLOR_ARRAY);
+					glColorPointer(fmt.getElementCount(attrib), fmt.getDataType(attrib), stride, vertexData + fmt.getAttributeOffset(attrib));
+				}
+				else
+				{
+					glDisableClientState(GL_COLOR_ARRAY);
+				}
+				break;
+
+			case VERTEX_TEX_COORD:
+				if(fmt.isAttributeEnabled(attrib))
+				{
+					glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+					glTexCoordPointer(fmt.getElementCount(attrib), fmt.getDataType(attrib), stride, vertexData + fmt.getAttributeOffset(attrib));
+				}
+				else
+				{
+					glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+				}
+				break;
+		}
+	}
+
+	// Draw primitives
+	glDrawArrays(type, 0, vertexCount);
+}
+
+void GraphicsContext::drawPrimitives(const PrimitiveType type, const VertexBuffer *vbo)
+{
+	setupContext();
+
+	// Bind vertices and indices array
+	glBindBuffer(GL_ARRAY_BUFFER, vbo->m_id);
+			
+	// Set array pointers
+	VertexFormat fmt = vbo->getVertexFormat();
+	int stride = fmt.getVertexSizeInBytes();
+	for(int i = 0; i < VERTEX_ATTRIB_MAX; i++)
+	{
+		VertexAttribute attrib = VertexAttribute(i);
+		switch(attrib)
+		{
+			case VERTEX_POSITION:
+				if(fmt.isAttributeEnabled(attrib))
+				{
+					glEnableClientState(GL_VERTEX_ARRAY);
+					glVertexPointer(fmt.getElementCount(attrib), fmt.getDataType(attrib), stride, (void*)fmt.getAttributeOffset(attrib));
+				}
+				else
+				{
+					glDisableClientState(GL_VERTEX_ARRAY);
+				}
+				break;
+
+			case VERTEX_COLOR:
+				if(fmt.isAttributeEnabled(attrib))
+				{
+					glEnableClientState(GL_COLOR_ARRAY);
+					glColorPointer(fmt.getElementCount(attrib), fmt.getDataType(attrib), stride, (void*)fmt.getAttributeOffset(attrib));
+				}
+				else
+				{
+					glDisableClientState(GL_COLOR_ARRAY);
+				}
+				break;
+
+			case VERTEX_TEX_COORD:
+				if(fmt.isAttributeEnabled(attrib))
+				{
+					glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+					glTexCoordPointer(fmt.getElementCount(attrib), fmt.getDataType(attrib), stride, (void*)fmt.getAttributeOffset(attrib));
+				}
+				else
+				{
+					glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+				}
+				break;
+		}
+	}
+
+	// Draw vbo
+	glDrawArrays(type, 0, vbo->getSize());
+
+	// Reset vbo buffers
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+}
+
+void GraphicsContext::drawRectangle(const float x, const float y, const float width, const float height, const Color &color)
+{
+	Vertex vertices[4];
+
+	vertices[0].set4f(xd::VERTEX_POSITION, x,			y);
+	vertices[1].set4f(xd::VERTEX_POSITION, x + width,	y);
+	vertices[2].set4f(xd::VERTEX_POSITION, x,			y + height);
+	vertices[3].set4f(xd::VERTEX_POSITION, x + width,	y + height);
+
+	vertices[0].set4ub(xd::VERTEX_COLOR, color.r, color.g, color.b, color.a);
+	vertices[1].set4ub(xd::VERTEX_COLOR, color.r, color.g, color.b, color.a);
+	vertices[2].set4ub(xd::VERTEX_COLOR, color.r, color.g, color.b, color.a);
+	vertices[3].set4ub(xd::VERTEX_COLOR, color.r, color.g, color.b, color.a);
+	
+	vertices[0].set4f(xd::VERTEX_TEX_COORD, 0.0f, 1.0f);
+	vertices[1].set4f(xd::VERTEX_TEX_COORD, 1.0f, 1.0f);
+	vertices[2].set4f(xd::VERTEX_TEX_COORD, 0.0f, 0.0f);
+	vertices[3].set4f(xd::VERTEX_TEX_COORD, 1.0f, 0.0f);
+
+	drawPrimitives(PRIMITIVE_TRIANGLE_STRIP, vertices, 4);
+}
+
+void GraphicsContext::drawRectangle(const Vector2 &pos, const Vector2 &size, const Color &color)
+{
+	drawRectangle(pos.x, pos.y, size.x, size.y, color);
+}
+
+void GraphicsContext::drawRectangle(const Rect &rect, const Color &color)
+{
+	drawRectangle(rect.position.x, rect.position.y, rect.size.x, rect.size.y, color);
+}
+
 
 }

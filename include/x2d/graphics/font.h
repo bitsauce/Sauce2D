@@ -6,10 +6,11 @@
 namespace xd
 {
 
-class Font;
 struct Color;
 class TextureAtlas;
+class SpriteBatch;
 
+class Font;
 typedef shared_ptr<Font> FontPtr;
 
 class XDAPI Font
@@ -20,8 +21,8 @@ public:
 	float getStringWidth(const string &str);
 	float getStringHeight(const string &str);
 	void setColor(const Color &color);
-	void draw(Batch *batch, const Vector2 &pos, const string &str);
-	Texture2DPtr renderToTexture(const string &text, const uint padding = 2);
+	void draw(SpriteBatch *batch, const Vector2 &pos, const string &str) const;
+	Texture2DPtr renderToTexture(GraphicsContext &graphicsContext, const string &text, const uint padding = 2);
 
 	struct CharMetrics
 	{
@@ -43,7 +44,7 @@ public:
 private:
 	// Load font using TrueType 2
 	Font(const string &fontFile, const uint size);
-	bool isValidChar(uchar ch) { return ch >= 0 && ch < 128; }
+	bool isValidChar(uchar ch) const { return ch >= 0 && ch < 128; }
 
 	// Font color
 	Color m_color;

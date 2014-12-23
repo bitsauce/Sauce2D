@@ -13,7 +13,7 @@
 namespace xd
 {
 
-Animation::Animation(Texture2DPtr &texture, const int nRows, const int nColumns)
+Animation::Animation(const int nRows, const int nColumns)
 {
 	// Create texture regions
 	for(int y = 0; y < nRows; y++)
@@ -21,7 +21,7 @@ Animation::Animation(Texture2DPtr &texture, const int nRows, const int nColumns)
 		for(int x = 0; x < nColumns; x++)
 		{
 			m_textureRegions.push_back(
-				TextureRegion(texture,
+				TextureRegion(
 					Vector2(float(x)/nColumns, float(y)/nRows),
 					Vector2(float(x+1)/nColumns, float(y+1)/nRows))
 				);

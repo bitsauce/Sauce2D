@@ -123,7 +123,7 @@ Font::Font(const string &filePath, const uint size) :
 	}
 
 	// Load bitmap data for each of the character of the font
-	vector<Pixmap> pixmaps;
+	vector<Pixmap> pixmaps; int maxY = 0; int minY = 0;
 	for(uchar ch = 0; ch < 128; ch++)
 	{
 		// Load the glyph for our character
@@ -173,8 +173,11 @@ Font::Font(const string &filePath, const uint size) :
 			face->glyph->advance.x >> 6,
 			metrics.bearing.y - metrics.size.y
 			);
+
+		if(metrics.bearing.y > maxY) maxY = metrics.bearing.y;
+		if(metrics.bearing.y - metrics.size.y < minY) minY = metrics.bearing.y - metrics.size.y;
 	}
-	m_lineSize = face->height >> 6;
+	m_lineSize = maxY - minY;
 	m_Msize = m_metrics['M'].size.y;
 
 	// Create Font atlas
@@ -241,17 +244,14 @@ void Font::setColor(const Color &color)
 	m_color = color;
 }
 
-void Font::draw(Batch *batch, const Vector2 &pos, const string &str)
+void Font::draw(SpriteBatch *batch, const Vector2 &pos, const string &str) const
 {
 	// Get current position
 	Vector2 currentPos = pos;
 
-	// Setup batch
-	batch->setTexture(m_atlas->getTexture());
-	batch->setPrimitive(Batch::PRIMITIVE_TRIANGLES);
-
 	// Draw string
-	Vertex *vertices = new Vertex[4];
+	Sprite sprite(m_atlas->getTexture());
+	sprite.setColor(m_color);
 	for(uint i = 0; i < str.size(); i++)
 	{
 		// Check for new line
@@ -275,46 +275,31 @@ void Font::draw(Batch *batch, const Vector2 &pos, const string &str)
 		currentPos.x += metrics.bearing.x;
 		
 		// Draw char
-		xd::TextureRegion region = m_atlas->get(ch);
-
-		vertices[0].set4f(VERTEX_POSITION, currentPos.x, currentPos.y + (m_Msize - metrics.size.y) - metrics.advance.y);
-		vertices[0].set4ub(VERTEX_COLOR, m_color.r, m_color.g, m_color.b, m_color.a);
-		vertices[0].set4f(VERTEX_TEX_COORD, region.uv0.x, region.uv1.y);
-
-		vertices[1].set4f(VERTEX_POSITION, currentPos.x + metrics.size.x, currentPos.y + (m_Msize - metrics.size.y) - metrics.advance.y);
-		vertices[1].set4ub(VERTEX_COLOR, m_color.r, m_color.g, m_color.b, m_color.a);
-		vertices[1].set4f(VERTEX_TEX_COORD, region.uv1.x, region.uv1.y);
-		
-		vertices[2].set4f(VERTEX_POSITION, currentPos.x + metrics.size.x, currentPos.y + (m_Msize - metrics.size.y) - metrics.advance.y + metrics.size.y);
-		vertices[2].set4ub(VERTEX_COLOR, m_color.r, m_color.g, m_color.b, m_color.a);
-		vertices[2].set4f(VERTEX_TEX_COORD, region.uv1.x, region.uv0.y);
-		
-		vertices[3].set4f(VERTEX_POSITION, currentPos.x, currentPos.y + (m_Msize - metrics.size.y) - metrics.advance.y + metrics.size.y);
-		vertices[3].set4ub(VERTEX_COLOR, m_color.r, m_color.g, m_color.b, m_color.a);
-		vertices[3].set4f(VERTEX_TEX_COORD, region.uv0.x, region.uv0.y);
-		
-		batch->addVertices(vertices, 4, QUAD_INDICES, 6);
+		sprite.setRegion(m_atlas->get(ch));
+		sprite.setPosition(currentPos.x, currentPos.y + (m_Msize - metrics.size.y - metrics.advance.y));
+		sprite.setSize(metrics.size.x, metrics.size.y);
+		batch->drawSprite(sprite);
 
 		// Apply advance
 		currentPos.x += metrics.advance.x - metrics.bearing.x;
 	}
-	delete[] vertices;
-	//batch->release();
 }
 
-xd::Texture2DPtr Font::renderToTexture(const string &text, const uint padding)
+xd::Texture2DPtr Font::renderToTexture(GraphicsContext &graphicsContext, const string &text, const uint padding)
 {
-	xd::Texture2DPtr texture = xd::Texture2DPtr(new xd::Texture2D((uint)ceil(getStringWidth(text)) + padding, (uint)ceil(getStringHeight(text)) + padding));
+	// Setup render target
+	RenderTarget2D renderTarget((uint)ceil(getStringWidth(text)) + padding, (uint)ceil(getStringHeight(text)) + padding, 1);
+	graphicsContext.setRenderTarget(&renderTarget);
+	graphicsContext.disable(GraphicsContext::BLEND);
 
-	Graphics::disableAlphaBlending();
+	SpriteBatch spriteBatch(graphicsContext);
+	spriteBatch.begin();
+	draw(&spriteBatch, Vector2(padding*0.5f, padding*0.5f), text);
+	spriteBatch.end();
 
-	Batch batch;
-	draw(&batch, Vector2(padding/2.0f, padding/2.0f), text);
-	batch.renderToTexture(texture);
+	graphicsContext.setRenderTarget(nullptr);
 
-	Graphics::enableAlphaBlending();
-
-	return texture;
+	return renderTarget.getTexture();
 }
 
 }

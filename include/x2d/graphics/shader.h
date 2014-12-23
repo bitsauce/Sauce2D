@@ -2,19 +2,17 @@
 #define X2D_SHADER_H
 
 #include "../engine.h"
+#include "texture.h"
 
 namespace xd
 {
 
 class Shader;
-class Texture2D;
-
 typedef shared_ptr<Shader> ShaderPtr;
 
 class XDAPI Shader
 {
 	friend class GraphicsContext;
-	friend class Texture2D;
 public:
 	Shader(const string &vertFilePath, const string &fragFilePath);
 	~Shader();
@@ -27,7 +25,7 @@ public:
 	void setUniform2f(const string &name, const float v0, const float v1);
 	void setUniform3f(const string &name, const float v0, const float v1, const float v2);
 	void setUniform4f(const string &name, const float v0, const float v1, const float v2, const float v3);
-	void setSampler2D(const string &name, xd::Texture2DPtr texture);
+	void setSampler2D(const string &name, Texture2DPtr texture);
 	
 	static ShaderPtr loadResource(const string &name);
 

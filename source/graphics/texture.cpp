@@ -12,50 +12,6 @@
 
 namespace xd {
 
-GLint enumToGL(const Texture2D::TextureFilter filter)
-{
-	switch(filter)
-	{
-	case Texture2D::NEAREST: return GL_NEAREST;
-	case Texture2D::LINEAR: return GL_LINEAR;
-	}
-	return 0;
-}
-
-Texture2D::TextureFilter enumFromGL(const GLint filter)
-{
-	switch(filter)
-	{
-	case GL_NEAREST: return Texture2D::NEAREST;
-	case GL_LINEAR: return Texture2D::LINEAR;
-	}
-	return Texture2D::TextureFilter(0);
-}
-
-GLint wrapToGL(const Texture2D::TextureWrapping wrapping)
-{
-	switch(wrapping)
-	{
-	case Texture2D::CLAMP_TO_BORDER: return GL_CLAMP_TO_BORDER;
-	case Texture2D::CLAMP_TO_EDGE: return GL_CLAMP_TO_EDGE;
-	case Texture2D::REPEAT: return GL_REPEAT;
-	case Texture2D::MIRRORED_REPEAT: return GL_MIRRORED_REPEAT;
-	}
-	return GL_CLAMP_TO_BORDER;
-}
-
-Texture2D::TextureWrapping wrapFromGL(const GLint wrapping)
-{
-	switch(wrapping)
-	{
-	case GL_CLAMP_TO_BORDER: return Texture2D::CLAMP_TO_BORDER;
-	case GL_CLAMP_TO_EDGE: return Texture2D::CLAMP_TO_EDGE;
-	case GL_REPEAT: return Texture2D::REPEAT;
-	case GL_MIRRORED_REPEAT: return Texture2D::MIRRORED_REPEAT;
-	}
-	return Texture2D::CLAMP_TO_BORDER;
-}
-
 Texture2D::Texture2D(const PixelFormat format)
 {
 	init(Pixmap(format));
@@ -125,10 +81,9 @@ void Texture2D::disableMipmaps()
 
 void Texture2D::setFiltering(const TextureFilter filter)
 {
-	GLint glfilter = enumToGL(filter);
-	if(m_filter != glfilter)
+	if(m_filter != filter)
 	{
-		m_filter = glfilter;
+		m_filter = filter;
 		updateFiltering();
 	}
 	else
@@ -139,22 +94,21 @@ void Texture2D::setFiltering(const TextureFilter filter)
 
 Texture2D::TextureFilter Texture2D::getFiltering() const
 {
-	return enumFromGL(m_filter);
+	return TextureFilter(m_filter);
 }
 
 void Texture2D::setWrapping(const TextureWrapping wrapping)
 {
-	GLint glwrapping = wrapToGL(wrapping);
-	if(m_wrapping != glwrapping)
+	if(m_wrapping != wrapping)
 	{
-		m_wrapping = glwrapping;
+		m_wrapping = wrapping;
 		updateFiltering();
 	}
 }
 
 Texture2D::TextureWrapping Texture2D::getWrapping() const
 {
-	return wrapFromGL(m_wrapping);
+	return TextureWrapping(m_wrapping);
 }
 
 Pixmap Texture2D::getPixmap(const PixelFormat format) const

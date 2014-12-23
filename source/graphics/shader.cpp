@@ -130,21 +130,20 @@ Shader::Shader(const string &vertFilePath, const string &fragFilePath)
 		Uniform *uniform = new Uniform;
 		uniform->type = type;
 		uniform->loc = glGetUniformLocation(m_id, name);
-
-		int dataSize = 0;
+		
+		size_t dataSize = 0;
 		switch(type)
 		{
-		case GL_INT: dataSize = INT_SIZE; break;
-		case GL_INT_VEC2: dataSize = INT_SIZE*2; break;
-		case GL_INT_VEC3: dataSize = INT_SIZE*3; break;
-		case GL_INT_VEC4: dataSize = INT_SIZE*4; break;
-		case GL_FLOAT: dataSize = FLOAT_SIZE; break;
-		case GL_FLOAT_VEC2: dataSize = FLOAT_SIZE*2; break;
-		case GL_FLOAT_VEC3: dataSize = FLOAT_SIZE*3; break;
-		case GL_FLOAT_VEC4: dataSize = FLOAT_SIZE*4; break;
-		case GL_SAMPLER_2D: dataSize = /*U*/INT_SIZE; break;
+			case GL_INT: dataSize = INT_SIZE; break;
+			case GL_INT_VEC2: dataSize = INT_SIZE*2; break;
+			case GL_INT_VEC3: dataSize = INT_SIZE*3; break;
+			case GL_INT_VEC4: dataSize = INT_SIZE*4; break;
+			case GL_FLOAT: dataSize = FLOAT_SIZE; break;
+			case GL_FLOAT_VEC2: dataSize = FLOAT_SIZE*2; break;
+			case GL_FLOAT_VEC3: dataSize = FLOAT_SIZE*3; break;
+			case GL_FLOAT_VEC4: dataSize = FLOAT_SIZE*4; break;
+			case GL_SAMPLER_2D: dataSize = /*U*/INT_SIZE; break;
 		}
-
 		uniform->data = new char[dataSize];
 		m_uniforms[name] = uniform;
 	}
@@ -162,10 +161,12 @@ void Shader::setUniform1i(const string &name, const int v0)
 	if(m_uniforms.find(name) != m_uniforms.end())
 	{
 		Uniform *uniform = m_uniforms[name];
-		if(uniform->type == GL_INT) {
+		if(uniform->type == GL_INT)
+		{
 			((GLint*)uniform->data)[0] = v0;
 		}
-	}else
+	}
+	else
 	{
 		LOG("Uniform '%s' does not exist.", name.c_str());
 	}
@@ -176,11 +177,13 @@ void Shader::setUniform2i(const string &name, const int v0, const int v1)
 	if(m_uniforms.find(name) != m_uniforms.end())
 	{
 		Uniform *uniform = m_uniforms[name];
-		if(uniform->type == GL_INT_VEC2) {
+		if(uniform->type == GL_INT_VEC2)
+		{
 			((GLint*)uniform->data)[0] = v0;
 			((GLint*)uniform->data)[1] = v1;
 		}
-	}else
+	}
+	else
 	{
 		LOG("Uniform '%s' does not exist.", name.c_str());
 	}
@@ -191,12 +194,14 @@ void Shader::setUniform3i(const string &name, const int v0, const int v1, const 
 	if(m_uniforms.find(name) != m_uniforms.end())
 	{
 		Uniform *uniform = m_uniforms[name];
-		if(uniform->type == GL_INT_VEC3) {
+		if(uniform->type == GL_INT_VEC3)
+		{
 			((GLint*)uniform->data)[0] = v0;
 			((GLint*)uniform->data)[1] = v1;
 			((GLint*)uniform->data)[2] = v2;
 		}
-	}else
+	}
+	else
 	{
 		LOG("Uniform '%s' does not exist.", name.c_str());
 	}
@@ -207,13 +212,15 @@ void Shader::setUniform4i(const string &name, const int v0, const int v1, const 
 	if(m_uniforms.find(name) != m_uniforms.end())
 	{
 		Uniform *uniform = m_uniforms[name];
-		if(uniform->type == GL_INT_VEC4) {
+		if(uniform->type == GL_INT_VEC4)
+		{
 			((GLint*)uniform->data)[0] = v0;
 			((GLint*)uniform->data)[1] = v1;
 			((GLint*)uniform->data)[2] = v2;
 			((GLint*)uniform->data)[3] = v3;
 		}
-	}else
+	}
+	else
 	{
 		LOG("Uniform '%s' does not exist.", name.c_str());
 	}
@@ -224,10 +231,12 @@ void Shader::setUniform1f(const string &name, const float v0)
 	if(m_uniforms.find(name) != m_uniforms.end())
 	{
 		Uniform *uniform = m_uniforms[name];
-		if(uniform->type == GL_FLOAT) {
+		if(uniform->type == GL_FLOAT)
+		{
 			((GLfloat*)uniform->data)[0] = v0;
 		}
-	}else
+	}
+	else
 	{
 		LOG("Uniform '%s' does not exist.", name.c_str());
 	}
@@ -238,11 +247,13 @@ void Shader::setUniform2f(const string &name, const float v0, const float v1)
 	if(m_uniforms.find(name) != m_uniforms.end())
 	{
 		Uniform *uniform = m_uniforms[name];
-		if(uniform->type == GL_FLOAT_VEC2) {
+		if(uniform->type == GL_FLOAT_VEC2)
+		{
 			((GLfloat*)uniform->data)[0] = v0;
 			((GLfloat*)uniform->data)[1] = v1;
 		}
-	}else
+	}
+	else
 	{
 		LOG("Uniform '%s' does not exist.", name.c_str());
 	}
@@ -253,12 +264,14 @@ void Shader::setUniform3f(const string &name, const float v0, const float v1, co
 	if(m_uniforms.find(name) != m_uniforms.end())
 	{
 		Uniform *uniform = m_uniforms[name];
-		if(uniform->type == GL_FLOAT_VEC3) {
+		if(uniform->type == GL_FLOAT_VEC3)
+		{
 			((GLfloat*)uniform->data)[0] = v0;
 			((GLfloat*)uniform->data)[1] = v1;
 			((GLfloat*)uniform->data)[2] = v2;
 		}
-	}else
+	}
+	else
 	{
 		LOG("Uniform '%s' does not exist.", name.c_str());
 	}
@@ -269,36 +282,36 @@ void Shader::setUniform4f(const string &name, const float v0, const float v1, co
 	if(m_uniforms.find(name) != m_uniforms.end())
 	{
 		Uniform *uniform = m_uniforms[name];
-		if(uniform->type == GL_FLOAT_VEC4) {
+		if(uniform->type == GL_FLOAT_VEC4)
+		{
 			((GLfloat*)uniform->data)[0] = v0;
 			((GLfloat*)uniform->data)[1] = v1;
 			((GLfloat*)uniform->data)[2] = v2;
 			((GLfloat*)uniform->data)[3] = v3;
 		}
-	}else
+	}
+	else
 	{
 		LOG("Uniform '%s' does not exist.", name.c_str());
 	}
 }
 
-void Shader::setSampler2D(const string &name, xd::Texture2DPtr texture)
+void Shader::setSampler2D(const string &name, Texture2DPtr texture)
 {
+	// TODO: We should actually store a handle to the texture object to avoid it being destroyed
 	if(m_uniforms.find(name) != m_uniforms.end())
 	{
 		Uniform *uniform = m_uniforms[name];
-		if(uniform->type == GL_SAMPLER_2D) {
+		if(uniform->type == GL_SAMPLER_2D)
+		{
 			((GLuint*)uniform->data)[0] = texture != 0 ? texture->m_id : 0;
 		}
-	}else
+	}
+	else
 	{
 		LOG("Uniform '%s' does not exist.", name.c_str());
 	}
-
-	//if(texture != 0) {
-	//	texture->release();
-	//}
 }
-
 
 ShaderPtr Shader::loadResource(const string &name)
 {

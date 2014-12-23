@@ -1,7 +1,8 @@
 #include "config.h"
-#include "graphics/graphicscontext.h"
+#include "graphics/graphicsContext.h"
+#include "graphics/blendState.h"
 #include "graphics/animation.h"
-#include "graphics/batch.h"
+#include "graphics/spritebatch.h"
 #include "graphics/font.h"
 #include "graphics/rendertarget.h"
 #include "graphics/pixmap.h"
@@ -13,7 +14,6 @@
 #include "graphics/textureregion.h"
 #include "graphics/vertex.h"
 #include "graphics/vertexbuffer.h"
-#include "graphics/vertexbufferobject.h"
 #include "graphics/viewport.h"
 
 #ifndef X2D_GRAPHICS_H
@@ -33,7 +33,6 @@ XDAPI extern Vector2 QUAD_TEXCOORD[4];
 class XDAPI Graphics
 {
 	friend class XEngine;
-	friend class Batch;
 	friend class XWindow;
 
 public:
@@ -55,10 +54,6 @@ public:
 	// Wireframe
 	static void enableWireframe();
 	static void disableWireframe();
-
-	// Alpha blending
-	static void enableAlphaBlending();
-	static void disableAlphaBlending();
 
 	// Time step & fps
 	static float getTimeStep();
