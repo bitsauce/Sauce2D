@@ -128,6 +128,10 @@ int XEngine::init(const XConfig &config)
 	s_flags = config.flags;
 
 	s_workDir = config.workDir;
+	if(s_workDir.empty())
+	{
+		s_workDir = _getcwd(0, 0);
+	}
 	replace(s_workDir.begin(), s_workDir.end(), '\\', '/');
 	util::toDirectoryPath(s_workDir);
 
