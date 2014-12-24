@@ -460,5 +460,30 @@ void GraphicsContext::drawRectangle(const Rect &rect, const Color &color)
 	drawRectangle(rect.position.x, rect.position.y, rect.size.x, rect.size.y, color);
 }
 
+void GraphicsContext::drawCircle(const float x, const float y, const float radius, const uint segments, const Color &color)
+{
+	Vertex *vertices = new Vertex[segments+2];
+
+	vertices[0].set4f(xd::VERTEX_POSITION, x, y);
+	vertices[0].set4ub(xd::VERTEX_COLOR, color.r, color.g, color.b, color.a);
+	vertices[0].set4f(xd::VERTEX_TEX_COORD, 0.0f, 1.0f);
+
+	for(uint i = 1; i < segments+2; ++i)
+	{
+		float r = (2.0f*PI*i)/segments;
+		vertices[i].set4f(VERTEX_POSITION, x + cos(r)*radius, y + sin(r)*radius);
+		vertices[i].set4ub(VERTEX_COLOR, color.r, color.g, color.b, color.a);
+		vertices[i].set4f(VERTEX_TEX_COORD, (1 + cos(r))/2.0f, 1.0f - (1 + sin(r))/2.0f);
+	}
+
+	drawPrimitives(PRIMITIVE_TRIANGLE_FAN, vertices, segments+2);
+
+	delete[] vertices;
+}
+
+void GraphicsContext::drawCircle(const Vector2 &center, const float radius, const uint segments, const Color &color)
+{
+	drawCircle(center.x, center.y, radius, segments, color);
+}
 
 }
