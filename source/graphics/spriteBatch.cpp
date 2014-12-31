@@ -117,7 +117,6 @@ void SpriteBatch::end()
 				{
 					// For each texture
 					uint spriteCount = 0;
-					Texture2DPtr prevTexture = itr1->second.begin()->first;
 					for(map<Texture2DPtr, list<Sprite*>>::iterator itr2 = itr1->second.begin(); itr2 != itr1->second.end(); ++itr2)
 					{
 						// Batch all sprite vertex data
@@ -127,28 +126,14 @@ void SpriteBatch::end()
 							spriteCount++;
 						}
 
-						// If this texture is different from the previous one
-						if(itr2->first != prevTexture)
+						// If we have sprites
+						if(spriteCount > 0)
 						{
-							// And if we have sprites
-							if(spriteCount > 0)
-							{
-								// Draw textured primitives
-								m_graphicsContext.setTexture(prevTexture);
-								m_graphicsContext.drawIndexedPrimitives(GraphicsContext::PRIMITIVE_TRIANGLES, m_vertices, spriteCount * 4, m_indices, spriteCount * 6);
-								spriteCount = 0;
-							}
-							prevTexture = itr2->first;
+							// Draw textured primitives
+							m_graphicsContext.setTexture(itr2->first);
+							m_graphicsContext.drawIndexedPrimitives(GraphicsContext::PRIMITIVE_TRIANGLES, m_vertices, spriteCount * 4, m_indices, spriteCount * 6);
+							spriteCount = 0;
 						}
-					}
-					
-					// If we have sprites
-					if(spriteCount > 0)
-					{
-						// Draw remaining textured primitives
-						m_graphicsContext.setTexture(prevTexture);
-						m_graphicsContext.drawIndexedPrimitives(GraphicsContext::PRIMITIVE_TRIANGLES, m_vertices, spriteCount * 4, m_indices, spriteCount * 6);
-						spriteCount = 0;
 					}
 				}
 			}

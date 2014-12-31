@@ -64,6 +64,7 @@
 	#include <fstream>
 	#include <sstream>
 	#include <memory>
+	#include <queue>
 	#include <GL/glew.h>
 	#include <GL/wglew.h>
 #elif X2D_UNIX
@@ -94,7 +95,6 @@ typedef unsigned int uint;
 typedef uintptr_t uintptr;
 typedef unsigned char uchar;
 typedef unsigned long ulong;
-#define delegate function
 
 /*********************************************************************
 **	Engine return codes												**
