@@ -83,6 +83,9 @@ public:
 	void setBlendState(const BlendState &blendState);
 	BlendState getBlendState();
 
+	// Copy to texture
+	void saveScreenshot(string path);
+
 	// Resize viewport
 	void resizeViewport(const uint w, const uint h);
 

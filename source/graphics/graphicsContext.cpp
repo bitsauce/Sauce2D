@@ -115,6 +115,22 @@ BlendState GraphicsContext::getBlendState()
 	return m_blendState;
 }
 
+#include <freeimage.h>
+void GraphicsContext::saveScreenshot(string path)
+{
+	// Get frame buffer data
+	uchar *data = new uchar[m_width*m_height*3];
+	glReadBuffer(GL_FRONT);
+	glReadPixels(0, 0, m_width, m_height, GL_BGR, GL_UNSIGNED_BYTE, data);
+	glReadBuffer(GL_BACK);
+
+	FIBITMAP *bitmap = FreeImage_ConvertFromRawBits(data, m_width, m_height, m_width * 3, 24, FI_RGBA_RED_MASK, FI_RGBA_GREEN_MASK, FI_RGBA_BLUE_MASK, false);
+	util::toAbsoluteFilePath(path);
+	FreeImage_Save(FIF_PNG, bitmap, path.c_str(), PNG_DEFAULT); // For now, let's just save everything as png
+
+	delete[] data;
+}
+
 // Orthographic projection
 void GraphicsContext::resizeViewport(const uint w, const uint h)
 {
