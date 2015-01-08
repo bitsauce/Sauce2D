@@ -11,6 +11,9 @@
 #include <x2d/graphics.h>
 #include <x2d/audio.h>
 
+#include <direct.h> // for _getcw()
+#include <ShlObj.h>
+
 BEGIN_XD_NAMESPACE
 
 #ifdef X2D_LINUX
@@ -89,9 +92,6 @@ void Engine::popScene()
 	// Show next scene
 	s_showScene = s_sceneStack.size() > 0 ? s_sceneStack.top() : 0;
 }
-
-#include <direct.h> // for _getcw()
-#include <ShlObj.h>
 
 // Convert a wide Unicode string to an UTF8 string
 string utf8_encode(const wstring &wstr)

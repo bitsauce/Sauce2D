@@ -9,7 +9,6 @@
 
 #include <x2d/math.h>
 
-
 BEGIN_XD_NAMESPACE
 
 Color &Color::operator*(const float c)
@@ -53,6 +52,47 @@ uint ror(const uint a, const uint b)
 uint rol(const uint a, const uint b)
 {
 	return (a >> b) | (a << (sizeof(uint)*CHAR_BIT-b));
+}
+
+float round(const float value)
+{
+	return (float)int((value > 0.0f) ? (value + 0.5f) : (value - 0.5f));
+}
+
+float ceil(const float value)
+{
+	return ceilf(value);
+}
+
+float floor(const float value)
+{
+	return floorf(value);
+}
+
+float abs(const float value)
+{
+	return ::abs(value);
+}
+
+float sqrt(const float value)
+{
+	return sqrtf(value);
+}
+
+float pow(const float a, const float b)
+{
+	return powf(a, b);
+}
+
+int mod(const int a, const int b)
+{
+	int r = a % b;
+	return r < 0 ? r + b : r;
+}
+
+float lerp(const float v0, const float v1, const float t)
+{
+	return (1.0f-t)*v0 + t*v1;
 }
 
 }
