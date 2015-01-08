@@ -10,6 +10,8 @@
 #include <x2d/engine.h>
 #include <x2d/graphics.h>
 
+BEGIN_XD_NAMESPACE
+
 // Window class name
 #define WINDOW_CLASSNAME "x2D"
 
@@ -20,17 +22,17 @@
 // Window
 //--------------------------------------------------------------------
 
-HWND XWindow::s_window = 0;
-HDC XWindow::s_deviceContext = 0;
-MSG XWindow::s_message;
-vector<Vector2i> XWindow::s_resolutions;
-bool XWindow::s_focus = false;
-Vector2i XWindow::s_size = Vector2i(0);
-bool XWindow::s_fullscreen = false;
-list<xd::WindowListener*> XWindow::s_windowListeners;
-xd::GraphicsContext *XWindow::s_graphicsContext = nullptr;
+HWND Window::s_window = 0;
+HDC Window::s_deviceContext = 0;
+MSG Window::s_message;
+vector<Vector2i> Window::s_resolutions;
+bool Window::s_focus = false;
+Vector2i Window::s_size = Vector2i(0);
+bool Window::s_fullscreen = false;
+list<xd::WindowListener*> Window::s_windowListeners;
+xd::GraphicsContext *Window::s_graphicsContext = nullptr;
 
-void XWindow::close()
+void Window::close()
 {
 	// If we're fullscreen
 	if(s_fullscreen)
@@ -56,7 +58,7 @@ void XWindow::close()
     UnregisterClass(TEXT(WINDOW_CLASSNAME), GetModuleHandle(NULL));
 
 	// Close engine
-	XEngine::exit();
+	Engine::exit();
 }
 
 // Exception
@@ -70,13 +72,13 @@ void XWindow::close()
 // Initialation
 //--------------------------------------------------------------------
 #define IDI_ICON 101
-void XWindow::show()
+void Window::show()
 {
 	// Register the window class
     WNDCLASSEX windowClass;
 	windowClass.cbSize = sizeof(WNDCLASSEX);
     windowClass.style		  = CS_HREDRAW | CS_VREDRAW | CS_OWNDC;	// Redraw On Size, And Own DC For Window.
-    windowClass.lpfnWndProc   = &XWindow::OnEvent;
+    windowClass.lpfnWndProc   = &Window::OnEvent;
     windowClass.cbClsExtra    = 0;
     windowClass.cbWndExtra    = 0;
     windowClass.hInstance     = GetModuleHandle(NULL);
@@ -225,7 +227,7 @@ void XWindow::show()
 //--------------------------------------------------------------------
 // Window functions
 //--------------------------------------------------------------------
-void XWindow::enableFullscreen()
+void Window::enableFullscreen()
 {
 	if(!s_fullscreen)
 	{
@@ -269,7 +271,7 @@ void XWindow::enableFullscreen()
 	}
 }
 
-void XWindow::disableFullscreen()
+void Window::disableFullscreen()
 {
 	if(s_fullscreen)
 	{
@@ -308,7 +310,7 @@ void XWindow::disableFullscreen()
 	}
 }
 
-bool XWindow::isFullscreen()
+bool Window::isFullscreen()
 {
 	return s_fullscreen;
 } 
@@ -326,14 +328,14 @@ bool XWindow::isFullscreen()
 	return arr;
 }*/
 
-void XWindow::enableResize()
+void Window::enableResize()
 {
 	// Set style
 	SetWindowLong(s_window, GWL_STYLE, WS_OVERLAPPEDWINDOW);
 	ShowWindow(s_window, SW_SHOW);
 }
 
-void XWindow::disableResize()
+void Window::disableResize()
 {
 	// Set style
 	SetWindowLong(s_window, GWL_STYLE,
@@ -342,12 +344,12 @@ void XWindow::disableResize()
 	ShowWindow(s_window, SW_SHOW);
 }
 
-bool XWindow::hasFocus()
+bool Window::hasFocus()
 {
 	return s_focus;
 }
 
-Vector2i XWindow::getPosition()
+Vector2i Window::getPosition()
 {
 	RECT rect;
 	GetWindowRect(s_window, &rect);
@@ -358,7 +360,7 @@ Vector2i XWindow::getPosition()
 	}*/
 }
 
-void XWindow::setSize(const Vector2i &size)
+void Window::setSize(const Vector2i &size)
 {
 	// Make sure the application is initialized
 	/*if(!m_initEventsDone)
@@ -430,33 +432,33 @@ void XWindow::setSize(const Vector2i &size)
 	}
 }
 
-void XWindow::maximize()
+void Window::maximize()
 {
 }
 
-void XWindow::minimize()
+void Window::minimize()
 {
 }
 
-void XWindow::setPosition(const Vector2i &)
+void Window::setPosition(const Vector2i &)
 {
 }
 
-void XWindow::restore()
+void Window::restore()
 {
 }
 
-Vector2i XWindow::getSize()
+Vector2i Window::getSize()
 {
 	return s_size;
 }
 
-void XWindow::addWindowListener(xd::WindowListener *listener)
+void Window::addWindowListener(xd::WindowListener *listener)
 {
 	s_windowListeners.push_back(listener);
 }
 
-void XWindow::removeWindowListener(xd::WindowListener *listener)
+void Window::removeWindowListener(xd::WindowListener *listener)
 {
 	s_windowListeners.remove(listener);
 }
@@ -464,7 +466,7 @@ void XWindow::removeWindowListener(xd::WindowListener *listener)
 //--------------------------------------------------------------------
 // Event loop
 //--------------------------------------------------------------------
-void XWindow::processEvents()
+void Window::processEvents()
 {
 	// Check for messages
 	//
@@ -478,7 +480,7 @@ void XWindow::processEvents()
 	}
 }
 
-LRESULT XWindow::OnEvent(HWND Handle, UINT Message, WPARAM wParam, LPARAM lParam)
+LRESULT Window::OnEvent(HWND Handle, UINT Message, WPARAM wParam, LPARAM lParam)
 {
 	// On create
 	if(Message == WM_NCCREATE)
@@ -498,7 +500,7 @@ LRESULT XWindow::OnEvent(HWND Handle, UINT Message, WPARAM wParam, LPARAM lParam
     return DefWindowProc(Handle, Message, wParam, lParam);
 }
 
-void XWindow::processEvents(UINT Message, WPARAM wParam, LPARAM lParam)
+void Window::processEvents(UINT Message, WPARAM wParam, LPARAM lParam)
 {
 	// Switch message
 	switch(Message)
@@ -579,27 +581,27 @@ void XWindow::processEvents(UINT Message, WPARAM wParam, LPARAM lParam)
 			// Set cursor pos
 			int x = GET_X_LPARAM(lParam);
 			int y = GET_Y_LPARAM(lParam);
-			XInput::s_position.set((float)x, (float)y);
+			Input::s_position.set((float)x, (float)y);
 		}
 		break;
 
 		case WM_MOUSEWHEEL:
 		{
 			int scrollDelta = GET_WHEEL_DELTA_WPARAM(wParam) / WHEEL_DELTA; // should be float so that finer mousewheels dont bug out
-			XInput::mouseScroll(scrollDelta);
+			Input::mouseScroll(scrollDelta);
 		}
 		break;
 
 		case WM_KEYDOWN:
-			XInput::keyPressed(fromWinKey((uchar)wParam));
+			Input::keyPressed(fromWinKey((uchar)wParam));
 		break;
 
 		case WM_KEYUP:
-			XInput::keyReleased(fromWinKey((uchar)wParam));
+			Input::keyReleased(fromWinKey((uchar)wParam));
 		break;
 
 		case WM_CHAR:
-			XInput::charEvent((wchar_t)wParam);
+			Input::charEvent((wchar_t)wParam);
 		break;
     }
 }
@@ -639,3 +641,5 @@ void XWindow::processEvents(UINT Message, WPARAM wParam, LPARAM lParam)
 		viewport->setPos((uint)((m_size.x/2)-(viewport->size().x/2)), (uint)((m_size.y/2)-(viewport->size().y/2)));
 	}
 }*/
+
+END_XD_NAMESPACE

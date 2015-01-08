@@ -9,7 +9,9 @@
 
 #include <x2d/engine.h>
 
-XProfiler::XProfiler() :
+BEGIN_XD_NAMESPACE
+
+Profiler::Profiler() :
 	m_root(0),
 	m_currentNode(0),
 	m_samples(0),
@@ -18,7 +20,7 @@ XProfiler::XProfiler() :
 {
 }
 
-XProfiler::~XProfiler()
+Profiler::~Profiler()
 {
 	if(m_root)
 	{
@@ -26,7 +28,7 @@ XProfiler::~XProfiler()
 	}
 }
 
-void XProfiler::deleteTree(Node *node)
+void Profiler::deleteTree(Node *node)
 {
 	for(map<string, Node*>::iterator itr = node->children.begin(); itr != node->children.end(); ++itr)
 	{
@@ -35,7 +37,7 @@ void XProfiler::deleteTree(Node *node)
 	delete node;
 }
 
-void XProfiler::push(const string &name)
+void Profiler::push(const string &name)
 {
 	if(m_enabled)
 	{
@@ -59,7 +61,7 @@ void XProfiler::push(const string &name)
 	}
 }
 
-void XProfiler::pop()
+void Profiler::pop()
 {
 	if(m_enabled)
 	{
@@ -69,7 +71,7 @@ void XProfiler::pop()
 	}
 }
 
-void XProfiler::sendStats(Node *node)
+void Profiler::sendStats(Node *node)
 {
 	// Calculate stuffs
 	stringstream ss;
@@ -91,7 +93,7 @@ void XProfiler::sendStats(Node *node)
 	delete node;
 }
 
-void XProfiler::enable()
+void Profiler::enable()
 {
 	// Toggle if its not enabled
 	if(!m_enabled)
@@ -100,7 +102,7 @@ void XProfiler::enable()
 	}
 }
 
-void XProfiler::disable()
+void Profiler::disable()
 {
 	// Toggle if its enabled
 	if(m_enabled)
@@ -109,12 +111,12 @@ void XProfiler::disable()
 	}
 }
 
-bool XProfiler::isEnabled() const
+bool Profiler::isEnabled() const
 {
 	return m_enabled;
 }
 
-void XProfiler::stepBegin()
+void Profiler::stepBegin()
 {
 	assert(m_currentNode == m_root);
 	
@@ -143,3 +145,5 @@ void XProfiler::stepBegin()
 	m_root = m_currentNode = new Node("Step");
 	m_root->startTime = m_timer->getElapsedTime();
 }
+
+END_XD_NAMESPACE

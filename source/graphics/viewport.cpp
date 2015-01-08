@@ -10,15 +10,19 @@
 #include <x2d/engine.h>
 #include <x2d/graphics.h>
 
-XViewport::XViewport(const Recti &view)
+BEGIN_XD_NAMESPACE
+
+Viewport::Viewport(const Recti &view)
 {
 }
 
-XViewport::XViewport(const int x, const int y, const int w, const int h)
+Viewport::Viewport(const int x, const int y, const int w, const int h)
 {
 }
 
-void XViewport::makeCurrent() const
+void Viewport::makeCurrent() const
 {
 	//Gfx::setViewport(this);
 }
+
+END_XD_NAMESPACE

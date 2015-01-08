@@ -4,8 +4,7 @@
 #include "../engine.h"
 #include "textureRegion.h"
 
-namespace xd
-{
+BEGIN_XD_NAMESPACE
 
 class Texture2D;
 class Shape;
@@ -73,6 +72,6 @@ private:
 	void getVertices(Vertex *vertices, uint *indices, const uint indexOffset = 0) const;
 };
 
-}
+END_XD_NAMESPACE
 
 #endif // X2D_SPRITE_H

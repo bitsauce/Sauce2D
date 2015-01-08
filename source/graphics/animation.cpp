@@ -10,8 +10,7 @@
 #include <x2d/engine.h>
 #include <x2d/graphics.h>
 
-namespace xd
-{
+BEGIN_XD_NAMESPACE
 
 Animation::Animation(const int nRows, const int nColumns)
 {
@@ -39,4 +38,4 @@ TextureRegion Animation::getKeyFrame(int frameIndex)
 	return m_textureRegions[frameIndex];
 }
 
-}
+END_XD_NAMESPACE

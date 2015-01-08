@@ -9,7 +9,9 @@
 
 #include <x2d/audio.h>
 
-XAudioBuffer::XAudioBuffer(void *data, uint size, uint frequency, Format format) :
+BEGIN_XD_NAMESPACE
+
+AudioBuffer::AudioBuffer(void *data, uint size, uint frequency, Format format) :
 	m_frequency(frequency),
 	m_format(format)
 {
@@ -18,27 +20,29 @@ XAudioBuffer::XAudioBuffer(void *data, uint size, uint frequency, Format format)
 	m_size = size;
 }
 
-XAudioBuffer::~XAudioBuffer()
+AudioBuffer::~AudioBuffer()
 {
 	delete m_data;
 }
 
-void *XAudioBuffer::getData() const
+void *AudioBuffer::getData() const
 {
 	return m_data;
 }
 
-uint XAudioBuffer::getSize() const
+uint AudioBuffer::getSize() const
 {
 	return m_size;
 }
 
-uint XAudioBuffer::getFrequency() const
+uint AudioBuffer::getFrequency() const
 {
 	return m_frequency;
 }
 
-XAudioBuffer::Format XAudioBuffer::getFormat() const
+AudioBuffer::Format AudioBuffer::getFormat() const
 {
 	return m_format;
 }
+
+END_XD_NAMESPACE

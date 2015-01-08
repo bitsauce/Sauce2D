@@ -9,9 +9,11 @@
 
 #include <x2d/audio.h>
 
-SINGLETON_DEF(XAudioManager)
+BEGIN_XD_NAMESPACE
 
-XAudioManager::XAudioManager()
+SINGLETON_DEF(AudioManager)
+
+AudioManager::AudioManager()
 {
 	SINGLETON_ASSERT
 
@@ -39,7 +41,7 @@ XAudioManager::XAudioManager()
 	//alListenerfv(AL_ORIENTATION, 0.0f, 0.0f, 1.0f);
 }
 
-XAudioManager::~XAudioManager()
+AudioManager::~AudioManager()
 {
 	// Get active context and device
 	ALCcontext *ctx = alcGetCurrentContext();
@@ -53,38 +55,40 @@ XAudioManager::~XAudioManager()
 	alcCloseDevice(device);
 }
 
-void XAudioManager::setPosition(const Vector2 &position)
+void AudioManager::setPosition(const Vector2 &position)
 {
 	alListener3f(AL_POSITION, position.x, position.y, 0.0f);
 }
 
-Vector2 XAudioManager::getPosition() const
+Vector2 AudioManager::getPosition() const
 {
 	Vector2 position(0.0f);
 	alGetListener3f(AL_POSITION, &position.x, &position.y, 0);
 	return position;
 }
 
-void XAudioManager::setVelocity(const Vector2 &velocity)
+void AudioManager::setVelocity(const Vector2 &velocity)
 {
 	alListener3f(AL_VELOCITY, velocity.x, velocity.y, 0.0f);
 }
 
-Vector2 XAudioManager::getVelocity() const
+Vector2 AudioManager::getVelocity() const
 {
 	Vector2 velocity(0.0f);
 	alGetListener3f(AL_VELOCITY, &velocity.x, &velocity.y, 0);
 	return velocity;
 }
 
-void XAudioManager::setOrientation(const Vector3 &axis)
+void AudioManager::setOrientation(const Vector3 &axis)
 {
 	//alListener3f(AL_ORIENTATION, axis.x, axis.y, axis.z);
 }
 
-Vector3 XAudioManager::getOrientation() const
+Vector3 AudioManager::getOrientation() const
 {
 	Vector3 axis(0.0f);
 	//alGetListener3f(AL_ORIENTATION, &axis.x, &axis.y, &axis.z);
 	return axis;
 }
+
+END_XD_NAMESPACE

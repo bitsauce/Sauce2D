@@ -3,7 +3,7 @@
 
 #include "../engine.h"
 
-namespace xd {
+BEGIN_XD_NAMESPACE
 
 class XDAPI BlendState
 {
@@ -42,6 +42,6 @@ private:
 	BlendFactor m_src, m_dst, m_alphaSrc, m_alphaDst;
 };
 
-}
+END_XD_NAMESPACE
 
 #endif // BLEND_STATE_H

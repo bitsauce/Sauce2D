@@ -10,8 +10,7 @@
 #include <x2d/engine.h>
 #include <x2d/graphics.h>
 
-namespace xd
-{
+BEGIN_XD_NAMESPACE
 
 TextureRegion::TextureRegion() :
 	uv0(0.0f),
@@ -65,4 +64,4 @@ void TextureRegion::setRegion(const float u0, const float v0, const float u1, co
 	uv1.set(u1, v1);
 }
 
-}
+END_XD_NAMESPACE

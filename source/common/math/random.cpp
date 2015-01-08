@@ -10,29 +10,31 @@
 
 #include <x2d/math.h>
 
-void XRandom::setSeed(uint32_t seed)
+BEGIN_XD_NAMESPACE
+
+void Random::setSeed(uint32_t seed)
 {
 	m_seed = seed;
 }
 
-double XRandom::nextDouble()
+double Random::nextDouble()
 {
 	// We have to cast to double because floats can only represent integers up to 2^23
 	return nextInt() / 4294967295.0; // 2^32 - 1
 }
 
-double XRandom::nextDouble(double max)
+double Random::nextDouble(double max)
 {
 	return nextDouble() * max;
 }
 
-double XRandom::nextDouble(double min, double max)
+double Random::nextDouble(double min, double max)
 {
 	double t = nextDouble();
 	return (1.0f-t)*min + t*max;
 }
 
-uint32_t XRandom::nextInt()
+uint32_t Random::nextInt()
 {
 	m_seed ^= m_seed << 13;
 	m_seed ^= m_seed >> 17;
@@ -40,32 +42,34 @@ uint32_t XRandom::nextInt()
 	return m_seed * 314159265;
 }
 
-uint32_t XRandom::nextInt(uint32_t max)
+uint32_t Random::nextInt(uint32_t max)
 {
 	return nextInt() % (max+1);
 }
 
-uint32_t XRandom::nextInt(uint32_t min, uint32_t max)
+uint32_t Random::nextInt(uint32_t min, uint32_t max)
 {
 	if(min > max)
 		return nextInt() % (min-max+1) + max;
 	return nextInt() % (max-min+1) + min;
 }
 
-bool XRandom::chance(uint a, uint b)
+bool Random::chance(uint a, uint b)
 {
 	return nextDouble() < (float)a/(float)b;
 }
 
-double XRandom::getDouble(uint32_t offset) const
+double Random::getDouble(uint32_t offset) const
 {
 	return getInt(offset) / 4294967295.0; // 2^32 - 1
 }
 
-uint32_t XRandom::getInt(uint32_t offset) const
+uint32_t Random::getInt(uint32_t offset) const
 {
 	offset ^= offset << 13;
 	offset ^= offset >> 17;
 	offset ^= offset << 5;
 	return offset * 314159265;
 }
+
+END_XD_NAMESPACE

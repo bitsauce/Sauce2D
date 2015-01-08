@@ -23,8 +23,7 @@
 **	Graphics class [static]											**
 **********************************************************************/
 
-namespace xd
-{
+BEGIN_XD_NAMESPACE
 
 XDAPI extern uint QUAD_INDICES[6];
 XDAPI extern Vector4 QUAD_VERTICES[4];
@@ -32,8 +31,8 @@ XDAPI extern Vector2 QUAD_TEXCOORD[4];
 
 class XDAPI Graphics
 {
-	friend class XEngine;
-	friend class XWindow;
+	friend class Engine;
+	friend class Window;
 
 public:
 
@@ -82,6 +81,6 @@ protected:
 	static GraphicsContext s_graphicsContext;
 };
 
-}
+END_XD_NAMESPACE
 
 #endif // X2D_GRAPHICS_H

@@ -3,8 +3,7 @@
 
 #include "../engine.h"
 
-namespace xd
-{
+BEGIN_XD_NAMESPACE
 
 // Pixel formats
 enum PixelFormat
@@ -51,6 +50,6 @@ private:
 	uint m_pixelSize;
 };
 
-}
+END_XD_NAMESPACE
 
 #endif // X2D_PIXMAP_H

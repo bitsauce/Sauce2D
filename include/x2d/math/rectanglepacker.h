@@ -6,8 +6,7 @@
 #include "vector.h"
 #include "rect.h"
 
-namespace xd
-{
+BEGIN_XD_NAMESPACE
 
 class XDAPI RectanglePacker
 {
@@ -90,6 +89,6 @@ private:
 	int m_maxWidth;
 };
 
-}
+END_XD_NAMESPACE
 
 #endif // X2D_RECTANGLE_PACKER_H

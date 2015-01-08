@@ -5,7 +5,7 @@
 #include "shader.h"
 #include "blendState.h"
 
-namespace xd {
+BEGIN_XD_NAMESPACE
 
 class RenderTarget2D;
 class Vertex;
@@ -119,6 +119,6 @@ private:
 	stack<Matrix4> m_matrixStack;
 };
 
-}
+END_XD_NAMESPACE
 
 #endif // GRAPHICS_CONTEXT_H

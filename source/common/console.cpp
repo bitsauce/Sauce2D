@@ -9,28 +9,30 @@
 
 #include <x2d/engine.h>
 
-SINGLETON_DEF(XConsole)
+BEGIN_XD_NAMESPACE
 
-bool XConsole::s_initialized = false;
+SINGLETON_DEF(Console)
 
-XConsole::XConsole() :
+bool Console::s_initialized = false;
+
+Console::Console() :
 	m_engine(0), // Set by the engine
 	m_output(0)
 {
 	SINGLETON_ASSERT
 }
 
-XConsole::~XConsole()
+Console::~Console()
 {
 	delete m_output;
 }
 
-void XConsole::log(const string &msg)
+void Console::log(const string &msg)
 {
 	Log(msg.c_str());
 }
 
-void XConsole::call_log(const char *msg, va_list args)
+void Console::call_log(const char *msg, va_list args)
 {
 	// Get string length
 	int size = _vscprintf(msg, args) + 1;
@@ -53,17 +55,11 @@ void XConsole::call_log(const char *msg, va_list args)
 #endif
 	
 	// Append message to log file
-	if(XEngine::isEnabled(XD_EXPORT_LOG))
+	if(Engine::isEnabled(XD_EXPORT_LOG))
 	{
 		m_output->append(out);
 		m_output->append("\n");
 		m_output->flush();
-	}
-
-	// Send message to debugger
-	//if(m_engine->getDebugger())
-	{
-		//m_engine->getDebugger()->sendPacket(XD_MESSAGE_PACKET, out);
 	}
 
 	// Append to console buffer
@@ -87,7 +83,7 @@ void XConsole::call_log(const char *msg, va_list args)
 	delete newMsg;
 #endif
 
-void XConsole::Log(const char *msg, ...)
+void Console::Log(const char *msg, ...)
 {
 	// Get argument lists
 	va_list args;
@@ -98,34 +94,36 @@ void XConsole::Log(const char *msg, ...)
 	va_end(args);
 }
 
-string XConsole::getLog() const
+string Console::getLog() const
 {
 	return m_log;
 }
 
-void XConsole::clear()
+void Console::clear()
 {
 	m_log.clear();
 }
 
-void XConsole::exportFile() const
+void Console::exportFile() const
 {
-	XFileSystem::WriteFile(":/console.log", m_log);
+	FileSystem::WriteFile(":/console.log", m_log);
 }
 
-string XConsole::readBuffer()
+string Console::readBuffer()
 {
 	string buffer = m_buffer;
 	m_buffer.clear();
 	return buffer;
 }
 
-bool XConsole::hasBuffer() const
+bool Console::hasBuffer() const
 {
 	return m_buffer.size() > 0;
 }
 
-void XConsole::clearBuffer()
+void Console::clearBuffer()
 {
 	m_buffer.clear();
 }
+
+END_XD_NAMESPACE

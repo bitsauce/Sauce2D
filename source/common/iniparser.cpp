@@ -9,7 +9,9 @@
 
 #include <x2d/engine.h>
 
-XIniFile::XIniFile(string path) :
+BEGIN_XD_NAMESPACE
+
+IniFile::IniFile(string path) :
 	m_path(path)
 {
 	util::toAbsoluteFilePath(path);
@@ -17,7 +19,7 @@ XIniFile::XIniFile(string path) :
 	if(!util::fileExists(path))
 		return;
 
-	XFileReader *reader = new XFileReader(path);
+	FileReader *reader = new FileReader(path);
 
 	string comment, sectionName;
 	while(!reader->isEOF())
@@ -54,7 +56,7 @@ XIniFile::XIniFile(string path) :
 	delete reader;
 }
 
-string XIniFile::getValue(const string &sec, const string &key) const
+string IniFile::getValue(const string &sec, const string &key) const
 {
 	if(isSection(sec))
 	{
@@ -67,18 +69,18 @@ string XIniFile::getValue(const string &sec, const string &key) const
 	return "";
 }
 
-void XIniFile::setValue(const string &sec, const string &key, const string &value)
+void IniFile::setValue(const string &sec, const string &key, const string &value)
 {
 	Section &section = m_sections[sec];
 	section.keys[key].value = value;
 }
 
-bool XIniFile::isSection(const string &sec) const
+bool IniFile::isSection(const string &sec) const
 {
 	return m_sections.find(sec) != m_sections.end();
 }
 
-void XIniFile::save()
+void IniFile::save()
 {
 	stringstream out;
 	for(map<string, Section>::iterator sectionItr = m_sections.begin(); sectionItr != m_sections.end(); ++sectionItr)
@@ -100,5 +102,7 @@ void XIniFile::save()
 		out << endl;
 	}
 	
-	XFileSystem::WriteFile(m_path, out.str());
+	FileSystem::WriteFile(m_path, out.str());
 }
+
+END_XD_NAMESPACE

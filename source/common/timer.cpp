@@ -9,7 +9,9 @@
 
 #include <x2d/engine.h>
 
-XTimer::XTimer() :
+BEGIN_XD_NAMESPACE
+
+Timer::Timer() :
 	m_ticksPerSec(CLOCKS_PER_SEC),
 	m_running(false)
 {
@@ -17,24 +19,24 @@ XTimer::XTimer() :
 	m_start.QuadPart = m_end.QuadPart = 0;
 }
 
-long XTimer::getTickCount() const
+long Timer::getTickCount() const
 {
 	return clock();
 }
 
-void XTimer::start()
+void Timer::start()
 {
 	m_running = true;
 	QueryPerformanceCounter(&m_start);
 }
 
-void XTimer::stop()
+void Timer::stop()
 {
 	QueryPerformanceCounter(&m_end);
 	m_running = false;
 }
 
-float XTimer::getElapsedTime() const
+float Timer::getElapsedTime() const
 {
 	LARGE_INTEGER end = m_end;
     if(m_running)
@@ -46,3 +48,5 @@ float XTimer::getElapsedTime() const
 	float endTime = end.QuadPart * (1000.0f / m_frequency.QuadPart);
     return endTime - startTime;
 }
+
+END_XD_NAMESPACE

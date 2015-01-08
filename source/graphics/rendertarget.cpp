@@ -10,7 +10,7 @@
 #include <x2d/engine.h>
 #include <x2d/graphics.h>
 
-namespace xd {
+BEGIN_XD_NAMESPACE
 
 RenderTarget2D::RenderTarget2D(const uint width, const uint height, const uint count, const PixelFormat fmt) :
 	m_width(width),
@@ -53,4 +53,4 @@ void RenderTarget2D::unbind()
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 }
 
-}
+END_XD_NAMESPACE

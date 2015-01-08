@@ -4,8 +4,7 @@
 #include "../engine.h"
 #include "texture.h"
 
-namespace xd
-{
+BEGIN_XD_NAMESPACE
 
 class XDAPI TextureRegion
 {
@@ -28,6 +27,6 @@ public:
 	Vector2 uv1;
 };
 
-}
+END_XD_NAMESPACE
 
 #endif // X2D_TEXTURE_REGION_H

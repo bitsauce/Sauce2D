@@ -1,6 +1,6 @@
 #include <x2d/graphics.h>
 
-namespace xd {
+BEGIN_XD_NAMESPACE
 
 GraphicsContext::GraphicsContext() :
 	m_width(0),
@@ -56,7 +56,7 @@ void GraphicsContext::setRenderTarget(RenderTarget2D *renderTarget)
 			m_renderTarget = nullptr;
 
 			// Reset viewport
-			resizeViewport(XWindow::getSize().x, XWindow::getSize().y);
+			resizeViewport(Window::getSize().x, Window::getSize().y);
 		}
 	}
 }
@@ -502,4 +502,4 @@ void GraphicsContext::drawCircle(const Vector2 &center, const float radius, cons
 	drawCircle(center.x, center.y, radius, segments, color);
 }
 
-}
+END_XD_NAMESPACE

@@ -3,8 +3,7 @@
 
 #include "../engine.h"
 
-namespace xd
-{
+BEGIN_XD_NAMESPACE
 
 class Texture2D;
 
@@ -45,6 +44,6 @@ private:
 	int m_index;
 };
 
-}
+END_XD_NAMESPACE
 
 #endif // X2D_SHAPE_H

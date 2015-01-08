@@ -3,10 +3,12 @@
 
 #include "engine.h"
 
-class XDAPI XIniFile
+BEGIN_XD_NAMESPACE
+
+class XDAPI IniFile
 {
 public:
-	XIniFile(string path);
+	IniFile(string path);
 
 	string getValue(const string &section, const string &key) const;
 	void setValue(const string &section, const string &key, const string &value);
@@ -32,5 +34,7 @@ private:
 	map<string, Section> m_sections;
 	string m_path;
 };
+
+END_XD_NAMESPACE
 
 #endif // X2D_INI_PARSER_H

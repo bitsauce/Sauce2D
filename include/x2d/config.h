@@ -82,6 +82,7 @@
 	#include <map>
 #endif
 
+
 /*********************************************************************
 **	Enable STL namespace											**
 **********************************************************************/
@@ -96,10 +97,15 @@ typedef uintptr_t uintptr;
 typedef unsigned char uchar;
 typedef unsigned long ulong;
 
+#define BEGIN_XD_NAMESPACE namespace xd {
+#define END_XD_NAMESPACE }
+
+BEGIN_XD_NAMESPACE
+
 /*********************************************************************
 **	Engine return codes												**
 **********************************************************************/
-enum XRetCode
+enum RetCode
 {
 	X2D_OK						= 0,
 	X2D_COMPILE_FAILED			= -1,
@@ -114,7 +120,7 @@ enum XRetCode
 /*********************************************************************
 **	Engine run flags												**
 **********************************************************************/
-enum XEngineFlag
+enum EngineFlag
 {
 	XD_EXPORT_LOG		=	1 << 0,
 	XD_SHOW_WARININGS	=	1 << 1
@@ -123,7 +129,7 @@ enum XEngineFlag
 /*********************************************************************
 **	Message types													**
 **********************************************************************/
-enum XMessageType
+enum MessageType
 {
 	X2D_INFO_MSG,
 	X2D_WARN_MSG,
@@ -162,6 +168,8 @@ namespace util
 	XDAPI void toAbsoluteFilePath(string &assetPath);
 	XDAPI void toDirectoryPath(string &path);
 }
+
+END_XD_NAMESPACE
 
 /*********************************************************************
 **	Macros															**

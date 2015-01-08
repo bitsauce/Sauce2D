@@ -9,16 +9,18 @@
 
 #include <x2d/engine.h>
 
+BEGIN_XD_NAMESPACE
+
 // TODO: Refactor. This class is a mess
-map<XVirtualKey, XInput::KeyBind> XInput::s_keyBindings;
-vector<xd::KeyboardListener*> XInput::s_keyListeners;
+map<VirtualKey, Input::KeyBind> Input::s_keyBindings;
+vector<xd::KeyboardListener*> Input::s_keyListeners;
 	
-map<XMouseButton, bool> XInput::s_mousePressed;
-vector<xd::MouseListener*> XInput::s_mouseListeners;
+map<MouseButton, bool> Input::s_mousePressed;
+vector<xd::MouseListener*> Input::s_mouseListeners;
 
-Vector2 XInput::s_position;
+Vector2 Input::s_position;
 
-XVirtualKey fromWinKey(uchar vk)
+VirtualKey fromWinKey(uchar vk)
 {
 	switch(vk)
 	{
@@ -73,11 +75,11 @@ XVirtualKey fromWinKey(uchar vk)
 	//case XD_KEY_GREATER: return VK_OEM; break;
 	//case XD_KEY_LESS: return ; break;
 	//case XD_KEY_EQUALS: return VK_; break;
-	default: return XVirtualKey(vk);
+	default: return VirtualKey(vk);
 	}
 }
 
-uchar toWinKey(XVirtualKey key)
+uchar toWinKey(VirtualKey key)
 {
 	uchar vk = 0;
 	switch(key)
@@ -152,12 +154,12 @@ uchar toWinKey(XVirtualKey key)
 	return vk;
 }
 
-/*XInput::init()
+/*Input::init()
 {
 	s_mousePressed[XD_MOUSE_LEFT] = s_mousePressed[XD_MOUSE_RIGHT] = s_mousePressed[XD_MOUSE_MIDDLE] = true;
 }
 
-XInput::~XInput()
+Input::~Input()
 {
 	for(map<XVirtualKey, KeyBind>::iterator itr = m_keyBindings.begin(); itr != m_keyBindings.end(); ++itr)
 	{
@@ -178,7 +180,7 @@ XInput::~XInput()
 	}
 }*/
 
-void XInput::bind(const XVirtualKey key, function<void()> function)
+void Input::bind(const VirtualKey key, function<void()> function)
 {
 	if(function)
 	{
@@ -193,17 +195,17 @@ void XInput::bind(const XVirtualKey key, function<void()> function)
 	}
 }
 
-void XInput::unbind(const XVirtualKey key)
+void Input::unbind(const VirtualKey key)
 {
 	bind(key, function<void()>());
 }
 
-void XInput::resetBindings()
+void Input::resetBindings()
 {
 	s_keyBindings.clear();
 }
 
-void XInput::addKeyboardListener(xd::KeyboardListener *object)
+void Input::addKeyboardListener(xd::KeyboardListener *object)
 {
 	// Add keyboard listener
 	if(object)
@@ -212,7 +214,7 @@ void XInput::addKeyboardListener(xd::KeyboardListener *object)
 	}
 }
 
-void XInput::charEvent(const wchar_t c)
+void Input::charEvent(const wchar_t c)
 {
 	for(vector<xd::KeyboardListener*>::iterator itr = s_keyListeners.begin(); itr != s_keyListeners.end(); ++itr)
 	{
@@ -220,7 +222,7 @@ void XInput::charEvent(const wchar_t c)
 	}
 }
 
-void XInput::keyPressed(const XVirtualKey key)
+void Input::keyPressed(const VirtualKey key)
 {
 	for(vector<xd::KeyboardListener*>::iterator itr = s_keyListeners.begin(); itr != s_keyListeners.end(); ++itr)
 	{
@@ -228,7 +230,7 @@ void XInput::keyPressed(const XVirtualKey key)
 	}
 }
 
-void XInput::keyReleased(const XVirtualKey key)
+void Input::keyReleased(const VirtualKey key)
 {
 	for(vector<xd::KeyboardListener*>::iterator itr = s_keyListeners.begin(); itr != s_keyListeners.end(); ++itr)
 	{
@@ -236,7 +238,7 @@ void XInput::keyReleased(const XVirtualKey key)
 	}
 }
 
-void XInput::addMouseListener(xd::MouseListener *object)
+void Input::addMouseListener(xd::MouseListener *object)
 {
 	// Add keyboard listener
 	if(object) {
@@ -244,7 +246,7 @@ void XInput::addMouseListener(xd::MouseListener *object)
 	}
 }
 
-void XInput::mouseScroll(const int dt)
+void Input::mouseScroll(const int dt)
 {
 	for(vector<xd::MouseListener*>::iterator itr = s_mouseListeners.begin(); itr != s_mouseListeners.end(); ++itr)
 	{
@@ -252,10 +254,10 @@ void XInput::mouseScroll(const int dt)
 	}
 }
 
-void XInput::checkBindings()
+void Input::checkBindings()
 {
 	// Iterate key bindings
-	for(map<XVirtualKey, KeyBind>::iterator itr = s_keyBindings.begin(); itr != s_keyBindings.end(); ++itr)
+	for(map<VirtualKey, KeyBind>::iterator itr = s_keyBindings.begin(); itr != s_keyBindings.end(); ++itr)
 	{
 		KeyBind &key = itr->second;
 		if(getKeyState(itr->first))
@@ -274,19 +276,19 @@ void XInput::checkBindings()
 	}
 }
 
-Vector2i XInput::getCursorPos()
+Vector2i Input::getCursorPos()
 {
 	POINT p;
 	GetCursorPos(&p);
 	return Vector2i(p.x, p.y);
 }
 
-void XInput::setCursorPos(const Vector2i &pos)
+void Input::setCursorPos(const Vector2i &pos)
 {
 	SetCursorPos(pos.x, pos.y);
 }
 
-void XInput::setCursorLimits(const Recti &area)
+void Input::setCursorLimits(const Recti &area)
 {
 	RECT rect;
 	rect.top    = (long)(area.getY());
@@ -296,12 +298,14 @@ void XInput::setCursorLimits(const Recti &area)
 	ClipCursor(&rect);
 }
 
-Vector2 XInput::getPosition()
+Vector2 Input::getPosition()
 {
 	return s_position;
 }
 
-bool XInput::getKeyState(const XVirtualKey key)
+bool Input::getKeyState(const VirtualKey key)
 {
 	return /*Window::hasFocus() &&*/ (GetKeyState(toWinKey(key)) & 0x80) != 0;
 }
+
+END_XD_NAMESPACE

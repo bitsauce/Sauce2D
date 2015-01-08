@@ -10,7 +10,7 @@
 #include <x2d/engine.h>
 #include <x2d/graphics.h>
 
-namespace xd {
+BEGIN_XD_NAMESPACE
 
 /*********************************************************************
 **	Vertex format													**
@@ -349,4 +349,4 @@ void Vertex::print()
 	}
 }
 
-}
+END_XD_NAMESPACE

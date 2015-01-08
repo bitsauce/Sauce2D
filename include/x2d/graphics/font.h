@@ -3,8 +3,7 @@
 
 #include "../engine.h"
 
-namespace xd
-{
+BEGIN_XD_NAMESPACE
 
 struct Color;
 class TextureAtlas;
@@ -67,6 +66,6 @@ private:
 
 template XDAPI class shared_ptr<Font>;
 
-}
+END_XD_NAMESPACE
 
 #endif // X2D_FONT_H

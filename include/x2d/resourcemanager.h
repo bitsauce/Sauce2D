@@ -7,8 +7,7 @@
 **	Resource manager												**
 **********************************************************************/
 
-namespace xd
-{
+BEGIN_XD_NAMESPACE
 
 // Image formats
 /*enum XImageFormat
@@ -50,6 +49,6 @@ private:
 	static map<string, void*> s_resources;
 };
 
-}
+END_XD_NAMESPACE
 
 #endif // X2D_RESOURCE_MANAGER_H

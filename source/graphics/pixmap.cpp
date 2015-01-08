@@ -10,7 +10,7 @@
 #include <x2d/engine.h>
 #include <x2d/graphics.h>
 
-namespace xd {
+BEGIN_XD_NAMESPACE
 
 size_t getPixelFormatSize(const PixelFormat format)
 {
@@ -166,4 +166,4 @@ void Pixmap::exportToFile(const string &path) const
 	//XAssetManager::SavePixmap(path, (uchar*)m_data, m_width, m_height);
 }
 
-}
+END_XD_NAMESPACE

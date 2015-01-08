@@ -14,8 +14,7 @@
 
 // TDOD: Add a border option to the texture atlas (usefull for fixing font bleeding)
 
-namespace xd
-{
+BEGIN_XD_NAMESPACE
 
 TextureAtlas::TextureAtlas() :
 	m_border(1),
@@ -156,4 +155,4 @@ void TextureAtlas::update()
 	m_texture->updatePixmap(Pixmap(ATLAS_SIZE, ATLAS_SIZE, pixels));
 }
 
-}
+END_XD_NAMESPACE

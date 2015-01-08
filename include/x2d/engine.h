@@ -6,7 +6,9 @@
 #include "resourcemanager.h"
 #include "iniparser.h"
 
-#define LOG(str, ...) XConsole::Log(str, __VA_ARGS__)
+BEGIN_XD_NAMESPACE
+
+#define LOG(str, ...) Console::Log(str, __VA_ARGS__)
 
 #define NOT_IMPLEMENTED(func)			LOG("%s does not have a implementation.", #func);
 #define NOT_IMPLEMENTED_RET(func, ret)	LOG("%s does not have a implementation.", #func); return ret;
@@ -15,22 +17,21 @@
 **	Game console													**
 **********************************************************************/
 
-class XFileSystem;
-class XFileReader;
-class XFileWriter;
-class XDebugger;
-class XAudioManager;
+class FileSystem;
+class FileReader;
+class FileWriter;
+class AudioManager;
 class Graphics;
 
-class XDAPI XConsole
+class XDAPI Console
 {
-	friend class XEngine;
+	friend class Engine;
 
-	SINGLETON_DECL(XConsole);
+	SINGLETON_DECL(Console);
 
 public:
-	XConsole();
-	~XConsole();
+	Console();
+	~Console();
 
 	void log(const string &msg);
 	void logf(const char *msg, ...);
@@ -51,8 +52,8 @@ private:
 	string m_log;
 	string m_buffer;
 	
-	XEngine *m_engine;
-	XFileWriter *m_output;
+	Engine *m_engine;
+	FileWriter *m_output;
 	
 	static bool s_initialized;
 };
@@ -60,10 +61,10 @@ private:
 /*********************************************************************
 **	Event handler													**
 **********************************************************************/
-class XDAPI XTimer
+class XDAPI Timer
 {
 public:
-	XTimer();
+	Timer();
 	
 	// High-resolution timing
 	void  start();
@@ -86,7 +87,7 @@ private:
 /*********************************************************************
 **	Event handler													**
 **********************************************************************/
-class XDAPI XEventHandler
+class XDAPI EventHandler
 {
 	virtual void processEvents() = 0;
 };
@@ -94,7 +95,7 @@ class XDAPI XEventHandler
 /*********************************************************************
 **	Thread manager													**
 **********************************************************************/
-class XThreadManager
+class XDAPI ThreadManager
 {
 public:
 	virtual void setupThread() = 0;
@@ -104,11 +105,11 @@ public:
 /*********************************************************************
 **	File reader class												**
 **********************************************************************/
-class XDAPI XFileReader
+class XDAPI FileReader
 {
 public:
-	XFileReader(const string &path);
-	~XFileReader();
+	FileReader(const string &path);
+	~FileReader();
 
 	bool isOpen();
 	bool isEOF();
@@ -124,11 +125,11 @@ private:
 /*********************************************************************
 **	File writer class												**
 **********************************************************************/
-class XDAPI XFileWriter
+class XDAPI FileWriter
 {
 public:
-	XFileWriter(const string &path);
-	~XFileWriter();
+	FileWriter(const string &path);
+	~FileWriter();
 
 	bool isOpen();
 	void close();
@@ -139,18 +140,16 @@ public:
 	void flush();
 	
     // define an operator<< to take in std::endl
-    XFileWriter &operator<<(basic_ostream<char, std::char_traits<char> >& (*fp)(basic_ostream<char, std::char_traits<char> >&)) { stream << fp; return *this; }
+    FileWriter &operator<<(basic_ostream<char, std::char_traits<char> >& (*fp)(basic_ostream<char, std::char_traits<char> >&)) { stream << fp; return *this; }
 
 	bool operator!() const { return !stream; }
-	XFileWriter &operator<<(int i) { stream << i; return *this; }
-	XFileWriter &operator<<(char c) { stream << c; return *this; }
+	FileWriter &operator<<(int i) { stream << i; return *this; }
+	FileWriter &operator<<(char c) { stream << c; return *this; }
 
 private:
 	ofstream stream;
 };
 
-namespace xd
-{
 /*********************************************************************
 **	File writer class												**
 **********************************************************************/
@@ -175,16 +174,16 @@ private:
 	vector<string> m_files;
 	vector<string>::iterator m_itr;
 };
-}
+
 
 /*********************************************************************
 **	File system class												**
 **********************************************************************/
-class XDAPI XFileSystem
+class XDAPI FileSystem
 {
-	friend class XEngine;
+	friend class Engine;
 
-	SINGLETON_DECL(XFileSystem)
+	SINGLETON_DECL(FileSystem)
 public:
 	// File buffers
 	bool readFile(string filePath, string &conent) const;
@@ -193,9 +192,9 @@ public:
 	// OS specifics
 	bool fileExists(string &filePath) const;
 	// NOTE TO SELF: I might want to consider making a DirectoryIterator instead of using this function
-	//virtual XScriptArray *listFiles(string &directory, const string &mask, const bool recursive) const		{ NOT_IMPLEMENTED_RET(listFiles, 0) }			// Optional
+	//virtual XScriptArray *listFiles(string &directory, const string &mask, const bool recursive) const	{ NOT_IMPLEMENTED_RET(listFiles, 0) }			// Optional
 	//virtual XScriptArray *listFolders(string &directory, const string &mask, const bool recursive) const	{ NOT_IMPLEMENTED_RET(listFolders, 0) }			// Optional
-	bool remove(string &path)																		{ NOT_IMPLEMENTED_RET(remove, false) }			// Optional
+	bool remove(string &path)																				{ NOT_IMPLEMENTED_RET(remove, false) }			// Optional
 
 	// System windows
 	string showSaveDialog(const string &file, const string &ext, const string &title, const string &folder) const	{ NOT_IMPLEMENTED_RET(showSaveDialog, "") }				// Optional
@@ -215,7 +214,7 @@ protected:
 **********************************************************************/
 
 // Mouse buttons
-enum XMouseButton
+enum MouseButton
 {
 	XD_MOUSE_LEFT,
 	XD_MOUSE_MIDDLE,
@@ -223,7 +222,7 @@ enum XMouseButton
 };
 
 // Virtual keys
-enum XVirtualKey
+enum VirtualKey
 {
 	// Standard ASCII-Mapped keys
 	XD_KEY_NULL = 0x00,
@@ -348,13 +347,11 @@ enum XVirtualKey
 	XD_KEY_EQUALS
 };
 
-namespace xd
-{
 class XDAPI KeyboardListener
 {
 public:
-	virtual void keyPressEvent(const XVirtualKey key) { }
-	virtual void keyReleaseEvent(const XVirtualKey key) { }
+	virtual void keyPressEvent(const VirtualKey key) { }
+	virtual void keyReleaseEvent(const VirtualKey key) { }
 	virtual void charEvent(const wchar_t c) { }
 };
 
@@ -363,12 +360,10 @@ class XDAPI MouseListener
 public:
 	virtual void mouseWheelEvent(const int dt) { }
 };
-}
 
-class XDAPI XInput
+class XDAPI Input
 {
-	friend class XWindow;
-
+	friend class Window;
 public:
 	// Desktop cursor functions
 	static void     setCursorPos(const Vector2i &pos);
@@ -376,26 +371,26 @@ public:
 	static void     setCursorLimits(const Recti &area);
 
 	// Key state function
-	static bool getKeyState(const XVirtualKey key);
+	static bool getKeyState(const VirtualKey key);
 
 	// General position
 	static Vector2 getPosition();
 
 	// Key binding
-	static void bind(const XVirtualKey key, function<void()> function);
-	static void unbind(const XVirtualKey key);
+	static void bind(const VirtualKey key, function<void()> function);
+	static void unbind(const VirtualKey key);
 	static void resetBindings();
 	static void updateBindings();
 	static void checkBindings();
 
 	// Keyboard listener
-	static void addKeyboardListener(xd::KeyboardListener *object);
+	static void addKeyboardListener(KeyboardListener *object);
 	static void charEvent(const wchar_t c);
-	static void keyPressed(const XVirtualKey key);
-	static void keyReleased(const XVirtualKey key);
+	static void keyPressed(const VirtualKey key);
+	static void keyReleased(const VirtualKey key);
 
 	// Mouse listener
-	static void addMouseListener(xd::MouseListener *object);
+	static void addMouseListener(MouseListener *object);
 	//static void mouseClick(const XMouseButton btn); // This doesn't make any sence unless we specify a click-rectangle
 	static void mouseScroll(const int dt);
 
@@ -413,27 +408,26 @@ private:
 	};
 
 	// Keyboard listener
-	static map<XVirtualKey, KeyBind> s_keyBindings;
-	static vector<xd::KeyboardListener*> s_keyListeners;
+	static map<VirtualKey, KeyBind> s_keyBindings;
+	static vector<KeyboardListener*> s_keyListeners;
 
 	// Mouse listener
-	static map<XMouseButton, bool> s_mousePressed;
-	static vector<xd::MouseListener*> s_mouseListeners;
+	static map<MouseButton, bool> s_mousePressed;
+	static vector<MouseListener*> s_mouseListeners;
 
 	// Cursor position
 	static Vector2 s_position;
 };
 
-extern XVirtualKey fromWinKey(uchar key);
-extern uchar toWinKey(XVirtualKey key);
+extern VirtualKey fromWinKey(uchar key);
+extern uchar toWinKey(VirtualKey key);
 
 /*********************************************************************
 **	Scene interface													**
 **********************************************************************/
-
-class XScene
+class XDAPI Scene
 {
-	friend class XEngine;
+	friend class Engine;
 private:
 	virtual void showEvent() {}
 	virtual void hideEvent() {}
@@ -450,10 +444,9 @@ private:
 /*********************************************************************
 **	Profiler														**
 **********************************************************************/
-class XDAPI XProfiler
+class XDAPI Profiler
 {
-	friend class XDebugger;
-	friend class XEngine;
+	friend class Engine;
 
 	struct Node
 	{
@@ -479,8 +472,8 @@ class XDAPI XProfiler
 	};
 
 public:
-	XProfiler();
-	virtual ~XProfiler();
+	Profiler();
+	virtual ~Profiler();
 
 	void deleteTree(Node *node);
 
@@ -497,8 +490,7 @@ public:
 private:
 	Node *m_root;
 	Node *m_currentNode;
-	XDebugger *m_debugger;
-	XTimer *m_timer;
+	Timer *m_timer;
 	uint m_samples;
 	bool m_enabled;
 	bool m_toggle;
@@ -507,12 +499,9 @@ private:
 /*********************************************************************
 **	Window class													**
 **********************************************************************/
-
-namespace xd
-{
 class WindowListener
 {
-	friend class ::XWindow;
+	friend class Window;
 protected:
 	virtual void resizeEvent(uint width, uint height) {}
 	virtual void moveEvent(uint x, uint y) {}
@@ -521,11 +510,10 @@ protected:
 
 class Graphics;
 class GraphicsContext;
-}
 
-class XDAPI XWindow
+class XDAPI Window
 {
-	friend class xd::Graphics;
+	friend class Graphics;
 public:
 	static void processEvents();
 	static void processEvents(UINT Message, WPARAM wParam, LPARAM lParam);
@@ -550,8 +538,8 @@ public:
 	static void maximize();
 	static void restore();
 
-	static void addWindowListener(xd::WindowListener *listener);
-	static void removeWindowListener(xd::WindowListener *listener);
+	static void addWindowListener(WindowListener *listener);
+	static void removeWindowListener(WindowListener *listener);
 
 private:
 	// The window handle
@@ -576,10 +564,10 @@ private:
 	static bool s_fullscreen;
 
 	// Windows graphics device
-	static xd::GraphicsContext *s_graphicsContext;
+	static GraphicsContext *s_graphicsContext;
 
 	// Window listeners
-	static list<xd::WindowListener*> s_windowListeners;
+	static list<WindowListener*> s_windowListeners;
 	
 	// Window procedure callback
 	static LRESULT CALLBACK OnEvent(HWND Handle, UINT Message, WPARAM wParam, LPARAM lParam);
@@ -588,16 +576,16 @@ private:
 /*********************************************************************
 **	Exception class													**
 **********************************************************************/
-class XException
+class XDAPI Exception
 {
 public:
-	XException(XRetCode code, string msg) :
+	Exception(RetCode code, string msg) :
 		m_errorCode(code),
 		m_message(msg)
 	{
 	}
 
-	XRetCode errorCode() const
+	RetCode errorCode() const
 	{
 		return m_errorCode;
 	}
@@ -609,15 +597,15 @@ public:
 
 private:
 	string m_message;
-	XRetCode m_errorCode;
+	RetCode m_errorCode;
 };
 
 /*********************************************************************
 **	Engine config													**
 **********************************************************************/
-struct XDAPI XConfig
+struct XDAPI Config
 {
-	XConfig();
+	Config();
 
 	// Engine running flags (optional)
 	int				flags;
@@ -627,20 +615,20 @@ struct XDAPI XConfig
 
 	// Game loop functions
 	function<void()> update, main, stepBegin, stepEnd, end;
-	function<void(xd::GraphicsContext &)> draw;
+	function<void(GraphicsContext&)> draw;
 };
 
 /*********************************************************************
 **	Game engine														**
 **********************************************************************/
-class XDAPI XEngine
+class XDAPI Engine
 {
 public:
-	XEngine();
-	~XEngine();
+	Engine();
+	~Engine();
 
 	// Initialize the engine
-	int init(const XConfig &config);
+	int init(const Config &config);
 
 	// Run game
 	int run();
@@ -654,14 +642,14 @@ public:
 	//virtual void exception(const xdRetCode) = 0;
 
 	// Scene
-	static void pushScene(XScene *scene);
+	static void pushScene(Scene *scene);
 	static void popScene();
 
 	// Exceptions
-	void exception(XRetCode errorCode, const char* message);
+	void exception(RetCode errorCode, const char* message);
 
 	// Static functions
-	static bool isEnabled(const XEngineFlag flag) { return (s_flags & flag) != 0; }
+	static bool isEnabled(const EngineFlag flag) { return (s_flags & flag) != 0; }
 	static string getWorkingDirectory() { return s_workDir; }
 	static string getSaveDirectory() { return s_saveDir; }
 
@@ -678,28 +666,29 @@ private:
 	static string s_saveDir;
 
 	// Scene swap
-	static XScene *s_showScene;
-	static XScene *s_hideScene;
+	static Scene *s_showScene;
+	static Scene *s_hideScene;
 	
-	XFileSystem*	m_fileSystem;
-	xd::Graphics*	m_graphics;
-	XAudioManager*	m_audio;
-	XTimer*			m_timer;
-	XConsole*		m_console;
-	XMath*			m_math;
+	FileSystem		*m_fileSystem;
+	Graphics		*m_graphics;
+	AudioManager	*m_audio;
+	Timer			*m_timer;
+	Console			*m_console;
 
 	// Game loop
 	void draw();
 	void update();
 
 	// Scene stack
-	static stack<XScene*> s_sceneStack;
+	static stack<Scene*> s_sceneStack;
 
 	// Game loop
 	function<void()> m_mainFunc, m_updateFunc, m_stepBeginFunc, m_stepEndFunc, m_endFunc;
-	function<void(xd::GraphicsContext&)> m_drawFunc;
+	function<void(GraphicsContext&)> m_drawFunc;
 };
 
-XDAPI XEngine *CreateEngine();
+XDAPI Engine *CreateEngine();
+
+END_XD_NAMESPACE
 
 #endif // X2D_ENGINE_H

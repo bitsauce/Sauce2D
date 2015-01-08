@@ -3,7 +3,7 @@
 
 #include "../engine.h"
 
-namespace xd {
+BEGIN_XD_NAMESPACE
 
 class Vertex;
 
@@ -114,6 +114,7 @@ public:
 	StaticIndexBuffer();
 	StaticIndexBuffer(const uint *vertices, const uint indexCount);
 };
-}
+
+END_XD_NAMESPACE
 
 #endif // X2D_VERTEX_BUFFER_H

@@ -10,8 +10,7 @@
 #include <x2d/engine.h>
 #include <x2d/graphics.h>
 
-namespace xd
-{
+BEGIN_XD_NAMESPACE
 
 SpriteBatch::SpriteBatch(GraphicsContext &graphicsContext) : 
 	m_graphicsContext(graphicsContext),
@@ -169,4 +168,4 @@ void SpriteBatch::end()
 	m_beingCalled = false;
 }
 
-}
+END_XD_NAMESPACE

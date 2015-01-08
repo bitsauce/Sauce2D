@@ -10,8 +10,7 @@
 #include <x2d/engine.h>
 #include <x2d/graphics.h>
 
-namespace xd
-{
+BEGIN_XD_NAMESPACE
 
 Shape::Shape() :
 	m_fillColor(255),
@@ -195,4 +194,4 @@ Shape Shape::intersect(const Shape &Shape)
 	return *this;
 }
 
-}
+END_XD_NAMESPACE

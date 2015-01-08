@@ -3,10 +3,12 @@
 
 #include "../config.h"
 
-class XDAPI XRandom
+BEGIN_XD_NAMESPACE
+
+class XDAPI Random
 {
 public:
-	XRandom() :
+	Random() :
 		m_seed((uint32_t)time(0))
 	{
 	}
@@ -28,8 +30,8 @@ public:
 
 private:
 	uint32_t m_seed;
-
-	static void DefaultConstructor(XRandom *self) { new (self) XRandom(); }
 };
+
+END_XD_NAMESPACE
 
 #endif // X2D_RANDOM_H

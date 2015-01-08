@@ -11,6 +11,8 @@
 #include <sstream>
 #include <fstream>
 
+BEGIN_XD_NAMESPACE
+
 vector<string> util::splitString(const string& src, const string& delim)
 {	
 	vector<string> result;
@@ -103,10 +105,10 @@ string util::asciiToStr(const uchar value)
 string util::getAbsoluteFilePath(const string &path)
 {
 	if(path.substr(0, 2) == ":/") {
-		return XEngine::getWorkingDirectory() + path.substr(2, string::npos);
+		return Engine::getWorkingDirectory() + path.substr(2, string::npos);
 	}
 	if(path.substr(0, 7) == "saves:/") {
-		return XEngine::getSaveDirectory() + path.substr(7, string::npos);
+		return Engine::getSaveDirectory() + path.substr(7, string::npos);
 	}
 	return path;
 }
@@ -130,3 +132,5 @@ bool util::fileExists(string filePath)
 	s.close();
 	return open;
 }
+
+END_XD_NAMESPACE

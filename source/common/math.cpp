@@ -9,45 +9,52 @@
 
 #include <x2d/math.h>
 
-namespace xd {
+
+BEGIN_XD_NAMESPACE
+
 Color &Color::operator*(const float c)
 {
 	r *= c; g *= c; b *= c; a *= c;
 	return *this;
 }
-}
 
-float XMath::radToDeg(const float rad)
+namespace math {
+
+float radToDeg(const float rad)
 {
 	return rad*(180.0f/PI);
 }
 
-float XMath::degToRad(const float deg)
+float degToRad(const float deg)
 {
 	return deg*(PI/180.0f);
 }
 
-float XMath::clamp(const float x, const float min, const float max)
+float clamp(const float x, const float min, const float max)
 {
 	return x < min ? min : (x > max ? max : x);
 }
 
-float XMath::maximum(const float a, const float b)
+float maximum(const float a, const float b)
 {
 	return (a > b ? a : b);
 }
 
-float XMath::minimum(const float a, const float b)
+float minimum(const float a, const float b)
 {
 	return (a < b ? a : b);
 }
 
-uint XMath::ror(const uint a, const uint b)
+uint ror(const uint a, const uint b)
 {
 	return (a << b) | (a >> (sizeof(uint)*CHAR_BIT-b));
 }
 
-uint XMath::rol(const uint a, const uint b)
+uint rol(const uint a, const uint b)
 {
 	return (a >> b) | (a << (sizeof(uint)*CHAR_BIT-b));
 }
+
+}
+
+END_XD_NAMESPACE

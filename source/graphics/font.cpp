@@ -20,6 +20,8 @@
 #include <freetype/fttrigon.h>
 #include <freetype/ftsnames.h>
 
+BEGIN_XD_NAMESPACE
+
 bool getFontFile(string &fontName)
 {
 	HKEY hkey;
@@ -81,8 +83,6 @@ inline int next_p2(int a)
 	while(rval < a) rval <<= 1;
 	return rval;
 }
-
-namespace xd {
 
 Font::Font(const string &filePath, const uint size) :
 	m_color(0, 0, 0, 255),
@@ -302,4 +302,4 @@ xd::Texture2DPtr Font::renderToTexture(GraphicsContext &graphicsContext, const s
 	return renderTarget.getTexture();
 }
 
-}
+END_XD_NAMESPACE

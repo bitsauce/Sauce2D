@@ -13,8 +13,7 @@
 const int INT_SIZE = sizeof(GLint);
 const int FLOAT_SIZE = sizeof(GLfloat);
 
-namespace xd
-{
+BEGIN_XD_NAMESPACE
 
 Shader::Shader(const string &vertFilePath, const string &fragFilePath)
 {
@@ -22,16 +21,16 @@ Shader::Shader(const string &vertFilePath, const string &fragFilePath)
     GLuint vertShader = glCreateShader(GL_VERTEX_SHADER);
     GLuint fragShader = glCreateShader(GL_FRAGMENT_SHADER);
 
-	XFileReader *fileReader;
+	FileReader *fileReader;
 
 	// Read vertex source
-	fileReader = new XFileReader(util::getAbsoluteFilePath(vertFilePath));
+	fileReader = new FileReader(util::getAbsoluteFilePath(vertFilePath));
 	string vertSource = fileReader->readAll();
 	fileReader->close();
 	delete fileReader;
 	
 	// Read fragment source
-	fileReader = new XFileReader(util::getAbsoluteFilePath(fragFilePath));
+	fileReader = new FileReader(util::getAbsoluteFilePath(fragFilePath));
 	string fragSource = fileReader->readAll();
 	fileReader->close();
 	delete fileReader;
@@ -318,4 +317,4 @@ ShaderPtr Shader::loadResource(const string &name)
 	return ShaderPtr(new Shader(name + ".vert", name + ".frag"));
 }
 
-}
+END_XD_NAMESPACE

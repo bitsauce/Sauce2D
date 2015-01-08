@@ -4,8 +4,7 @@
 #include "../engine.h"
 #include "texture.h"
 
-namespace xd
-{
+BEGIN_XD_NAMESPACE
 
 class Shader;
 typedef shared_ptr<Shader> ShaderPtr;
@@ -57,6 +56,6 @@ private:
 
 template XDAPI class shared_ptr<Shader>;
 
-}
+END_XD_NAMESPACE
 
 #endif // X2D_SHADER_H

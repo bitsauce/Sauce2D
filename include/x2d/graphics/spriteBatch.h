@@ -9,8 +9,7 @@
 #include "shader.h"
 #include "font.h"
 
-namespace xd
-{
+BEGIN_XD_NAMESPACE
 
 class Sprite;
 
@@ -75,6 +74,6 @@ private:
 	GraphicsContext &m_graphicsContext;
 };
 
-}
+END_XD_NAMESPACE
 
 #endif // X2D_BATCH_H

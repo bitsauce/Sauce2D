@@ -10,7 +10,7 @@
 
 #include <x2d/math.h>
 
-namespace xd {
+BEGIN_XD_NAMESPACE
 
 bool heightSort(RectanglePacker::Rectangle i, RectanglePacker::Rectangle j)
 {
@@ -131,4 +131,4 @@ void RectanglePacker::clearRects()
 	m_rectangles.clear();
 }
 
-}
+END_XD_NAMESPACE

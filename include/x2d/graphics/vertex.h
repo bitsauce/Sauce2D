@@ -3,8 +3,7 @@
 
 #include "../engine.h"
 
-namespace xd
-{
+BEGIN_XD_NAMESPACE
 
 /*********************************************************************
 **	Data types														**
@@ -127,6 +126,6 @@ private:
 	static void Destruct(Vertex *self) { self->~Vertex(); }
 };
 
-}
+END_XD_NAMESPACE
 
 #endif // X2D_VERTEX_H

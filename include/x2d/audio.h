@@ -22,18 +22,20 @@
 **	Abstract Audio Manager											**
 **********************************************************************/
 
-class XAudioSource;
-class XAudioBuffer;
+BEGIN_XD_NAMESPACE
 
-class XDAPI XAudioManager
+class AudioSource;
+class AudioBuffer;
+
+class XDAPI AudioManager
 {
-	SINGLETON_DECL(XAudioManager)
+	SINGLETON_DECL(AudioManager)
 
-	friend class XEngine;
+	friend class Engine;
 
 public:
-	XAudioManager();
-	~XAudioManager();
+	AudioManager();
+	~AudioManager();
 
 	// Listener position
 	void setPosition(const Vector2 &position);
@@ -51,7 +53,7 @@ public:
 /*********************************************************************
 **	Audio buffer													**
 **********************************************************************/
-class XDAPI XAudioBuffer
+class XDAPI AudioBuffer
 {
 public:
 	
@@ -64,8 +66,8 @@ public:
 	};
 
 public:
-	XAudioBuffer(void *data, uint size, uint frequency, Format format);
-	~XAudioBuffer();
+	AudioBuffer(void *data, uint size, uint frequency, Format format);
+	~AudioBuffer();
 
 	Format getFormat() const;
 	void *getData() const;
@@ -82,11 +84,11 @@ private:
 /*********************************************************************
 **	Audio source													**
 **********************************************************************/
-class XDAPI XAudioSource
+class XDAPI AudioSource
 {
 public:
-	XAudioSource(XAudioBuffer *buffer);
-	~XAudioSource();
+	AudioSource(AudioBuffer *buffer);
+	~AudioSource();
 
 	void play();
 	void stop();
@@ -109,5 +111,7 @@ private:
 	ALuint m_sourceId;
 	ALuint m_bufferId;
 };
+
+END_XD_NAMESPACE
 
 #endif // X2D_AUDIO_H

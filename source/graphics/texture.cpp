@@ -215,7 +215,7 @@ Texture2DPtr Texture2D::loadResource(const string &name)
 
 	// Load asset as a image
 	string content;
-	if(XFileSystem::ReadFile(/*XResourceManager::getFileByName(name)*/name, content))
+	if(FileSystem::ReadFile(/*XResourceManager::getFileByName(name)*/name, content))
 	{
 		// Attach the binary data to a memory stream
 		FIMEMORY *hmem = FreeImage_OpenMemory((uchar*)content.c_str(), content.size());

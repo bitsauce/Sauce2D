@@ -10,7 +10,7 @@
 #include <x2d/engine.h>
 #include <x2d/graphics.h>
 
-namespace xd {
+BEGIN_XD_NAMESPACE
 
 uint QUAD_INDICES[6] = {
 	0, 3, 2, 0, 2, 1
@@ -105,9 +105,9 @@ void Graphics::init()
 	setRefreshRate(60);
 
 	// Setup viewport
-	Vector2i size = XWindow::getSize();
+	Vector2i size = Window::getSize();
 	s_graphicsContext.resizeViewport(size.x, size.y);
-	XWindow::s_graphicsContext = &s_graphicsContext;
+	Window::s_graphicsContext = &s_graphicsContext;
 
 	// Init Graphics
 	glEnable(GL_TEXTURE_2D);
@@ -131,10 +131,10 @@ void Graphics::init()
 void Graphics::createContext()
 {
 	// Create Graphics rendering context
-	s_context = wglCreateContext(XWindow::s_deviceContext);
+	s_context = wglCreateContext(Window::s_deviceContext);
 
 	// Make context current
-	wglMakeCurrent(XWindow::s_deviceContext, s_context);
+	wglMakeCurrent(Window::s_deviceContext, s_context);
 }
 
 void Graphics::destroyContext()
@@ -154,7 +154,7 @@ void Graphics::destroyContext()
 
 void Graphics::swapBuffers()
 {
-	SwapBuffers(XWindow::s_deviceContext);
+	SwapBuffers(Window::s_deviceContext);
 	glClear(GL_COLOR_BUFFER_BIT);
 }
 
@@ -190,4 +190,4 @@ void Graphics::disableWireframe()
 	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 }
 
-}
+END_XD_NAMESPACE

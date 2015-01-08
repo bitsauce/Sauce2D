@@ -10,7 +10,7 @@
 #include <x2d/engine.h>
 #include <x2d/graphics.h>
 
-namespace xd {
+BEGIN_XD_NAMESPACE
 
 VertexBuffer::VertexBuffer(const BufferType type) :
 	m_format(),
@@ -142,4 +142,4 @@ StaticIndexBuffer::StaticIndexBuffer(const uint *indices, const uint indexCount)
 	setData(indices, indexCount);
 }
 
-}
+END_XD_NAMESPACE

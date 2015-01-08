@@ -11,11 +11,13 @@
 #include <x2d/graphics.h>
 #include <x2d/audio.h>
 
+BEGIN_XD_NAMESPACE
+
 #ifdef X2D_LINUX
 #define MAX_PATH 256
 #endif
 
-XConfig::XConfig() :
+Config::Config() :
 	flags(0),
 	workDir("")
 {
@@ -25,33 +27,33 @@ XConfig::XConfig() :
 // Engine
 //------------------------------------------------------------------------
 
-XEngine *CreateEngine()
+Engine *CreateEngine()
 {
-	return new XEngine();
+	return new Engine();
 }
 
-bool XEngine::s_initialized = false;
-bool XEngine::s_paused = false;
-bool XEngine::s_running = false;
-int XEngine::s_flags = 0;
-stack<XScene*> XEngine::s_sceneStack;
-XScene *XEngine::s_showScene = 0;
-XScene *XEngine::s_hideScene = 0;
+bool Engine::s_initialized = false;
+bool Engine::s_paused = false;
+bool Engine::s_running = false;
+int Engine::s_flags = 0;
+stack<Scene*> Engine::s_sceneStack;
+Scene *Engine::s_showScene = 0;
+Scene *Engine::s_hideScene = 0;
 
 // System dirs
-string XEngine::s_workDir;
-string XEngine::s_saveDir;
+string Engine::s_workDir;
+string Engine::s_saveDir;
 
-XEngine::XEngine()
+Engine::Engine()
 {
 }
 
-XEngine::~XEngine()
+Engine::~Engine()
 {
 	// Pop all scene objects
 	while(s_sceneStack.size() > 0)
 	{
-		XScene *scene = s_sceneStack.top();
+		Scene *scene = s_sceneStack.top();
 		if(scene) scene->hideEvent();
 		s_sceneStack.pop();
 	}
@@ -62,11 +64,10 @@ XEngine::~XEngine()
 	delete m_graphics;
 	delete m_audio;
 	delete m_timer;
-	delete m_math;
 	delete m_console;
 }
 
-void XEngine::pushScene(XScene *scene)
+void Engine::pushScene(Scene *scene)
 {
 	// Show and hide scenes
 	s_showScene = scene;
@@ -76,7 +77,7 @@ void XEngine::pushScene(XScene *scene)
 	s_sceneStack.push(scene);
 }
 
-void XEngine::popScene()
+void Engine::popScene()
 {
 	// Make sure there is a scene to pop
 	if(s_sceneStack.size() == 0) return;
@@ -122,7 +123,7 @@ string getSaveDir()
 //------------------------------------------------------------------------
 // Run
 //------------------------------------------------------------------------
-int XEngine::init(const XConfig &config)
+int Engine::init(const Config &config)
 {
 	// Set platform string and program dir
 	s_flags = config.flags;
@@ -139,17 +140,16 @@ int XEngine::init(const XConfig &config)
 	replace(s_saveDir.begin(), s_saveDir.end(), '\\', '/');
 	util::toDirectoryPath(s_saveDir);
 	
-	m_console = new XConsole();
-	m_fileSystem = new XFileSystem();
+	m_console = new Console();
+	m_fileSystem = new FileSystem();
 	if(isEnabled(XD_EXPORT_LOG))
 	{
-		m_console->m_output = new XFileWriter(util::getAbsoluteFilePath(":/console.log"));
+		m_console->m_output = new FileWriter(util::getAbsoluteFilePath(":/console.log"));
 	}
 
-	m_timer = new XTimer();
-	m_graphics = new xd::Graphics();
-	m_audio = new XAudioManager();
-	m_math = new XMath();
+	m_timer = new Timer();
+	m_graphics = new Graphics();
+	m_audio = new AudioManager();
 
 	m_mainFunc = config.main;
 	m_drawFunc = config.draw;
@@ -160,13 +160,8 @@ int XEngine::init(const XConfig &config)
 
 	m_console->m_engine = this;
 
-	XWindow::show();
-	xd::Graphics::init();
-
-	if(!m_math)
-	{
-		m_math = new XMath;
-	}
+	Window::show();
+	Graphics::init();
 	
 	try
 	{
@@ -180,7 +175,7 @@ int XEngine::init(const XConfig &config)
 		LOG("x2D Engine Initialized");
 		s_initialized = true;
 	}
-	catch(XException e)
+	catch(Exception e)
 	{
 		LOG("An exception occured: %s", e.message().c_str());
 		return e.errorCode();
@@ -193,24 +188,24 @@ int XEngine::init(const XConfig &config)
 	return X2D_OK;
 }
 
-void XEngine::draw()
+void Engine::draw()
 {
 	m_drawFunc(m_graphics->s_graphicsContext);
 	m_graphics->swapBuffers();
 }
 
-void XEngine::update()
+void Engine::update()
 {
-	XInput::checkBindings();
+	Input::checkBindings();
 	m_updateFunc();
 }
 
-void XEngine::exit()
+void Engine::exit()
 {
 	s_running = false;
 }
 
-int XEngine::run()
+int Engine::run()
 {
 	assert(s_initialized);
 
@@ -232,10 +227,10 @@ int XEngine::run()
 		while(s_running)
 		{
 			// Process game events
-			XWindow::processEvents();
+			Window::processEvents();
 
 			// Check if game is paused or out of focus
-			if(s_paused || !XWindow::hasFocus())
+			if(s_paused || !Window::hasFocus())
 			{
 				continue;
 			}
@@ -294,7 +289,7 @@ int XEngine::run()
 			if(m_stepEndFunc) m_stepEndFunc();
 		}
 	}
-	catch(XException e)
+	catch(Exception e)
 	{
 		LOG("An exception occured: %s", e.message().c_str());
 		return e.errorCode();
@@ -309,4 +304,6 @@ int XEngine::run()
 
 	// Return OK
 	return X2D_OK;
+}
+
 }

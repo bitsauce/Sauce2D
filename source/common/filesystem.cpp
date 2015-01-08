@@ -9,34 +9,36 @@
 
 #include <x2d/engine.h>
 
-XFileSystem *XFileSystem::s_this = 0;
+BEGIN_XD_NAMESPACE
 
-XFileReader::XFileReader(const string &path) :
+FileSystem *FileSystem::s_this = 0;
+
+FileReader::FileReader(const string &path) :
 	stream(path, ifstream::binary)
 {
 }
 
-XFileReader::~XFileReader()
+FileReader::~FileReader()
 {
 	close();
 }
 
-bool XFileReader::isEOF()
+bool FileReader::isEOF()
 {
 	return stream.eof();
 }
 
-bool XFileReader::isOpen()
+bool FileReader::isOpen()
 {
 	return stream.is_open();
 }
 
-void XFileReader::close()
+void FileReader::close()
 {
 	stream.close();
 }
 
-string XFileReader::readLine()
+string FileReader::readLine()
 {
 	string line;
 	getline(stream, line);
@@ -46,40 +48,38 @@ string XFileReader::readLine()
 	return line.c_str();
 }
 
-string XFileReader::readAll()
+string FileReader::readAll()
 {
 	stringstream ss;
 	ss << stream.rdbuf();
 	return ss.str();
 }
 
-XFileWriter::XFileWriter(const string &path) :
+FileWriter::FileWriter(const string &path) :
 	stream(path, ofstream::binary)
 {
 }
 
-XFileWriter::~XFileWriter()
+FileWriter::~FileWriter()
 {
 	close();
 }
 
-bool XFileWriter::isOpen()
+bool FileWriter::isOpen()
 {
 	return stream.is_open();
 }
 
-void XFileWriter::close()
+void FileWriter::close()
 {
 	stream.close();
 }
 
-void XFileWriter::clear()
+void FileWriter::clear()
 {
 	stream.clear();
 }
 
-namespace xd
-{
 FileSystemIterator::FileSystemIterator(string path, const string &mask, const int flags)
 {
 	// Create output array
@@ -132,45 +132,43 @@ string &FileSystemIterator::next()
 	return str; // *m_itr++;
 }
 
-}
-
-void XFileWriter::append(const char* data, const int length)
+void FileWriter::append(const char* data, const int length)
 {
 	stream << data;
 }
 
-void XFileWriter::flush()
+void FileWriter::flush()
 {
 	stream.flush();
 }
 
-bool XFileSystem::ReadFile(string path, string &content)
+bool FileSystem::ReadFile(string path, string &content)
 {
 	util::toAbsoluteFilePath(path);
 	return s_this->readFile(path, content);
 }
 
-bool XFileSystem::WriteFile(string path, const string &content)
+bool FileSystem::WriteFile(string path, const string &content)
 {
 	MakeDir(path.substr(0, path.find_last_of('/')));
 	util::toAbsoluteFilePath(path);
 	return s_this->writeFile(path, content);
 }
 
-bool XFileSystem::MakeDir(string path)
+bool FileSystem::MakeDir(string path)
 {
 	util::toAbsoluteFilePath(path);
 	return s_this->makeDir(path);
 }
 
-bool XFileSystem::fileExists(string &filePath) const
+bool FileSystem::fileExists(string &filePath) const
 {
 	return util::fileExists(filePath);
 }
 
-bool XFileSystem::readFile(string filePath, string &content) const
+bool FileSystem::readFile(string filePath, string &content) const
 {
-	XFileReader fileReader(filePath);
+	FileReader fileReader(filePath);
 	if(fileReader.isOpen())
 	{
 		content = fileReader.readAll();
@@ -180,9 +178,9 @@ bool XFileSystem::readFile(string filePath, string &content) const
 	return false;
 }
 
-bool XFileSystem::writeFile(string filePath, const string content) const
+bool FileSystem::writeFile(string filePath, const string content) const
 {
-	XFileWriter fileWriter(filePath);
+	FileWriter fileWriter(filePath);
 	fileWriter.clear();
 	if(fileWriter.isOpen())
 	{
@@ -200,7 +198,7 @@ bool dirExists(const string& dirPath)
 		(attr & FILE_ATTRIBUTE_DIRECTORY);
 }
 
-bool XFileSystem::makeDir(const string &path)
+bool FileSystem::makeDir(const string &path)
 {
 	if(!dirExists(path))
 	{
@@ -220,3 +218,5 @@ bool XFileSystem::makeDir(const string &path)
 	}
 	return true;
 }
+
+END_XD_NAMESPACE
