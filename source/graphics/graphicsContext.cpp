@@ -482,7 +482,7 @@ void GraphicsContext::drawCircle(const float x, const float y, const float radiu
 
 	vertices[0].set4f(xd::VERTEX_POSITION, x, y);
 	vertices[0].set4ub(xd::VERTEX_COLOR, color.r, color.g, color.b, color.a);
-	vertices[0].set4f(xd::VERTEX_TEX_COORD, 0.0f, 1.0f);
+	vertices[0].set4f(xd::VERTEX_TEX_COORD, 0.5f, 0.5f);
 
 	for(uint i = 1; i < segments+2; ++i)
 	{
