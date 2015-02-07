@@ -6,11 +6,11 @@
 
 BEGIN_XD_NAMESPACE
 
-class XDAPI Animation
+class XDAPI SpriteAnimation
 {
 public:
-	Animation(const int nRows, const int nColumns);
-	~Animation();
+	SpriteAnimation(const int nRows, const int nColumns);
+	~SpriteAnimation();
 
 	TextureRegion getKeyFrame(int frameIndex);
 

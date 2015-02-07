@@ -12,7 +12,7 @@
 
 BEGIN_XD_NAMESPACE
 
-Animation::Animation(const int nRows, const int nColumns)
+SpriteAnimation::SpriteAnimation(const int nRows, const int nColumns)
 {
 	// Create texture regions
 	for(int y = 0; y < nRows; y++)
@@ -28,12 +28,12 @@ Animation::Animation(const int nRows, const int nColumns)
 	}
 }
 
-Animation::~Animation()
+SpriteAnimation::~SpriteAnimation()
 {
 	m_textureRegions.clear();
 }
 
-TextureRegion Animation::getKeyFrame(int frameIndex)
+TextureRegion SpriteAnimation::getKeyFrame(int frameIndex)
 {
 	return m_textureRegions[frameIndex];
 }

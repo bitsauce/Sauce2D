@@ -423,25 +423,6 @@ extern VirtualKey fromWinKey(uchar key);
 extern uchar toWinKey(VirtualKey key);
 
 /*********************************************************************
-**	Scene interface													**
-**********************************************************************/
-class XDAPI Scene
-{
-	friend class Engine;
-private:
-	virtual void showEvent() {}
-	virtual void hideEvent() {}
-
-	virtual void drawEvent() {}
-	virtual void updateEvent() {}
-
-	virtual void resizeEvent() {}
-	
-	//virtual void keyboardEvent() {}
-	//virtual void mouseEvent() {}
-};
-
-/*********************************************************************
 **	Profiler														**
 **********************************************************************/
 class XDAPI Profiler
@@ -638,13 +619,6 @@ public:
 	static void pause() { s_paused = true; }
 	static void resume() { s_paused = false; }
 
-	// Exception
-	//virtual void exception(const xdRetCode) = 0;
-
-	// Scene
-	static void pushScene(Scene *scene);
-	static void popScene();
-
 	// Exceptions
 	void exception(RetCode errorCode, const char* message);
 
@@ -664,10 +638,6 @@ private:
 	// System dirs
 	static string s_workDir;
 	static string s_saveDir;
-
-	// Scene swap
-	static Scene *s_showScene;
-	static Scene *s_hideScene;
 	
 	FileSystem		*m_fileSystem;
 	Graphics		*m_graphics;
@@ -678,9 +648,6 @@ private:
 	// Game loop
 	void draw();
 	void update();
-
-	// Scene stack
-	static stack<Scene*> s_sceneStack;
 
 	// Game loop
 	function<void()> m_mainFunc, m_updateFunc, m_stepBeginFunc, m_stepEndFunc, m_endFunc;

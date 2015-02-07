@@ -39,9 +39,6 @@ bool Engine::s_initialized = false;
 bool Engine::s_paused = false;
 bool Engine::s_running = false;
 int Engine::s_flags = 0;
-stack<Scene*> Engine::s_sceneStack;
-Scene *Engine::s_showScene = 0;
-Scene *Engine::s_hideScene = 0;
 
 // System dirs
 string Engine::s_workDir;
@@ -53,14 +50,6 @@ Engine::Engine()
 
 Engine::~Engine()
 {
-	// Pop all scene objects
-	while(s_sceneStack.size() > 0)
-	{
-		Scene *scene = s_sceneStack.top();
-		if(scene) scene->hideEvent();
-		s_sceneStack.pop();
-	}
-
 	m_endFunc();
 	
 	delete m_fileSystem;
@@ -68,29 +57,6 @@ Engine::~Engine()
 	delete m_audio;
 	delete m_timer;
 	delete m_console;
-}
-
-void Engine::pushScene(Scene *scene)
-{
-	// Show and hide scenes
-	s_showScene = scene;
-	s_hideScene = s_sceneStack.size() > 0 ? s_sceneStack.top() : 0;
-
-	// Add scene to stack
-	s_sceneStack.push(scene);
-}
-
-void Engine::popScene()
-{
-	// Make sure there is a scene to pop
-	if(s_sceneStack.size() == 0) return;
-
-	// Hide and pop topmost scene
-	s_hideScene = s_sceneStack.top();
-	s_sceneStack.pop();
-
-	// Show next scene
-	s_showScene = s_sceneStack.size() > 0 ? s_sceneStack.top() : 0;
 }
 
 // Convert a wide Unicode string to an UTF8 string
@@ -237,19 +203,6 @@ int Engine::run()
 
 			// Step begin
 			if(m_stepBeginFunc) m_stepBeginFunc();
-
-			// Show new scene before hiding current scene to keep common resources alive
-			if(s_showScene)
-			{
-				s_showScene->showEvent();
-				s_showScene = 0;
-			}
-			
-			if(s_hideScene)
-			{
-				s_hideScene->hideEvent();
-				s_hideScene = 0;
-			}
 
 			// Calculate time delta
 			const float currentTime = m_timer->getElapsedTime() * 0.001f;
