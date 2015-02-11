@@ -95,6 +95,16 @@ void Sprite::setColor(const Color &color)
 	m_color = color;
 }
 
+void Sprite::setDepth(const float depth)
+{
+	m_depth = depth;
+}
+
+float Sprite::getDepth() const
+{
+	return m_depth;
+}
+
 void Sprite::move(const Vector2 &dt)
 {
 	m_position += dt;

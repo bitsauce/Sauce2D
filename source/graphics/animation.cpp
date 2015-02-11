@@ -35,7 +35,7 @@ SpriteAnimation::~SpriteAnimation()
 
 TextureRegion SpriteAnimation::getKeyFrame(int frameIndex)
 {
-	return m_textureRegions[frameIndex];
+	return frameIndex < m_textureRegions.size() ? m_textureRegions[frameIndex] : TextureRegion();
 }
 
 END_XD_NAMESPACE

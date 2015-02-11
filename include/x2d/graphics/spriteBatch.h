@@ -51,9 +51,11 @@ public:
 	void drawSprite(const Sprite &sprite);
 	void drawText(const Vector2 &pos, const string &text, const FontPtr font);
 	void end();
+	void flush();
 
 	State getState() const { return m_state; }
 	GraphicsContext &getGraphicsContext() const { return m_graphicsContext; }
+	uint getTextureSwapCount() const;
 
 private:
 

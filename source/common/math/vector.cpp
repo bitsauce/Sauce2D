@@ -188,7 +188,12 @@ const Vector2 Vector2::operator/(const Vector2 &v2) const
 
 bool Vector2::operator==(const Vector2& v2) const
 {
-    return ((x == v2.x) && (y == v2.y));
+    return (x == v2.x) && (y == v2.y);
+}
+
+bool Vector2::operator!=(const Vector2& v2) const
+{
+    return (x != v2.x) || (y != v2.y);
 }
 
 // Vector2i
@@ -332,54 +337,6 @@ const Vector2i Vector2i::operator/(const float scalar) const
 bool Vector2i::operator==(const Vector2i& v2) const
 {
     return ((x == v2.x) && (y == v2.y));
-}
-
-//----------------------------------------------------------------------------
-// AngelScript
-//----------------------------------------------------------------------------
-
-// Vector2
-
-void Vector2::DefaultConstructor(Vector2 *self)
-{
-	new(self) Vector2();
-}
-
-void Vector2::CopyConstructor(const Vector2 &other, Vector2 *self)
-{
-	new(self) Vector2(other);
-}
-
-void Vector2::InitConstructor1(const float xy, Vector2 *self)
-{
-	new(self) Vector2(xy);
-}
-
-void Vector2::InitConstructor2(const float x, const float y, Vector2 *self)
-{
-	new(self) Vector2(x, y);
-}
-
-// Vector2i
-
-void Vector2i::DefaultConstructor(Vector2i *self)
-{
-	new(self) Vector2i(0);
-}
-
-void Vector2i::CopyConstructor(const Vector2i &other, Vector2i *self)
-{
-	new(self) Vector2i(other);
-}
-
-void Vector2i::InitConstructor1(int xy, Vector2i *self)
-{
-	new(self) Vector2i(xy);
-}
-
-void Vector2i::InitConstructor2(int x, int y, Vector2i *self)
-{
-	new(self) Vector2i(x, y);
 }
  
 //-----------------------------------------------------
@@ -555,33 +512,9 @@ const Vector3 Vector3::operator/(const float scalar) const
     return Vector3(*this) /= scalar;
 }
  
-bool Vector3::operator== (const Vector3& v2) const
+bool Vector3::operator==(const Vector3& v2) const
 {
-    return ((x == v2.x) && (y == v2.y)) && (z == v2.z);
-}
-
-//----------------------------------------------------------------------------
-// AngelScript
-//----------------------------------------------------------------------------
-
-void Vector3::DefaultConstructor(Vector3 *self)
-{
-	new(self) Vector3(0.0f);
-}
-
-void Vector3::CopyConstructor(const Vector3 &other, Vector3 *self)
-{
-	new(self) Vector3(other);
-}
-
-void Vector3::InitConstructor1(float xyz, Vector3 *self)
-{
-	new(self) Vector3(xyz);
-}
-
-void Vector3::InitConstructor2(float x, float y, float z, Vector3 *self)
-{
-	new(self) Vector3(x, y, z);
+    return x == v2.x && y == v2.y && z == v2.z;
 }
 
 //-----------------------------------------------------
@@ -754,28 +687,4 @@ const Vector4 Vector4::operator/(const float scalar) const
 bool Vector4::operator== (const Vector4& v2) const
 {
     return ((x == v2.x) && (y == v2.y)) && (z == v2.z) && (w == v2.w);
-}
-
-//----------------------------------------------------------------------------
-// AngelScript
-//----------------------------------------------------------------------------
-
-void Vector4::DefaultConstructor(Vector4 *self)
-{
-	new(self) Vector4(0.0f);
-}
-
-void Vector4::CopyConstructor(const Vector4 &other, Vector4 *self)
-{
-	new(self) Vector4(other);
-}
-
-void Vector4::InitConstructor1(float xyz, Vector4 *self)
-{
-	new(self) Vector4(xyz);
-}
-
-void Vector4::InitConstructor2(float x, float y, float z, float w, Vector4 *self)
-{
-	new(self) Vector4(x, y, z, w);
 }

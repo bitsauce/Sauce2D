@@ -76,8 +76,6 @@ void SpriteBatch::drawText(const Vector2 &pos, const string &text, const FontPtr
 	font->draw(this, pos, text);
 }
 
-
-
 void SpriteBatch::end()
 {
 	if(!m_beingCalled)
@@ -166,6 +164,48 @@ void SpriteBatch::end()
 	m_graphicsContext.setTexture(m_prevTexture);
 	
 	m_beingCalled = false;
+}
+
+void SpriteBatch::flush()
+{
+	if(!m_beingCalled)
+	{
+		LOG("SpriteBatch::flush(): Called before begin()");
+		return;
+	}
+
+	// Draw current and begin new batch using the same state
+	end();
+	begin(m_state);
+}
+
+// TODO: Can we make this more efficient?
+uint SpriteBatch::getTextureSwapCount() const
+{
+	// Separate sprites by depth and texture
+	map<float, map<Texture2DPtr, list<Sprite*>>> layerTextureMap;
+	for(uint i = 0; i < m_spriteCount; ++i)
+	{
+		Sprite *sprite = &m_sprites[i];
+		layerTextureMap[sprite->m_depth][sprite->m_texture].push_back(sprite);
+	}
+
+	// For each depth
+	uint textureSwapCount = 0;
+	for(map<float, map<Texture2DPtr, list<Sprite*>>>::iterator itr1 = layerTextureMap.begin(); itr1 != layerTextureMap.end(); ++itr1)
+	{
+		// For each texture
+		for(map<Texture2DPtr, list<Sprite*>>::iterator itr2 = itr1->second.begin(); itr2 != itr1->second.end(); ++itr2)
+		{
+			// If we have sprites
+			if(itr2->second.size() > 0)
+			{
+				++textureSwapCount;
+			}
+		}
+	}
+
+	return textureSwapCount;
 }
 
 END_XD_NAMESPACE

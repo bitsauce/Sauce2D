@@ -55,16 +55,8 @@ public:
     const Vector2 operator/(const float scalar) const;
     const Vector2 operator/(const Vector2 &v2) const;
     bool operator==(const Vector2& v2) const;
-
-public:
-
-	// AngelScript
-	static void DefaultConstructor(Vector2 *self);
-	static void CopyConstructor(const Vector2 &other, Vector2 *self);
-	static void InitConstructor1(const float xy, Vector2 *self);
-	static void InitConstructor2(const float x, const float y, Vector2 *self);
+    bool operator!=(const Vector2& v2) const;
  
-public:
     float x, y;
 };
 
@@ -117,16 +109,7 @@ public:
 		TUPLE_CMP2(this->y, v2.y)
 		return false;
 	}
-
-public:
-
-	// AngelScript
-	static void DefaultConstructor(Vector2i *self);
-	static void CopyConstructor(const Vector2i &other, Vector2i *self);
-	static void InitConstructor1(int xy, Vector2i *self);
-	static void InitConstructor2(int x, int y, Vector2i *self);
  
-public:
     int x, y;
 };
 
@@ -196,15 +179,6 @@ public:
     const Vector3 operator/(const float scalar) const;
     bool operator==(const Vector3& v2) const;
 
-public:
-
-	// AngelScript
-	static void DefaultConstructor(Vector3 *self);
-	static void CopyConstructor(const Vector3 &other, Vector3 *self);
-	static void InitConstructor1(float xyz, Vector3 *self);
-	static void InitConstructor2(float x, float y, float z, Vector3 *self);
- 
-public:
     float x, y, z;
 };
 
@@ -342,14 +316,7 @@ public:
     const Vector4 operator/(const float scalar) const;
     bool operator==(const Vector4& v2) const;
 
-public:
     float x, y, z, w;
-
-	// AngelScript
-	static void DefaultConstructor(Vector4 *self);
-	static void CopyConstructor(const Vector4 &other, Vector4 *self);
-	static void InitConstructor1(float xyz, Vector4 *self);
-	static void InitConstructor2(float x, float y, float z, float w, Vector4 *self);
 };
 
 #endif // X2D_VECTOR_H
