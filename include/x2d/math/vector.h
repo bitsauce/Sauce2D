@@ -95,6 +95,7 @@ public:
     const Vector2i operator*(const float scalar) const;
     const Vector2i operator/(const float scalar) const;
     bool operator==(const Vector2i& v2) const;
+    bool operator!=(const Vector2i& v2) const;
 
 	bool operator<(const Vector2i& v2) const
 	{

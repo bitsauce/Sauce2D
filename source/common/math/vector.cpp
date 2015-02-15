@@ -333,10 +333,15 @@ const Vector2i Vector2i::operator/(const float scalar) const
 {
     return Vector2i(*this) /= scalar;
 }
- 
+
 bool Vector2i::operator==(const Vector2i& v2) const
 {
-    return ((x == v2.x) && (y == v2.y));
+    return x == v2.x && y == v2.y;
+}
+
+bool Vector2i::operator!=(const Vector2i& v2) const
+{
+    return x != v2.x || y != v2.y;
 }
  
 //-----------------------------------------------------
