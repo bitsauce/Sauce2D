@@ -43,6 +43,7 @@
 **	Include	STL														**
 **********************************************************************/
 #ifdef X2D_WINDOWS
+	#define NOMINMAX
 	#include <windows.h>
 	#include <windowsx.h>
 	#include <string>
