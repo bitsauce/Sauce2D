@@ -118,6 +118,9 @@ public:
 	string readLine();
 	string readAll();
 
+	FileReader &operator>>(int &i) { stream >> i; return *this; }
+	FileReader &operator>>(char &c) { stream >> c; return *this; }
+
 private:
 	ifstream stream;
 };
