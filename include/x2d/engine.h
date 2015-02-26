@@ -382,8 +382,7 @@ public:
 	// Key binding
 	static void bind(const VirtualKey key, function<void()> function);
 	static void unbind(const VirtualKey key);
-	static void resetBindings();
-	static void updateBindings();
+	static void unbindAll();
 	static void checkBindings();
 
 	// Keyboard listener

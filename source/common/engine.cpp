@@ -196,7 +196,7 @@ int Engine::run()
 			Window::processEvents();
 
 			// Check if game is paused or out of focus
-			if(s_paused || !Window::hasFocus())
+			if(s_paused || (!isEnabled(XD_RUN_IN_BACKGROUND) && !Window::hasFocus()))
 			{
 				continue;
 			}

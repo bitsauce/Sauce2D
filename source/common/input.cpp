@@ -200,7 +200,7 @@ void Input::unbind(const VirtualKey key)
 	bind(key, function<void()>());
 }
 
-void Input::resetBindings()
+void Input::unbindAll()
 {
 	s_keyBindings.clear();
 }
@@ -257,7 +257,8 @@ void Input::mouseScroll(const int dt)
 void Input::checkBindings()
 {
 	// Iterate key bindings
-	for(map<VirtualKey, KeyBind>::iterator itr = s_keyBindings.begin(); itr != s_keyBindings.end(); ++itr)
+	map<VirtualKey, KeyBind> mutableCopy(s_keyBindings);
+	for(map<VirtualKey, KeyBind>::iterator itr = mutableCopy.begin(); itr != mutableCopy.end(); ++itr)
 	{
 		KeyBind &key = itr->second;
 		if(getKeyState(itr->first))

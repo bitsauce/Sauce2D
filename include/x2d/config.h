@@ -124,7 +124,8 @@ enum RetCode
 enum EngineFlag
 {
 	XD_EXPORT_LOG		=	1 << 0,
-	XD_SHOW_WARININGS	=	1 << 1
+	XD_SHOW_WARININGS	=	1 << 1,
+	XD_RUN_IN_BACKGROUND  = 1 << 2
 };
 
 /*********************************************************************
