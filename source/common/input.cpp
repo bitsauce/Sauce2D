@@ -216,6 +216,7 @@ void Input::addKeyboardListener(xd::KeyboardListener *object)
 
 void Input::charEvent(const wchar_t c)
 {
+	if(Engine::isEnabled(XD_BLOCK_BACKGROUND_INPUT) && !Window::hasFocus()) return;
 	for(vector<xd::KeyboardListener*>::iterator itr = s_keyListeners.begin(); itr != s_keyListeners.end(); ++itr)
 	{
 		(*itr)->charEvent(c);
@@ -224,6 +225,7 @@ void Input::charEvent(const wchar_t c)
 
 void Input::keyPressed(const VirtualKey key)
 {
+	if(Engine::isEnabled(XD_BLOCK_BACKGROUND_INPUT) && !Window::hasFocus()) return;
 	for(vector<xd::KeyboardListener*>::iterator itr = s_keyListeners.begin(); itr != s_keyListeners.end(); ++itr)
 	{
 		(*itr)->keyPressEvent(key);
@@ -232,6 +234,7 @@ void Input::keyPressed(const VirtualKey key)
 
 void Input::keyReleased(const VirtualKey key)
 {
+	if(Engine::isEnabled(XD_BLOCK_BACKGROUND_INPUT) && !Window::hasFocus()) return;
 	for(vector<xd::KeyboardListener*>::iterator itr = s_keyListeners.begin(); itr != s_keyListeners.end(); ++itr)
 	{
 		(*itr)->keyReleaseEvent(key);
@@ -248,6 +251,7 @@ void Input::addMouseListener(xd::MouseListener *object)
 
 void Input::mouseScroll(const int dt)
 {
+	if(Engine::isEnabled(XD_BLOCK_BACKGROUND_INPUT) && !Window::hasFocus()) return;
 	for(vector<xd::MouseListener*>::iterator itr = s_mouseListeners.begin(); itr != s_mouseListeners.end(); ++itr)
 	{
 		(*itr)->mouseWheelEvent(dt);
@@ -256,6 +260,8 @@ void Input::mouseScroll(const int dt)
 
 void Input::checkBindings()
 {
+	if(Engine::isEnabled(XD_BLOCK_BACKGROUND_INPUT) && !Window::hasFocus()) return;
+
 	// Iterate key bindings
 	map<VirtualKey, KeyBind> mutableCopy(s_keyBindings);
 	for(map<VirtualKey, KeyBind>::iterator itr = mutableCopy.begin(); itr != mutableCopy.end(); ++itr)
@@ -306,7 +312,8 @@ Vector2 Input::getPosition()
 
 bool Input::getKeyState(const VirtualKey key)
 {
-	return /*Window::hasFocus() &&*/ (GetKeyState(toWinKey(key)) & 0x80) != 0;
+	if(Engine::isEnabled(XD_BLOCK_BACKGROUND_INPUT) && !Window::hasFocus()) return false;
+	return (GetKeyState(toWinKey(key)) & 0x80) != 0;
 }
 
 END_XD_NAMESPACE

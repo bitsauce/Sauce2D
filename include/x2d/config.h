@@ -125,7 +125,8 @@ enum EngineFlag
 {
 	XD_EXPORT_LOG		=	1 << 0,
 	XD_SHOW_WARININGS	=	1 << 1,
-	XD_RUN_IN_BACKGROUND  = 1 << 2
+	XD_RUN_IN_BACKGROUND  = 1 << 2,
+	XD_BLOCK_BACKGROUND_INPUT = 1 << 3
 };
 
 /*********************************************************************
