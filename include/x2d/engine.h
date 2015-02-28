@@ -387,6 +387,7 @@ public:
 
 	// Keyboard listener
 	static void addKeyboardListener(KeyboardListener *object);
+	static void removeKeyboardListener(KeyboardListener *object);
 	static void charEvent(const wchar_t c);
 	static void keyPressed(const VirtualKey key);
 	static void keyReleased(const VirtualKey key);
@@ -411,7 +412,7 @@ private:
 
 	// Keyboard listener
 	static map<VirtualKey, KeyBind> s_keyBindings;
-	static vector<KeyboardListener*> s_keyListeners;
+	static list<KeyboardListener*> s_keyListeners;
 
 	// Mouse listener
 	static map<MouseButton, bool> s_mousePressed;

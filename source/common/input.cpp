@@ -11,12 +11,11 @@
 
 BEGIN_XD_NAMESPACE
 
-// TODO: Refactor. This class is a mess
 map<VirtualKey, Input::KeyBind> Input::s_keyBindings;
-vector<xd::KeyboardListener*> Input::s_keyListeners;
+list<KeyboardListener*> Input::s_keyListeners;
 	
 map<MouseButton, bool> Input::s_mousePressed;
-vector<xd::MouseListener*> Input::s_mouseListeners;
+vector<MouseListener*> Input::s_mouseListeners;
 
 Vector2 Input::s_position;
 
@@ -205,7 +204,7 @@ void Input::unbindAll()
 	s_keyBindings.clear();
 }
 
-void Input::addKeyboardListener(xd::KeyboardListener *object)
+void Input::addKeyboardListener(KeyboardListener *object)
 {
 	// Add keyboard listener
 	if(object)
@@ -214,10 +213,15 @@ void Input::addKeyboardListener(xd::KeyboardListener *object)
 	}
 }
 
+void Input::removeKeyboardListener(KeyboardListener *object)
+{
+	s_keyListeners.remove(object);
+}
+
 void Input::charEvent(const wchar_t c)
 {
 	if(Engine::isEnabled(XD_BLOCK_BACKGROUND_INPUT) && !Window::hasFocus()) return;
-	for(vector<xd::KeyboardListener*>::iterator itr = s_keyListeners.begin(); itr != s_keyListeners.end(); ++itr)
+	for(list<KeyboardListener*>::iterator itr = s_keyListeners.begin(); itr != s_keyListeners.end(); ++itr)
 	{
 		(*itr)->charEvent(c);
 	}
@@ -226,7 +230,7 @@ void Input::charEvent(const wchar_t c)
 void Input::keyPressed(const VirtualKey key)
 {
 	if(Engine::isEnabled(XD_BLOCK_BACKGROUND_INPUT) && !Window::hasFocus()) return;
-	for(vector<xd::KeyboardListener*>::iterator itr = s_keyListeners.begin(); itr != s_keyListeners.end(); ++itr)
+	for(list<KeyboardListener*>::iterator itr = s_keyListeners.begin(); itr != s_keyListeners.end(); ++itr)
 	{
 		(*itr)->keyPressEvent(key);
 	}
@@ -235,13 +239,13 @@ void Input::keyPressed(const VirtualKey key)
 void Input::keyReleased(const VirtualKey key)
 {
 	if(Engine::isEnabled(XD_BLOCK_BACKGROUND_INPUT) && !Window::hasFocus()) return;
-	for(vector<xd::KeyboardListener*>::iterator itr = s_keyListeners.begin(); itr != s_keyListeners.end(); ++itr)
+	for(list<KeyboardListener*>::iterator itr = s_keyListeners.begin(); itr != s_keyListeners.end(); ++itr)
 	{
 		(*itr)->keyReleaseEvent(key);
 	}
 }
 
-void Input::addMouseListener(xd::MouseListener *object)
+void Input::addMouseListener(MouseListener *object)
 {
 	// Add keyboard listener
 	if(object) {
@@ -252,7 +256,7 @@ void Input::addMouseListener(xd::MouseListener *object)
 void Input::mouseScroll(const int dt)
 {
 	if(Engine::isEnabled(XD_BLOCK_BACKGROUND_INPUT) && !Window::hasFocus()) return;
-	for(vector<xd::MouseListener*>::iterator itr = s_mouseListeners.begin(); itr != s_mouseListeners.end(); ++itr)
+	for(vector<MouseListener*>::iterator itr = s_mouseListeners.begin(); itr != s_mouseListeners.end(); ++itr)
 	{
 		(*itr)->mouseWheelEvent(dt);
 	}
@@ -263,8 +267,8 @@ void Input::checkBindings()
 	if(Engine::isEnabled(XD_BLOCK_BACKGROUND_INPUT) && !Window::hasFocus()) return;
 
 	// Iterate key bindings
-	map<VirtualKey, KeyBind> mutableCopy(s_keyBindings);
-	for(map<VirtualKey, KeyBind>::iterator itr = mutableCopy.begin(); itr != mutableCopy.end(); ++itr)
+	//map<VirtualKey, KeyBind> mutableCopy(s_keyBindings);
+	for(map<VirtualKey, KeyBind>::iterator itr = s_keyBindings.begin(); itr != s_keyBindings.end(); ++itr)
 	{
 		KeyBind &key = itr->second;
 		if(getKeyState(itr->first))
