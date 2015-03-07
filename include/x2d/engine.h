@@ -492,7 +492,7 @@ private:
 /*********************************************************************
 **	Window class													**
 **********************************************************************/
-class WindowListener
+class XDAPI WindowListener
 {
 	friend class Window;
 protected:
