@@ -353,6 +353,9 @@ enum VirtualKey
 class XDAPI KeyboardListener
 {
 public:
+	KeyboardListener();
+	virtual ~KeyboardListener();
+
 	virtual void keyPressEvent(const VirtualKey key) { }
 	virtual void keyReleaseEvent(const VirtualKey key) { }
 	virtual void charEvent(const wchar_t c) { }
@@ -361,12 +364,17 @@ public:
 class XDAPI MouseListener
 {
 public:
+	MouseListener();
+	virtual ~MouseListener();
+
 	virtual void mouseWheelEvent(const int dt) { }
 };
 
 class XDAPI Input
 {
 	friend class Window;
+	friend class KeyboardListener;
+	friend class MouseListener;
 public:
 	// Desktop cursor functions
 	static void     setCursorPos(const Vector2i &pos);
@@ -386,14 +394,11 @@ public:
 	static void checkBindings();
 
 	// Keyboard listener
-	static void addKeyboardListener(KeyboardListener *object);
-	static void removeKeyboardListener(KeyboardListener *object);
 	static void charEvent(const wchar_t c);
 	static void keyPressed(const VirtualKey key);
 	static void keyReleased(const VirtualKey key);
 
 	// Mouse listener
-	static void addMouseListener(MouseListener *object);
 	//static void mouseClick(const XMouseButton btn); // This doesn't make any sence unless we specify a click-rectangle
 	static void mouseScroll(const int dt);
 
@@ -413,10 +418,14 @@ private:
 	// Keyboard listener
 	static map<VirtualKey, KeyBind> s_keyBindings;
 	static list<KeyboardListener*> s_keyListeners;
+	static void addKeyboardListener(KeyboardListener *object);
+	static void removeKeyboardListener(KeyboardListener *object);
 
 	// Mouse listener
 	static map<MouseButton, bool> s_mousePressed;
-	static vector<MouseListener*> s_mouseListeners;
+	static list<MouseListener*> s_mouseListeners;
+	static void addMouseListener(MouseListener *object);
+	static void removeMouseListener(MouseListener *object);
 
 	// Cursor position
 	static Vector2 s_position;
@@ -487,6 +496,9 @@ class WindowListener
 {
 	friend class Window;
 protected:
+	WindowListener();
+	virtual ~WindowListener();
+
 	virtual void resizeEvent(uint width, uint height) {}
 	virtual void moveEvent(uint x, uint y) {}
 	//virtual void 
@@ -498,6 +510,7 @@ class GraphicsContext;
 class XDAPI Window
 {
 	friend class Graphics;
+	friend class WindowListener;
 public:
 	static void processEvents();
 	static void processEvents(UINT Message, WPARAM wParam, LPARAM lParam);
@@ -521,9 +534,6 @@ public:
 	static void minimize();
 	static void maximize();
 	static void restore();
-
-	static void addWindowListener(WindowListener *listener);
-	static void removeWindowListener(WindowListener *listener);
 
 private:
 	// The window handle
@@ -552,6 +562,8 @@ private:
 
 	// Window listeners
 	static list<WindowListener*> s_windowListeners;
+	static void addWindowListener(WindowListener *listener);
+	static void removeWindowListener(WindowListener *listener);
 	
 	// Window procedure callback
 	static LRESULT CALLBACK OnEvent(HWND Handle, UINT Message, WPARAM wParam, LPARAM lParam);

@@ -15,9 +15,29 @@ map<VirtualKey, Input::KeyBind> Input::s_keyBindings;
 list<KeyboardListener*> Input::s_keyListeners;
 	
 map<MouseButton, bool> Input::s_mousePressed;
-vector<MouseListener*> Input::s_mouseListeners;
+list<MouseListener*> Input::s_mouseListeners;
 
 Vector2 Input::s_position;
+
+KeyboardListener::KeyboardListener()
+{
+	Input::addKeyboardListener(this);
+}
+
+KeyboardListener::~KeyboardListener()
+{
+	Input::removeKeyboardListener(this);
+}
+
+MouseListener::MouseListener()
+{
+	Input::addMouseListener(this);
+}
+
+MouseListener::~MouseListener()
+{
+	Input::removeMouseListener(this);
+}
 
 VirtualKey fromWinKey(uchar vk)
 {
@@ -253,10 +273,15 @@ void Input::addMouseListener(MouseListener *object)
 	}
 }
 
+void Input::removeMouseListener(MouseListener *object)
+{
+	s_mouseListeners.remove(object);
+}
+
 void Input::mouseScroll(const int dt)
 {
 	if(Engine::isEnabled(XD_BLOCK_BACKGROUND_INPUT) && !Window::hasFocus()) return;
-	for(vector<MouseListener*>::iterator itr = s_mouseListeners.begin(); itr != s_mouseListeners.end(); ++itr)
+	for(list<MouseListener*>::iterator itr = s_mouseListeners.begin(); itr != s_mouseListeners.end(); ++itr)
 	{
 		(*itr)->mouseWheelEvent(dt);
 	}

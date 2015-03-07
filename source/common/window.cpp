@@ -29,8 +29,18 @@ vector<Vector2i> Window::s_resolutions;
 bool Window::s_focus = false;
 Vector2i Window::s_size = Vector2i(0);
 bool Window::s_fullscreen = false;
-list<xd::WindowListener*> Window::s_windowListeners;
-xd::GraphicsContext *Window::s_graphicsContext = nullptr;
+list<WindowListener*> Window::s_windowListeners;
+GraphicsContext *Window::s_graphicsContext = nullptr;
+
+WindowListener::WindowListener()
+{
+	Window::addWindowListener(this);
+}
+
+WindowListener::~WindowListener()
+{
+	Window::removeWindowListener(this);
+}
 
 void Window::close()
 {
@@ -43,7 +53,7 @@ void Window::close()
 	}
 
 	// If we have a OpenGL context
-	xd::Graphics::destroyContext();
+	Graphics::destroyContext();
 
 	// If we have a device context
 	if(s_deviceContext)
@@ -206,7 +216,7 @@ void Window::show()
 	if(!SetPixelFormat(s_deviceContext, pixelFormat, &pfd))			
 		assert("Unable to create rendering context");
 
-	xd::Graphics::createContext();
+	Graphics::createContext();
 
 	// Setup window
 	ShowWindow(s_window, SW_SHOW);
@@ -453,12 +463,12 @@ Vector2i Window::getSize()
 	return s_size;
 }
 
-void Window::addWindowListener(xd::WindowListener *listener)
+void Window::addWindowListener(WindowListener *listener)
 {
 	s_windowListeners.push_back(listener);
 }
 
-void Window::removeWindowListener(xd::WindowListener *listener)
+void Window::removeWindowListener(WindowListener *listener)
 {
 	s_windowListeners.remove(listener);
 }
@@ -518,7 +528,7 @@ void Window::processEvents(UINT Message, WPARAM wParam, LPARAM lParam)
 			// Resize viewport
 			s_size.set(LOWORD(lParam), HIWORD(lParam));
 			s_graphicsContext->resizeViewport(s_size.x, s_size.y);
-			for(list<xd::WindowListener*>::iterator itr = s_windowListeners.begin(); itr != s_windowListeners.end(); ++itr)
+			for(list<WindowListener*>::iterator itr = s_windowListeners.begin(); itr != s_windowListeners.end(); ++itr)
 			{
 				(*itr)->resizeEvent(s_size.x, s_size.y);
 			}
@@ -527,7 +537,7 @@ void Window::processEvents(UINT Message, WPARAM wParam, LPARAM lParam)
 
 		case WM_MOVE:
 		{
-			/*for(list<xd::WindowListener*>::iterator itr = s_windowListeners.begin(); itr != s_windowListeners.end(); ++itr)
+			/*for(list<WindowListener*>::iterator itr = s_windowListeners.begin(); itr != s_windowListeners.end(); ++itr)
 			{
 				(*itr)->moveEvent(s_size.x, s_size.y);
 			}*/
