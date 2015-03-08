@@ -38,7 +38,6 @@ static unsigned long readByte32(const unsigned char buffer[4])
 
 //  References:
 //  -  http://ccrma.stanford.edu/courses/422/projects/WaveFormat/
-//  -  http://www.borg.com/~jglatt/tech/wave.htm
 //  -  Alut source code: static BufferData *loadWavFile (InputStream *stream)
 //     http://www.openal.org/repos/openal/tags/freealut_1_1_0/alut/alut/src/alutLoader.c
 
@@ -210,7 +209,7 @@ static unsigned long readByte32(const unsigned char buffer[4])
 		data.insert(data.end(), array, array + bytes);
 	}
 
-	delete []array;
+	delete[] array;
 	array = NULL;
 
 	fclose(f);

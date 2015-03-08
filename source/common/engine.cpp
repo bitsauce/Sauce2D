@@ -189,6 +189,8 @@ int Engine::run()
 
 		s_running = true;
 
+		update();
+
 		// Game loop
 		while(s_running)
 		{
