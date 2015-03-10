@@ -610,8 +610,10 @@ struct XDAPI Config
 	const char*		workDir;
 
 	// Game loop functions
-	function<void()> update, main, stepBegin, stepEnd, end;
-	function<void(GraphicsContext&)> draw;
+	function<void()> stepBeginFunc, stepEndFunc, endFunc;
+	function<void(GraphicsContext&)> mainFunc;
+	function<void(GraphicsContext&, const float)> drawFunc;
+	function<void(const float)> updateFunc;
 };
 
 /*********************************************************************
@@ -661,12 +663,14 @@ private:
 	Console			*m_console;
 
 	// Game loop
-	void draw();
-	void update();
+	void draw(const float alpha);
+	void update(const float dt);
 
 	// Game loop
-	function<void()> m_mainFunc, m_updateFunc, m_stepBeginFunc, m_stepEndFunc, m_endFunc;
-	function<void(GraphicsContext&)> m_drawFunc;
+	function<void()> m_stepBeginFunc, m_stepEndFunc, m_endFunc;
+	function<void(GraphicsContext&)> m_mainFunc;
+	function<void(GraphicsContext&, const float)> m_drawFunc;
+	function<void(const float)> m_updateFunc;
 };
 
 XDAPI Engine *CreateEngine();

@@ -55,7 +55,7 @@ public:
 	static void disableWireframe();
 
 	// Time step & fps
-	static float getTimeStep();
+	//static float getTimeStep();
 	static float getFPS();
 
 	// Swap buffers

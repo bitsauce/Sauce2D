@@ -50,7 +50,7 @@ Engine::Engine()
 
 Engine::~Engine()
 {
-	m_endFunc();
+	if(m_endFunc) m_endFunc();
 	
 	delete m_fileSystem;
 	delete m_graphics;
@@ -117,12 +117,12 @@ int Engine::init(const Config &config)
 	m_graphics = new Graphics();
 	m_audio = new AudioManager();
 
-	m_mainFunc = config.main;
-	m_drawFunc = config.draw;
-	m_updateFunc = config.update;
-	m_stepBeginFunc = config.stepBegin;
-	m_stepEndFunc = config.stepEnd;
-	m_endFunc = config.end;
+	m_mainFunc = config.mainFunc;
+	m_drawFunc = config.drawFunc;
+	m_updateFunc = config.updateFunc;
+	m_stepBeginFunc = config.stepBeginFunc;
+	m_stepEndFunc = config.stepEndFunc;
+	m_endFunc = config.endFunc;
 
 	m_console->m_engine = this;
 
@@ -136,7 +136,7 @@ int Engine::init(const Config &config)
 	
 		m_console->s_initialized = true;
 
-		m_mainFunc();
+		if(m_mainFunc) m_mainFunc(m_graphics->s_graphicsContext);
 	
 		LOG("x2D Engine Initialized");
 		s_initialized = true;
@@ -154,16 +154,16 @@ int Engine::init(const Config &config)
 	return X2D_OK;
 }
 
-void Engine::draw()
+void Engine::draw(const float alpha)
 {
-	m_drawFunc(m_graphics->s_graphicsContext);
+	m_drawFunc(m_graphics->s_graphicsContext, alpha);
 	m_graphics->swapBuffers();
 }
 
-void Engine::update()
+void Engine::update(const float dt)
 {
-	Input::checkBindings();
-	m_updateFunc();
+	//Input::checkBindings();
+	//m_updateFunc();
 }
 
 void Engine::exit()
@@ -177,19 +177,22 @@ int Engine::run()
 
 	try
 	{
-		// Setup game loop
-		m_timer->start();
-		float prevTime = m_timer->getElapsedTime() * 0.001f;
-		float acc = 0.0f;
-
 		// Fps sampling
 		const int numFpsSamples = 8;
 		float fpsSamples[numFpsSamples];
 		int currFpsSample = 0;
 
+		// Set running
 		s_running = true;
 
-		update();
+		// Setup game loop
+		m_timer->start();
+		const float dt = 1.0f / 30.0f;
+		float accumulator = 0.0f;
+		float prevTime = m_timer->getElapsedTime() * 0.001f;
+
+		// Lets make sure update is called once before draw
+		if(m_updateFunc) m_updateFunc(dt);
 
 		// Game loop
 		while(s_running)
@@ -203,9 +206,6 @@ int Engine::run()
 				continue;
 			}
 
-			// Step begin
-			if(m_stepBeginFunc) m_stepBeginFunc();
-
 			// Calculate time delta
 			const float currentTime = m_timer->getElapsedTime() * 0.001f;
 			float deltaTime = currentTime - prevTime;
@@ -213,19 +213,30 @@ int Engine::run()
 		
 			// Avoid spiral of death
 			if(deltaTime > 0.25f)
+			{
 				deltaTime = 0.25f;
-		
-			// Apply time delta to acc
-			acc += deltaTime;
-			while(acc >= xd::Graphics::s_timeStep)
+			}
+
+			// Step begin
+			if(m_stepBeginFunc) m_stepBeginFunc();
+
+			// Apply time delta to accumulator
+			accumulator += deltaTime;
+			while(accumulator >= dt)
 			{
 				// Update the game
-				update();
-				acc -= xd::Graphics::s_timeStep;
+				Input::checkBindings();
+				if(m_updateFunc) m_updateFunc(dt);
+				accumulator -= dt;
 			}
 
 			// Draw the game
-			draw();
+			if(m_drawFunc)
+			{
+				const double alpha = accumulator / dt;
+				m_drawFunc(m_graphics->s_graphicsContext, alpha);
+				m_graphics->swapBuffers();
+			}
 
 			// Calculate fps
 			if(deltaTime != 0.0f)
@@ -237,7 +248,7 @@ int Engine::run()
 			{
 				float fps = 0.0f;
 				for(int i = 0; i < numFpsSamples; i++) fps += fpsSamples[i];
-				xd::Graphics::s_framesPerSecond = (float)int(fps/numFpsSamples);
+				Graphics::s_framesPerSecond = (float)int(fps/numFpsSamples);
 				currFpsSample = 0;
 			}
 

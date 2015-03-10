@@ -56,10 +56,10 @@ int Graphics::getRefreshRate()
 	return s_refreshRate;
 }
 
-float Graphics::getTimeStep()
+/*float Graphics::getTimeStep()
 {
 	return s_timeStep;
-}
+}*/
 
 float Graphics::getFPS()
 {
