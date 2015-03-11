@@ -12,7 +12,7 @@
 
 BEGIN_XD_NAMESPACE
 
-Sprite::Sprite(const Texture2DPtr texture, const Rect &rectangle, const Vector2 &origin, const float angle, const TextureRegion &region, const Color &color, const float depth) :
+Sprite::Sprite(const Texture2DPtr texture, const Rect &rectangle, const Vector2 &origin, const float angle, const TextureRegion &region, const Color &color, const float depth, const Vector2 scale) :
 	m_texture(texture),
 	m_textureRegion(region),
 	m_position(rectangle.position),
@@ -20,7 +20,8 @@ Sprite::Sprite(const Texture2DPtr texture, const Rect &rectangle, const Vector2 
 	m_origin(origin),
 	m_angle(angle),
 	m_color(color),
-	m_depth(depth)
+	m_depth(depth),
+	m_scale(scale)
 {
 }
 
@@ -199,6 +200,7 @@ void Sprite::getVertices(Vertex *vertices, uint *indices, const uint indexOffset
 	Matrix4 mat;
 	mat.scale(m_size.x, m_size.y, 1.0f);
 	mat.translate(-m_origin.x, -m_origin.y, 0.0f);
+	mat.scale(m_scale.x, m_scale.y, 1.0f);
 	mat.rotateZ(m_angle);
 	mat.translate(m_position.x + m_origin.x, m_position.y + m_origin.y, 0.0f);
 

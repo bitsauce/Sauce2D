@@ -13,7 +13,7 @@ class XDAPI Sprite
 {
 	friend class SpriteBatch;
 public:
-	Sprite(const Texture2DPtr texture = nullptr, const Rect &rectangle = Rect(0, 0, 0, 0), const Vector2 &origin = Vector2(0.0f, 0.0f), const float angle = 0.0f, const TextureRegion &region = TextureRegion(), const Color &color = Color(255), const float depth = 0.0f);
+	Sprite(const Texture2DPtr texture = nullptr, const Rect &rectangle = Rect(0, 0, 0, 0), const Vector2 &origin = Vector2(0.0f, 0.0f), const float angle = 0.0f, const TextureRegion &region = TextureRegion(), const Color &color = Color(255), const float depth = 0.0f, const Vector2 scale = Vector2(1.0f, 1.0f));
 	//Sprite(const Texture2DPtr texture, const Rect &rectangle, const TextureRegion &region = TextureRegion(), const Color &color = Color(255), const float depth = 0.0f);
 	//Sprite(const Texture2DPtr texture, const Rect &rectangle, const TextureRegion &region = TextureRegion(), const Color &color = Color(255), const float depth = 0.0f);
 	//Sprite(const Texture2DPtr texture, const Vector2 &center, const TextureRegion &region = TextureRegion(), const Color &color = Color(255), const float depth = 0.0f);
@@ -31,6 +31,9 @@ public:
 
 	void setOrigin(const Vector2 &origin);
 	void setRotation(const float ang);
+	void setScale(const Vector2 &scale) { m_scale = scale; }
+	void setScaleX(const float x) { m_scale.x = x; }
+	void setScaleY(const float y) { m_scale.y = y; }
 	void setRegion(const TextureRegion &region, const bool resize = false);
 	void setColor(const Color &color);
 
@@ -53,6 +56,7 @@ public:
 
 	Vector2 getOrigin() const;
 	Vector2 getCenter() const;
+	Vector2 getScale() const { return m_scale; }
 	float getRotation() const;
 	Color getColor() const;
 	TextureRegion getRegion() const;
@@ -64,6 +68,7 @@ private:
 	Vector2 m_position;
 	Vector2 m_size;
 	Vector2 m_origin;
+	Vector2 m_scale;
 	float m_depth;
 	float m_angle;
 	Color m_color;
