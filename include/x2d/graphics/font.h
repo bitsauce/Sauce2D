@@ -20,6 +20,7 @@ public:
 	float getStringWidth(const string &str);
 	float getStringHeight(const string &str);
 	void setColor(const Color &color);
+	void setDepth(const float depth);
 	void draw(SpriteBatch *batch, const Vector2 &pos, const string &str) const;
 	Texture2DPtr renderToTexture(GraphicsContext &graphicsContext, const string &text, const uint padding = 2);
 
@@ -45,10 +46,13 @@ private:
 	Font(const string &fontFile, const uint size);
 	bool isValidChar(uchar ch) const { return ch >= 0 && ch < 128; }
 
-	// Font color
+	// Color
 	Color m_color;
 
-	// Font texture atlas
+	// Depth
+	float m_depth;
+
+	// Texture atlas
 	TextureAtlas *m_atlas;
 
 	// Font size (px)

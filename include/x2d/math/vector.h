@@ -18,7 +18,7 @@ class XDAPI Vector2
 {
 public:
 	// Constructor
-    Vector2(const float xy = 0.0f);
+    explicit Vector2(const float xy = 0.0f);
     Vector2(const float d[2]);
     Vector2(const float x, const float y);
 	Vector2(const Vector2 &v);

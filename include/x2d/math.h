@@ -48,16 +48,25 @@ namespace math
 	XDAPI float clamp(const float x, const float min, const float max);
 	XDAPI float maximum(const float a, const float b);
 	XDAPI float minimum(const float a, const float b);
-	XDAPI float round(const float value);
-	XDAPI float ceil(const float value);
-	XDAPI float floor(const float value);
-	XDAPI float abs(const float value);
-	XDAPI float sqrt(const float value);
+
+	XDAPI float round(const float v);
+	XDAPI Vector2 round(const Vector2 &v);
+	XDAPI float ceil(const float v);
+	XDAPI Vector2 ceil(const Vector2 &v);
+	XDAPI float floor(const float v);
+	XDAPI Vector2 floor(const Vector2 &v);
+	XDAPI float abs(const float v);
+	XDAPI Vector2 abs(const Vector2 &v);
+	XDAPI float sqrt(const float v);
+	XDAPI Vector2 sqrt(const Vector2 &v);
 	XDAPI float pow(const float a, const float b);
+	XDAPI Vector2 pow(const Vector2 &v);
+	XDAPI float lerp(const float v0, const float v1, const float t);
+	XDAPI Vector2 lerp(const Vector2 &v0, const Vector2 &v1, const float t);
+
 	XDAPI int mod(const int a, const int b);
 	XDAPI uint ror(const uint a, const uint b);
 	XDAPI uint rol(const uint a, const uint b);
-	XDAPI float lerp(const float v0, const float v1, const float t);
 }
 
 END_XD_NAMESPACE

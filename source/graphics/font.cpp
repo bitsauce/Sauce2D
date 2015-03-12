@@ -86,6 +86,7 @@ inline int next_p2(int a)
 
 Font::Font(const string &filePath, const uint size) :
 	m_color(0, 0, 0, 255),
+	m_depth(0.0f),
 	m_atlas(0),
 	m_size(0),
 	m_lineSize(0),
@@ -244,6 +245,11 @@ void Font::setColor(const Color &color)
 	m_color = color;
 }
 
+void Font::setDepth(const float depth)
+{
+	m_depth = depth;
+}
+
 void Font::draw(SpriteBatch *batch, const Vector2 &pos, const string &str) const
 {
 	// Get current position
@@ -252,6 +258,7 @@ void Font::draw(SpriteBatch *batch, const Vector2 &pos, const string &str) const
 	// Draw string
 	Sprite sprite(m_atlas->getTexture());
 	sprite.setColor(m_color);
+	sprite.setDepth(m_depth);
 	for(uint i = 0; i < str.size(); i++)
 	{
 		// Check for new line
@@ -277,7 +284,7 @@ void Font::draw(SpriteBatch *batch, const Vector2 &pos, const string &str) const
 		// Draw char
 		sprite.setRegion(m_atlas->get(ch));
 		sprite.setPosition(currentPos.x, currentPos.y + (m_Msize - metrics.size.y - metrics.advance.y));
-		sprite.setSize(metrics.size.x, metrics.size.y);
+		sprite.setSize((float)metrics.size.x, (float)metrics.size.y);
 		batch->drawSprite(sprite);
 
 		// Apply advance

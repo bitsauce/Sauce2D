@@ -54,29 +54,64 @@ uint rol(const uint a, const uint b)
 	return (a >> b) | (a << (sizeof(uint)*CHAR_BIT-b));
 }
 
-float round(const float value)
+float round(const float v)
 {
-	return (float)int((value > 0.0f) ? (value + 0.5f) : (value - 0.5f));
+	return (float)int((v > 0.0f) ? (v + 0.5f) : (v - 0.5f));
 }
 
-float ceil(const float value)
+Vector2 round(const Vector2 &v)
 {
-	return ceilf(value);
+	return Vector2(round(v.x), round(v.y));
 }
 
-float floor(const float value)
+float ceil(const float v)
 {
-	return floorf(value);
+	return ceilf(v);
 }
 
-float abs(const float value)
+Vector2 ceil(const Vector2 &v)
 {
-	return ::abs(value);
+	return Vector2(ceil(v.x), ceil(v.y));
 }
 
-float sqrt(const float value)
+float floor(const float v)
 {
-	return sqrtf(value);
+	return floorf(v);
+}
+
+Vector2 floor(const Vector2 &v)
+{
+	return Vector2(floorf(v.x), floorf(v.y));
+}
+
+float abs(const float v)
+{
+	return ::abs(v);
+}
+
+Vector2 abs(const Vector2 &v)
+{
+	return Vector2(::abs(v.x), ::abs(v.y));
+}
+
+float sqrt(const float v)
+{
+	return sqrtf(v);
+}
+
+Vector2 sqrt(const Vector2 &v)
+{
+	return Vector2(sqrtf(v.x), sqrtf(v.y));
+}
+
+float lerp(const float v0, const float v1, const float t)
+{
+	return v0 * (1.0f - t) + v1 * t;
+}
+
+Vector2 lerp(const Vector2 &v0, const Vector2 &v1, const float t)
+{
+	return v0 * (1.0f - t) + v1 * t;
 }
 
 float pow(const float a, const float b)
@@ -88,11 +123,6 @@ int mod(const int a, const int b)
 {
 	int r = a % b;
 	return r < 0 ? r + b : r;
-}
-
-float lerp(const float v0, const float v1, const float t)
-{
-	return (1.0f-t)*v0 + t*v1;
 }
 
 }
