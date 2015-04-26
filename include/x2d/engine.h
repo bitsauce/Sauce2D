@@ -350,11 +350,11 @@ enum VirtualKey
 	XD_KEY_EQUALS
 };
 
-class XDAPI KeyboardListener
+class XDAPI KeyListener
 {
 public:
-	KeyboardListener();
-	virtual ~KeyboardListener();
+	KeyListener();
+	virtual ~KeyListener();
 
 	virtual void keyPressEvent(const VirtualKey key) { }
 	virtual void keyReleaseEvent(const VirtualKey key) { }
@@ -373,7 +373,7 @@ public:
 class XDAPI Input
 {
 	friend class Window;
-	friend class KeyboardListener;
+	friend class KeyListener;
 	friend class MouseListener;
 public:
 	// Desktop cursor functions
@@ -417,9 +417,9 @@ private:
 
 	// Keyboard listener
 	static map<VirtualKey, KeyBind> s_keyBindings;
-	static list<KeyboardListener*> s_keyListeners;
-	static void addKeyboardListener(KeyboardListener *object);
-	static void removeKeyboardListener(KeyboardListener *object);
+	static list<KeyListener*> s_keyListeners;
+	static void addKeyListener(KeyListener *object);
+	static void removeKeyListener(KeyListener *object);
 
 	// Mouse listener
 	static map<MouseButton, bool> s_mousePressed;

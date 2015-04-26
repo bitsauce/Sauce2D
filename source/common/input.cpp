@@ -12,21 +12,21 @@
 BEGIN_XD_NAMESPACE
 
 map<VirtualKey, Input::KeyBind> Input::s_keyBindings;
-list<KeyboardListener*> Input::s_keyListeners;
+list<KeyListener*> Input::s_keyListeners;
 	
 map<MouseButton, bool> Input::s_mousePressed;
 list<MouseListener*> Input::s_mouseListeners;
 
 Vector2 Input::s_position;
 
-KeyboardListener::KeyboardListener()
+KeyListener::KeyListener()
 {
-	Input::addKeyboardListener(this);
+	Input::addKeyListener(this);
 }
 
-KeyboardListener::~KeyboardListener()
+KeyListener::~KeyListener()
 {
-	Input::removeKeyboardListener(this);
+	Input::removeKeyListener(this);
 }
 
 MouseListener::MouseListener()
@@ -224,7 +224,7 @@ void Input::unbindAll()
 	s_keyBindings.clear();
 }
 
-void Input::addKeyboardListener(KeyboardListener *object)
+void Input::addKeyListener(KeyListener *object)
 {
 	// Add keyboard listener
 	if(object)
@@ -233,7 +233,7 @@ void Input::addKeyboardListener(KeyboardListener *object)
 	}
 }
 
-void Input::removeKeyboardListener(KeyboardListener *object)
+void Input::removeKeyListener(KeyListener *object)
 {
 	s_keyListeners.remove(object);
 }
@@ -241,7 +241,7 @@ void Input::removeKeyboardListener(KeyboardListener *object)
 void Input::charEvent(const wchar_t c)
 {
 	if(Engine::isEnabled(XD_BLOCK_BACKGROUND_INPUT) && !Window::hasFocus()) return;
-	for(list<KeyboardListener*>::iterator itr = s_keyListeners.begin(); itr != s_keyListeners.end(); ++itr)
+	for(list<KeyListener*>::iterator itr = s_keyListeners.begin(); itr != s_keyListeners.end(); ++itr)
 	{
 		(*itr)->charEvent(c);
 	}
@@ -250,7 +250,7 @@ void Input::charEvent(const wchar_t c)
 void Input::keyPressed(const VirtualKey key)
 {
 	if(Engine::isEnabled(XD_BLOCK_BACKGROUND_INPUT) && !Window::hasFocus()) return;
-	for(list<KeyboardListener*>::iterator itr = s_keyListeners.begin(); itr != s_keyListeners.end(); ++itr)
+	for(list<KeyListener*>::iterator itr = s_keyListeners.begin(); itr != s_keyListeners.end(); ++itr)
 	{
 		(*itr)->keyPressEvent(key);
 	}
@@ -259,7 +259,7 @@ void Input::keyPressed(const VirtualKey key)
 void Input::keyReleased(const VirtualKey key)
 {
 	if(Engine::isEnabled(XD_BLOCK_BACKGROUND_INPUT) && !Window::hasFocus()) return;
-	for(list<KeyboardListener*>::iterator itr = s_keyListeners.begin(); itr != s_keyListeners.end(); ++itr)
+	for(list<KeyListener*>::iterator itr = s_keyListeners.begin(); itr != s_keyListeners.end(); ++itr)
 	{
 		(*itr)->keyReleaseEvent(key);
 	}

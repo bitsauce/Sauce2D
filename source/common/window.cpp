@@ -558,31 +558,37 @@ void Window::processEvents(UINT Message, WPARAM wParam, LPARAM lParam)
 
 		case WM_LBUTTONDOWN:
 		{
+			Input::keyPressed(XD_LMB);
 		}
 		break;
 
 		case WM_LBUTTONUP:
 		{
+			Input::keyReleased(XD_LMB);
 		}
 		break;
 
 		case WM_RBUTTONDOWN:
 		{
+			Input::keyPressed(XD_RMB);
 		}
 		break;
 
 		case WM_RBUTTONUP:
 		{
+			Input::keyReleased(XD_RMB);
 		}
 		break;
 		
 		case WM_MBUTTONDOWN:
 		{
+			Input::keyPressed(XD_WHEEL);
 		}
 		break;
 
 		case WM_MBUTTONUP:
 		{
+			Input::keyReleased(XD_WHEEL);
 		}
 		break;
 
