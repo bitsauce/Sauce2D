@@ -14,6 +14,7 @@ public:
 	}
 
 	void setSeed(uint32_t seed);
+	uint32_t getSeed() const { return m_seed; }
 
 	double nextDouble();
 	double nextDouble(double max);
