@@ -14,7 +14,7 @@ BEGIN_XD_NAMESPACE
 FileSystem *FileSystem::s_this = 0;
 
 FileReader::FileReader(const string &path) :
-	stream(path, ifstream::binary)
+	stream(util::getAbsoluteFilePath(path), ifstream::binary)
 {
 }
 
@@ -56,7 +56,7 @@ string FileReader::readAll()
 }
 
 FileWriter::FileWriter(const string &path) :
-	stream(path, ofstream::binary)
+	stream(util::getAbsoluteFilePath(path), ofstream::binary)
 {
 }
 

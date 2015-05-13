@@ -80,10 +80,10 @@ wstring utf8_decode(const string &str)
 string getSaveDir()
 {
 	wchar_t *path;
-	SHGetKnownFolderPath(FOLDERID_SavedGames, 0, 0, &path);
+	SHGetKnownFolderPath(FOLDERID_Documents, 0, 0, &path);
 	string str = utf8_encode(path);
 	CoTaskMemFree(path);
-	return str;
+	return str + "\\My Games";
 }
 
 //------------------------------------------------------------------------
