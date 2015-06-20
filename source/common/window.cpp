@@ -370,7 +370,7 @@ Vector2i Window::getPosition()
 	}*/
 }
 
-void Window::setSize(const Vector2i &size)
+void Window::setSize(const int width, const int height)
 {
 	// Make sure the application is initialized
 	/*if(!m_initEventsDone)
@@ -380,7 +380,7 @@ void Window::setSize(const Vector2i &size)
 	}*/
 
 	// Set size
-	s_size = size;
+	s_size.set(width, height);
 
 	// If we are fullscreen, refresh fullscreen mode
 	if(s_fullscreen)
@@ -442,6 +442,16 @@ void Window::setSize(const Vector2i &size)
 	}
 }
 
+void Window::setWidth(const int width)
+{
+	setSize(width, getSize().y);
+}
+
+void Window::setHeight(const int height)
+{
+	setSize(getSize().x, height);
+}
+
 void Window::maximize()
 {
 }
@@ -461,6 +471,16 @@ void Window::restore()
 Vector2i Window::getSize()
 {
 	return s_size;
+}
+
+int Window::getWidth()
+{
+	return s_size.x;
+}
+
+int Window::getHeight()
+{
+	return s_size.y;
 }
 
 void Window::addWindowListener(WindowListener *listener)

@@ -529,8 +529,13 @@ public:
 	// Window actions
 	static void setPosition(const Vector2i &pos);
 	static Vector2i getPosition();
-	static void setSize(const Vector2i &size);
+	static void setSize(const int width, const int height);
+	static void setSize(const Vector2i &size) { setSize(size.x, size.y); }
+	static void setWidth(const int width);
+	static void setHeight(const int height);
 	static Vector2i getSize();
+	static int getWidth();
+	static int getHeight();
 	static void minimize();
 	static void maximize();
 	static void restore();
