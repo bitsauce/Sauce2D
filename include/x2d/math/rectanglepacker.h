@@ -77,7 +77,7 @@ public:
 		Vector2i canvas;
 		int area;
 		float efficiency;
-		vector<const Rectangle> rectangles;
+		vector<Rectangle> rectangles;
 	};
 
 	const Result pack();

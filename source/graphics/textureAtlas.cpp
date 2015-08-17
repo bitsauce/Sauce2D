@@ -134,7 +134,7 @@ void TextureAtlas::update()
 	memset(pixels, 0, ATLAS_SIZE*ATLAS_SIZE*4);
 
 	const RectanglePacker::Result result = m_texturePacker.pack();
-	for(vector<const RectanglePacker::Rectangle>::const_iterator itr = result.rectangles.begin(); itr != result.rectangles.end(); ++itr)
+	for(vector<RectanglePacker::Rectangle>::const_iterator itr = result.rectangles.begin(); itr != result.rectangles.end(); ++itr)
 	{
 		const RectanglePacker::Rectangle &rect = (*itr);
 		const Pixmap *pixmap = ((AtlasPage*)rect.getData())->getPixmap();

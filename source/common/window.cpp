@@ -547,7 +547,7 @@ void Window::processEvents(UINT Message, WPARAM wParam, LPARAM lParam)
 		{
 			// Resize viewport
 			s_size.set(LOWORD(lParam), HIWORD(lParam));
-			s_graphicsContext->resizeViewport(s_size.x, s_size.y);
+			if(s_graphicsContext) s_graphicsContext->resizeViewport(s_size.x, s_size.y);
 			for(list<WindowListener*>::iterator itr = s_windowListeners.begin(); itr != s_windowListeners.end(); ++itr)
 			{
 				(*itr)->resizeEvent(s_size.x, s_size.y);
