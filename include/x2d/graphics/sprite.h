@@ -60,6 +60,7 @@ public:
 	float getRotation() const;
 	Color getColor() const;
 	TextureRegion getRegion() const;
+	void setTexture(const Texture2DPtr texture) { m_texture = texture; }
 	Texture2DPtr getTexture() const;
 
 private:

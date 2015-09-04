@@ -1,312 +1,1095 @@
-//       ____  ____     ____                        _____             _            
-// __  _|___ \|  _ \   / ___| __ _ _ __ ___   ___  | ____|_ __   __ _(_)_ __   ___ 
-// \ \/ / __) | | | | | |  _ / _  |  _   _ \ / _ \ |  _| |  _ \ / _  | |  _ \ / _ \
-//  >  < / __/| |_| | | |_| | (_| | | | | | |  __/ | |___| | | | (_| | | | | |  __/
-// /_/\_\_____|____/   \____|\__ _|_| |_| |_|\___| |_____|_| |_|\__, |_|_| |_|\___|
-//                                                              |___/     
-//				Originally written by Marcus Loo Vergara (aka. Bitsauce)
-//									2011-2014 (C)
-// Inspired by: http://nehe.gamedev.net/tutorial/freetype_fonts_in_opengl/24001/
-
-#include <x2d/engine.h>
 #include <x2d/graphics.h>
-
-// Credits to the FreeType library
-// FreeType Headers
-#include <ft2build.h>
-#include <freetype/freetype.h>
-#include <freetype/ftglyph.h>
-#include <freetype/ftoutln.h>
-#include <freetype/fttrigon.h>
-#include <freetype/ftsnames.h>
 
 BEGIN_XD_NAMESPACE
 
-bool getFontFile(string &fontName)
+class FontLoader
 {
-	HKEY hkey;
-	if(RegOpenKeyEx(HKEY_LOCAL_MACHINE, "Software\\Microsoft\\Windows NT\\CurrentVersion\\Fonts", 0, KEY_READ, &hkey) == ERROR_SUCCESS)
-	{
-		// Get maximum buffer sizes
-		ulong maxValue;
-		ulong maxData;
-		RegQueryInfoKey(hkey, NULL, NULL, NULL, NULL, NULL, NULL, NULL, &maxValue, &maxData, NULL, NULL);
-		maxValue++;
-		maxData++;
+public:
+	FontLoader(FileReader*, Font *font, const string &);
 
-		// Enumerate registry
-		int i = 0;
-		char *value = new char[maxValue];
-		ulong valsize = maxValue;
-		uchar *data = new uchar[maxData];
-		ulong datasize = maxData;
-		ulong datatype = REG_SZ;
-		while(RegEnumValue(hkey, i++, value, &valsize, 0, &datatype, data, &datasize) == ERROR_SUCCESS)
-		{
-			// Get name of Font
-			string valstr = value;
-			valstr = valstr.substr(0, valstr.find_first_of('(')-1);
+	virtual int Load() = 0; // Must be implemented by derived class
 
-			// Check if the value was found
-			if(fontName == valstr)
-			{
-				// Set filename
-				char *winDir = new char[MAX_PATH];
-				GetWindowsDirectory(winDir, MAX_PATH);
-				fontName = string(winDir) + "\\Fonts\\" + string(reinterpret_cast<char*>(data));
+protected:
+	void loadPage(int id, const char *pageFile, string fontFile);
+	void SetFontInfo(int outlineThickness);
+	void setCommonInfo(short fontHeight, short base, short scaleW, short scaleH, int pages, bool isPacked);
+	void addChar(int id, short x, short y, short w, short h, short xoffset, short yoffset, short xadvance, short page, int chnl);
+	void AddKerningPair(int first, int second, int amount);
 
-				// Clean up
-				delete[] value;
-				delete[] data;
-				delete[] winDir;
-				return true;
-			}
+	FileReader *m_file;
+	Font *m_font;
+	string m_fontFile;
 
-			// Reset variables
-			ZeroMemory(value, maxValue);
-			ZeroMemory(data, maxData);
-			valsize = maxValue;
-			datasize = maxData;
-		}
+	int m_outlineThickness;
+};
 
-		// Clean up
-		delete[] value;
-		delete[] data;
-	}
-	return false;
-}
-
-// Finds next power of two
-inline int next_p2(int a)
+class FontLoaderTextFormat : public FontLoader
 {
-	int rval = 2;
-	while(rval < a) rval <<= 1;
-	return rval;
-}
+public:
+	FontLoaderTextFormat(FileReader*, Font *font, const string &fontFile);
 
-Font::Font(const string &filePath, const uint size) :
-	m_color(0, 0, 0, 255),
-	m_depth(0.0f),
-	m_atlas(0),
-	m_size(0),
-	m_lineSize(0),
-	m_Msize(0)
+	int Load();
+
+	int SkipWhiteSpace(std::string &str, int start);
+	int FindEndOfToken(std::string &str, int start);
+
+	void InterpretInfo(std::string &str, int start);
+	void InterpretCommon(std::string &str, int start);
+	void InterpretChar(std::string &str, int start);
+	void InterpretSpacing(std::string &str, int start);
+	void InterpretKerning(std::string &str, int start);
+	void InterpretPage(std::string &str, int start, const string &fontFile);
+};
+
+class FontLoaderBinaryFormat : public FontLoader
 {
-	// Load font from file
-	//
-	// Create and initialize a FreeType library
-	FT_Library library;
-	FT_Error error;
-	if((error = FT_Init_FreeType(&library)) != 0)
-	{
-		LOG("Font::load - Failed to initialize FreeType 2 (error code: %i)", error);
-		return;
-	}
+public:
+	FontLoaderBinaryFormat(FileReader*, Font *font, const string &fontFile);
 
-	// Load font information from file
-	FT_Face face;
-	if((error = FT_New_Face(library, filePath.c_str(), 0, &face)) != 0)
-	{
-		LOG("Font::load - Failed load font data (error code: %i)", error);
-		return;
-	}
+	int Load();
 
-	// Setup font characters
-	m_metrics.resize(128);
-	m_size = size;
+	void ReadInfoBlock(int size);
+	void ReadCommonBlock(int size);
+	void ReadPagesBlock(int size);
+	void ReadCharsBlock(int size);
+	void ReadKerningPairsBlock(int size);
+};
 
-	// Set characterset size
-	//if(error = FT_Set_Char_Size(face, size << 6, size << 6, 96, 96))
-	if((error = FT_Set_Pixel_Sizes(face, size, size)) != 0)
-	{
-		LOG("Font::load - Failed to set pixel size (error code: %i)", error);
-		return;
-	}
+//=============================================================================
+// Font
+//
+// This is the Font class that is used to write text with bitmap fonts.
+//=============================================================================
 
-	// Load bitmap data for each of the character of the font
-	vector<Pixmap> pixmaps; int maxY = 0; int minY = 0;
-	for(uchar ch = 0; ch < 128; ch++)
+Font::Font(string fontFile)
+{
+	m_fontHeight = 0;
+	m_base = 0;
+	m_scaleW = 0;
+	m_scaleH = 0;
+	m_scale = 1.0f;
+	m_hasOutline = false;
+	m_encoding = NONE;
+	m_color = Color(255, 255, 255, 255);
+	m_depth = 0.0f;
+
+	// Load the font
+	util::toAbsoluteFilePath(fontFile);
+
+	FileReader *file = new FileReader(fontFile);
+	if (file->isOpen())
 	{
-		// Load the glyph for our character
-		if((error = FT_Load_Glyph(face, FT_Get_Char_Index(face, ch), FT_LOAD_DEFAULT)) != 0)
-		{
-			LOG("Font::load - Failed to load glyph '%c' (error code: %i)", ch, error);
-			return;
+		// Determine format by reading the first bytes of the file
+		char fmt[3];
+		file->readBytes(fmt, 3);
+
+		FontLoader *loader = 0;
+		if (strcmp(fmt, "BMF") == 0) {
+			loader = new FontLoaderBinaryFormat(file, this, fontFile);
+		}
+		else {
+			loader = new FontLoaderTextFormat(file, this, fontFile);
 		}
 
-		// Render glyph to bitmap
-		if((error = FT_Render_Glyph(face->glyph, FT_RENDER_MODE_NORMAL)) != 0)
-		{
-			LOG("Font::load - Failed to get glyph '%c' (error code: %i)", ch, error);
-			return;
-		}
-
-		// Get bitmap object
-		FT_Bitmap &bitmap = face->glyph->bitmap;
-
-		// Get dimentions of glyph
-		uint width = bitmap.width;
-		uint height = bitmap.rows;
-
-		// Allocate memory for texture data
-		Pixmap pixmap(width, height);
-		for(uint y = 0; y < height; y++)
-		{ 
-			for(uint x = 0; x < width; x++)
-			{
-				uchar c = bitmap.buffer[x + (height-y-1)*width];
-				pixmap.setColor(x, y, Color(255, 255, 255, c));
-			}
-		}
-		pixmaps.push_back(pixmap);
-
-		// Store metrics
-		CharMetrics &metrics = m_metrics[ch];
-		metrics.bearing.set(
-			face->glyph->metrics.horiBearingX >> 6,
-			face->glyph->metrics.horiBearingY >> 6
-			);
-		metrics.size.set(
-			face->glyph->metrics.width >> 6,
-			face->glyph->metrics.height >> 6
-			);
-		metrics.advance.set(
-			face->glyph->advance.x >> 6,
-			metrics.bearing.y - metrics.size.y
-			);
-
-		if(metrics.bearing.y > maxY) maxY = metrics.bearing.y;
-		if(metrics.bearing.y - metrics.size.y < minY) minY = metrics.bearing.y - metrics.size.y;
+		loader->Load();
+		delete loader;
 	}
-	m_lineSize = maxY - minY;
-	m_Msize = m_metrics['M'].size.y;
-
-	// Create Font atlas
-	m_atlas = new xd::TextureAtlas(pixmaps);
-
-	// Clean up FreeType
-	FT_Done_Face(face);
-	FT_Done_FreeType(library);
 }
 
 Font::~Font()
 {
-	delete m_atlas;
+	std::map<int, CharDescr*>::iterator it = m_chars.begin();
+	while (it != m_chars.end())
+	{
+		delete it->second;
+		it++;
+	}
+
+	m_pages.clear();
 }
 
-FontPtr Font::loadResource(const string &name)
+FontPtr Font::loadResource(const string &fontFile)
 {
-	// Get name and size
-	uint size = util::strToInt(name.substr(name.find_last_of(' ') + 1));
-	string filePath = name.substr(0, name.find_last_of(' '));
+	return FontPtr(new Font(fontFile));
+}
 
-	// Check if we can find the font in the local directories
-	util::toAbsoluteFilePath(filePath);
-	if(!util::fileExists(filePath))
+void Font::setTextEncoding(FontTextEncoding encoding)
+{
+	this->m_encoding = encoding;
+}
+
+// Internal
+CharDescr *Font::getChar(int id)
+{
+	map<int, CharDescr*>::iterator it = m_chars.find(id);
+	if (it == m_chars.end()) return 0;
+	return it->second;
+}
+
+// Internal
+float Font::adjustForKerningPairs(int first, int second)
+{
+	CharDescr *ch = getChar(first);
+	if (ch == 0) return 0;
+	for (UINT n = 0; n < ch->kerningPairs.size(); n += 2)
 	{
-		// Loop throught the registry to find the file by font name
-		
-		if(!getFontFile(filePath))
-		{
-			LOG("Font '%s' not found!", name);
-			return FontPtr(0);
+		if (ch->kerningPairs[n] == second)
+			return ch->kerningPairs[n + 1] * m_scale;
+	}
+
+	return 0;
+}
+
+float Font::getStringWidth(const string &text, int count)
+{
+	if (count <= 0) {
+		count = getTextLength(text);
+	}
+
+	float x = 0;
+
+	for (int n = 0; n < count; )
+	{
+		int charId = getTextChar(text, n, &n);
+
+		CharDescr *ch = getChar(charId);
+		if (ch == 0) ch = &m_defChar;
+
+		x += m_scale * (ch->xAdv);
+
+		if (n < count)
+			x += adjustForKerningPairs(charId, getTextChar(text, n));
+	}
+
+	return x;
+}
+
+float Font::getStringHeight(const string &text)
+{
+	float height = m_scale * float(m_fontHeight);
+	for (char c : text)
+	{
+		if (c == '\n') {
+			height += m_scale * float(m_fontHeight);
 		}
-	}
-
-	return FontPtr(new Font(filePath, size));
-}
-
-float Font::getStringWidth(const string &str)
-{
-	float width = 0.0f;
-	for(uint i = 0; i < str.size(); i++)
-	{
-		uchar ch = str[i];
-		if(!isValidChar(ch))
-			continue;
-		width += m_metrics[ch].advance.x;
-	}
-	return width;
-}
-
-float Font::getStringHeight(const string &str)
-{
-	float height = (float)m_lineSize;
-	for(uint i = 0; i < str.size(); i++)
-	{
-		if(str[i] == '\n')
-			height += m_lineSize;
 	}
 	return height;
 }
 
-void Font::setColor(const Color &color)
+void Font::setHeight(float h)
 {
-	m_color = color;
+	m_scale = h / float(m_fontHeight);
 }
 
-void Font::setDepth(const float depth)
+float Font::getHeight() const
 {
-	m_depth = depth;
+	return m_scale * float(m_fontHeight);
 }
 
-void Font::draw(SpriteBatch *batch, const Vector2 &pos, const string &str) const
+float Font::getBottomOffset() const
 {
-	// Get current position
-	Vector2 currentPos = pos;
+	return m_scale * (m_base - m_fontHeight);
+}
 
-	// Draw string
-	Sprite sprite(m_atlas->getTexture());
+float Font::getTopOffset() const
+{
+	return m_scale * (m_base - 0);
+}
+
+// Internal
+// Returns the number of bytes in the string until the null char
+int Font::getTextLength(const string &text)
+{
+	if (m_encoding == UTF16)
+	{
+		int textLen = 0;
+		while (true)
+		{
+			unsigned int len;
+			int r = util::decodeUTF16(&text[textLen], &len);
+			if (r > 0)
+				textLen += len;
+			else if (r < 0)
+				textLen++;
+			else
+				return textLen;
+		}
+	}
+
+	// Both UTF8 and standard ASCII strings can use strlen
+	return text.size();
+}
+
+// Internal
+int Font::getTextChar(const string &text, int pos, int *nextPos)
+{
+	int ch;
+	unsigned int len;
+	if (m_encoding == UTF8)
+	{
+		ch = util::decodeUTF8(&text[pos], &len);
+		if (ch == -1) len = 1;
+	}
+	else if (m_encoding == UTF16)
+	{
+		ch = util::decodeUTF16(&text[pos], &len);
+		if (ch == -1) len = 2;
+	}
+	else
+	{
+		len = 1;
+		ch = (unsigned char)text[pos];
+	}
+
+	if (nextPos) *nextPos = pos + len;
+	return ch;
+}
+
+// Internal
+int Font::findTextChar(const char *text, int start, int length, int ch)
+{
+	int pos = start;
+	int nextPos;
+	int currChar = -1;
+	while (pos < length)
+	{
+		currChar = getTextChar(text, pos, &nextPos);
+		if (currChar == ch)
+			return pos;
+		pos = nextPos;
+	}
+
+	return -1;
+}
+
+void Font::drawInternal(SpriteBatch *spriteBatch, float x, float y, const string &text, int count, float spacing)
+{
+	int page = -1;
+
+	Sprite sprite(m_pages[0]);
 	sprite.setColor(m_color);
 	sprite.setDepth(m_depth);
-	for(uint i = 0; i < str.size(); i++)
+	for (int n = 0; n < count; )
 	{
-		// Check for new line
-		if(str[i] == '\n')
+		int charId = getTextChar(text, n, &n);
+		CharDescr *ch = getChar(charId);
+		if (ch == 0) ch = &m_defChar;
+
+		// Map the center of the texel to the corners
+		// in order to get pixel perfect mapping
+		float u = float(ch->srcX) / m_scaleW;
+		float v = float(ch->srcY) / m_scaleH;
+		float u2 = u + float(ch->srcW) / m_scaleW;
+		float v2 = v + float(ch->srcH) / m_scaleH;
+
+		float a = m_scale * float(ch->xAdv);
+		float w = m_scale * float(ch->srcW);
+		float h = m_scale * float(ch->srcH);
+		float ox = m_scale * float(ch->xOff);
+		float oy = m_scale * float(ch->yOff);
+
+		sprite.setRegion(TextureRegion(u, 1.f-v2, u2, 1.f-v));
+		sprite.setPosition(x + ox, y + oy);
+		sprite.setSize(w, h);
+
+		if (ch->page != page)
 		{
-			currentPos.x = pos.x;
-			currentPos.y += m_lineSize;
-			continue;
+			page = ch->page;
+			sprite.setTexture(m_pages[page]);
 		}
 
-		// Get char index
-		uchar ch = str[i];
-		if(!isValidChar(ch)) {
-			continue; // Cannot draw this char (yet)
-		}
-		
-		// Get char object
-		const CharMetrics &metrics = m_metrics[ch];
+		spriteBatch->drawSprite(sprite);
 
-		// Apply char bearing
-		currentPos.x += metrics.bearing.x;
-		
-		// Draw char
-		sprite.setRegion(m_atlas->get(ch));
-		sprite.setPosition(currentPos.x, currentPos.y + (m_Msize - metrics.size.y - metrics.advance.y));
-		sprite.setSize((float)metrics.size.x, (float)metrics.size.y);
-		batch->drawSprite(sprite);
+		x += a;
+		if (charId == ' ')
+			x += spacing;
 
-		// Apply advance
-		currentPos.x += metrics.advance.x - metrics.bearing.x;
+		if (n < count)
+			x += adjustForKerningPairs(charId, getTextChar(text, n));
 	}
 }
 
-xd::Texture2DPtr Font::renderToTexture(GraphicsContext &graphicsContext, const string &text, const uint padding)
+void Font::draw(SpriteBatch *spriteBatch, float x, float y, const string &text, FontAlign mode)
 {
-	// Setup render target
-	RenderTarget2D renderTarget((uint)ceil(getStringWidth(text)) + padding, (uint)ceil(getStringHeight(text)) + padding, 1);
-	graphicsContext.setRenderTarget(&renderTarget);
-	graphicsContext.disable(GraphicsContext::BLEND);
+	// Get character count
+	vector<string> lines = util::splitString(text, "\n");
+	for (string line : lines)
+	{
+		int count = getTextLength(line);
+		int drawX = x;
+		if (mode == FONT_ALIGN_CENTER)
+		{
+			float w = getStringWidth(line, count);
+			drawX -= w / 2;
+		}
+		else if (mode == FONT_ALIGN_RIGHT)
+		{
+			float w = getStringWidth(line, count);
+			drawX -= w;
+		}
 
-	SpriteBatch spriteBatch(graphicsContext);
-	spriteBatch.begin();
-	draw(&spriteBatch, Vector2(padding*0.5f, padding*0.5f), text);
-	spriteBatch.end();
+		drawInternal(spriteBatch, drawX, y, line, count);
+		y += m_scale * float(m_fontHeight);
+	}
+}
 
-	graphicsContext.setRenderTarget(nullptr);
+void Font::drawBox(SpriteBatch *spriteBatch, float x, float y, float width, const string &text, int count, FontAlign mode)
+{
+	if (count <= 0) {
+		count = getTextLength(text);
+	}
 
-	return renderTarget.getTexture();
+	float currWidth = 0, wordWidth;
+	int lineS = 0, lineE = 0, wordS = 0, wordE = 0;
+	int wordCount = 0;
+
+	const char *s = " ";
+	float spaceWidth = getStringWidth(s, 1);
+	bool softBreak = false;
+
+	for (; lineS < count;)
+	{
+		// Determine the extent of the line
+		for (;;)
+		{
+			// Determine the number of characters in the word
+			while (wordE < count &&
+				getTextChar(text, wordE) != ' ' &&
+				getTextChar(text, wordE) != '\n')
+				// Advance the cursor to the next character
+				getTextChar(text, wordE, &wordE);
+
+			// Determine the width of the word
+			if (wordE > wordS)
+			{
+				wordCount++;
+				wordWidth = getStringWidth(&text[wordS], wordE - wordS);
+			}
+			else
+				wordWidth = 0;
+
+			// Does the word fit on the line? The first word is always accepted.
+			if (wordCount == 1 || currWidth + (wordCount > 1 ? spaceWidth : 0) + wordWidth <= width)
+			{
+				// Increase the line extent to the end of the word
+				lineE = wordE;
+				currWidth += (wordCount > 1 ? spaceWidth : 0) + wordWidth;
+
+				// Did we reach the end of the line?
+				if (wordE == count || getTextChar(text, wordE) == '\n')
+				{
+					softBreak = false;
+
+					// Skip the newline character
+					if (wordE < count)
+						// Advance the cursor to the next character
+						getTextChar(text, wordE, &wordE);
+					break;
+				}
+
+				// Skip the trailing space
+				if (wordE < count && getTextChar(text, wordE) == ' ')
+					// Advance the cursor to the next character
+					getTextChar(text, wordE, &wordE);
+				// Move to next word
+				wordS = wordE;
+			}
+			else
+			{
+				softBreak = true;
+
+				// Skip the trailing space
+				if (wordE < count && getTextChar(text, wordE) == ' ')
+					// Advance the cursor to the next character
+					getTextChar(text, wordE, &wordE);
+				break;
+			}
+		}
+
+		// Write the line
+		if (mode == FONT_ALIGN_JUSTIFY)
+		{
+			float spacing = 0;
+			if (softBreak)
+			{
+				if (wordCount > 2)
+					spacing = (width - currWidth) / (wordCount - 2);
+				else
+					spacing = (width - currWidth);
+			}
+			drawInternal(spriteBatch, x, y, &text[lineS], lineE - lineS, spacing);
+		}
+		else
+		{
+			float cx = x;
+			if (mode == FONT_ALIGN_RIGHT)
+				cx = x + width - currWidth;
+			else if (mode == FONT_ALIGN_CENTER)
+				cx = x + 0.5f*(width - currWidth);
+			drawInternal(spriteBatch, x, y, &text[lineS], lineE - lineS);
+		}
+
+		if (softBreak)
+		{
+			// Skip the trailing space
+			if (lineE < count && getTextChar(text, lineE) == ' ')
+				// Advance the cursor to the next character
+				getTextChar(text, lineE, &lineE);
+
+			// We've already counted the first word on the next line
+			currWidth = wordWidth;
+			wordCount = 1;
+		}
+		else
+		{
+			// Skip the line break
+			if (lineE < count && getTextChar(text, lineE) == '\n')
+				// Advance the cursor to the next character
+				getTextChar(text, lineE, &lineE);
+			currWidth = 0;
+			wordCount = 0;
+		}
+
+		// Move to next line
+		lineS = lineE;
+		wordS = wordE;
+		y -= m_scale * float(m_fontHeight);
+	}
+}
+
+//=============================================================================
+// FontLoader
+//
+// This is the base class for all loader classes. This is the only class
+// that has access to and knows how to set the Font members.
+//=============================================================================
+
+FontLoader::FontLoader(FileReader *f, Font *font, const string &fontFile)
+{
+	this->m_file = f;
+	this->m_font = font;
+	this->m_fontFile = fontFile;
+
+	m_outlineThickness = 0;
+}
+
+void FontLoader::loadPage(int id, const char *pageFile, string fontFile)
+{
+	// Load the texture from the same directory as the font descriptor file
+
+	// Find the directory
+	for (size_t n = 0; (n = fontFile.find('/', n)) != string::npos; ) fontFile.replace(n, 1, "\\");
+	size_t i = fontFile.rfind('\\');
+	if (i != string::npos)
+		fontFile = fontFile.substr(0, i + 1);
+	else
+		fontFile = "";
+
+	// Load the font textures
+	fontFile += pageFile;
+
+	m_font->m_pages[id] = ResourceManager::get<Texture2D>(fontFile);
+}
+
+void FontLoader::SetFontInfo(int outlineThickness)
+{
+	m_outlineThickness = outlineThickness;
+}
+
+void FontLoader::setCommonInfo(short fontHeight, short base, short scaleW, short scaleH, int pages, bool isPacked)
+{
+	m_font->m_fontHeight = fontHeight;
+	m_font->m_base = base;
+	m_font->m_scaleW = scaleW;
+	m_font->m_scaleH = scaleH;
+	m_font->m_pages.resize(pages);
+	for (int n = 0; n < pages; n++)
+		m_font->m_pages[n] = 0;
+
+	if (isPacked && m_outlineThickness)
+		m_font->m_hasOutline = true;
+}
+
+void FontLoader::addChar(int id, short x, short y, short w, short h, short xoffset, short yoffset, short xadvance, short page, int chnl)
+{
+	// Convert to a 4 element vector
+	// TODO: Does this depend on hardware? It probably does
+	if (chnl == 1) chnl = 0x00010000;  // Blue channel
+	else if (chnl == 2) chnl = 0x00000100;  // Green channel
+	else if (chnl == 4) chnl = 0x00000001;  // Red channel
+	else if (chnl == 8) chnl = 0x01000000;  // Alpha channel
+	else chnl = 0;
+
+	if (id >= 0)
+	{
+		CharDescr *ch = new CharDescr;
+		ch->srcX = x;
+		ch->srcY = y;
+		ch->srcW = w;
+		ch->srcH = h;
+		ch->xOff = xoffset;
+		ch->yOff = yoffset;
+		ch->xAdv = xadvance;
+		ch->page = page;
+		ch->chnl = chnl;
+
+		m_font->m_chars.insert(std::map<int, CharDescr*>::value_type(id, ch));
+	}
+
+	if (id == -1)
+	{
+		m_font->m_defChar.srcX = x;
+		m_font->m_defChar.srcY = y;
+		m_font->m_defChar.srcW = w;
+		m_font->m_defChar.srcH = h;
+		m_font->m_defChar.xOff = xoffset;
+		m_font->m_defChar.yOff = yoffset;
+		m_font->m_defChar.xAdv = xadvance;
+		m_font->m_defChar.page = page;
+		m_font->m_defChar.chnl = chnl;
+	}
+}
+
+void FontLoader::AddKerningPair(int first, int second, int amount)
+{
+	if (first >= 0 && first < 256 && m_font->m_chars[first])
+	{
+		m_font->m_chars[first]->kerningPairs.push_back(second);
+		m_font->m_chars[first]->kerningPairs.push_back(amount);
+	}
+}
+
+//=============================================================================
+// FontLoaderTextFormat
+//
+// This class implements the logic for loading a BMFont file in text format
+//=============================================================================
+
+FontLoaderTextFormat::FontLoaderTextFormat(FileReader *f, Font *font, const string &fontFile) : FontLoader(f, font, fontFile)
+{
+}
+
+int FontLoaderTextFormat::Load()
+{
+	string line;
+
+	while (!m_file->isEOF())
+	{
+		// Read until line feed (or EOF)
+		line = "";
+		line.reserve(256);
+		while (!m_file->isEOF())
+		{
+			char ch;
+			if (m_file->readBytes(&ch, 1))
+			{
+				if (ch != '\n')
+					line += ch;
+				else
+					break;
+			}
+		}
+
+		// Skip white spaces
+		int pos = SkipWhiteSpace(line, 0);
+
+		// Read token
+		int pos2 = FindEndOfToken(line, pos);
+		string token = line.substr(pos, pos2 - pos);
+
+		// Interpret line
+		if (token == "info")
+			InterpretInfo(line, pos2);
+		else if (token == "common")
+			InterpretCommon(line, pos2);
+		else if (token == "char")
+			InterpretChar(line, pos2);
+		else if (token == "kerning")
+			InterpretKerning(line, pos2);
+		else if (token == "page")
+			InterpretPage(line, pos2, m_fontFile);
+	}
+
+	m_file->close();
+	delete m_file;
+	m_file = 0;
+
+	// Success
+	return 0;
+}
+
+int FontLoaderTextFormat::SkipWhiteSpace(string &str, int start)
+{
+	UINT n = start;
+	while (n < str.size())
+	{
+		char ch = str[n];
+		if (ch != ' ' &&
+			ch != '\t' &&
+			ch != '\r' &&
+			ch != '\n')
+			break;
+
+		++n;
+	}
+
+	return n;
+}
+
+int FontLoaderTextFormat::FindEndOfToken(string &str, int start)
+{
+	UINT n = start;
+	if (str[n] == '"')
+	{
+		n++;
+		while (n < str.size())
+		{
+			char ch = str[n];
+			if (ch == '"')
+			{
+				// Include the last quote char in the token
+				++n;
+				break;
+			}
+			++n;
+		}
+	}
+	else
+	{
+		while (n < str.size())
+		{
+			char ch = str[n];
+			if (ch == ' ' ||
+				ch == '\t' ||
+				ch == '\r' ||
+				ch == '\n' ||
+				ch == '=')
+				break;
+
+			++n;
+		}
+	}
+
+	return n;
+}
+
+void FontLoaderTextFormat::InterpretKerning(string &str, int start)
+{
+	// Read the attributes
+	int first = 0;
+	int second = 0;
+	int amount = 0;
+
+	int pos, pos2 = start;
+	while (true)
+	{
+		pos = SkipWhiteSpace(str, pos2);
+		pos2 = FindEndOfToken(str, pos);
+
+		string token = str.substr(pos, pos2 - pos);
+
+		pos = SkipWhiteSpace(str, pos2);
+		if ((uint)pos == str.size() || str[pos] != '=') break;
+
+		pos = SkipWhiteSpace(str, pos + 1);
+		pos2 = FindEndOfToken(str, pos);
+
+		string value = str.substr(pos, pos2 - pos);
+
+		if (token == "first")
+			first = strtol(value.c_str(), 0, 10);
+		else if (token == "second")
+			second = strtol(value.c_str(), 0, 10);
+		else if (token == "amount")
+			amount = strtol(value.c_str(), 0, 10);
+
+		if ((uint)pos == str.size()) break;
+	}
+
+	// Store the attributes
+	AddKerningPair(first, second, amount);
+}
+
+void FontLoaderTextFormat::InterpretChar(string &str, int start)
+{
+	// Read all attributes
+	int id = 0;
+	short x = 0;
+	short y = 0;
+	short width = 0;
+	short height = 0;
+	short xoffset = 0;
+	short yoffset = 0;
+	short xadvance = 0;
+	short page = 0;
+	int chnl = 0;
+
+	int pos, pos2 = start;
+	while (true)
+	{
+		pos = SkipWhiteSpace(str, pos2);
+		pos2 = FindEndOfToken(str, pos);
+
+		string token = str.substr(pos, pos2 - pos);
+
+		pos = SkipWhiteSpace(str, pos2);
+		if ((uint)pos == str.size() || str[pos] != '=') break;
+
+		pos = SkipWhiteSpace(str, pos + 1);
+		pos2 = FindEndOfToken(str, pos);
+
+		string value = str.substr(pos, pos2 - pos);
+
+		if (token == "id")
+			id = strtol(value.c_str(), 0, 10);
+		else if (token == "x")
+			x = (short)strtol(value.c_str(), 0, 10);
+		else if (token == "y")
+			y = (short)strtol(value.c_str(), 0, 10);
+		else if (token == "width")
+			width = (short)strtol(value.c_str(), 0, 10);
+		else if (token == "height")
+			height = (short)strtol(value.c_str(), 0, 10);
+		else if (token == "xoffset")
+			xoffset = (short)strtol(value.c_str(), 0, 10);
+		else if (token == "yoffset")
+			yoffset = (short)strtol(value.c_str(), 0, 10);
+		else if (token == "xadvance")
+			xadvance = (short)strtol(value.c_str(), 0, 10);
+		else if (token == "page")
+			page = (short)strtol(value.c_str(), 0, 10);
+		else if (token == "chnl")
+			chnl = strtol(value.c_str(), 0, 10);
+
+		if ((uint)pos == str.size()) break;
+	}
+
+	// Store the attributes
+	addChar(id, x, y, width, height, xoffset, yoffset, xadvance, page, chnl);
+}
+
+void FontLoaderTextFormat::InterpretCommon(string &str, int start)
+{
+	short fontHeight = 0;
+	short base = 0;
+	short scaleW = 0;
+	short scaleH = 0;
+	int pages = 0;
+	int packed = 0;
+
+	// Read all attributes
+	int pos, pos2 = start;
+	while (true)
+	{
+		pos = SkipWhiteSpace(str, pos2);
+		pos2 = FindEndOfToken(str, pos);
+
+		string token = str.substr(pos, pos2 - pos);
+
+		pos = SkipWhiteSpace(str, pos2);
+		if ((uint)pos == str.size() || str[pos] != '=') break;
+
+		pos = SkipWhiteSpace(str, pos + 1);
+		pos2 = FindEndOfToken(str, pos);
+
+		string value = str.substr(pos, pos2 - pos);
+
+		if (token == "lineHeight")
+			fontHeight = (short)strtol(value.c_str(), 0, 10);
+		else if (token == "base")
+			base = (short)strtol(value.c_str(), 0, 10);
+		else if (token == "scaleW")
+			scaleW = (short)strtol(value.c_str(), 0, 10);
+		else if (token == "scaleH")
+			scaleH = (short)strtol(value.c_str(), 0, 10);
+		else if (token == "pages")
+			pages = strtol(value.c_str(), 0, 10);
+		else if (token == "packed")
+			packed = strtol(value.c_str(), 0, 10);
+
+		if ((uint)pos == str.size()) break;
+	}
+
+	setCommonInfo(fontHeight, base, scaleW, scaleH, pages, packed ? true : false);
+}
+
+void FontLoaderTextFormat::InterpretInfo(string &str, int start)
+{
+	int outlineThickness = 0;
+
+	// Read all attributes
+	int pos, pos2 = start;
+	while (true)
+	{
+		pos = SkipWhiteSpace(str, pos2);
+		pos2 = FindEndOfToken(str, pos);
+
+		string token = str.substr(pos, pos2 - pos);
+
+		pos = SkipWhiteSpace(str, pos2);
+		if ((uint)pos == str.size() || str[pos] != '=') break;
+
+		pos = SkipWhiteSpace(str, pos + 1);
+		pos2 = FindEndOfToken(str, pos);
+
+		string value = str.substr(pos, pos2 - pos);
+
+		if (token == "outline")
+			outlineThickness = (short)strtol(value.c_str(), 0, 10);
+
+		if ((uint)pos == str.size()) break;
+	}
+
+	SetFontInfo(outlineThickness);
+}
+
+void FontLoaderTextFormat::InterpretPage(string &str, int start, const string &fontFile)
+{
+	int id = 0;
+	string file;
+
+	// Read all attributes
+	int pos, pos2 = start;
+	while (true)
+	{
+		pos = SkipWhiteSpace(str, pos2);
+		pos2 = FindEndOfToken(str, pos);
+
+		string token = str.substr(pos, pos2 - pos);
+
+		pos = SkipWhiteSpace(str, pos2);
+		if ((uint)pos == str.size() || str[pos] != '=') break;
+
+		pos = SkipWhiteSpace(str, pos + 1);
+		pos2 = FindEndOfToken(str, pos);
+
+		string value = str.substr(pos, pos2 - pos);
+
+		if (token == "id")
+			id = strtol(value.c_str(), 0, 10);
+		else if (token == "file")
+			file = value.substr(1, value.length() - 2);
+
+		if ((uint)pos == str.size()) break;
+	}
+
+	loadPage(id, file.c_str(), fontFile);
+}
+
+//=============================================================================
+// FontLoaderBinaryFormat
+//
+// This class implements the logic for loading a BMFont file in binary format
+//=============================================================================
+
+FontLoaderBinaryFormat::FontLoaderBinaryFormat(FileReader *f, Font *font, const string &fontFile) : FontLoader(f, font, fontFile)
+{
+}
+
+int FontLoaderBinaryFormat::Load()
+{
+	// Read and validate the tag. It should be 66, 77, 70, 2, 
+	// or 'BMF' and 2 where the number is the file version.
+	char magicString[4];
+	m_file->readBytes(magicString, 4);
+	if (strcmp(magicString, "BMF\003") != 0)
+	{
+		LOG("Unrecognized format for '%s'", m_fontFile);
+		
+		m_file->close();
+		delete m_file;
+		m_file = 0;
+
+		return -1;
+	}
+
+	// Read each block
+	char blockType;
+	int blockSize;
+	while (m_file->readBytes(&blockType, 1))
+	{
+		// Read the blockSize
+		m_file->readBytes((char*)&blockSize, 4);
+
+		switch (blockType)
+		{
+		case 1: // info
+			ReadInfoBlock(blockSize);
+			break;
+		case 2: // common
+			ReadCommonBlock(blockSize);
+			break;
+		case 3: // pages
+			ReadPagesBlock(blockSize);
+			break;
+		case 4: // chars
+			ReadCharsBlock(blockSize);
+			break;
+		case 5: // kerning pairs
+			ReadKerningPairsBlock(blockSize);
+			break;
+		default:
+			LOG("Unexpected block type (%d)", blockType);
+
+			m_file->close();
+			delete m_file;
+			m_file = 0;
+
+			return -1;
+		}
+	}
+
+	m_file->close();
+	delete m_file;
+	m_file = 0;
+
+	// Success
+	return 0;
+}
+
+void FontLoaderBinaryFormat::ReadInfoBlock(int size)
+{
+#pragma pack(push)
+#pragma pack(1)
+	struct infoBlock
+	{
+		WORD fontSize;
+		BYTE reserved : 4;
+		BYTE bold : 1;
+		BYTE italic : 1;
+		BYTE unicode : 1;
+		BYTE smooth : 1;
+		BYTE charSet;
+		WORD stretchH;
+		BYTE aa;
+		BYTE paddingUp;
+		BYTE paddingRight;
+		BYTE paddingDown;
+		BYTE paddingLeft;
+		BYTE spacingHoriz;
+		BYTE spacingVert;
+		BYTE outline;         // Added with version 2
+		char fontName[1];
+	};
+#pragma pack(pop)
+
+	infoBlock blk;
+	m_file->readBytes((char*)&blk, size);
+
+	// We're only interested in the outline thickness
+	SetFontInfo(blk.outline);
+}
+
+void FontLoaderBinaryFormat::ReadCommonBlock(int size)
+{
+#pragma pack(push)
+#pragma pack(1)
+	struct commonBlock
+	{
+		WORD lineHeight;
+		WORD base;
+		WORD scaleW;
+		WORD scaleH;
+		WORD pages;
+		BYTE packed : 1;
+		BYTE reserved : 7;
+		BYTE alphaChnl;
+		BYTE redChnl;
+		BYTE greenChnl;
+		BYTE blueChnl;
+	};
+#pragma pack(pop)
+
+	commonBlock blk;
+	m_file->readBytes((char*)&blk, size);
+
+	setCommonInfo(blk.lineHeight, blk.base, blk.scaleW, blk.scaleH, blk.pages, blk.packed ? true : false);
+}
+
+void FontLoaderBinaryFormat::ReadPagesBlock(int size)
+{
+#pragma pack(push)
+#pragma pack(1)
+	struct pagesBlock
+	{
+		char pageNames[1];
+	};
+#pragma pack(pop)
+
+	pagesBlock blk;
+	m_file->readBytes((char*)&blk, size);
+
+	for (int id = 0, pos = 0; pos < size; id++)
+	{
+		loadPage(id, &blk.pageNames[pos], m_fontFile);
+		pos += 1 + (int)strlen(&blk.pageNames[pos]);
+	}
+}
+
+void FontLoaderBinaryFormat::ReadCharsBlock(int size)
+{
+#pragma pack(push)
+#pragma pack(1)
+	struct charsBlock
+	{
+		struct charInfo
+		{
+			DWORD id;
+			WORD  x;
+			WORD  y;
+			WORD  width;
+			WORD  height;
+			short xoffset;
+			short yoffset;
+			short xadvance;
+			BYTE  page;
+			BYTE  chnl;
+		} chars[1];
+	};
+#pragma pack(pop)
+
+	charsBlock blk;
+	m_file->readBytes((char*)&blk, size);
+
+	for (int n = 0; int(n*sizeof(charsBlock::charInfo)) < size; n++)
+	{
+		addChar(blk.chars[n].id,
+			blk.chars[n].x,
+			blk.chars[n].y,
+			blk.chars[n].width,
+			blk.chars[n].height,
+			blk.chars[n].xoffset,
+			blk.chars[n].yoffset,
+			blk.chars[n].xadvance,
+			blk.chars[n].page,
+			blk.chars[n].chnl);
+	}
+}
+
+void FontLoaderBinaryFormat::ReadKerningPairsBlock(int size)
+{
+#pragma pack(push)
+#pragma pack(1)
+	struct kerningPairsBlock
+	{
+		struct kerningPair
+		{
+			DWORD first;
+			DWORD second;
+			short amount;
+		} kerningPairs[1];
+	};
+#pragma pack(pop)
+
+	kerningPairsBlock blk;
+	m_file->readBytes((char*)&blk, size);
+
+	for (int n = 0; int(n*sizeof(kerningPairsBlock::kerningPair)) < size; n++)
+	{
+		AddKerningPair(blk.kerningPairs[n].first,
+			blk.kerningPairs[n].second,
+			blk.kerningPairs[n].amount);
+	}
 }
 
 END_XD_NAMESPACE

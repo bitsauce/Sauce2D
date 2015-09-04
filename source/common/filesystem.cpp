@@ -38,6 +38,12 @@ void FileReader::close()
 	stream.close();
 }
 
+bool FileReader::readBytes(char *buffer, const int count)
+{
+	stream.read(buffer, count);
+	return !stream.eof();
+}
+
 string FileReader::readLine()
 {
 	string line;

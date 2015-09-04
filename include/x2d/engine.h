@@ -115,6 +115,7 @@ public:
 	bool isEOF();
 	void close();
 
+	bool readBytes(char *buffer, const int count);
 	string readLine();
 	string readAll();
 

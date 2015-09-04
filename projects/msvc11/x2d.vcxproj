@@ -25,8 +25,8 @@
     <ClInclude Include="..\..\include\x2d\graphics.h" />
     <ClInclude Include="..\..\include\x2d\graphics\animation.h" />
     <ClInclude Include="..\..\include\x2d\graphics\blendState.h" />
-    <ClInclude Include="..\..\include\x2d\graphics\spriteBatch.h" />
     <ClInclude Include="..\..\include\x2d\graphics\font.h" />
+    <ClInclude Include="..\..\include\x2d\graphics\spriteBatch.h" />
     <ClInclude Include="..\..\include\x2d\graphics\graphicsContext.h" />
     <ClInclude Include="..\..\include\x2d\graphics\rendertarget.h" />
     <ClInclude Include="..\..\include\x2d\graphics\pixmap.h" />
@@ -71,8 +71,8 @@
     <ClCompile Include="..\..\source\common\window.cpp" />
     <ClCompile Include="..\..\source\graphics\animation.cpp" />
     <ClCompile Include="..\..\source\graphics\blendState.cpp" />
-    <ClCompile Include="..\..\source\graphics\spriteBatch.cpp" />
     <ClCompile Include="..\..\source\graphics\font.cpp" />
+    <ClCompile Include="..\..\source\graphics\spriteBatch.cpp" />
     <ClCompile Include="..\..\source\graphics\graphicsContext.cpp" />
     <ClCompile Include="..\..\source\graphics\renderTarget.cpp" />
     <ClCompile Include="..\..\source\graphics\graphics.cpp" />

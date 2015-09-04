@@ -5,67 +5,98 @@
 
 BEGIN_XD_NAMESPACE
 
-struct Color;
-class TextureAtlas;
 class SpriteBatch;
 
 class Font;
 typedef shared_ptr<Font> FontPtr;
 
+class FontLoader;
+class Texture;
+
+struct XDAPI CharDescr
+{
+	CharDescr() : srcX(0), srcY(0), srcW(0), srcH(0), xOff(0), yOff(0), xAdv(0), page(0) {}
+
+	short srcX;
+	short srcY;
+	short srcW;
+	short srcH;
+	short xOff;
+	short yOff;
+	short xAdv;
+	short page;
+	unsigned int chnl;
+
+	std::vector<int> kerningPairs;
+};
+
+enum FontTextEncoding
+{
+	NONE,
+	UTF8,
+	UTF16
+};
+
+
+enum FontAlign
+{
+	FONT_ALIGN_LEFT,
+	FONT_ALIGN_CENTER,
+	FONT_ALIGN_RIGHT,
+	FONT_ALIGN_JUSTIFY
+};
+
 class XDAPI Font
 {
 public:
+	Font(string fontFile);
 	~Font();
 
-	float getStringWidth(const string &str);
-	float getStringHeight(const string &str);
-	void setColor(const Color &color);
-	void setDepth(const float depth);
-	void draw(SpriteBatch *batch, const Vector2 &pos, const string &str) const;
-	Texture2DPtr renderToTexture(GraphicsContext &graphicsContext, const string &text, const uint padding = 2);
+	void setTextEncoding(FontTextEncoding encoding);
+	void setDepth(const float depth) { m_depth = depth;  }
+	void setColor(const Color &color) { m_color = color; }
 
-	struct CharMetrics
-	{
-		CharMetrics() :
-			advance(0),
-			bearing(0),
-			size(0)
-		{
-		}
+	float getStringWidth(const string &text, int count = 0);
+	float getStringHeight(const string &text);
+	void draw(SpriteBatch *spriteBatch, float x, float y, const string &text, FontAlign mode = FONT_ALIGN_LEFT);
+	void draw(SpriteBatch *spriteBatch, const Vector2 &pos, const string &text, FontAlign mode = FONT_ALIGN_LEFT) { draw(spriteBatch, pos.x, pos.y, text, mode); }
+	void drawBox(SpriteBatch *spriteBatch, float x, float y, float width, const string &text, int count, FontAlign mode = FONT_ALIGN_LEFT);
+	void drawBox(SpriteBatch *spriteBatch, const Vector2 &pos, float width, const string &text, int count, FontAlign mode = FONT_ALIGN_LEFT) { drawBox(spriteBatch, pos.x, pos.y, width, text, count, mode); }
 
-		// Metrics
-		Vector2i advance;
-		Vector2i bearing;
-		Vector2i size;
-	};
+	void setHeight(float h);
+	float getHeight() const;
 
-	static FontPtr loadResource(const string &name);
+	float getBottomOffset() const;
+	float getTopOffset() const;
 
-private:
-	// Load font using TrueType 2
-	Font(const string &fontFile, const uint size);
-	bool isValidChar(uchar ch) const { return ch >= 0 && ch < 128; }
+	static FontPtr loadResource(const string &fontFile);
 
-	// Color
-	Color m_color;
+protected:
+	friend class FontLoader;
 
-	// Depth
+	void drawInternal(SpriteBatch *spriteBatch, float x, float y, const string &text, int count, float spacing = 0);
+
+	float adjustForKerningPairs(int first, int second);
+	CharDescr *getChar(int id);
+
+	int getTextLength(const string &text);
+	int getTextChar(const string &text, int pos, int *nextPos = 0);
+	int findTextChar(const char *text, int start, int length, int ch);
+
+	short m_fontHeight; // total height of the font
+	short m_base;       // y of base line
+	short m_scaleW;
+	short m_scaleH;
+	CharDescr m_defChar;
+	bool m_hasOutline;
+
+	float m_scale;
 	float m_depth;
+	Color m_color;
+	FontTextEncoding m_encoding;
 
-	// Texture atlas
-	TextureAtlas *m_atlas;
-
-	// Font size (px)
-	int m_size;
-
-	// Line size (px)
-	int m_lineSize;
-
-	// Origin
-	int m_Msize;
-
-	// Font character metrics
-	vector<CharMetrics> m_metrics;
+	map<int, CharDescr*> m_chars;
+	vector<shared_ptr<Texture2D>> m_pages;
 };
 
 template XDAPI class shared_ptr<Font>;

@@ -170,6 +170,28 @@ namespace util
 	XDAPI string getAbsoluteFilePath(const string &assetPath);
 	XDAPI void toAbsoluteFilePath(string &assetPath);
 	XDAPI void toDirectoryPath(string &path);
+
+	enum UnicodeByteOrder
+	{
+		LITTLE_ENDIAN,
+		BIG_ENDIAN,
+	};
+
+	// This function will attempt to decode a UTF-8 encoded character in the buffer.
+	// If the encoding is invalid, the function returns -1.
+	int decodeUTF8(const char *encodedBuffer, unsigned int *outCharLength);
+
+	// This function will encode the value into the buffer.
+	// If the value is invalid, the function returns -1, else the encoded length.
+	int encodeUTF8(unsigned int value, char *outEncodedBuffer, unsigned int *outCharLength);
+
+	// This function will attempt to decode a UTF-16 encoded character in the buffer.
+	// If the encoding is invalid, the function returns -1.
+	int decodeUTF16(const char *encodedBuffer, unsigned int *outCharLength, UnicodeByteOrder byteOrder = LITTLE_ENDIAN);
+
+	// This function will encode the value into the buffer.
+	// If the value is invalid, the function returns -1, else the encoded length.
+	int encodeUTF16(unsigned int value, char *outEncodedBuffer, unsigned int *outCharLength, UnicodeByteOrder byteOrder = LITTLE_ENDIAN);
 }
 
 END_XD_NAMESPACE
