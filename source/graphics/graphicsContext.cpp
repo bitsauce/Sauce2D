@@ -169,7 +169,7 @@ void GraphicsContext::setupContext()
 	if (!shader)
 	{
 		shader = Graphics::s_defaultShader;
-		shader->setSampler2D("u_texture", m_texture == 0 ? Graphics::s_defaultTexture : m_texture);
+		shader->setSampler2D("u_Texture", m_texture == 0 ? Graphics::s_defaultTexture : m_texture);
 	}
 
 	// Enable shader
@@ -177,7 +177,7 @@ void GraphicsContext::setupContext()
 
 	// Set projection matrix
 	Matrix4 modelViewProjection = m_projectionMatrix * m_modelViewMatrixStack.top();
-	shader->setUniformMatrix4f("u_modelViewProj", modelViewProjection.get());
+	shader->setUniformMatrix4f("u_ModelViewProj", modelViewProjection.get());
 
 	GLuint target = 0;
 

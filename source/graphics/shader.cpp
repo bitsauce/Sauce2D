@@ -48,7 +48,7 @@ Shader::Shader(const string &vertexSource, const string &fragmentSource)
 
 	// Print shader error to console
 	if(logLength > 1) {
-		LOG("\t%s", compileLog);
+		LOG("%s", compileLog);
 	}
 
 	LOG("Compiling fragment shader...");
@@ -70,7 +70,7 @@ Shader::Shader(const string &vertexSource, const string &fragmentSource)
 
 	// Print shader error to console
 	if(logLength > 1) {
-		LOG("\t%s", compileLog);
+		LOG("%s", compileLog);
 	}
 
     LOG("Linking shader program...");
@@ -80,10 +80,10 @@ Shader::Shader(const string &vertexSource, const string &fragmentSource)
     glAttachShader(program, vertShader);
     glAttachShader(program, fragShader);
 
-	glBindAttribLocation(program, 0, "in_position");
-	glBindAttribLocation(program, 1, "in_vertexColor");
-	glBindAttribLocation(program, 2, "in_texCoord");
-	glBindFragDataLocation(program, 0, "out_fragColor");
+	glBindAttribLocation(program, 0, "in_Position");
+	glBindAttribLocation(program, 1, "in_VertexColor");
+	glBindAttribLocation(program, 2, "in_TexCoord");
+	glBindFragDataLocation(program, 0, "out_FragColor");
 
     glLinkProgram(program);
 
@@ -96,7 +96,7 @@ Shader::Shader(const string &vertexSource, const string &fragmentSource)
 
 	// Print program error to console
 	if(logLength > 1) {
-		LOG("\t%s", programLog);
+		LOG("%s", programLog);
 	}
 
 	// Delete shader buffers as they are loaded into the shader program

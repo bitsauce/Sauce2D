@@ -145,35 +145,35 @@ void Graphics::init()
 
 	string vertexShader =
 		"\n"
-		"in vec2 in_position;\n"
-		"in vec2 in_texCoord;\n"
-		"in vec4 in_vertexColor;\n"
+		"in vec2 in_Position;\n"
+		"in vec2 in_TexCoord;\n"
+		"in vec4 in_VertexColor;\n"
 		"\n"
-		"out vec2 texCoord;\n"
-		"out vec4 vertexColor;\n"
+		"out vec2 v_TexCoord;\n"
+		"out vec4 v_VertexColor;\n"
 		"\n"
-		"uniform mat4 u_modelViewProj;\n"
+		"uniform mat4 u_ModelViewProj;\n"
 		"\n"
 		"void main()\n"
 		"{\n"
-		"	gl_Position = vec4(in_position, 0.0, 1.0) * u_modelViewProj;\n"
-		"	texCoord = in_texCoord;\n"
-		"	vertexColor = in_vertexColor;\n"
+		"	gl_Position = vec4(in_Position, 0.0, 1.0) * u_ModelViewProj;\n"
+		"	v_TexCoord = in_TexCoord;\n"
+		"	v_VertexColor = in_VertexColor;\n"
 		"}\n";
 
 	string fragmentShader =
 		"\n"
-		"in vec2 texCoord;\n"
-		"in vec4 vertexColor;\n"
+		"in vec2 v_TexCoord;\n"
+		"in vec4 v_VertexColor;\n"
 		"\n"
-		"out vec4 out_fragColor;\n"
+		"out vec4 out_FragColor;\n"
 		"\n"
-		"uniform sampler2D u_texture;"
+		"uniform sampler2D u_Texture;"
 		"\n"
 		"void main()\n"
 		"{\n"
-		"	out_fragColor = texture2D(u_texture, texCoord) * vertexColor;\n"
-		"}";
+		"	out_FragColor = texture(u_Texture, v_TexCoord) * v_VertexColor;\n"
+		"}\n";
 
 	s_defaultShader = ShaderPtr(new Shader(vertexShader, fragmentShader));
 	s_defaultTexture = Texture2DPtr(new Texture2D(1, 1));
