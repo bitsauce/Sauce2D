@@ -98,8 +98,8 @@ void Graphics::init()
 	LOG("** Using GPU: %s (OpenGL %s) **", glGetString(GL_VENDOR), glGetString(GL_VERSION));
 
 	// Check OpenGL 3.2 support
-	if (!gl3wIsSupported(3, 2)) {
-		assert("OpenGL 3.2 not supported\n");
+	if (!gl3wIsSupported(3, 1)) {
+		assert("OpenGL 3.1 not supported\n");
 	}
 
 	// Get the vsync/swap_control EXT
@@ -176,7 +176,10 @@ void Graphics::init()
 		"}\n";
 
 	s_defaultShader = ShaderPtr(new Shader(vertexShader, fragmentShader));
-	s_defaultTexture = Texture2DPtr(new Texture2D(1, 1));
+
+	uchar pixel[4];
+	pixel[0] = pixel[1] = pixel[2] = pixel[3] = 255;
+	s_defaultTexture = Texture2DPtr(new Texture2D(1, 1, pixel));
 }
 
 ShaderPtr Graphics::s_defaultShader = 0;

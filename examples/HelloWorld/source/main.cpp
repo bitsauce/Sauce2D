@@ -48,7 +48,7 @@ public:
 
 	static void draw(GraphicsContext &context, const float alpha)
 	{
-		shader->setSampler2D("u_tileMap", texture);
+		shader->setSampler2D("u_TileMap", texture);
 		context.setShader(shader);
 		context.drawRectangle(Rect(0, 0, context.getWidth(), context.getHeight()));
 		context.setShader(0);
