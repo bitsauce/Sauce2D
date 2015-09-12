@@ -41,8 +41,8 @@ Vector2::Vector2(const Vector2 &v)
 
 Vector2::Vector2(const Vector2i &v)
 {
-    this->x = v.x;
-    this->y = v.y;
+    this->x = (float) v.x;
+    this->y = (float) v.y;
 }
 
 void Vector2::set(const float x, const float y)
@@ -212,8 +212,8 @@ Vector2i::Vector2i(int x, int y)
 
 Vector2i::Vector2i(const Vector2 &v)
 {
-    this->x = v.x;
-    this->y = v.y;
+    this->x = (int) v.x;
+    this->y = (int) v.y;
 }
 
 // Setting
@@ -302,15 +302,15 @@ Vector2i& Vector2i::operator-=(const Vector2i& v2)
  
 Vector2i& Vector2i::operator*=(const float scalar)
 {
-    x *= scalar;
-    y *= scalar;
+    x = (int) (x * scalar);
+	y = (int) (y * scalar);
     return *this;
 }
  
 Vector2i& Vector2i::operator/=(const float scalar)
 {
-    x /= scalar;
-    y /= scalar;
+    x = (int) (x / scalar);
+	y = (int) (y / scalar);
     return *this;
 }
  

@@ -13,7 +13,10 @@ BEGIN_XD_NAMESPACE
 
 Color &Color::operator*(const float c)
 {
-	r *= c; g *= c; b *= c; a *= c;
+	r = (uchar) (r * c);
+	g = (uchar) (g * c);
+	b = (uchar) (b * c);
+	a = (uchar) (a * c);
 	return *this;
 }
 

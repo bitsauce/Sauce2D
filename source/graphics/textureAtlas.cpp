@@ -138,9 +138,9 @@ void TextureAtlas::update()
 	{
 		const RectanglePacker::Rectangle &rect = (*itr);
 		const Pixmap *pixmap = ((AtlasPage*)rect.getData())->getPixmap();
-		for(int x = 0; x < pixmap->getWidth(); x++)
+		for(uint x = 0; x < pixmap->getWidth(); x++)
 		{
-			for(int y = 0; y < pixmap->getHeight(); y++)
+			for(uint y = 0; y < pixmap->getHeight(); y++)
 			{
 				int dataPos = ((rect.x + x + m_border) + ((rect.y + y + m_border) * ATLAS_SIZE)) * 4;
 				int pagePos = (x + y * pixmap->getWidth()) * 4;

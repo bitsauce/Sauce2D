@@ -8,7 +8,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "HelloWorld", "project\SoftS
 		{F3F25B49-2C6B-4FF0-98FB-47695DF70B8A} = {F3F25B49-2C6B-4FF0-98FB-47695DF70B8A}
 	EndProjectSection
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "x2d", "..\..\projects\msvc11\x2d.vcxproj", "{F3F25B49-2C6B-4FF0-98FB-47695DF70B8A}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "x2d", "..\..\projects\msvc14\x2d.vcxproj", "{F3F25B49-2C6B-4FF0-98FB-47695DF70B8A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

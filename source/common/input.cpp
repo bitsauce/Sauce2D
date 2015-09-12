@@ -139,7 +139,7 @@ uchar toWinKey(VirtualKey key)
 	case XD_KEY_F9:
 	case XD_KEY_F10:
 	case XD_KEY_F11:
-	case XD_KEY_F12: vk = VK_F1 + (key - XD_KEY_F1); break;
+	case XD_KEY_F12: vk = (uchar)(VK_F1 + (key - XD_KEY_F1)); break;
 
 	case XD_KEY_NUMPAD0: vk = VK_NUMPAD0; break;
 	case XD_KEY_NUMPAD1: vk = VK_NUMPAD1; break;

@@ -1,5 +1,5 @@
 FreeType 2.4.8
-GLEW 1.10.0
+GL3W (gl3w_gen.py @ 2015-09-11)
 OpenAL 1.1
 VLD 2.3
 FreeImage 3.15.4

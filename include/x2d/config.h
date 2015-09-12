@@ -38,6 +38,8 @@
 #pragma warning(disable : 4127) // 
 #pragma warning(disable : 4100) // Unreferenced parameters
 #pragma warning(disable : 4251) // DLL-export warning
+#pragma warning(disable : 4458) // Declaration hides class member
+#pragma warning(disable : 4456) // Declaration hides pevious local declaration
 
 /*********************************************************************
 **	Include	STL														**
@@ -66,8 +68,8 @@
 	#include <sstream>
 	#include <memory>
 	#include <queue>
-	#include <GL/glew.h>
-	#include <GL/wglew.h>
+	#include <GL/gl3w.h>
+	#include <GL/wglext.h>
 #elif X2D_UNIX
 	#include <sys/socket.h>
 	#include <netinet/in.h>

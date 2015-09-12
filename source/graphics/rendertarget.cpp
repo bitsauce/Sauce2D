@@ -12,7 +12,7 @@
 
 BEGIN_XD_NAMESPACE
 
-RenderTarget2D::RenderTarget2D(const uint width, const uint height, const uint count, const PixelFormat fmt) :
+RenderTarget2D::RenderTarget2D(const uint width, const uint height, const uint count, const PixelFormat &fmt) :
 	m_width(width),
 	m_height(height),
 	m_textureCount(count)
@@ -25,7 +25,7 @@ RenderTarget2D::RenderTarget2D(const uint width, const uint height, const uint c
 	m_buffers = new GLenum[m_textureCount];
 	for(uint i = 0; i < m_textureCount; ++i)
 	{
-		m_textures[i] = Texture2DPtr(new Texture2D(width, height, Color(0, 0, 0, 0), fmt));
+		m_textures[i] = Texture2DPtr(new Texture2D(width, height, 0, fmt));
 		m_buffers[i] = GL_COLOR_ATTACHMENT0 + i;
 	}
 }

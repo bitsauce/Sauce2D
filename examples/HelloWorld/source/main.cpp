@@ -16,22 +16,42 @@ class GameManager
 public:
 	static FontPtr font;
 	static SpriteBatch *spriteBatch;
+	static Texture2DPtr texture;
+	static ShaderPtr shader;
 
-	static void main(GraphicsContext &graphicsDevice)
+	static void main(GraphicsContext &graphicsContext)
 	{
 		font = ResourceManager::get<Font>(":/arial.fnt");
-		spriteBatch = new SpriteBatch(graphicsDevice);
+		spriteBatch = new SpriteBatch(graphicsContext);
+		//texture = ResourceManager::get<Texture2D>(":/background.png");
+
+		shader = ResourceManager::get<Shader>(":/TileMap");
+
+		Pixmap pixmap(32, 32, PixelFormat(PixelFormat::RGBA, PixelFormat::UNSIGNED_INT));
+		for (int i = 0; i < 32; ++i)
+		{
+			for (int j = 0; j < 32; ++j)
+			{
+				uint pixel[4];
+				pixel[0] = pixel[1] = pixel[2] = (i + j * 32) % 256;
+				pixel[3] = 255;
+				pixmap.setPixel(i, j, pixel);
+			}
+		}
+
+		texture = Texture2DPtr(new Texture2D(pixmap));
 	}
 
 	static void update(const float dt)
 	{
 	}
 
-	static void draw(GraphicsContext &graphicsDevice, const float alpha)
+	static void draw(GraphicsContext &context, const float alpha)
 	{
-		spriteBatch->begin();
-		font->draw(spriteBatch, graphicsDevice.getWidth() * 0.5f, (graphicsDevice.getHeight() - font->getHeight()) * 0.5f, "Hello World", FONT_ALIGN_CENTER);
-		spriteBatch->end();
+		shader->setSampler2D("u_tileMap", texture);
+		context.setShader(shader);
+		context.drawRectangle(Rect(0, 0, context.getWidth(), context.getHeight()));
+		context.setShader(0);
 	}
 
 	static void exit()
@@ -42,6 +62,8 @@ public:
 
 FontPtr GameManager::font;
 SpriteBatch *GameManager::spriteBatch = 0;
+Texture2DPtr GameManager::texture = 0;
+ShaderPtr GameManager::shader = 0;
 
 // Win32 entry point
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, INT)

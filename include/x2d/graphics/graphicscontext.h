@@ -21,11 +21,9 @@ public:
 	enum Capability
 	{
 		BLEND = GL_BLEND,
-		ALPHA_TEST = GL_ALPHA_TEST,
 		DEPTH_TEST = GL_DEPTH_TEST,
 		SCISSOR_TEST = GL_SCISSOR_TEST,
 		LINE_SMOOTH = GL_LINE_SMOOTH,
-		POINT_SMOOTH = GL_POINT_SMOOTH,
 		POLYGON_SMOOTH = GL_POLYGON_SMOOTH,
 		MULTISAMPLE = GL_MULTISAMPLE,
 		TEXTURE_1D = GL_TEXTURE_1D,
@@ -48,7 +46,6 @@ public:
 	{
 		COLOR_BUFFER = GL_COLOR_BUFFER_BIT,
 		DEPTH_BUFFER = GL_DEPTH_BUFFER_BIT,
-		ACCUM_BUFFER = GL_ACCUM_BUFFER_BIT,
 		STENCIL_BUFFER = GL_STENCIL_BUFFER_BIT
 	};
 
@@ -64,8 +61,8 @@ public:
 	RenderTarget2D *getRenderTarget() const { return m_renderTarget; }
 	
 	// Projection matrix
-	void setProjectionMatrix(const Matrix4 &projmat);
-	Matrix4 getProjectionMatrix() const;
+	void setModelViewMatrix(const Matrix4 &projmat);
+	Matrix4 getModelViewMatrix() const;
 
 	// Matrix stack
 	void pushMatrix(const Matrix4 &mat);
@@ -116,7 +113,8 @@ private:
 	ShaderPtr m_shader;
 	BlendState m_blendState;
 	RenderTarget2D *m_renderTarget;
-	stack<Matrix4> m_matrixStack;
+	stack<Matrix4> m_modelViewMatrixStack;
+	Matrix4 m_projectionMatrix;
 };
 
 END_XD_NAMESPACE

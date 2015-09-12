@@ -191,16 +191,25 @@ void Window::show()
 	assert(s_window);
 
 	// Describes the pixel format of the drawing surface
-	PIXELFORMATDESCRIPTOR pfd;
-	memset(&pfd, 0, sizeof(PIXELFORMATDESCRIPTOR));
-	pfd.nSize = sizeof(PIXELFORMATDESCRIPTOR);
-	pfd.nVersion = 1;					// Version Number
-	pfd.dwFlags = PFD_DRAW_TO_WINDOW |	// Draws to a window
-				PFD_SUPPORT_OPENGL |	// The format must support OpenGL
-				PFD_DOUBLEBUFFER;		// Support for double buffering
-	pfd.iPixelType = PFD_TYPE_RGBA;		// Uses an RGBA pixel format
-	pfd.cColorBits = 24;				// 24 bits colors
-	pfd.cAlphaBits = 8;					// 8 bits alpha
+	PIXELFORMATDESCRIPTOR pfd =
+	{
+		sizeof(PIXELFORMATDESCRIPTOR),
+		1,
+		PFD_DRAW_TO_WINDOW | PFD_SUPPORT_OPENGL | PFD_DOUBLEBUFFER,	// Flags
+		PFD_TYPE_RGBA,												// The kind of framebuffer. RGBA or palette.
+		32,															// Colordepth of the framebuffer.
+		0, 0, 0, 0, 0, 0,
+		0,
+		0,
+		0,
+		0, 0, 0, 0,
+		24,						// Number of bits for the depthbuffer
+		8,						// Number of bits for the stencilbuffer
+		0,						// Number of Aux buffers in the framebuffer.
+		PFD_MAIN_PLANE,
+		0,
+		0, 0, 0
+	};
 
 	// Get device context
 	s_deviceContext = GetDC(s_window);

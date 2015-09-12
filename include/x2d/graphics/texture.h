@@ -15,8 +15,8 @@ class XDAPI Texture2D
 	friend class GraphicsContext;
 	friend class Shader;
 public:
-	Texture2D(const PixelFormat format = RGBA);
-	Texture2D(const uint width, const uint height, const Color &color = Color(0), const PixelFormat format = RGBA);
+	Texture2D(const PixelFormat &format = PixelFormat());
+	Texture2D(const uint width, const uint height, const void *data = 0, const PixelFormat &format = PixelFormat());
 	Texture2D(const Pixmap &pixmap);
 	Texture2D(const Texture2D &other);
 	~Texture2D();
@@ -54,7 +54,7 @@ public:
 	Vector2i getSize() const { return Vector2i(getWidth(), getHeight()); }
 
 	// Pixmap (texture data)
-	Pixmap getPixmap(const PixelFormat format = RGBA) const;
+	Pixmap getPixmap() const;
 	void updatePixmap(const Pixmap &pixmap);
 	void updatePixmap(const int x, const int y, const Pixmap &pixmap);
 	void clear();
@@ -77,6 +77,7 @@ private:
 
 	uint m_width;
 	uint m_height;
+	PixelFormat m_pixelFormat;
 };
 
 template XDAPI class shared_ptr<Texture2D>;

@@ -12,38 +12,29 @@
 
 const int INT_SIZE = sizeof(GLint);
 const int FLOAT_SIZE = sizeof(GLfloat);
+const int PTR_SIZE = sizeof(void*);
 
 BEGIN_XD_NAMESPACE
 
-Shader::Shader(const string &vertFilePath, const string &fragFilePath)
+Shader::Shader(const string &vertexSource, const string &fragmentSource)
 {
 	// Create vertex and fragment shaders
     GLuint vertShader = glCreateShader(GL_VERTEX_SHADER);
     GLuint fragShader = glCreateShader(GL_FRAGMENT_SHADER);
 
-	FileReader *fileReader;
-
-	// Read vertex source
-	fileReader = new FileReader(util::getAbsoluteFilePath(vertFilePath));
-	string vertSource = fileReader->readAll();
-	fileReader->close();
-	delete fileReader;
-	
-	// Read fragment source
-	fileReader = new FileReader(util::getAbsoluteFilePath(fragFilePath));
-	string fragSource = fileReader->readAll();
-	fileReader->close();
-	delete fileReader;
-
 	// Result variables
     int result = 0;
     int logLength = 0;
 
-	LOG("Compiling vertex shader: %s", vertFilePath.c_str());
+	// Create modified shader code
+	string vertexSourceModified = "#version 130\n" + vertexSource;
+	string fragmentSourceModified = "#version 130\n" + fragmentSource;
+
+	LOG("Compiling vertex shader...");
 	
     // Compile vertex shader
-	const char *data = vertSource.c_str();
-	int len = vertSource.length();
+	const char *data = vertexSourceModified.c_str();
+	int len = vertexSourceModified.length();
 	glShaderSource(vertShader, 1, &data, &len);
     glCompileShader(vertShader);
 
@@ -60,11 +51,11 @@ Shader::Shader(const string &vertFilePath, const string &fragFilePath)
 		LOG("\t%s", compileLog);
 	}
 
-    LOG("Compiling fragment shader: %s", fragFilePath.c_str());
+	LOG("Compiling fragment shader...");
 
     // Compile fragment shader
-	data = fragSource.c_str();
-	len = fragSource.size();
+	data = fragmentSourceModified.c_str();
+	len = fragmentSourceModified.length();
 	glShaderSource(fragShader, 1, &data, &len);
     glCompileShader(fragShader);
 
@@ -82,12 +73,18 @@ Shader::Shader(const string &vertFilePath, const string &fragFilePath)
 		LOG("\t%s", compileLog);
 	}
 
-    LOG("Linking shader program");
+    LOG("Linking shader program...");
 
     // Create shader program
     GLuint program = glCreateProgram();
     glAttachShader(program, vertShader);
     glAttachShader(program, fragShader);
+
+	glBindAttribLocation(program, 0, "in_position");
+	glBindAttribLocation(program, 1, "in_vertexColor");
+	glBindAttribLocation(program, 2, "in_texCoord");
+	glBindFragDataLocation(program, 0, "out_fragColor");
+
     glLinkProgram(program);
 
     glGetProgramiv(program, GL_LINK_STATUS, &result);
@@ -133,15 +130,18 @@ Shader::Shader(const string &vertFilePath, const string &fragFilePath)
 		size_t dataSize = 0;
 		switch(type)
 		{
-			case GL_INT: dataSize = INT_SIZE; break;
-			case GL_INT_VEC2: dataSize = INT_SIZE*2; break;
-			case GL_INT_VEC3: dataSize = INT_SIZE*3; break;
-			case GL_INT_VEC4: dataSize = INT_SIZE*4; break;
-			case GL_FLOAT: dataSize = FLOAT_SIZE; break;
-			case GL_FLOAT_VEC2: dataSize = FLOAT_SIZE*2; break;
-			case GL_FLOAT_VEC3: dataSize = FLOAT_SIZE*3; break;
-			case GL_FLOAT_VEC4: dataSize = FLOAT_SIZE*4; break;
-			case GL_SAMPLER_2D: dataSize = /*U*/INT_SIZE; break;
+		case GL_UNSIGNED_INT_SAMPLER_2D:
+		case GL_INT_SAMPLER_2D:
+		case GL_SAMPLER_2D:
+		case GL_INT:		dataSize = INT_SIZE; break;
+		case GL_INT_VEC2:	dataSize = INT_SIZE * 2; break;
+		case GL_INT_VEC3:	dataSize = INT_SIZE * 3; break;
+		case GL_INT_VEC4:	dataSize = INT_SIZE * 4; break;
+		case GL_FLOAT:		dataSize = FLOAT_SIZE; break;
+		case GL_FLOAT_VEC2:	dataSize = FLOAT_SIZE * 2; break;
+		case GL_FLOAT_VEC3:	dataSize = FLOAT_SIZE * 3; break;
+		case GL_FLOAT_VEC4:	dataSize = FLOAT_SIZE * 4; break;
+		case GL_FLOAT_MAT4:	dataSize = FLOAT_SIZE * 16; break;
 		}
 		uniform->data = new char[dataSize];
 		m_uniforms[name] = uniform;
@@ -295,13 +295,34 @@ void Shader::setUniform4f(const string &name, const float v0, const float v1, co
 	}
 }
 
+void Shader::setUniformMatrix4f(const string & name, const float * v0)
+{
+	if (m_uniforms.find(name) != m_uniforms.end())
+	{
+		Uniform *uniform = m_uniforms[name];
+		if (uniform->type == GL_FLOAT_MAT4)
+		{
+			for (int i = 0; i < 16; ++i)
+			{
+				((GLfloat*)uniform->data)[i] = v0[i];
+			}
+		}
+	}
+	else
+	{
+		LOG("Uniform '%s' does not exist.", name.c_str());
+	}
+}
+
 void Shader::setSampler2D(const string &name, Texture2DPtr texture)
 {
 	// TODO: We should actually store a handle to the texture object to avoid it being destroyed
 	if(m_uniforms.find(name) != m_uniforms.end())
 	{
 		Uniform *uniform = m_uniforms[name];
-		if(uniform->type == GL_SAMPLER_2D)
+		if(uniform->type == GL_SAMPLER_2D ||
+			uniform->type == GL_INT_SAMPLER_2D ||
+			uniform->type == GL_UNSIGNED_INT_SAMPLER_2D)
 		{
 			((GLuint*)uniform->data)[0] = texture != 0 ? texture->m_id : 0;
 		}
@@ -314,7 +335,21 @@ void Shader::setSampler2D(const string &name, Texture2DPtr texture)
 
 ShaderPtr Shader::loadResource(const string &name)
 {
-	return ShaderPtr(new Shader(name + ".vert", name + ".frag"));
+	FileReader *fileReader;
+
+	fileReader = new FileReader(util::getAbsoluteFilePath(name + ".vert"));
+	string vertexSource = fileReader->readAll();
+	fileReader->close();
+	delete fileReader;
+
+	fileReader = new FileReader(util::getAbsoluteFilePath(name + ".frag"));
+	string fragmentSource = fileReader->readAll();
+	fileReader->close();
+	delete fileReader;
+
+	LOG("Compiling shader program: %s", name.c_str());
+
+	return ShaderPtr(new Shader(vertexSource, fragmentSource));
 }
 
 END_XD_NAMESPACE

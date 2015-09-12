@@ -13,7 +13,7 @@ class XDAPI Shader
 {
 	friend class GraphicsContext;
 public:
-	Shader(const string &vertFilePath, const string &fragFilePath);
+	Shader(const string &vertexSource, const string &fragmentSource);
 	~Shader();
 	
 	void setUniform1i(const string &name, const int v0);
@@ -24,6 +24,7 @@ public:
 	void setUniform2f(const string &name, const float v0, const float v1);
 	void setUniform3f(const string &name, const float v0, const float v1, const float v2);
 	void setUniform4f(const string &name, const float v0, const float v1, const float v2, const float v3);
+	void setUniformMatrix4f(const string &name, const float *v0);
 	void setSampler2D(const string &name, Texture2DPtr texture);
 	
 	static ShaderPtr loadResource(const string &name);

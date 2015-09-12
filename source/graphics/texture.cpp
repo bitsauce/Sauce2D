@@ -10,17 +10,127 @@
 #include <x2d/engine.h>
 #include <x2d/graphics.h>
 
-namespace xd {
+BEGIN_XD_NAMESPACE
 
-Texture2D::Texture2D(const PixelFormat format)
+GLint toInternalFormat(PixelFormat::Components fmt, PixelFormat::DataType dt)
+{
+	switch (fmt)
+	{
+	case PixelFormat::R:
+	{
+		switch (dt)
+		{
+		case PixelFormat::INT: return GL_R32I;
+		case PixelFormat::UNSIGNED_INT: return GL_R32UI;
+		case PixelFormat::BYTE: return GL_R8I;
+		case PixelFormat::UNSIGNED_BYTE: return GL_R8;
+		case PixelFormat::FLOAT: return GL_R32F;
+		}
+	}
+	break;
+	case PixelFormat::RG:
+	{
+		switch (dt)
+		{
+		case PixelFormat::INT: return GL_RG32I;
+		case PixelFormat::UNSIGNED_INT: return GL_RG32UI;
+		case PixelFormat::BYTE: return GL_RG8I;
+		case PixelFormat::UNSIGNED_BYTE: return GL_RG8;
+		case PixelFormat::FLOAT: return GL_RG32F;
+		}
+	}
+	break;
+	case PixelFormat::RGB:
+	{
+		switch (dt)
+		{
+		case PixelFormat::INT: return GL_RGB32I;
+		case PixelFormat::UNSIGNED_INT: return GL_RGB32UI;
+		case PixelFormat::BYTE: return GL_RGB8I;
+		case PixelFormat::UNSIGNED_BYTE: return GL_RGB8;
+		case PixelFormat::FLOAT: return GL_RGB32F;
+		}
+	}
+	break;
+	case PixelFormat::RGBA:
+	{
+		switch (dt)
+		{
+		case PixelFormat::INT: return GL_RGBA32I;
+		case PixelFormat::UNSIGNED_INT: return GL_RGBA32UI;
+		case PixelFormat::BYTE: return GL_RGBA8I;
+		case PixelFormat::UNSIGNED_BYTE: return GL_RGBA8;
+		case PixelFormat::FLOAT: return GL_RGBA32F;
+		}
+	}
+	break;
+	}
+	return 0;
+}
+
+GLint toFormat(PixelFormat::Components fmt, PixelFormat::DataType dt)
+{
+	switch (fmt)
+	{
+	case PixelFormat::R:
+	{
+		switch (dt)
+		{
+		case PixelFormat::UNSIGNED_BYTE: case PixelFormat::BYTE: case PixelFormat::FLOAT: return GL_RED;
+		case PixelFormat::UNSIGNED_INT: case PixelFormat::INT: return GL_RED_INTEGER;
+		}
+	}
+	break;
+	case PixelFormat::RG:
+	{
+		switch (dt)
+		{
+		case PixelFormat::UNSIGNED_BYTE: case PixelFormat::BYTE: case PixelFormat::FLOAT: return GL_RG;
+		case PixelFormat::UNSIGNED_INT: case PixelFormat::INT: return GL_RG_INTEGER;
+		}
+	}
+	break;
+	case PixelFormat::RGB:
+	{
+		switch (dt)
+		{
+		case PixelFormat::UNSIGNED_BYTE: case PixelFormat::BYTE: case PixelFormat::FLOAT: return GL_RGB;
+		case PixelFormat::UNSIGNED_INT: case PixelFormat::INT: return GL_RGB_INTEGER;
+		}
+	}
+	break;
+	case PixelFormat::RGBA:
+	{
+		switch (dt)
+		{
+		case PixelFormat::UNSIGNED_BYTE: case PixelFormat::BYTE: case PixelFormat::FLOAT: return GL_RGBA;
+		case PixelFormat::UNSIGNED_INT: case PixelFormat::INT: return GL_RGBA_INTEGER;
+		}
+	}
+	break;
+	}
+	return 0;
+}
+
+Texture2D::Texture2D(const PixelFormat &format)
 {
 	init(Pixmap(format));
 }
 	
-Texture2D::Texture2D(const uint width, const uint height, const Color &color, const PixelFormat format)
+Texture2D::Texture2D(const uint width, const uint height, const void *data, const PixelFormat &format)
 {
 	Pixmap pixmap(width, height, format);
-	pixmap.fill(color);
+	if (data == 0)
+	{
+		uchar *tmp = new uchar[format.getPixelSizeInBytes()];
+		memset(tmp, 0, format.getPixelSizeInBytes());
+		pixmap.fill(tmp);
+		delete[] tmp;
+	}
+	else
+	{
+		pixmap.fill(data);
+	}
 	init(pixmap);
 }
 
@@ -48,6 +158,7 @@ void Texture2D::init(const Pixmap &pixmap)
 	m_filter = GL_NEAREST; // Prefs::GetDefaultFilterMode();
 	m_wrapping = GL_CLAMP_TO_BORDER;
 	m_mipmaps = false; // Prefs::UseMipmaps()
+	m_pixelFormat = pixmap.getFormat();
 
 	// Update pixmap
 	updatePixmap(pixmap);
@@ -111,16 +222,16 @@ Texture2D::TextureWrapping Texture2D::getWrapping() const
 	return TextureWrapping(m_wrapping);
 }
 
-Pixmap Texture2D::getPixmap(const PixelFormat format) const
+Pixmap Texture2D::getPixmap() const
 {
 	// Get texture data
-	uchar *data = new uchar[m_width * m_height * getPixelFormatSize(format)];
+	uchar *data = new uchar[m_width * m_height * m_pixelFormat.getPixelSizeInBytes()];
 	glBindTexture(GL_TEXTURE_2D, m_id);
-	glGetTexImage(GL_TEXTURE_2D, 0, GL_RGBA, GL_UNSIGNED_BYTE, (GLvoid*)data);
+	glGetTexImage(GL_TEXTURE_2D, 0, toFormat(m_pixelFormat.getComponents(), m_pixelFormat.getDataType()), m_pixelFormat.getDataType(), (GLvoid*)data);
 	glBindTexture(GL_TEXTURE_2D, 0);
 
 	// Copy data to pixmap
-	Pixmap pixmap(m_width, m_height, data, format);
+	Pixmap pixmap(m_width, m_height, data, m_pixelFormat);
 	delete[] data;
 	return pixmap;
 }
@@ -133,7 +244,7 @@ void Texture2D::updatePixmap(const Pixmap &pixmap)
 
 	// Set default filtering
 	glBindTexture(GL_TEXTURE_2D, m_id);
-	glTexImage2D(GL_TEXTURE_2D, 0, pixmap.getFormat(), (GLsizei)m_width, (GLsizei)m_height, 0, pixmap.getFormat(), GL_UNSIGNED_BYTE, (const GLvoid*)pixmap.getData());
+	glTexImage2D(GL_TEXTURE_2D, 0, toInternalFormat(pixmap.getFormat().getComponents(), pixmap.getFormat().getDataType()), (GLsizei)m_width, (GLsizei)m_height, 0, toFormat(pixmap.getFormat().getComponents(), pixmap.getFormat().getDataType()), pixmap.getFormat().getDataType(), (const GLvoid*)pixmap.getData());
 	glBindTexture(GL_TEXTURE_2D, 0);
 
 	// Regenerate mipmaps
@@ -148,7 +259,7 @@ void Texture2D::updatePixmap(const int x, const int y, const Pixmap &pixmap)
 {
 	// Set default filtering
 	glBindTexture(GL_TEXTURE_2D, m_id);
-	glTexSubImage2D(GL_TEXTURE_2D, 0, (GLint)x, (GLint)y, (GLsizei)pixmap.getWidth(), (GLsizei)pixmap.getHeight(), GL_RGBA, GL_UNSIGNED_BYTE, (const GLvoid*)pixmap.getData());
+	glTexSubImage2D(GL_TEXTURE_2D, 0, (GLint)x, (GLint)y, (GLsizei)pixmap.getWidth(), (GLsizei)pixmap.getHeight(), toFormat(pixmap.getFormat().getComponents(), pixmap.getFormat().getDataType()), pixmap.getFormat().getDataType(), (const GLvoid*)pixmap.getData());
 	glBindTexture(GL_TEXTURE_2D, 0);
 
 	// Regenerate mipmaps
@@ -195,8 +306,15 @@ uint Texture2D::getHeight() const
 
 void Texture2D::exportToFile(string path)
 {
+	// NOTE TO SELF: If I ever decide to implement export for integer texture, glGetTexImage() expects GL_BGRA_INTEGER instead of GL_BGRA
+	if (m_pixelFormat.getDataType() != PixelFormat::BYTE && m_pixelFormat.getDataType() != PixelFormat::UNSIGNED_BYTE)
+	{
+		LOG("Cannot export image with a pixel data type different from byte or unsigned byte");
+		return;
+	}
+
 	// Get texture data
-	uchar *data = new uchar[m_width*m_height*4];
+	uchar *data = new uchar[m_width * m_height * m_pixelFormat.getPixelSizeInBytes()];
 	glBindTexture(GL_TEXTURE_2D, m_id);
 	glGetTexImage(GL_TEXTURE_2D, 0, GL_BGRA, GL_UNSIGNED_BYTE, (GLvoid*)data);
 	glBindTexture(GL_TEXTURE_2D, 0);

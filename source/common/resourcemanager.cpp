@@ -16,7 +16,7 @@ map<string, void*> xd::ResourceManager::s_resources;
 #define WAV_LOAD_ERROR 0
 
  // buffer is always in big endian!
-static unsigned short readByte16(const unsigned char buffer[2])
+/*static unsigned short readByte16(const unsigned char buffer[2])
 {
 	#if PCCE_BIG_ENDIAN
 		return (buffer[0] << 8) + buffer[1];
@@ -32,7 +32,7 @@ static unsigned long readByte32(const unsigned char buffer[4])
 	#else
 		return (buffer[3] << 24) + (buffer[2] << 16) + (buffer[1] << 8) + buffer[0];
 	#endif
-}
+}*/
 
 //-----------------------------------------
 

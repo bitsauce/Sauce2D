@@ -19,6 +19,15 @@
 #ifndef X2D_GRAPHICS_H
 #define X2D_GRAPHICS_H
 
+#define GL_CHECK_ERROR \
+	{ \
+		GLenum error; \
+		if ((error = glGetError()) != GL_NO_ERROR) \
+		{ \
+			LOG("glGetError() returned 0x%X", error); \
+		} \
+	}
+
 /*********************************************************************
 **	Graphics class [static]											**
 **********************************************************************/
@@ -33,6 +42,7 @@ class XDAPI Graphics
 {
 	friend class Engine;
 	friend class Window;
+	friend class GraphicsContext;
 
 public:
 
@@ -61,9 +71,6 @@ public:
 	// Swap buffers
 	static void swapBuffers();
 
-	// Rendering
-	static bool isSupported(Feature feature);
-
 protected:
 	// Init
 	static void init();
@@ -77,6 +84,12 @@ protected:
 	static float s_framesPerSecond;
 	static int s_refreshRate;
 	static float s_timeStep;
+
+	static ShaderPtr s_defaultShader;
+	static Texture2DPtr s_defaultTexture;
+	static GLuint s_vao;
+	static GLuint s_vbo;
+	static GLuint s_ibo;
 
 	static GraphicsContext s_graphicsContext;
 };

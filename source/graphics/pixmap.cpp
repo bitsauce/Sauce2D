@@ -12,19 +12,34 @@
 
 BEGIN_XD_NAMESPACE
 
-size_t getPixelFormatSize(const PixelFormat format)
+uint PixelFormat::getComponentCount() const
 {
-	switch(format) {
-		case ALPHA: return 1;
-		case LUMINANCE: return 1;
-		case LUMINANCE_ALPHA: return 2;
-		case RGB: return 3;
-		case RGBA: return 4;
+	switch (m_components) {
+	case R: return 1;
+	case RG: return 2;
+	case RGB: return 3;
+	case RGBA: return 4;
 	}
 	return 0;
 }
 
-Pixmap::Pixmap(const PixelFormat format) :
+uint PixelFormat::getDataTypeSizeInBytes() const
+{
+	switch (m_dataType)
+	{
+	case UNSIGNED_INT: case INT: return sizeof(GLint);
+	case UNSIGNED_BYTE: case BYTE: return sizeof(GLbyte);
+	case FLOAT: return sizeof(GLfloat);
+	}
+	return 0;
+}
+
+uint PixelFormat::getPixelSizeInBytes() const
+{
+	return getComponentCount() * getDataTypeSizeInBytes();
+}
+
+Pixmap::Pixmap(const PixelFormat &format) :
 	m_width(0),
 	m_height(0),
 	m_data(0),
@@ -32,17 +47,16 @@ Pixmap::Pixmap(const PixelFormat format) :
 {
 }
 
-Pixmap::Pixmap(const uint width, const uint height, const uchar *data, const PixelFormat format) :
+Pixmap::Pixmap(const uint width, const uint height, const void *data, const PixelFormat &format) :
 	m_width(width),
 	m_height(height),
 	m_format(format)
 {
 	// Copy pixels
-	m_pixelSize = getPixelFormatSize(m_format);
 	if(width >= 0 && height >= 0)
 	{
-		m_data = new uchar[width * height * m_pixelSize];
-		memcpy(m_data, data, width * height * m_pixelSize);
+		m_data = new uchar[width * height * m_format.getPixelSizeInBytes()];
+		memcpy(m_data, data, width * height * m_format.getPixelSizeInBytes());
 	}
 	else
 	{
@@ -50,17 +64,16 @@ Pixmap::Pixmap(const uint width, const uint height, const uchar *data, const Pix
 	}
 }
 
-Pixmap::Pixmap(const uint width, const uint height, const PixelFormat format) :
+Pixmap::Pixmap(const uint width, const uint height, const PixelFormat &format) :
 	m_width(width),
 	m_height(height),
 	m_format(format)
 {
 	// Create empty pixmap
-	m_pixelSize = getPixelFormatSize(m_format);
 	if(width >= 0 && height >= 0)
 	{
-		m_data = new uchar[width * height * m_pixelSize];
-		memset(m_data, 0, width * height * m_pixelSize);
+		m_data = new uchar[width * height * m_format.getPixelSizeInBytes()];
+		memset(m_data, 0, width * height * m_format.getPixelSizeInBytes());
 	}
 	else
 	{
@@ -73,11 +86,10 @@ Pixmap::Pixmap(const Pixmap &other)
 	m_width = other.m_width;
 	m_height = other.m_height;
 	m_format = other.m_format;
-	m_pixelSize = getPixelFormatSize(m_format);
 	if(other.m_data)
 	{
-		m_data = new uchar[m_width * m_height * m_pixelSize];
-		memcpy(m_data, other.m_data, m_width*m_height*m_pixelSize);
+		m_data = new uchar[m_width * m_height * m_format.getPixelSizeInBytes()];
+		memcpy(m_data, other.m_data, m_width * m_height * m_format.getPixelSizeInBytes());
 	}
 	else
 	{
@@ -85,7 +97,7 @@ Pixmap::Pixmap(const Pixmap &other)
 	}
 }
 
-/*Pixmap &Pixmap::operator=(Pixmap &other)
+/*Pixmap::Pixmap &operator=(Pixmap &other)
 {
 	swap(m_data, other.m_data);
 	swap(m_width, other.m_width);
@@ -118,46 +130,39 @@ PixelFormat Pixmap::getFormat() const
 	return m_format;
 }
 
-Color Pixmap::getColor(const uint x, const uint y) const
-{
-	Color color;
-	if(x < m_width && y < m_height)
-	{
-		memcpy(&color, m_data + (x + y*m_width) * m_pixelSize, 4);
-	}
-	else
-	{
-		//warn("");
-	}
-	return color;
-}
-
-void Pixmap::setColor(const uint x, const uint y, const Color &color)
+void Pixmap::getPixel(const uint x, const uint y, void *data) const
 {
 	if(x < m_width && y < m_height)
 	{
-		memcpy(m_data + (x + y*m_width) * m_pixelSize, &color, m_pixelSize);
-	}
-	else
-	{
-		//warn("");
+		memcpy(data, m_data + (x + y * m_width) * m_format.getPixelSizeInBytes(), m_format.getPixelSizeInBytes());
 	}
 }
 
-void Pixmap::fill(const Color &color)
+void Pixmap::setPixel(const uint x, const uint y, const void *data)
+{
+	if(x < m_width && y < m_height)
+	{
+		memcpy(m_data + (x + y*m_width) * m_format.getPixelSizeInBytes(), data, m_format.getPixelSizeInBytes());
+	}
+}
+
+void Pixmap::fill(const void *data)
 {
 	for(uint y = 0; y < m_height; ++y)
 	{
 		for(uint x = 0; x < m_width; ++x)
 		{
-			memcpy(m_data + (x + y*m_width) * m_pixelSize, &color, m_pixelSize);
+			memcpy(m_data + (x + y*m_width) * m_format.getPixelSizeInBytes(), data, m_format.getPixelSizeInBytes());
 		}
 	}
 }
 
 void Pixmap::clear()
 {
-	fill(Color(0));
+	uchar *emptyPixel = new uchar[m_format.getPixelSizeInBytes()];
+	memset(emptyPixel, 0, m_format.getPixelSizeInBytes());
+	fill(emptyPixel);
+	delete[] emptyPixel;
 }
 
 void Pixmap::exportToFile(const string &path) const

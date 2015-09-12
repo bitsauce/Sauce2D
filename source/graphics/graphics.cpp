@@ -66,36 +66,52 @@ float Graphics::getFPS()
 	return s_framesPerSecond;
 }
 
+bool WGLExtensionSupported(const char *extension_name)
+{
+	// this is pointer to function which returns pointer to string with list of all wgl extensions
+	PFNWGLGETEXTENSIONSSTRINGEXTPROC _wglGetExtensionsStringEXT = NULL;
+
+	// determine pointer to wglGetExtensionsStringEXT function
+	_wglGetExtensionsStringEXT = (PFNWGLGETEXTENSIONSSTRINGEXTPROC)wglGetProcAddress("wglGetExtensionsStringEXT");
+
+	if (strstr(_wglGetExtensionsStringEXT(), extension_name) == NULL)
+	{
+		// string was not found
+		return false;
+	}
+
+	// extension is supported
+	return true;
+}
+
+PFNWGLSWAPINTERVALEXTPROC       wglSwapIntervalEXT = NULL;
+PFNWGLGETSWAPINTERVALEXTPROC    wglGetSwapIntervalEXT = NULL;
+
 void Graphics::init()
 {
-	// Init glew
-	//glewExperimental = true;
-	if(glewInit() != GLEW_OK) {
+	// Initialize the GL3W library
+	if(gl3wInit() != 0) {
 		assert("GLEW did not initialize!");
 	}
 	
-	LOG("** Using GPU: %s **", glGetString(GL_VENDOR));
+	// Print GPU info
+	LOG("** Using GPU: %s (OpenGL %s) **", glGetString(GL_VENDOR), glGetString(GL_VERSION));
 
-	// Check if non-power of two textures are supported
-	if(!GLEW_ARB_texture_non_power_of_two) {
-		LOG("WARNING: NPOT is not supported on this card!");
+	// Check OpenGL 3.2 support
+	if (!gl3wIsSupported(3, 2)) {
+		assert("OpenGL 3.2 not supported\n");
 	}
 
-	// Check if FBOs are supported
-	if(!GLEW_EXT_framebuffer_object) {
-		LOG("WARNING: FBO is not supported on this card!");
+	// Get the vsync/swap_control EXT
+	if (WGLExtensionSupported("WGL_EXT_swap_control"))
+	{
+		// Extension is supported, init pointers.
+		wglSwapIntervalEXT = (PFNWGLSWAPINTERVALEXTPROC)wglGetProcAddress("wglSwapIntervalEXT");
+
+		// this is another function from WGL_EXT_swap_control extension
+		wglGetSwapIntervalEXT = (PFNWGLGETSWAPINTERVALEXTPROC)wglGetProcAddress("wglGetSwapIntervalEXT");
 	}
 
-	// Check if PBOs are supported
-	if(!GLEW_EXT_pixel_buffer_object) {
-		LOG("WARNING: PBO is not supported on this card!");
-	}
-
-	// Check if (changing) v-sync (state) is supported
-	if(!WGLEW_EXT_swap_control) {
-		LOG("WARNING: VSYNC is not supported on this card!");
-	}
-	
 	// Setup default vertex format
 	VertexFormat::s_vct.set(VERTEX_POSITION, 2);
 	VertexFormat::s_vct.set(VERTEX_COLOR, 4, XD_UBYTE);
@@ -109,9 +125,12 @@ void Graphics::init()
 	s_graphicsContext.resizeViewport(size.x, size.y);
 	Window::s_graphicsContext = &s_graphicsContext;
 
-	// Init Graphics
-	glEnable(GL_TEXTURE_2D);
-	glShadeModel(GL_SMOOTH);
+	// Init graphics
+	glGenVertexArrays(1, &s_vao);
+	glBindVertexArray(s_vao);
+	glGenBuffers(1, &s_vbo);
+	glGenBuffers(1, &s_ibo);
+
 	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 
 	// Enable blend
@@ -122,11 +141,49 @@ void Graphics::init()
 	//glEnable(GL_ALPHA_TEST);
 	//glAlphaFunc(GL_LEQUAL, 0.0f);
 
-	// Set Graphics hints
-	glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
-
 	glPointSize(4);
+
+	string vertexShader =
+		"\n"
+		"in vec2 in_position;\n"
+		"in vec2 in_texCoord;\n"
+		"in vec4 in_vertexColor;\n"
+		"\n"
+		"out vec2 texCoord;\n"
+		"out vec4 vertexColor;\n"
+		"\n"
+		"uniform mat4 u_modelViewProj;\n"
+		"\n"
+		"void main()\n"
+		"{\n"
+		"	gl_Position = vec4(in_position, 0.0, 1.0) * u_modelViewProj;\n"
+		"	texCoord = in_texCoord;\n"
+		"	vertexColor = in_vertexColor;\n"
+		"}\n";
+
+	string fragmentShader =
+		"\n"
+		"in vec2 texCoord;\n"
+		"in vec4 vertexColor;\n"
+		"\n"
+		"out vec4 out_fragColor;\n"
+		"\n"
+		"uniform sampler2D u_texture;"
+		"\n"
+		"void main()\n"
+		"{\n"
+		"	out_fragColor = texture2D(u_texture, texCoord) * vertexColor;\n"
+		"}";
+
+	s_defaultShader = ShaderPtr(new Shader(vertexShader, fragmentShader));
+	s_defaultTexture = Texture2DPtr(new Texture2D(1, 1));
 }
+
+ShaderPtr Graphics::s_defaultShader = 0;
+Texture2DPtr Graphics::s_defaultTexture = 0;
+GLuint Graphics::s_vao = 0;
+GLuint Graphics::s_vbo = 0;
+GLuint Graphics::s_ibo = 0;
 
 void Graphics::createContext()
 {
@@ -139,6 +196,9 @@ void Graphics::createContext()
 
 void Graphics::destroyContext()
 {
+	glDeleteBuffers(1, &s_vbo);
+	glDeleteVertexArrays(1, &s_vao);
+
 	if(s_context)
 	{
 		// Make the rendering context not current
@@ -158,25 +218,19 @@ void Graphics::swapBuffers()
 	glClear(GL_COLOR_BUFFER_BIT);
 }
 
-bool Graphics::isSupported(Feature feature)
-{
-	switch(feature)
-	{
-	case VertexBufferObjects: return GLEW_ARB_vertex_buffer_object == GL_TRUE; break;
-	case FrameBufferObjects: return GLEW_ARB_framebuffer_object == GL_TRUE; break;
-	}
-	return false;
-}
-
 // Vsync
 void Graphics::enableVsync()
 {
-	wglSwapIntervalEXT(1);
+	if (wglSwapIntervalEXT) {
+		wglSwapIntervalEXT(1);
+	}
 }
 
 void Graphics::disableVsync()
 {
-	wglSwapIntervalEXT(0);
+	if (wglSwapIntervalEXT) {
+		wglSwapIntervalEXT(0);
+	}
 }
 
 // Wireframe

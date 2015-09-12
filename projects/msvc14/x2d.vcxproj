@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Android">
       <Configuration>Debug</Configuration>
@@ -19,52 +19,79 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\include\x2d\app.h" />
-    <ClInclude Include="..\..\include\x2d\assetloader.h" />
-    <ClInclude Include="..\..\include\x2d\debug.h" />
+    <ClInclude Include="..\..\include\x2d\audio.h" />
+    <ClInclude Include="..\..\include\x2d\config.h" />
     <ClInclude Include="..\..\include\x2d\engine.h" />
-    <ClInclude Include="..\..\include\x2d\gfx.h" />
-    <ClInclude Include="..\..\include\x2d\iosystem.h" />
+    <ClInclude Include="..\..\include\x2d\graphics.h" />
+    <ClInclude Include="..\..\include\x2d\graphics\animation.h" />
+    <ClInclude Include="..\..\include\x2d\graphics\blendState.h" />
+    <ClInclude Include="..\..\include\x2d\graphics\font.h" />
+    <ClInclude Include="..\..\include\x2d\graphics\spriteBatch.h" />
+    <ClInclude Include="..\..\include\x2d\graphics\graphicsContext.h" />
+    <ClInclude Include="..\..\include\x2d\graphics\rendertarget.h" />
+    <ClInclude Include="..\..\include\x2d\graphics\pixmap.h" />
+    <ClInclude Include="..\..\include\x2d\graphics\shader.h" />
+    <ClInclude Include="..\..\include\x2d\graphics\shape.h" />
+    <ClInclude Include="..\..\include\x2d\graphics\sprite.h" />
+    <ClInclude Include="..\..\include\x2d\graphics\texture.h" />
+    <ClInclude Include="..\..\include\x2d\graphics\textureAtlas.h" />
+    <ClInclude Include="..\..\include\x2d\graphics\textureRegion.h" />
+    <ClInclude Include="..\..\include\x2d\graphics\vertex.h" />
+    <ClInclude Include="..\..\include\x2d\graphics\vertexbuffer.h" />
+    <ClInclude Include="..\..\include\x2d\graphics\viewport.h" />
+    <ClInclude Include="..\..\include\x2d\iniparser.h" />
     <ClInclude Include="..\..\include\x2d\math.h" />
-    <ClInclude Include="..\..\include\x2d\math\array.h" />
     <ClInclude Include="..\..\include\x2d\math\matrix.h" />
-    <ClInclude Include="..\..\include\x2d\math\profiler.h" />
+    <ClInclude Include="..\..\include\x2d\math\random.h" />
     <ClInclude Include="..\..\include\x2d\math\rect.h" />
-    <ClInclude Include="..\..\include\x2d\math\rectPacker.h" />
+    <ClInclude Include="..\..\include\x2d\math\rectanglepacker.h" />
     <ClInclude Include="..\..\include\x2d\math\vector.h" />
-    <ClInclude Include="..\..\include\x2d\platform.h" />
-    <ClInclude Include="..\..\include\x2d\scripts.h" />
-    <ClInclude Include="..\..\include\x2d\sfx.h" />
-    <ClInclude Include="..\..\source\scripts\scriptarray.h" />
-    <ClInclude Include="..\..\source\scripts\scriptbuilder.h" />
-    <ClInclude Include="..\..\source\scripts\scriptgrid.h" />
-    <ClInclude Include="..\..\source\scripts\scripthelper.h" />
-    <ClInclude Include="..\..\source\scripts\scriptstdstring.h" />
+    <ClInclude Include="..\..\include\x2d\resourcemanager.h" />
+    <ClInclude Include="..\..\include\x2d\x2d.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\source\array.cpp" />
-    <ClCompile Include="..\..\source\assetloader.cpp" />
-    <ClCompile Include="..\..\source\engine.cpp" />
-    <ClCompile Include="..\..\source\iosystem.cpp" />
-    <ClCompile Include="..\..\source\math\math.cpp" />
-    <ClCompile Include="..\..\source\math\matrix.cpp" />
-    <ClCompile Include="..\..\source\math\rect.cpp" />
-    <ClCompile Include="..\..\source\math\rectPacker.cpp" />
-    <ClCompile Include="..\..\source\math\vector.cpp" />
-    <ClCompile Include="..\..\source\profiler.cpp" />
-    <ClCompile Include="..\..\source\scripts.cpp" />
-    <ClCompile Include="..\..\source\scripts\scriptarray.cpp" />
-    <ClCompile Include="..\..\source\scripts\scriptbuilder.cpp" />
-    <ClCompile Include="..\..\source\scripts\scriptgrid.cpp" />
-    <ClCompile Include="..\..\source\scripts\scripthelper.cpp" />
-    <ClCompile Include="..\..\source\scripts\scriptstdstring.cpp" />
-    <ClCompile Include="..\..\source\scripts\scriptstdstring_utils.cpp" />
-    <ClCompile Include="..\..\source\x2d\debug.cpp" />
+    <ClCompile Include="..\..\source\audio\audio.cpp" />
+    <ClCompile Include="..\..\source\audio\buffer.cpp" />
+    <ClCompile Include="..\..\source\audio\source.cpp" />
+    <ClCompile Include="..\..\source\common\iniparser.cpp" />
+    <ClCompile Include="..\..\source\common\resourcemanager.cpp" />
+    <ClCompile Include="..\..\source\common\console.cpp" />
+    <ClCompile Include="..\..\source\common\engine.cpp" />
+    <ClCompile Include="..\..\source\common\filesystem.cpp" />
+    <ClCompile Include="..\..\source\common\input.cpp" />
+    <ClCompile Include="..\..\source\common\math.cpp" />
+    <ClCompile Include="..\..\source\common\math\matrix.cpp" />
+    <ClCompile Include="..\..\source\common\math\random.cpp" />
+    <ClCompile Include="..\..\source\common\math\rect.cpp" />
+    <ClCompile Include="..\..\source\common\math\rectanglepacker.cpp" />
+    <ClCompile Include="..\..\source\common\math\vector.cpp" />
+    <ClCompile Include="..\..\source\common\profiler.cpp" />
+    <ClCompile Include="..\..\source\common\timer.cpp" />
+    <ClCompile Include="..\..\source\common\util.cpp" />
+    <ClCompile Include="..\..\source\common\window.cpp" />
+    <ClCompile Include="..\..\source\graphics\animation.cpp" />
+    <ClCompile Include="..\..\source\graphics\blendState.cpp" />
+    <ClCompile Include="..\..\source\graphics\font.cpp" />
+    <ClCompile Include="..\..\source\graphics\spriteBatch.cpp" />
+    <ClCompile Include="..\..\source\graphics\graphicsContext.cpp" />
+    <ClCompile Include="..\..\source\graphics\renderTarget.cpp" />
+    <ClCompile Include="..\..\source\graphics\graphics.cpp" />
+    <ClCompile Include="..\..\source\graphics\pixmap.cpp" />
+    <ClCompile Include="..\..\source\graphics\shader.cpp" />
+    <ClCompile Include="..\..\source\graphics\shape.cpp" />
+    <ClCompile Include="..\..\source\graphics\sprite.cpp" />
+    <ClCompile Include="..\..\source\graphics\texture.cpp" />
+    <ClCompile Include="..\..\source\graphics\textureAtlas.cpp" />
+    <ClCompile Include="..\..\source\graphics\textureRegion.cpp" />
+    <ClCompile Include="..\..\source\graphics\vertex.cpp" />
+    <ClCompile Include="..\..\source\graphics\vertexBuffer.cpp" />
+    <ClCompile Include="..\..\source\graphics\viewport.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{F3F25B49-2C6B-4FF0-98FB-47695DF70B8A}</ProjectGuid>
     <RootNamespace>sanangeles</RootNamespace>
     <ProjectName>x2d</ProjectName>
+    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Android'" Label="Configuration">
@@ -73,7 +100,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <CharacterSet>NotSet</CharacterSet>
     <ConfigurationType>DynamicLibrary</ConfigurationType>
-    <PlatformToolset>v120</PlatformToolset>
+    <PlatformToolset>v140</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Android'" Label="Configuration">
     <CharacterSet>NotSet</CharacterSet>
@@ -90,25 +117,25 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <ConfigurationType>DynamicLibrary</ConfigurationType>
-    <PlatformToolset>v120</PlatformToolset>
+    <PlatformToolset>v140</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Android'" Label="Configuration">
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <ConfigurationType>DynamicLibrary</ConfigurationType>
-    <PlatformToolset>v110</PlatformToolset>
+    <PlatformToolset>v140</PlatformToolset>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <OutDir>$(SolutionDir)..\..\build\$(Platform)\$(Configuration)\</OutDir>
+    <OutDir>$(ProjectDir)..\..\build\$(Platform)\$(Configuration)\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Android'">
     <OutDir>$(SolutionDir)..\..\build\$(Platform)\$(Configuration)\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <TargetName>$(ProjectName)_d</TargetName>
+    <TargetName>$(ProjectName)d</TargetName>
     <LinkIncremental>true</LinkIncremental>
     <IntDir>$(Configuration)\</IntDir>
   </PropertyGroup>
@@ -117,7 +144,7 @@
     <LinkIncremental>true</LinkIncremental>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <OutDir>$(SolutionDir)..\..\build\$(Platform)\$(Configuration)\</OutDir>
+    <OutDir>$(ProjectDir)..\..\build\$(Platform)\$(Configuration)\</OutDir>
     <LinkIncremental>false</LinkIncremental>
     <IntDir>$(Configuration)\</IntDir>
   </PropertyGroup>
@@ -147,7 +174,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
-      <AdditionalIncludeDirectories>$(SolutionDir)..\..\include;$(SolutionDir)..\..\source;$(SolutionDir)..\..\lib\angelscript\sdk\angelscript\include;$(SolutionDir)..\..\lib\lpng154;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\include;$(ProjectDir)..\..\source;$(ProjectDir)..\..\3rdparty\freeimage\source;$(ProjectDir)..\..\3rdparty\freetype\include;$(ProjectDir)..\..\3rdparty\openal\include;$(ProjectDir)..\..\3rdparty\gl3w\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Android'">
@@ -160,7 +187,7 @@
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <WarningLevel>Level4</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>USING_AS;X2D_EXPORT</PreprocessorDefinitions>
+      <PreprocessorDefinitions>X2D_EXPORT;X2D_USE_GL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -169,11 +196,11 @@
       <ExceptionHandling>Sync</ExceptionHandling>
     </ClCompile>
     <Link>
-      <AdditionalLibraryDirectories>$(SolutionDir)..\..\lib\angelscript\sdk\angelscript\lib;$(SolutionDir)..\..\lib\zlib-1.2.5\lib;$(SolutionDir)..\..\lib\lpng154\lib</AdditionalLibraryDirectories>
-      <AdditionalDependencies>ws2_32.lib;angelscriptd.lib;iphlpapi.lib;libpng15_d.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>$(ProjectDir)..\..\3rdparty\freeimage\lib;$(ProjectDir)..\..\3rdparty\freetype\lib;$(ProjectDir)..\..\3rdparty\openal\libs\Win32;$(ProjectDir)..\..\3rdparty\gl3w\lib</AdditionalLibraryDirectories>
+      <GenerateDebugInformation>Debug</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
+      <AdditionalDependencies>openal32.lib;freetyped.lib;freeimaged.lib;opengl32.lib;gl3wd.lib;glu32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <Lib>
       <AdditionalDependencies>glew32_d.lib;ws2_32.lib;IPHlpAPI.lib;freetype248_d.lib;OpenAL32.lib;libpng15_d.lib;angelscriptd.lib;%(AdditionalDependencies)</AdditionalDependencies>
@@ -197,7 +224,7 @@
     <Link>
       <AdditionalLibraryDirectories>$(SolutionDir)..\..\lib\angelscript\sdk\angelscript\lib;$(SolutionDir)..\..\lib\zlib-1.2.5\lib;$(SolutionDir)..\..\lib\lpng154\lib</AdditionalLibraryDirectories>
       <AdditionalDependencies>angelscriptd.a;libpng15_d.a;zlib_d.a;%(AdditionalDependencies)</AdditionalDependencies>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <GenerateDebugInformation>Debug</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
     </Link>
@@ -208,7 +235,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
-      <AdditionalIncludeDirectories>$(SolutionDir)..\..\include;$(SolutionDir)..\..\source;$(SolutionDir)..\..\lib\angelscript\sdk\angelscript\include;$(SolutionDir)..\..\lib\lpng154;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\include;$(ProjectDir)..\..\source;$(ProjectDir)..\..\3rdparty\freeimage\source;$(ProjectDir)..\..\3rdparty\freetype\include;$(ProjectDir)..\..\3rdparty\openal\include;$(ProjectDir)..\..\3rdparty\glew\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Android'">
@@ -220,7 +247,7 @@
     <ClCompile>
       <WarningLevel>Level4</WarningLevel>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>USING_AS;X2D_EXPORT</PreprocessorDefinitions>
+      <PreprocessorDefinitions>X2D_EXPORT;X2D_USE_GL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <Optimization>Full</Optimization>
@@ -229,10 +256,8 @@
       <WholeProgramOptimization>true</WholeProgramOptimization>
     </ClCompile>
     <Link>
-      <AdditionalLibraryDirectories>$(SolutionDir)..\..\lib\angelscript\sdk\angelscript\lib;$(SolutionDir)..\..\lib\zlib-1.2.5\lib;$(SolutionDir)..\..\lib\lpng154\lib</AdditionalLibraryDirectories>
-      <AdditionalDependencies>angelscript.lib;iphlpapi.lib;libpng15.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <GenerateDebugInformation>
-      </GenerateDebugInformation>
+      <AdditionalLibraryDirectories>$(ProjectDir)..\..\3rdparty\freeimage\lib;$(ProjectDir)..\..\3rdparty\freetype\lib;$(ProjectDir)..\..\3rdparty\openal\libs\Win32;$(ProjectDir)..\..\3rdparty\glew\lib</AdditionalLibraryDirectories>
+      <AdditionalDependencies>openal32.lib;freetype.lib;freeimage.lib;opengl32.lib;glew.lib;glu32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
       <Command>
@@ -254,8 +279,6 @@
     <Link>
       <AdditionalLibraryDirectories>$(SolutionDir)..\..\lib\angelscript\sdk\angelscript\lib;$(SolutionDir)..\..\lib\zlib-1.2.5\lib;$(SolutionDir)..\..\lib\lpng154\lib</AdditionalLibraryDirectories>
       <AdditionalDependencies>ws2_32.lib;angelscript.lib;iphlpapi.lib;libpng15.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <GenerateDebugInformation>
-      </GenerateDebugInformation>
     </Link>
     <PostBuildEvent>
       <Command>

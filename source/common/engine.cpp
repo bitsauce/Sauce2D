@@ -234,7 +234,7 @@ int Engine::run()
 			if(m_drawFunc)
 			{
 				const double alpha = accumulator / dt;
-				m_drawFunc(m_graphics->s_graphicsContext, alpha);
+				m_drawFunc(m_graphics->s_graphicsContext, (float)alpha);
 				m_graphics->swapBuffers();
 			}
 

@@ -11,7 +11,7 @@ class Font;
 typedef shared_ptr<Font> FontPtr;
 
 class FontLoader;
-class Texture;
+class Texture2D;
 
 struct XDAPI CharDescr
 {
