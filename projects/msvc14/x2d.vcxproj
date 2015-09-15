@@ -257,7 +257,7 @@
     </ClCompile>
     <Link>
       <AdditionalLibraryDirectories>$(ProjectDir)..\..\3rdparty\freeimage\lib;$(ProjectDir)..\..\3rdparty\freetype\lib;$(ProjectDir)..\..\3rdparty\openal\libs\Win32;$(ProjectDir)..\..\3rdparty\gl3w\lib</AdditionalLibraryDirectories>
-      <AdditionalDependencies>openal32.lib;freetyped.lib;freeimaged.lib;opengl32.lib;gl3w.lib;glu32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>openal32.lib;freetype.lib;freeimage.lib;opengl32.lib;gl3w.lib;glu32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
       <Command>
