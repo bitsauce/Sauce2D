@@ -157,9 +157,10 @@ Shader::~Shader()
 
 void Shader::setUniform1i(const string &name, const int v0)
 {
-	if(m_uniforms.find(name) != m_uniforms.end())
+	map<string, Uniform*>::iterator itr;
+	if((itr = m_uniforms.find(name)) != m_uniforms.end())
 	{
-		Uniform *uniform = m_uniforms[name];
+		Uniform *uniform = itr->second;
 		if(uniform->type == GL_INT)
 		{
 			((GLint*)uniform->data)[0] = v0;
@@ -173,9 +174,10 @@ void Shader::setUniform1i(const string &name, const int v0)
 
 void Shader::setUniform2i(const string &name, const int v0, const int v1)
 {
-	if(m_uniforms.find(name) != m_uniforms.end())
+	map<string, Uniform*>::iterator itr;
+	if ((itr = m_uniforms.find(name)) != m_uniforms.end())
 	{
-		Uniform *uniform = m_uniforms[name];
+		Uniform *uniform = itr->second;
 		if(uniform->type == GL_INT_VEC2)
 		{
 			((GLint*)uniform->data)[0] = v0;
@@ -190,9 +192,10 @@ void Shader::setUniform2i(const string &name, const int v0, const int v1)
 
 void Shader::setUniform3i(const string &name, const int v0, const int v1, const int v2)
 {
-	if(m_uniforms.find(name) != m_uniforms.end())
+	map<string, Uniform*>::iterator itr;
+	if ((itr = m_uniforms.find(name)) != m_uniforms.end())
 	{
-		Uniform *uniform = m_uniforms[name];
+		Uniform *uniform = itr->second;
 		if(uniform->type == GL_INT_VEC3)
 		{
 			((GLint*)uniform->data)[0] = v0;
@@ -208,9 +211,10 @@ void Shader::setUniform3i(const string &name, const int v0, const int v1, const 
 
 void Shader::setUniform4i(const string &name, const int v0, const int v1, const int v2, const int v3)
 {
-	if(m_uniforms.find(name) != m_uniforms.end())
+	map<string, Uniform*>::iterator itr;
+	if ((itr = m_uniforms.find(name)) != m_uniforms.end())
 	{
-		Uniform *uniform = m_uniforms[name];
+		Uniform *uniform = itr->second;
 		if(uniform->type == GL_INT_VEC4)
 		{
 			((GLint*)uniform->data)[0] = v0;
@@ -227,9 +231,10 @@ void Shader::setUniform4i(const string &name, const int v0, const int v1, const 
 
 void Shader::setUniform1f(const string &name, const float v0)
 {
-	if(m_uniforms.find(name) != m_uniforms.end())
+	map<string, Uniform*>::iterator itr;
+	if ((itr = m_uniforms.find(name)) != m_uniforms.end())
 	{
-		Uniform *uniform = m_uniforms[name];
+		Uniform *uniform = itr->second;
 		if(uniform->type == GL_FLOAT)
 		{
 			((GLfloat*)uniform->data)[0] = v0;
@@ -243,9 +248,10 @@ void Shader::setUniform1f(const string &name, const float v0)
 
 void Shader::setUniform2f(const string &name, const float v0, const float v1)
 {
-	if(m_uniforms.find(name) != m_uniforms.end())
+	map<string, Uniform*>::iterator itr;
+	if ((itr = m_uniforms.find(name)) != m_uniforms.end())
 	{
-		Uniform *uniform = m_uniforms[name];
+		Uniform *uniform = itr->second;
 		if(uniform->type == GL_FLOAT_VEC2)
 		{
 			((GLfloat*)uniform->data)[0] = v0;
@@ -260,9 +266,10 @@ void Shader::setUniform2f(const string &name, const float v0, const float v1)
 
 void Shader::setUniform3f(const string &name, const float v0, const float v1, const float v2)
 {
-	if(m_uniforms.find(name) != m_uniforms.end())
+	map<string, Uniform*>::iterator itr;
+	if ((itr = m_uniforms.find(name)) != m_uniforms.end())
 	{
-		Uniform *uniform = m_uniforms[name];
+		Uniform *uniform = itr->second;
 		if(uniform->type == GL_FLOAT_VEC3)
 		{
 			((GLfloat*)uniform->data)[0] = v0;
@@ -278,9 +285,10 @@ void Shader::setUniform3f(const string &name, const float v0, const float v1, co
 
 void Shader::setUniform4f(const string &name, const float v0, const float v1, const float v2, const float v3)
 {
-	if(m_uniforms.find(name) != m_uniforms.end())
+	map<string, Uniform*>::iterator itr;
+	if ((itr = m_uniforms.find(name)) != m_uniforms.end())
 	{
-		Uniform *uniform = m_uniforms[name];
+		Uniform *uniform = itr->second;
 		if(uniform->type == GL_FLOAT_VEC4)
 		{
 			((GLfloat*)uniform->data)[0] = v0;
@@ -297,9 +305,10 @@ void Shader::setUniform4f(const string &name, const float v0, const float v1, co
 
 void Shader::setUniformMatrix4f(const string & name, const float * v0)
 {
-	if (m_uniforms.find(name) != m_uniforms.end())
+	map<string, Uniform*>::iterator itr;
+	if ((itr = m_uniforms.find(name)) != m_uniforms.end())
 	{
-		Uniform *uniform = m_uniforms[name];
+		Uniform *uniform = itr->second;
 		if (uniform->type == GL_FLOAT_MAT4)
 		{
 			for (int i = 0; i < 16; ++i)
@@ -317,9 +326,10 @@ void Shader::setUniformMatrix4f(const string & name, const float * v0)
 void Shader::setSampler2D(const string &name, Texture2DPtr texture)
 {
 	// TODO: We should actually store a handle to the texture object to avoid it being destroyed
-	if(m_uniforms.find(name) != m_uniforms.end())
+	map<string, Uniform*>::iterator itr;
+	if ((itr = m_uniforms.find(name)) != m_uniforms.end())
 	{
-		Uniform *uniform = m_uniforms[name];
+		Uniform *uniform = itr->second;
 		if(uniform->type == GL_SAMPLER_2D ||
 			uniform->type == GL_INT_SAMPLER_2D ||
 			uniform->type == GL_UNSIGNED_INT_SAMPLER_2D)
@@ -331,6 +341,29 @@ void Shader::setSampler2D(const string &name, Texture2DPtr texture)
 	{
 		LOG("Uniform '%s' does not exist.", name.c_str());
 	}
+}
+
+void Shader::exportAssembly(const string & fileName)
+{
+	// Max file size
+	const size_t MAX_SIZE = 1 << 24;
+
+	// Get binary program
+	char *binary = new char[MAX_SIZE];
+	GLenum format;
+	GLint length;
+	glGetProgramBinary(m_id, MAX_SIZE, &length, &format, binary);
+
+	// Copy to string
+	string content;
+	content.resize(length);
+	memcpy(&content[0], binary, length);
+
+	// Write to file
+	FileSystem::WriteFile(fileName, content);
+
+	// Clean up
+	delete[] binary;
 }
 
 ShaderPtr Shader::loadResource(const string &name)

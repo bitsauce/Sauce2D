@@ -26,6 +26,8 @@ public:
 	void setUniform4f(const string &name, const float v0, const float v1, const float v2, const float v3);
 	void setUniformMatrix4f(const string &name, const float *v0);
 	void setSampler2D(const string &name, Texture2DPtr texture);
+
+	void exportAssembly(const string &fileName);
 	
 	static ShaderPtr loadResource(const string &name);
 

@@ -108,8 +108,8 @@ TextureRegion TextureAtlas::get(const int index, const Vector2 &uv0, const Vecto
 	// Get texture region
 	const RectanglePacker::Rectangle &rect = m_result.rectangles[index];
 	return TextureRegion(
-		((rect.x+m_border) + (rect.width-m_border*2)*uv0.x)/ATLAS_SIZE, ((rect.y+m_border) + (rect.height-m_border*2)*uv0.y)/ATLAS_SIZE,
-		((rect.x+m_border) + (rect.width-m_border*2)*uv1.x)/ATLAS_SIZE, ((rect.y+m_border) + (rect.height-m_border*2)*uv1.y)/ATLAS_SIZE
+		( ( rect.x + m_border ) + ( rect.width - m_border * 2 ) * uv0.x ) / ATLAS_SIZE, ( ( rect.y + m_border) + ( rect.height - m_border * 2 ) * uv0.y ) / ATLAS_SIZE,
+		( ( rect.x + m_border ) + ( rect.width - m_border * 2 ) * uv1.x ) / ATLAS_SIZE, ( ( rect.y + m_border) + ( rect.height - m_border * 2 ) * uv1.y ) / ATLAS_SIZE
 		);
 }
 

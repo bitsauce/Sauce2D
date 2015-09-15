@@ -33,3 +33,5 @@
 .svn
 AS_DEBUG
 3rdparty/RakNet
+*.iobj
+*.ipdb

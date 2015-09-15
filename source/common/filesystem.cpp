@@ -140,7 +140,7 @@ string &FileSystemIterator::next()
 
 void FileWriter::append(const char* data, const int length)
 {
-	stream << data;
+	stream.write(data, length);
 }
 
 void FileWriter::flush()

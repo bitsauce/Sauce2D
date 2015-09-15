@@ -226,7 +226,7 @@ void GraphicsContext::drawIndexedPrimitives(const PrimitiveType type, const Vert
 	glBindBuffer(GL_ARRAY_BUFFER, Graphics::s_vbo);
 	glBufferData(GL_ARRAY_BUFFER, vertexCount * vertexSizeInBytes, vertexData, GL_DYNAMIC_DRAW);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, Graphics::s_ibo);
-	glBufferData(GL_ARRAY_BUFFER, indexCount * sizeof(uint), indices, GL_DYNAMIC_DRAW);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, indexCount * sizeof(uint), indices, GL_DYNAMIC_DRAW);
 			
 	// Set array pointers
 	for(int i = 0; i < VERTEX_ATTRIB_MAX; i++)
@@ -273,7 +273,7 @@ void GraphicsContext::drawIndexedPrimitives(const PrimitiveType type, const Vert
 	}
 
 	// Draw primitives
-	glDrawElements(type, indexCount, GL_UNSIGNED_INT, indices);
+	glDrawElements(type, indexCount, GL_UNSIGNED_INT, 0);
 
 	// Reset vbo buffers
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
