@@ -179,7 +179,7 @@ int Engine::run()
 	{
 		// Fps sampling
 		const int numFpsSamples = 8;
-		float fpsSamples[numFpsSamples];
+		double fpsSamples[numFpsSamples];
 		int currFpsSample = 0;
 
 		// Set running
@@ -187,9 +187,9 @@ int Engine::run()
 
 		// Setup game loop
 		m_timer->start();
-		const float dt = 1.0f / 30.0f;
-		float accumulator = 0.0f;
-		float prevTime = m_timer->getElapsedTime() * 0.001f;
+		const double dt = 1.0 / 30.0;
+		double accumulator = 0.0;
+		double prevTime = m_timer->getElapsedTime();
 
 		// Lets make sure update is called once before draw
 		if(m_updateFunc) m_updateFunc(dt);
@@ -207,14 +207,14 @@ int Engine::run()
 			}
 
 			// Calculate time delta
-			const float currentTime = m_timer->getElapsedTime() * 0.001f;
-			float deltaTime = currentTime - prevTime;
+			const double currentTime = m_timer->getElapsedTime();
+			double deltaTime = currentTime - prevTime;
 			prevTime = currentTime;
-		
+
 			// Avoid spiral of death
-			if(deltaTime > 0.25f)
+			if(deltaTime > 0.25)
 			{
-				deltaTime = 0.25f;
+				deltaTime = 0.25;
 			}
 
 			// Step begin
@@ -234,21 +234,21 @@ int Engine::run()
 			if(m_drawFunc)
 			{
 				const double alpha = accumulator / dt;
-				m_drawFunc(m_graphics->s_graphicsContext, (float)alpha);
+				m_drawFunc(m_graphics->s_graphicsContext, (float) alpha);
 				m_graphics->swapBuffers();
 			}
 
 			// Calculate fps
 			if(deltaTime != 0.0f)
 			{
-				fpsSamples[currFpsSample++] = 1.0f/deltaTime;
+				fpsSamples[currFpsSample++] = 1.0 / deltaTime;
 			}
 
 			if(currFpsSample >= numFpsSamples)
 			{
-				float fps = 0.0f;
+				double fps = 0.0;
 				for(int i = 0; i < numFpsSamples; i++) fps += fpsSamples[i];
-				Graphics::s_framesPerSecond = (float)int(fps/numFpsSamples);
+				Graphics::s_framesPerSecond = float(fps / numFpsSamples);
 				currFpsSample = 0;
 			}
 

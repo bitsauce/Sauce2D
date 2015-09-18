@@ -11,6 +11,9 @@
 
 using namespace xd;
 
+float x = 0, xPrev = 0;
+bool vsync = true;
+
 class GameManager
 {
 public:
@@ -21,17 +24,43 @@ public:
 	{
 		font = ResourceManager::get<Font>(":/arial.fnt");
 		spriteBatch = new SpriteBatch(graphicsContext);
+		Input::bind(XD_KEY_1, toggleVSync);
+		Input::bind(XD_KEY_2, toggleFullscreen);
+	}
+
+	static void toggleVSync()
+	{
+		if(vsync)
+			Graphics::disableVsync();
+		else
+			Graphics::enableVsync();
+		vsync = !vsync;
+	}
+
+	static void toggleFullscreen()
+	{
+		if(Window::isFullscreen())
+			Window::disableFullscreen();
+		else
+			Window::enableFullscreen();
 	}
 
 	static void update(const float dt)
 	{
+		xPrev = x;
+		x += 5.0f;
+		if(x > Window::getWidth())
+		{
+			x -= Window::getWidth();
+		}
 	}
 
 	static void draw(GraphicsContext &context, const float alpha)
 	{
 		spriteBatch->begin();
-		font->draw(spriteBatch, 0, 0, "Hello World");
+		font->draw(spriteBatch, 0, 0, "FPS: " + util::floatToStr(Graphics::getFPS()) + "\nVSync: " + (vsync?"ON":"OFF") + " (press 1 to toggle)\nFullscreen: " + (Window::isFullscreen() ? "ON" : "OFF") + " (press 2 to toggle)");
 		spriteBatch->end();
+		context.drawRectangle(Rect(math::lerp(xPrev, x, alpha), context.getHeight() * 0.5f, 32.0f, 32.0f));
 	}
 
 	static void exit()
@@ -69,9 +98,9 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, INT)
 	config.updateFunc = &GameManager::update;
 	config.drawFunc = &GameManager::draw;
 	config.endFunc = &GameManager::exit;
-#ifdef X2D_DEBUG
+//#ifdef X2D_DEBUG
 	config.workDir = "..\\game\\";
-#endif
+//#endif
 	config.flags = flags;
 
 	if(engine->init(config) != X2D_OK)

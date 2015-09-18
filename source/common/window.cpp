@@ -240,7 +240,8 @@ void Window::show()
 		if(find(s_resolutions.begin(), s_resolutions.end(), res) == s_resolutions.end()) {
 			s_resolutions.push_back(res);
 		}
-	}	
+	}
+	sort(s_resolutions.begin(), s_resolutions.end());
 }
 
 //--------------------------------------------------------------------
@@ -251,11 +252,11 @@ void Window::enableFullscreen()
 	if(!s_fullscreen)
 	{
 		// Check if resolution is supported
-		if(find(s_resolutions.begin(), s_resolutions.end(), s_size) == s_resolutions.end())
+		//if(find(s_resolutions.begin(), s_resolutions.end(), s_size) == s_resolutions.end())
 		{
 			// Apply largest resolution
 			Vector2 res = s_resolutions.back();
-			LOG("Resolution %ix%i is not supported by this graphics card. Using largest resolution %ix%i by default.", uint(s_size.x), uint(s_size.y), uint(res.x), uint(res.y));
+			//LOG("Resolution %ix%i is not supported by this graphics card. Using largest resolution %ix%i by default.", uint(s_size.x), uint(s_size.y), uint(res.x), uint(res.y));
 			s_size = res;
 		}
 

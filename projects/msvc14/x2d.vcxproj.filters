@@ -1,6 +1,15 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
+    <Filter Include="include">
+      <UniqueIdentifier>{63a1d898-eb0d-49f6-8bfc-378bbed62473}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\math">
+      <UniqueIdentifier>{11ab994e-9d47-4069-aa41-1236c6e983e0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\graphics">
+      <UniqueIdentifier>{095c17d4-bd34-4d01-a74d-31fe78f8ff43}</UniqueIdentifier>
+    </Filter>
     <Filter Include="source">
       <UniqueIdentifier>{dbaa90f1-6e42-4362-be07-632b221b4742}</UniqueIdentifier>
     </Filter>
@@ -15,15 +24,6 @@
     </Filter>
     <Filter Include="source\common\math">
       <UniqueIdentifier>{75496aa6-e494-42a7-ab65-c135565772ef}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="include">
-      <UniqueIdentifier>{63a1d898-eb0d-49f6-8bfc-378bbed62473}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="include\math">
-      <UniqueIdentifier>{11ab994e-9d47-4069-aa41-1236c6e983e0}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="include\graphics">
-      <UniqueIdentifier>{095c17d4-bd34-4d01-a74d-31fe78f8ff43}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

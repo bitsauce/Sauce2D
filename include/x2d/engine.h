@@ -69,7 +69,7 @@ public:
 	// High-resolution timing
 	void  start();
 	void  stop();
-	float getElapsedTime() const;
+	double getElapsedTime() const;
 
 	// System clock
 	void getTicksPerSecond();
