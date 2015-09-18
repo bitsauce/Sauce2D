@@ -36,7 +36,7 @@ void Timer::stop()
 	m_running = false;
 }
 
-float Timer::getElapsedTime() const
+double Timer::getElapsedTime() const
 {
 	LARGE_INTEGER end = m_end;
     if(m_running)
@@ -44,8 +44,8 @@ float Timer::getElapsedTime() const
         QueryPerformanceCounter(&end);
 	}
 
-	float startTime = m_start.QuadPart * (1000.0f / m_frequency.QuadPart);
-	float endTime = end.QuadPart * (1000.0f / m_frequency.QuadPart);
+	double startTime = m_start.QuadPart * (1.0 / m_frequency.QuadPart);
+	double endTime = end.QuadPart * (1.0 / m_frequency.QuadPart);
     return endTime - startTime;
 }
 

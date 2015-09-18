@@ -15,6 +15,10 @@ class XDAPI Shader
 public:
 	Shader(const string &vertexSource, const string &fragmentSource);
 	~Shader();
+
+	void bindFragLocation(const uint location, const string &name);
+
+	void link();
 	
 	void setUniform1i(const string &name, const int v0);
 	void setUniform2i(const string &name, const int v0, const int v1);
@@ -53,7 +57,7 @@ private:
 		void *data;
 	};
 
-	GLint m_id;
+	GLuint m_id, m_vertShaderID, m_fragShaderID;
 	map<string, Uniform*> m_uniforms;
 };
 

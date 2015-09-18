@@ -19,8 +19,8 @@ BEGIN_XD_NAMESPACE
 Shader::Shader(const string &vertexSource, const string &fragmentSource)
 {
 	// Create vertex and fragment shaders
-    GLuint vertShader = glCreateShader(GL_VERTEX_SHADER);
-    GLuint fragShader = glCreateShader(GL_FRAGMENT_SHADER);
+    m_vertShaderID = glCreateShader(GL_VERTEX_SHADER);
+    m_fragShaderID = glCreateShader(GL_FRAGMENT_SHADER);
 
 	// Result variables
     int result = 0;
@@ -35,16 +35,16 @@ Shader::Shader(const string &vertexSource, const string &fragmentSource)
     // Compile vertex shader
 	const char *data = vertexSourceModified.c_str();
 	int len = vertexSourceModified.length();
-	glShaderSource(vertShader, 1, &data, &len);
-    glCompileShader(vertShader);
+	glShaderSource(m_vertShaderID, 1, &data, &len);
+    glCompileShader(m_vertShaderID);
 
     // Validate vertex shader
-    glGetShaderiv(vertShader, GL_COMPILE_STATUS, &result);
-    glGetShaderiv(vertShader, GL_INFO_LOG_LENGTH, &logLength);
+    glGetShaderiv(m_vertShaderID, GL_COMPILE_STATUS, &result);
+    glGetShaderiv(m_vertShaderID, GL_INFO_LOG_LENGTH, &logLength);
 
 	// Get error log
     char *compileLog = new char[logLength];
-    glGetShaderInfoLog(vertShader, logLength, NULL, compileLog);
+    glGetShaderInfoLog(m_vertShaderID, logLength, NULL, compileLog);
 
 	// Print shader error to console
 	if(logLength > 1) {
@@ -56,59 +56,37 @@ Shader::Shader(const string &vertexSource, const string &fragmentSource)
     // Compile fragment shader
 	data = fragmentSourceModified.c_str();
 	len = fragmentSourceModified.length();
-	glShaderSource(fragShader, 1, &data, &len);
-    glCompileShader(fragShader);
+	glShaderSource(m_fragShaderID, 1, &data, &len);
+    glCompileShader(m_fragShaderID);
 
     // Check fragment shader
-    glGetShaderiv(fragShader, GL_COMPILE_STATUS, &result);
-    glGetShaderiv(fragShader, GL_INFO_LOG_LENGTH, &logLength);
+    glGetShaderiv(m_fragShaderID, GL_COMPILE_STATUS, &result);
+    glGetShaderiv(m_fragShaderID, GL_INFO_LOG_LENGTH, &logLength);
 
 	// Get error log
 	delete[] compileLog;
 	compileLog = new char[logLength];
-    glGetShaderInfoLog(fragShader, logLength, NULL, compileLog);
+    glGetShaderInfoLog(m_fragShaderID, logLength, NULL, compileLog);
 
 	// Print shader error to console
 	if(logLength > 1) {
 		LOG("%s", compileLog);
 	}
 
-    LOG("Linking shader program...");
-
     // Create shader program
-    GLuint program = glCreateProgram();
-    glAttachShader(program, vertShader);
-    glAttachShader(program, fragShader);
+    m_id = glCreateProgram();
+    glAttachShader(m_id, m_vertShaderID);
+    glAttachShader(m_id, m_fragShaderID);
 
-	glBindAttribLocation(program, 0, "in_Position");
-	glBindAttribLocation(program, 1, "in_VertexColor");
-	glBindAttribLocation(program, 2, "in_TexCoord");
-	glBindFragDataLocation(program, 0, "out_FragColor");
+	glBindAttribLocation(m_id, 0, "in_Position");
+	glBindAttribLocation(m_id, 1, "in_VertexColor");
+	glBindAttribLocation(m_id, 2, "in_TexCoord");
+	glBindFragDataLocation(m_id, 0, "out_FragColor");
 
-    glLinkProgram(program);
-
-    glGetProgramiv(program, GL_LINK_STATUS, &result);
-    glGetProgramiv(program, GL_INFO_LOG_LENGTH, &logLength);
-
-	// Get error log
-    char* programLog = new char[(logLength > 1) ? logLength : 1];
-    glGetProgramInfoLog(program, logLength, NULL, programLog);
-
-	// Print program error to console
-	if(logLength > 1) {
-		LOG("%s", programLog);
-	}
-
-	// Delete shader buffers as they are loaded into the shader program
-    glDeleteShader(vertShader);
-    glDeleteShader(fragShader);
+	link();
 
 	// Delete log buffers
 	delete[] compileLog;
-	delete[] programLog;
-
-	// Return shader program
-	m_id = program;
 
 	// Setup uniform variables
 	GLint count;
@@ -150,9 +128,42 @@ Shader::Shader(const string &vertexSource, const string &fragmentSource)
 
 Shader::~Shader()
 {
+	// Delete shader buffers as they are loaded into the shader program
+	glDeleteShader(m_vertShaderID);
+	glDeleteShader(m_fragShaderID);
 	for(map<string, Uniform*>::iterator itr = m_uniforms.begin(); itr != m_uniforms.end(); ++itr) {
 		delete itr->second;
 	}
+}
+
+void Shader::bindFragLocation(const uint location, const string &name)
+{
+	glBindFragDataLocation(m_id, location, name.c_str());
+}
+
+void Shader::link()
+{
+	LOG("Linking shader program...");
+
+	int result = 0;
+	int logLength = 0;
+
+	glLinkProgram(m_id);
+
+	glGetProgramiv(m_id, GL_LINK_STATUS, &result);
+	glGetProgramiv(m_id, GL_INFO_LOG_LENGTH, &logLength);
+
+	// Get error log
+	char* programLog = new char[(logLength > 1) ? logLength : 1];
+	glGetProgramInfoLog(m_id, logLength, NULL, programLog);
+
+	// Print program error to console
+	if(logLength > 1)
+	{
+		LOG("%s", programLog);
+	}
+
+	delete[] programLog;
 }
 
 void Shader::setUniform1i(const string &name, const int v0)
