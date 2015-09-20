@@ -217,139 +217,153 @@ protected:
 **	Input class [static]											**
 **********************************************************************/
 
-// Mouse buttons
-enum MouseButton
-{
-	XD_MOUSE_LEFT,
-	XD_MOUSE_MIDDLE,
-	XD_MOUSE_RIGHT
-};
+/* The unknown key */
+#define XD_KEY_UNKNOWN            -1
 
-// Virtual keys
-enum VirtualKey
-{
-	// Standard ASCII-Mapped keys
-	XD_KEY_NULL = 0x00,
-	XD_KEY_BACKSPACE = 0x08,
-	XD_KEY_TAB = 0x09,
-	XD_KEY_ENTER = 0x0D,
-	XD_KEY_ESCAPE = 0x1B,
-	XD_KEY_SPACE = 0x20,
+/* Printable keys */
+#define XD_KEY_SPACE              32
+#define XD_KEY_APOSTROPHE         39  /* ' */
+#define XD_KEY_COMMA              44  /* , */
+#define XD_KEY_MINUS              45  /* - */
+#define XD_KEY_PERIOD             46  /* . */
+#define XD_KEY_SLASH              47  /* / */
+#define XD_KEY_0                  48
+#define XD_KEY_1                  49
+#define XD_KEY_2                  50
+#define XD_KEY_3                  51
+#define XD_KEY_4                  52
+#define XD_KEY_5                  53
+#define XD_KEY_6                  54
+#define XD_KEY_7                  55
+#define XD_KEY_8                  56
+#define XD_KEY_9                  57
+#define XD_KEY_SEMICOLON          59  /* ; */
+#define XD_KEY_EQUAL              61  /* = */
+#define XD_KEY_A                  65
+#define XD_KEY_B                  66
+#define XD_KEY_C                  67
+#define XD_KEY_D                  68
+#define XD_KEY_E                  69
+#define XD_KEY_F                  70
+#define XD_KEY_G                  71
+#define XD_KEY_H                  72
+#define XD_KEY_I                  73
+#define XD_KEY_J                  74
+#define XD_KEY_K                  75
+#define XD_KEY_L                  76
+#define XD_KEY_M                  77
+#define XD_KEY_N                  78
+#define XD_KEY_O                  79
+#define XD_KEY_P                  80
+#define XD_KEY_Q                  81
+#define XD_KEY_R                  82
+#define XD_KEY_S                  83
+#define XD_KEY_T                  84
+#define XD_KEY_U                  85
+#define XD_KEY_V                  86
+#define XD_KEY_W                  87
+#define XD_KEY_X                  88
+#define XD_KEY_Y                  89
+#define XD_KEY_Z                  90
+#define XD_KEY_LEFT_BRACKET       91  /* [ */
+#define XD_KEY_BACKSLASH          92  /* \ */
+#define XD_KEY_RIGHT_BRACKET      93  /* ] */
+#define XD_KEY_GRAVE_ACCENT       96  /* ` */
+#define XD_KEY_WORLD_1            161 /* non-US #1 */
+#define XD_KEY_WORLD_2            162 /* non-US #2 */
 
-	XD_KEY_0 = 0x30,
-	XD_KEY_1,
-	XD_KEY_2,
-	XD_KEY_3,
-	XD_KEY_4,
-	XD_KEY_5,
-	XD_KEY_6,
-	XD_KEY_7,
-	XD_KEY_8,
-	XD_KEY_9,
+/* Function keys */
+#define XD_KEY_ESCAPE             256
+#define XD_KEY_ENTER              257
+#define XD_KEY_TAB                258
+#define XD_KEY_BACKSPACE          259
+#define XD_KEY_INSERT             260
+#define XD_KEY_DELETE             261
+#define XD_KEY_RIGHT              262
+#define XD_KEY_LEFT               263
+#define XD_KEY_DOWN               264
+#define XD_KEY_UP                 265
+#define XD_KEY_PAGE_UP            266
+#define XD_KEY_PAGE_DOWN          267
+#define XD_KEY_HOME               268
+#define XD_KEY_END                269
+#define XD_KEY_CAPS_LOCK          280
+#define XD_KEY_SCROLL_LOCK        281
+#define XD_KEY_NUM_LOCK           282
+#define XD_KEY_PRINT_SCREEN       283
+#define XD_KEY_PAUSE              284
+#define XD_KEY_F1                 290
+#define XD_KEY_F2                 291
+#define XD_KEY_F3                 292
+#define XD_KEY_F4                 293
+#define XD_KEY_F5                 294
+#define XD_KEY_F6                 295
+#define XD_KEY_F7                 296
+#define XD_KEY_F8                 297
+#define XD_KEY_F9                 298
+#define XD_KEY_F10                299
+#define XD_KEY_F11                300
+#define XD_KEY_F12                301
+#define XD_KEY_F13                302
+#define XD_KEY_F14                303
+#define XD_KEY_F15                304
+#define XD_KEY_F16                305
+#define XD_KEY_F17                306
+#define XD_KEY_F18                307
+#define XD_KEY_F19                308
+#define XD_KEY_F20                309
+#define XD_KEY_F21                310
+#define XD_KEY_F22                311
+#define XD_KEY_F23                312
+#define XD_KEY_F24                313
+#define XD_KEY_F25                314
+#define XD_KEY_KP_0               320
+#define XD_KEY_KP_1               321
+#define XD_KEY_KP_2               322
+#define XD_KEY_KP_3               323
+#define XD_KEY_KP_4               324
+#define XD_KEY_KP_5               325
+#define XD_KEY_KP_6               326
+#define XD_KEY_KP_7               327
+#define XD_KEY_KP_8               328
+#define XD_KEY_KP_9               329
+#define XD_KEY_KP_DECIMAL         330
+#define XD_KEY_KP_DIVIDE          331
+#define XD_KEY_KP_MULTIPLY        332
+#define XD_KEY_KP_SUBTRACT        333
+#define XD_KEY_KP_ADD             334
+#define XD_KEY_KP_ENTER           335
+#define XD_KEY_KP_EQUAL           336
+#define XD_KEY_LEFT_SHIFT         340
+#define XD_KEY_LEFT_CONTROL       341
+#define XD_KEY_LEFT_ALT           342
+#define XD_KEY_LEFT_SUPER         343
+#define XD_KEY_RIGHT_SHIFT        344
+#define XD_KEY_RIGHT_CONTROL      345
+#define XD_KEY_RIGHT_ALT          346
+#define XD_KEY_RIGHT_SUPER        347
+#define XD_KEY_MENU               348
+#define XD_KEY_LAST               XD_KEY_MENU
 
-	// Alphabetic keys
-	XD_KEY_A = 0x41,
-	XD_KEY_B,
-	XD_KEY_C,
-	XD_KEY_D,
-	XD_KEY_E,
-	XD_KEY_F,
-	XD_KEY_G,
-	XD_KEY_H,
-	XD_KEY_I,
-	XD_KEY_J,
-	XD_KEY_K,
-	XD_KEY_L,
-	XD_KEY_M,
-	XD_KEY_N,
-	XD_KEY_O,
-	XD_KEY_P,
-	XD_KEY_Q,
-	XD_KEY_R,
-	XD_KEY_S,
-	XD_KEY_T,
-	XD_KEY_U,
-	XD_KEY_V,
-	XD_KEY_W,
-	XD_KEY_X,
-	XD_KEY_Y,
-	XD_KEY_Z,
+#define XD_MOD_SHIFT           0x0001
+#define XD_MOD_CONTROL         0x0002
+#define XD_MOD_ALT             0x0004
+#define XD_MOD_SUPER           0x0008
 
-	// Mouse keys
-	XD_LMB = 0x80,
-	XD_RMB,
-	XD_WHEEL,
+#define XD_MOUSE_BUTTON_1         0
+#define XD_MOUSE_BUTTON_2         1
+#define XD_MOUSE_BUTTON_3         2
+#define XD_MOUSE_BUTTON_4         3
+#define XD_MOUSE_BUTTON_5         4
+#define XD_MOUSE_BUTTON_6         5
+#define XD_MOUSE_BUTTON_7         6
+#define XD_MOUSE_BUTTON_8         7
+#define XD_MOUSE_BUTTON_LAST      XD_MOUSE_BUTTON_8
+#define XD_MOUSE_BUTTON_LEFT      XD_MOUSE_BUTTON_1
+#define XD_MOUSE_BUTTON_RIGHT     XD_MOUSE_BUTTON_2
+#define XD_MOUSE_BUTTON_MIDDLE    XD_MOUSE_BUTTON_3
 
-	// Arrow keys
-	XD_KEY_LEFT,
-	XD_KEY_UP,
-	XD_KEY_RIGHT,
-	XD_KEY_DOWN,
-
-	// Special keys
-	XD_KEY_SHIFT,
-	XD_KEY_LSHIFT,
-	XD_KEY_RSHIFT,
-	XD_KEY_CONTROL,
-	XD_KEY_LCONTROL,
-	XD_KEY_RCONTROL,
-	XD_KEY_MENU, // Windows button
-	XD_KEY_LMENU,
-	XD_KEY_RMENU,
-	//XD_KEY_SPACE,
-	XD_KEY_PAGEUP,
-	XD_KEY_PAGEDOWN,
-	XD_KEY_END,
-	XD_KEY_HOME,
-	XD_KEY_SNAPSHOT,
-	XD_KEY_INSERT,
-	XD_KEY_DELETE,
-
-	// Function keys
-	XD_KEY_F1,
-	XD_KEY_F2,
-	XD_KEY_F3,
-	XD_KEY_F4,
-	XD_KEY_F5,
-	XD_KEY_F6,
-	XD_KEY_F7,
-	XD_KEY_F8,
-	XD_KEY_F9,
-	XD_KEY_F10,
-	XD_KEY_F11,
-	XD_KEY_F12,
-
-	// Numpad keys
-	XD_KEY_NUMPAD0,
-	XD_KEY_NUMPAD1,
-	XD_KEY_NUMPAD2,
-	XD_KEY_NUMPAD3,
-	XD_KEY_NUMPAD4,
-	XD_KEY_NUMPAD5,
-	XD_KEY_NUMPAD6,
-	XD_KEY_NUMPAD7,
-	XD_KEY_NUMPAD8,
-	XD_KEY_NUMPAD9,
-	XD_KEY_PLUS,
-	XD_KEY_MINUS,
-
-	// Other keys
-	XD_KEY_CARET,
-	XD_KEY_APOSTROPHE,
-	XD_KEY_QUOTATION_MARK,
-	XD_KEY_BACKSLASH,
-	XD_KEY_SLASH,
-	XD_KEY_ASTERISK,
-	XD_KEY_PIPE,
-	XD_KEY_COLON,
-	XD_KEY_SEMICOLON,
-	XD_KEY_TILDE,
-	XD_KEY_COMMA,
-	XD_KEY_PERIOD,
-	XD_KEY_GREATER,
-	XD_KEY_LESS,
-	XD_KEY_EQUALS
-};
+typedef int VirtualKey;
 
 class XDAPI KeyListener
 {
@@ -359,7 +373,7 @@ public:
 
 	virtual void keyPressEvent(const VirtualKey key) { }
 	virtual void keyReleaseEvent(const VirtualKey key) { }
-	virtual void charEvent(const wchar_t c) { }
+	virtual void charEvent(const uint c) { }
 };
 
 class XDAPI MouseListener
@@ -395,7 +409,7 @@ public:
 	static void checkBindings();
 
 	// Keyboard listener
-	static void charEvent(const wchar_t c);
+	static void charEvent(const uint c);
 	static void keyPressed(const VirtualKey key);
 	static void keyReleased(const VirtualKey key);
 
@@ -423,7 +437,6 @@ private:
 	static void removeKeyListener(KeyListener *object);
 
 	// Mouse listener
-	static map<MouseButton, bool> s_mousePressed;
 	static list<MouseListener*> s_mouseListeners;
 	static void addMouseListener(MouseListener *object);
 	static void removeMouseListener(MouseListener *object);
@@ -512,24 +525,33 @@ class XDAPI Window
 {
 	friend class Graphics;
 	friend class WindowListener;
-public:
-	static void processEvents();
-	static void processEvents(UINT Message, WPARAM wParam, LPARAM lParam);
-	static void close();
-	static void show();
-	
-	static void enableFullscreen();
-	static void disableFullscreen();
-	static bool isFullscreen();
-	//XScriptArray *getResolutionList() const;
+	friend class Engine;
+	friend class Input;
+private:
+	static void init(int w, int h, bool fs);
 
-	static void enableResize();
-	static void disableResize();
+	static void focusChanged(GLFWwindow*, int);
+	static void sizeChanged(GLFWwindow*, int, int);
+	static void keyCallback(GLFWwindow*, int, int, int, int);
+	static void charCallback(GLFWwindow*, uint);
+	static void mouseButtonCallback(GLFWwindow *, int, int, int);
+	static void cursorMoveCallback(GLFWwindow*, double, double);
+	static void scrollCallback(GLFWwindow*, double, double);
+
+public:
+	static void close();
+	
+	static void setFullScreen(const bool fullscreen);
+	static bool getFullScreen();
+
+	static void setResizable(const bool resizable);
+	static bool getResizable();
+
 	static bool hasFocus();
 	
-	// Window actions
 	static void setPosition(const Vector2i &pos);
 	static Vector2i getPosition();
+
 	static void setSize(const int width, const int height);
 	static void setSize(const Vector2i &size) { setSize(size.x, size.y); }
 	static void setWidth(const int width);
@@ -537,31 +559,21 @@ public:
 	static Vector2i getSize();
 	static int getWidth();
 	static int getHeight();
+
 	static void minimize();
-	static void maximize();
 	static void restore();
+	//static void maximize();
 
 private:
 	// The window handle
-	static HWND s_window;
-
-	// The window device context
-	static HDC s_deviceContext;
-	
-	// The event message
-	static MSG s_message;
+	static GLFWwindow *s_window;
 
 	// Cached list of resolutions
-	static vector<Vector2i> s_resolutions;
+	//static vector<Vector2i> s_resolutions;
 
-	// Window focus
+	// Fullscreen
 	static bool s_focus;
-
-	// Window size
-	static Vector2i s_size;
-
-	// Window fullscreen state
-	static bool s_fullscreen;
+	static bool s_fullScreen;
 
 	// Windows graphics device
 	static GraphicsContext *s_graphicsContext;
@@ -618,8 +630,8 @@ struct XDAPI Config
 	// Game loop functions
 	function<void()> stepBeginFunc, stepEndFunc, endFunc;
 	function<void(GraphicsContext&)> mainFunc;
-	function<void(GraphicsContext&, const float)> drawFunc;
-	function<void(const float)> updateFunc;
+	function<void(GraphicsContext&, const double)> drawFunc;
+	function<void(const double)> updateFunc;
 };
 
 /*********************************************************************
@@ -669,14 +681,10 @@ private:
 	Console			*m_console;
 
 	// Game loop
-	void draw(const float alpha);
-	void update(const float dt);
-
-	// Game loop
 	function<void()> m_stepBeginFunc, m_stepEndFunc, m_endFunc;
 	function<void(GraphicsContext&)> m_mainFunc;
-	function<void(GraphicsContext&, const float)> m_drawFunc;
-	function<void(const float)> m_updateFunc;
+	function<void(GraphicsContext&, const double)> m_drawFunc;
+	function<void(const double)> m_updateFunc;
 };
 
 XDAPI Engine *CreateEngine();

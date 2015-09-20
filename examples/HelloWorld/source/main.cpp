@@ -12,7 +12,6 @@
 using namespace xd;
 
 float x = 0, xPrev = 0;
-bool vsync = true;
 
 class GameManager
 {
@@ -30,22 +29,15 @@ public:
 
 	static void toggleVSync()
 	{
-		if(vsync)
-			Graphics::disableVsync();
-		else
-			Graphics::enableVsync();
-		vsync = !vsync;
+		Graphics::setVsync(!Graphics::getVsync());
 	}
 
 	static void toggleFullscreen()
 	{
-		if(Window::isFullscreen())
-			Window::disableFullscreen();
-		else
-			Window::enableFullscreen();
+		Window::setFullScreen(!Window::getFullScreen());
 	}
 
-	static void update(const float dt)
+	static void update(const double dt)
 	{
 		xPrev = x;
 		x += 5.0f;
@@ -55,10 +47,10 @@ public:
 		}
 	}
 
-	static void draw(GraphicsContext &context, const float alpha)
+	static void draw(GraphicsContext &context, const double alpha)
 	{
 		spriteBatch->begin();
-		font->draw(spriteBatch, 0, 0, "FPS: " + util::floatToStr(Graphics::getFPS()) + "\nVSync: " + (vsync?"ON":"OFF") + " (press 1 to toggle)\nFullscreen: " + (Window::isFullscreen() ? "ON" : "OFF") + " (press 2 to toggle)");
+		font->draw(spriteBatch, 0, 0, "FPS: " + util::floatToStr(Graphics::getFPS()) + "\nVSync: " + (Graphics::getVsync() == 1 ? "ON" : "OFF") + " (press 1 to toggle)\nFullscreen: " + (Window::getFullScreen() ? "ON" : "OFF") + " (press 2 to toggle)");
 		spriteBatch->end();
 		context.drawRectangle(Rect(math::lerp(xPrev, x, alpha), context.getHeight() * 0.5f, 32.0f, 32.0f));
 	}
@@ -84,8 +76,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, INT)
 		{
 			switch(__argv[i][1])
 			{
-			case 'v': flags |= XD_EXPORT_LOG; break;
-			case 'w': workDir = string(__argv[i]+3); break;
+				case 'v': flags |= XD_EXPORT_LOG; break;
+				case 'w': workDir = string(__argv[i] + 3); break;
 			}
 		}
 	}
@@ -98,9 +90,9 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, INT)
 	config.updateFunc = &GameManager::update;
 	config.drawFunc = &GameManager::draw;
 	config.endFunc = &GameManager::exit;
-//#ifdef X2D_DEBUG
+	//#ifdef X2D_DEBUG
 	config.workDir = "..\\game\\";
-//#endif
+	//#endif
 	config.flags = flags;
 
 	if(engine->init(config) != X2D_OK)

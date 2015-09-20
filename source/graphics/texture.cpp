@@ -373,7 +373,7 @@ Texture2DPtr Texture2D::loadResource(const string &name)
 	else
 	{
 		// Unable to read file
-		LOG("Texture2DLoader::load() - Unable to read file '%s'", name);
+		LOG("Texture2DLoader::load() - Unable to read file '%s'", name.c_str());
 	}
 	return Texture2DPtr(texture);
 }

@@ -52,44 +52,32 @@ public:
 		FrameBufferObjects
 	};
 
-	// Refresh rate
-	static void setRefreshRate(const int hz);
-	static int getRefreshRate();
-	
 	// Vsync
-	static void enableVsync();
-	static void disableVsync();
+	static void setVsync(const int mode);
+	static int getVsync();
 
 	// Wireframe
 	static void enableWireframe();
 	static void disableWireframe();
 
 	// Time step & fps
-	//static float getTimeStep();
-	static float getFPS();
+	static double getFPS();
 
 	// Swap buffers
 	static void swapBuffers();
 
 protected:
-	// Init
 	static void init();
+	static void clear();
 
-	// Rendering context
-	static void createContext();
-	static void destroyContext();
-
-	static HGLRC s_context;
-
-	static float s_framesPerSecond;
-	static int s_refreshRate;
-	static float s_timeStep;
+	static double s_framesPerSecond;
 
 	static ShaderPtr s_defaultShader;
 	static Texture2DPtr s_defaultTexture;
 	static GLuint s_vao;
 	static GLuint s_vbo;
 	static GLuint s_ibo;
+	static int s_vsync;
 
 	static GraphicsContext s_graphicsContext;
 };

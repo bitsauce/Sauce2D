@@ -68,8 +68,9 @@
 	#include <sstream>
 	#include <memory>
 	#include <queue>
-	#include <GL/gl3w.h>
-	#include <GL/wglext.h>
+	#include "..\3rdparty\gl3w\include\GL\gl3w.h"
+	#include "..\3rdparty\gl3w\include\GL\wglext.h"
+	#include "..\3rdparty\glfw\include\GLFW\glfw3.h"
 #elif X2D_UNIX
 	#include <sys/socket.h>
 	#include <netinet/in.h>

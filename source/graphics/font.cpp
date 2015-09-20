@@ -316,11 +316,11 @@ void Font::draw(SpriteBatch *spriteBatch, float x, float y, const string &text, 
 	for (string line : lines)
 	{
 		int count = getTextLength(line);
-		int drawX = x;
+		float drawX = x;
 		if (mode == FONT_ALIGN_CENTER)
 		{
 			float w = getStringWidth(line, count);
-			drawX -= w / 2;
+			drawX -= w * 0.5f;
 		}
 		else if (mode == FONT_ALIGN_RIGHT)
 		{

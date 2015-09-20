@@ -3,8 +3,8 @@
 
 #include "engine.h"
 
-#include <al.h>
-#include <alc.h>
+#include "../3rdparty/openal/include/al.h"
+#include "../3rdparty/openal/include/alc.h"
 
 #ifdef X2D_DEBUG
 	#define AL_ASSERT \
