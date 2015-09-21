@@ -248,6 +248,7 @@ void Window::charCallback(GLFWwindow *, uint c)
 
 void Window::mouseButtonCallback(GLFWwindow*, int button, int action, int mods)
 {
+	Input::s_mouseButtonState[button] = action;
 	switch(action)
 	{
 		case GLFW_PRESS:

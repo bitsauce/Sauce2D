@@ -175,8 +175,6 @@ public:
 	static void     setCursorLimits(const int x, const int y, const int w, const int h) { setCursorLimits(Recti(x, y, w, h)); }
 
 	// Key state function
-	static bool isKeyPressed(const VirtualKey key);
-	static bool isKeyReleased(const VirtualKey key);
 	static int getKeyState(const VirtualKey key);
 
 	// General position
@@ -211,6 +209,9 @@ private:
 
 	// String to key map
 	static map<string, VirtualKey> s_strToKey;
+
+	// Mouse buttons
+	static map<VirtualKey, int> s_mouseButtonState;
 };
 
 END_XD_NAMESPACE

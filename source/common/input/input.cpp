@@ -14,6 +14,7 @@ BEGIN_XD_NAMESPACE
 Vector2 Input::s_position;
 InputContext *Input::s_context = 0;
 map<string, VirtualKey> Input::s_strToKey;
+map<VirtualKey, int> Input::s_mouseButtonState;
 
 void Input::init()
 {
@@ -148,6 +149,11 @@ void Input::init()
 	s_strToKey["mouse_button_left"] = XD_MOUSE_BUTTON_LEFT;
 	s_strToKey["mouse_button_right"] = XD_MOUSE_BUTTON_RIGHT;
 	s_strToKey["mouse_button_middle"] = XD_MOUSE_BUTTON_MIDDLE;
+
+	for(uint i = XD_MOUSE_BUTTON_1; i < XD_MOUSE_BUTTON_LAST; ++i)
+	{
+		s_mouseButtonState[i] = GLFW_RELEASE;
+	}
 }
 
 Vector2i Input::getCursorPos()
@@ -239,18 +245,13 @@ void Input::updateBindings()
 	}
 }
 
-bool Input::isKeyPressed(const VirtualKey key)
-{
-	return (Engine::isEnabled(XD_BLOCK_BACKGROUND_INPUT) && !Window::hasFocus()) ? false : glfwGetKey(Window::s_window, key) == GLFW_PRESS;
-}
-
-bool Input::isKeyReleased(const VirtualKey key)
-{
-	return (Engine::isEnabled(XD_BLOCK_BACKGROUND_INPUT) && !Window::hasFocus()) ? false : glfwGetKey(Window::s_window, key) == GLFW_RELEASE;
-}
-
 int Input::getKeyState(const VirtualKey key)
 {
+	if(Engine::isEnabled(XD_BLOCK_BACKGROUND_INPUT) && !Window::hasFocus()) return false;
+	if(key >= XD_MOUSE_BUTTON_1 && key <= XD_MOUSE_BUTTON_LAST)
+	{
+		return s_mouseButtonState[key];
+	}
 	return glfwGetKey(Window::s_window, key);
 }
 

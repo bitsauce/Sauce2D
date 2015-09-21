@@ -22,7 +22,7 @@ void InputContext::updateBindings()
 		KeyBind &key = itr->second;
 		if(key.singleShot)
 		{
-			if(Input::isKeyPressed(m_nameToKey[itr->first]))
+			if(Input::getKeyState(m_nameToKey[itr->first]) == GLFW_PRESS)
 			{
 				if(!key.pressed)
 				{
