@@ -232,10 +232,10 @@ void Window::keyCallback(GLFWwindow*, int key, int scancode, int action, int mod
 	switch(action)
 	{
 		case GLFW_PRESS:
-			Input::keyPressed(key);
+			KeyListener::callKeyPressed(key);
 			break;
 		case GLFW_RELEASE:
-			Input::keyReleased(key);
+			KeyListener::callKeyReleased(key);
 			break;
 		case GLFW_REPEAT: break;
 	}
@@ -243,7 +243,7 @@ void Window::keyCallback(GLFWwindow*, int key, int scancode, int action, int mod
 
 void Window::charCallback(GLFWwindow *, uint c)
 {
-	Input::charEvent(c);
+	KeyListener::callCharEvent(c);
 }
 
 void Window::mouseButtonCallback(GLFWwindow*, int button, int action, int mods)
@@ -251,10 +251,10 @@ void Window::mouseButtonCallback(GLFWwindow*, int button, int action, int mods)
 	switch(action)
 	{
 		case GLFW_PRESS:
-			Input::keyPressed(button);
+			KeyListener::callKeyPressed(button);
 			break;
 		case GLFW_RELEASE:
-			Input::keyReleased(button);
+			KeyListener::callKeyReleased(button);
 			break;
 		case GLFW_REPEAT: break;
 	}
@@ -267,7 +267,7 @@ void Window::cursorMoveCallback(GLFWwindow*, double x, double y)
 
 void Window::scrollCallback(GLFWwindow*, double x, double y)
 {
-	Input::mouseScroll(y);
+	MouseListener::callMouseWheelEvent(y);
 }
 
 END_XD_NAMESPACE

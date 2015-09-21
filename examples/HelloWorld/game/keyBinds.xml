@@ -1,0 +1,10 @@
+<default>
+	<bind>
+		<name>toggle_vsync</name>
+		<key>1</key>
+	</bind>
+	<bind>
+		<name>toggle_full_screen</name>
+		<key>2</key>
+	</bind>
+</default>

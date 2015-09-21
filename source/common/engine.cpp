@@ -140,6 +140,7 @@ int Engine::init(const Config &config)
 
 	Window::init(800, 600, false);
 	Graphics::init();
+	Input::init();
 
 	try
 	{
@@ -226,7 +227,7 @@ int Engine::run()
 			while(accumulator >= dt)
 			{
 				// Update the game
-				Input::checkBindings();
+				Input::updateBindings();
 				if(m_updateFunc) m_updateFunc(dt);
 				accumulator -= dt;
 			}

@@ -2,5 +2,5 @@ FreeType 2.4.8
 GL3W (gl3w_gen.py @ 2015-09-11)
 GLFW (HEAD @ 2015-09-19)
 OpenAL 1.1
-VLD 2.3
 FreeImage 3.15.4
+tinyxml2 (HEAD @ 2015-09-21)

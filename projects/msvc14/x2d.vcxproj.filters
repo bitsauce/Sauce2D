@@ -25,6 +25,12 @@
     <Filter Include="source\common\math">
       <UniqueIdentifier>{75496aa6-e494-42a7-ab65-c135565772ef}</UniqueIdentifier>
     </Filter>
+    <Filter Include="include\input">
+      <UniqueIdentifier>{2f1d2e8c-a720-40d6-89e4-b51a07413f6f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source\common\input">
+      <UniqueIdentifier>{79b1dc4e-e953-4723-9696-e7f4379fc4d5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\include\x2d\config.h">
@@ -114,6 +120,18 @@
     <ClInclude Include="..\..\include\x2d\graphics\font.h">
       <Filter>include\graphics</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\include\x2d\input\input.h">
+      <Filter>include\input</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\x2d\input\keyListener.h">
+      <Filter>include\input</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\x2d\input\mouseListener.h">
+      <Filter>include\input</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\x2d\input\inputContext.h">
+      <Filter>include\input</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\source\audio\buffer.cpp">
@@ -173,12 +191,6 @@
     <ClCompile Include="..\..\source\common\filesystem.cpp">
       <Filter>source\common</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\source\common\input.cpp">
-      <Filter>source\common</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\common\profiler.cpp">
-      <Filter>source\common</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\source\common\timer.cpp">
       <Filter>source\common</Filter>
     </ClCompile>
@@ -223,6 +235,18 @@
     </ClCompile>
     <ClCompile Include="..\..\source\graphics\font.cpp">
       <Filter>source\graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\common\input\input.cpp">
+      <Filter>source\common\input</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\common\input\keyListener.cpp">
+      <Filter>source\common\input</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\common\input\mouseListener.cpp">
+      <Filter>source\common\input</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\common\input\inputContext.cpp">
+      <Filter>source\common\input</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

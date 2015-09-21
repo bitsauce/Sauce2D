@@ -46,6 +46,7 @@
 **********************************************************************/
 #ifdef X2D_WINDOWS
 	#define NOMINMAX
+	#define WIN32_LEAN_AND_MEAN
 	#include <windows.h>
 	#include <windowsx.h>
 	#include <string>
@@ -71,6 +72,7 @@
 	#include "..\3rdparty\gl3w\include\GL\gl3w.h"
 	#include "..\3rdparty\gl3w\include\GL\wglext.h"
 	#include "..\3rdparty\glfw\include\GLFW\glfw3.h"
+	#include "..\3rdparty\tinyxml2\tinyxml2.h"
 #elif X2D_UNIX
 	#include <sys/socket.h>
 	#include <netinet/in.h>
@@ -100,6 +102,8 @@ typedef unsigned int uint;
 typedef uintptr_t uintptr;
 typedef unsigned char uchar;
 typedef unsigned long ulong;
+
+typedef int VirtualKey;
 
 #define BEGIN_XD_NAMESPACE namespace xd {
 #define END_XD_NAMESPACE }

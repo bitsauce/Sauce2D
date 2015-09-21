@@ -23,18 +23,27 @@ public:
 	{
 		font = ResourceManager::get<Font>(":/arial.fnt");
 		spriteBatch = new SpriteBatch(graphicsContext);
-		Input::bind(XD_KEY_1, toggleVSync);
-		Input::bind(XD_KEY_2, toggleFullscreen);
+
+		InputContext* inputContext = Input::loadInputConfig(":/keyBinds.xml")[0];
+		inputContext->bind("toggle_vsync", toggleVSync, true);
+		inputContext->bind("toggle_full_screen", toggleFullscreen, true);
+		Input::setInputContext(inputContext);
 	}
 
-	static void toggleVSync()
+	static void toggleVSync(int action)
 	{
-		Graphics::setVsync(!Graphics::getVsync());
+		if(action == GLFW_PRESS)
+		{
+			Graphics::setVsync(!Graphics::getVsync());
+		}
 	}
 
-	static void toggleFullscreen()
+	static void toggleFullscreen(int action)
 	{
-		Window::setFullScreen(!Window::getFullScreen());
+		if(action == GLFW_PRESS)
+		{
+			Window::setFullScreen(!Window::getFullScreen());
+		}
 	}
 
 	static void update(const double dt)
