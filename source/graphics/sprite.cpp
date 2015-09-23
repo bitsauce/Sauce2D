@@ -126,10 +126,11 @@ void Sprite::getAABB(Vector2 *points) const
 	Matrix4 mat;
 	mat.scale(m_size.x, m_size.y, 1.0f);
 	mat.translate(-m_origin.x, -m_origin.y, 0.0f);
+	mat.scale(m_scale.x, m_scale.y, 1.0f);
 	mat.rotateZ(m_angle);
 	mat.translate(m_position.x + m_origin.x, m_position.y + m_origin.y, 0.0f);
 
-	for(uint i = 0; i < 4; i++)
+	for(int i = 0; i < 4; i++)
 	{
 		points[i] = (mat * QUAD_VERTICES[i]).getXY();
 	}

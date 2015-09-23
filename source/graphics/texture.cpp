@@ -331,9 +331,18 @@ Texture2DPtr Texture2D::loadResource(const string &name)
 	// Load texture from file
 	Texture2D *texture = 0;
 
+	// Split input
+	vector<string> strings = util::splitString(name, "?");
+	string filePath = strings[0];
+	bool premultiply = false;
+	for(uint i = 1; i < strings.size(); ++i)
+	{
+		if(strings[i] == "PremultiplyAlpha") premultiply = true;
+	}
+
 	// Load asset as a image
 	string content;
-	if(FileSystem::ReadFile(/*XResourceManager::getFileByName(name)*/name, content))
+	if(FileSystem::ReadFile(filePath, content))
 	{
 		// Attach the binary data to a memory stream
 		FIMEMORY *hmem = FreeImage_OpenMemory((uchar*)content.c_str(), content.size());
@@ -351,6 +360,11 @@ Texture2DPtr Texture2D::loadResource(const string &name)
 			FIBITMAP *newBitmap = FreeImage_ConvertTo32Bits(bitmap);
 			FreeImage_Unload(bitmap);
 			bitmap = newBitmap;
+		}
+
+		if(premultiply)
+		{
+			FreeImage_PreMultiplyWithAlpha(bitmap);
 		}
 			
 		// Create pixmap
@@ -373,7 +387,7 @@ Texture2DPtr Texture2D::loadResource(const string &name)
 	else
 	{
 		// Unable to read file
-		LOG("Texture2DLoader::load() - Unable to read file '%s'", name.c_str());
+		LOG("Texture2DLoader::load() - Unable to read file '%s'", filePath.c_str());
 	}
 	return Texture2DPtr(texture);
 }

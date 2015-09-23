@@ -30,6 +30,19 @@ RenderTarget2D::RenderTarget2D(const uint width, const uint height, const uint c
 	}
 }
 
+RenderTarget2D::RenderTarget2D(Texture2DPtr target) :
+	m_width(target->getWidth()),
+	m_height(target->getHeight()),
+	m_textureCount(1)
+{
+	// Generate framebuffer
+	glGenFramebuffers(1, &m_id);
+
+	// Set texture variables
+	(m_textures = new Texture2DPtr[1])[0] = target;
+	(m_buffers = new GLenum[1])[0] = GL_COLOR_ATTACHMENT0;
+}
+
 RenderTarget2D::~RenderTarget2D()
 {
 	glDeleteFramebuffers(1, &m_id);
