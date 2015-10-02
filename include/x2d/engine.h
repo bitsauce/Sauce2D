@@ -5,6 +5,7 @@
 #include "math.h"
 #include "resourcemanager.h"
 #include "iniparser.h"
+#include "input/input.h"
 
 BEGIN_XD_NAMESPACE
 
@@ -214,283 +215,6 @@ protected:
 };
 
 /*********************************************************************
-**	Input class [static]											**
-**********************************************************************/
-
-// Mouse buttons
-enum MouseButton
-{
-	XD_MOUSE_LEFT,
-	XD_MOUSE_MIDDLE,
-	XD_MOUSE_RIGHT
-};
-
-// Virtual keys
-enum VirtualKey
-{
-	// Standard ASCII-Mapped keys
-	XD_KEY_NULL = 0x00,
-	XD_KEY_BACKSPACE = 0x08,
-	XD_KEY_TAB = 0x09,
-	XD_KEY_ENTER = 0x0D,
-	XD_KEY_ESCAPE = 0x1B,
-	XD_KEY_SPACE = 0x20,
-
-	XD_KEY_0 = 0x30,
-	XD_KEY_1,
-	XD_KEY_2,
-	XD_KEY_3,
-	XD_KEY_4,
-	XD_KEY_5,
-	XD_KEY_6,
-	XD_KEY_7,
-	XD_KEY_8,
-	XD_KEY_9,
-
-	// Alphabetic keys
-	XD_KEY_A = 0x41,
-	XD_KEY_B,
-	XD_KEY_C,
-	XD_KEY_D,
-	XD_KEY_E,
-	XD_KEY_F,
-	XD_KEY_G,
-	XD_KEY_H,
-	XD_KEY_I,
-	XD_KEY_J,
-	XD_KEY_K,
-	XD_KEY_L,
-	XD_KEY_M,
-	XD_KEY_N,
-	XD_KEY_O,
-	XD_KEY_P,
-	XD_KEY_Q,
-	XD_KEY_R,
-	XD_KEY_S,
-	XD_KEY_T,
-	XD_KEY_U,
-	XD_KEY_V,
-	XD_KEY_W,
-	XD_KEY_X,
-	XD_KEY_Y,
-	XD_KEY_Z,
-
-	// Mouse keys
-	XD_LMB = 0x80,
-	XD_RMB,
-	XD_WHEEL,
-
-	// Arrow keys
-	XD_KEY_LEFT,
-	XD_KEY_UP,
-	XD_KEY_RIGHT,
-	XD_KEY_DOWN,
-
-	// Special keys
-	XD_KEY_SHIFT,
-	XD_KEY_LSHIFT,
-	XD_KEY_RSHIFT,
-	XD_KEY_CONTROL,
-	XD_KEY_LCONTROL,
-	XD_KEY_RCONTROL,
-	XD_KEY_MENU, // Windows button
-	XD_KEY_LMENU,
-	XD_KEY_RMENU,
-	//XD_KEY_SPACE,
-	XD_KEY_PAGEUP,
-	XD_KEY_PAGEDOWN,
-	XD_KEY_END,
-	XD_KEY_HOME,
-	XD_KEY_SNAPSHOT,
-	XD_KEY_INSERT,
-	XD_KEY_DELETE,
-
-	// Function keys
-	XD_KEY_F1,
-	XD_KEY_F2,
-	XD_KEY_F3,
-	XD_KEY_F4,
-	XD_KEY_F5,
-	XD_KEY_F6,
-	XD_KEY_F7,
-	XD_KEY_F8,
-	XD_KEY_F9,
-	XD_KEY_F10,
-	XD_KEY_F11,
-	XD_KEY_F12,
-
-	// Numpad keys
-	XD_KEY_NUMPAD0,
-	XD_KEY_NUMPAD1,
-	XD_KEY_NUMPAD2,
-	XD_KEY_NUMPAD3,
-	XD_KEY_NUMPAD4,
-	XD_KEY_NUMPAD5,
-	XD_KEY_NUMPAD6,
-	XD_KEY_NUMPAD7,
-	XD_KEY_NUMPAD8,
-	XD_KEY_NUMPAD9,
-	XD_KEY_PLUS,
-	XD_KEY_MINUS,
-
-	// Other keys
-	XD_KEY_CARET,
-	XD_KEY_APOSTROPHE,
-	XD_KEY_QUOTATION_MARK,
-	XD_KEY_BACKSLASH,
-	XD_KEY_SLASH,
-	XD_KEY_ASTERISK,
-	XD_KEY_PIPE,
-	XD_KEY_COLON,
-	XD_KEY_SEMICOLON,
-	XD_KEY_TILDE,
-	XD_KEY_COMMA,
-	XD_KEY_PERIOD,
-	XD_KEY_GREATER,
-	XD_KEY_LESS,
-	XD_KEY_EQUALS
-};
-
-class XDAPI KeyListener
-{
-public:
-	KeyListener();
-	virtual ~KeyListener();
-
-	virtual void keyPressEvent(const VirtualKey key) { }
-	virtual void keyReleaseEvent(const VirtualKey key) { }
-	virtual void charEvent(const wchar_t c) { }
-};
-
-class XDAPI MouseListener
-{
-public:
-	MouseListener();
-	virtual ~MouseListener();
-
-	virtual void mouseWheelEvent(const int dt) { }
-};
-
-class XDAPI Input
-{
-	friend class Window;
-	friend class KeyListener;
-	friend class MouseListener;
-public:
-	// Desktop cursor functions
-	static void     setCursorPos(const Vector2i &pos);
-	static Vector2i getCursorPos();
-	static void     setCursorLimits(const Recti &area);
-
-	// Key state function
-	static bool getKeyState(const VirtualKey key);
-
-	// General position
-	static Vector2 getPosition();
-
-	// Key binding
-	static void bind(const VirtualKey key, function<void()> function);
-	static void unbind(const VirtualKey key);
-	static void unbindAll();
-	static void checkBindings();
-
-	// Keyboard listener
-	static void charEvent(const wchar_t c);
-	static void keyPressed(const VirtualKey key);
-	static void keyReleased(const VirtualKey key);
-
-	// Mouse listener
-	//static void mouseClick(const XMouseButton btn); // This doesn't make any sence unless we specify a click-rectangle
-	static void mouseScroll(const int dt);
-
-	// Overloads
-	static void setCursorPos(const int x, const int y) { setCursorPos(Vector2i(x, y)); }
-	static void setCursorLimits(const int x, const int y, const int w, const int h) { setCursorLimits(Recti(x, y, w, h)); }
-
-private:
-
-	// Key bind
-	struct KeyBind
-	{
-		bool pressed;
-		function<void()> function;
-	};
-
-	// Keyboard listener
-	static map<VirtualKey, KeyBind> s_keyBindings;
-	static list<KeyListener*> s_keyListeners;
-	static void addKeyListener(KeyListener *object);
-	static void removeKeyListener(KeyListener *object);
-
-	// Mouse listener
-	static map<MouseButton, bool> s_mousePressed;
-	static list<MouseListener*> s_mouseListeners;
-	static void addMouseListener(MouseListener *object);
-	static void removeMouseListener(MouseListener *object);
-
-	// Cursor position
-	static Vector2 s_position;
-};
-
-extern VirtualKey fromWinKey(uchar key);
-extern uchar toWinKey(VirtualKey key);
-
-/*********************************************************************
-**	Profiler														**
-**********************************************************************/
-class XDAPI Profiler
-{
-	friend class Engine;
-
-	struct Node
-	{
-		// Constructors
-		Node(const string &name) :
-			name(name),
-			duration(0.0f),
-			calls(0)
-		{
-		}
-
-		// Parent-child relations
-		Node *parent;
-		map<string, Node*> children;
-
-		// Time measurement
-		float startTime;
-		float duration;
-		int calls;
-
-		// Node data
-		string name;
-	};
-
-public:
-	Profiler();
-	virtual ~Profiler();
-
-	void deleteTree(Node *node);
-
-	void enable();
-	void disable();
-	bool isEnabled() const;
-
-	void push(const string &name);
-	void pop();
-
-	void sendStats(Node *node);
-	void stepBegin();
-
-private:
-	Node *m_root;
-	Node *m_currentNode;
-	Timer *m_timer;
-	uint m_samples;
-	bool m_enabled;
-	bool m_toggle;
-};
-
-/*********************************************************************
 **	Window class													**
 **********************************************************************/
 class XDAPI WindowListener
@@ -512,24 +236,33 @@ class XDAPI Window
 {
 	friend class Graphics;
 	friend class WindowListener;
-public:
-	static void processEvents();
-	static void processEvents(UINT Message, WPARAM wParam, LPARAM lParam);
-	static void close();
-	static void show();
-	
-	static void enableFullscreen();
-	static void disableFullscreen();
-	static bool isFullscreen();
-	//XScriptArray *getResolutionList() const;
+	friend class Engine;
+	friend class Input;
+private:
+	static void init(int w, int h, bool fs);
 
-	static void enableResize();
-	static void disableResize();
+	static void focusChanged(GLFWwindow*, int);
+	static void sizeChanged(GLFWwindow*, int, int);
+	static void keyCallback(GLFWwindow*, int, int, int, int);
+	static void charCallback(GLFWwindow*, uint);
+	static void mouseButtonCallback(GLFWwindow *, int, int, int);
+	static void cursorMoveCallback(GLFWwindow*, double, double);
+	static void scrollCallback(GLFWwindow*, double, double);
+
+public:
+	static void close();
+	
+	static void setFullScreen(const bool fullscreen);
+	static bool getFullScreen();
+
+	static void setResizable(const bool resizable);
+	static bool getResizable();
+
 	static bool hasFocus();
 	
-	// Window actions
 	static void setPosition(const Vector2i &pos);
 	static Vector2i getPosition();
+
 	static void setSize(const int width, const int height);
 	static void setSize(const Vector2i &size) { setSize(size.x, size.y); }
 	static void setWidth(const int width);
@@ -537,31 +270,21 @@ public:
 	static Vector2i getSize();
 	static int getWidth();
 	static int getHeight();
+
 	static void minimize();
-	static void maximize();
 	static void restore();
+	//static void maximize();
 
 private:
 	// The window handle
-	static HWND s_window;
-
-	// The window device context
-	static HDC s_deviceContext;
-	
-	// The event message
-	static MSG s_message;
+	static GLFWwindow *s_window;
 
 	// Cached list of resolutions
-	static vector<Vector2i> s_resolutions;
+	//static vector<Vector2i> s_resolutions;
 
-	// Window focus
+	// Fullscreen
 	static bool s_focus;
-
-	// Window size
-	static Vector2i s_size;
-
-	// Window fullscreen state
-	static bool s_fullscreen;
+	static bool s_fullScreen;
 
 	// Windows graphics device
 	static GraphicsContext *s_graphicsContext;
@@ -618,8 +341,8 @@ struct XDAPI Config
 	// Game loop functions
 	function<void()> stepBeginFunc, stepEndFunc, endFunc;
 	function<void(GraphicsContext&)> mainFunc;
-	function<void(GraphicsContext&, const float)> drawFunc;
-	function<void(const float)> updateFunc;
+	function<void(GraphicsContext&, const double)> drawFunc;
+	function<void(const double)> updateFunc;
 };
 
 /*********************************************************************
@@ -669,14 +392,10 @@ private:
 	Console			*m_console;
 
 	// Game loop
-	void draw(const float alpha);
-	void update(const float dt);
-
-	// Game loop
 	function<void()> m_stepBeginFunc, m_stepEndFunc, m_endFunc;
 	function<void(GraphicsContext&)> m_mainFunc;
-	function<void(GraphicsContext&, const float)> m_drawFunc;
-	function<void(const float)> m_updateFunc;
+	function<void(GraphicsContext&, const double)> m_drawFunc;
+	function<void(const double)> m_updateFunc;
 };
 
 XDAPI Engine *CreateEngine();

@@ -12,6 +12,7 @@ class XDAPI RenderTarget2D
 	friend class GraphicsContext;
 public:
 	RenderTarget2D(const uint width, const uint height, const uint targetCount = 1, const PixelFormat &fmt = PixelFormat());
+	RenderTarget2D(Texture2DPtr target);
 	~RenderTarget2D();
 
 	Texture2DPtr getTexture(const uint target = 0) { if(target < m_textureCount) return m_textures[target]; else return nullptr; }

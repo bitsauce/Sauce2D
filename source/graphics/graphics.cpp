@@ -32,64 +32,23 @@ Vector2 QUAD_TEXCOORD[4] = {
 
 VertexFormat VertexFormat::s_vct;
 
-HGLRC Graphics::s_context = 0;
-
-float Graphics::s_framesPerSecond = 0.0f;
-int Graphics::s_refreshRate;
-float Graphics::s_timeStep;
-
+double Graphics::s_framesPerSecond = 0.0;
 GraphicsContext Graphics::s_graphicsContext;
+ShaderPtr Graphics::s_defaultShader = 0;
+Texture2DPtr Graphics::s_defaultTexture = 0;
+GLuint Graphics::s_vao = 0;
+GLuint Graphics::s_vbo = 0;
+GLuint Graphics::s_ibo = 0;
+int Graphics::s_vsync = 0;
 
-void Graphics::setRefreshRate(const int hz)
-{
-	if(hz == 0)
-	{
-		LOG("Graphics::setRefreshRate() refresh rate cannot be 0");
-		return;
-	}
-	s_timeStep = 1.0f/hz;
-	s_refreshRate = hz;
-}
-
-int Graphics::getRefreshRate()
-{
-	return s_refreshRate;
-}
-
-/*float Graphics::getTimeStep()
-{
-	return s_timeStep;
-}*/
-
-float Graphics::getFPS()
+double Graphics::getFPS()
 {
 	return s_framesPerSecond;
 }
 
-bool WGLExtensionSupported(const char *extension_name)
-{
-	// this is pointer to function which returns pointer to string with list of all wgl extensions
-	PFNWGLGETEXTENSIONSSTRINGEXTPROC _wglGetExtensionsStringEXT = NULL;
-
-	// determine pointer to wglGetExtensionsStringEXT function
-	_wglGetExtensionsStringEXT = (PFNWGLGETEXTENSIONSSTRINGEXTPROC)wglGetProcAddress("wglGetExtensionsStringEXT");
-
-	if (strstr(_wglGetExtensionsStringEXT(), extension_name) == NULL)
-	{
-		// string was not found
-		return false;
-	}
-
-	// extension is supported
-	return true;
-}
-
-PFNWGLSWAPINTERVALEXTPROC       wglSwapIntervalEXT = NULL;
-PFNWGLGETSWAPINTERVALEXTPROC    wglGetSwapIntervalEXT = NULL;
-
 void Graphics::init()
 {
-	// Initialize the GL3W library
+	// Initialize the GLFW library
 	if(gl3wInit() != 0) {
 		assert("GLEW did not initialize!");
 	}
@@ -97,28 +56,15 @@ void Graphics::init()
 	// Print GPU info
 	LOG("** Using GPU: %s (OpenGL %s) **", glGetString(GL_VENDOR), glGetString(GL_VERSION));
 
-	// Check OpenGL 3.2 support
+	// Check OpenGL 3.1 support
 	if (!gl3wIsSupported(3, 1)) {
 		assert("OpenGL 3.1 not supported\n");
-	}
-
-	// Get the vsync/swap_control EXT
-	if (WGLExtensionSupported("WGL_EXT_swap_control"))
-	{
-		// Extension is supported, init pointers.
-		wglSwapIntervalEXT = (PFNWGLSWAPINTERVALEXTPROC)wglGetProcAddress("wglSwapIntervalEXT");
-
-		// this is another function from WGL_EXT_swap_control extension
-		wglGetSwapIntervalEXT = (PFNWGLGETSWAPINTERVALEXTPROC)wglGetProcAddress("wglGetSwapIntervalEXT");
 	}
 
 	// Setup default vertex format
 	VertexFormat::s_vct.set(VERTEX_POSITION, 2);
 	VertexFormat::s_vct.set(VERTEX_COLOR, 4, XD_UBYTE);
 	VertexFormat::s_vct.set(VERTEX_TEX_COORD, 2);
-
-	// Set refresh rate
-	setRefreshRate(60);
 
 	// Setup viewport
 	Vector2i size = Window::getSize();
@@ -182,58 +128,28 @@ void Graphics::init()
 	s_defaultTexture = Texture2DPtr(new Texture2D(1, 1, pixel));
 }
 
-ShaderPtr Graphics::s_defaultShader = 0;
-Texture2DPtr Graphics::s_defaultTexture = 0;
-GLuint Graphics::s_vao = 0;
-GLuint Graphics::s_vbo = 0;
-GLuint Graphics::s_ibo = 0;
-
-void Graphics::createContext()
-{
-	// Create Graphics rendering context
-	s_context = wglCreateContext(Window::s_deviceContext);
-
-	// Make context current
-	wglMakeCurrent(Window::s_deviceContext, s_context);
-}
-
-void Graphics::destroyContext()
+void Graphics::clear()
 {
 	glDeleteBuffers(1, &s_vbo);
 	glDeleteVertexArrays(1, &s_vao);
-
-	if(s_context)
-	{
-		// Make the rendering context not current
-		wglMakeCurrent(NULL, NULL);
-
-		// Delete the Graphics rendering context
-		wglDeleteContext(s_context);
-
-		// Set to null
-		s_context = NULL;
-	}
 }
 
 void Graphics::swapBuffers()
 {
-	SwapBuffers(Window::s_deviceContext);
+	glfwSwapBuffers(Window::s_window);
 	glClear(GL_COLOR_BUFFER_BIT);
 }
 
 // Vsync
-void Graphics::enableVsync()
+void Graphics::setVsync(const int mode)
 {
-	if (wglSwapIntervalEXT) {
-		wglSwapIntervalEXT(1);
-	}
+	glfwSwapInterval(mode);
+	s_vsync = mode;
 }
 
-void Graphics::disableVsync()
+int Graphics::getVsync()
 {
-	if (wglSwapIntervalEXT) {
-		wglSwapIntervalEXT(0);
-	}
+	return s_vsync;
 }
 
 // Wireframe
