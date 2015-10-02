@@ -91,9 +91,33 @@ string getSaveDir()
 //------------------------------------------------------------------------
 int Engine::init(const Config &config)
 {
-	// Set platform string and program dir
+	// Set and process flags
 	s_flags = config.flags;
 
+	string workDir;
+	for(uint i = 0; i < __argc; i++)
+	{
+		string arg = __argv[i];
+		if(arg == "-export-log")
+		{
+			s_flags |= XD_EXPORT_LOG;
+		}
+		else if(arg == "-verbose")
+		{
+			s_flags |= XD_VERBOSE;
+		}
+	}
+
+	// Set current directory to exe location
+	{
+		char* programPath = 0;
+		_get_pgmptr(&programPath);
+		string str = programPath;
+		str = str.substr(0, str.find_last_of('\\'));
+		SetCurrentDirectory(str.c_str());
+	}
+
+	// Set working directory
 	s_workDir = config.workDir;
 	if(s_workDir.empty())
 	{
@@ -102,6 +126,7 @@ int Engine::init(const Config &config)
 	replace(s_workDir.begin(), s_workDir.end(), '\\', '/');
 	util::toDirectoryPath(s_workDir);
 
+	// Set save directory
 	s_saveDir = getSaveDir();
 	replace(s_saveDir.begin(), s_saveDir.end(), '\\', '/');
 	util::toDirectoryPath(s_saveDir);
@@ -210,6 +235,8 @@ int Engine::run()
 			const double currentTime = m_timer->getElapsedTime();
 			double deltaTime = currentTime - prevTime;
 			prevTime = currentTime;
+
+			LOG("deltaTime: %f", deltaTime);
 
 			// Avoid spiral of death
 			if(deltaTime > 0.25)
