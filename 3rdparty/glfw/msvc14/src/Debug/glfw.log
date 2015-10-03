@@ -1,0 +1,14 @@
+﻿Build started 21.09.2015 03.05.54.
+     1>Project "C:\Users\Marcus\Documents\GitHub\x2D-Game-Engine\3rdparty\glfw\msvc14\src\glfw.vcxproj" on node 3 (Build target(s)).
+     1>C:\Program Files (x86)\MSBuild\14.0\bin\Microsoft.Common.CurrentVersion.targets(1610,5): warning : The referenced project 'C:/Users/Marcus/Desktop/glfw/msvc14/ZERO_CHECK.vcxproj' does not exist.
+     1>Link:
+         glfw.vcxproj -> C:\Users\Marcus\Documents\GitHub\x2D-Game-Engine\3rdparty\glfw\msvc14\src\..\..\lib\glfwd.dll
+       PostBuildEvent:
+         copy "C:\Users\Marcus\Documents\GitHub\x2D-Game-Engine\3rdparty\glfw\msvc14\src\..\..\lib\glfwd.dll" "C:\Users\Marcus\Documents\GitHub\x2D-Game-Engine\projects\msvc14\..\..\build\Win32\Debug\glfwd.dll"
+         :VCEnd
+                 1 file(s) copied.
+     1>Done Building Project "C:\Users\Marcus\Documents\GitHub\x2D-Game-Engine\3rdparty\glfw\msvc14\src\glfw.vcxproj" (Build target(s)).
+
+Build succeeded.
+
+Time Elapsed 00:00:00.16

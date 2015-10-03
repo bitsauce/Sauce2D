@@ -1,0 +1,41 @@
+﻿Build started 21.09.2015 04.23.20.
+     1>Project "C:\Users\Marcus\Documents\GitHub\x2D-Game-Engine\3rdparty\glfw\msvc14\src\glfw.vcxproj" on node 3 (Build target(s)).
+     1>C:\Program Files (x86)\MSBuild\14.0\bin\Microsoft.Common.CurrentVersion.targets(1610,5): warning : The referenced project 'C:/Users/Marcus/Desktop/glfw/msvc14/ZERO_CHECK.vcxproj' does not exist.
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\CL.exe /c /I"C:\Users\Marcus\Documents\GitHub\x2D-Game-Engine\3rdparty\glfw\msvc14\src\..\..\src" /I"C:\Users\Marcus\Documents\GitHub\x2D-Game-Engine\3rdparty\glfw\msvc14\src\\" /nologo /W3 /WX- /O2 /Ob2 /Oy- /D WIN32 /D _WINDOWS /D NDEBUG /D _CRT_SECURE_NO_WARNINGS /D _GLFW_USE_CONFIG_H /D _GLFW_BUILD_DLL /D _WINDLL /D _MBCS /Gm- /MD /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"Release\\" /Fd"Release\vc140.pdb" /Gd /TC /analyze- /errorReport:prompt ..\..\src\context.c ..\..\src\init.c ..\..\src\input.c ..\..\src\monitor.c ..\..\src\wgl_context.c ..\..\src\win32_init.c ..\..\src\win32_monitor.c ..\..\src\win32_time.c ..\..\src\win32_tls.c ..\..\src\win32_window.c ..\..\src\window.c ..\..\src\winmm_joystick.c
+         context.c
+         init.c
+         input.c
+         monitor.c
+         wgl_context.c
+         win32_init.c
+         win32_monitor.c
+         win32_time.c
+         win32_tls.c
+         win32_window.c
+         window.c
+         winmm_joystick.c
+         Generating Code...
+       Link:
+         C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Marcus\Documents\GitHub\x2D-Game-Engine\3rdparty\glfw\msvc14\src\..\..\lib\glfw.dll" /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\Marcus\Documents\GitHub\x2D-Game-Engine\3rdparty\glfw\msvc14\src\..\..\lib\glfw.pdb" /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\Marcus\Documents\GitHub\x2D-Game-Engine\3rdparty\glfw\msvc14\src\..\..\lib\glfw.lib" /MACHINE:X86 /SAFESEH /DLL Release\context.obj
+         Release\init.obj
+         Release\input.obj
+         Release\monitor.obj
+         Release\wgl_context.obj
+         Release\win32_init.obj
+         Release\win32_monitor.obj
+         Release\win32_time.obj
+         Release\win32_tls.obj
+         Release\win32_window.obj
+         Release\window.obj
+         Release\winmm_joystick.obj
+         glfw.vcxproj -> C:\Users\Marcus\Documents\GitHub\x2D-Game-Engine\3rdparty\glfw\msvc14\src\..\..\lib\glfw.dll
+       PostBuildEvent:
+         copy "C:\Users\Marcus\Documents\GitHub\x2D-Game-Engine\3rdparty\glfw\msvc14\src\..\..\lib\glfw.dll" "C:\Users\Marcus\Documents\GitHub\x2D-Game-Engine\projects\msvc14\..\..\build\Win32\Release\glfw.dll"
+         :VCEnd
+                 1 file(s) copied.
+     1>Done Building Project "C:\Users\Marcus\Documents\GitHub\x2D-Game-Engine\3rdparty\glfw\msvc14\src\glfw.vcxproj" (Build target(s)).
+
+Build succeeded.
+
+Time Elapsed 00:00:02.50
