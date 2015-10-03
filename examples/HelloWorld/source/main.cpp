@@ -12,6 +12,7 @@
 using namespace xd;
 
 float x = 0, xPrev = 0;
+bool vsync = true;
 
 class GameManager
 {
@@ -21,45 +22,45 @@ public:
 
 	static void main(GraphicsContext &graphicsContext)
 	{
-		font = ResourceManager::get<Font>(":/arial.fnt");
+		font = ResourceManager::get<Font>(":/font/arial.fnt");
 		spriteBatch = new SpriteBatch(graphicsContext);
-
-		InputContext* inputContext = Input::loadInputConfig(":/keyBinds.xml")[0];
-		inputContext->bind("toggle_vsync", toggleVSync, true);
-		inputContext->bind("toggle_full_screen", toggleFullscreen, true);
-		Input::setInputContext(inputContext);
+		Input::bind(XD_KEY_1, toggleVSync);
+		Input::bind(XD_KEY_2, toggleFullscreen);
+		Graphics::enableVsync();
 	}
 
-	static void toggleVSync(int action)
+	static void toggleVSync()
 	{
-		if(action == GLFW_PRESS)
-		{
-			Graphics::setVsync(!Graphics::getVsync());
-		}
+		if(vsync)
+			Graphics::disableVsync();
+		else
+			Graphics::enableVsync();
+		vsync = !vsync;
 	}
 
-	static void toggleFullscreen(int action)
+	static void toggleFullscreen()
 	{
-		if(action == GLFW_PRESS)
-		{
-			Window::setFullScreen(!Window::getFullScreen());
-		}
+		if(Window::isFullscreen())
+			Window::disableFullscreen();
+		else
+			Window::enableFullscreen();
 	}
 
-	static void update(const double dt)
+	static void update(const float dt)
 	{
 		xPrev = x;
 		x += 5.0f;
 		if(x > Window::getWidth())
 		{
-			x -= Window::getWidth();
+			xPrev = x = -32.0f;
+			x += 5.0f;
 		}
 	}
 
-	static void draw(GraphicsContext &context, const double alpha)
+	static void draw(GraphicsContext &context, const float alpha)
 	{
 		spriteBatch->begin();
-		font->draw(spriteBatch, 0, 0, "FPS: " + util::floatToStr(Graphics::getFPS()) + "\nVSync: " + (Graphics::getVsync() == 1 ? "ON" : "OFF") + " (press 1 to toggle)\nFullscreen: " + (Window::getFullScreen() ? "ON" : "OFF") + " (press 2 to toggle)");
+		font->draw(spriteBatch, 0, 0, "FPS: " + util::floatToStr(Graphics::getFPS()) + "\nVSync: " + (vsync ? "ON" : "OFF") + " (press 1 to toggle)\nFullscreen: " + (Window::isFullscreen() ? "ON" : "OFF") + " (press 2 to toggle)");
 		spriteBatch->end();
 		context.drawRectangle(Rect(math::lerp(xPrev, x, alpha), context.getHeight() * 0.5f, 32.0f, 32.0f));
 	}
@@ -76,22 +77,7 @@ SpriteBatch *GameManager::spriteBatch = 0;
 // Win32 entry point
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, INT)
 {
-	// Process the command-line
-	int flags = 0;
-	string workDir;
-	for(int i = 0; i < __argc; i++)
-	{
-		if(__argv[i][0] == '-')
-		{
-			switch(__argv[i][1])
-			{
-				case 'v': flags |= XD_EXPORT_LOG; break;
-				case 'w': workDir = string(__argv[i] + 3); break;
-			}
-		}
-	}
-	flags |= XD_EXPORT_LOG; // For now we force this flag
-
+	// Create engine
 	Engine *engine = CreateEngine();
 
 	Config config;
@@ -99,10 +85,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, INT)
 	config.updateFunc = &GameManager::update;
 	config.drawFunc = &GameManager::draw;
 	config.endFunc = &GameManager::exit;
-	//#ifdef X2D_DEBUG
-	config.workDir = "..\\game\\";
-	//#endif
-	config.flags = flags;
+	config.flags = XD_EXPORT_LOG;
 
 	if(engine->init(config) != X2D_OK)
 	{
