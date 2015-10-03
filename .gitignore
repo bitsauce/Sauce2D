@@ -10,8 +10,6 @@
 *.lib
 
 !3rdparty/openal/libs/*.lib
-!3rdparty/vld/lib/*.lib
-!3rdparty/vld/bin/*.dll
 
 # Exclude Visual Studio files
 *.sbr
@@ -31,7 +29,6 @@
 
 # Exclude subversion control folders
 .svn
-AS_DEBUG
 3rdparty/RakNet
 *.iobj
 *.ipdb
