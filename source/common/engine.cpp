@@ -238,8 +238,6 @@ int Engine::run()
 			double deltaTime = currentTime - prevTime;
 			prevTime = currentTime;
 
-			LOG("deltaTime: %f", deltaTime);
-
 			// Avoid spiral of death
 			if(deltaTime > 0.25)
 			{
