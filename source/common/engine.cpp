@@ -91,6 +91,19 @@ void error_callback(int error, const char* description)
 	LOG(description);
 }
 
+Exception::Exception(RetCode code, const char * msg, ...) :
+	m_errorCode(code)
+{
+	va_list args;
+	va_start(args, msg);
+
+	int size = _scprintf(msg, args) + 1;
+	m_message.resize(size);
+	vsprintf_s(&m_message[0], size, msg, args);
+
+	va_end(args);
+}
+
 //------------------------------------------------------------------------
 // Run
 //------------------------------------------------------------------------
@@ -100,7 +113,7 @@ int Engine::init(const Config &config)
 	s_flags = config.flags;
 
 	string workDir;
-	for(uint i = 0; i < __argc; i++)
+	for(int i = 0; i < __argc; i++)
 	{
 		string arg = __argv[i];
 		if(arg == "-export-log")

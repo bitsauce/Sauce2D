@@ -12,7 +12,7 @@ public:
 	SpriteAnimation(const int nRows, const int nColumns);
 	~SpriteAnimation();
 
-	TextureRegion getKeyFrame(int frameIndex);
+	TextureRegion getKeyFrame(uint frameIndex);
 
 private:
 	vector<TextureRegion> m_textureRegions;

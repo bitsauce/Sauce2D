@@ -268,7 +268,7 @@ void Window::cursorMoveCallback(GLFWwindow*, double x, double y)
 
 void Window::scrollCallback(GLFWwindow*, double x, double y)
 {
-	MouseListener::callMouseWheelEvent(y);
+	MouseListener::callMouseWheelEvent((int)y);
 }
 
 END_XD_NAMESPACE

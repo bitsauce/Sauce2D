@@ -32,3 +32,5 @@
 3rdparty/RakNet
 *.iobj
 *.ipdb
+*.lib
+*.tlog

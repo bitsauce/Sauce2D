@@ -33,7 +33,7 @@ SpriteAnimation::~SpriteAnimation()
 	m_textureRegions.clear();
 }
 
-TextureRegion SpriteAnimation::getKeyFrame(int frameIndex)
+TextureRegion SpriteAnimation::getKeyFrame(uint frameIndex)
 {
 	return frameIndex < m_textureRegions.size() ? m_textureRegions[frameIndex] : TextureRegion();
 }

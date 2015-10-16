@@ -10,6 +10,7 @@
 BEGIN_XD_NAMESPACE
 
 #define LOG(str, ...) Console::Log(str, __VA_ARGS__)
+#define THROW(str, ...) throw Exception(X2D_RUNTIME_EXCEPTION, str, __VA_ARGS__)
 
 #define NOT_IMPLEMENTED(func)			LOG("%s does not have a implementation.", #func);
 #define NOT_IMPLEMENTED_RET(func, ret)	LOG("%s does not have a implementation.", #func); return ret;
@@ -304,11 +305,7 @@ private:
 class XDAPI Exception
 {
 public:
-	Exception(RetCode code, string msg) :
-		m_errorCode(code),
-		m_message(msg)
-	{
-	}
+	Exception(RetCode code, const char * msg, ...);
 
 	RetCode errorCode() const
 	{
