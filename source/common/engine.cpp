@@ -14,6 +14,8 @@
 #include <direct.h> // for _getcw()
 #include <ShlObj.h>
 
+#include <boxer/boxer.h>
+
 BEGIN_XD_NAMESPACE
 
 #ifdef X2D_LINUX
@@ -298,6 +300,7 @@ int Engine::run()
 	}
 	catch(Exception e)
 	{
+		boxer::show(e.message().c_str(), "Exception");
 		LOG("An exception occured: %s", e.message().c_str());
 		return e.errorCode();
 	}

@@ -180,7 +180,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
-      <AdditionalIncludeDirectories>$(ProjectDir)..\..\include;$(ProjectDir)..\..\source;$(ProjectDir)..\..\3rdparty\freeimage\source;$(ProjectDir)..\..\3rdparty\freetype\include;$(ProjectDir)..\..\3rdparty\openal\include;$(ProjectDir)..\..\3rdparty\glfw\include;$(ProjectDir)..\..\3rdparty\gl3w\include;$(ProjectDir)..\..\3rdparty\tinyxml2;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\include;$(ProjectDir)..\..\source;$(ProjectDir)..\..\3rdparty\freeimage\source;$(ProjectDir)..\..\3rdparty\freetype\include;$(ProjectDir)..\..\3rdparty\openal\include;$(ProjectDir)..\..\3rdparty\glfw\include;$(ProjectDir)..\..\3rdparty\gl3w\include;$(ProjectDir)..\..\3rdparty\tinyxml2;$(ProjectDir)..\..\3rdparty\boxer\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Android'">
@@ -202,11 +202,11 @@
       <ExceptionHandling>Sync</ExceptionHandling>
     </ClCompile>
     <Link>
-      <AdditionalLibraryDirectories>$(ProjectDir)..\..\3rdparty\freeimage\lib;$(ProjectDir)..\..\3rdparty\freetype\lib;$(ProjectDir)..\..\3rdparty\openal\libs\Win32;$(ProjectDir)..\..\3rdparty\glfw\lib;$(ProjectDir)..\..\3rdparty\gl3w\lib;$(ProjectDir)..\..\3rdparty\tinyxml2\lib</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(ProjectDir)..\..\3rdparty\freeimage\lib;$(ProjectDir)..\..\3rdparty\freetype\lib;$(ProjectDir)..\..\3rdparty\openal\libs\Win32;$(ProjectDir)..\..\3rdparty\glfw\lib;$(ProjectDir)..\..\3rdparty\gl3w\lib;$(ProjectDir)..\..\3rdparty\tinyxml2\lib;$(ProjectDir)..\..\3rdparty\Boxer\lib</AdditionalLibraryDirectories>
       <GenerateDebugInformation>Debug</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
-      <AdditionalDependencies>openal32.lib;freetyped.lib;freeimaged.lib;gl3wd.lib;glfwd.lib;opengl32.lib;glu32.lib;tinyxml2d.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>openal32.lib;freetyped.lib;freeimaged.lib;gl3wd.lib;glfwd.lib;opengl32.lib;glu32.lib;tinyxml2d.lib;boxerd.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <Lib>
       <AdditionalDependencies>glew32_d.lib;ws2_32.lib;IPHlpAPI.lib;freetype248_d.lib;OpenAL32.lib;libpng15_d.lib;angelscriptd.lib;%(AdditionalDependencies)</AdditionalDependencies>
@@ -241,7 +241,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
-      <AdditionalIncludeDirectories>$(ProjectDir)..\..\include;$(ProjectDir)..\..\source;$(ProjectDir)..\..\3rdparty\freeimage\source;$(ProjectDir)..\..\3rdparty\freetype\include;$(ProjectDir)..\..\3rdparty\openal\include;$(ProjectDir)..\..\3rdparty\glfw\include;$(ProjectDir)..\..\3rdparty\gl3w\include;$(ProjectDir)..\..\3rdparty\tinyxml2;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\include;$(ProjectDir)..\..\source;$(ProjectDir)..\..\3rdparty\freeimage\source;$(ProjectDir)..\..\3rdparty\freetype\include;$(ProjectDir)..\..\3rdparty\openal\include;$(ProjectDir)..\..\3rdparty\glfw\include;$(ProjectDir)..\..\3rdparty\gl3w\include;$(ProjectDir)..\..\3rdparty\tinyxml2;$(ProjectDir)..\..\3rdparty\boxer\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Android'">
@@ -262,8 +262,8 @@
       <WholeProgramOptimization>true</WholeProgramOptimization>
     </ClCompile>
     <Link>
-      <AdditionalLibraryDirectories>$(ProjectDir)..\..\3rdparty\freeimage\lib;$(ProjectDir)..\..\3rdparty\freetype\lib;$(ProjectDir)..\..\3rdparty\openal\libs\Win32;$(ProjectDir)..\..\3rdparty\glfw\lib;$(ProjectDir)..\..\3rdparty\gl3w\lib;$(ProjectDir)..\..\3rdparty\tinyxml2\lib</AdditionalLibraryDirectories>
-      <AdditionalDependencies>openal32.lib;freetype.lib;freeimage.lib;gl3w.lib;glfw.lib;opengl32.lib;glu32.lib;tinyxml2.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(ProjectDir)..\..\3rdparty\freeimage\lib;$(ProjectDir)..\..\3rdparty\freetype\lib;$(ProjectDir)..\..\3rdparty\openal\libs\Win32;$(ProjectDir)..\..\3rdparty\glfw\lib;$(ProjectDir)..\..\3rdparty\gl3w\lib;$(ProjectDir)..\..\3rdparty\tinyxml2\lib;$(ProjectDir)..\..\3rdparty\Boxer\lib</AdditionalLibraryDirectories>
+      <AdditionalDependencies>openal32.lib;freetype.lib;freeimage.lib;gl3w.lib;glfw.lib;opengl32.lib;glu32.lib;tinyxml2.lib;boxer.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
       <Command>
