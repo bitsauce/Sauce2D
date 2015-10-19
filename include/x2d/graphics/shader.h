@@ -26,6 +26,7 @@ public:
 	void setUniform4i(const string &name, const int v0, const int v1, const int v2, const int v3);
 	void setUniform1f(const string &name, const float v0);
 	void setUniform2f(const string &name, const float v0, const float v1);
+	void setUniform2f(const string &name, const float *v);
 	void setUniform3f(const string &name, const float v0, const float v1, const float v2);
 	void setUniform4f(const string &name, const float v0, const float v1, const float v2, const float v3);
 	void setUniformMatrix4f(const string &name, const float *v0);
@@ -43,6 +44,7 @@ private:
 		Uniform() :
 			type(0),
 			loc(0),
+			count(0),
 			data(0)
 		{
 		}
@@ -54,6 +56,7 @@ private:
 
 		GLenum type;
 		int loc;
+		int count;
 		void *data;
 	};
 

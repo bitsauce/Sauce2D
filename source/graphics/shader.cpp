@@ -106,6 +106,7 @@ Shader::Shader(const string &vertexSource, const string &fragmentSource)
 		Uniform *uniform = new Uniform;
 		uniform->type = type;
 		uniform->loc = glGetUniformLocation(m_id, name);
+		uniform->count = size;
 
 		size_t dataSize = 0;
 		switch(type)
@@ -123,7 +124,7 @@ Shader::Shader(const string &vertexSource, const string &fragmentSource)
 			case GL_FLOAT_VEC4:	dataSize = FLOAT_SIZE * 4; break;
 			case GL_FLOAT_MAT4:	dataSize = FLOAT_SIZE * 16; break;
 		}
-		uniform->data = new char[dataSize];
+		uniform->data = new char[dataSize * size];
 		m_uniforms[name] = uniform;
 	}
 }
@@ -269,6 +270,23 @@ void Shader::setUniform2f(const string &name, const float v0, const float v1)
 		{
 			((GLfloat*) uniform->data)[0] = v0;
 			((GLfloat*) uniform->data)[1] = v1;
+		}
+	}
+	else
+	{
+		LOG("Uniform '%s' does not exist.", name.c_str());
+	}
+}
+
+void Shader::setUniform2f(const string & name, const float * v)
+{
+	map<string, Uniform*>::iterator itr;
+	if((itr = m_uniforms.find(name)) != m_uniforms.end())
+	{
+		Uniform *uniform = itr->second;
+		if(uniform->type == GL_FLOAT_VEC2)
+		{
+			memcpy(uniform->data, v, uniform->count * FLOAT_SIZE);
 		}
 	}
 	else
