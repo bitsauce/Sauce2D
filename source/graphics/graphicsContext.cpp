@@ -140,7 +140,7 @@ void GraphicsContext::resizeViewport(const uint w, const uint h)
 	float l = 0.0f,
 		r = (float)m_width,
 		b = (float)m_height,
-		t = 0,
+		t = 0.0f,
 		n = -1.0f,
 		f = 1.0f;
 

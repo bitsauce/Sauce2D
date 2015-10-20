@@ -286,7 +286,7 @@ void Shader::setUniform2f(const string & name, const float * v)
 		Uniform *uniform = itr->second;
 		if(uniform->type == GL_FLOAT_VEC2)
 		{
-			memcpy(uniform->data, v, uniform->count * FLOAT_SIZE);
+			memcpy(uniform->data, v,  2 * uniform->count * FLOAT_SIZE);
 		}
 	}
 	else

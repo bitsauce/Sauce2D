@@ -337,7 +337,8 @@ Texture2DPtr Texture2D::loadResource(const string &name)
 	bool premultiply = false;
 	for(uint i = 1; i < strings.size(); ++i)
 	{
-		if(strings[i] == "PremultiplyAlpha") premultiply = true;
+		if(strings[i] == "PremultiplyAlpha")
+			premultiply = true;
 	}
 
 	// Load asset as a image
