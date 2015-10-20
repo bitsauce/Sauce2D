@@ -165,10 +165,21 @@ void Pixmap::clear()
 	delete[] emptyPixel;
 }
 
-void Pixmap::exportToFile(const string &path) const
+#include <freeimage.h>
+
+void Pixmap::exportToFile(string path) const
 {
-	// TODO: REFACTORING
-	//XAssetManager::SavePixmap(path, (uchar*)m_data, m_width, m_height);
+	// NOTE TO SELF: If I ever decide to implement export for integer texture, glGetTexImage() expects GL_BGRA_INTEGER instead of GL_BGRA
+	if(m_format.getDataType() != PixelFormat::BYTE && m_format.getDataType() != PixelFormat::UNSIGNED_BYTE)
+	{
+		LOG("Cannot export image with a pixel data type different from byte or unsigned byte");
+		return;
+	}
+
+	FIBITMAP *bitmap = FreeImage_ConvertFromRawBits(m_data, m_width, m_height, m_width * 4, 32, FI_RGBA_RED_MASK, FI_RGBA_GREEN, FI_RGBA_BLUE, false);
+	util::toAbsoluteFilePath(path);
+	FreeImage_Save(FIF_PNG, bitmap, path.c_str(), PNG_DEFAULT); // For now, let's just save everything as png
+
 }
 
 END_XD_NAMESPACE

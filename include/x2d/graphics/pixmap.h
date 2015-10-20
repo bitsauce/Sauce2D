@@ -64,7 +64,7 @@ public:
 	void fill(const void *data);
 	void clear();
 
-	void exportToFile(const string &path) const;
+	void exportToFile(string path) const;
 
 	const uchar *getData() const;
 

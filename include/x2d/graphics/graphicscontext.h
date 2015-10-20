@@ -4,6 +4,7 @@
 #include "../engine.h"
 #include "shader.h"
 #include "blendState.h"
+#include "textureregion.h"
 
 BEGIN_XD_NAMESPACE
 
@@ -98,10 +99,10 @@ public:
 	void drawPrimitives(const PrimitiveType type, const VertexBuffer *vbo);
 
 	// Draw shapes
-	void drawRectangle(const Rect &rect, const Color &c = Color(255));
-	void drawRectangle(const Vector2 &pos, const Vector2 &size, const Color &c = Color(255));
-	void drawRectangle(const float x, const float y, const float width, const float height, const Color &c = Color(255));
-	void drawCircle(const Vector2 &center, const float r, const uint segments, const Color &c = Color(255)); // TODO: Implement
+	void drawRectangle(const Rect &rect, const Color &c = Color(255), const TextureRegion &textureRegion = TextureRegion());
+	void drawRectangle(const Vector2 &pos, const Vector2 &size, const Color &c = Color(255), const TextureRegion &textureRegion = TextureRegion());
+	void drawRectangle(const float x, const float y, const float width, const float height, const Color &c = Color(255), const TextureRegion &textureRegion = TextureRegion());
+	void drawCircle(const Vector2 &center, const float r, const uint segments, const Color &c = Color(255));
 	void drawCircle(const float x, const float y, const float r, const uint segments, const Color &c = Color(255));
 
 private:

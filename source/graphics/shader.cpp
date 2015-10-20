@@ -125,7 +125,14 @@ Shader::Shader(const string &vertexSource, const string &fragmentSource)
 			case GL_FLOAT_MAT4:	dataSize = FLOAT_SIZE * 16; break;
 		}
 		uniform->data = new char[dataSize * size];
-		m_uniforms[name] = uniform;
+
+		string strName = name;
+		if(strName.length() > 3 && strName.substr(strName.length() - 3) == "[0]")
+		{
+			strName = strName.substr(0, strName.length() - 3);
+		}
+
+		m_uniforms[strName] = uniform;
 	}
 }
 

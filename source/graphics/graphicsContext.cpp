@@ -470,34 +470,34 @@ void GraphicsContext::drawPrimitives(const PrimitiveType type, const VertexBuffe
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
 
-void GraphicsContext::drawRectangle(const float x, const float y, const float width, const float height, const Color &color)
+void GraphicsContext::drawRectangle(const float x, const float y, const float width, const float height, const Color &color, const TextureRegion &textureRegion)
 {
 	Vertex vertices[4];
 
-	vertices[0].set4f(xd::VERTEX_POSITION, x,			y);
-	vertices[1].set4f(xd::VERTEX_POSITION, x,			y + height);
-	vertices[2].set4f(xd::VERTEX_POSITION, x + width,	y);
-	vertices[3].set4f(xd::VERTEX_POSITION, x + width,	y + height);
+	vertices[0].set4f(VERTEX_POSITION, x,			y);
+	vertices[1].set4f(VERTEX_POSITION, x,			y + height);
+	vertices[2].set4f(VERTEX_POSITION, x + width,	y);
+	vertices[3].set4f(VERTEX_POSITION, x + width,	y + height);
 
-	vertices[0].set4ub(xd::VERTEX_COLOR, color.r, color.g, color.b, color.a);
-	vertices[1].set4ub(xd::VERTEX_COLOR, color.r, color.g, color.b, color.a);
-	vertices[2].set4ub(xd::VERTEX_COLOR, color.r, color.g, color.b, color.a);
-	vertices[3].set4ub(xd::VERTEX_COLOR, color.r, color.g, color.b, color.a);
+	vertices[0].set4ub(VERTEX_COLOR, color.r, color.g, color.b, color.a);
+	vertices[1].set4ub(VERTEX_COLOR, color.r, color.g, color.b, color.a);
+	vertices[2].set4ub(VERTEX_COLOR, color.r, color.g, color.b, color.a);
+	vertices[3].set4ub(VERTEX_COLOR, color.r, color.g, color.b, color.a);
 	
-	vertices[0].set4f(xd::VERTEX_TEX_COORD, 0.0f, 1.0f);
-	vertices[1].set4f(xd::VERTEX_TEX_COORD, 0.0f, 0.0f);
-	vertices[2].set4f(xd::VERTEX_TEX_COORD, 1.0f, 1.0f);
-	vertices[3].set4f(xd::VERTEX_TEX_COORD, 1.0f, 0.0f);
+	vertices[0].set4f(VERTEX_TEX_COORD, textureRegion.uv0.x, textureRegion.uv1.y);
+	vertices[1].set4f(VERTEX_TEX_COORD, textureRegion.uv0.x, textureRegion.uv0.y);
+	vertices[2].set4f(VERTEX_TEX_COORD, textureRegion.uv1.x, textureRegion.uv1.y);
+	vertices[3].set4f(VERTEX_TEX_COORD, textureRegion.uv1.x, textureRegion.uv0.y);
 
 	drawPrimitives(PRIMITIVE_TRIANGLE_STRIP, vertices, 4);
 }
 
-void GraphicsContext::drawRectangle(const Vector2 &pos, const Vector2 &size, const Color &color)
+void GraphicsContext::drawRectangle(const Vector2 &pos, const Vector2 &size, const Color &color, const TextureRegion &textureRegion)
 {
 	drawRectangle(pos.x, pos.y, size.x, size.y, color);
 }
 
-void GraphicsContext::drawRectangle(const Rect &rect, const Color &color)
+void GraphicsContext::drawRectangle(const Rect &rect, const Color &color, const TextureRegion &textureRegion)
 {
 	drawRectangle(rect.position.x, rect.position.y, rect.size.x, rect.size.y, color);
 }

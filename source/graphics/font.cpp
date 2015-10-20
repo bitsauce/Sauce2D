@@ -122,8 +122,8 @@ void Font::setTextEncoding(FontTextEncoding encoding)
 CharDescr *Font::getChar(int id)
 {
 	map<int, CharDescr*>::iterator it = m_chars.find(id);
-	if (it == m_chars.end()) return 0;
-	return it->second;
+	if(it == m_chars.end()) return 0;
+	return it->second; 
 }
 
 // Internal
@@ -535,8 +535,7 @@ void FontLoader::addChar(int id, short x, short y, short w, short h, short xoffs
 
 		m_font->m_chars.insert(std::map<int, CharDescr*>::value_type(id, ch));
 	}
-
-	if (id == -1)
+	else if (id == -1)
 	{
 		m_font->m_defChar.srcX = x;
 		m_font->m_defChar.srcY = y;
