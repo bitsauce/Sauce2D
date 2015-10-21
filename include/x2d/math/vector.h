@@ -3,9 +3,9 @@
 
 #include "../config.h"
 
-/** \brief A class which holds a 2 dimentional vector
+/** \brief A class which holds a 2 dimensional vector
  *
- * The Vector2 class is a 2 dimentional (hence the 2) vector.
+ * The Vector2 class is a 2 dimensional (hence the 2) vector.
  * It stores the x and y value as floating-point values.
  *
  */

@@ -4,9 +4,9 @@
 #include "../config.h"
 #include "vector.h"
 
-/** \brief A class which holds a 2 dimentional Rect
+/** \brief A class which holds a 2 dimensional Rect
  *
- * The Rect class is a 2 dimentional (hence the 2) Rect.
+ * The Rect class is a 2 dimensional (hence the 2) Rect.
  * It stores the x and y coordinates, aswell as the width and height, as floating-point values.
  *
  */

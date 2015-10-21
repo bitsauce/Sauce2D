@@ -104,13 +104,13 @@ const RectanglePacker::Result RectanglePacker::pack()
 					if(!bestResult.valid)
 						canvasWidth = rightMost;
 						
-					// Store canvas dimentions and the result as best
+					// Store canvas dimensions and the result as best
 					result.valid = true;
 					result.canvas.set(rightMost, canvasHeight);
 					bestResult = result;
 				}
 					
-				// Retry with different dimentions
+				// Retry with different dimensions
 				cells.clear();
 				cells.push_back(Recti(0, 0, --canvasWidth, canvasHeight));
 				result.clear();

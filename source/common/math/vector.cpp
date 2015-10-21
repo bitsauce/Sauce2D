@@ -12,7 +12,7 @@
  
 //-----------------------------------------------------
 // Vector2
-// - A 2-dimentional vector class
+// - A 2-dimensional vector class
 //-----------------------------------------------------
 
 Vector2::Vector2(const float xy)
@@ -346,7 +346,7 @@ bool Vector2i::operator!=(const Vector2i& v2) const
  
 //-----------------------------------------------------
 // Vector3
-// - A 3-dimentional vector class
+// - A 3-dimensional vector class
 //-----------------------------------------------------
 
 Vector3::Vector3(float xyz)
@@ -524,7 +524,7 @@ bool Vector3::operator==(const Vector3& v2) const
 
 //-----------------------------------------------------
 // Vector4
-// - A 4-dimentional vector class
+// - A 4-dimensional vector class
 //-----------------------------------------------------
 
 Vector4::Vector4(float xyzw)
