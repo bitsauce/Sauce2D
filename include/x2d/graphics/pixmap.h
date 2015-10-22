@@ -10,19 +10,19 @@ class XDAPI PixelFormat
 public:
 	enum Components
 	{
-		R = GL_RED,
-		RG = GL_RG,
-		RGB = GL_RGB,
-		RGBA = GL_RGBA
+		R,
+		RG,
+		RGB,
+		RGBA
 	};
 
 	enum DataType
 	{
-		INT = GL_INT,
-		UNSIGNED_INT = GL_UNSIGNED_INT,
-		BYTE = GL_BYTE,
-		UNSIGNED_BYTE = GL_UNSIGNED_BYTE,
-		FLOAT = GL_FLOAT
+		INT,
+		UNSIGNED_INT,
+		BYTE,
+		UNSIGNED_BYTE,
+		FLOAT
 	};
 
 	PixelFormat(Components components = RGBA, DataType dataType = UNSIGNED_BYTE)

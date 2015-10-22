@@ -14,100 +14,113 @@ BEGIN_XD_NAMESPACE
 
 GLint toInternalFormat(PixelFormat::Components fmt, PixelFormat::DataType dt)
 {
-	switch (fmt)
+	switch(fmt)
 	{
-	case PixelFormat::R:
-	{
-		switch (dt)
+		case PixelFormat::R:
 		{
-		case PixelFormat::INT: return GL_R32I;
-		case PixelFormat::UNSIGNED_INT: return GL_R32UI;
-		case PixelFormat::BYTE: return GL_R8I;
-		case PixelFormat::UNSIGNED_BYTE: return GL_R8;
-		case PixelFormat::FLOAT: return GL_R32F;
+			switch(dt)
+			{
+				case PixelFormat::INT: return GL_R32I;
+				case PixelFormat::UNSIGNED_INT: return GL_R32UI;
+				case PixelFormat::BYTE: return GL_R8I;
+				case PixelFormat::UNSIGNED_BYTE: return GL_R8;
+				case PixelFormat::FLOAT: return GL_R32F;
+			}
 		}
-	}
-	break;
-	case PixelFormat::RG:
-	{
-		switch (dt)
+		break;
+		case PixelFormat::RG:
 		{
-		case PixelFormat::INT: return GL_RG32I;
-		case PixelFormat::UNSIGNED_INT: return GL_RG32UI;
-		case PixelFormat::BYTE: return GL_RG8I;
-		case PixelFormat::UNSIGNED_BYTE: return GL_RG8;
-		case PixelFormat::FLOAT: return GL_RG32F;
+			switch(dt)
+			{
+				case PixelFormat::INT: return GL_RG32I;
+				case PixelFormat::UNSIGNED_INT: return GL_RG32UI;
+				case PixelFormat::BYTE: return GL_RG8I;
+				case PixelFormat::UNSIGNED_BYTE: return GL_RG8;
+				case PixelFormat::FLOAT: return GL_RG32F;
+			}
 		}
-	}
-	break;
-	case PixelFormat::RGB:
-	{
-		switch (dt)
+		break;
+		case PixelFormat::RGB:
 		{
-		case PixelFormat::INT: return GL_RGB32I;
-		case PixelFormat::UNSIGNED_INT: return GL_RGB32UI;
-		case PixelFormat::BYTE: return GL_RGB8I;
-		case PixelFormat::UNSIGNED_BYTE: return GL_RGB8;
-		case PixelFormat::FLOAT: return GL_RGB32F;
+			switch(dt)
+			{
+				case PixelFormat::INT: return GL_RGB32I;
+				case PixelFormat::UNSIGNED_INT: return GL_RGB32UI;
+				case PixelFormat::BYTE: return GL_RGB8I;
+				case PixelFormat::UNSIGNED_BYTE: return GL_RGB8;
+				case PixelFormat::FLOAT: return GL_RGB32F;
+			}
 		}
-	}
-	break;
-	case PixelFormat::RGBA:
-	{
-		switch (dt)
+		break;
+		case PixelFormat::RGBA:
 		{
-		case PixelFormat::INT: return GL_RGBA32I;
-		case PixelFormat::UNSIGNED_INT: return GL_RGBA32UI;
-		case PixelFormat::BYTE: return GL_RGBA8I;
-		case PixelFormat::UNSIGNED_BYTE: return GL_RGBA8;
-		case PixelFormat::FLOAT: return GL_RGBA32F;
+			switch(dt)
+			{
+				case PixelFormat::INT: return GL_RGBA32I;
+				case PixelFormat::UNSIGNED_INT: return GL_RGBA32UI;
+				case PixelFormat::BYTE: return GL_RGBA8I;
+				case PixelFormat::UNSIGNED_BYTE: return GL_RGBA8;
+				case PixelFormat::FLOAT: return GL_RGBA32F;
+			}
 		}
-	}
-	break;
+		break;
 	}
 	return 0;
 }
 
 GLint toFormat(PixelFormat::Components fmt, PixelFormat::DataType dt)
 {
-	switch (fmt)
+	switch(fmt)
 	{
-	case PixelFormat::R:
-	{
-		switch (dt)
+		case PixelFormat::R:
 		{
-		case PixelFormat::UNSIGNED_BYTE: case PixelFormat::BYTE: case PixelFormat::FLOAT: return GL_RED;
-		case PixelFormat::UNSIGNED_INT: case PixelFormat::INT: return GL_RED_INTEGER;
+			switch(dt)
+			{
+				case PixelFormat::UNSIGNED_BYTE: case PixelFormat::BYTE: case PixelFormat::FLOAT: return GL_RED;
+				case PixelFormat::UNSIGNED_INT: case PixelFormat::INT: return GL_RED_INTEGER;
+			}
 		}
-	}
-	break;
-	case PixelFormat::RG:
-	{
-		switch (dt)
+		break;
+		case PixelFormat::RG:
 		{
-		case PixelFormat::UNSIGNED_BYTE: case PixelFormat::BYTE: case PixelFormat::FLOAT: return GL_RG;
-		case PixelFormat::UNSIGNED_INT: case PixelFormat::INT: return GL_RG_INTEGER;
+			switch(dt)
+			{
+				case PixelFormat::UNSIGNED_BYTE: case PixelFormat::BYTE: case PixelFormat::FLOAT: return GL_RG;
+				case PixelFormat::UNSIGNED_INT: case PixelFormat::INT: return GL_RG_INTEGER;
+			}
 		}
-	}
-	break;
-	case PixelFormat::RGB:
-	{
-		switch (dt)
+		break;
+		case PixelFormat::RGB:
 		{
-		case PixelFormat::UNSIGNED_BYTE: case PixelFormat::BYTE: case PixelFormat::FLOAT: return GL_RGB;
-		case PixelFormat::UNSIGNED_INT: case PixelFormat::INT: return GL_RGB_INTEGER;
+			switch(dt)
+			{
+				case PixelFormat::UNSIGNED_BYTE: case PixelFormat::BYTE: case PixelFormat::FLOAT: return GL_RGB;
+				case PixelFormat::UNSIGNED_INT: case PixelFormat::INT: return GL_RGB_INTEGER;
+			}
 		}
-	}
-	break;
-	case PixelFormat::RGBA:
-	{
-		switch (dt)
+		break;
+		case PixelFormat::RGBA:
 		{
-		case PixelFormat::UNSIGNED_BYTE: case PixelFormat::BYTE: case PixelFormat::FLOAT: return GL_RGBA;
-		case PixelFormat::UNSIGNED_INT: case PixelFormat::INT: return GL_RGBA_INTEGER;
+			switch(dt)
+			{
+				case PixelFormat::UNSIGNED_BYTE: case PixelFormat::BYTE: case PixelFormat::FLOAT: return GL_RGBA;
+				case PixelFormat::UNSIGNED_INT: case PixelFormat::INT: return GL_RGBA_INTEGER;
+			}
 		}
+		break;
 	}
-	break;
+	return 0;
+}
+
+GLint toGLDataType(PixelFormat::DataType dt)
+{
+	switch(dt)
+	{
+		case PixelFormat::INT: return GL_INT;
+		case PixelFormat::UNSIGNED_INT: return GL_UNSIGNED_INT;
+		case PixelFormat::BYTE: return GL_BYTE;
+		case PixelFormat::UNSIGNED_BYTE: return GL_UNSIGNED_BYTE;
+		case PixelFormat::FLOAT: return GL_FLOAT;
 	}
 	return 0;
 }
@@ -227,7 +240,7 @@ Pixmap Texture2D::getPixmap() const
 	// Get texture data
 	uchar *data = new uchar[m_width * m_height * m_pixelFormat.getPixelSizeInBytes()];
 	glBindTexture(GL_TEXTURE_2D, m_id);
-	glGetTexImage(GL_TEXTURE_2D, 0, toFormat(m_pixelFormat.getComponents(), m_pixelFormat.getDataType()), m_pixelFormat.getDataType(), (GLvoid*)data);
+	glGetTexImage(GL_TEXTURE_2D, 0, toFormat(m_pixelFormat.getComponents(), m_pixelFormat.getDataType()), toGLDataType(m_pixelFormat.getDataType()), (GLvoid*)data);
 	glBindTexture(GL_TEXTURE_2D, 0);
 
 	// Copy data to pixmap
@@ -244,8 +257,14 @@ void Texture2D::updatePixmap(const Pixmap &pixmap)
 
 	// Set default filtering
 	glBindTexture(GL_TEXTURE_2D, m_id);
-	glTexImage2D(GL_TEXTURE_2D, 0, toInternalFormat(pixmap.getFormat().getComponents(), pixmap.getFormat().getDataType()), (GLsizei)m_width, (GLsizei)m_height, 0, toFormat(pixmap.getFormat().getComponents(), pixmap.getFormat().getDataType()), pixmap.getFormat().getDataType(), (const GLvoid*)pixmap.getData());
+	glTexImage2D(GL_TEXTURE_2D, 0, toInternalFormat(pixmap.getFormat().getComponents(), pixmap.getFormat().getDataType()), (GLsizei)m_width, (GLsizei)m_height, 0, toFormat(pixmap.getFormat().getComponents(), pixmap.getFormat().getDataType()), toGLDataType(pixmap.getFormat().getDataType()), (const GLvoid*)pixmap.getData());
 	glBindTexture(GL_TEXTURE_2D, 0);
+
+	GLenum error;
+	if((error = glGetError()) != GL_NO_ERROR)
+	{
+		LOG("GL error: %i", error);
+	}
 
 	// Regenerate mipmaps
 	m_mipmapsGenerated = false;
@@ -259,7 +278,7 @@ void Texture2D::updatePixmap(const int x, const int y, const Pixmap &pixmap)
 {
 	// Set default filtering
 	glBindTexture(GL_TEXTURE_2D, m_id);
-	glTexSubImage2D(GL_TEXTURE_2D, 0, (GLint)x, (GLint)y, (GLsizei)pixmap.getWidth(), (GLsizei)pixmap.getHeight(), toFormat(pixmap.getFormat().getComponents(), pixmap.getFormat().getDataType()), pixmap.getFormat().getDataType(), (const GLvoid*)pixmap.getData());
+	glTexSubImage2D(GL_TEXTURE_2D, 0, (GLint)x, (GLint)y, (GLsizei)pixmap.getWidth(), (GLsizei)pixmap.getHeight(), toFormat(pixmap.getFormat().getComponents(), pixmap.getFormat().getDataType()), toGLDataType(pixmap.getFormat().getDataType()), (const GLvoid*)pixmap.getData());
 	glBindTexture(GL_TEXTURE_2D, 0);
 
 	// Regenerate mipmaps

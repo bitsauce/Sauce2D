@@ -191,11 +191,19 @@ void GraphicsContext::setupContext()
 		case GL_INT_VEC2: glUniform2i(uniform->loc, ((GLint*)uniform->data)[0], ((GLint*)uniform->data)[1]); break;
 		case GL_INT_VEC3: glUniform3i(uniform->loc, ((GLint*)uniform->data)[0], ((GLint*)uniform->data)[1], ((GLint*)uniform->data)[2]); break;
 		case GL_INT_VEC4: glUniform4i(uniform->loc, ((GLint*)uniform->data)[0], ((GLint*)uniform->data)[1], ((GLint*)uniform->data)[2], ((GLint*)uniform->data)[3]); break;
+
+		case GL_UNSIGNED_INT: glUniform1ui(uniform->loc, ((GLuint*) uniform->data)[0]); break;
+		case GL_UNSIGNED_INT_VEC2: glUniform2ui(uniform->loc, ((GLuint*) uniform->data)[0], ((GLuint*) uniform->data)[1]); break;
+		case GL_UNSIGNED_INT_VEC3: glUniform3ui(uniform->loc, ((GLuint*) uniform->data)[0], ((GLuint*) uniform->data)[1], ((GLuint*) uniform->data)[2]); break;
+		case GL_UNSIGNED_INT_VEC4: glUniform4ui(uniform->loc, ((GLuint*) uniform->data)[0], ((GLuint*) uniform->data)[1], ((GLuint*) uniform->data)[2], ((GLuint*) uniform->data)[3]); break;
+
 		case GL_FLOAT: glUniform1f(uniform->loc, ((GLfloat*)uniform->data)[0]); break;
 		case GL_FLOAT_VEC2: glUniform2fv(uniform->loc, uniform->count, (const GLfloat*)uniform->data); break;
 		case GL_FLOAT_VEC3: glUniform3f(uniform->loc, ((GLfloat*)uniform->data)[0], ((GLfloat*)uniform->data)[1], ((GLfloat*)uniform->data)[2]); break;
 		case GL_FLOAT_VEC4: glUniform4f(uniform->loc, ((GLfloat*)uniform->data)[0], ((GLfloat*)uniform->data)[1], ((GLfloat*)uniform->data)[2], ((GLfloat*)uniform->data)[3]); break;
+
 		case GL_FLOAT_MAT4: glUniformMatrix4fv(uniform->loc, 1, GL_FALSE, (GLfloat*)uniform->data); break;
+
 		case GL_UNSIGNED_INT_SAMPLER_2D:
 		case GL_INT_SAMPLER_2D:
 		case GL_SAMPLER_2D:

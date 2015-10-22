@@ -114,10 +114,17 @@ Shader::Shader(const string &vertexSource, const string &fragmentSource)
 			case GL_UNSIGNED_INT_SAMPLER_2D:
 			case GL_INT_SAMPLER_2D:
 			case GL_SAMPLER_2D:
+
 			case GL_INT:		dataSize = INT_SIZE; break;
 			case GL_INT_VEC2:	dataSize = INT_SIZE * 2; break;
 			case GL_INT_VEC3:	dataSize = INT_SIZE * 3; break;
 			case GL_INT_VEC4:	dataSize = INT_SIZE * 4; break;
+
+			case GL_UNSIGNED_INT:		dataSize = INT_SIZE; break;
+			case GL_UNSIGNED_INT_VEC2:	dataSize = INT_SIZE * 2; break;
+			case GL_UNSIGNED_INT_VEC3:	dataSize = INT_SIZE * 3; break;
+			case GL_UNSIGNED_INT_VEC4:	dataSize = INT_SIZE * 4; break;
+
 			case GL_FLOAT:		dataSize = FLOAT_SIZE; break;
 			case GL_FLOAT_VEC2:	dataSize = FLOAT_SIZE * 2; break;
 			case GL_FLOAT_VEC3:	dataSize = FLOAT_SIZE * 3; break;
@@ -186,6 +193,10 @@ void Shader::setUniform1i(const string &name, const int v0)
 		{
 			((GLint*) uniform->data)[0] = v0;
 		}
+		else
+		{
+			LOG("Uniform '%s' is not type 'int'", name.c_str());
+		}
 	}
 	else
 	{
@@ -203,6 +214,10 @@ void Shader::setUniform2i(const string &name, const int v0, const int v1)
 		{
 			((GLint*) uniform->data)[0] = v0;
 			((GLint*) uniform->data)[1] = v1;
+		}
+		else
+		{
+			LOG("Uniform '%s' is not type 'ivec2'", name.c_str());
 		}
 	}
 	else
@@ -222,6 +237,10 @@ void Shader::setUniform3i(const string &name, const int v0, const int v1, const 
 			((GLint*) uniform->data)[0] = v0;
 			((GLint*) uniform->data)[1] = v1;
 			((GLint*) uniform->data)[2] = v2;
+		}
+		else
+		{
+			LOG("Uniform '%s' is not type 'ivec3'", name.c_str());
 		}
 	}
 	else
@@ -243,6 +262,100 @@ void Shader::setUniform4i(const string &name, const int v0, const int v1, const 
 			((GLint*) uniform->data)[2] = v2;
 			((GLint*) uniform->data)[3] = v3;
 		}
+		else
+		{
+			LOG("Uniform '%s' is not type 'ivec4'", name.c_str());
+		}
+	}
+	else
+	{
+		LOG("Uniform '%s' does not exist.", name.c_str());
+	}
+}
+
+void Shader::setUniform1ui(const string &name, const uint v0)
+{
+	map<string, Uniform*>::iterator itr;
+	if((itr = m_uniforms.find(name)) != m_uniforms.end())
+	{
+		Uniform *uniform = itr->second;
+		if(uniform->type == GL_UNSIGNED_INT)
+		{
+			((GLuint*) uniform->data)[0] = v0;
+		}
+		else
+		{
+			LOG("Uniform '%s' is not type 'uint'", name.c_str());
+		}
+	}
+	else
+	{
+		LOG("Uniform '%s' does not exist.", name.c_str());
+	}
+}
+
+void Shader::setUniform2ui(const string &name, const uint v0, const uint v1)
+{
+	map<string, Uniform*>::iterator itr;
+	if((itr = m_uniforms.find(name)) != m_uniforms.end())
+	{
+		Uniform *uniform = itr->second;
+		if(uniform->type == GL_UNSIGNED_INT_VEC2)
+		{
+			((GLuint*) uniform->data)[0] = v0;
+			((GLuint*) uniform->data)[1] = v1;
+		}
+		else
+		{
+			LOG("Uniform '%s' is not type 'uvec2'", name.c_str());
+		}
+	}
+	else
+	{
+		LOG("Uniform '%s' does not exist.", name.c_str());
+	}
+}
+
+void Shader::setUniform3ui(const string &name, const uint v0, const uint v1, const uint v2)
+{
+	map<string, Uniform*>::iterator itr;
+	if((itr = m_uniforms.find(name)) != m_uniforms.end())
+	{
+		Uniform *uniform = itr->second;
+		if(uniform->type == GL_UNSIGNED_INT_VEC3)
+		{
+			((GLuint*) uniform->data)[0] = v0;
+			((GLuint*) uniform->data)[1] = v1;
+			((GLuint*) uniform->data)[2] = v2;
+		}
+		else
+		{
+			LOG("Uniform '%s' is not type 'uvec3'", name.c_str());
+		}
+	}
+	else
+	{
+		LOG("Uniform '%s' does not exist.", name.c_str());
+	}
+}
+
+void Shader::setUniform4ui(const string &name, const uint v0, const uint v1, const uint v2, const uint v3)
+{
+	map<string, Uniform*>::iterator itr;
+	if((itr = m_uniforms.find(name)) != m_uniforms.end())
+	{
+		Uniform *uniform = itr->second;
+		if(uniform->type == GL_UNSIGNED_INT_VEC4)
+		{
+			((GLuint*) uniform->data)[0] = v0;
+			((GLuint*) uniform->data)[1] = v1;
+			((GLuint*) uniform->data)[2] = v2;
+			((GLuint*) uniform->data)[3] = v3;
+		}
+		else
+		{
+			LOG("Uniform '%s' is not type 'uvec4'", name.c_str());
+		}
 	}
 	else
 	{
@@ -259,6 +372,10 @@ void Shader::setUniform1f(const string &name, const float v0)
 		if(uniform->type == GL_FLOAT)
 		{
 			((GLfloat*) uniform->data)[0] = v0;
+		}
+		else
+		{
+			LOG("Uniform '%s' is not type 'float'", name.c_str());
 		}
 	}
 	else
@@ -278,6 +395,10 @@ void Shader::setUniform2f(const string &name, const float v0, const float v1)
 			((GLfloat*) uniform->data)[0] = v0;
 			((GLfloat*) uniform->data)[1] = v1;
 		}
+		else
+		{
+			LOG("Uniform '%s' is not type 'vec2'", name.c_str());
+		}
 	}
 	else
 	{
@@ -294,6 +415,10 @@ void Shader::setUniform2f(const string & name, const float * v)
 		if(uniform->type == GL_FLOAT_VEC2)
 		{
 			memcpy(uniform->data, v,  2 * uniform->count * FLOAT_SIZE);
+		}
+		else
+		{
+			LOG("Uniform '%s' is not type 'vec2'", name.c_str());
 		}
 	}
 	else
@@ -313,6 +438,10 @@ void Shader::setUniform3f(const string &name, const float v0, const float v1, co
 			((GLfloat*) uniform->data)[0] = v0;
 			((GLfloat*) uniform->data)[1] = v1;
 			((GLfloat*) uniform->data)[2] = v2;
+		}
+		else
+		{
+			LOG("Uniform '%s' is not type 'vec3'", name.c_str());
 		}
 	}
 	else
@@ -334,6 +463,10 @@ void Shader::setUniform4f(const string &name, const float v0, const float v1, co
 			((GLfloat*) uniform->data)[2] = v2;
 			((GLfloat*) uniform->data)[3] = v3;
 		}
+		else
+		{
+			LOG("Uniform '%s' is not type 'vec4'", name.c_str());
+		}
 	}
 	else
 	{
@@ -354,6 +487,10 @@ void Shader::setUniformMatrix4f(const string & name, const float * v0)
 				((GLfloat*) uniform->data)[i] = v0[i];
 			}
 		}
+		else
+		{
+			LOG("Uniform '%s' is not type 'mat4'", name.c_str());
+		}
 	}
 	else
 	{
@@ -373,6 +510,10 @@ void Shader::setSampler2D(const string &name, Texture2DPtr texture)
 			uniform->type == GL_UNSIGNED_INT_SAMPLER_2D)
 		{
 			((GLuint*) uniform->data)[0] = texture != 0 ? texture->m_id : 0;
+		}
+		else
+		{
+			LOG("Uniform '%s' is not type 'gsampler2D'", name.c_str());
 		}
 	}
 	else
