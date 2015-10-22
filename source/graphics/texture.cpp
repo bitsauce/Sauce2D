@@ -255,10 +255,6 @@ void Texture2D::updatePixmap(const Pixmap &pixmap)
 	m_width = pixmap.getWidth();
 	m_height = pixmap.getHeight();
 
-	GLint mem = 0;
-	glGetIntegerv(0x9049, &mem);
-	LOG("Mem: %i", mem);
-
 	// Set default filtering
 	glBindTexture(GL_TEXTURE_2D, m_id);
 	glTexImage2D(GL_TEXTURE_2D, 0, toInternalFormat(pixmap.getFormat().getComponents(), pixmap.getFormat().getDataType()), (GLsizei)m_width, (GLsizei)m_height, 0, toFormat(pixmap.getFormat().getComponents(), pixmap.getFormat().getDataType()), toGLDataType(pixmap.getFormat().getDataType()), (const GLvoid*)pixmap.getData());
