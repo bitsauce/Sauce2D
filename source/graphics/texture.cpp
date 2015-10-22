@@ -251,20 +251,18 @@ Pixmap Texture2D::getPixmap() const
 
 void Texture2D::updatePixmap(const Pixmap &pixmap)
 {
-	// Store dimentions
+	// Store dimensions
 	m_width = pixmap.getWidth();
 	m_height = pixmap.getHeight();
+
+	GLint mem = 0;
+	glGetIntegerv(0x9049, &mem);
+	LOG("Mem: %i", mem);
 
 	// Set default filtering
 	glBindTexture(GL_TEXTURE_2D, m_id);
 	glTexImage2D(GL_TEXTURE_2D, 0, toInternalFormat(pixmap.getFormat().getComponents(), pixmap.getFormat().getDataType()), (GLsizei)m_width, (GLsizei)m_height, 0, toFormat(pixmap.getFormat().getComponents(), pixmap.getFormat().getDataType()), toGLDataType(pixmap.getFormat().getDataType()), (const GLvoid*)pixmap.getData());
 	glBindTexture(GL_TEXTURE_2D, 0);
-
-	GLenum error;
-	if((error = glGetError()) != GL_NO_ERROR)
-	{
-		LOG("GL error: %i", error);
-	}
 
 	// Regenerate mipmaps
 	m_mipmapsGenerated = false;
