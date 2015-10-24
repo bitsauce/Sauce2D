@@ -286,6 +286,8 @@ void GraphicsContext::drawIndexedPrimitives(const PrimitiveType type, const Vert
 	// Reset vbo buffers
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+
+	GL_CHECK_ERROR
 }
 
 void GraphicsContext::drawIndexedPrimitives(const PrimitiveType type, const VertexBuffer *vbo, const IndexBuffer *ibo)
@@ -348,6 +350,8 @@ void GraphicsContext::drawIndexedPrimitives(const PrimitiveType type, const Vert
 	// Reset vbo buffers
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+
+	GL_CHECK_ERROR
 }
 
 void GraphicsContext::drawPrimitives(const PrimitiveType type, const Vertex *vertices, const uint vertexCount)
@@ -416,6 +420,8 @@ void GraphicsContext::drawPrimitives(const PrimitiveType type, const Vertex *ver
 
 	// Reset vbo buffers
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+	GL_CHECK_ERROR
 }
 
 void GraphicsContext::drawPrimitives(const PrimitiveType type, const VertexBuffer *vbo)
@@ -476,6 +482,8 @@ void GraphicsContext::drawPrimitives(const PrimitiveType type, const VertexBuffe
 
 	// Reset vbo buffers
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+	GL_CHECK_ERROR
 }
 
 void GraphicsContext::drawRectangle(const float x, const float y, const float width, const float height, const Color &color, const TextureRegion &textureRegion)

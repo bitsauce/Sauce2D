@@ -22,9 +22,9 @@
 #define GL_CHECK_ERROR \
 	{ \
 		GLenum error; \
-		if ((error = glGetError()) != GL_NO_ERROR) \
+		if((error = glGetError()) != GL_NO_ERROR) \
 		{ \
-			LOG("glGetError() returned 0x%X", error); \
+			THROW("glGetError() returned 0x%X", error); \
 		} \
 	}
 
