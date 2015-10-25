@@ -286,6 +286,9 @@ void GraphicsContext::drawIndexedPrimitives(const PrimitiveType type, const Vert
 	// Reset vbo buffers
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+
+	// Release vertex data
+	delete[] vertexData;
 }
 
 void GraphicsContext::drawIndexedPrimitives(const PrimitiveType type, const VertexBuffer *vbo, const IndexBuffer *ibo)
@@ -416,6 +419,9 @@ void GraphicsContext::drawPrimitives(const PrimitiveType type, const Vertex *ver
 
 	// Reset vbo buffers
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+	// Release vertex data
+	delete[] vertexData;
 }
 
 void GraphicsContext::drawPrimitives(const PrimitiveType type, const VertexBuffer *vbo)
