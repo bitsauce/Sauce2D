@@ -22,11 +22,54 @@ BEGIN_XD_NAMESPACE
 #define MAX_PATH 256
 #endif
 
-Config::Config() :
-	flags(0),
-	workDir("")
+Game::Game() :
+	m_flags(0),
+	m_workDir(""),
+	m_saveDir(""),
+	m_inputConfig("")
 {
 }
+
+void Game::setFlags(const uint flags)
+{
+	m_flags = flags;
+}
+
+uint Game::getFlags() const
+{
+	return m_flags;
+}
+
+void Game::setWorkDir(const string & workDir)
+{
+	m_workDir = workDir;
+}
+
+string Game::getWorkDir() const
+{
+	return m_workDir;
+}
+
+void Game::setSaveDir(const string & saveDir)
+{
+	m_saveDir = saveDir;
+}
+
+string Game::getSaveDir() const
+{
+	return m_saveDir;
+}
+
+void Game::setInputConfig(const string & inputConfig)
+{
+	m_inputConfig = inputConfig;
+}
+
+string Game::getInputConfig() const
+{
+	return m_inputConfig;
+}
+
 
 //------------------------------------------------------------------------
 // Engine
@@ -40,11 +83,7 @@ Engine *CreateEngine()
 bool Engine::s_initialized = false;
 bool Engine::s_paused = false;
 bool Engine::s_running = false;
-int Engine::s_flags = 0;
-
-// System dirs
-string Engine::s_workDir;
-string Engine::s_saveDir;
+Game * Engine::s_game = 0;
 
 Engine::Engine()
 {
@@ -52,7 +91,7 @@ Engine::Engine()
 
 Engine::~Engine()
 {
-	if(m_endFunc) m_endFunc();
+	s_game->end();
 
 	delete m_fileSystem;
 	delete m_graphics;
@@ -109,22 +148,23 @@ Exception::Exception(RetCode code, const char * msg, ...) :
 //------------------------------------------------------------------------
 // Run
 //------------------------------------------------------------------------
-int Engine::init(const Config &config)
+int Engine::init(Game * game)
 {
-	// Set and process flags
-	s_flags = config.flags;
+	// Set game
+	s_game = game;
 
-	string workDir;
+	// Set and process flags
+	uint flags = game->getFlags();
 	for(int i = 0; i < __argc; i++)
 	{
 		string arg = __argv[i];
 		if(arg == "-export-log")
 		{
-			s_flags |= XD_EXPORT_LOG;
+			flags |= XD_EXPORT_LOG;
 		}
 		else if(arg == "-verbose")
 		{
-			s_flags |= XD_VERBOSE;
+			flags |= XD_VERBOSE;
 		}
 	}
 
@@ -138,36 +178,35 @@ int Engine::init(const Config &config)
 	}
 
 	// Set working directory
-	s_workDir = config.workDir;
-	if(s_workDir.empty())
+	string workDir = game->getWorkDir();
+	if(workDir.empty())
 	{
-		s_workDir = _getcwd(0, 0);
+		workDir = _getcwd(0, 0);
 	}
-	replace(s_workDir.begin(), s_workDir.end(), '\\', '/');
-	util::toDirectoryPath(s_workDir);
+	replace(workDir.begin(), workDir.end(), '\\', '/');
+	util::toDirectoryPath(workDir);
+	game->setWorkDir(workDir);
 
 	// Set save directory
-	s_saveDir = getSaveDir();
-	replace(s_saveDir.begin(), s_saveDir.end(), '\\', '/');
-	util::toDirectoryPath(s_saveDir);
+	string saveDir = game->getSaveDir();
+	if(saveDir.empty())
+	{
+		saveDir = getSaveDir();
+	}
+	replace(saveDir.begin(), saveDir.end(), '\\', '/');
+	util::toDirectoryPath(saveDir);
+	game->setSaveDir(saveDir);
 
 	m_console = new Console();
 	m_fileSystem = new FileSystem();
 	if(isEnabled(XD_EXPORT_LOG))
 	{
-		m_console->m_output = new FileWriter(util::getAbsoluteFilePath(":/console.log"));
+		m_console->m_output = new FileWriter(util::getAbsoluteFilePath(":/Console.log"));
 	}
 
 	m_timer = new Timer();
 	m_graphics = new Graphics();
 	m_audio = new AudioManager();
-
-	m_mainFunc = config.mainFunc;
-	m_drawFunc = config.drawFunc;
-	m_updateFunc = config.updateFunc;
-	m_stepBeginFunc = config.stepBeginFunc;
-	m_stepEndFunc = config.stepEndFunc;
-	m_endFunc = config.endFunc;
 
 	m_console->m_engine = this;
 
@@ -180,18 +219,17 @@ int Engine::init(const Config &config)
 
 	Window::init(800, 600, false);
 	Graphics::init();
-	Input::init();
+	Input::init(game->getInputConfig());
 
 	try
 	{
 		// Print application message
 		LOG("** x2D Game Engine **");
 
-		m_console->s_initialized = true;
+		// Start game
+		s_game->start(m_graphics->s_graphicsContext);
 
-		if(m_mainFunc) m_mainFunc(m_graphics->s_graphicsContext);
-
-		LOG("x2D Engine Initialized");
+		// Set initialized
 		s_initialized = true;
 	}
 	catch(Exception e)
@@ -212,9 +250,18 @@ void Engine::exit()
 	Window::close();
 }
 
+bool Engine::isEnabled(const EngineFlag flag)
+{
+	return (s_game->getFlags() & flag) != 0;
+}
+
 int Engine::run()
 {
-	assert(s_initialized);
+	// Make sure we've run init
+	if(!s_initialized)
+	{
+		return X2D_NOT_INITIALIZED;
+	}
 
 	try
 	{
@@ -234,7 +281,7 @@ int Engine::run()
 		double prevTime = m_timer->getElapsedTime();
 
 		// Lets make sure update is called once before draw
-		if(m_updateFunc) m_updateFunc(dt);
+		s_game->update(dt);
 
 		// Game loop
 		while(!glfwWindowShouldClose(Window::s_window))
@@ -260,7 +307,7 @@ int Engine::run()
 			}
 
 			// Step begin
-			if(m_stepBeginFunc) m_stepBeginFunc();
+			s_game->stepBegin();
 
 			// Apply time delta to accumulator
 			accumulator += deltaTime;
@@ -268,17 +315,14 @@ int Engine::run()
 			{
 				// Update the game
 				Input::updateBindings();
-				if(m_updateFunc) m_updateFunc(dt);
+				s_game->update(dt);
 				accumulator -= dt;
 			}
 
 			// Draw the game
-			if(m_drawFunc)
-			{
-				const double alpha = accumulator / dt;
-				m_drawFunc(m_graphics->s_graphicsContext, alpha);
-				m_graphics->swapBuffers();
-			}
+			const double alpha = accumulator / dt;
+			s_game->draw(m_graphics->s_graphicsContext, alpha);
+			m_graphics->swapBuffers();
 
 			// Add fps sample
 			if(deltaTime != 0.0f)
@@ -295,7 +339,8 @@ int Engine::run()
 			for(uint i = 0; i < numFpsSamples; i++) fps += fpsSamples[i];
 			Graphics::s_framesPerSecond = fps / numFpsSamples;
 
-			if(m_stepEndFunc) m_stepEndFunc();
+			// Step end
+			s_game->stepEnd();
 		}
 	}
 	catch(Exception e)
@@ -316,4 +361,4 @@ int Engine::run()
 	return X2D_OK;
 }
 
-}
+END_XD_NAMESPACE

@@ -1,3 +1,5 @@
+#include "..\..\..\include\x2d\input\input.h"
+#include "..\..\..\include\x2d\input\input.h"
 //       ____  ____     ____                        _____             _            
 // __  _|___ \|  _ \   / ___| __ _ _ __ ___   ___  | ____|_ __   __ _(_)_ __   ___ 
 // \ \/ / __) | | | | | |  _ / _  |  _   _ \ / _ \ |  _| |  _ \ / _  | |  _ \ / _ \
@@ -13,11 +15,13 @@ BEGIN_XD_NAMESPACE
 
 Vector2 Input::s_position;
 InputContext *Input::s_context = 0;
+map<string, InputContext*> Input::s_contextMap;
 map<string, VirtualKey> Input::s_strToKey;
 map<VirtualKey, int> Input::s_mouseButtonState;
 
-void Input::init()
+void Input::init(string file)
 {
+	// Set all str to key mappings
 	s_strToKey["space"] = XD_KEY_SPACE;
 	s_strToKey["apostrophe"] = XD_KEY_APOSTROPHE;
 	s_strToKey["comma"] = XD_KEY_COMMA;
@@ -69,7 +73,7 @@ void Input::init()
 	s_strToKey["world_1"] = XD_KEY_WORLD_1;
 	s_strToKey["world_2"] = XD_KEY_WORLD_2;
 	s_strToKey["escape"] = XD_KEY_ESCAPE;
-	s_strToKey["enter"] = XD_KEY_ENTER;
+	s_strToKey["enter"] = s_strToKey["return"] = XD_KEY_ENTER;
 	s_strToKey["tab"] = XD_KEY_TAB;
 	s_strToKey["backspace"] = XD_KEY_BACKSPACE;
 	s_strToKey["insert"] = XD_KEY_INSERT;
@@ -150,9 +154,57 @@ void Input::init()
 	s_strToKey["mouse_button_right"] = XD_MOUSE_BUTTON_RIGHT;
 	s_strToKey["mouse_button_middle"] = XD_MOUSE_BUTTON_MIDDLE;
 
+	// Set button states
 	for(uint i = XD_MOUSE_BUTTON_1; i < XD_MOUSE_BUTTON_LAST; ++i)
 	{
 		s_mouseButtonState[i] = GLFW_RELEASE;
+	}
+
+	// Load input config file
+	if(util::fileExists(file))
+	{
+		tinyxml2::XMLDocument doc;
+		util::toAbsoluteFilePath(file);
+		doc.LoadFile(file.c_str());
+
+		// Get root node
+		tinyxml2::XMLNode *contextNode = doc.FirstChild();
+		if(!contextNode)
+		{
+			LOG("Invalid input config file");
+			return;
+		}
+
+		// For each context
+		contextNode = contextNode->FirstChild();
+		while(contextNode)
+		{
+			InputContext *inputContext = new InputContext();
+
+			// For each key bind
+			tinyxml2::XMLNode *node = contextNode->FirstChild();
+			while(node)
+			{
+				// Get name and key
+				tinyxml2::XMLElement *name = node->FirstChildElement("name");
+				tinyxml2::XMLElement *key = node->FirstChildElement("key");
+				if(name && key)
+				{
+					VirtualKey vk = strToKey(key->GetText());
+					if(vk != XD_KEY_UNKNOWN)
+					{
+						inputContext->m_nameToKey[name->GetText()] = vk;
+					}
+					else
+					{
+						LOG("Input::loadInputConfig(): Unknown key '%s'", key->GetText());
+					}
+				}
+				node = node->NextSibling();
+			}
+			s_contextMap[contextNode->Value()] = inputContext;
+			contextNode = contextNode->NextSibling();
+		}
 	}
 }
 
@@ -194,47 +246,25 @@ VirtualKey Input::strToKey(string name)
 	return XD_KEY_UNKNOWN;
 }
 
-vector<InputContext*> Input::loadInputConfig(string file)
+void Input::setContext(InputContext * inputContext)
 {
-	tinyxml2::XMLDocument doc;
-	util::toAbsoluteFilePath(file);
-	doc.LoadFile(file.c_str());
-
-	vector<InputContext*> inputContexts;
-
-	// For each context
-	tinyxml2::XMLNode *contextNode = doc.FirstChild();
-	while(contextNode)
+	// Set current key state for the keys in the context
+	if(inputContext)
+	for(map<string, InputContext::KeyBind>::iterator itr = inputContext->m_nameToFunc.begin(); itr != inputContext->m_nameToFunc.end(); ++itr)
 	{
-		InputContext *inputContext = new InputContext();
-
-		// For each key bind
-		tinyxml2::XMLNode *node = contextNode->FirstChild();
-		while(node)
-		{
-			// Get name and key
-			tinyxml2::XMLElement *name = node->FirstChildElement("name");
-			tinyxml2::XMLElement *key = node->FirstChildElement("key");
-			if(name && key)
-			{
-				VirtualKey vk = strToKey(key->GetText());
-				if(vk != XD_KEY_UNKNOWN)
-				{
-					inputContext->m_nameToKey[name->GetText()] = vk;
-				}
-				else
-				{
-					LOG("Input::loadInputConfig(): Unknown key '%s'", key->GetText());
-				}
-			}
-			node = node->NextSibling();
-		}
-
-		inputContexts.push_back(inputContext);
-		contextNode = contextNode->NextSibling();
+		itr->second.pressed = Input::getKeyState(inputContext->m_nameToKey[itr->first]) == GLFW_PRESS;
 	}
+	s_context = inputContext;
+}
 
-	return inputContexts;
+InputContext * Input::getContext(const string & name)
+{
+	if(s_contextMap.find(name) == s_contextMap.end())
+	{
+		LOG("No input context with name '%s'", name);
+		return 0;
+	}
+	return s_contextMap[name];
 }
 
 void Input::updateBindings()

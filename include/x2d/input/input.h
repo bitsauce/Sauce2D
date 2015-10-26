@@ -181,15 +181,13 @@ public:
 	static Vector2 getPosition();
 
 	// Input context
-	static vector<InputContext*> loadInputConfig(string file);
-	static void setInputContext(InputContext *context)
-	{
-		s_context = context;
-	}
-	static InputContext *getInputContext()
-	{
-		return s_context;
-	}
+	static void setContext(InputContext * inputContext);
+	static InputContext * getContext(const string & contextName);
+
+	/**
+	 *
+	 */
+	static void captureTextInput();
 
 	// Virtual key to string
 	static VirtualKey strToKey(string name);
@@ -198,20 +196,22 @@ private:
 	// Update bindings
 	static void updateBindings();
 
-	// Init
-	static void init();
+	// Initialize
+	static void init(string file);
 
 	// Cursor position
 	static Vector2 s_position;
 
 	// Input context
 	static InputContext *s_context;
+	static map<string, InputContext*> s_contextMap;
 
 	// String to key map
 	static map<string, VirtualKey> s_strToKey;
 
 	// Mouse buttons
 	static map<VirtualKey, int> s_mouseButtonState;
+
 };
 
 END_XD_NAMESPACE

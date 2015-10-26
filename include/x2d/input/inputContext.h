@@ -23,7 +23,6 @@ private:
 	struct KeyBind
 	{
 		bool pressed;
-		bool released;
 		function<void(int)> function;
 		bool singleShot;
 	};

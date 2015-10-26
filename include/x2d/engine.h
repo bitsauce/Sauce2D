@@ -56,8 +56,6 @@ private:
 	
 	Engine *m_engine;
 	FileWriter *m_output;
-	
-	static bool s_initialized;
 };
 
 /*********************************************************************
@@ -323,23 +321,41 @@ private:
 };
 
 /*********************************************************************
-**	Engine config													**
+**	Game class														**
 **********************************************************************/
-struct XDAPI Config
+class XDAPI Game
 {
-	Config();
+public:
+	Game();
 
-	// Engine running flags (optional)
-	int				flags;
+	void setFlags(const uint flags);
+	uint getFlags() const;
+	void setWorkDir(const string & workDir);
+	string getWorkDir() const;
+	void setSaveDir(const string & saveDir);
+	string getSaveDir() const;
+	void setInputConfig(const string & inputConfig);
+	string getInputConfig() const;
 
-	// Engine working directory (required)
-	const char*		workDir;
+	virtual void start(GraphicsContext&) { }
+	virtual void end() { }
 
-	// Game loop functions
-	function<void()> stepBeginFunc, stepEndFunc, endFunc;
-	function<void(GraphicsContext&)> mainFunc;
-	function<void(GraphicsContext&, const double)> drawFunc;
-	function<void(const double)> updateFunc;
+	virtual void update(const float) { }
+	virtual void draw(GraphicsContext&, const float) { }
+	virtual void stepBegin() { }
+	virtual void stepEnd() { }
+
+	//virtual void keyPress() { }
+
+private:
+	// Engine running flags
+	uint m_flags;
+
+	// Engine working directory
+	string m_workDir, m_saveDir;
+
+	// Input config file
+	string m_inputConfig;
 };
 
 /*********************************************************************
@@ -352,7 +368,7 @@ public:
 	~Engine();
 
 	// Initialize the engine
-	int init(const Config &config);
+	int init(Game * game);
 
 	// Run game
 	int run();
@@ -362,13 +378,10 @@ public:
 	static void pause() { s_paused = true; }
 	static void resume() { s_paused = false; }
 
-	// Exceptions
-	void exception(RetCode errorCode, const char* message);
-
 	// Static functions
-	static bool isEnabled(const EngineFlag flag) { return (s_flags & flag) != 0; }
-	static string getWorkingDirectory() { return s_workDir; }
-	static string getSaveDirectory() { return s_saveDir; }
+	static bool isEnabled(const EngineFlag flag);
+	static string getWorkingDirectory() { return s_game->getWorkDir(); }
+	static string getSaveDirectory() { return s_game->getSaveDir(); }
 
 private:
 	
@@ -376,11 +389,6 @@ private:
 	static bool s_initialized;
 	static bool s_paused;
 	static bool s_running;
-	static int s_flags;
-
-	// System dirs
-	static string s_workDir;
-	static string s_saveDir;
 	
 	FileSystem		*m_fileSystem;
 	Graphics		*m_graphics;
@@ -388,11 +396,8 @@ private:
 	Timer			*m_timer;
 	Console			*m_console;
 
-	// Game loop
-	function<void()> m_stepBeginFunc, m_stepEndFunc, m_endFunc;
-	function<void(GraphicsContext&)> m_mainFunc;
-	function<void(GraphicsContext&, const double)> m_drawFunc;
-	function<void(const double)> m_updateFunc;
+	// Game
+	static Game * s_game;
 };
 
 XDAPI Engine *CreateEngine();
