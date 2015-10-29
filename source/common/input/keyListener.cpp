@@ -32,21 +32,12 @@ void KeyListener::callCharEvent(const uint c)
 	}
 }
 
-void KeyListener::callKeyPressed(const VirtualKey key)
+void KeyListener::callKeyEvent(const KeyEvent & event)
 {
 	if(Engine::isEnabled(XD_BLOCK_BACKGROUND_INPUT) && !Window::hasFocus()) return;
 	for(list<KeyListener*>::iterator itr = s_keyListeners.begin(); itr != s_keyListeners.end(); ++itr)
 	{
-		(*itr)->keyPressEvent(key);
-	}
-}
-
-void KeyListener::callKeyReleased(const VirtualKey key)
-{
-	if(Engine::isEnabled(XD_BLOCK_BACKGROUND_INPUT) && !Window::hasFocus()) return;
-	for(list<KeyListener*>::iterator itr = s_keyListeners.begin(); itr != s_keyListeners.end(); ++itr)
-	{
-		(*itr)->keyReleaseEvent(key);
+		(*itr)->keyEvent(event);
 	}
 }
 

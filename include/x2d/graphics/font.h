@@ -55,6 +55,7 @@ public:
 	void setTextEncoding(FontTextEncoding encoding);
 	void setDepth(const float depth) { m_depth = depth;  }
 	void setColor(const Color &color) { m_color = color; }
+	Color getColor() { return m_color; }
 
 	float getStringWidth(const string &text, int count = 0);
 	float getStringHeight(const string &text);

@@ -13,8 +13,6 @@ BEGIN_XD_NAMESPACE
 
 SINGLETON_DEF(Console)
 
-bool Console::s_initialized = false;
-
 Console::Console() :
 	m_engine(0), // Set by the engine
 	m_output(0)
