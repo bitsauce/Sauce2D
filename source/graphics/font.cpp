@@ -340,68 +340,88 @@ void Font::drawBox(SpriteBatch *spriteBatch, float x, float y, float width, cons
 	}
 
 	float currWidth = 0, wordWidth;
-	int lineS = 0, lineE = 0, wordS = 0, wordE = 0;
+	int lineStart = 0, lineEnd = 0, wordStart = 0, wordEnd = 0;
 	int wordCount = 0;
 
 	const char *s = " ";
 	float spaceWidth = getStringWidth(s, 1);
-	bool softBreak = false;
 
-	for (; lineS < count;)
+	enum { NONE, SOFT, HARD } breakType;
+	breakType = NONE;
+
+	for (; lineStart < count;)
 	{
 		// Determine the extent of the line
 		for (;;)
 		{
 			// Determine the number of characters in the word
-			while (wordE < count &&
-				getTextChar(text, wordE) != ' ' &&
-				getTextChar(text, wordE) != '\n')
+			while(wordEnd < count &&
+				getTextChar(text, wordEnd) != ' ' &&
+				getTextChar(text, wordEnd) != '\n')
+			{
 				// Advance the cursor to the next character
-				getTextChar(text, wordE, &wordE);
+				getTextChar(text, wordEnd, &wordEnd);
+			}
 
 			// Determine the width of the word
-			if (wordE > wordS)
+			if (wordEnd > wordStart)
 			{
 				wordCount++;
-				wordWidth = getStringWidth(&text[wordS], wordE - wordS);
+				wordWidth = getStringWidth(&text[wordStart], wordEnd - wordStart);
 			}
 			else
+			{
 				wordWidth = 0;
+			}
 
+			// If the word is longer than the width of our box, we need hard line breaks
+			if(wordWidth > width)
+			{
+				// Find out where the word needs to be broken
+				int linePos = lineStart + 1;
+				while(getStringWidth(&text[lineStart], linePos++ - lineStart) < width);
+
+				// Set line and word
+				lineEnd = wordEnd = linePos - 3;
+
+				// Set break type
+				breakType = HARD;
+				break;
+			}
 			// Does the word fit on the line? The first word is always accepted.
-			if (wordCount == 1 || currWidth + (wordCount > 1 ? spaceWidth : 0) + wordWidth <= width)
+			else if (wordCount == 1 || currWidth + (wordCount > 1 ? spaceWidth : 0) + wordWidth <= width)
 			{
 				// Increase the line extent to the end of the word
-				lineE = wordE;
+				lineEnd = wordEnd;
 				currWidth += (wordCount > 1 ? spaceWidth : 0) + wordWidth;
 
 				// Did we reach the end of the line?
-				if (wordE == count || getTextChar(text, wordE) == '\n')
+				if (wordEnd == count || getTextChar(text, wordEnd) == '\n')
 				{
-					softBreak = false;
+					breakType = NONE;
 
 					// Skip the newline character
-					if (wordE < count)
+					if (wordEnd < count)
 						// Advance the cursor to the next character
-						getTextChar(text, wordE, &wordE);
+						getTextChar(text, wordEnd, &wordEnd);
 					break;
 				}
 
 				// Skip the trailing space
-				if (wordE < count && getTextChar(text, wordE) == ' ')
+				if (wordEnd < count && getTextChar(text, wordEnd) == ' ')
 					// Advance the cursor to the next character
-					getTextChar(text, wordE, &wordE);
+					getTextChar(text, wordEnd, &wordEnd);
 				// Move to next word
-				wordS = wordE;
+				wordStart = wordEnd;
 			}
 			else
 			{
-				softBreak = true;
+				breakType = SOFT;
 
 				// Skip the trailing space
-				if (wordE < count && getTextChar(text, wordE) == ' ')
+				if (wordEnd < count && getTextChar(text, wordEnd) == ' ')
 					// Advance the cursor to the next character
-					getTextChar(text, wordE, &wordE);
+					getTextChar(text, wordEnd, &wordEnd);
 				break;
 			}
 		}
@@ -409,15 +429,15 @@ void Font::drawBox(SpriteBatch *spriteBatch, float x, float y, float width, cons
 		// Write the line
 		if (mode == FONT_ALIGN_JUSTIFY)
 		{
-			float spacing = 0;
-			if (softBreak)
+			float spacing = 0.0f;
+			if (breakType == SOFT)
 			{
 				if (wordCount > 2)
 					spacing = (width - currWidth) / (wordCount - 2);
 				else
 					spacing = (width - currWidth);
 			}
-			drawInternal(spriteBatch, x, y, &text[lineS], lineE - lineS, spacing);
+			drawInternal(spriteBatch, x, y, &text[lineStart], lineEnd - lineStart, spacing);
 		}
 		else
 		{
@@ -425,35 +445,56 @@ void Font::drawBox(SpriteBatch *spriteBatch, float x, float y, float width, cons
 			if (mode == FONT_ALIGN_RIGHT)
 				cx = x + width - currWidth;
 			else if (mode == FONT_ALIGN_CENTER)
-				cx = x + 0.5f*(width - currWidth);
-			drawInternal(spriteBatch, x, y, &text[lineS], lineE - lineS);
+				cx = x + 0.5f * (width - currWidth);
+			drawInternal(spriteBatch, x, y, &text[lineStart], lineEnd - lineStart);
 		}
 
-		if (softBreak)
+		switch(breakType)
 		{
-			// Skip the trailing space
-			if (lineE < count && getTextChar(text, lineE) == ' ')
-				// Advance the cursor to the next character
-				getTextChar(text, lineE, &lineE);
+			case NONE:
+			{
+				// Skip the line break
+				if(lineEnd < count && getTextChar(text, lineEnd) == '\n')
+				{
+					// Advance the cursor to the next character
+					getTextChar(text, lineEnd, &lineEnd);
+				}
+				currWidth = 0;
+				wordCount = 0;
+			}
+			break;
 
-			// We've already counted the first word on the next line
-			currWidth = wordWidth;
-			wordCount = 1;
-		}
-		else
-		{
-			// Skip the line break
-			if (lineE < count && getTextChar(text, lineE) == '\n')
-				// Advance the cursor to the next character
-				getTextChar(text, lineE, &lineE);
-			currWidth = 0;
-			wordCount = 0;
+			case SOFT:
+			{
+				// Skip the trailing space
+				if(lineEnd < count && getTextChar(text, lineEnd) == ' ')
+				{
+					// Advance the cursor to the next character
+					getTextChar(text, lineEnd, &lineEnd);
+				}
+
+				// We've already counted the first word on the next line
+				currWidth = wordWidth;
+				wordCount = 1;
+			}
+			break;
+
+			case HARD:
+			{
+				// Add a hyphen at the end of the line when we enounter a hard line break
+				drawInternal(spriteBatch, x + getStringWidth(&text[lineStart], lineEnd - lineStart), y, "-", 1);
+
+				// Set width and word count to 0 since we're starting anew on the next line
+				currWidth = 0;
+				wordCount = 0;
+				break;
+			}
 		}
 
 		// Move to next line
-		lineS = lineE;
-		wordS = wordE;
-		y -= m_scale * float(m_fontHeight);
+		lineStart = lineEnd;
+		wordStart = wordEnd;
+		y += m_scale * float(m_fontHeight);
 	}
 }
 

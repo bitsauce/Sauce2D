@@ -229,16 +229,8 @@ void Window::sizeChanged(GLFWwindow *, const int width, const int height)
 
 void Window::keyCallback(GLFWwindow*, int key, int scancode, int action, int mods)
 {
-	switch(action)
-	{
-		case GLFW_PRESS:
-			KeyListener::callKeyPressed(key);
-			break;
-		case GLFW_RELEASE:
-			KeyListener::callKeyReleased(key);
-			break;
-		case GLFW_REPEAT: break;
-	}
+	KeyEvent event(key, (KeyEvent::Action) action, mods, scancode);
+	KeyListener::callKeyEvent(event);
 }
 
 void Window::charCallback(GLFWwindow *, uint c)
@@ -249,16 +241,8 @@ void Window::charCallback(GLFWwindow *, uint c)
 void Window::mouseButtonCallback(GLFWwindow*, int button, int action, int mods)
 {
 	Input::s_mouseButtonState[button] = action;
-	switch(action)
-	{
-		case GLFW_PRESS:
-			KeyListener::callKeyPressed(button);
-			break;
-		case GLFW_RELEASE:
-			KeyListener::callKeyReleased(button);
-			break;
-		case GLFW_REPEAT: break;
-	}
+	KeyEvent event(button, (KeyEvent::Action) action, mods, button);
+	KeyListener::callKeyEvent(event);
 }
 
 void Window::cursorMoveCallback(GLFWwindow*, double x, double y)

@@ -1,5 +1,6 @@
 #include "..\..\..\include\x2d\input\input.h"
 #include "..\..\..\include\x2d\input\input.h"
+#include "..\..\..\include\x2d\input\input.h"
 //       ____  ____     ____                        _____             _            
 // __  _|___ \|  _ \   / ___| __ _ _ __ ___   ___  | ____|_ __   __ _(_)_ __   ___ 
 // \ \/ / __) | | | | | |  _ / _  |  _   _ \ / _ \ |  _| |  _ \ / _  | |  _ \ / _ \
@@ -265,6 +266,16 @@ InputContext * Input::getContext(const string & name)
 		return 0;
 	}
 	return s_contextMap[name];
+}
+
+string Input::getClipboardString()
+{
+	return glfwGetClipboardString(Window::s_window);
+}
+
+void Input::setClipboardString(const string str)
+{
+	glfwSetClipboardString(Window::s_window, str.c_str());
 }
 
 void Input::updateBindings()

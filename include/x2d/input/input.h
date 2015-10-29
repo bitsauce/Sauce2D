@@ -184,10 +184,9 @@ public:
 	static void setContext(InputContext * inputContext);
 	static InputContext * getContext(const string & contextName);
 
-	/**
-	 *
-	 */
-	static void captureTextInput();
+	// Clipboard
+	static string getClipboardString();
+	static void setClipboardString(const string);
 
 	// Virtual key to string
 	static VirtualKey strToKey(string name);
