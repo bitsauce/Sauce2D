@@ -10,6 +10,8 @@
 #include <x2d/engine.h>
 #include <x2d/graphics.h>
 
+#include <freeimage.h>
+
 BEGIN_XD_NAMESPACE
 
 uint PixelFormat::getComponentCount() const
@@ -94,6 +96,79 @@ Pixmap::Pixmap(const Pixmap &other)
 	else
 	{
 		m_data = 0;
+	}
+}
+
+Pixmap::Pixmap(const string &imageFile, const bool premultiplyAlpha) :
+	m_format()
+{
+	// Load asset as a image
+	string content;
+	if(FileSystem::ReadFile(imageFile, content))
+	{
+		// Attach the binary data to a memory stream
+		FIMEMORY *hmem = FreeImage_OpenMemory((uchar*) content.c_str(), content.size());
+
+		// Get the file type
+		FREE_IMAGE_FORMAT fif = FreeImage_GetFileTypeFromMemory(hmem);
+
+		// Load an image from the memory stream
+		FIBITMAP *bitmap = FreeImage_LoadFromMemory(fif, hmem, 0);
+
+		// Convert all non-32bpp bitmaps to 32bpp bitmaps
+		// TODO: I should add support for loading different bpps into graphics memory
+		if(FreeImage_GetBPP(bitmap) != 32)
+		{
+			FIBITMAP *newBitmap = FreeImage_ConvertTo32Bits(bitmap);
+			FreeImage_Unload(bitmap);
+			bitmap = newBitmap;
+		}
+
+		// Pre-multiply alpha if needed
+		if(premultiplyAlpha)
+		{
+			FreeImage_PreMultiplyWithAlpha(bitmap);
+		}
+
+		// Create pixmap
+		uint width = FreeImage_GetWidth(bitmap), height = FreeImage_GetHeight(bitmap);
+		BYTE *data = FreeImage_GetBits(bitmap);
+
+		// Create pixmap data
+		if(width >= 0 && height >= 0)
+		{
+			m_data = new uchar[width * height * m_format.getPixelSizeInBytes()];
+		}
+		else
+		{
+			m_data = 0;
+		}
+
+		// Fill pixmap data
+		for(uint i = 0; i < width * height; i++) // BGRA to RGBA
+		{
+			m_data[i * 4 + 0] = data[i * 4 + 2];
+			m_data[i * 4 + 1] = data[i * 4 + 1];
+			m_data[i * 4 + 2] = data[i * 4 + 0];
+			m_data[i * 4 + 3] = data[i * 4 + 3];
+		}
+
+		// Set width and height
+		m_width = width;
+		m_height = height;
+
+		// Close the memory stream
+		FreeImage_Unload(bitmap);
+		FreeImage_CloseMemory(hmem);
+	}
+	else
+	{
+		// Set data, width and height to 0
+		m_data = 0;
+		m_width = m_height = 0;
+
+		// Unable to read file
+		LOG("Pixmap::Pixmap(const string &imageFile): Unable to read file '%s'", imageFile.c_str());
 	}
 }
 

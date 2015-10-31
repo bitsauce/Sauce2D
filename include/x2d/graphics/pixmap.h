@@ -52,6 +52,7 @@ public:
 	Pixmap(const uint width, const uint height, const PixelFormat &format = PixelFormat());
 	Pixmap(const uint width, const uint height, const void *data, const PixelFormat &format = PixelFormat());
 	Pixmap(const Pixmap& other);
+	Pixmap(const string &imageFile, const bool premultiplyAlpha = false);
 	~Pixmap();
 
 	uint getWidth() const;
