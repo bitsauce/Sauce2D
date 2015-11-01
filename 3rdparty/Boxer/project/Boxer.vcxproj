@@ -115,10 +115,10 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="C:\Users\Marcus\Documents\GitHub\x2D-Game-Engine\3rdparty\Boxer\lib\boxer_win.cpp" />
+    <ClInclude Include="..\include\boxer\boxer.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\include\boxer\boxer.h" />
+    <ClCompile Include="..\lib\boxer_win.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
