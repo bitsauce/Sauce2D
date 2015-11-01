@@ -6,8 +6,6 @@ class MinimalGame : public Game
 public:
 	void main(GraphicsContext &graphicsContext)
 	{
-		m_font = ResourceManager::get<Font>(":/font/arial.fnt");
-		m_spriteBatch = new SpriteBatch(graphicsContext);
 	}
 
 	void update(const float dt)
@@ -20,15 +18,10 @@ public:
 
 	void end()
 	{
-		delete m_spriteBatch;
 	}
-
-private:
-	FontPtr m_font;
-	SpriteBatch *m_spriteBatch;
 };
 
-// Win32 entry point
+// Main entry point
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, INT)
 {
 	// Setup game
