@@ -20,6 +20,7 @@ AudioManager::AudioManager()
 	{
 		THROW("AudioManager already initialized!");
 	}
+	s_this = this;
 
 	// Get default device
 	const ALCchar *defaultDevice = alcGetString(NULL, ALC_DEFAULT_DEVICE_SPECIFIER);
@@ -28,9 +29,7 @@ AudioManager::AudioManager()
 	// Open device
 	ALCdevice *device;
 	if((device = alcOpenDevice(defaultDevice)) == NULL) {
-		// Failed
-		//ERR("Error: failed to open sound device\n");
-		return;
+		THROW("Failed to open sound device.");
 	}
 
 	// Create context

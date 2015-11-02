@@ -22,6 +22,7 @@ Console::Console() :
 	{
 		THROW("Console already initialized!");
 	}
+	s_this = this;
 }
 
 Console::~Console()
