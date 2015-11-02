@@ -1,8 +1,5 @@
 var searchData=
 [
-  ['abs',['abs',['../class_math.html#a3c55041c8264e92c676de666b7c983a0',1,'Math']]],
-  ['acos',['acos',['../class_math.html#a61ed4331b09a43915d126c3657bb5ea7',1,'Math']]],
-  ['animation',['Animation',['../class_animation.html#a0e7dc33f4812b8300f16b6ac288a2e14',1,'Animation']]],
-  ['asin',['asin',['../class_math.html#a3c45cd25003e1494e7767b8fa7c60b21',1,'Math']]],
-  ['atan',['atan',['../class_math.html#a6001f10f33afb18d79a4473af39cb890',1,'Math']]]
+  ['clear',['clear',['../class_graphics_context.html#a2042f7857d65640d4251161d6c6ba34a',1,'GraphicsContext']]],
+  ['color',['Color',['../struct_color.html#a5d84a194e4f27184502776085c10e693',1,'Color::Color(uchar v=0)'],['../struct_color.html#a21de3e4d18a75c2a52d16d1eedaab678',1,'Color::Color(uchar r, uchar g, uchar b, uchar a=255)']]]
 ];

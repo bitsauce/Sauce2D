@@ -79,7 +79,7 @@ $(document).ready(function(){initNavTree('functions_eval.html','');});
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Enumerator</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Pages</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Enumerator</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -90,23 +90,56 @@ $(document).ready(function(){initNavTree('functions_eval.html','');});
 
 <div class="contents">
 &#160;<ul>
-<li>CLAMP_TO_BORDER
-: <a class="el" href="class_texture.html#ab57ddfe4ab6794971da5963f80026824aecb0feeaaa8b95157dd29d1c77d0332e">Texture</a>
+<li>BLEND
+: <a class="el" href="class_graphics_context.html#a4171335401279aad7e5a463349c093c6a6ab28e2ebc774a58674a758d3eb36f77">GraphicsContext</a>
 </li>
-<li>CLAMP_TO_EDGE
-: <a class="el" href="class_texture.html#ab57ddfe4ab6794971da5963f80026824ac017e952a3740f4b8ba06fae64e262df">Texture</a>
+<li>COLOR_BUFFER
+: <a class="el" href="class_graphics_context.html#a2c5a9d1abe0cc51b3f0afcfa625431e7a1ffae172520a390eeb086b65dcbf1ee0">GraphicsContext</a>
 </li>
-<li>LINEAR
-: <a class="el" href="class_texture.html#ac4b92e6b8c820ded95490092f8bfff74adc101ebf31c49c2d4b80b7c6f59f22cb">Texture</a>
+<li>DEPTH_BUFFER
+: <a class="el" href="class_graphics_context.html#a2c5a9d1abe0cc51b3f0afcfa625431e7a9d07d2b828a5221842fde0c689d7bc34">GraphicsContext</a>
 </li>
-<li>MIRRORED_REPEAT
-: <a class="el" href="class_texture.html#ab57ddfe4ab6794971da5963f80026824ac1b32fc83f123788b14f7b244b93cb30">Texture</a>
+<li>DEPTH_TEST
+: <a class="el" href="class_graphics_context.html#a4171335401279aad7e5a463349c093c6ac3185f6b39d7b321f70d5ac940d68753">GraphicsContext</a>
 </li>
-<li>NEAREST
-: <a class="el" href="class_texture.html#ac4b92e6b8c820ded95490092f8bfff74a32bf899c26ebe34101c3c9d15e41b77e">Texture</a>
+<li>LINE_SMOOTH
+: <a class="el" href="class_graphics_context.html#a4171335401279aad7e5a463349c093c6a7d858d33ebc84491a6975f18e18e46e5">GraphicsContext</a>
 </li>
-<li>REPEAT
-: <a class="el" href="class_texture.html#ab57ddfe4ab6794971da5963f80026824a972f3df9d279a3d3acc88bcbe4452d51">Texture</a>
+<li>MULTISAMPLE
+: <a class="el" href="class_graphics_context.html#a4171335401279aad7e5a463349c093c6a55dc7e0010e82c2aaeb833279724a7b2">GraphicsContext</a>
+</li>
+<li>POLYGON_SMOOTH
+: <a class="el" href="class_graphics_context.html#a4171335401279aad7e5a463349c093c6aa031b875b0d466f02da9da5f6b05c15a">GraphicsContext</a>
+</li>
+<li>PRIMITIVE_LINES
+: <a class="el" href="class_graphics_context.html#a240c1924416689e5700ff0d9f30539d9afef78adda61f559edb2926d62e740e2b">GraphicsContext</a>
+</li>
+<li>PRIMITIVE_POINTS
+: <a class="el" href="class_graphics_context.html#a240c1924416689e5700ff0d9f30539d9ad65e06d0b867e575d79ed2ae09138227">GraphicsContext</a>
+</li>
+<li>PRIMITIVE_TRIANGLE_FAN
+: <a class="el" href="class_graphics_context.html#a240c1924416689e5700ff0d9f30539d9a63e9e4fb756113df2d7c3148ae62357c">GraphicsContext</a>
+</li>
+<li>PRIMITIVE_TRIANGLE_STRIP
+: <a class="el" href="class_graphics_context.html#a240c1924416689e5700ff0d9f30539d9af16b3d7162f95d2b54698205aadc4b04">GraphicsContext</a>
+</li>
+<li>PRIMITIVE_TRIANGLES
+: <a class="el" href="class_graphics_context.html#a240c1924416689e5700ff0d9f30539d9a6c2db634fd752b5bf02a5cf37efae40e">GraphicsContext</a>
+</li>
+<li>SCISSOR_TEST
+: <a class="el" href="class_graphics_context.html#a4171335401279aad7e5a463349c093c6ad87117d28b8360371e6fb569b8a3eb46">GraphicsContext</a>
+</li>
+<li>STENCIL_BUFFER
+: <a class="el" href="class_graphics_context.html#a2c5a9d1abe0cc51b3f0afcfa625431e7a154ab4c2f59ab2425fa74958c235eb92">GraphicsContext</a>
+</li>
+<li>TEXTURE_1D
+: <a class="el" href="class_graphics_context.html#a4171335401279aad7e5a463349c093c6a4f0e9b2b99e86486d92c7b5f5a92ab76">GraphicsContext</a>
+</li>
+<li>TEXTURE_2D
+: <a class="el" href="class_graphics_context.html#a4171335401279aad7e5a463349c093c6a3e47363105c3d592ed1667da0b97ad55">GraphicsContext</a>
+</li>
+<li>TEXTURE_3D
+: <a class="el" href="class_graphics_context.html#a4171335401279aad7e5a463349c093c6a85164b8505d0d5edf7f21c4a182d057b">GraphicsContext</a>
 </li>
 </ul>
 </div><!-- contents -->
@@ -114,7 +147,7 @@ $(document).ready(function(){initNavTree('functions_eval.html','');});
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Sat Nov 1 2014 04:42:40 for x2D Game Engine by
+    <li class="footer">Generated on Mon Nov 2 2015 02:31:31 for x2D Game Engine by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.7 </li>
   </ul>

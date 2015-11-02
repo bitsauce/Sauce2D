@@ -12,26 +12,73 @@
 
 BEGIN_XD_NAMESPACE
 
+
+/**
+ * \brief A class for representing colors.
+ *
+ * This class represents a color with red, green, blue and alpha channels (RGBA). Each channel is a byte in size.
+ */
 struct XDAPI Color
 {
-	Color(uchar v = 0) { r = g = b = a = v; }
-	Color(uchar r, uchar g, uchar b, uchar a = 255) { this->r = r; this->g = g; this->b = b; this->a = a; }
+	/**
+	 * Constructs a color setting all its components to equal \p v
+	 * \param v Value of RGBA
+	 */
+	Color(uchar v = 0)
+	{
+		r = g = b = a = v;
+	}
+
+	/**
+	 * Constructs a color setting all the components
+	 * \param r Red component
+	 * \param g Green component
+	 * \param b Blue component
+	 * \param a Alpha component
+	 */
+	Color(uchar r, uchar g, uchar b, uchar a = 255)
+	{
+		this->r = r; this->g = g; this->b = b; this->a = a;
+	}
 	
+	/**
+	 * Adds this color to another and claps the values of the components in the range [0-255]
+	 * \param c Other color object
+	 */
 	Color &operator+(const Color &c)
 	{
-		r += c.r; g += c.g; b += c.b; a += c.a;
+		r = (uchar) min(r + c.r, 255);
+		g = (uchar) min(g + c.g, 255);
+		b = (uchar) min(b + c.b, 255);
+		a = (uchar) min(a + c.a, 255);
 		return *this;
 	}
 
-	Color &operator*(const Color &c)
-	{
-		r *= c.r; g *= c.g; b *= c.b; a *= c.a;
-		return *this;
-	}
+	/**
+	 * Multiplies all components of this color with a scalar and claps the values of the components in the range [0-255]
+	 * \param scale Scalar
+	 */
+	Color &operator*(const float scale);
 
-	Color &operator*(const float c);
+	/**
+	 * Red component
+	 */
+	uchar r;
 
-	uchar r, g, b, a;
+	/**
+	 * Green component
+	 */
+	uchar g;
+
+	/**
+	 * Blue component
+	 */
+	uchar b;
+
+	/**
+	 * Alpha component
+	 */
+	uchar a;
 };
 
 namespace math

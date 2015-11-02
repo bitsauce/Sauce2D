@@ -11,7 +11,7 @@
 
 BEGIN_XD_NAMESPACE
 
-FileSystem *FileSystem::s_this = 0;
+FileSystem *FileSystem::s_this = nullptr;
 
 FileReader::FileReader(const string &path) :
 	stream(util::getAbsoluteFilePath(path), ifstream::binary)

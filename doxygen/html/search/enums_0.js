@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['texturefilter',['TextureFilter',['../class_texture.html#ac4b92e6b8c820ded95490092f8bfff74',1,'Texture']]],
-  ['texturewrapping',['TextureWrapping',['../class_texture.html#ab57ddfe4ab6794971da5963f80026824',1,'Texture']]]
+  ['buffermask',['BufferMask',['../class_graphics_context.html#a2c5a9d1abe0cc51b3f0afcfa625431e7',1,'GraphicsContext']]]
 ];

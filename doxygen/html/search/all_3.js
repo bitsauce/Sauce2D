@@ -1,9 +1,10 @@
 var searchData=
 [
-  ['disablefullscreen',['disableFullscreen',['../class_window.html#ae63476a624f22a8e6570257503c942dd',1,'Window']]],
-  ['disablemipmaps',['disableMipmaps',['../class_texture.html#aab4fc973e9c29949923caeedc784699f',1,'Texture']]],
-  ['disableresize',['disableResize',['../class_window.html#a8ce4538550692b4b3be9e1ea032af747',1,'Window']]],
-  ['disablevsync',['disableVsync',['../class_graphics.html#ad3962ac13c18173b141f569794a96b26',1,'Graphics']]],
-  ['draw',['draw',['../class_shape.html#a10c159047a1f624f6ccda7a8341e9a1d',1,'Shape::draw()'],['../class_sprite.html#a5273752c722df11cbf6f61d7ef9e18bb',1,'Sprite::draw()']]],
-  ['dt',['dt',['../class_graphics.html#a778e38aa889751afffa2dea6b803e67a',1,'Graphics']]]
+  ['depth_5fbuffer',['DEPTH_BUFFER',['../class_graphics_context.html#a2c5a9d1abe0cc51b3f0afcfa625431e7a9d07d2b828a5221842fde0c689d7bc34',1,'GraphicsContext']]],
+  ['depth_5ftest',['DEPTH_TEST',['../class_graphics_context.html#a4171335401279aad7e5a463349c093c6ac3185f6b39d7b321f70d5ac940d68753',1,'GraphicsContext']]],
+  ['disable',['disable',['../class_graphics_context.html#a282d800096bcd6c9a02115bf4b33fbe9',1,'GraphicsContext']]],
+  ['drawcircle',['drawCircle',['../class_graphics_context.html#a783d6c3c19ab3c635d648e820c9fac1e',1,'GraphicsContext::drawCircle(const Vector2 &amp;pos, const float radius, const uint segments, const Color &amp;color=Color(255))'],['../class_graphics_context.html#ab68e6d1a73de626fe08171e0571214d0',1,'GraphicsContext::drawCircle(const float x, const float y, const float radius, const uint segments, const Color &amp;color=Color(255))']]],
+  ['drawindexedprimitives',['drawIndexedPrimitives',['../class_graphics_context.html#aa3bbdf13b414214281ead0b3dc39f67a',1,'GraphicsContext::drawIndexedPrimitives(const PrimitiveType type, const Vertex *vertices, const uint vertexCount, const uint *indices, const uint indexCount)'],['../class_graphics_context.html#ad62786dc06841b67d1a9fb95ea504081',1,'GraphicsContext::drawIndexedPrimitives(const PrimitiveType type, const VertexBuffer *vbo, const IndexBuffer *ibo)']]],
+  ['drawprimitives',['drawPrimitives',['../class_graphics_context.html#af00663a712ef5080cf9d732156328c03',1,'GraphicsContext::drawPrimitives(const PrimitiveType type, const Vertex *vertices, const uint vertexCount)'],['../class_graphics_context.html#ab5edd0597d4846689365f2807bbf67a6',1,'GraphicsContext::drawPrimitives(const PrimitiveType type, const VertexBuffer *vbo)']]],
+  ['drawrectangle',['drawRectangle',['../class_graphics_context.html#ace30d4bb10727b827910e159f6a34345',1,'GraphicsContext::drawRectangle(const Rect &amp;rect, const Color &amp;color=Color(255), const TextureRegion &amp;textureRegion=TextureRegion())'],['../class_graphics_context.html#a4d40c89661fd2488e6cf151f4bae3aef',1,'GraphicsContext::drawRectangle(const Vector2 &amp;pos, const Vector2 &amp;size, const Color &amp;color=Color(255), const TextureRegion &amp;textureRegion=TextureRegion())'],['../class_graphics_context.html#a0dd520b437660a440b71748ba8d0b78c',1,'GraphicsContext::drawRectangle(const float x, const float y, const float width, const float height, const Color &amp;color=Color(255), const TextureRegion &amp;textureRegion=TextureRegion())']]]
 ];

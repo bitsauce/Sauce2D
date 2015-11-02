@@ -208,19 +208,6 @@ END_XD_NAMESPACE
 **	Macros															**
 **********************************************************************/
 
-#define SINGLETON_DECL(clazz) \
-	private: \
-		static clazz *s_this;
-
-#define SINGLETON_DEF(clazz) \
-	clazz *clazz::s_this = 0; \
-
-#define SINGLETON_ASSERT \
-		assert(s_this == 0); \
-		s_this = this;
-
-#define SINGLETON_OBJECT s_this
-
 #define TUPLE_CMP(a, b) \
 	if(a < b) return true; \
 	if(a > b) return false;

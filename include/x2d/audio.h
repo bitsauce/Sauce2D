@@ -29,10 +29,7 @@ class AudioBuffer;
 
 class XDAPI AudioManager
 {
-	SINGLETON_DECL(AudioManager)
-
 	friend class Engine;
-
 public:
 	AudioManager();
 	~AudioManager();
@@ -48,6 +45,9 @@ public:
 	// Listener orientation
 	void setOrientation(const Vector3&);
 	Vector3 getOrientation() const;
+
+private:
+	static AudioManager *s_this;
 };
 
 /*********************************************************************

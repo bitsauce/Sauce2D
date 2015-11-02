@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['linear',['LINEAR',['../class_texture.html#ac4b92e6b8c820ded95490092f8bfff74adc101ebf31c49c2d4b80b7c6f59f22cb',1,'Texture']]]
+  ['color_5fbuffer',['COLOR_BUFFER',['../class_graphics_context.html#a2c5a9d1abe0cc51b3f0afcfa625431e7a1ffae172520a390eeb086b65dcbf1ee0',1,'GraphicsContext']]]
 ];

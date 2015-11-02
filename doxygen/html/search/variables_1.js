@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['fps',['FPS',['../class_graphics.html#a4ce66cf70b6cf09c40e92fd9e6bcf046',1,'Graphics']]]
+  ['b',['b',['../struct_color.html#a1257f1682341fca1120d6d2d6955bd7f',1,'Color']]]
 ];

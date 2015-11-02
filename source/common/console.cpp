@@ -11,13 +11,17 @@
 
 BEGIN_XD_NAMESPACE
 
-SINGLETON_DEF(Console)
+Console *Console::s_this = nullptr;
 
 Console::Console() :
 	m_engine(0), // Set by the engine
 	m_output(0)
 {
-	SINGLETON_ASSERT
+	// Check singleton
+	if(s_this)
+	{
+		THROW("Console already initialized!");
+	}
 }
 
 Console::~Console()

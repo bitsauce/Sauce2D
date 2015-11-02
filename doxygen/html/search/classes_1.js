@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['batch',['Batch',['../class_batch.html',1,'']]]
+  ['graphicscontext',['GraphicsContext',['../class_graphics_context.html',1,'']]]
 ];

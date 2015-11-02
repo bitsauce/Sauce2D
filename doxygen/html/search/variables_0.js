@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['dt',['dt',['../class_graphics.html#a778e38aa889751afffa2dea6b803e67a',1,'Graphics']]]
+  ['a',['a',['../struct_color.html#ac4b9d51a5d2ecc82aa55bff73e6c088d',1,'Color']]]
 ];

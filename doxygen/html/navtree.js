@@ -1,10 +1,6 @@
 var NAVTREE =
 [
   [ "x2D Game Engine", "index.html", [
-    [ "Manual", "index.html", null ],
-    [ "About", "about.html", "about" ],
-    [ "Getting Started", "get_started.html", "get_started" ],
-    [ "Advanced topics", "advanced_topics.html", null ],
     [ "Classes", null, [
       [ "Class List", "annotated.html", "annotated" ],
       [ "Class Index", "classes.html", null ],
@@ -21,7 +17,7 @@ var NAVTREE =
 
 var NAVTREEINDEX =
 [
-"about.html"
+"annotated.html"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

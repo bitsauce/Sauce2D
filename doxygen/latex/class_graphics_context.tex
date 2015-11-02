@@ -1,0 +1,549 @@
+\hypertarget{class_graphics_context}{\section{Graphics\+Context Class Reference}
+\label{class_graphics_context}\index{Graphics\+Context@{Graphics\+Context}}
+}
+
+
+Handles primitive rendering to the screen.  
+
+
+\subsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+enum \hyperlink{class_graphics_context_a4171335401279aad7e5a463349c093c6}{Capability} \{ \\*
+\hyperlink{class_graphics_context_a4171335401279aad7e5a463349c093c6a6ab28e2ebc774a58674a758d3eb36f77}{B\+L\+E\+N\+D} = G\+L\+\_\+\+B\+L\+E\+N\+D, 
+\hyperlink{class_graphics_context_a4171335401279aad7e5a463349c093c6ac3185f6b39d7b321f70d5ac940d68753}{D\+E\+P\+T\+H\+\_\+\+T\+E\+S\+T} = G\+L\+\_\+\+D\+E\+P\+T\+H\+\_\+\+T\+E\+S\+T, 
+\hyperlink{class_graphics_context_a4171335401279aad7e5a463349c093c6ad87117d28b8360371e6fb569b8a3eb46}{S\+C\+I\+S\+S\+O\+R\+\_\+\+T\+E\+S\+T} = G\+L\+\_\+\+S\+C\+I\+S\+S\+O\+R\+\_\+\+T\+E\+S\+T, 
+\hyperlink{class_graphics_context_a4171335401279aad7e5a463349c093c6a7d858d33ebc84491a6975f18e18e46e5}{L\+I\+N\+E\+\_\+\+S\+M\+O\+O\+T\+H} = G\+L\+\_\+\+L\+I\+N\+E\+\_\+\+S\+M\+O\+O\+T\+H, 
+\\*
+\hyperlink{class_graphics_context_a4171335401279aad7e5a463349c093c6aa031b875b0d466f02da9da5f6b05c15a}{P\+O\+L\+Y\+G\+O\+N\+\_\+\+S\+M\+O\+O\+T\+H} = G\+L\+\_\+\+P\+O\+L\+Y\+G\+O\+N\+\_\+\+S\+M\+O\+O\+T\+H, 
+\hyperlink{class_graphics_context_a4171335401279aad7e5a463349c093c6a55dc7e0010e82c2aaeb833279724a7b2}{M\+U\+L\+T\+I\+S\+A\+M\+P\+L\+E} = G\+L\+\_\+\+M\+U\+L\+T\+I\+S\+A\+M\+P\+L\+E, 
+\hyperlink{class_graphics_context_a4171335401279aad7e5a463349c093c6a4f0e9b2b99e86486d92c7b5f5a92ab76}{T\+E\+X\+T\+U\+R\+E\+\_\+1\+D} = G\+L\+\_\+\+T\+E\+X\+T\+U\+R\+E\+\_\+1\+D, 
+\hyperlink{class_graphics_context_a4171335401279aad7e5a463349c093c6a3e47363105c3d592ed1667da0b97ad55}{T\+E\+X\+T\+U\+R\+E\+\_\+2\+D} = G\+L\+\_\+\+T\+E\+X\+T\+U\+R\+E\+\_\+2\+D, 
+\\*
+\hyperlink{class_graphics_context_a4171335401279aad7e5a463349c093c6a85164b8505d0d5edf7f21c4a182d057b}{T\+E\+X\+T\+U\+R\+E\+\_\+3\+D} = G\+L\+\_\+\+T\+E\+X\+T\+U\+R\+E\+\_\+3\+D
+ \}
+\item 
+enum \hyperlink{class_graphics_context_a240c1924416689e5700ff0d9f30539d9}{Primitive\+Type} \{ \\*
+\hyperlink{class_graphics_context_a240c1924416689e5700ff0d9f30539d9ad65e06d0b867e575d79ed2ae09138227}{P\+R\+I\+M\+I\+T\+I\+V\+E\+\_\+\+P\+O\+I\+N\+T\+S} = G\+L\+\_\+\+P\+O\+I\+N\+T\+S, 
+\hyperlink{class_graphics_context_a240c1924416689e5700ff0d9f30539d9afef78adda61f559edb2926d62e740e2b}{P\+R\+I\+M\+I\+T\+I\+V\+E\+\_\+\+L\+I\+N\+E\+S} = G\+L\+\_\+\+L\+I\+N\+E\+S, 
+\hyperlink{class_graphics_context_a240c1924416689e5700ff0d9f30539d9a6c2db634fd752b5bf02a5cf37efae40e}{P\+R\+I\+M\+I\+T\+I\+V\+E\+\_\+\+T\+R\+I\+A\+N\+G\+L\+E\+S} = G\+L\+\_\+\+T\+R\+I\+A\+N\+G\+L\+E\+S, 
+\hyperlink{class_graphics_context_a240c1924416689e5700ff0d9f30539d9af16b3d7162f95d2b54698205aadc4b04}{P\+R\+I\+M\+I\+T\+I\+V\+E\+\_\+\+T\+R\+I\+A\+N\+G\+L\+E\+\_\+\+S\+T\+R\+I\+P} = G\+L\+\_\+\+T\+R\+I\+A\+N\+G\+L\+E\+\_\+\+S\+T\+R\+I\+P, 
+\\*
+\hyperlink{class_graphics_context_a240c1924416689e5700ff0d9f30539d9a63e9e4fb756113df2d7c3148ae62357c}{P\+R\+I\+M\+I\+T\+I\+V\+E\+\_\+\+T\+R\+I\+A\+N\+G\+L\+E\+\_\+\+F\+A\+N} = G\+L\+\_\+\+T\+R\+I\+A\+N\+G\+L\+E\+\_\+\+F\+A\+N
+ \}
+\item 
+enum \hyperlink{class_graphics_context_a2c5a9d1abe0cc51b3f0afcfa625431e7}{Buffer\+Mask} \{ \hyperlink{class_graphics_context_a2c5a9d1abe0cc51b3f0afcfa625431e7a1ffae172520a390eeb086b65dcbf1ee0}{C\+O\+L\+O\+R\+\_\+\+B\+U\+F\+F\+E\+R} = G\+L\+\_\+\+C\+O\+L\+O\+R\+\_\+\+B\+U\+F\+F\+E\+R\+\_\+\+B\+I\+T, 
+\hyperlink{class_graphics_context_a2c5a9d1abe0cc51b3f0afcfa625431e7a9d07d2b828a5221842fde0c689d7bc34}{D\+E\+P\+T\+H\+\_\+\+B\+U\+F\+F\+E\+R} = G\+L\+\_\+\+D\+E\+P\+T\+H\+\_\+\+B\+U\+F\+F\+E\+R\+\_\+\+B\+I\+T, 
+\hyperlink{class_graphics_context_a2c5a9d1abe0cc51b3f0afcfa625431e7a154ab4c2f59ab2425fa74958c235eb92}{S\+T\+E\+N\+C\+I\+L\+\_\+\+B\+U\+F\+F\+E\+R} = G\+L\+\_\+\+S\+T\+E\+N\+C\+I\+L\+\_\+\+B\+U\+F\+F\+E\+R\+\_\+\+B\+I\+T
+ \}
+\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{class_graphics_context_ab530828f0209ce95ff7f2c00297fbe76}{enable} (const \hyperlink{class_graphics_context_a4171335401279aad7e5a463349c093c6}{Capability} cap)
+\item 
+void \hyperlink{class_graphics_context_a282d800096bcd6c9a02115bf4b33fbe9}{disable} (const \hyperlink{class_graphics_context_a4171335401279aad7e5a463349c093c6}{Capability} cap)
+\item 
+void \hyperlink{class_graphics_context_a2042f7857d65640d4251161d6c6ba34a}{clear} (const uint mask, const \hyperlink{struct_color}{Color} \&fill\+Color=\hyperlink{struct_color}{Color}(0, 0, 0, 0))
+\item 
+void \hyperlink{class_graphics_context_a4ecf8a82b0a8824005fd79ec37b2602e}{set\+Render\+Target} (Render\+Target2\+D $\ast$render\+Target)
+\item 
+Render\+Target2\+D $\ast$ \hyperlink{class_graphics_context_ab630203811c66d63ac6ceb511ced90f2}{get\+Render\+Target} () const 
+\item 
+void \hyperlink{class_graphics_context_a395d4f9a734509da73c1757929a0f7f7}{set\+Model\+View\+Matrix} (const Matrix4 \&mat)
+\item 
+Matrix4 \hyperlink{class_graphics_context_a50388419b98eadbf2d38e787aaa7fae7}{get\+Model\+View\+Matrix} () const 
+\item 
+void \hyperlink{class_graphics_context_a0784775a27375168d2867bd47363e899}{push\+Matrix} (const Matrix4 \&mat)
+\item 
+void \hyperlink{class_graphics_context_a89162c73545bb184c781c825dd72f082}{pop\+Matrix} ()
+\item 
+void \hyperlink{class_graphics_context_af49e7858667f3ed99956517a33c298df}{set\+Texture} (const Texture2\+D\+Ptr texture)
+\item 
+Texture2\+D\+Ptr \hyperlink{class_graphics_context_ab7ab5aa673a41e08f1ba325682c04c74}{get\+Texture} () const 
+\item 
+void \hyperlink{class_graphics_context_aa547cd0c7d532d7c6e6946af0d988429}{set\+Shader} (const Shader\+Ptr shader)
+\item 
+Shader\+Ptr \hyperlink{class_graphics_context_af0eeabbc9586e2939fef72bed1b0969e}{get\+Shader} () const 
+\item 
+void \hyperlink{class_graphics_context_aead84482bf5fbdc1f59fe748178aa6a8}{set\+Blend\+State} (const Blend\+State \&blend\+State)
+\item 
+Blend\+State \hyperlink{class_graphics_context_a7713be59d4d62a129c22789468439666}{get\+Blend\+State} ()
+\item 
+void \hyperlink{class_graphics_context_a0d4cbf012e3148ff546f3fc207196430}{save\+Screenshot} (string path)
+\item 
+void \hyperlink{class_graphics_context_a8d30cb975ff071bfd3e4e120141b10f8}{resize\+Viewport} (const uint w, const uint h)
+\item 
+uint \hyperlink{class_graphics_context_a290563bfc82e1ad627ac10bda066729e}{get\+Width} () const 
+\item 
+uint \hyperlink{class_graphics_context_ae84b5088898ed1f2a0ca2da13d7ebfe8}{get\+Height} () const 
+\item 
+void \hyperlink{class_graphics_context_aa3bbdf13b414214281ead0b3dc39f67a}{draw\+Indexed\+Primitives} (const \hyperlink{class_graphics_context_a240c1924416689e5700ff0d9f30539d9}{Primitive\+Type} type, const Vertex $\ast$vertices, const uint vertex\+Count, const uint $\ast$indices, const uint index\+Count)
+\item 
+void \hyperlink{class_graphics_context_ad62786dc06841b67d1a9fb95ea504081}{draw\+Indexed\+Primitives} (const \hyperlink{class_graphics_context_a240c1924416689e5700ff0d9f30539d9}{Primitive\+Type} type, const Vertex\+Buffer $\ast$vbo, const Index\+Buffer $\ast$ibo)
+\item 
+void \hyperlink{class_graphics_context_af00663a712ef5080cf9d732156328c03}{draw\+Primitives} (const \hyperlink{class_graphics_context_a240c1924416689e5700ff0d9f30539d9}{Primitive\+Type} type, const Vertex $\ast$vertices, const uint vertex\+Count)
+\item 
+void \hyperlink{class_graphics_context_ab5edd0597d4846689365f2807bbf67a6}{draw\+Primitives} (const \hyperlink{class_graphics_context_a240c1924416689e5700ff0d9f30539d9}{Primitive\+Type} type, const Vertex\+Buffer $\ast$vbo)
+\item 
+void \hyperlink{class_graphics_context_ace30d4bb10727b827910e159f6a34345}{draw\+Rectangle} (const Rect \&rect, const \hyperlink{struct_color}{Color} \&color=\hyperlink{struct_color}{Color}(255), const Texture\+Region \&texture\+Region=Texture\+Region())
+\item 
+void \hyperlink{class_graphics_context_a4d40c89661fd2488e6cf151f4bae3aef}{draw\+Rectangle} (const Vector2 \&pos, const Vector2 \&size, const \hyperlink{struct_color}{Color} \&color=\hyperlink{struct_color}{Color}(255), const Texture\+Region \&texture\+Region=Texture\+Region())
+\item 
+void \hyperlink{class_graphics_context_a0dd520b437660a440b71748ba8d0b78c}{draw\+Rectangle} (const float x, const float y, const float width, const float height, const \hyperlink{struct_color}{Color} \&color=\hyperlink{struct_color}{Color}(255), const Texture\+Region \&texture\+Region=Texture\+Region())
+\item 
+void \hyperlink{class_graphics_context_a783d6c3c19ab3c635d648e820c9fac1e}{draw\+Circle} (const Vector2 \&pos, const float radius, const uint segments, const \hyperlink{struct_color}{Color} \&color=\hyperlink{struct_color}{Color}(255))
+\item 
+void \hyperlink{class_graphics_context_ab68e6d1a73de626fe08171e0571214d0}{draw\+Circle} (const float x, const float y, const float radius, const uint segments, const \hyperlink{struct_color}{Color} \&color=\hyperlink{struct_color}{Color}(255))
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Handles primitive rendering to the screen. 
+
+\subsection{Member Enumeration Documentation}
+\hypertarget{class_graphics_context_a2c5a9d1abe0cc51b3f0afcfa625431e7}{\index{Graphics\+Context@{Graphics\+Context}!Buffer\+Mask@{Buffer\+Mask}}
+\index{Buffer\+Mask@{Buffer\+Mask}!Graphics\+Context@{Graphics\+Context}}
+\subsubsection[{Buffer\+Mask}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf Buffer\+Mask}}}\label{class_graphics_context_a2c5a9d1abe0cc51b3f0afcfa625431e7}
+Clearing buffer mask. Used for selecting how to clear the backbuffer. \begin{Desc}
+\item[Enumerator]\par
+\begin{description}
+\index{C\+O\+L\+O\+R\+\_\+\+B\+U\+F\+F\+E\+R@{C\+O\+L\+O\+R\+\_\+\+B\+U\+F\+F\+E\+R}!Graphics\+Context@{Graphics\+Context}}\index{Graphics\+Context@{Graphics\+Context}!C\+O\+L\+O\+R\+\_\+\+B\+U\+F\+F\+E\+R@{C\+O\+L\+O\+R\+\_\+\+B\+U\+F\+F\+E\+R}}\item[{\em 
+\hypertarget{class_graphics_context_a2c5a9d1abe0cc51b3f0afcfa625431e7a1ffae172520a390eeb086b65dcbf1ee0}{C\+O\+L\+O\+R\+\_\+\+B\+U\+F\+F\+E\+R}\label{class_graphics_context_a2c5a9d1abe0cc51b3f0afcfa625431e7a1ffae172520a390eeb086b65dcbf1ee0}
+}]Color buffer \index{D\+E\+P\+T\+H\+\_\+\+B\+U\+F\+F\+E\+R@{D\+E\+P\+T\+H\+\_\+\+B\+U\+F\+F\+E\+R}!Graphics\+Context@{Graphics\+Context}}\index{Graphics\+Context@{Graphics\+Context}!D\+E\+P\+T\+H\+\_\+\+B\+U\+F\+F\+E\+R@{D\+E\+P\+T\+H\+\_\+\+B\+U\+F\+F\+E\+R}}\item[{\em 
+\hypertarget{class_graphics_context_a2c5a9d1abe0cc51b3f0afcfa625431e7a9d07d2b828a5221842fde0c689d7bc34}{D\+E\+P\+T\+H\+\_\+\+B\+U\+F\+F\+E\+R}\label{class_graphics_context_a2c5a9d1abe0cc51b3f0afcfa625431e7a9d07d2b828a5221842fde0c689d7bc34}
+}]Depth buffer. \index{S\+T\+E\+N\+C\+I\+L\+\_\+\+B\+U\+F\+F\+E\+R@{S\+T\+E\+N\+C\+I\+L\+\_\+\+B\+U\+F\+F\+E\+R}!Graphics\+Context@{Graphics\+Context}}\index{Graphics\+Context@{Graphics\+Context}!S\+T\+E\+N\+C\+I\+L\+\_\+\+B\+U\+F\+F\+E\+R@{S\+T\+E\+N\+C\+I\+L\+\_\+\+B\+U\+F\+F\+E\+R}}\item[{\em 
+\hypertarget{class_graphics_context_a2c5a9d1abe0cc51b3f0afcfa625431e7a154ab4c2f59ab2425fa74958c235eb92}{S\+T\+E\+N\+C\+I\+L\+\_\+\+B\+U\+F\+F\+E\+R}\label{class_graphics_context_a2c5a9d1abe0cc51b3f0afcfa625431e7a154ab4c2f59ab2425fa74958c235eb92}
+}]Stencil buffer. \end{description}
+\end{Desc}
+\hypertarget{class_graphics_context_a4171335401279aad7e5a463349c093c6}{\index{Graphics\+Context@{Graphics\+Context}!Capability@{Capability}}
+\index{Capability@{Capability}!Graphics\+Context@{Graphics\+Context}}
+\subsubsection[{Capability}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf Capability}}}\label{class_graphics_context_a4171335401279aad7e5a463349c093c6}
+Graphics capabilites. For enabling and disabling certain rendering options. \begin{Desc}
+\item[Enumerator]\par
+\begin{description}
+\index{B\+L\+E\+N\+D@{B\+L\+E\+N\+D}!Graphics\+Context@{Graphics\+Context}}\index{Graphics\+Context@{Graphics\+Context}!B\+L\+E\+N\+D@{B\+L\+E\+N\+D}}\item[{\em 
+\hypertarget{class_graphics_context_a4171335401279aad7e5a463349c093c6a6ab28e2ebc774a58674a758d3eb36f77}{B\+L\+E\+N\+D}\label{class_graphics_context_a4171335401279aad7e5a463349c093c6a6ab28e2ebc774a58674a758d3eb36f77}
+}]Back buffer blending. \index{D\+E\+P\+T\+H\+\_\+\+T\+E\+S\+T@{D\+E\+P\+T\+H\+\_\+\+T\+E\+S\+T}!Graphics\+Context@{Graphics\+Context}}\index{Graphics\+Context@{Graphics\+Context}!D\+E\+P\+T\+H\+\_\+\+T\+E\+S\+T@{D\+E\+P\+T\+H\+\_\+\+T\+E\+S\+T}}\item[{\em 
+\hypertarget{class_graphics_context_a4171335401279aad7e5a463349c093c6ac3185f6b39d7b321f70d5ac940d68753}{D\+E\+P\+T\+H\+\_\+\+T\+E\+S\+T}\label{class_graphics_context_a4171335401279aad7e5a463349c093c6ac3185f6b39d7b321f70d5ac940d68753}
+}]Depth testing. \index{S\+C\+I\+S\+S\+O\+R\+\_\+\+T\+E\+S\+T@{S\+C\+I\+S\+S\+O\+R\+\_\+\+T\+E\+S\+T}!Graphics\+Context@{Graphics\+Context}}\index{Graphics\+Context@{Graphics\+Context}!S\+C\+I\+S\+S\+O\+R\+\_\+\+T\+E\+S\+T@{S\+C\+I\+S\+S\+O\+R\+\_\+\+T\+E\+S\+T}}\item[{\em 
+\hypertarget{class_graphics_context_a4171335401279aad7e5a463349c093c6ad87117d28b8360371e6fb569b8a3eb46}{S\+C\+I\+S\+S\+O\+R\+\_\+\+T\+E\+S\+T}\label{class_graphics_context_a4171335401279aad7e5a463349c093c6ad87117d28b8360371e6fb569b8a3eb46}
+}]Scissor testing. \index{L\+I\+N\+E\+\_\+\+S\+M\+O\+O\+T\+H@{L\+I\+N\+E\+\_\+\+S\+M\+O\+O\+T\+H}!Graphics\+Context@{Graphics\+Context}}\index{Graphics\+Context@{Graphics\+Context}!L\+I\+N\+E\+\_\+\+S\+M\+O\+O\+T\+H@{L\+I\+N\+E\+\_\+\+S\+M\+O\+O\+T\+H}}\item[{\em 
+\hypertarget{class_graphics_context_a4171335401279aad7e5a463349c093c6a7d858d33ebc84491a6975f18e18e46e5}{L\+I\+N\+E\+\_\+\+S\+M\+O\+O\+T\+H}\label{class_graphics_context_a4171335401279aad7e5a463349c093c6a7d858d33ebc84491a6975f18e18e46e5}
+}]Smooth lines. \index{P\+O\+L\+Y\+G\+O\+N\+\_\+\+S\+M\+O\+O\+T\+H@{P\+O\+L\+Y\+G\+O\+N\+\_\+\+S\+M\+O\+O\+T\+H}!Graphics\+Context@{Graphics\+Context}}\index{Graphics\+Context@{Graphics\+Context}!P\+O\+L\+Y\+G\+O\+N\+\_\+\+S\+M\+O\+O\+T\+H@{P\+O\+L\+Y\+G\+O\+N\+\_\+\+S\+M\+O\+O\+T\+H}}\item[{\em 
+\hypertarget{class_graphics_context_a4171335401279aad7e5a463349c093c6aa031b875b0d466f02da9da5f6b05c15a}{P\+O\+L\+Y\+G\+O\+N\+\_\+\+S\+M\+O\+O\+T\+H}\label{class_graphics_context_a4171335401279aad7e5a463349c093c6aa031b875b0d466f02da9da5f6b05c15a}
+}]Smooth polygons. \index{M\+U\+L\+T\+I\+S\+A\+M\+P\+L\+E@{M\+U\+L\+T\+I\+S\+A\+M\+P\+L\+E}!Graphics\+Context@{Graphics\+Context}}\index{Graphics\+Context@{Graphics\+Context}!M\+U\+L\+T\+I\+S\+A\+M\+P\+L\+E@{M\+U\+L\+T\+I\+S\+A\+M\+P\+L\+E}}\item[{\em 
+\hypertarget{class_graphics_context_a4171335401279aad7e5a463349c093c6a55dc7e0010e82c2aaeb833279724a7b2}{M\+U\+L\+T\+I\+S\+A\+M\+P\+L\+E}\label{class_graphics_context_a4171335401279aad7e5a463349c093c6a55dc7e0010e82c2aaeb833279724a7b2}
+}]Multisample? \index{T\+E\+X\+T\+U\+R\+E\+\_\+1\+D@{T\+E\+X\+T\+U\+R\+E\+\_\+1\+D}!Graphics\+Context@{Graphics\+Context}}\index{Graphics\+Context@{Graphics\+Context}!T\+E\+X\+T\+U\+R\+E\+\_\+1\+D@{T\+E\+X\+T\+U\+R\+E\+\_\+1\+D}}\item[{\em 
+\hypertarget{class_graphics_context_a4171335401279aad7e5a463349c093c6a4f0e9b2b99e86486d92c7b5f5a92ab76}{T\+E\+X\+T\+U\+R\+E\+\_\+1\+D}\label{class_graphics_context_a4171335401279aad7e5a463349c093c6a4f0e9b2b99e86486d92c7b5f5a92ab76}
+}]1\+D textures \index{T\+E\+X\+T\+U\+R\+E\+\_\+2\+D@{T\+E\+X\+T\+U\+R\+E\+\_\+2\+D}!Graphics\+Context@{Graphics\+Context}}\index{Graphics\+Context@{Graphics\+Context}!T\+E\+X\+T\+U\+R\+E\+\_\+2\+D@{T\+E\+X\+T\+U\+R\+E\+\_\+2\+D}}\item[{\em 
+\hypertarget{class_graphics_context_a4171335401279aad7e5a463349c093c6a3e47363105c3d592ed1667da0b97ad55}{T\+E\+X\+T\+U\+R\+E\+\_\+2\+D}\label{class_graphics_context_a4171335401279aad7e5a463349c093c6a3e47363105c3d592ed1667da0b97ad55}
+}]2\+D textures \index{T\+E\+X\+T\+U\+R\+E\+\_\+3\+D@{T\+E\+X\+T\+U\+R\+E\+\_\+3\+D}!Graphics\+Context@{Graphics\+Context}}\index{Graphics\+Context@{Graphics\+Context}!T\+E\+X\+T\+U\+R\+E\+\_\+3\+D@{T\+E\+X\+T\+U\+R\+E\+\_\+3\+D}}\item[{\em 
+\hypertarget{class_graphics_context_a4171335401279aad7e5a463349c093c6a85164b8505d0d5edf7f21c4a182d057b}{T\+E\+X\+T\+U\+R\+E\+\_\+3\+D}\label{class_graphics_context_a4171335401279aad7e5a463349c093c6a85164b8505d0d5edf7f21c4a182d057b}
+}]3\+D textures \end{description}
+\end{Desc}
+\hypertarget{class_graphics_context_a240c1924416689e5700ff0d9f30539d9}{\index{Graphics\+Context@{Graphics\+Context}!Primitive\+Type@{Primitive\+Type}}
+\index{Primitive\+Type@{Primitive\+Type}!Graphics\+Context@{Graphics\+Context}}
+\subsubsection[{Primitive\+Type}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf Primitive\+Type}}}\label{class_graphics_context_a240c1924416689e5700ff0d9f30539d9}
+Primitive types. For rendering different kinds of primitives. \begin{Desc}
+\item[Enumerator]\par
+\begin{description}
+\index{P\+R\+I\+M\+I\+T\+I\+V\+E\+\_\+\+P\+O\+I\+N\+T\+S@{P\+R\+I\+M\+I\+T\+I\+V\+E\+\_\+\+P\+O\+I\+N\+T\+S}!Graphics\+Context@{Graphics\+Context}}\index{Graphics\+Context@{Graphics\+Context}!P\+R\+I\+M\+I\+T\+I\+V\+E\+\_\+\+P\+O\+I\+N\+T\+S@{P\+R\+I\+M\+I\+T\+I\+V\+E\+\_\+\+P\+O\+I\+N\+T\+S}}\item[{\em 
+\hypertarget{class_graphics_context_a240c1924416689e5700ff0d9f30539d9ad65e06d0b867e575d79ed2ae09138227}{P\+R\+I\+M\+I\+T\+I\+V\+E\+\_\+\+P\+O\+I\+N\+T\+S}\label{class_graphics_context_a240c1924416689e5700ff0d9f30539d9ad65e06d0b867e575d79ed2ae09138227}
+}]Points. 1 vertex per primitive. \index{P\+R\+I\+M\+I\+T\+I\+V\+E\+\_\+\+L\+I\+N\+E\+S@{P\+R\+I\+M\+I\+T\+I\+V\+E\+\_\+\+L\+I\+N\+E\+S}!Graphics\+Context@{Graphics\+Context}}\index{Graphics\+Context@{Graphics\+Context}!P\+R\+I\+M\+I\+T\+I\+V\+E\+\_\+\+L\+I\+N\+E\+S@{P\+R\+I\+M\+I\+T\+I\+V\+E\+\_\+\+L\+I\+N\+E\+S}}\item[{\em 
+\hypertarget{class_graphics_context_a240c1924416689e5700ff0d9f30539d9afef78adda61f559edb2926d62e740e2b}{P\+R\+I\+M\+I\+T\+I\+V\+E\+\_\+\+L\+I\+N\+E\+S}\label{class_graphics_context_a240c1924416689e5700ff0d9f30539d9afef78adda61f559edb2926d62e740e2b}
+}]Lines. 2 vertex per primitive. \index{P\+R\+I\+M\+I\+T\+I\+V\+E\+\_\+\+T\+R\+I\+A\+N\+G\+L\+E\+S@{P\+R\+I\+M\+I\+T\+I\+V\+E\+\_\+\+T\+R\+I\+A\+N\+G\+L\+E\+S}!Graphics\+Context@{Graphics\+Context}}\index{Graphics\+Context@{Graphics\+Context}!P\+R\+I\+M\+I\+T\+I\+V\+E\+\_\+\+T\+R\+I\+A\+N\+G\+L\+E\+S@{P\+R\+I\+M\+I\+T\+I\+V\+E\+\_\+\+T\+R\+I\+A\+N\+G\+L\+E\+S}}\item[{\em 
+\hypertarget{class_graphics_context_a240c1924416689e5700ff0d9f30539d9a6c2db634fd752b5bf02a5cf37efae40e}{P\+R\+I\+M\+I\+T\+I\+V\+E\+\_\+\+T\+R\+I\+A\+N\+G\+L\+E\+S}\label{class_graphics_context_a240c1924416689e5700ff0d9f30539d9a6c2db634fd752b5bf02a5cf37efae40e}
+}]Triangles. 3 vertex per primitive. \index{P\+R\+I\+M\+I\+T\+I\+V\+E\+\_\+\+T\+R\+I\+A\+N\+G\+L\+E\+\_\+\+S\+T\+R\+I\+P@{P\+R\+I\+M\+I\+T\+I\+V\+E\+\_\+\+T\+R\+I\+A\+N\+G\+L\+E\+\_\+\+S\+T\+R\+I\+P}!Graphics\+Context@{Graphics\+Context}}\index{Graphics\+Context@{Graphics\+Context}!P\+R\+I\+M\+I\+T\+I\+V\+E\+\_\+\+T\+R\+I\+A\+N\+G\+L\+E\+\_\+\+S\+T\+R\+I\+P@{P\+R\+I\+M\+I\+T\+I\+V\+E\+\_\+\+T\+R\+I\+A\+N\+G\+L\+E\+\_\+\+S\+T\+R\+I\+P}}\item[{\em 
+\hypertarget{class_graphics_context_a240c1924416689e5700ff0d9f30539d9af16b3d7162f95d2b54698205aadc4b04}{P\+R\+I\+M\+I\+T\+I\+V\+E\+\_\+\+T\+R\+I\+A\+N\+G\+L\+E\+\_\+\+S\+T\+R\+I\+P}\label{class_graphics_context_a240c1924416689e5700ff0d9f30539d9af16b3d7162f95d2b54698205aadc4b04}
+}]Triangle strip. 3 vertex for the first primitive, 1 vertex for the next. \index{P\+R\+I\+M\+I\+T\+I\+V\+E\+\_\+\+T\+R\+I\+A\+N\+G\+L\+E\+\_\+\+F\+A\+N@{P\+R\+I\+M\+I\+T\+I\+V\+E\+\_\+\+T\+R\+I\+A\+N\+G\+L\+E\+\_\+\+F\+A\+N}!Graphics\+Context@{Graphics\+Context}}\index{Graphics\+Context@{Graphics\+Context}!P\+R\+I\+M\+I\+T\+I\+V\+E\+\_\+\+T\+R\+I\+A\+N\+G\+L\+E\+\_\+\+F\+A\+N@{P\+R\+I\+M\+I\+T\+I\+V\+E\+\_\+\+T\+R\+I\+A\+N\+G\+L\+E\+\_\+\+F\+A\+N}}\item[{\em 
+\hypertarget{class_graphics_context_a240c1924416689e5700ff0d9f30539d9a63e9e4fb756113df2d7c3148ae62357c}{P\+R\+I\+M\+I\+T\+I\+V\+E\+\_\+\+T\+R\+I\+A\+N\+G\+L\+E\+\_\+\+F\+A\+N}\label{class_graphics_context_a240c1924416689e5700ff0d9f30539d9a63e9e4fb756113df2d7c3148ae62357c}
+}]Triangle fan. 3 vertex for the first primitive, 1 vertex for the next. \end{description}
+\end{Desc}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{class_graphics_context_a2042f7857d65640d4251161d6c6ba34a}{\index{Graphics\+Context@{Graphics\+Context}!clear@{clear}}
+\index{clear@{clear}!Graphics\+Context@{Graphics\+Context}}
+\subsubsection[{clear}]{\setlength{\rightskip}{0pt plus 5cm}void clear (
+\begin{DoxyParamCaption}
+\item[{const uint}]{mask, }
+\item[{const {\bf Color} \&}]{fill\+Color = {\ttfamily {\bf Color}(0,~0,~0,~0)}}
+\end{DoxyParamCaption}
+)}}\label{class_graphics_context_a2042f7857d65640d4251161d6c6ba34a}
+Clears the back buffer using {\ttfamily mask}. 
+\begin{DoxyParams}{Parameters}
+{\em mask} & Decides what channels in the back buffer to clear. \\
+\hline
+{\em fill\+Color} & Decides what value to clear to. \\
+\hline
+\end{DoxyParams}
+\hypertarget{class_graphics_context_a282d800096bcd6c9a02115bf4b33fbe9}{\index{Graphics\+Context@{Graphics\+Context}!disable@{disable}}
+\index{disable@{disable}!Graphics\+Context@{Graphics\+Context}}
+\subsubsection[{disable}]{\setlength{\rightskip}{0pt plus 5cm}void disable (
+\begin{DoxyParamCaption}
+\item[{const {\bf Capability}}]{cap}
+\end{DoxyParamCaption}
+)}}\label{class_graphics_context_a282d800096bcd6c9a02115bf4b33fbe9}
+Disables the select capability. 
+\begin{DoxyParams}{Parameters}
+{\em cap} & Capability to disable. \\
+\hline
+\end{DoxyParams}
+\hypertarget{class_graphics_context_a783d6c3c19ab3c635d648e820c9fac1e}{\index{Graphics\+Context@{Graphics\+Context}!draw\+Circle@{draw\+Circle}}
+\index{draw\+Circle@{draw\+Circle}!Graphics\+Context@{Graphics\+Context}}
+\subsubsection[{draw\+Circle}]{\setlength{\rightskip}{0pt plus 5cm}void draw\+Circle (
+\begin{DoxyParamCaption}
+\item[{const Vector2 \&}]{pos, }
+\item[{const float}]{radius, }
+\item[{const uint}]{segments, }
+\item[{const {\bf Color} \&}]{color = {\ttfamily {\bf Color}(255)}}
+\end{DoxyParamCaption}
+)}}\label{class_graphics_context_a783d6c3c19ab3c635d648e820c9fac1e}
+Renders a circle. 
+\begin{DoxyParams}{Parameters}
+{\em pos} & Center of the circle. \\
+\hline
+{\em radius} & Radius of the circle. \\
+\hline
+{\em segments} & Number of triangle segments to divide the circle into. \\
+\hline
+{\em color} & Color of the circle. \\
+\hline
+\end{DoxyParams}
+\hypertarget{class_graphics_context_ab68e6d1a73de626fe08171e0571214d0}{\index{Graphics\+Context@{Graphics\+Context}!draw\+Circle@{draw\+Circle}}
+\index{draw\+Circle@{draw\+Circle}!Graphics\+Context@{Graphics\+Context}}
+\subsubsection[{draw\+Circle}]{\setlength{\rightskip}{0pt plus 5cm}void draw\+Circle (
+\begin{DoxyParamCaption}
+\item[{const float}]{x, }
+\item[{const float}]{y, }
+\item[{const float}]{radius, }
+\item[{const uint}]{segments, }
+\item[{const {\bf Color} \&}]{color = {\ttfamily {\bf Color}(255)}}
+\end{DoxyParamCaption}
+)}}\label{class_graphics_context_ab68e6d1a73de626fe08171e0571214d0}
+Renders a circle. 
+\begin{DoxyParams}{Parameters}
+{\em x} & Center x position of the circle. \\
+\hline
+{\em y} & Center y position of the circle. \\
+\hline
+{\em radius} & Radius of the circle. \\
+\hline
+{\em segments} & Number of triangle segments to divide the circle into. \\
+\hline
+{\em color} & Color of the circle. \\
+\hline
+\end{DoxyParams}
+\hypertarget{class_graphics_context_aa3bbdf13b414214281ead0b3dc39f67a}{\index{Graphics\+Context@{Graphics\+Context}!draw\+Indexed\+Primitives@{draw\+Indexed\+Primitives}}
+\index{draw\+Indexed\+Primitives@{draw\+Indexed\+Primitives}!Graphics\+Context@{Graphics\+Context}}
+\subsubsection[{draw\+Indexed\+Primitives}]{\setlength{\rightskip}{0pt plus 5cm}void draw\+Indexed\+Primitives (
+\begin{DoxyParamCaption}
+\item[{const {\bf Primitive\+Type}}]{type, }
+\item[{const Vertex $\ast$}]{vertices, }
+\item[{const uint}]{vertex\+Count, }
+\item[{const uint $\ast$}]{indices, }
+\item[{const uint}]{index\+Count}
+\end{DoxyParamCaption}
+)}}\label{class_graphics_context_aa3bbdf13b414214281ead0b3dc39f67a}
+Renders an indexed primitive to the screen. 
+\begin{DoxyParams}{Parameters}
+{\em type} & Types of primitives to render. \\
+\hline
+{\em vertices} & Array of vertices to render. \\
+\hline
+{\em vertex\+Count} & Number of vertices to render. \\
+\hline
+{\em indices} & Array of indices. \\
+\hline
+{\em index\+Count} & Number of indices. \\
+\hline
+\end{DoxyParams}
+\hypertarget{class_graphics_context_ad62786dc06841b67d1a9fb95ea504081}{\index{Graphics\+Context@{Graphics\+Context}!draw\+Indexed\+Primitives@{draw\+Indexed\+Primitives}}
+\index{draw\+Indexed\+Primitives@{draw\+Indexed\+Primitives}!Graphics\+Context@{Graphics\+Context}}
+\subsubsection[{draw\+Indexed\+Primitives}]{\setlength{\rightskip}{0pt plus 5cm}void draw\+Indexed\+Primitives (
+\begin{DoxyParamCaption}
+\item[{const {\bf Primitive\+Type}}]{type, }
+\item[{const Vertex\+Buffer $\ast$}]{vbo, }
+\item[{const Index\+Buffer $\ast$}]{ibo}
+\end{DoxyParamCaption}
+)}}\label{class_graphics_context_ad62786dc06841b67d1a9fb95ea504081}
+Renders an indexed primitive to the screen using vertex and index buffers. 
+\begin{DoxyParams}{Parameters}
+{\em type} & Types of primitives to render. \\
+\hline
+{\em vbo} & Vertex buffer object. \\
+\hline
+{\em ibo} & Index buffer object. \\
+\hline
+\end{DoxyParams}
+\hypertarget{class_graphics_context_af00663a712ef5080cf9d732156328c03}{\index{Graphics\+Context@{Graphics\+Context}!draw\+Primitives@{draw\+Primitives}}
+\index{draw\+Primitives@{draw\+Primitives}!Graphics\+Context@{Graphics\+Context}}
+\subsubsection[{draw\+Primitives}]{\setlength{\rightskip}{0pt plus 5cm}void draw\+Primitives (
+\begin{DoxyParamCaption}
+\item[{const {\bf Primitive\+Type}}]{type, }
+\item[{const Vertex $\ast$}]{vertices, }
+\item[{const uint}]{vertex\+Count}
+\end{DoxyParamCaption}
+)}}\label{class_graphics_context_af00663a712ef5080cf9d732156328c03}
+Renders primitives to the screen. 
+\begin{DoxyParams}{Parameters}
+{\em type} & Types of primitives to render. \\
+\hline
+{\em vertices} & Array of vertices to render. \\
+\hline
+{\em vertex\+Count} & Number of vertices to render. \\
+\hline
+\end{DoxyParams}
+\hypertarget{class_graphics_context_ab5edd0597d4846689365f2807bbf67a6}{\index{Graphics\+Context@{Graphics\+Context}!draw\+Primitives@{draw\+Primitives}}
+\index{draw\+Primitives@{draw\+Primitives}!Graphics\+Context@{Graphics\+Context}}
+\subsubsection[{draw\+Primitives}]{\setlength{\rightskip}{0pt plus 5cm}void draw\+Primitives (
+\begin{DoxyParamCaption}
+\item[{const {\bf Primitive\+Type}}]{type, }
+\item[{const Vertex\+Buffer $\ast$}]{vbo}
+\end{DoxyParamCaption}
+)}}\label{class_graphics_context_ab5edd0597d4846689365f2807bbf67a6}
+Renders primitives to the screen. 
+\begin{DoxyParams}{Parameters}
+{\em type} & Types of primitives to render. \\
+\hline
+{\em vbo} & Vertex buffer object. \\
+\hline
+\end{DoxyParams}
+\hypertarget{class_graphics_context_ace30d4bb10727b827910e159f6a34345}{\index{Graphics\+Context@{Graphics\+Context}!draw\+Rectangle@{draw\+Rectangle}}
+\index{draw\+Rectangle@{draw\+Rectangle}!Graphics\+Context@{Graphics\+Context}}
+\subsubsection[{draw\+Rectangle}]{\setlength{\rightskip}{0pt plus 5cm}void draw\+Rectangle (
+\begin{DoxyParamCaption}
+\item[{const Rect \&}]{rect, }
+\item[{const {\bf Color} \&}]{color = {\ttfamily {\bf Color}(255)}, }
+\item[{const Texture\+Region \&}]{texture\+Region = {\ttfamily TextureRegion()}}
+\end{DoxyParamCaption}
+)}}\label{class_graphics_context_ace30d4bb10727b827910e159f6a34345}
+Renders a rectangle. 
+\begin{DoxyParams}{Parameters}
+{\em rect} & Rectangle to render. \\
+\hline
+{\em color} & Color of the rectangle. \\
+\hline
+{\em texture\+Region} & Texture region of the rectangle. \\
+\hline
+\end{DoxyParams}
+\hypertarget{class_graphics_context_a4d40c89661fd2488e6cf151f4bae3aef}{\index{Graphics\+Context@{Graphics\+Context}!draw\+Rectangle@{draw\+Rectangle}}
+\index{draw\+Rectangle@{draw\+Rectangle}!Graphics\+Context@{Graphics\+Context}}
+\subsubsection[{draw\+Rectangle}]{\setlength{\rightskip}{0pt plus 5cm}void draw\+Rectangle (
+\begin{DoxyParamCaption}
+\item[{const Vector2 \&}]{pos, }
+\item[{const Vector2 \&}]{size, }
+\item[{const {\bf Color} \&}]{color = {\ttfamily {\bf Color}(255)}, }
+\item[{const Texture\+Region \&}]{texture\+Region = {\ttfamily TextureRegion()}}
+\end{DoxyParamCaption}
+)}}\label{class_graphics_context_a4d40c89661fd2488e6cf151f4bae3aef}
+Renders a rectangle. 
+\begin{DoxyParams}{Parameters}
+{\em pos} & Top-\/left corner of the rectangle. \\
+\hline
+{\em size} & Size of the rectangle. \\
+\hline
+{\em color} & Color of the rectangle. \\
+\hline
+{\em texture\+Region} & Texture region of the rectangle. \\
+\hline
+\end{DoxyParams}
+\hypertarget{class_graphics_context_a0dd520b437660a440b71748ba8d0b78c}{\index{Graphics\+Context@{Graphics\+Context}!draw\+Rectangle@{draw\+Rectangle}}
+\index{draw\+Rectangle@{draw\+Rectangle}!Graphics\+Context@{Graphics\+Context}}
+\subsubsection[{draw\+Rectangle}]{\setlength{\rightskip}{0pt plus 5cm}void draw\+Rectangle (
+\begin{DoxyParamCaption}
+\item[{const float}]{x, }
+\item[{const float}]{y, }
+\item[{const float}]{width, }
+\item[{const float}]{height, }
+\item[{const {\bf Color} \&}]{color = {\ttfamily {\bf Color}(255)}, }
+\item[{const Texture\+Region \&}]{texture\+Region = {\ttfamily TextureRegion()}}
+\end{DoxyParamCaption}
+)}}\label{class_graphics_context_a0dd520b437660a440b71748ba8d0b78c}
+Renders a rectangle. 
+\begin{DoxyParams}{Parameters}
+{\em x} & Left x position of the rectangle. \\
+\hline
+{\em y} & Top y position of the rectangle. \\
+\hline
+{\em width} & Width of the rectangle. \\
+\hline
+{\em height} & Height of the rectangle. \\
+\hline
+{\em color} & Color of the rectangle. \\
+\hline
+{\em texture\+Region} & Texture region of the rectangle. \\
+\hline
+\end{DoxyParams}
+\hypertarget{class_graphics_context_ab530828f0209ce95ff7f2c00297fbe76}{\index{Graphics\+Context@{Graphics\+Context}!enable@{enable}}
+\index{enable@{enable}!Graphics\+Context@{Graphics\+Context}}
+\subsubsection[{enable}]{\setlength{\rightskip}{0pt plus 5cm}void enable (
+\begin{DoxyParamCaption}
+\item[{const {\bf Capability}}]{cap}
+\end{DoxyParamCaption}
+)}}\label{class_graphics_context_ab530828f0209ce95ff7f2c00297fbe76}
+Enables the select capability. 
+\begin{DoxyParams}{Parameters}
+{\em cap} & Capability to enable. \\
+\hline
+\end{DoxyParams}
+\hypertarget{class_graphics_context_a7713be59d4d62a129c22789468439666}{\index{Graphics\+Context@{Graphics\+Context}!get\+Blend\+State@{get\+Blend\+State}}
+\index{get\+Blend\+State@{get\+Blend\+State}!Graphics\+Context@{Graphics\+Context}}
+\subsubsection[{get\+Blend\+State}]{\setlength{\rightskip}{0pt plus 5cm}Blend\+State get\+Blend\+State (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{class_graphics_context_a7713be59d4d62a129c22789468439666}
+Returns the current blend state. \hypertarget{class_graphics_context_ae84b5088898ed1f2a0ca2da13d7ebfe8}{\index{Graphics\+Context@{Graphics\+Context}!get\+Height@{get\+Height}}
+\index{get\+Height@{get\+Height}!Graphics\+Context@{Graphics\+Context}}
+\subsubsection[{get\+Height}]{\setlength{\rightskip}{0pt plus 5cm}uint get\+Height (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}}\label{class_graphics_context_ae84b5088898ed1f2a0ca2da13d7ebfe8}
+Returns the height of the viewport. \hypertarget{class_graphics_context_a50388419b98eadbf2d38e787aaa7fae7}{\index{Graphics\+Context@{Graphics\+Context}!get\+Model\+View\+Matrix@{get\+Model\+View\+Matrix}}
+\index{get\+Model\+View\+Matrix@{get\+Model\+View\+Matrix}!Graphics\+Context@{Graphics\+Context}}
+\subsubsection[{get\+Model\+View\+Matrix}]{\setlength{\rightskip}{0pt plus 5cm}Matrix4 get\+Model\+View\+Matrix (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}\label{class_graphics_context_a50388419b98eadbf2d38e787aaa7fae7}
+Gets the current model-\/view matrix \hypertarget{class_graphics_context_ab630203811c66d63ac6ceb511ced90f2}{\index{Graphics\+Context@{Graphics\+Context}!get\+Render\+Target@{get\+Render\+Target}}
+\index{get\+Render\+Target@{get\+Render\+Target}!Graphics\+Context@{Graphics\+Context}}
+\subsubsection[{get\+Render\+Target}]{\setlength{\rightskip}{0pt plus 5cm}Render\+Target2\+D$\ast$ get\+Render\+Target (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}}\label{class_graphics_context_ab630203811c66d63ac6ceb511ced90f2}
+Get current render target. \hypertarget{class_graphics_context_af0eeabbc9586e2939fef72bed1b0969e}{\index{Graphics\+Context@{Graphics\+Context}!get\+Shader@{get\+Shader}}
+\index{get\+Shader@{get\+Shader}!Graphics\+Context@{Graphics\+Context}}
+\subsubsection[{get\+Shader}]{\setlength{\rightskip}{0pt plus 5cm}Shader\+Ptr get\+Shader (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}\label{class_graphics_context_af0eeabbc9586e2939fef72bed1b0969e}
+Returns the current shader. \hypertarget{class_graphics_context_ab7ab5aa673a41e08f1ba325682c04c74}{\index{Graphics\+Context@{Graphics\+Context}!get\+Texture@{get\+Texture}}
+\index{get\+Texture@{get\+Texture}!Graphics\+Context@{Graphics\+Context}}
+\subsubsection[{get\+Texture}]{\setlength{\rightskip}{0pt plus 5cm}Texture2\+D\+Ptr get\+Texture (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}\label{class_graphics_context_ab7ab5aa673a41e08f1ba325682c04c74}
+Gets the current texture. \hypertarget{class_graphics_context_a290563bfc82e1ad627ac10bda066729e}{\index{Graphics\+Context@{Graphics\+Context}!get\+Width@{get\+Width}}
+\index{get\+Width@{get\+Width}!Graphics\+Context@{Graphics\+Context}}
+\subsubsection[{get\+Width}]{\setlength{\rightskip}{0pt plus 5cm}uint get\+Width (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}}\label{class_graphics_context_a290563bfc82e1ad627ac10bda066729e}
+Returns the width of the viewport. \hypertarget{class_graphics_context_a89162c73545bb184c781c825dd72f082}{\index{Graphics\+Context@{Graphics\+Context}!pop\+Matrix@{pop\+Matrix}}
+\index{pop\+Matrix@{pop\+Matrix}!Graphics\+Context@{Graphics\+Context}}
+\subsubsection[{pop\+Matrix}]{\setlength{\rightskip}{0pt plus 5cm}void pop\+Matrix (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{class_graphics_context_a89162c73545bb184c781c825dd72f082}
+Pops the top matrix of the model-\/view matrix stack. \hypertarget{class_graphics_context_a0784775a27375168d2867bd47363e899}{\index{Graphics\+Context@{Graphics\+Context}!push\+Matrix@{push\+Matrix}}
+\index{push\+Matrix@{push\+Matrix}!Graphics\+Context@{Graphics\+Context}}
+\subsubsection[{push\+Matrix}]{\setlength{\rightskip}{0pt plus 5cm}void push\+Matrix (
+\begin{DoxyParamCaption}
+\item[{const Matrix4 \&}]{mat}
+\end{DoxyParamCaption}
+)}}\label{class_graphics_context_a0784775a27375168d2867bd47363e899}
+Pushes a matrix onto the model-\/view matrix stack. The matrix is pushed as follows
+\begin{DoxyCode}
+stack.push\_back(stack.top() * mat) 
+\end{DoxyCode}
+ 
+\begin{DoxyParams}{Parameters}
+{\em mat} & Matrix to push on the stack. \\
+\hline
+\end{DoxyParams}
+\hypertarget{class_graphics_context_a8d30cb975ff071bfd3e4e120141b10f8}{\index{Graphics\+Context@{Graphics\+Context}!resize\+Viewport@{resize\+Viewport}}
+\index{resize\+Viewport@{resize\+Viewport}!Graphics\+Context@{Graphics\+Context}}
+\subsubsection[{resize\+Viewport}]{\setlength{\rightskip}{0pt plus 5cm}void resize\+Viewport (
+\begin{DoxyParamCaption}
+\item[{const uint}]{w, }
+\item[{const uint}]{h}
+\end{DoxyParamCaption}
+)}}\label{class_graphics_context_a8d30cb975ff071bfd3e4e120141b10f8}
+Resizes the viewport (the area of the screen rendered to). 
+\begin{DoxyParams}{Parameters}
+{\em w} & Width of the viewport in pixels \\
+\hline
+{\em h} & Height of the viewport in pixels \\
+\hline
+\end{DoxyParams}
+\hypertarget{class_graphics_context_a0d4cbf012e3148ff546f3fc207196430}{\index{Graphics\+Context@{Graphics\+Context}!save\+Screenshot@{save\+Screenshot}}
+\index{save\+Screenshot@{save\+Screenshot}!Graphics\+Context@{Graphics\+Context}}
+\subsubsection[{save\+Screenshot}]{\setlength{\rightskip}{0pt plus 5cm}void save\+Screenshot (
+\begin{DoxyParamCaption}
+\item[{string}]{path}
+\end{DoxyParamCaption}
+)}}\label{class_graphics_context_a0d4cbf012e3148ff546f3fc207196430}
+Saves a screen shot of the back buffer to {\ttfamily path} as a P\+N\+G file. 
+\begin{DoxyParams}{Parameters}
+{\em path} & Screen shot destination path \\
+\hline
+\end{DoxyParams}
+\hypertarget{class_graphics_context_aead84482bf5fbdc1f59fe748178aa6a8}{\index{Graphics\+Context@{Graphics\+Context}!set\+Blend\+State@{set\+Blend\+State}}
+\index{set\+Blend\+State@{set\+Blend\+State}!Graphics\+Context@{Graphics\+Context}}
+\subsubsection[{set\+Blend\+State}]{\setlength{\rightskip}{0pt plus 5cm}void set\+Blend\+State (
+\begin{DoxyParamCaption}
+\item[{const Blend\+State \&}]{blend\+State}
+\end{DoxyParamCaption}
+)}}\label{class_graphics_context_aead84482bf5fbdc1f59fe748178aa6a8}
+Set blend state. Every pixel rendered after this will use a formula defined by {\ttfamily blend\+State} to blend new pixels with the back buffer. 
+\begin{DoxyParams}{Parameters}
+{\em blend\+State} & The blend state to render with. \\
+\hline
+\end{DoxyParams}
+\hypertarget{class_graphics_context_a395d4f9a734509da73c1757929a0f7f7}{\index{Graphics\+Context@{Graphics\+Context}!set\+Model\+View\+Matrix@{set\+Model\+View\+Matrix}}
+\index{set\+Model\+View\+Matrix@{set\+Model\+View\+Matrix}!Graphics\+Context@{Graphics\+Context}}
+\subsubsection[{set\+Model\+View\+Matrix}]{\setlength{\rightskip}{0pt plus 5cm}void set\+Model\+View\+Matrix (
+\begin{DoxyParamCaption}
+\item[{const Matrix4 \&}]{mat}
+\end{DoxyParamCaption}
+)}}\label{class_graphics_context_a395d4f9a734509da73c1757929a0f7f7}
+Sets the model-\/view matrix. This means that every vertex drawn after this will be multiplied by {\ttfamily mat}. 
+\begin{DoxyParams}{Parameters}
+{\em mat} & The 4x4 matrix to be multiplied with every vertex. \\
+\hline
+\end{DoxyParams}
+\hypertarget{class_graphics_context_a4ecf8a82b0a8824005fd79ec37b2602e}{\index{Graphics\+Context@{Graphics\+Context}!set\+Render\+Target@{set\+Render\+Target}}
+\index{set\+Render\+Target@{set\+Render\+Target}!Graphics\+Context@{Graphics\+Context}}
+\subsubsection[{set\+Render\+Target}]{\setlength{\rightskip}{0pt plus 5cm}void set\+Render\+Target (
+\begin{DoxyParamCaption}
+\item[{Render\+Target2\+D $\ast$}]{render\+Target}
+\end{DoxyParamCaption}
+)}}\label{class_graphics_context_a4ecf8a82b0a8824005fd79ec37b2602e}
+Sets a render target. This means that everything drawn beyond this point will be rendered to the given {\ttfamily render\+Target} instead of the screen. 
+\begin{DoxyParams}{Parameters}
+{\em render\+Target} & The target buffer to render to. \\
+\hline
+\end{DoxyParams}
+\hypertarget{class_graphics_context_aa547cd0c7d532d7c6e6946af0d988429}{\index{Graphics\+Context@{Graphics\+Context}!set\+Shader@{set\+Shader}}
+\index{set\+Shader@{set\+Shader}!Graphics\+Context@{Graphics\+Context}}
+\subsubsection[{set\+Shader}]{\setlength{\rightskip}{0pt plus 5cm}void set\+Shader (
+\begin{DoxyParamCaption}
+\item[{const Shader\+Ptr}]{shader}
+\end{DoxyParamCaption}
+)}}\label{class_graphics_context_aa547cd0c7d532d7c6e6946af0d988429}
+Set shader. Every vertex and fragment rendered after this will have the effect of {\ttfamily shader} applied to them. 
+\begin{DoxyParams}{Parameters}
+{\em shader} & Shader to render the primitves with. \\
+\hline
+\end{DoxyParams}
+\hypertarget{class_graphics_context_af49e7858667f3ed99956517a33c298df}{\index{Graphics\+Context@{Graphics\+Context}!set\+Texture@{set\+Texture}}
+\index{set\+Texture@{set\+Texture}!Graphics\+Context@{Graphics\+Context}}
+\subsubsection[{set\+Texture}]{\setlength{\rightskip}{0pt plus 5cm}void set\+Texture (
+\begin{DoxyParamCaption}
+\item[{const Texture2\+D\+Ptr}]{texture}
+\end{DoxyParamCaption}
+)}}\label{class_graphics_context_af49e7858667f3ed99956517a33c298df}
+Set texture. Every primitive rendered after this will have {\ttfamily texture} applied to it. 
+\begin{DoxyParams}{Parameters}
+{\em texture} & Texture to apply to the primitives. \\
+\hline
+\end{DoxyParams}

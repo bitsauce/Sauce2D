@@ -28,9 +28,6 @@ class Graphics;
 class XDAPI Console
 {
 	friend class Engine;
-
-	SINGLETON_DECL(Console);
-
 public:
 	Console();
 	~Console();
@@ -56,6 +53,8 @@ private:
 	
 	Engine *m_engine;
 	FileWriter *m_output;
+
+	static Console *s_this;
 };
 
 /*********************************************************************
@@ -186,8 +185,6 @@ private:
 class XDAPI FileSystem
 {
 	friend class Engine;
-
-	SINGLETON_DECL(FileSystem)
 public:
 	// File buffers
 	bool readFile(string filePath, string &conent) const;
@@ -211,6 +208,9 @@ public:
 
 protected:
 	bool makeDir(const string &path);
+
+private:
+	static FileSystem *s_this;
 };
 
 /*********************************************************************

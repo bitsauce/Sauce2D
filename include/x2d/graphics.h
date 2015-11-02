@@ -43,7 +43,6 @@ class XDAPI Graphics
 	friend class Engine;
 	friend class Window;
 	friend class GraphicsContext;
-
 public:
 
 	enum Feature

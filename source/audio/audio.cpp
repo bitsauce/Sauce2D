@@ -11,11 +11,15 @@
 
 BEGIN_XD_NAMESPACE
 
-SINGLETON_DEF(AudioManager)
+AudioManager *AudioManager::s_this = nullptr;
 
 AudioManager::AudioManager()
 {
-	SINGLETON_ASSERT
+	// Check singleton
+	if(s_this)
+	{
+		THROW("AudioManager already initialized!");
+	}
 
 	// Get default device
 	const ALCchar *defaultDevice = alcGetString(NULL, ALC_DEFAULT_DEVICE_SPECIFIER);
