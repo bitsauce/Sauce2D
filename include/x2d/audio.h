@@ -1,7 +1,7 @@
 #ifndef X2D_AUDIO_H
 #define X2D_AUDIO_H
 
-#include "engine.h"
+#include <x2d/engine.h>
 
 #include "../3rdparty/openal/include/al.h"
 #include "../3rdparty/openal/include/alc.h"

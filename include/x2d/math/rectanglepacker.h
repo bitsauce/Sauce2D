@@ -1,10 +1,10 @@
 #ifndef X2D_RECTANGLE_PACKER_H
 #define X2D_RECTANGLE_PACKER_H
 
-#include "../config.h"
+#include <x2d/config.h>
 
-#include "vector.h"
-#include "rect.h"
+#include <x2d/math/vector.h>
+#include <x2d/math/rect.h>
 
 BEGIN_XD_NAMESPACE
 

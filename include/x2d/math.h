@@ -1,12 +1,12 @@
 #ifndef X2D_MATH_H
 #define X2D_MATH_H
 
-#include "config.h"
-#include "math/matrix.h"
-#include "math/rect.h"
-#include "math/rectanglepacker.h"
-#include "math/vector.h"
-#include "math/random.h"
+#include <x2d/config.h>
+#include <x2d/math/matrix.h>
+#include <x2d/math/rect.h>
+#include <x2d/math/rectanglepacker.h>
+#include <x2d/math/vector.h>
+#include <x2d/math/random.h>
 
 #define PI 3.14159265359f
 

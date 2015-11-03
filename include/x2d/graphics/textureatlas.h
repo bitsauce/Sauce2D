@@ -1,10 +1,10 @@
 #ifndef X2D_TEXTURE_ATLAS_H
 #define X2D_TEXTURE_ATLAS_H
 
-#include "../engine.h"
-#include "texture.h"
-#include "pixmap.h"
-#include "textureRegion.h"
+#include <x2d/engine.h>
+#include <x2d/graphics/texture.h>
+#include <x2d/graphics/pixmap.h>
+#include <x2d/graphics/textureRegion.h>
 
 BEGIN_XD_NAMESPACE
 

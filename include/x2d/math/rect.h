@@ -1,8 +1,8 @@
 #ifndef X2D_RECT_H
 #define X2D_RECT_H
 
-#include "../config.h"
-#include "vector.h"
+#include <x2d/config.h>
+#include <x2d/math/vector.h>
 
 /** \brief A class which holds a 2 dimensional Rect
  *

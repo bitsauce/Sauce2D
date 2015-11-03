@@ -1,11 +1,11 @@
 #ifndef X2D_ENGINE_H
 #define X2D_ENGINE_H
 
-#include "config.h"
-#include "math.h"
-#include "resourcemanager.h"
-#include "iniparser.h"
-#include "input/input.h"
+#include <x2d/config.h>
+#include <x2d/math.h>
+#include <x2d/resourcemanager.h>
+#include <x2d/iniparser.h>
+#include <x2d/input/input.h>
 
 BEGIN_XD_NAMESPACE
 

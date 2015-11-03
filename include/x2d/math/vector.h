@@ -1,7 +1,7 @@
 #ifndef X2D_VECTOR_H
 #define X2D_VECTOR_H
 
-#include "../config.h"
+#include <x2d/config.h>
 
 /** \brief A class which holds a 2 dimensional vector
  *

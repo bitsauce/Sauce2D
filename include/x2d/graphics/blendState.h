@@ -1,7 +1,7 @@
 #ifndef BLEND_STATE_H
 #define BLEND_STATE_H
 
-#include "../engine.h"
+#include <x2d/engine.h>
 
 BEGIN_XD_NAMESPACE
 

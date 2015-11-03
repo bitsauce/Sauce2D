@@ -1,7 +1,7 @@
 #ifndef X2D_RANDOM_H
 #define X2D_RANDOM_H
 
-#include "../config.h"
+#include <x2d/config.h>
 
 BEGIN_XD_NAMESPACE
 

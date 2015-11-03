@@ -1,8 +1,8 @@
 #ifndef X2D_MATRIX_H
 #define X2D_MATRIX_H
 
-#include "../config.h"
-#include "vector.h"
+#include <x2d/config.h>
+#include <x2d/math/vector.h>
 
 /*********************************************************************
 **	2x2 Matrix														**

@@ -1,8 +1,8 @@
 #ifndef X2D_TEXTURE_H
 #define X2D_TEXTURE_H
 
-#include "../engine.h"
-#include "pixmap.h"
+#include <x2d/engine.h>
+#include <x2d/graphics/pixmap.h>
 
 BEGIN_XD_NAMESPACE
 	

@@ -1,10 +1,10 @@
 #ifndef GRAPHICS_CONTEXT_H
 #define GRAPHICS_CONTEXT_H
 
-#include "../engine.h"
-#include "shader.h"
-#include "blendState.h"
-#include "textureregion.h"
+#include <x2d/engine.h>
+#include <x2d/graphics/shader.h>
+#include <x2d/graphics/blendState.h>
+#include <x2d/graphics/textureRegion.h>
 
 BEGIN_XD_NAMESPACE
 

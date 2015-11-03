@@ -1,7 +1,7 @@
 #ifndef X2D_VIEWPORT_H
 #define X2D_VIEWPORT_H
 
-#include "../engine.h"
+#include <x2d/engine.h>
 
 BEGIN_XD_NAMESPACE
 

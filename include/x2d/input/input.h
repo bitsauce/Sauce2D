@@ -4,9 +4,9 @@
 #include <x2d/config.h>
 #include <x2d/math.h>
 
-#include "inputContext.h"
-#include "keyListener.h"
-#include "mouseListener.h"
+#include <x2d/input/inputContext.h>
+#include <x2d/input/keyListener.h>
+#include <x2d/input/mouseListener.h>
 
 BEGIN_XD_NAMESPACE
 

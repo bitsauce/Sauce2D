@@ -1,7 +1,7 @@
 #ifndef X2D_INI_PARSER_H
 #define X2D_INI_PARSER_H
 
-#include "engine.h"
+#include <x2d/engine.h>
 
 BEGIN_XD_NAMESPACE
 

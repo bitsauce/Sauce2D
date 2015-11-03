@@ -1,13 +1,13 @@
 #ifndef X2D_BATCH_H
 #define X2D_BATCH_H
 
-#include "../engine.h"
-#include "vertex.h"
-#include "vertexBuffer.h"
-#include "blendState.h"
-#include "texture.h"
-#include "shader.h"
-#include "font.h"
+#include <x2d/engine.h>
+#include <x2d/graphics/vertex.h>
+#include <x2d/graphics/vertexBuffer.h>
+#include <x2d/graphics/blendState.h>
+#include <x2d/graphics/texture.h>
+#include <x2d/graphics/shader.h>
+#include <x2d/graphics/font.h>
 
 BEGIN_XD_NAMESPACE
 

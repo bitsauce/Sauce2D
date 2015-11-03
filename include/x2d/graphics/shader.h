@@ -1,8 +1,8 @@
 #ifndef X2D_SHADER_H
 #define X2D_SHADER_H
 
-#include "../engine.h"
-#include "texture.h"
+#include <x2d/engine.h>
+#include <x2d/graphics/texture.h>
 
 BEGIN_XD_NAMESPACE
 

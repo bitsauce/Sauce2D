@@ -1,8 +1,8 @@
 #ifndef X2D_ANIMATION_H
 #define X2D_ANIMATION_H
 
-#include "../engine.h"
-#include "textureRegion.h"
+#include <x2d/engine.h>
+#include <x2d/graphics/textureregion.h>
 
 BEGIN_XD_NAMESPACE
 

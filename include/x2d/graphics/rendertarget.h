@@ -1,9 +1,9 @@
 #ifndef X2D_RENDER_TARGET_H
 #define X2D_RENDER_TARGET_H
 
-#include "../engine.h"
-#include "graphicscontext.h"
-#include "texture.h"
+#include <x2d/engine.h>
+#include <x2d/graphics/graphicsContext.h>
+#include <x2d/graphics/texture.h>
 
 BEGIN_XD_NAMESPACE
 
