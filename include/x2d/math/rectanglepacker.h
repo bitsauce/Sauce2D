@@ -22,36 +22,56 @@ public:
 		m_maxWidth = width;
 	}
 
-	class XDAPI Rectangle
+	class XDAPI Rect
 	{
+		friend class RectanglePacker;
 	public:
-		Rectangle(void *data) :
+		Rect(const uint width, const uint height, void *data) :
 			data(data),
 			x(0),
 			y(0),
-			width(0),
-			height(0)
+			width(width),
+			height(height)
 		{
 		}
 
-		void set(int x, int y, int width, int height)
+		Rect(const Rect &other) :
+			data(other.data),
+			x(other.x),
+			y(other.y),
+			width(other.width),
+			height(other.height)
 		{
-			this->x = x;
-			this->y = y;
-			this->width = width;
-			this->height = height;
 		}
 
-		void setSize(int width, int height)
+		uint getX() const
 		{
-			this->width = width;
-			this->height = height;
+			return x;
 		}
 
-		int x, y, width, height;
-		const void *getData() const { return data; }
+		uint getY() const
+		{
+			return y;
+		}
+
+		uint getWidth() const
+		{
+			return width;
+		}
+
+		uint getHeight() const
+		{
+			return height;
+		}
+
+		const void *getData() const
+		{
+			return data;
+		}
 
 	private:
+		uint x, y;
+		uint width, height; // Should be const but cannot be, as it breaks operator=.
 		void *data;
 	};
 
@@ -77,15 +97,15 @@ public:
 		Vector2i canvas;
 		int area;
 		float efficiency;
-		vector<Rectangle> rectangles;
+		vector<Rect> rectangles;
 	};
 
 	const Result pack();
-	void addRect(const Rectangle rectangle);
+	void addRect(const Rect rectangle);
 	void clearRects();
 
 private:
-	vector<Rectangle> m_rectangles;
+	vector<Rect> m_rectangles;
 	int m_maxWidth;
 };
 

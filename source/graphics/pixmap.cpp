@@ -185,6 +185,23 @@ Pixmap::~Pixmap()
 	delete[] m_data;
 }
 
+Pixmap &Pixmap::operator=(Pixmap &other)
+{
+	m_width = other.m_width;
+	m_height = other.m_height;
+	m_format = other.m_format;
+	if(other.m_data)
+	{
+		m_data = new uchar[m_width * m_height * m_format.getPixelSizeInBytes()];
+		memcpy(m_data, other.m_data, m_width * m_height * m_format.getPixelSizeInBytes());
+	}
+	else
+	{
+		m_data = 0;
+	}
+	return *this;
+}
+
 const uchar *Pixmap::getData() const
 {
 	return m_data;
@@ -239,8 +256,6 @@ void Pixmap::clear()
 	fill(emptyPixel);
 	delete[] emptyPixel;
 }
-
-#include <freeimage.h>
 
 void Pixmap::exportToFile(string path) const
 {

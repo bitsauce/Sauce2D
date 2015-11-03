@@ -234,6 +234,7 @@ int Engine::init(Game * game)
 	}
 	catch(Exception e)
 	{
+		boxer::show(e.message().c_str(), "Exception");
 		LOG("An exception occured: %s", e.message().c_str());
 		return e.errorCode();
 	}

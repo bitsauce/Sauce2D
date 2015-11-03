@@ -55,6 +55,8 @@ public:
 	Pixmap(const string &imageFile, const bool premultiplyAlpha = false);
 	~Pixmap();
 
+	Pixmap &operator=(Pixmap &other);
+
 	uint getWidth() const;
 	uint getHeight() const;
 	PixelFormat getFormat() const;
@@ -68,8 +70,6 @@ public:
 	void exportToFile(string path) const;
 
 	const uchar *getData() const;
-
-	//Pixmap &operator=(Pixmap &other);
 
 private:
 	uchar *m_data;

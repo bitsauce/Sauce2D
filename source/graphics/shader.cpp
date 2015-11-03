@@ -23,8 +23,7 @@ Shader::Shader(const string &vertexSource, const string &fragmentSource)
     m_fragShaderID = glCreateShader(GL_FRAGMENT_SHADER);
 
 	// Result variables
-	int result = 0;
-	int logLength = 0;
+	GLint success;
 
 	// Create modified shader code
 	string vertexSourceModified = "#version 130\n" + vertexSource;
@@ -39,17 +38,20 @@ Shader::Shader(const string &vertexSource, const string &fragmentSource)
     glCompileShader(m_vertShaderID);
 
     // Validate vertex shader
-    glGetShaderiv(m_vertShaderID, GL_COMPILE_STATUS, &result);
-    glGetShaderiv(m_vertShaderID, GL_INFO_LOG_LENGTH, &logLength);
-
-	// Get error log
-    char *compileLog = new char[logLength];
-    glGetShaderInfoLog(m_vertShaderID, logLength, NULL, compileLog);
-
-	// Print shader error to console
-	if(logLength > 1)
+    glGetShaderiv(m_vertShaderID, GL_COMPILE_STATUS, &success);
+	if(!success)
 	{
-		LOG("%s", compileLog);
+		// Get log length
+		GLint logLength;
+		glGetShaderiv(m_vertShaderID, GL_INFO_LOG_LENGTH, &logLength);
+
+		// Get compilation log
+		string compileLog;
+		compileLog.resize(logLength);
+		glGetShaderInfoLog(m_vertShaderID, logLength, NULL, &compileLog[0]);
+
+		// Throw exception
+		THROW(compileLog.c_str());
 	}
 
 	LOG("Compiling fragment shader...");
@@ -60,19 +62,21 @@ Shader::Shader(const string &vertexSource, const string &fragmentSource)
 	glShaderSource(m_fragShaderID, 1, &data, &len);
     glCompileShader(m_fragShaderID);
 
-    // Check fragment shader
-    glGetShaderiv(m_fragShaderID, GL_COMPILE_STATUS, &result);
-    glGetShaderiv(m_fragShaderID, GL_INFO_LOG_LENGTH, &logLength);
-
-	// Get error log
-	delete[] compileLog;
-	compileLog = new char[logLength];
-    glGetShaderInfoLog(m_fragShaderID, logLength, NULL, compileLog);
-
-	// Print shader error to console
-	if(logLength > 1)
+	// Validate fragment shader
+	glGetShaderiv(m_fragShaderID, GL_COMPILE_STATUS, &success);
+	if(!success)
 	{
-		LOG("%s", compileLog);
+		// Get log length
+		GLint logLength;
+		glGetShaderiv(m_fragShaderID, GL_INFO_LOG_LENGTH, &logLength);
+
+		// Get compilation log
+		string compileLog;
+		compileLog.resize(logLength);
+		glGetShaderInfoLog(m_fragShaderID, logLength, NULL, &compileLog[0]);
+
+		// Throw exception
+		THROW(compileLog.c_str());
 	}
 
     // Create shader program
@@ -86,9 +90,6 @@ Shader::Shader(const string &vertexSource, const string &fragmentSource)
 	glBindFragDataLocation(m_id, 0, "out_FragColor");
 
 	link();
-
-	// Delete log buffers
-	delete[] compileLog;
 
 	// Setup uniform variables
 	GLint count;
@@ -162,25 +163,26 @@ void Shader::link()
 {
 	LOG("Linking shader program...");
 
-	int result = 0;
-	int logLength = 0;
-
+	// Link program
 	glLinkProgram(m_id);
 
-	glGetProgramiv(m_id, GL_LINK_STATUS, &result);
-	glGetProgramiv(m_id, GL_INFO_LOG_LENGTH, &logLength);
-
-	// Get error log
-	char* programLog = new char[(logLength > 1) ? logLength : 1];
-	glGetProgramInfoLog(m_id, logLength, NULL, programLog);
-
-	// Print program error to console
-	if(logLength > 1)
+	// Check if link was successful 
+	GLint success;
+	glGetProgramiv(m_id, GL_LINK_STATUS, &success);
+	if(!success)
 	{
-		LOG("%s", programLog);
-	}
+		// Get log length
+		int logLength = 0;
+		glGetProgramiv(m_id, GL_INFO_LOG_LENGTH, &logLength);
 
-	delete[] programLog;
+		// Get compilation log
+		string compileLog;
+		compileLog.resize(logLength);
+		glGetProgramInfoLog(m_id, logLength, NULL, &compileLog[0]);
+
+		// Throw exception
+		THROW(compileLog.c_str());
+	}
 }
 
 void Shader::setUniform1i(const string &name, const int v0)

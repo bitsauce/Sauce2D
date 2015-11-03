@@ -12,27 +12,29 @@
 
 BEGIN_XD_NAMESPACE
 
-bool heightSort(RectanglePacker::Rectangle i, RectanglePacker::Rectangle j)
+bool heightSort(RectanglePacker::Rect i, RectanglePacker::Rect j)
 {
-	return i.height > j.height;
+	return i.getHeight() > j.getHeight();
 }
 
 const RectanglePacker::Result RectanglePacker::pack()
 {
 	// No point in packing 0 rectangles
 	if(m_rectangles.size() == 0)
+	{
 		return Result();
+	}
 
 	// Sort rectangles by height
 	sort(m_rectangles.begin(), m_rectangles.end(), heightSort);
 
 	// Find total area and max height
-	int totalArea = 0;
-	int rightMost = 0;
-	int maxWidth = 0, maxHeight = m_rectangles[0].height;
+	uint totalArea = 0;
+	uint rightMost = 0;
+	uint maxWidth = 0, maxHeight = m_rectangles[0].height;
 	for(uint i = 0; i < m_rectangles.size(); i++)
 	{
-		Rectangle &rect = m_rectangles[i];
+		Rect &rect = m_rectangles[i];
 		totalArea += rect.height * rect.height;
 		if(maxWidth < rect.width) {
 			maxWidth = rect.width;
@@ -40,7 +42,7 @@ const RectanglePacker::Result RectanglePacker::pack()
 	}
 
 	// Setup loop vars
-	int canvasWidth = m_maxWidth, canvasHeight = maxHeight;
+	uint canvasWidth = m_maxWidth, canvasHeight = maxHeight;
 	vector<Recti> cells;
 	cells.push_back(Recti(0, 0, canvasWidth, canvasHeight));
 	Result bestResult;
@@ -51,14 +53,14 @@ const RectanglePacker::Result RectanglePacker::pack()
 	while(canvasWidth >= maxWidth)
 	{
 		// Get rectangle
-		Rectangle &rect = m_rectangles[idx++];
+		Rect &rect = m_rectangles[idx++];
 
 		// Find best cell
 		int bestCellIdx = -1;
 		for(uint i = 0; i < cells.size(); i++)
 		{
 			Recti *cell = &cells[i];
-			if(cell->getWidth() >= rect.width && cell->getHeight() >= rect.height)
+			if((uint) cell->getWidth() >= rect.width && (uint) cell->getHeight() >= rect.height)
 			{
 				if(bestCellIdx < 0 || cell->getArea() < cells[bestCellIdx].getArea())
 					bestCellIdx = i;
@@ -80,7 +82,8 @@ const RectanglePacker::Result RectanglePacker::pack()
 			cells.erase(cells.begin() + bestCellIdx);
 			
 			// Place rectangle into results
-			rect.set(cell.getX(), cell.getY(), rect.width, rect.height);
+			rect.x = cell.getX();
+			rect.y = cell.getY();
 			result.rectangles.push_back(rect);
 			if(rect.x + rect.width > rightMost) {
 				rightMost = rect.x + rect.width;
@@ -121,7 +124,7 @@ const RectanglePacker::Result RectanglePacker::pack()
 	return bestResult;
 }
 
-void RectanglePacker::addRect(const Rectangle rect)
+void RectanglePacker::addRect(const Rect rect)
 {
 	m_rectangles.push_back(rect);
 }
