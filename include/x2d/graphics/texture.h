@@ -56,7 +56,7 @@ public:
 	// Pixmap (texture data)
 	Pixmap getPixmap() const;
 	void updatePixmap(const Pixmap &pixmap);
-	void updatePixmap(const int x, const int y, const Pixmap &pixmap);
+	void updatePixmap(const uint x, const uint y, const Pixmap &pixmap);
 	void clear();
 
 	void exportToFile(string path);

@@ -19,7 +19,7 @@ class Sprite;
 class XDAPI SpriteBatch
 {
 public:
-	SpriteBatch(GraphicsContext &graphicsContext);
+	SpriteBatch(GraphicsContext &graphicsContext, const uint maxSprites = 2048);
 	~SpriteBatch();
 
 	enum SpriteSortMode
@@ -71,6 +71,7 @@ private:
 	uint *m_indices;
 	Sprite *m_sprites;
 	uint m_spriteCount;
+	const uint m_maxSpriteCount;
 
 	// Graphics context
 	GraphicsContext &m_graphicsContext;

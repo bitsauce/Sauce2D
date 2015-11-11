@@ -270,8 +270,14 @@ void Texture2D::updatePixmap(const Pixmap &pixmap)
 	updateFiltering();
 }
 
-void Texture2D::updatePixmap(const int x, const int y, const Pixmap &pixmap)
+void Texture2D::updatePixmap(const uint x, const uint y, const Pixmap &pixmap)
 {
+	if(x >= m_width || y >= m_height)
+	{
+		LOG("Texture2D::updatePixmap(): Position out of texture bounds.");
+		return;
+	}
+
 	// Set default filtering
 	glBindTexture(GL_TEXTURE_2D, m_id);
 	glTexSubImage2D(GL_TEXTURE_2D, 0, (GLint) x, (GLint) y, (GLsizei) pixmap.getWidth(), (GLsizei) pixmap.getHeight(), toFormat(pixmap.getFormat().getComponents(), pixmap.getFormat().getDataType()), toGLDataType(pixmap.getFormat().getDataType()), (const GLvoid*) pixmap.getData());

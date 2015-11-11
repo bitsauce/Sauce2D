@@ -12,13 +12,14 @@
 
 BEGIN_XD_NAMESPACE
 
-SpriteBatch::SpriteBatch(GraphicsContext &graphicsContext) : 
+SpriteBatch::SpriteBatch(GraphicsContext &graphicsContext, const uint maxSprites) :
 	m_graphicsContext(graphicsContext),
-	m_beingCalled(false)
+	m_beingCalled(false),
+	m_maxSpriteCount(maxSprites)
 {
-	m_sprites = new Sprite[2084];
-	m_vertices = new Vertex[8912];
-	m_indices = new uint[12288];
+	m_sprites = new Sprite[maxSprites];
+	m_vertices = new Vertex[maxSprites * 4];
+	m_indices = new uint[maxSprites * 6];
 }
 
 SpriteBatch::~SpriteBatch()
@@ -57,6 +58,12 @@ void SpriteBatch::drawSprite(const Sprite &sprite)
 	if(!sprite.getTexture())
 	{
 		LOG("SpriteBatch::drawSprite(): Sprite needs a texture.");
+		return;
+	}
+
+	if(m_spriteCount >= m_maxSpriteCount)
+	{
+		LOG("SpriteBatch::drawSprite(): No more sprites can fit!");
 		return;
 	}
 
