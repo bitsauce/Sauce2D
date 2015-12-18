@@ -5,12 +5,12 @@
 // /_/\_\_____|____/   \____|\__ _|_| |_| |_|\___| |_____|_| |_|\__, |_|_| |_|\___|
 //                                                              |___/     
 //				Originally written by Marcus Loo Vergara (aka. Bitsauce)
-//									2011-2014 (C)
+//									2011-2015 (C)
 
 #include <x2d/engine.h>
 #include <x2d/graphics.h>
 
-BEGIN_XD_NAMESPACE
+BEGIN_CG_NAMESPACE
 
 TextureRegion::TextureRegion() :
 	uv0(0.0f),
@@ -64,4 +64,4 @@ void TextureRegion::setRegion(const float u0, const float v0, const float u1, co
 	uv1.set(u1, v1);
 }
 
-END_XD_NAMESPACE
+END_CG_NAMESPACE

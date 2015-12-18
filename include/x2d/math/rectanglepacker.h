@@ -6,7 +6,7 @@
 #include <x2d/math/vector.h>
 #include <x2d/math/rect.h>
 
-BEGIN_XD_NAMESPACE
+BEGIN_CG_NAMESPACE
 
 class XDAPI RectanglePacker
 {
@@ -109,6 +109,6 @@ private:
 	int m_maxWidth;
 };
 
-END_XD_NAMESPACE
+END_CG_NAMESPACE
 
 #endif // X2D_RECTANGLE_PACKER_H

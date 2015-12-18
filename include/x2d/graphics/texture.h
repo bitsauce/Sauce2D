@@ -4,7 +4,7 @@
 #include <x2d/engine.h>
 #include <x2d/graphics/pixmap.h>
 
-BEGIN_XD_NAMESPACE
+BEGIN_CG_NAMESPACE
 	
 class Texture2D;
 typedef shared_ptr<Texture2D> Texture2DPtr;
@@ -82,6 +82,6 @@ private:
 
 template XDAPI class shared_ptr<Texture2D>;
 
-END_XD_NAMESPACE
+END_CG_NAMESPACE
 
 #endif // X2D_TEXTURE_H

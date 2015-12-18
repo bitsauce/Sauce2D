@@ -8,17 +8,18 @@
 // /_/\_\_____|____/   \____|\__ _|_| |_| |_|\___| |_____|_| |_|\__, |_|_| |_|\___|
 //                                                              |___/     
 //				Originally written by Marcus Loo Vergara (aka. Bitsauce)
-//									2011-2014 (C)
+//									2011-2015 (C)
 
 #include <x2d/engine.h>
 
-BEGIN_XD_NAMESPACE
+BEGIN_CG_NAMESPACE
 
 Vector2 Input::s_position;
 InputContext *Input::s_context = 0;
 map<string, InputContext*> Input::s_contextMap;
 map<string, VirtualKey> Input::s_strToKey;
 map<VirtualKey, int> Input::s_mouseButtonState;
+Game *Input::s_game = 0;
 
 void Input::init(string file)
 {
@@ -158,7 +159,7 @@ void Input::init(string file)
 	// Set button states
 	for(uint i = XD_MOUSE_BUTTON_1; i < XD_MOUSE_BUTTON_LAST; ++i)
 	{
-		s_mouseButtonState[i] = GLFW_RELEASE;
+		//s_mouseButtonState[i] = GLFW_RELEASE;
 	}
 
 	// Load input config file
@@ -212,13 +213,13 @@ void Input::init(string file)
 Vector2i Input::getCursorPos()
 {
 	double x, y;
-	glfwGetCursorPos(Window::s_window, &x, &y);
+	//glfwGetCursorPos(Window::s_window, &x, &y);
 	return Vector2i((int) x, (int) y);
 }
 
 void Input::setCursorPos(const Vector2i &pos)
 {
-	glfwSetCursorPos(Window::s_window, pos.x, pos.y);
+	//glfwSetCursorPos(Window::s_window, pos.x, pos.y);
 }
 
 void Input::setCursorLimits(const Recti &area)
@@ -253,7 +254,7 @@ void Input::setContext(InputContext * inputContext)
 	if(inputContext)
 	for(map<string, InputContext::KeyBind>::iterator itr = inputContext->m_nameToFunc.begin(); itr != inputContext->m_nameToFunc.end(); ++itr)
 	{
-		itr->second.pressed = Input::getKeyState(inputContext->m_nameToKey[itr->first]) == GLFW_PRESS;
+		//itr->second.pressed = Input::getKeyState(inputContext->m_nameToKey[itr->first]) == GLFW_PRESS;
 	}
 	s_context = inputContext;
 }
@@ -270,12 +271,12 @@ InputContext * Input::getContext(const string & name)
 
 string Input::getClipboardString()
 {
-	return glfwGetClipboardString(Window::s_window);
+	return SDL_GetClipboardText();
 }
 
 void Input::setClipboardString(const string str)
 {
-	glfwSetClipboardString(Window::s_window, str.c_str());
+	SDL_SetClipboardText(str.c_str());
 }
 
 void Input::updateBindings()
@@ -286,14 +287,12 @@ void Input::updateBindings()
 	}
 }
 
-int Input::getKeyState(const VirtualKey key)
+int Input::getKeyState(const SDL_Scancode scancode)
 {
-	if(Engine::isEnabled(XD_BLOCK_BACKGROUND_INPUT) && !Window::hasFocus()) return false;
-	if(key >= XD_MOUSE_BUTTON_1 && key <= XD_MOUSE_BUTTON_LAST)
-	{
-		return s_mouseButtonState[key];
-	}
-	return glfwGetKey(Window::s_window, key);
+	if(s_game->isEnabled(XD_BLOCK_BACKGROUND_INPUT) && !s_game->getMainWindow()->checkFlags(SDL_WINDOW_INPUT_FOCUS)) return false;
+
+	const Uint8* currentKeyStates = SDL_GetKeyboardState(NULL);
+	return currentKeyStates[scancode];
 }
 
-END_XD_NAMESPACE
+END_CG_NAMESPACE

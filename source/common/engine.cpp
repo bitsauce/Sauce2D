@@ -5,132 +5,13 @@
 // /_/\_\_____|____/   \____|\__ _|_| |_| |_|\___| |_____|_| |_|\__, |_|_| |_|\___|
 //                                                              |___/     
 //				Originally written by Marcus Loo Vergara (aka. Bitsauce)
-//									2011-2014 (C)
+//									2011-2015 (C)
 
 #include <x2d/engine.h>
 #include <x2d/graphics.h>
 #include <x2d/audio.h>
 
-#include <direct.h> // for _getcw()
-#include <ShlObj.h>
-
-#include <boxer/boxer.h>
-
-BEGIN_XD_NAMESPACE
-
-#ifdef X2D_LINUX
-#define MAX_PATH 256
-#endif
-
-Game::Game() :
-	m_flags(0),
-	m_workDir(""),
-	m_saveDir(""),
-	m_inputConfig("")
-{
-}
-
-void Game::setFlags(const uint flags)
-{
-	m_flags = flags;
-}
-
-uint Game::getFlags() const
-{
-	return m_flags;
-}
-
-void Game::setWorkDir(const string & workDir)
-{
-	m_workDir = workDir;
-}
-
-string Game::getWorkDir() const
-{
-	return m_workDir;
-}
-
-void Game::setSaveDir(const string & saveDir)
-{
-	m_saveDir = saveDir;
-}
-
-string Game::getSaveDir() const
-{
-	return m_saveDir;
-}
-
-void Game::setInputConfig(const string & inputConfig)
-{
-	m_inputConfig = inputConfig;
-}
-
-string Game::getInputConfig() const
-{
-	return m_inputConfig;
-}
-
-
-//------------------------------------------------------------------------
-// Engine
-//------------------------------------------------------------------------
-
-Engine *CreateEngine()
-{
-	return new Engine();
-}
-
-bool Engine::s_initialized = false;
-bool Engine::s_paused = false;
-bool Engine::s_running = false;
-Game * Engine::s_game = 0;
-
-Engine::Engine()
-{
-}
-
-Engine::~Engine()
-{
-	s_game->end();
-
-	delete m_fileSystem;
-	delete m_graphics;
-	delete m_audio;
-	delete m_timer;
-	delete m_console;
-}
-
-// Convert a wide Unicode string to an UTF8 string
-string utf8_encode(const wstring &wstr)
-{
-	int size_needed = WideCharToMultiByte(CP_UTF8, 0, &wstr[0], (int) wstr.size(), NULL, 0, NULL, NULL);
-	string strTo(size_needed, 0);
-	WideCharToMultiByte(CP_UTF8, 0, &wstr[0], (int) wstr.size(), &strTo[0], size_needed, NULL, NULL);
-	return strTo;
-}
-
-// Convert an UTF8 string to a wide Unicode String
-wstring utf8_decode(const string &str)
-{
-	int size_needed = MultiByteToWideChar(CP_UTF8, 0, &str[0], (int) str.size(), NULL, 0);
-	wstring wstrTo(size_needed, 0);
-	MultiByteToWideChar(CP_UTF8, 0, &str[0], (int) str.size(), &wstrTo[0], size_needed);
-	return wstrTo;
-}
-
-string getSaveDir()
-{
-	wchar_t *path;
-	SHGetKnownFolderPath(FOLDERID_Documents, 0, 0, &path);
-	string str = utf8_encode(path);
-	CoTaskMemFree(path);
-	return str + "\\My Games";
-}
-
-void error_callback(int error, const char* description)
-{
-	LOG(description);
-}
+BEGIN_CG_NAMESPACE
 
 Exception::Exception(RetCode code, const char * msg, ...) :
 	m_errorCode(code)
@@ -145,135 +26,182 @@ Exception::Exception(RetCode code, const char * msg, ...) :
 	va_end(args);
 }
 
+// TODO: Might want to do some validation check on the name
+// and org name so that the pref path won't bug out
+Game::Game(const string &name, const string &organization) :
+	m_name(name),
+	m_organization(organization),
+	m_flags(0),
+	m_rootDir(""),
+	m_saveDir(""),
+	m_initialized(false),
+	m_paused(false),
+	m_running(false)
+{
+}
+
+Game::~Game()
+{
+	// Release managers
+	delete m_fileSystem;
+	//delete m_audio;
+	delete m_timer;
+	delete m_console;
+}
+
 //------------------------------------------------------------------------
 // Run
 //------------------------------------------------------------------------
-int Engine::init(Game * game)
+int Game::run()
 {
-	// Set game
-	s_game = game;
-
-	// Set and process flags
-	uint flags = game->getFlags();
-	for(int i = 0; i < __argc; i++)
-	{
-		string arg = __argv[i];
-		if(arg == "-export-log")
-		{
-			flags |= XD_EXPORT_LOG;
-		}
-		else if(arg == "-verbose")
-		{
-			flags |= XD_VERBOSE;
-		}
-	}
-
-	// Set current directory to exe location
-	{
-		char* programPath = 0;
-		_get_pgmptr(&programPath);
-		string str = programPath;
-		str = str.substr(0, str.find_last_of('\\'));
-		SetCurrentDirectory(str.c_str());
-	}
-
-	// Set working directory
-	string workDir = game->getWorkDir();
-	if(workDir.empty())
-	{
-		workDir = _getcwd(0, 0);
-	}
-	replace(workDir.begin(), workDir.end(), '\\', '/');
-	util::toDirectoryPath(workDir);
-	game->setWorkDir(workDir);
-
-	// Set save directory
-	string saveDir = game->getSaveDir();
-	if(saveDir.empty())
-	{
-		saveDir = getSaveDir();
-	}
-	replace(saveDir.begin(), saveDir.end(), '\\', '/');
-	util::toDirectoryPath(saveDir);
-	game->setSaveDir(saveDir);
-
-	m_console = new Console();
-	m_fileSystem = new FileSystem();
-	if(isEnabled(XD_EXPORT_LOG))
-	{
-		m_console->m_output = new FileWriter(util::getAbsoluteFilePath(":/Console.log"));
-	}
-
-	m_timer = new Timer();
-	m_graphics = new Graphics();
-	m_audio = new AudioManager();
-
-	m_console->m_engine = this;
-
-	glfwSetErrorCallback(error_callback);
-
-	if(!glfwInit())
-	{
-		assert("GLFW could not initialize");
-	}
-
-	Window::init(800, 600, false);
-	Graphics::init();
-	Input::init(game->getInputConfig());
-
 	try
 	{
-		// Print application message
-		LOG("** x2D Game Engine **");
+		// Make sure we're not running already
+		if(m_running)
+		{
+			THROW("Game already running");
+		}
+		m_running = true;
 
-		// Start game
-		s_game->start(m_graphics->s_graphicsContext);
+		// TODO: Implement an engine config file
+		// (DefaultConfig.ini for instance). It should
+		// set the value of XD_EXPORT_LOG and XD_VERBOSE, etc.
+		//
+		// ConfigFile default("config:/DefaultConfig.ini");
+		// default.getValue("Window/ResolutionX");
+		// etc...
 
-		// Set initialized
-		s_initialized = true;
-	}
-	catch(Exception e)
-	{
-		boxer::show(e.message().c_str(), "Exception");
-		LOG("An exception occured: %s", e.message().c_str());
-		return e.errorCode();
-	}
-	catch(...)
-	{
-		LOG("Unknown exception occured.");
-		return X2D_UNKNOWN_EXCEPTION;
-	}
-	return X2D_OK;
-}
+		// Set game root directory
+		m_rootDir = SDL_GetBasePath();
+#ifdef __WINDOWS__
+		m_rootDir += "..\\..\\..\\";
+#else
+		m_rootDir += "../../../";
+#endif
 
-void Engine::exit()
-{
-	Window::close();
-}
+		// Set save directory
+		m_saveDir = SDL_GetPrefPath(m_organization.c_str(), m_name.c_str());
 
-bool Engine::isEnabled(const EngineFlag flag)
-{
-	return (s_game->getFlags() & flag) != 0;
-}
+		m_console = new Console();
+		m_fileSystem = new FileSystem();
+		if(isEnabled(XD_EXPORT_LOG))
+		{
+			m_console->m_output = new FileWriter(util::getAbsoluteFilePath("binary:/Console.log"));
+		}
 
-int Engine::run()
-{
-	// Make sure we've run init
-	if(!s_initialized)
-	{
-		return X2D_NOT_INITIALIZED;
-	}
+		m_timer = new Timer();
+		//m_audio = new AudioManager();
 
-	try
-	{
+		m_console->m_engine = this;
+
+		LOG("** Initializing Engine **");
+
+		// Initialize SDL
+		if(SDL_Init(SDL_INIT_EVERYTHING) < 0)
+		{
+			THROW("Unable to initialize SDL");
+		}
+
+		m_window = new Window(m_name.c_str(), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 1280, 720, 0);
+		GraphicsContext *graphicsContext = m_window->getGraphicsContext();
+
+		// Initialize GL3W
+		if(gl3wInit() != 0)
+		{
+			THROW("GL3W did not initialize!");
+		}
+
+		// Print GPU info
+		LOG("** Using GPU: %s (OpenGL %s) **", glGetString(GL_VENDOR), glGetString(GL_VERSION));
+
+		// Check OpenGL 3.1 support
+		if(!gl3wIsSupported(3, 1))
+		{
+			THROW("OpenGL 3.1 not supported\n");
+		}
+
+		// Setup default vertex format
+		VertexFormat::s_vct.set(VERTEX_POSITION, 2);
+		VertexFormat::s_vct.set(VERTEX_COLOR, 4, XD_UBYTE);
+		VertexFormat::s_vct.set(VERTEX_TEX_COORD, 2);
+
+		// Setup viewport
+		Vector2i size;
+		m_window->getSize(&size.x, &size.y);
+		graphicsContext->resizeViewport(size.x, size.y);
+
+		// Init graphics
+		glGenVertexArrays(1, &GraphicsContext::s_vao);
+		glBindVertexArray(GraphicsContext::s_vao);
+		glGenBuffers(1, &GraphicsContext::s_vbo);
+		glGenBuffers(1, &GraphicsContext::s_ibo);
+
+		glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+
+		// Enable blend
+		glEnable(GL_BLEND);
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+		// Enable alpha test // Optimization?
+		//glEnable(GL_ALPHA_TEST);
+		//glAlphaFunc(GL_LEQUAL, 0.0f);
+
+		glPointSize(4);
+
+		string vertexShader =
+			"\n"
+			"in vec2 in_Position;\n"
+			"in vec2 in_TexCoord;\n"
+			"in vec4 in_VertexColor;\n"
+			"\n"
+			"out vec2 v_TexCoord;\n"
+			"out vec4 v_VertexColor;\n"
+			"\n"
+			"uniform mat4 u_ModelViewProj;\n"
+			"\n"
+			"void main()\n"
+			"{\n"
+			"	gl_Position = vec4(in_Position, 0.0, 1.0) * u_ModelViewProj;\n"
+			"	v_TexCoord = in_TexCoord;\n"
+			"	v_VertexColor = in_VertexColor;\n"
+			"}\n";
+
+		string fragmentShader =
+			"\n"
+			"in vec2 v_TexCoord;\n"
+			"in vec4 v_VertexColor;\n"
+			"\n"
+			"out vec4 out_FragColor;\n"
+			"\n"
+			"uniform sampler2D u_Texture;"
+			"\n"
+			"void main()\n"
+			"{\n"
+			"	out_FragColor = texture(u_Texture, v_TexCoord) * v_VertexColor;\n"
+			"}\n";
+
+		GraphicsContext::s_defaultShader = ShaderPtr(new Shader(vertexShader, fragmentShader));
+
+		uchar pixel[4];
+		pixel[0] = pixel[1] = pixel[2] = pixel[3] = 255;
+		GraphicsContext::s_defaultTexture = Texture2DPtr(new Texture2D(1, 1, pixel));
+
+		// Initialize input handler
+		Input::init("config:/InputDefault.ini");//(m_inputConfig);
+
+		// Engine initialized
+		m_initialized = true;
+
+		LOG("** Engine Initialized **");
+
+		// Call onStart event
+		onStart(*graphicsContext);
+
 		// Fps sampling
 		const uint numFpsSamples = 8;
 		double fpsSamples[numFpsSamples];
 		for(uint i = 0; i < numFpsSamples; ++i) fpsSamples[i] = 0.0;
 		uint currFpsSample = 0;
-
-		// Set running
-		s_running = true;
 
 		// Setup game loop
 		m_timer->start();
@@ -281,17 +209,75 @@ int Engine::run()
 		double accumulator = 0.0;
 		double prevTime = m_timer->getElapsedTime();
 
-		// Lets make sure update is called once before draw
-		s_game->update(dt);
+		// Make sure update is called once before draw
+		onUpdate(dt);
 
 		// Game loop
-		while(!glfwWindowShouldClose(Window::s_window))
+		while(m_running)
 		{
-			// Process game events
-			glfwPollEvents();
+			// Event
+			SDL_Event event;
+			while(SDL_PollEvent(&event))
+			{
+				switch(event.type)
+				{
+					case SDL_WINDOWEVENT:
+					{
+						if(event.window.type == SDL_WINDOWEVENT_SIZE_CHANGED)
+						{
+							// Resize viewport
+							int width = event.window.data1, height = event.window.data2;
+							graphicsContext->resizeViewport(width, height);
+
+							// Call onSizeChanged event
+							onSizeChanged(width, height);
+						}
+					}
+					break;
+
+					case SDL_KEYDOWN:
+					{
+						// Call onKeyDown event
+						onKeyDown(event.key.keysym.sym, event.key.keysym.mod, event.key.keysym.scancode);
+					}
+					break;
+
+					case SDL_KEYUP:
+					{
+						// Call onKeyUp event
+						onKeyUp(event.key.keysym.sym, event.key.keysym.mod, event.key.keysym.scancode);
+					}
+					break;
+
+					case SDL_MOUSEMOTION:
+					{
+						Input::s_position.set((float) event.motion.x, (float) event.motion.y);
+						onMouseMove((float) event.motion.x, (float) event.motion.y);
+					}
+					break;
+
+					case SDL_MOUSEBUTTONDOWN:
+					{
+						onMouseDown(event.button.button);
+					}
+					break;
+
+					case SDL_MOUSEBUTTONUP:
+					{
+						onMouseUp(event.button.button);
+					}
+					break;
+
+					case SDL_MOUSEWHEEL:
+					{
+						onMouseWheel(event.wheel.x, event.wheel.y);
+					}
+					break;
+				}
+			}
 
 			// Check if game is paused or out of focus
-			if(s_paused || (!isEnabled(XD_RUN_IN_BACKGROUND) && !Window::hasFocus()))
+			if(m_paused || (!isEnabled(XD_RUN_IN_BACKGROUND) && !m_window->checkFlags(SDL_WINDOW_INPUT_FOCUS)))
 			{
 				continue;
 			}
@@ -308,7 +294,7 @@ int Engine::run()
 			}
 
 			// Step begin
-			s_game->stepBegin();
+			onStepBegin();
 
 			// Apply time delta to accumulator
 			accumulator += deltaTime;
@@ -316,14 +302,15 @@ int Engine::run()
 			{
 				// Update the game
 				Input::updateBindings();
-				s_game->update(dt);
+				onUpdate(dt);
 				accumulator -= dt;
 			}
 
 			// Draw the game
 			const double alpha = accumulator / dt;
-			s_game->draw(m_graphics->s_graphicsContext, alpha);
-			m_graphics->swapBuffers();
+			onDraw(*graphicsContext, alpha);
+			SDL_GL_SwapWindow(m_window->getSDLHandle());
+			glClear(GL_COLOR_BUFFER_BIT);
 
 			// Add fps sample
 			if(deltaTime != 0.0f)
@@ -338,15 +325,21 @@ int Engine::run()
 			// Get average fps
 			double fps = 0.0;
 			for(uint i = 0; i < numFpsSamples; i++) fps += fpsSamples[i];
-			Graphics::s_framesPerSecond = fps / numFpsSamples;
+			m_framesPerSecond = fps / numFpsSamples;
 
 			// Step end
-			s_game->stepEnd();
+			onStepEnd();
 		}
+
+
+		LOG("** Game Ending **");
+
+		// Call onEnd event
+		onEnd();
 	}
 	catch(Exception e)
 	{
-		boxer::show(e.message().c_str(), "Exception");
+		SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "An error occured", e.message().c_str(), m_window->getSDLHandle());
 		LOG("An exception occured: %s", e.message().c_str());
 		return e.errorCode();
 	}
@@ -355,11 +348,22 @@ int Engine::run()
 		LOG("Unknown exception occured.");
 		return X2D_UNKNOWN_EXCEPTION;
 	}
-
-	LOG("Exiting x2D Engine...");
-
-	// Return OK
 	return X2D_OK;
 }
 
-END_XD_NAMESPACE
+void Game::end()
+{
+	m_running = false;
+}
+
+void Game::setPaused(const bool paused)
+{
+	m_paused = paused;
+}
+
+bool Game::isEnabled(const EngineFlag flag)
+{
+	return (m_flags & flag) != 0;
+}
+
+END_CG_NAMESPACE

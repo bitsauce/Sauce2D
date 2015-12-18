@@ -5,13 +5,13 @@
 // /_/\_\_____|____/   \____|\__ _|_| |_| |_|\___| |_____|_| |_|\__, |_|_| |_|\___|
 //                                                              |___/     
 //				Originally written by Marcus Loo Vergara (aka. Bitsauce)
-//									2011-2014 (C)
+//									2011-2015 (C)
 
 #include <x2d/engine.h>
 #include <sstream>
 #include <fstream>
 
-BEGIN_XD_NAMESPACE
+BEGIN_CG_NAMESPACE
 
 vector<string> util::splitString(const string& src, const string& delim)
 {	
@@ -102,14 +102,15 @@ string util::asciiToStr(const uchar value)
 	return s;
 }
 
+// TODO: Fix me!
 string util::getAbsoluteFilePath(const string &path)
 {
-	if(path.substr(0, 2) == ":/") {
+	/*if(path.substr(0, 2) == ":/") {
 		return Engine::getWorkingDirectory() + path.substr(2, string::npos);
 	}
 	if(path.substr(0, 7) == "saves:/") {
 		return Engine::getSaveDirectory() + path.substr(7, string::npos);
-	}
+	}*/
 	return path;
 }
 
@@ -326,4 +327,4 @@ int util::encodeUTF16(unsigned int value, char *outEncodedBuffer, unsigned int *
 	}
 }
 
-END_XD_NAMESPACE
+END_CG_NAMESPACE

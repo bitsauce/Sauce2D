@@ -3,9 +3,9 @@
 
 #include <x2d/config.h>
 
-BEGIN_XD_NAMESPACE
+BEGIN_CG_NAMESPACE
 
-class XDAPI KeyEvent
+/*class XDAPI KeyEvent
 {
 	friend class Window;
 public:
@@ -85,8 +85,8 @@ private:
 	static void callKeyEvent(const KeyEvent & event);
 
 	static list<KeyListener*> s_keyListeners;
-};
+};*/
 
-END_XD_NAMESPACE
+END_CG_NAMESPACE
 
 #endif // X2D_KEY_LISTENER_H

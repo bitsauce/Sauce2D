@@ -5,12 +5,12 @@
 // /_/\_\_____|____/   \____|\__ _|_| |_| |_|\___| |_____|_| |_|\__, |_|_| |_|\___|
 //                                                              |___/     
 //				Originally written by Marcus Loo Vergara (aka. Bitsauce)
-//									2011-2014 (C)
+//									2011-2015 (C)
 // Inspired by: http://www.codeproject.com/Articles/210979/Fast-optimizing-rectangle-packing-algorithm-for-bu (i think)
 
 #include <x2d/math.h>
 
-BEGIN_XD_NAMESPACE
+BEGIN_CG_NAMESPACE
 
 bool heightSort(RectanglePacker::Rect i, RectanglePacker::Rect j)
 {
@@ -134,4 +134,4 @@ void RectanglePacker::clearRects()
 	m_rectangles.clear();
 }
 
-END_XD_NAMESPACE
+END_CG_NAMESPACE

@@ -3,7 +3,7 @@
 
 #include <x2d/engine.h>
 
-#include "../3rdparty/openal/include/al.h"
+/*#include "../3rdparty/openal/include/al.h"
 #include "../3rdparty/openal/include/alc.h"
 
 #ifdef X2D_DEBUG
@@ -16,20 +16,20 @@
 		}
 #else
 	#define AL_ASSERT
-#endif
+#endif*/
 
 /*********************************************************************
 **	Abstract Audio Manager											**
 **********************************************************************/
 
-BEGIN_XD_NAMESPACE
-
+BEGIN_CG_NAMESPACE
+/*
 class AudioSource;
 class AudioBuffer;
 
 class XDAPI AudioManager
 {
-	friend class Engine;
+	friend class Game;
 public:
 	AudioManager();
 	~AudioManager();
@@ -48,12 +48,12 @@ public:
 
 private:
 	static AudioManager *s_this;
-};
+};*/
 
 /*********************************************************************
 **	Audio buffer													**
 **********************************************************************/
-class XDAPI AudioBuffer
+/*class XDAPI AudioBuffer
 {
 public:
 	
@@ -79,12 +79,12 @@ private:
 	void *m_data;
 	uint m_size;
 	uint m_frequency;
-};
+};*/
 
 /*********************************************************************
 **	Audio source													**
 **********************************************************************/
-class XDAPI AudioSource
+/*class XDAPI AudioSource
 {
 public:
 	AudioSource(AudioBuffer *buffer);
@@ -110,8 +110,8 @@ public:
 private:
 	ALuint m_sourceId;
 	ALuint m_bufferId;
-};
+};*/
 
-END_XD_NAMESPACE
+END_CG_NAMESPACE
 
 #endif // X2D_AUDIO_H

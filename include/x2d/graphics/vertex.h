@@ -3,7 +3,7 @@
 
 #include <x2d/engine.h>
 
-BEGIN_XD_NAMESPACE
+BEGIN_CG_NAMESPACE
 
 /*********************************************************************
 **	Data types														**
@@ -37,7 +37,7 @@ enum VertexAttribute
 class Vertex;
 class XDAPI VertexFormat
 {
-	friend class Graphics;
+	friend class Game;
 	friend class Vertex;
 	friend class VertexBuffer;
 public:
@@ -126,6 +126,6 @@ private:
 	static void Destruct(Vertex *self) { self->~Vertex(); }
 };
 
-END_XD_NAMESPACE
+END_CG_NAMESPACE
 
 #endif // X2D_VERTEX_H

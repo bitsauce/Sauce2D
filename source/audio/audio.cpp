@@ -5,12 +5,12 @@
 // /_/\_\_____|____/   \____|\__ _|_| |_| |_|\___| |_____|_| |_|\__, |_|_| |_|\___|
 //                                                              |___/     
 //				Originally written by Marcus Loo Vergara (aka. Bitsauce)
-//									2011-2014 (C)
+//									2011-2015 (C)
 
 #include <x2d/audio.h>
 
-BEGIN_XD_NAMESPACE
-
+BEGIN_CG_NAMESPACE
+/*
 AudioManager *AudioManager::s_this = nullptr;
 
 AudioManager::AudioManager()
@@ -92,6 +92,6 @@ Vector3 AudioManager::getOrientation() const
 	Vector3 axis(0.0f);
 	//alGetListener3f(AL_ORIENTATION, &axis.x, &axis.y, &axis.z);
 	return axis;
-}
+}*/
 
-END_XD_NAMESPACE
+END_CG_NAMESPACE

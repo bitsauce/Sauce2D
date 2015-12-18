@@ -5,12 +5,12 @@
 // /_/\_\_____|____/   \____|\__ _|_| |_| |_|\___| |_____|_| |_|\__, |_|_| |_|\___|
 //                                                              |___/     
 //				Originally written by Marcus Loo Vergara (aka. Bitsauce)
-//									2011-2014 (C)
+//									2011-2015 (C)
 
 #include <x2d/engine.h>
 #include <x2d/graphics.h>
 
-BEGIN_XD_NAMESPACE
+BEGIN_CG_NAMESPACE
 
 Sprite::Sprite(const Texture2DPtr texture, const Rect &rectangle, const Vector2 &origin, const float angle, const TextureRegion &region, const Color &color, const float depth, const Vector2 scale) :
 	m_texture(texture),
@@ -225,4 +225,4 @@ void Sprite::getVertices(Vertex *vertices, uint *indices, const uint indexOffset
 	indices[5] = indexOffset + QUAD_INDICES[5];
 }
 
-END_XD_NAMESPACE
+END_CG_NAMESPACE

@@ -7,7 +7,7 @@
 **	Resource manager												**
 **********************************************************************/
 
-BEGIN_XD_NAMESPACE
+BEGIN_CG_NAMESPACE
 
 /**
  * \brief This class handles resource loading and handling.
@@ -46,6 +46,6 @@ private:
 	static map<string, void*> s_resources;
 };
 
-END_XD_NAMESPACE
+END_CG_NAMESPACE
 
 #endif // X2D_RESOURCE_MANAGER_H

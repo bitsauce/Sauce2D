@@ -8,7 +8,7 @@
 #include <x2d/input/keyListener.h>
 #include <x2d/input/mouseListener.h>
 
-BEGIN_XD_NAMESPACE
+BEGIN_CG_NAMESPACE
 
 /* The unknown key */
 #define XD_KEY_UNKNOWN            -1
@@ -163,7 +163,7 @@ BEGIN_XD_NAMESPACE
 class XDAPI Input
 {
 	friend class Window;
-	friend class Engine;
+	friend class Game;
 	friend class KeyListener;
 	friend class MouseListener;
 public:
@@ -175,14 +175,14 @@ public:
 	static void     setCursorLimits(const int x, const int y, const int w, const int h) { setCursorLimits(Recti(x, y, w, h)); }
 
 	// Key state function
-	static int getKeyState(const VirtualKey key);
+	static int getKeyState(const SDL_Scancode scancode);
 
 	// General position
 	static Vector2 getPosition();
 
 	// Input context
-	static void setContext(InputContext * inputContext);
-	static InputContext * getContext(const string & contextName);
+	static void setContext(InputContext *inputContext);
+	static InputContext *getContext(const string &contextName);
 
 	// Clipboard
 	static string getClipboardString();
@@ -211,8 +211,9 @@ private:
 	// Mouse buttons
 	static map<VirtualKey, int> s_mouseButtonState;
 
+	static Game *s_game;
 };
 
-END_XD_NAMESPACE
+END_CG_NAMESPACE
 
 #endif // X2D_INPUT_H

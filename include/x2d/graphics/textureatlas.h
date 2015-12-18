@@ -6,7 +6,7 @@
 #include <x2d/graphics/pixmap.h>
 #include <x2d/graphics/textureRegion.h>
 
-BEGIN_XD_NAMESPACE
+BEGIN_CG_NAMESPACE
 
 class XDAPI TextureAtlas
 {
@@ -65,6 +65,6 @@ private:
 	int m_border;
 };
 
-END_XD_NAMESPACE
+END_CG_NAMESPACE
 
 #endif // X2D_TEXTURE_ATLAS_H

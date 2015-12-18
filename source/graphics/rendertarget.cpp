@@ -5,12 +5,12 @@
 // /_/\_\_____|____/   \____|\__ _|_| |_| |_|\___| |_____|_| |_|\__, |_|_| |_|\___|
 //                                                              |___/     
 //				Originally written by Marcus Loo Vergara (aka. Bitsauce)
-//									2011-2014 (C)
+//									2011-2015 (C)
 
 #include <x2d/engine.h>
 #include <x2d/graphics.h>
 
-BEGIN_XD_NAMESPACE
+BEGIN_CG_NAMESPACE
 
 RenderTarget2D::RenderTarget2D(const uint width, const uint height, const uint count, const PixelFormat &fmt) :
 	m_width(width),
@@ -66,4 +66,4 @@ void RenderTarget2D::unbind()
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 }
 
-END_XD_NAMESPACE
+END_CG_NAMESPACE

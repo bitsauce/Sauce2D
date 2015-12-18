@@ -6,7 +6,7 @@
 #include <x2d/graphics/blendState.h>
 #include <x2d/graphics/textureRegion.h>
 
-BEGIN_XD_NAMESPACE
+BEGIN_CG_NAMESPACE
 
 class RenderTarget2D;
 class Vertex;
@@ -18,7 +18,8 @@ class IndexBuffer;
  */
 class XDAPI GraphicsContext
 {
-	friend class Graphics;
+	friend class Game;
+	friend class Window;
 public:
 
 	/**
@@ -82,8 +83,9 @@ public:
 	void clear(const uint mask, const Color &fillColor = Color(0, 0, 0, 0));
 
 	/**
-	 * Sets a render target. This means that everything drawn beyond this point
+	 * Sets a render target. This means that everything drawn after this function call
 	 * will be rendered to the given \p renderTarget instead of the screen.
+	 * TODO: Implement a render target stack.
 	 * \param renderTarget The target buffer to render to.
 	 */
 	void setRenderTarget(RenderTarget2D *renderTarget);
@@ -266,20 +268,33 @@ public:
 	 */
 	void drawCircle(const float x, const float y, const float radius, const uint segments, const Color &color = Color(255));
 
+	SDL_GLContext getSDLHandle() const
+	{
+		return m_context;
+	}
+
 private:
-	GraphicsContext();
+	GraphicsContext(Window *window);
+	~GraphicsContext();
 	void setupContext();
 
-	uint m_width;
-	uint m_height;
+	SDL_GLContext m_context;
+	uint m_width, m_prevWidth;
+	uint m_height, m_prevHeight;
 	Texture2DPtr m_texture;
 	ShaderPtr m_shader;
 	BlendState m_blendState;
 	RenderTarget2D *m_renderTarget;
 	stack<Matrix4> m_modelViewMatrixStack;
 	Matrix4 m_projectionMatrix;
+
+	static ShaderPtr s_defaultShader;
+	static Texture2DPtr s_defaultTexture;
+	static GLuint s_vao;
+	static GLuint s_vbo;
+	static GLuint s_ibo;
 };
 
-END_XD_NAMESPACE
+END_CG_NAMESPACE
 
 #endif // GRAPHICS_CONTEXT_H

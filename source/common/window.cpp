@@ -5,70 +5,40 @@
 // /_/\_\_____|____/   \____|\__ _|_| |_| |_|\___| |_____|_| |_|\__, |_|_| |_|\___|
 //                                                              |___/     
 //				Originally written by Marcus Loo Vergara (aka. Bitsauce)
-//									2011-2014 (C)
+//									2011-2015 (C)
 
 #include <x2d/engine.h>
 #include <x2d/graphics.h>
 
-BEGIN_XD_NAMESPACE
-
-// Window class name
-#define WINDOW_CLASSNAME "x2D"
-
-// Window title
-#define WINDOW_TITLE "x2D Game Engine"
-
-GLFWwindow *Window::s_window = 0;
-//vector<Vector2i> Window::s_resolutions;
-bool Window::s_focus = true;
-bool Window::s_fullScreen = false;
-list<WindowListener*> Window::s_windowListeners;
-GraphicsContext *Window::s_graphicsContext = nullptr;
+BEGIN_CG_NAMESPACE
 
 //--------------------------------------------------------------------
 // Window
 //--------------------------------------------------------------------
 
-WindowListener::WindowListener()
+Window::Window(const string &title, const int x, const int y, const int w, const int h, const Uint32 flags)
 {
-	Window::addWindowListener(this);
-}
+	// Request opengl 3.1 context
+	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
+	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 1);
 
-WindowListener::~WindowListener()
-{
-	Window::removeWindowListener(this);
-}
+	// Turn on double buffering with a 24bit Z buffer.
+	// You may need to change this to 16 or 32 for your system
+	SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
+	SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 24);
 
-//--------------------------------------------------------------------
-// Initialation
-//--------------------------------------------------------------------
-
-#define IDI_ICON 101
-
-void Window::init(int w, int h, bool fs)
-{
-	if(!s_window)
+	// Create our window
+	m_window = SDL_CreateWindow(title.c_str(), x, y, w, h, SDL_WINDOW_OPENGL | flags);
+	if(!m_window)
 	{
-		// Create window
-		s_window = glfwCreateWindow(w, h, WINDOW_TITLE, fs ? glfwGetPrimaryMonitor() : NULL, NULL);
-	}
-	else
-	{
-		// Change fullscreen mode
-		GLFWwindow *window = glfwCreateWindow(w, h, WINDOW_TITLE, fs ? glfwGetPrimaryMonitor() : NULL, s_window);
-		glfwDestroyWindow(s_window);
-		s_window = window;
-		s_graphicsContext->resizeViewport(w, h);
+		THROW("Window could not initialize");
 	}
 
-	if(!s_window)
-	{
-		glfwTerminate();
-		assert("Window could not initialize");
-	}
+	// Create graphics manager of this window
+	m_graphicsContext = new GraphicsContext(this);
 
 	// Set callbacks
-	glfwSetFramebufferSizeCallback(s_window, sizeChanged);
+	/*glfwSetFramebufferSizeCallback(s_window, sizeChanged);
 	glfwSetWindowFocusCallback(s_window, focusChanged);
 	glfwSetKeyCallback(s_window, keyCallback);
 	glfwSetCharCallback(s_window, charCallback);
@@ -78,181 +48,178 @@ void Window::init(int w, int h, bool fs)
 
 	glfwMakeContextCurrent(s_window);
 	Graphics::setVsync(1);
-	glfwShowWindow(s_window);
-
-	s_fullScreen = fs;
-	s_focus = true;
+	glfwShowWindow(s_window);*/
 }
 
-void Window::close()
+Window::~Window()
 {
-	glfwDestroyWindow(s_window);
+	delete m_graphicsContext;
+	SDL_DestroyWindow(m_window);
 }
-
-// Exception
-/*
-void Window::exception(xdRetCode error, const char* message)
-{
-	// Show exception in message box
-	MessageBox(m_window, message, "An Exception Occured", MB_OK);
-}
-*/
 
 //--------------------------------------------------------------------
 // Window functions
 //--------------------------------------------------------------------
-void Window::setFullScreen(const bool fullScreen)
+void Window::setFullScreenMode(SDL_DisplayMode *displayMode)
 {
-
-	//int count;
-	//const GLFWvidmode* modes = glfwGetVideoModes(glfwGetPrimaryMonitor(), &count);
-
-	if(s_fullScreen != fullScreen)
+	// Use desktop display mode if not given
+	if(displayMode == 0)
 	{
-		// Get window size
-		const GLFWvidmode* mode = glfwGetVideoMode(glfwGetPrimaryMonitor());
-
-		// Destroy window
-		Window::init(mode->width, mode->height, fullScreen);
+		SDL_GetDesktopDisplayMode(0, displayMode);
 	}
 
-	s_fullScreen = fullScreen;
+	// Set display mode and fullscreen flag
+	SDL_SetWindowDisplayMode(m_window, displayMode);
+	SDL_SetWindowFullscreen(m_window, SDL_WINDOW_FULLSCREEN);
 }
 
-bool Window::getFullScreen()
+void Window::setWindowed()
 {
-	return s_fullScreen;
-} 
-
-void Window::setResizable(const bool resizable)
-{
-	glfwWindowHint(GLFW_RESIZABLE, resizable);
-	glfwShowWindow(s_window);
+	SDL_SetWindowFullscreen(m_window, 0);
 }
 
-void Window::focusChanged(GLFWwindow*, int focus)
+Uint32 Window::getFlags() const
 {
-	s_focus = focus == 1;
+	return SDL_GetWindowFlags(m_window);
 }
 
-bool Window::hasFocus()
+bool Window::checkFlags(const Uint32 flags) const
 {
-	return s_focus;
+	return (getFlags() & flags) == flags;
 }
 
-Vector2i Window::getPosition()
+void Window::setPosition(const int x, const int y)
 {
-	int x = -1, y = -1;
-	glfwGetWindowPos(s_window, &x, &y);
-	return Vector2i(x, y);
+	SDL_SetWindowPosition(m_window, x, y);
+}
+
+void Window::getPosition(int *x, int *y) const
+{
+	SDL_GetWindowPosition(m_window, x, y);
 }
 
 void Window::setSize(const int width, const int height)
 {
-	glfwSetWindowSize(s_window, width, height);
+	SDL_SetWindowSize(m_window, width, height);
 }
 
-void Window::setWidth(const int width)
+void Window::getSize(int *width, int *height) const
 {
-	setSize(width, getSize().y);
+	SDL_GetWindowSize(m_window, width, height);
 }
 
-void Window::setHeight(const int height)
+void Window::setTitle(const string &title)
 {
-	setSize(getSize().x, height);
+	SDL_SetWindowTitle(m_window, title.c_str());
 }
 
-//void Window::maximize()
-//{
-//}
+string Window::getTitle() const
+{
+	return SDL_GetWindowTitle(m_window);
+}
+
+void Window::setIcon(const Pixmap &icon)
+{
+	Uint32 rmask, gmask, bmask, amask;
+
+	/* SDL interprets each pixel as a 32-bit number, so our masks must depend
+	on the endianness (byte order) of the machine */
+#if SDL_BYTEORDER == SDL_BIG_ENDIAN
+	rmask = 0xff000000;
+	gmask = 0x00ff0000;
+	bmask = 0x0000ff00;
+	amask = 0x000000ff;
+#else
+	rmask = 0x000000ff;
+	gmask = 0x0000ff00;
+	bmask = 0x00ff0000;
+	amask = 0xff000000;
+#endif
+
+	SDL_Surface *surface = SDL_CreateRGBSurfaceFrom((void*)icon.getData(), icon.getWidth(), icon.getHeight(), 32, icon.getWidth() * 4, rmask, gmask, bmask, amask);
+	SDL_SetWindowIcon(m_window, surface);
+	SDL_FreeSurface(surface);
+}
+
+void Window::setMinimumSize(const int width, const int height)
+{
+	SDL_SetWindowMinimumSize(m_window, width, height);
+}
+
+void Window::setMaximumSize(const int width, const int height)
+{
+	SDL_SetWindowMaximumSize(m_window, width, height);
+}
+
+void Window::setBordered(const bool bordered)
+{
+	SDL_SetWindowBordered(m_window, bordered ? SDL_TRUE : SDL_FALSE);
+}
+
+void Window::setGrab(const bool grabbed)
+{
+	SDL_SetWindowGrab(m_window, grabbed ? SDL_TRUE : SDL_FALSE);
+}
+
+void Window::setBrightness(const float brightness)
+{
+	SDL_SetWindowBrightness(m_window, brightness);
+}
+
+void Window::setGammaRamp(Uint16 *red, Uint16 *green, Uint16 *blue)
+{
+	SDL_SetWindowGammaRamp(m_window, red, green, blue);
+}
+
+void Window::show()
+{
+	SDL_ShowWindow(m_window);
+}
+
+void Window::hide()
+{
+	SDL_HideWindow(m_window);
+}
+
+int Window::getDisplayIndex() const
+{
+	return SDL_GetWindowDisplayIndex(m_window);
+}
+
+void Window::getDisplayMode(SDL_DisplayMode *mode) const
+{
+	SDL_GetWindowDisplayMode(m_window, mode);
+}
 
 void Window::minimize()
 {
-	glfwIconifyWindow(s_window);
-}
-
-void Window::setPosition(const Vector2i &pos)
-{
-	glfwSetWindowPos(s_window, pos.x, pos.y);
+	SDL_MinimizeWindow(m_window);
 }
 
 void Window::restore()
 {
-	glfwRestoreWindow(s_window);
+	SDL_RestoreWindow(m_window);
 }
 
-Vector2i Window::getSize()
+void Window::maximize()
 {
-	int w = -1, h = -1;
-	glfwGetWindowSize(s_window, &w, &h);
-	return Vector2i(w, h);
+	SDL_MaximizeWindow(m_window);
 }
 
-int Window::getWidth()
+GraphicsContext *Window::getGraphicsContext() const
 {
-	int w = -1, h = -1;
-	glfwGetWindowSize(s_window, &w, &h);
-	return w;
+	return m_graphicsContext;
 }
 
-int Window::getHeight()
+SDL_Window *Window::getSDLHandle() const
 {
-	int w = -1, h = -1;
-	glfwGetWindowSize(s_window, &w, &h);
-	return h;
+	return m_window;
 }
 
-void Window::addWindowListener(WindowListener *listener)
+void Window::setVSync(const int mode)
 {
-	s_windowListeners.push_back(listener);
+	SDL_GL_MakeCurrent(m_window, m_graphicsContext->getSDLHandle());
+	SDL_GL_SetSwapInterval(mode);
 }
 
-void Window::removeWindowListener(WindowListener *listener)
-{
-	s_windowListeners.remove(listener);
-}
-
-void Window::sizeChanged(GLFWwindow *, const int width, const int height)
-{
-	// Resize viewport
-	if(s_graphicsContext)
-	{
-		s_graphicsContext->resizeViewport(width, height);
-	}
-
-	// Call rezie events
-	for(list<WindowListener*>::iterator itr = s_windowListeners.begin(); itr != s_windowListeners.end(); ++itr)
-	{
-		(*itr)->resizeEvent(width, height);
-	}
-}
-
-void Window::keyCallback(GLFWwindow*, int key, int scancode, int action, int mods)
-{
-	KeyEvent event(key, (KeyEvent::Action) action, mods, scancode);
-	KeyListener::callKeyEvent(event);
-}
-
-void Window::charCallback(GLFWwindow *, uint c)
-{
-	KeyListener::callCharEvent(c);
-}
-
-void Window::mouseButtonCallback(GLFWwindow*, int button, int action, int mods)
-{
-	Input::s_mouseButtonState[button] = action;
-	KeyEvent event(button, (KeyEvent::Action) action, mods, button);
-	KeyListener::callKeyEvent(event);
-}
-
-void Window::cursorMoveCallback(GLFWwindow*, double x, double y)
-{
-	Input::s_position.set((float) x, (float) y);
-}
-
-void Window::scrollCallback(GLFWwindow*, double x, double y)
-{
-	MouseListener::callMouseWheelEvent((int)y);
-}
-
-END_XD_NAMESPACE
+END_CG_NAMESPACE

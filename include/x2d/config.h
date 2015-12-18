@@ -1,31 +1,26 @@
 #ifndef X2D_CONFIG_H
 #define X2D_CONFIG_H
 
+#include <SDL.h>
+#include <SDL_image.h>
+#include <SDL_mixer.h>
+
 /*********************************************************************
 **	Compiler preprocessor											**
 **********************************************************************/
-#if !defined(X2D_WINDOWS) && !defined(X2D_LINUX) && !defined(X2D_OSX)
-	#ifdef _MSC_VER
-		#define X2D_WINDOWS
-		#if _MSC_VER >= 1500
-			#define USE_CTR_SECURE
-		#endif
-	#elif __GNUC__
-		#define X2D_LINUX
-	#elif __APPLE__
-		#define X2D_OSX
-	#endif
-	#if defined(_DEBUG) && !defined(X2D_DEBUG) 
-		#define X2D_DEBUG
-	#endif
+#if __WINDOWS__ && _MSC_VER >= 1500
+	#define USE_CTR_SECURE
+#endif
+#if defined(_DEBUG) && !defined(X2D_DEBUG) 
+	#define X2D_DEBUG
 #endif
 
 /*********************************************************************
 **	Library export preprocessor										**
 **********************************************************************/
-#if defined(X2D_WINDOWS) && defined(X2D_EXPORT)
+#if defined(__WINDOWS__) && defined(X2D_EXPORT)
 	#define XDAPI __declspec(dllexport)
-#elif defined(X2D_WINDOWS) && defined(X2D_IMPORT)
+#elif defined(__WINDOWS__) && defined(X2D_IMPORT)
 	#define XDAPI __declspec(dllimport)
 #else
 	#define XDAPI 
@@ -44,7 +39,7 @@
 /*********************************************************************
 **	Include	STL														**
 **********************************************************************/
-#ifdef X2D_WINDOWS
+#ifdef __WINDOWS__
 	#define NOMINMAX
 	#define WIN32_LEAN_AND_MEAN
 	#include <windows.h>
@@ -71,9 +66,8 @@
 	#include <queue>
 	#include "..\3rdparty\gl3w\include\GL\gl3w.h"
 	#include "..\3rdparty\gl3w\include\GL\wglext.h"
-	#include "..\3rdparty\glfw\include\GLFW\glfw3.h"
 	#include "..\3rdparty\tinyxml2\tinyxml2.h"
-#elif X2D_UNIX
+#elif __LINUX__
 	#include <sys/socket.h>
 	#include <netinet/in.h>
 	#include <fcntl.h>
@@ -105,10 +99,10 @@ typedef unsigned long ulong;
 
 typedef int VirtualKey;
 
-#define BEGIN_XD_NAMESPACE namespace xd {
-#define END_XD_NAMESPACE }
+#define BEGIN_CG_NAMESPACE namespace cg {
+#define END_CG_NAMESPACE }
 
-BEGIN_XD_NAMESPACE
+BEGIN_CG_NAMESPACE
 
 /*********************************************************************
 **	Engine return codes												**
@@ -130,11 +124,10 @@ enum RetCode
 **********************************************************************/
 enum EngineFlag
 {
-	XD_EXPORT_LOG		=	1 << 0,
-	XD_SHOW_WARININGS	=	1 << 1,
-	XD_RUN_IN_BACKGROUND  = 1 << 2,
-	XD_BLOCK_BACKGROUND_INPUT = 1 << 3,
-	XD_VERBOSE = 1 << 4
+	XD_EXPORT_LOG				= 1 << 0, ///< Export the output log to a log file.
+	XD_RUN_IN_BACKGROUND		= 1 << 1, ///< This will allow the program to run while not focused.
+	XD_BLOCK_BACKGROUND_INPUT	= 1 << 2, ///< If XD_RUN_IN_BACKGROUND is set, this will block input while program is out of focus. 
+	XD_VERBOSE					= 1 << 4  ///< This will make the engine produce more verbose messages from engine calls.
 };
 
 /*********************************************************************
@@ -202,7 +195,7 @@ namespace util
 	int encodeUTF16(unsigned int value, char *outEncodedBuffer, unsigned int *outCharLength, UnicodeByteOrder byteOrder = LITTLE_ENDIAN);
 }
 
-END_XD_NAMESPACE
+END_CG_NAMESPACE
 
 /*********************************************************************
 **	Macros															**

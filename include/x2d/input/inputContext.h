@@ -3,17 +3,21 @@
 
 #include <x2d/config.h>
 
-BEGIN_XD_NAMESPACE
+BEGIN_CG_NAMESPACE
 
 /*********************************************************************
 **	Input context													**
 **********************************************************************/
 
+class Game;
+
 class XDAPI InputContext
 {
 	friend class Input;
 public:
-
+	/**
+	 * \brief Bind a function to an action for this input context.
+	 */
 	void bind(const string &action, function<void(int)> function, const bool singleShot = false);
 
 private:
@@ -27,10 +31,11 @@ private:
 		bool singleShot;
 	};
 
+	Game *m_game;
 	map<string, KeyBind> m_nameToFunc;
 	map<string, VirtualKey> m_nameToKey;
 };
 
-END_XD_NAMESPACE
+END_CG_NAMESPACE
 
 #endif // X2D_INPUT_CONTEXT_H

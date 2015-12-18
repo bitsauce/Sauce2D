@@ -5,11 +5,11 @@
 // /_/\_\_____|____/   \____|\__ _|_| |_| |_|\___| |_____|_| |_|\__, |_|_| |_|\___|
 //                                                              |___/     
 //				Originally written by Marcus Loo Vergara (aka. Bitsauce)
-//									2011-2014 (C)
+//									2011-2015 (C)
 
 #include <x2d/engine.h>
 
-BEGIN_XD_NAMESPACE
+BEGIN_CG_NAMESPACE
 
 Timer::Timer() :
 	m_ticksPerSec(CLOCKS_PER_SEC),
@@ -49,4 +49,4 @@ double Timer::getElapsedTime() const
     return endTime - startTime;
 }
 
-END_XD_NAMESPACE
+END_CG_NAMESPACE

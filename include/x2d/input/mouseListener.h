@@ -3,9 +3,9 @@
 
 #include <x2d/config.h>
 
-BEGIN_XD_NAMESPACE
+BEGIN_CG_NAMESPACE
 
-class XDAPI MouseListener
+/*class XDAPI MouseListener
 {
 	friend class Window;
 public:
@@ -18,8 +18,8 @@ private:
 	static void callMouseWheelEvent(const int delta);
 
 	static list<MouseListener*> s_mouseListeners;
-};
+};*/
 
-END_XD_NAMESPACE
+END_CG_NAMESPACE
 
 #endif // X2D_MOUSE_LISTENER_H

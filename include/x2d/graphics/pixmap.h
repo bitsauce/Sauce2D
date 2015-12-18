@@ -3,7 +3,19 @@
 
 #include <x2d/engine.h>
 
-BEGIN_XD_NAMESPACE
+BEGIN_CG_NAMESPACE
+
+#if SDL_BYTEORDER == SDL_BIG_ENDIAN
+	#define R_MASK 0xFF000000
+	#define G_MASK 0x00FF0000
+	#define B_MASK 0x0000FF00
+	#define A_MASK 0x000000FF
+#else
+	#define R_MASK 0x000000FF
+	#define G_MASK 0x0000FF00
+	#define B_MASK 0x00FF0000
+	#define A_MASK 0xFF000000
+#endif
 
 class XDAPI PixelFormat
 {
@@ -78,6 +90,6 @@ private:
 	PixelFormat m_format;
 };
 
-END_XD_NAMESPACE
+END_CG_NAMESPACE
 
 #endif // X2D_PIXMAP_H

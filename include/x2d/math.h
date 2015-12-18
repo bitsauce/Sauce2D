@@ -10,7 +10,7 @@
 
 #define PI 3.14159265359f
 
-BEGIN_XD_NAMESPACE
+BEGIN_CG_NAMESPACE
 
 
 /**
@@ -116,6 +116,6 @@ namespace math
 	XDAPI uint rol(const uint a, const uint b);
 }
 
-END_XD_NAMESPACE
+END_CG_NAMESPACE
 
 #endif // X2D_MATH_H

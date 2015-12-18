@@ -5,7 +5,7 @@
 #include <x2d/graphics/graphicsContext.h>
 #include <x2d/graphics/texture.h>
 
-BEGIN_XD_NAMESPACE
+BEGIN_CG_NAMESPACE
 
 class XDAPI RenderTarget2D
 {
@@ -32,6 +32,6 @@ private:
 	Texture2DPtr *m_textures;
 };
 
-END_XD_NAMESPACE
+END_CG_NAMESPACE
 
 #endif // X2D_RENDER_TARGET_H

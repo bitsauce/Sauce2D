@@ -9,7 +9,7 @@
 #include <x2d/graphics/shader.h>
 #include <x2d/graphics/font.h>
 
-BEGIN_XD_NAMESPACE
+BEGIN_CG_NAMESPACE
 
 class Sprite;
 
@@ -77,6 +77,6 @@ private:
 	GraphicsContext &m_graphicsContext;
 };
 
-END_XD_NAMESPACE
+END_CG_NAMESPACE
 
 #endif // X2D_BATCH_H

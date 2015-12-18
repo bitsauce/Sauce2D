@@ -7,13 +7,10 @@
 #include <x2d/iniparser.h>
 #include <x2d/input/input.h>
 
-BEGIN_XD_NAMESPACE
+BEGIN_CG_NAMESPACE
 
 #define LOG(str, ...) Console::Log(str, __VA_ARGS__)
 #define THROW(str, ...) throw Exception(X2D_RUNTIME_EXCEPTION, str, __VA_ARGS__)
-
-#define NOT_IMPLEMENTED(func)			LOG("%s does not have a implementation.", #func);
-#define NOT_IMPLEMENTED_RET(func, ret)	LOG("%s does not have a implementation.", #func); return ret;
 
 /*********************************************************************
 **	Game console													**
@@ -27,7 +24,7 @@ class Graphics;
 
 class XDAPI Console
 {
-	friend class Engine;
+	friend class Game;
 public:
 	Console();
 	~Console();
@@ -51,7 +48,7 @@ private:
 	string m_log;
 	string m_buffer;
 	
-	Engine *m_engine;
+	Game *m_engine;
 	FileWriter *m_output;
 
 	static Console *s_this;
@@ -182,9 +179,10 @@ private:
 /*********************************************************************
 **	File system class												**
 **********************************************************************/
+// TODO: Needs re-doing with SDL in mind
 class XDAPI FileSystem
 {
-	friend class Engine;
+	friend class Game;
 public:
 	// File buffers
 	bool readFile(string filePath, string &conent) const;
@@ -192,14 +190,6 @@ public:
 
 	// OS specifics
 	bool fileExists(string &filePath) const;
-	// NOTE TO SELF: I might want to consider making a DirectoryIterator instead of using this function
-	//virtual XScriptArray *listFiles(string &directory, const string &mask, const bool recursive) const	{ NOT_IMPLEMENTED_RET(listFiles, 0) }			// Optional
-	//virtual XScriptArray *listFolders(string &directory, const string &mask, const bool recursive) const	{ NOT_IMPLEMENTED_RET(listFolders, 0) }			// Optional
-	bool remove(string &path)																				{ NOT_IMPLEMENTED_RET(remove, false) }			// Optional
-
-	// System windows
-	string showSaveDialog(const string &file, const string &ext, const string &title, const string &folder) const	{ NOT_IMPLEMENTED_RET(showSaveDialog, "") }				// Optional
-	string showOpenDialog(const string &file, const string &ext, const string &title, const string &folder) const	{ NOT_IMPLEMENTED_RET(showOpenDialog, "") }				// Optional
 
 	// Static functions
 	static bool ReadFile(string path, string &content);
@@ -216,85 +206,161 @@ private:
 /*********************************************************************
 **	Window class													**
 **********************************************************************/
-class XDAPI WindowListener
-{
-	friend class Window;
-protected:
-	WindowListener();
-	virtual ~WindowListener();
-
-	virtual void resizeEvent(uint width, uint height) {}
-	virtual void moveEvent(uint x, uint y) {}
-	//virtual void 
-};
-
 class Graphics;
 class GraphicsContext;
+class Pixmap;
 
 class XDAPI Window
 {
-	friend class Graphics;
-	friend class WindowListener;
-	friend class Engine;
-	friend class Input;
-private:
-	static void init(int w, int h, bool fs);
-
-	static void focusChanged(GLFWwindow*, int);
-	static void sizeChanged(GLFWwindow*, int, int);
-	static void keyCallback(GLFWwindow*, int, int, int, int);
-	static void charCallback(GLFWwindow*, uint);
-	static void mouseButtonCallback(GLFWwindow *, int, int, int);
-	static void cursorMoveCallback(GLFWwindow*, double, double);
-	static void scrollCallback(GLFWwindow*, double, double);
-
 public:
-	static void close();
+	Window(const string &title, const int x, const int y, const int w, const int h, const Uint32 flags);
+	~Window();
 	
-	static void setFullScreen(const bool fullscreen);
-	static bool getFullScreen();
+	/** 
+	 * \brief Set the window to fullscreen using the given \p displayMode.
+	 * If \p displayMode is 0 or invalid, then setFullScreenMode will use the
+	 * current desktop display mode.
+	 * TODO: Multi-monitor support
+	 */
+	void setFullScreenMode(SDL_DisplayMode *displayMode);
 
-	static void setResizable(const bool resizable);
-	static bool getResizable();
+	/**
+	 * \brief Sets the window to windowed mode.
+	 */
+	void setWindowed();
 
-	static bool hasFocus();
-	
-	static void setPosition(const Vector2i &pos);
-	static Vector2i getPosition();
+	/**
+	 * \brief Gets the current window flags.
+	 */
+	Uint32 getFlags() const;
 
-	static void setSize(const int width, const int height);
-	static void setSize(const Vector2i &size) { setSize(size.x, size.y); }
-	static void setWidth(const int width);
-	static void setHeight(const int height);
-	static Vector2i getSize();
-	static int getWidth();
-	static int getHeight();
+	/**
+	 * \brief Returns true if all the flags in \p flags is set.
+	 */
+	bool checkFlags(const Uint32 flags) const;
 
-	static void minimize();
-	static void restore();
-	//static void maximize();
+	/**
+	 * \brief Moves the window to a given position in desktop coordinates.
+	 */
+	void setPosition(const int x, const int y);
+
+	/**
+	 * \brief Gets the position of window in desktop coordinates.
+	 */
+	void getPosition(int *x, int *y) const;
+
+	/**
+	 * \brief Resizes the window to a given size in desktop coordinates.
+	 */
+	void setSize(const int width, const int height);
+
+	/**
+	 * \brief Gets the size of window in desktop coordinates.
+	 */
+	void getSize(int *x, int *y) const;
+
+	/**
+	 * \brief Sets the title of the window.
+	 */
+	void setTitle(const string &title);
+
+	/**
+	 * \brief Gets the title of the window.
+	 */
+	string getTitle() const;
+
+	/**
+	 * \brief Sets the icon of the window.
+	 */
+	void setIcon(const Pixmap &icon);
+
+	/**
+	 * \brief Sets the minimum size of the window in desktop coordinates.
+	 */
+	void setMinimumSize(const int width, const int height);
+
+	/**
+	 * \brief Sets the maximum size of the window in desktop coordinates.
+	 */
+	void setMaximumSize(const int width, const int height);
+
+	/**
+	 * \brief If true applies borders to the window. If false removes borders from the window.
+	 */
+	void setBordered(const bool bordered);
+
+	/**
+	 * \brief If true the window will try to grab user input.
+	 */
+	void setGrab(const bool grabbed);
+
+	/**
+	 * \brief Set the brightness of the window?
+	 */
+	void setBrightness(const float brightness);
+
+	/**
+	 * \brief Set gamma ramp of the window?
+	 */
+	void setGammaRamp(Uint16 *red, Uint16 *green, Uint16 *blue);
+
+	/**
+	 * \brief Hides the window?
+	 */
+	void hide();
+
+	/**
+	 * \brief Shows the window?
+	 */
+	void show();
+
+	/**
+	 * \brief Get display index of window?
+	 */
+	int getDisplayIndex() const;
+
+	/**
+	 * \brief Get display mode?
+	 */
+	void getDisplayMode(SDL_DisplayMode *mode) const;
+
+	/**
+	 * \brief Maximizes the window.
+	 */
+	void maximize();
+
+	/**
+	 * \brief Minimizes the window.
+	 */
+	void minimize();
+
+	/**
+	 * \brief Restores the window if minimized.
+	 */
+	void restore();
+
+	/**
+	 * \brief Sets the vsync mode. 0 disables vsync, 1 enables vsync and -1 enables adaptive vsync.
+	 */
+	void setVSync(const int mode);
+
+
+	/**
+	 * \brief 
+	 */
+	GraphicsContext *getGraphicsContext() const;
+
+	/**
+	 * \brief Returns the SDL_Window handle of this window.
+	 */
+	SDL_Window *getSDLHandle() const;
 
 private:
-	// The window handle
-	static GLFWwindow *s_window;
+	// SDL window object
+	SDL_Window *m_window;
 
-	// Cached list of resolutions
-	//static vector<Vector2i> s_resolutions;
-
-	// Fullscreen
-	static bool s_focus;
-	static bool s_fullScreen;
-
-	// Windows graphics device
-	static GraphicsContext *s_graphicsContext;
-
-	// Window listeners
-	static list<WindowListener*> s_windowListeners;
-	static void addWindowListener(WindowListener *listener);
-	static void removeWindowListener(WindowListener *listener);
-	
-	// Window procedure callback
-	static LRESULT CALLBACK OnEvent(HWND Handle, UINT Message, WPARAM wParam, LPARAM lParam);
+	// Graphics context
+	GraphicsContext *m_graphicsContext;
 };
 
 /*********************************************************************
@@ -326,82 +392,105 @@ private:
 class XDAPI Game
 {
 public:
-	Game();
+	Game(const string &name, const string &organization = "CrossGame");
+	~Game();
 
-	void setFlags(const uint flags);
-	uint getFlags() const;
-	void setWorkDir(const string & workDir);
-	string getWorkDir() const;
-	void setSaveDir(const string & saveDir);
-	string getSaveDir() const;
-	void setInputConfig(const string & inputConfig);
-	string getInputConfig() const;
+	/**
+	 * \brief An event called after the game has initialized.
+	 */
+	virtual void onStart(GraphicsContext&) { }
 
-	virtual void start(GraphicsContext&) { }
-	virtual void end() { }
+	/**
+	 * \brief An event called as the game is ending.
+	 */
+	virtual void onEnd() { }
 
-	virtual void update(const float) { }
-	virtual void draw(GraphicsContext&, const float) { }
-	virtual void stepBegin() { }
-	virtual void stepEnd() { }
+	/**
+	 * \brief An event called when the game wants to update the game state.
+	 */
+	virtual void onUpdate(const float delta) { }
 
-	//virtual void keyPress() { }
+	/**
+	 * \brief An event called when the game wants to draw the current game state.
+	 */
+	virtual void onDraw(GraphicsContext&, const float alpha) { }
+
+	/**
+	 * \brief An event called at the start of the game loop.
+	 */
+	virtual void onStepBegin() { }
+	
+	/**
+	 * \brief An event called at the end of the game loop.
+	 */
+	virtual void onStepEnd() { }
+	
+	virtual void onSizeChanged(int width, int height) { }
+
+	virtual void onKeyDown(int vk, int mod, int scancode) { }
+
+	virtual void onKeyUp(int vk, int mod, int scancode) { }
+
+	virtual void onMouseMove(float x, float y) { }
+
+	virtual void onMouseDown(int btn) { }
+
+	virtual void onMouseUp(int btn) { }
+
+	virtual void onMouseWheel(int x, int y) { }
+
+public:
+	// Run game
+	int run();
+	
+	// End game
+	void end();
+
+	// Set pause state
+	void setPaused(const bool paused);
+
+	// Check game config
+	bool isEnabled(const EngineFlag flag);
+
+	// Get working dir
+	string getRootDirectory() const { return m_rootDir; }
+
+	// Get save dir
+	string getPrefDirectory() const { return m_saveDir; }
+
+	Window *getMainWindow() const { return m_window; }
 
 private:
+
+	// Game name and organization
+	const string m_name;
+	const string m_organization;
+	
+	// Initialized?
+	bool m_initialized;
+
+	// Paused?
+	bool m_paused;
+
+	// Running?
+	bool m_running;
+
+	// Fps
+	double m_framesPerSecond;
+	
+	Window *m_window;
+	FileSystem		*m_fileSystem;
+	//AudioManager	*m_audio;
+	Timer			*m_timer;
+	Console			*m_console;
+
 	// Engine running flags
 	uint m_flags;
 
 	// Engine working directory
-	string m_workDir, m_saveDir;
-
-	// Input config file
-	string m_inputConfig;
+	string m_rootDir, m_saveDir;
 };
 
-/*********************************************************************
-**	Game engine														**
-**********************************************************************/
-class XDAPI Engine
-{
-public:
-	Engine();
-	~Engine();
-
-	// Initialize the engine
-	int init(Game * game);
-
-	// Run game
-	int run();
-	
-	// Exit game
-	static void exit();
-	static void pause() { s_paused = true; }
-	static void resume() { s_paused = false; }
-
-	// Static functions
-	static bool isEnabled(const EngineFlag flag);
-	static string getWorkingDirectory() { return s_game->getWorkDir(); }
-	static string getSaveDirectory() { return s_game->getSaveDir(); }
-
-private:
-	
-	// State
-	static bool s_initialized;
-	static bool s_paused;
-	static bool s_running;
-	
-	FileSystem		*m_fileSystem;
-	Graphics		*m_graphics;
-	AudioManager	*m_audio;
-	Timer			*m_timer;
-	Console			*m_console;
-
-	// Game
-	static Game * s_game;
-};
-
-XDAPI Engine *CreateEngine();
-
-END_XD_NAMESPACE
+END_CG_NAMESPACE
 
 #endif // X2D_ENGINE_H

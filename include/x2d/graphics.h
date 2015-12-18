@@ -32,7 +32,7 @@
 **	Graphics class [static]											**
 **********************************************************************/
 
-BEGIN_XD_NAMESPACE
+BEGIN_CG_NAMESPACE
 
 XDAPI extern uint QUAD_INDICES[6];
 XDAPI extern Vector4 QUAD_VERTICES[4];
@@ -44,6 +44,8 @@ class XDAPI Graphics
 	friend class Window;
 	friend class GraphicsContext;
 public:
+	Graphics(Window *window);
+	~Graphics();
 
 	enum Feature
 	{
@@ -59,28 +61,20 @@ public:
 	static void enableWireframe();
 	static void disableWireframe();
 
-	// Time step & fps
-	static double getFPS();
-
 	// Swap buffers
 	static void swapBuffers();
 
+
+	SDL_GLContext *getSDLHandle() const;
+
 protected:
-	static void init();
-	static void clear();
+	SDL_GLContext m_context;
 
-	static double s_framesPerSecond;
-
-	static ShaderPtr s_defaultShader;
-	static Texture2DPtr s_defaultTexture;
-	static GLuint s_vao;
-	static GLuint s_vbo;
-	static GLuint s_ibo;
 	static int s_vsync;
 
-	static GraphicsContext s_graphicsContext;
+	GraphicsContext s_graphicsContext;
 };
 
-END_XD_NAMESPACE
+END_CG_NAMESPACE
 
 #endif // X2D_GRAPHICS_H

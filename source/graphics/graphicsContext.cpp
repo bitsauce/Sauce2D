@@ -1,8 +1,19 @@
 #include <x2d/graphics.h>
 
-BEGIN_XD_NAMESPACE
+BEGIN_CG_NAMESPACE
 
-GraphicsContext::GraphicsContext() :
+// Default shader. Used when no shader is set.
+ShaderPtr GraphicsContext::s_defaultShader = 0;
+
+// Default texture. Empty texture used when no texture is set.
+Texture2DPtr GraphicsContext::s_defaultTexture = 0;
+
+// Vertex array object
+GLuint GraphicsContext::s_vao = 0;
+GLuint GraphicsContext::s_vbo = 0;
+GLuint GraphicsContext::s_ibo = 0;
+
+GraphicsContext::GraphicsContext(Window *window) :
 	m_width(0),
 	m_height(0),
 	m_renderTarget(nullptr),
@@ -10,6 +21,14 @@ GraphicsContext::GraphicsContext() :
 	m_texture(nullptr),
 	m_blendState(BlendState::PRESET_ALPHA_BLEND)
 {
+	m_context = SDL_GL_CreateContext(window->getSDLHandle());
+}
+
+GraphicsContext::~GraphicsContext()
+{
+	glDeleteBuffers(1, &s_vbo);
+	glDeleteVertexArrays(1, &s_vao);
+	SDL_GL_DeleteContext(m_context);
 }
 
 void GraphicsContext::enable(const Capability cap)
@@ -44,6 +63,9 @@ void GraphicsContext::setRenderTarget(RenderTarget2D *renderTarget)
 			m_renderTarget = renderTarget;
 			m_renderTarget->bind();
 
+			m_prevWidth = m_width;
+			m_prevHeight = m_height;
+
 			// Resize viewport
 			resizeViewport(m_renderTarget->m_width, m_renderTarget->m_height);
 		}
@@ -54,7 +76,7 @@ void GraphicsContext::setRenderTarget(RenderTarget2D *renderTarget)
 			m_renderTarget = nullptr;
 
 			// Reset viewport
-			resizeViewport(Window::getSize().x, Window::getSize().y);
+			resizeViewport(m_prevWidth, m_prevHeight);
 		}
 	}
 }
@@ -113,18 +135,17 @@ BlendState GraphicsContext::getBlendState()
 	return m_blendState;
 }
 
-#include <freeimage.h>
 void GraphicsContext::saveScreenshot(string path)
 {
 	// Get frame buffer data
-	uchar *data = new uchar[m_width*m_height*3];
+	uchar *data = new uchar[m_width * m_height * 4];
 	glReadBuffer(GL_FRONT);
-	glReadPixels(0, 0, m_width, m_height, GL_BGR, GL_UNSIGNED_BYTE, data);
+	glReadPixels(0, 0, m_width, m_height, GL_BGRA, GL_UNSIGNED_BYTE, data);
 	glReadBuffer(GL_BACK);
 
-	FIBITMAP *bitmap = FreeImage_ConvertFromRawBits(data, m_width, m_height, m_width * 3, 24, FI_RGBA_RED_MASK, FI_RGBA_GREEN_MASK, FI_RGBA_BLUE_MASK, false);
-	util::toAbsoluteFilePath(path);
-	FreeImage_Save(FIF_PNG, bitmap, path.c_str(), PNG_DEFAULT); // For now, let's just save everything as png
+	// NOTE: This function is not tested!
+	Pixmap pixmap(m_width, m_height, data);
+	pixmap.exportToFile(path);
 
 	delete[] data;
 }
@@ -168,8 +189,8 @@ void GraphicsContext::setupContext()
 	ShaderPtr shader = m_shader;
 	if (!shader)
 	{
-		shader = Graphics::s_defaultShader;
-		shader->setSampler2D("u_Texture", m_texture == 0 ? Graphics::s_defaultTexture : m_texture);
+		shader = s_defaultShader;
+		shader->setSampler2D("u_Texture", m_texture == 0 ? s_defaultTexture : m_texture);
 	}
 
 	// Enable shader
@@ -231,9 +252,9 @@ void GraphicsContext::drawIndexedPrimitives(const PrimitiveType type, const Vert
 	}
 
 	// Bind buffers
-	glBindBuffer(GL_ARRAY_BUFFER, Graphics::s_vbo);
+	glBindBuffer(GL_ARRAY_BUFFER, s_vbo);
 	glBufferData(GL_ARRAY_BUFFER, vertexCount * vertexSizeInBytes, vertexData, GL_DYNAMIC_DRAW);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, Graphics::s_ibo);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, s_ibo);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, indexCount * sizeof(uint), indices, GL_DYNAMIC_DRAW);
 			
 	// Set array pointers
@@ -371,7 +392,7 @@ void GraphicsContext::drawPrimitives(const PrimitiveType type, const Vertex *ver
 	}
 
 	// Bind buffer
-	glBindBuffer(GL_ARRAY_BUFFER, Graphics::s_vbo);
+	glBindBuffer(GL_ARRAY_BUFFER, s_vbo);
 	glBufferData(GL_ARRAY_BUFFER, vertexCount * vertexSizeInBytes, vertexData, GL_DYNAMIC_DRAW);
 
 	// Set array pointers
@@ -528,9 +549,9 @@ void GraphicsContext::drawCircle(const float x, const float y, const float radiu
 {
 	Vertex *vertices = new Vertex[segments+2];
 
-	vertices[0].set4f(xd::VERTEX_POSITION, x, y);
-	vertices[0].set4ub(xd::VERTEX_COLOR, color.r, color.g, color.b, color.a);
-	vertices[0].set4f(xd::VERTEX_TEX_COORD, 0.5f, 0.5f);
+	vertices[0].set4f(VERTEX_POSITION, x, y);
+	vertices[0].set4ub(VERTEX_COLOR, color.r, color.g, color.b, color.a);
+	vertices[0].set4f(VERTEX_TEX_COORD, 0.5f, 0.5f);
 
 	for(uint i = 1; i < segments+2; ++i)
 	{
@@ -550,4 +571,4 @@ void GraphicsContext::drawCircle(const Vector2 &center, const float radius, cons
 	drawCircle(center.x, center.y, radius, segments, color);
 }
 
-END_XD_NAMESPACE
+END_CG_NAMESPACE

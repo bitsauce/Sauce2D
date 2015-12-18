@@ -3,7 +3,7 @@
 
 #include <x2d/config.h>
 
-BEGIN_XD_NAMESPACE
+BEGIN_CG_NAMESPACE
 
 class XDAPI Random
 {
@@ -33,6 +33,6 @@ private:
 	uint32_t m_seed;
 };
 
-END_XD_NAMESPACE
+END_CG_NAMESPACE
 
 #endif // X2D_RANDOM_H

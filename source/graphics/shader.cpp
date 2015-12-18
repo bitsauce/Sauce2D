@@ -5,7 +5,7 @@
 // /_/\_\_____|____/   \____|\__ _|_| |_| |_|\___| |_____|_| |_|\__, |_|_| |_|\___|
 //                                                              |___/     
 //				Originally written by Marcus Loo Vergara (aka. Bitsauce)
-//									2011-2014 (C)
+//									2011-2015 (C)
 
 #include <x2d/engine.h>
 #include <x2d/graphics.h>
@@ -14,7 +14,7 @@ const int INT_SIZE = sizeof(GLint);
 const int FLOAT_SIZE = sizeof(GLfloat);
 const int PTR_SIZE = sizeof(void*);
 
-BEGIN_XD_NAMESPACE
+BEGIN_CG_NAMESPACE
 
 Shader::Shader(const string &vertexSource, const string &fragmentSource)
 {
@@ -572,4 +572,4 @@ ShaderPtr Shader::loadResource(const string &name)
 	return ShaderPtr(new Shader(vertexSource, fragmentSource));
 }
 
-END_XD_NAMESPACE
+END_CG_NAMESPACE
