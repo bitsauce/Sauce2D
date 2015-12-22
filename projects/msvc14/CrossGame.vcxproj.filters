@@ -1,252 +1,264 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="include">
-      <UniqueIdentifier>{63a1d898-eb0d-49f6-8bfc-378bbed62473}</UniqueIdentifier>
+    <Filter Include="Source">
+      <UniqueIdentifier>{daca02bc-a9b5-490b-8978-d14ce5e4a29c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="include\math">
-      <UniqueIdentifier>{11ab994e-9d47-4069-aa41-1236c6e983e0}</UniqueIdentifier>
+    <Filter Include="Source\Common">
+      <UniqueIdentifier>{ed42a9eb-7bb6-4eb7-8ab5-0bf60d35e64e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="include\graphics">
-      <UniqueIdentifier>{095c17d4-bd34-4d01-a74d-31fe78f8ff43}</UniqueIdentifier>
+    <Filter Include="Source\Graphics">
+      <UniqueIdentifier>{5c4936cb-dcd3-4d2b-9f82-1e78436a3a73}</UniqueIdentifier>
     </Filter>
-    <Filter Include="source">
-      <UniqueIdentifier>{dbaa90f1-6e42-4362-be07-632b221b4742}</UniqueIdentifier>
+    <Filter Include="Source\Audio">
+      <UniqueIdentifier>{bc0f0669-f0f8-488b-afea-6e4d771f1cd1}</UniqueIdentifier>
     </Filter>
-    <Filter Include="source\audio">
-      <UniqueIdentifier>{39bb7ad7-8632-4004-9f02-ae1173d85ff4}</UniqueIdentifier>
+    <Filter Include="Source\Input">
+      <UniqueIdentifier>{07f942eb-4d73-46bd-b1e5-54b67ca87cb5}</UniqueIdentifier>
     </Filter>
-    <Filter Include="source\graphics">
-      <UniqueIdentifier>{b8826ba9-373b-469b-9942-29d310877829}</UniqueIdentifier>
+    <Filter Include="Source\Math">
+      <UniqueIdentifier>{8f3ac6ce-4394-4bf5-9acd-0bc183f71547}</UniqueIdentifier>
     </Filter>
-    <Filter Include="source\common">
-      <UniqueIdentifier>{eb8160ed-7f08-4413-be71-ebd7e1771d73}</UniqueIdentifier>
+    <Filter Include="Include">
+      <UniqueIdentifier>{a74b3217-6898-4fdc-8511-0be6c3a7705d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="source\common\math">
-      <UniqueIdentifier>{75496aa6-e494-42a7-ab65-c135565772ef}</UniqueIdentifier>
+    <Filter Include="Include\CGF">
+      <UniqueIdentifier>{27e7df68-5b3b-4a68-90ad-362c665f2bb6}</UniqueIdentifier>
     </Filter>
-    <Filter Include="include\input">
-      <UniqueIdentifier>{2f1d2e8c-a720-40d6-89e4-b51a07413f6f}</UniqueIdentifier>
+    <Filter Include="Include\CGF\Input">
+      <UniqueIdentifier>{4f75363f-4996-43bf-9469-80bcc04cc488}</UniqueIdentifier>
     </Filter>
-    <Filter Include="source\common\input">
-      <UniqueIdentifier>{79b1dc4e-e953-4723-9696-e7f4379fc4d5}</UniqueIdentifier>
+    <Filter Include="Include\CGF\Common">
+      <UniqueIdentifier>{010c5e1e-183d-4306-8214-cd92bd7445a0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Include\CGF\Audio">
+      <UniqueIdentifier>{f2ef1694-cbaa-424e-9a71-2482b9ec62be}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Include\CGF\Graphics">
+      <UniqueIdentifier>{bd6480d1-059e-4864-a1cb-198113f4a6f0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Include\CGF\Math">
+      <UniqueIdentifier>{5a523265-2f82-436b-a835-60a487624ef8}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\include\x2d\config.h">
-      <Filter>include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\x2d\engine.h">
-      <Filter>include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\x2d\graphics.h">
-      <Filter>include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\x2d\math.h">
-      <Filter>include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\x2d\audio.h">
-      <Filter>include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\x2d\x2d.h">
-      <Filter>include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\x2d\math\rect.h">
-      <Filter>include\math</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\x2d\math\rectanglepacker.h">
-      <Filter>include\math</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\x2d\math\vector.h">
-      <Filter>include\math</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\x2d\math\matrix.h">
-      <Filter>include\math</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\x2d\graphics\pixmap.h">
-      <Filter>include\graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\x2d\graphics\shader.h">
-      <Filter>include\graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\x2d\graphics\shape.h">
-      <Filter>include\graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\x2d\graphics\sprite.h">
-      <Filter>include\graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\x2d\graphics\texture.h">
-      <Filter>include\graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\x2d\graphics\textureAtlas.h">
-      <Filter>include\graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\x2d\graphics\textureRegion.h">
-      <Filter>include\graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\x2d\graphics\viewport.h">
-      <Filter>include\graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\x2d\graphics\animation.h">
-      <Filter>include\graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\x2d\graphics\vertex.h">
-      <Filter>include\graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\x2d\graphics\vertexbuffer.h">
-      <Filter>include\graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\x2d\math\random.h">
-      <Filter>include\math</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\x2d\resourcemanager.h">
-      <Filter>include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\x2d\iniparser.h">
-      <Filter>include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\x2d\graphics\rendertarget.h">
-      <Filter>include\graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\x2d\graphics\blendState.h">
-      <Filter>include\graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\x2d\graphics\spriteBatch.h">
-      <Filter>include\graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\x2d\graphics\graphicsContext.h">
-      <Filter>include\graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\x2d\graphics\font.h">
-      <Filter>include\graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\x2d\input\input.h">
-      <Filter>include\input</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\x2d\input\keyListener.h">
-      <Filter>include\input</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\x2d\input\mouseListener.h">
-      <Filter>include\input</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\x2d\input\inputContext.h">
-      <Filter>include\input</Filter>
-    </ClInclude>
+    <ClCompile Include="..\..\source\Common\Window.cpp">
+      <Filter>Source\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\Common\Console.cpp">
+      <Filter>Source\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\Common\FileSystem.cpp">
+      <Filter>Source\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\Common\IniParser.cpp">
+      <Filter>Source\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\Common\Math.cpp">
+      <Filter>Source\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\Common\ResourceManager.cpp">
+      <Filter>Source\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\Common\Timer.cpp">
+      <Filter>Source\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\Common\Utilities.cpp">
+      <Filter>Source\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\Audio\Audio.cpp">
+      <Filter>Source\Audio</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\Audio\Buffer.cpp">
+      <Filter>Source\Audio</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\Audio\Source.cpp">
+      <Filter>Source\Audio</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\Graphics\Animation.cpp">
+      <Filter>Source\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\Graphics\BlendState.cpp">
+      <Filter>Source\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\Graphics\Font.cpp">
+      <Filter>Source\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\Graphics\Graphics.cpp">
+      <Filter>Source\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\Graphics\GraphicsContext.cpp">
+      <Filter>Source\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\Graphics\Pixmap.cpp">
+      <Filter>Source\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\Graphics\RenderTarget.cpp">
+      <Filter>Source\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\Graphics\Shader.cpp">
+      <Filter>Source\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\Graphics\Shape.cpp">
+      <Filter>Source\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\Graphics\Sprite.cpp">
+      <Filter>Source\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\Graphics\SpriteBatch.cpp">
+      <Filter>Source\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\Graphics\Texture.cpp">
+      <Filter>Source\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\Graphics\TextureAtlas.cpp">
+      <Filter>Source\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\Graphics\TextureRegion.cpp">
+      <Filter>Source\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\Graphics\Vertex.cpp">
+      <Filter>Source\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\Graphics\VertexBuffer.cpp">
+      <Filter>Source\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\Graphics\Viewport.cpp">
+      <Filter>Source\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\Input\Input.cpp">
+      <Filter>Source\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\Input\InputContext.cpp">
+      <Filter>Source\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\Input\KeyListener.cpp">
+      <Filter>Source\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\Input\MouseListener.cpp">
+      <Filter>Source\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\Math\Matrix.cpp">
+      <Filter>Source\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\Math\Random.cpp">
+      <Filter>Source\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\Math\Rect.cpp">
+      <Filter>Source\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\Math\RectanglePacker.cpp">
+      <Filter>Source\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\Math\Vector.cpp">
+      <Filter>Source\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\Common\Game.cpp">
+      <Filter>Source\Common</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\source\audio\buffer.cpp">
-      <Filter>source\audio</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\audio\source.cpp">
-      <Filter>source\audio</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\graphics\textureAtlas.cpp">
-      <Filter>source\graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\graphics\textureRegion.cpp">
-      <Filter>source\graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\graphics\viewport.cpp">
-      <Filter>source\graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\graphics\animation.cpp">
-      <Filter>source\graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\graphics\graphics.cpp">
-      <Filter>source\graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\graphics\pixmap.cpp">
-      <Filter>source\graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\graphics\shader.cpp">
-      <Filter>source\graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\graphics\shape.cpp">
-      <Filter>source\graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\graphics\sprite.cpp">
-      <Filter>source\graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\graphics\texture.cpp">
-      <Filter>source\graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\common\console.cpp">
-      <Filter>source\common</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\common\engine.cpp">
-      <Filter>source\common</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\common\math\rectanglepacker.cpp">
-      <Filter>source\common\math</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\common\math\vector.cpp">
-      <Filter>source\common\math</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\common\math\matrix.cpp">
-      <Filter>source\common\math</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\common\math\rect.cpp">
-      <Filter>source\common\math</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\common\filesystem.cpp">
-      <Filter>source\common</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\common\timer.cpp">
-      <Filter>source\common</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\common\util.cpp">
-      <Filter>source\common</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\common\window.cpp">
-      <Filter>source\common</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\common\math.cpp">
-      <Filter>source\common</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\graphics\vertex.cpp">
-      <Filter>source\graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\common\math\random.cpp">
-      <Filter>source\common\math</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\audio\audio.cpp">
-      <Filter>source\audio</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\common\resourcemanager.cpp">
-      <Filter>source\common</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\common\iniparser.cpp">
-      <Filter>source\common</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\graphics\graphicsContext.cpp">
-      <Filter>source\graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\graphics\blendState.cpp">
-      <Filter>source\graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\graphics\vertexBuffer.cpp">
-      <Filter>source\graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\graphics\spriteBatch.cpp">
-      <Filter>source\graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\graphics\renderTarget.cpp">
-      <Filter>source\graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\graphics\font.cpp">
-      <Filter>source\graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\common\input\input.cpp">
-      <Filter>source\common\input</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\common\input\keyListener.cpp">
-      <Filter>source\common\input</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\common\input\mouseListener.cpp">
-      <Filter>source\common\input</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\common\input\inputContext.cpp">
-      <Filter>source\common\input</Filter>
-    </ClCompile>
+    <ClInclude Include="..\..\include\CGF\CGF.h">
+      <Filter>Include\CGF</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\CGF\Audio.h">
+      <Filter>Include\CGF</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\CGF\Config.h">
+      <Filter>Include\CGF</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\CGF\Graphics.h">
+      <Filter>Include\CGF</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\CGF\Math.h">
+      <Filter>Include\CGF</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\CGF\Input.h">
+      <Filter>Include\CGF</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\CGF\Input\Inputcontext.h">
+      <Filter>Include\CGF\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\CGF\Input\Keylistener.h">
+      <Filter>Include\CGF\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\CGF\Input\MouseListener.h">
+      <Filter>Include\CGF\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\CGF\Common.h">
+      <Filter>Include\CGF</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\CGF\Math\Matrix.h">
+      <Filter>Include\CGF\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\CGF\Math\Random.h">
+      <Filter>Include\CGF\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\CGF\Math\Rectangle.h">
+      <Filter>Include\CGF\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\CGF\Math\RectanglePacker.h">
+      <Filter>Include\CGF\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\CGF\Math\Vector.h">
+      <Filter>Include\CGF\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\CGF\Graphics\Sprite.h">
+      <Filter>Include\CGF\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\CGF\Graphics\SpriteBatch.h">
+      <Filter>Include\CGF\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\CGF\Graphics\Texture.h">
+      <Filter>Include\CGF\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\CGF\Graphics\TextureAtlas.h">
+      <Filter>Include\CGF\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\CGF\Graphics\TextureRegion.h">
+      <Filter>Include\CGF\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\CGF\Graphics\Vertex.h">
+      <Filter>Include\CGF\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\CGF\Graphics\VertexBuffer.h">
+      <Filter>Include\CGF\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\CGF\Graphics\Viewport.h">
+      <Filter>Include\CGF\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\CGF\Graphics\Animation.h">
+      <Filter>Include\CGF\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\CGF\Graphics\BlendState.h">
+      <Filter>Include\CGF\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\CGF\Graphics\Font.h">
+      <Filter>Include\CGF\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\CGF\Graphics\GraphicsContext.h">
+      <Filter>Include\CGF\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\CGF\Graphics\Pixmap.h">
+      <Filter>Include\CGF\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\CGF\Graphics\RenderTarget.h">
+      <Filter>Include\CGF\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\CGF\Graphics\Shader.h">
+      <Filter>Include\CGF\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\CGF\Graphics\Shape.h">
+      <Filter>Include\CGF\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\CGF\Common\ResourceManager.h">
+      <Filter>Include\CGF\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\CGF\Common\Game.h">
+      <Filter>Include\CGF\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\CGF\Common\IniParser.h">
+      <Filter>Include\CGF\Common</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

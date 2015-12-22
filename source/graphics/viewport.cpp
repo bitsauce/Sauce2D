@@ -7,10 +7,10 @@
 //				Originally written by Marcus Loo Vergara (aka. Bitsauce)
 //									2011-2015 (C)
 
-#include <x2d/engine.h>
-#include <x2d/graphics.h>
+#include <CGF/Common.h>
+#include <CGF/graphics.h>
 
-BEGIN_CG_NAMESPACE
+BEGIN_CGF_NAMESPACE
 
 Viewport::Viewport(const Recti &view)
 {
@@ -25,4 +25,4 @@ void Viewport::makeCurrent() const
 	//Gfx::setViewport(this);
 }
 
-END_CG_NAMESPACE
+END_CGF_NAMESPACE

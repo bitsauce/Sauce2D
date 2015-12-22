@@ -7,14 +7,14 @@
 //				Originally written by Marcus Loo Vergara (aka. Bitsauce)
 //									2011-2015 (C)
 
-#include <x2d/engine.h>
-#include <x2d/graphics.h>
+#include <CGF/Common.h>
+#include <CGF/graphics.h>
 
 const int INT_SIZE = sizeof(GLint);
 const int FLOAT_SIZE = sizeof(GLfloat);
 const int PTR_SIZE = sizeof(void*);
 
-BEGIN_CG_NAMESPACE
+BEGIN_CGF_NAMESPACE
 
 Shader::Shader(const string &vertexSource, const string &fragmentSource)
 {
@@ -572,4 +572,4 @@ ShaderPtr Shader::loadResource(const string &name)
 	return ShaderPtr(new Shader(vertexSource, fragmentSource));
 }
 
-END_CG_NAMESPACE
+END_CGF_NAMESPACE

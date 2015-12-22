@@ -7,10 +7,10 @@
 //				Originally written by Marcus Loo Vergara (aka. Bitsauce)
 //									2011-2015 (C)
 
-#include <x2d/engine.h>
-#include <x2d/graphics.h>
+#include <CGF/Common.h>
+#include <CGF/graphics.h>
 
-BEGIN_CG_NAMESPACE
+BEGIN_CGF_NAMESPACE
 
 TextureRegion::TextureRegion() :
 	uv0(0.0f),
@@ -64,4 +64,4 @@ void TextureRegion::setRegion(const float u0, const float v0, const float u1, co
 	uv1.set(u1, v1);
 }
 
-END_CG_NAMESPACE
+END_CGF_NAMESPACE

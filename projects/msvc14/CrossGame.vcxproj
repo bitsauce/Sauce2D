@@ -11,79 +11,80 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\include\x2d\audio.h" />
-    <ClInclude Include="..\..\include\x2d\config.h" />
-    <ClInclude Include="..\..\include\x2d\engine.h" />
-    <ClInclude Include="..\..\include\x2d\graphics.h" />
-    <ClInclude Include="..\..\include\x2d\graphics\animation.h" />
-    <ClInclude Include="..\..\include\x2d\graphics\blendState.h" />
-    <ClInclude Include="..\..\include\x2d\graphics\font.h" />
-    <ClInclude Include="..\..\include\x2d\graphics\spriteBatch.h" />
-    <ClInclude Include="..\..\include\x2d\graphics\graphicsContext.h" />
-    <ClInclude Include="..\..\include\x2d\graphics\rendertarget.h" />
-    <ClInclude Include="..\..\include\x2d\graphics\pixmap.h" />
-    <ClInclude Include="..\..\include\x2d\graphics\shader.h" />
-    <ClInclude Include="..\..\include\x2d\graphics\shape.h" />
-    <ClInclude Include="..\..\include\x2d\graphics\sprite.h" />
-    <ClInclude Include="..\..\include\x2d\graphics\texture.h" />
-    <ClInclude Include="..\..\include\x2d\graphics\textureAtlas.h" />
-    <ClInclude Include="..\..\include\x2d\graphics\textureRegion.h" />
-    <ClInclude Include="..\..\include\x2d\graphics\vertex.h" />
-    <ClInclude Include="..\..\include\x2d\graphics\vertexbuffer.h" />
-    <ClInclude Include="..\..\include\x2d\graphics\viewport.h" />
-    <ClInclude Include="..\..\include\x2d\iniparser.h" />
-    <ClInclude Include="..\..\include\x2d\input\input.h" />
-    <ClInclude Include="..\..\include\x2d\input\inputContext.h" />
-    <ClInclude Include="..\..\include\x2d\input\keyListener.h" />
-    <ClInclude Include="..\..\include\x2d\input\mouseListener.h" />
-    <ClInclude Include="..\..\include\x2d\math.h" />
-    <ClInclude Include="..\..\include\x2d\math\matrix.h" />
-    <ClInclude Include="..\..\include\x2d\math\random.h" />
-    <ClInclude Include="..\..\include\x2d\math\rect.h" />
-    <ClInclude Include="..\..\include\x2d\math\rectanglepacker.h" />
-    <ClInclude Include="..\..\include\x2d\math\vector.h" />
-    <ClInclude Include="..\..\include\x2d\resourcemanager.h" />
-    <ClInclude Include="..\..\include\x2d\x2d.h" />
+    <ClCompile Include="..\..\source\Audio\Audio.cpp" />
+    <ClCompile Include="..\..\source\Audio\Buffer.cpp" />
+    <ClCompile Include="..\..\source\Audio\Source.cpp" />
+    <ClCompile Include="..\..\source\Common\Console.cpp" />
+    <ClCompile Include="..\..\source\Common\Game.cpp" />
+    <ClCompile Include="..\..\source\Common\FileSystem.cpp" />
+    <ClCompile Include="..\..\source\Common\IniParser.cpp" />
+    <ClCompile Include="..\..\source\Common\Math.cpp" />
+    <ClCompile Include="..\..\source\Common\ResourceManager.cpp" />
+    <ClCompile Include="..\..\source\Common\Timer.cpp" />
+    <ClCompile Include="..\..\source\Common\Utilities.cpp" />
+    <ClCompile Include="..\..\source\Common\Window.cpp" />
+    <ClCompile Include="..\..\source\Graphics\Animation.cpp" />
+    <ClCompile Include="..\..\source\Graphics\BlendState.cpp" />
+    <ClCompile Include="..\..\source\Graphics\Font.cpp" />
+    <ClCompile Include="..\..\source\Graphics\Graphics.cpp" />
+    <ClCompile Include="..\..\source\Graphics\GraphicsContext.cpp" />
+    <ClCompile Include="..\..\source\Graphics\Pixmap.cpp" />
+    <ClCompile Include="..\..\source\Graphics\RenderTarget.cpp" />
+    <ClCompile Include="..\..\source\Graphics\Shader.cpp" />
+    <ClCompile Include="..\..\source\Graphics\Shape.cpp" />
+    <ClCompile Include="..\..\source\Graphics\Sprite.cpp" />
+    <ClCompile Include="..\..\source\Graphics\SpriteBatch.cpp" />
+    <ClCompile Include="..\..\source\Graphics\Texture.cpp" />
+    <ClCompile Include="..\..\source\Graphics\TextureAtlas.cpp" />
+    <ClCompile Include="..\..\source\Graphics\TextureRegion.cpp" />
+    <ClCompile Include="..\..\source\Graphics\Vertex.cpp" />
+    <ClCompile Include="..\..\source\Graphics\VertexBuffer.cpp" />
+    <ClCompile Include="..\..\source\Graphics\Viewport.cpp" />
+    <ClCompile Include="..\..\source\Input\Input.cpp" />
+    <ClCompile Include="..\..\source\Input\InputContext.cpp" />
+    <ClCompile Include="..\..\source\Input\KeyListener.cpp" />
+    <ClCompile Include="..\..\source\Input\MouseListener.cpp" />
+    <ClCompile Include="..\..\source\Math\Matrix.cpp" />
+    <ClCompile Include="..\..\source\Math\Random.cpp" />
+    <ClCompile Include="..\..\source\Math\Rect.cpp" />
+    <ClCompile Include="..\..\source\Math\RectanglePacker.cpp" />
+    <ClCompile Include="..\..\source\Math\Vector.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\source\audio\audio.cpp" />
-    <ClCompile Include="..\..\source\audio\buffer.cpp" />
-    <ClCompile Include="..\..\source\audio\source.cpp" />
-    <ClCompile Include="..\..\source\common\iniparser.cpp" />
-    <ClCompile Include="..\..\source\common\input\input.cpp" />
-    <ClCompile Include="..\..\source\common\input\inputContext.cpp" />
-    <ClCompile Include="..\..\source\common\input\keyListener.cpp" />
-    <ClCompile Include="..\..\source\common\input\mouseListener.cpp" />
-    <ClCompile Include="..\..\source\common\resourcemanager.cpp" />
-    <ClCompile Include="..\..\source\common\console.cpp" />
-    <ClCompile Include="..\..\source\common\engine.cpp" />
-    <ClCompile Include="..\..\source\common\filesystem.cpp" />
-    <ClCompile Include="..\..\source\common\math.cpp" />
-    <ClCompile Include="..\..\source\common\math\matrix.cpp" />
-    <ClCompile Include="..\..\source\common\math\random.cpp" />
-    <ClCompile Include="..\..\source\common\math\rect.cpp" />
-    <ClCompile Include="..\..\source\common\math\rectanglepacker.cpp" />
-    <ClCompile Include="..\..\source\common\math\vector.cpp" />
-    <ClCompile Include="..\..\source\common\timer.cpp" />
-    <ClCompile Include="..\..\source\common\util.cpp" />
-    <ClCompile Include="..\..\source\common\window.cpp" />
-    <ClCompile Include="..\..\source\graphics\animation.cpp" />
-    <ClCompile Include="..\..\source\graphics\blendState.cpp" />
-    <ClCompile Include="..\..\source\graphics\font.cpp" />
-    <ClCompile Include="..\..\source\graphics\spriteBatch.cpp" />
-    <ClCompile Include="..\..\source\graphics\graphicsContext.cpp" />
-    <ClCompile Include="..\..\source\graphics\renderTarget.cpp" />
-    <ClCompile Include="..\..\source\graphics\graphics.cpp" />
-    <ClCompile Include="..\..\source\graphics\pixmap.cpp" />
-    <ClCompile Include="..\..\source\graphics\shader.cpp" />
-    <ClCompile Include="..\..\source\graphics\shape.cpp" />
-    <ClCompile Include="..\..\source\graphics\sprite.cpp" />
-    <ClCompile Include="..\..\source\graphics\texture.cpp" />
-    <ClCompile Include="..\..\source\graphics\textureAtlas.cpp" />
-    <ClCompile Include="..\..\source\graphics\textureRegion.cpp" />
-    <ClCompile Include="..\..\source\graphics\vertex.cpp" />
-    <ClCompile Include="..\..\source\graphics\vertexBuffer.cpp" />
-    <ClCompile Include="..\..\source\graphics\viewport.cpp" />
+    <ClInclude Include="..\..\include\CGF\Audio.h" />
+    <ClInclude Include="..\..\include\CGF\CGF.h" />
+    <ClInclude Include="..\..\include\CGF\Common.h" />
+    <ClInclude Include="..\..\include\CGF\Common\Game.h" />
+    <ClInclude Include="..\..\include\CGF\Common\IniParser.h" />
+    <ClInclude Include="..\..\include\CGF\Common\ResourceManager.h" />
+    <ClInclude Include="..\..\include\CGF\Config.h" />
+    <ClInclude Include="..\..\include\CGF\Graphics.h" />
+    <ClInclude Include="..\..\include\CGF\Graphics\Animation.h" />
+    <ClInclude Include="..\..\include\CGF\Graphics\BlendState.h" />
+    <ClInclude Include="..\..\include\CGF\Graphics\Font.h" />
+    <ClInclude Include="..\..\include\CGF\Graphics\GraphicsContext.h" />
+    <ClInclude Include="..\..\include\CGF\Graphics\Pixmap.h" />
+    <ClInclude Include="..\..\include\CGF\Graphics\RenderTarget.h" />
+    <ClInclude Include="..\..\include\CGF\Graphics\Shader.h" />
+    <ClInclude Include="..\..\include\CGF\Graphics\Shape.h" />
+    <ClInclude Include="..\..\include\CGF\Graphics\Sprite.h" />
+    <ClInclude Include="..\..\include\CGF\Graphics\SpriteBatch.h" />
+    <ClInclude Include="..\..\include\CGF\Graphics\Texture.h" />
+    <ClInclude Include="..\..\include\CGF\Graphics\TextureAtlas.h" />
+    <ClInclude Include="..\..\include\CGF\Graphics\TextureRegion.h" />
+    <ClInclude Include="..\..\include\CGF\Graphics\Vertex.h" />
+    <ClInclude Include="..\..\include\CGF\Graphics\VertexBuffer.h" />
+    <ClInclude Include="..\..\include\CGF\Graphics\Viewport.h" />
+    <ClInclude Include="..\..\include\CGF\Input.h" />
+    <ClInclude Include="..\..\include\CGF\Input\Inputcontext.h" />
+    <ClInclude Include="..\..\include\CGF\Input\Keylistener.h" />
+    <ClInclude Include="..\..\include\CGF\Input\MouseListener.h" />
+    <ClInclude Include="..\..\include\CGF\Math.h" />
+    <ClInclude Include="..\..\include\CGF\Math\Matrix.h" />
+    <ClInclude Include="..\..\include\CGF\Math\Random.h" />
+    <ClInclude Include="..\..\include\CGF\Math\Rectangle.h" />
+    <ClInclude Include="..\..\include\CGF\Math\RectanglePacker.h" />
+    <ClInclude Include="..\..\include\CGF\Math\Vector.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{F3F25B49-2C6B-4FF0-98FB-47695DF70B8A}</ProjectGuid>
@@ -131,9 +132,9 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
-      <WarningLevel>Level4</WarningLevel>
+      <WarningLevel>Level1</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>X2D_EXPORT;_ITERATOR_DEBUG_LEVEL=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>CGF_EXPORT;_ITERATOR_DEBUG_LEVEL=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -161,9 +162,9 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
-      <WarningLevel>Level4</WarningLevel>
+      <WarningLevel>Level1</WarningLevel>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>X2D_EXPORT;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>CGF_EXPORT;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <Optimization>Full</Optimization>

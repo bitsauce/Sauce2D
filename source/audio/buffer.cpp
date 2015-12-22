@@ -7,9 +7,9 @@
 //				Originally written by Marcus Loo Vergara (aka. Bitsauce)
 //									2011-2015 (C)
 
-#include <x2d/audio.h>
+#include <CGF/audio.h>
 
-BEGIN_CG_NAMESPACE
+BEGIN_CGF_NAMESPACE
 /*
 AudioBuffer::AudioBuffer(void *data, uint size, uint frequency, Format format) :
 	m_frequency(frequency),
@@ -45,4 +45,4 @@ AudioBuffer::Format AudioBuffer::getFormat() const
 	return m_format;
 }
 */
-END_CG_NAMESPACE
+END_CGF_NAMESPACE

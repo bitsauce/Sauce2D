@@ -7,12 +7,12 @@
 //				Originally written by Marcus Loo Vergara (aka. Bitsauce)
 //									2011-2015 (C)
 
-#include <x2d/engine.h>
-#include <x2d/graphics.h>
+#include <CGF/Common.h>
+#include <CGF/graphics.h>
 
 #include "..\3rdparty\SDL_image\SDL_image.h"
 
-BEGIN_CG_NAMESPACE
+BEGIN_CGF_NAMESPACE
 
 GLint toInternalFormat(PixelFormat::Components fmt, PixelFormat::DataType dt)
 {
@@ -259,7 +259,8 @@ void Texture2D::updatePixmap(const Pixmap &pixmap)
 
 	// Set default filtering
 	glBindTexture(GL_TEXTURE_2D, m_id);
-	glTexImage2D(GL_TEXTURE_2D, 0, toInternalFormat(pixmap.getFormat().getComponents(), pixmap.getFormat().getDataType()), (GLsizei) m_width, (GLsizei) m_height, 0, toFormat(pixmap.getFormat().getComponents(), pixmap.getFormat().getDataType()), toGLDataType(pixmap.getFormat().getDataType()), (const GLvoid*) pixmap.getData());
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, m_width, m_height, 0, GL_RGBA, GL_UNSIGNED_BYTE, pixmap.getData());
+	//glTexImage2D(GL_TEXTURE_2D, 0, toInternalFormat(pixmap.getFormat().getComponents(), pixmap.getFormat().getDataType()), (GLsizei) m_width, (GLsizei) m_height, 0, toFormat(pixmap.getFormat().getComponents(), pixmap.getFormat().getDataType()), toGLDataType(pixmap.getFormat().getDataType()), (const GLvoid*) pixmap.getData());
 	glBindTexture(GL_TEXTURE_2D, 0);
 
 	// Regenerate mipmaps
@@ -325,41 +326,8 @@ uint Texture2D::getHeight() const
 
 void Texture2D::exportToFile(string path)
 {
-	// NOTE TO SELF: If I ever decide to implement export for integer texture, glGetTexImage() expects GL_BGRA_INTEGER instead of GL_BGRA
-	if(m_pixelFormat.getDataType() != PixelFormat::BYTE && m_pixelFormat.getDataType() != PixelFormat::UNSIGNED_BYTE)
-	{
-		LOG("Cannot export image with a pixel data type different from byte or unsigned byte");
-		return;
-	}
-
-	// Get texture data
-	uchar *data = new uchar[m_width * m_height * m_pixelFormat.getPixelSizeInBytes()];
-	glBindTexture(GL_TEXTURE_2D, m_id);
-	glGetTexImage(GL_TEXTURE_2D, 0, GL_BGRA, GL_UNSIGNED_BYTE, (GLvoid*) data);
-	glBindTexture(GL_TEXTURE_2D, 0);
-
-	Uint32 rmask, gmask, bmask, amask;
-
-	/* SDL interprets each pixel as a 32-bit number, so our masks must depend
-	on the endianness (byte order) of the machine */
-#if SDL_BYTEORDER == SDL_BIG_ENDIAN
-	rmask = 0xff000000;
-	gmask = 0x00ff0000;
-	bmask = 0x0000ff00;
-	amask = 0x000000ff;
-#else
-	rmask = 0x000000ff;
-	gmask = 0x0000ff00;
-	bmask = 0x00ff0000;
-	amask = 0xff000000;
-#endif
-
-	SDL_Surface *surface = SDL_CreateRGBSurfaceFrom((void*) data, m_width, m_height, 32, m_width * 4, rmask, gmask, bmask, amask);
-	util::toAbsoluteFilePath(path);
-	IMG_SavePNG(surface, path.c_str());
-	SDL_FreeSurface(surface);
-
-	delete[] data;
+	// TODO: This function might be redundant?
+	getPixmap().exportToFile(path);
 }
 
 Texture2DPtr Texture2D::loadResource(const string &name)
@@ -380,4 +348,4 @@ Texture2DPtr Texture2D::loadResource(const string &name)
 	return Texture2DPtr(new Texture2D(Pixmap(filePath, premultiply)));
 }
 
-END_CG_NAMESPACE
+END_CGF_NAMESPACE

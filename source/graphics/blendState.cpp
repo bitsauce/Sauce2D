@@ -1,6 +1,6 @@
-#include <x2d/graphics.h>
+#include <CGF/graphics.h>
 
-BEGIN_CG_NAMESPACE
+BEGIN_CGF_NAMESPACE
 
 BlendState::BlendState(const Preset preset)
 {
@@ -42,4 +42,4 @@ BlendState::BlendState(const BlendFactor csrc, const BlendFactor cdst, const Ble
 {
 }
 
-END_CG_NAMESPACE
+END_CGF_NAMESPACE

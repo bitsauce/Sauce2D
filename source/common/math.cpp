@@ -7,9 +7,9 @@
 //				Originally written by Marcus Loo Vergara (aka. Bitsauce)
 //									2011-2015 (C)
 
-#include <x2d/math.h>
+#include <CGF/math.h>
 
-BEGIN_CG_NAMESPACE
+BEGIN_CGF_NAMESPACE
 
 Color &Color::operator*(const float c)
 {
@@ -130,4 +130,4 @@ int mod(const int a, const int b)
 
 }
 
-END_CG_NAMESPACE
+END_CGF_NAMESPACE

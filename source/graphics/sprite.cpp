@@ -7,10 +7,10 @@
 //				Originally written by Marcus Loo Vergara (aka. Bitsauce)
 //									2011-2015 (C)
 
-#include <x2d/engine.h>
-#include <x2d/graphics.h>
+#include <CGF/Common.h>
+#include <CGF/graphics.h>
 
-BEGIN_CG_NAMESPACE
+BEGIN_CGF_NAMESPACE
 
 Sprite::Sprite(const Texture2DPtr texture, const Rect &rectangle, const Vector2 &origin, const float angle, const TextureRegion &region, const Color &color, const float depth, const Vector2 scale) :
 	m_texture(texture),
@@ -225,4 +225,4 @@ void Sprite::getVertices(Vertex *vertices, uint *indices, const uint indexOffset
 	indices[5] = indexOffset + QUAD_INDICES[5];
 }
 
-END_CG_NAMESPACE
+END_CGF_NAMESPACE

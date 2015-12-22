@@ -7,10 +7,10 @@
 //				Originally written by Marcus Loo Vergara (aka. Bitsauce)
 //									2011-2015 (C)
 
-#include <x2d/engine.h>
-#include <x2d/graphics.h>
+#include <CGF/Common.h>
+#include <CGF/graphics.h>
 
-BEGIN_CG_NAMESPACE
+BEGIN_CGF_NAMESPACE
 
 uint QUAD_INDICES[6] = {
 	0, 3, 2, 0, 2, 1
@@ -76,4 +76,4 @@ void Graphics::disableWireframe()
 	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 }
 */
-END_CG_NAMESPACE
+END_CGF_NAMESPACE

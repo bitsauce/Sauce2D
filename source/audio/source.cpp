@@ -7,9 +7,9 @@
 //				Originally written by Marcus Loo Vergara (aka. Bitsauce)
 //									2011-2015 (C)
 
-#include <x2d/audio.h>
+#include <CGF/audio.h>
 
-BEGIN_CG_NAMESPACE
+BEGIN_CGF_NAMESPACE
 /*
 ALenum toALFormat(AudioBuffer::Format format)
 {
@@ -129,4 +129,4 @@ void OpenALManager::setSourceMaxDist(const int sourceId, const float dist)
 	AudioSourcef(sourceId, AL_MAX_DISTANCE, dist);
 }*/
 
-END_CG_NAMESPACE
+END_CGF_NAMESPACE

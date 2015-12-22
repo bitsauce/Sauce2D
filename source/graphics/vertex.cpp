@@ -7,10 +7,10 @@
 //				Originally written by Marcus Loo Vergara (aka. Bitsauce)
 //									2011-2015 (C)
 
-#include <x2d/engine.h>
-#include <x2d/graphics.h>
+#include <CGF/Common.h>
+#include <CGF/graphics.h>
 
-BEGIN_CG_NAMESPACE
+BEGIN_CGF_NAMESPACE
 
 /*********************************************************************
 **	Vertex format													**
@@ -46,16 +46,16 @@ void VertexFormat::set(const VertexAttribute attrib, const int size, const DataT
 				m_attributes[at].offset = m_vertexByteSize;
 				switch(getDataType(at))
 				{
-				case XD_FLOAT:
+				case CGF_FLOAT:
 					m_vertexByteSize += sizeof(float)*getElementCount(at); break;
-				case XD_UINT:
-				case XD_INT:
+				case CGF_UINT:
+				case CGF_INT:
 					m_vertexByteSize += sizeof(int)*getElementCount(at); break;
-				case XD_USHORT:
-				case XD_SHORT:
+				case CGF_USHORT:
+				case CGF_SHORT:
 					m_vertexByteSize += sizeof(short)*getElementCount(at); break;
-				case XD_UBYTE:
-				case XD_BYTE:
+				case CGF_UBYTE:
+				case CGF_BYTE:
 					m_vertexByteSize += sizeof(char)*getElementCount(at); break;
 				}
 			}
@@ -326,19 +326,19 @@ void Vertex::print()
 			{
 				switch(m_format.getDataType(attrib))
 				{
-				case XD_FLOAT:
+				case CGF_FLOAT:
 					ss << ((float*)(m_data + m_format.getAttributeOffset(attrib)))[j];
 					break;
-				case XD_UINT:
-				case XD_INT:
+				case CGF_UINT:
+				case CGF_INT:
 					ss << ((int*)(m_data + m_format.getAttributeOffset(attrib)))[j];
 					break;
-				case XD_USHORT:
-				case XD_SHORT:
+				case CGF_USHORT:
+				case CGF_SHORT:
 					ss << ((short*)(m_data + m_format.getAttributeOffset(attrib)))[j];
 					break;
-				case XD_UBYTE:
-				case XD_BYTE:
+				case CGF_UBYTE:
+				case CGF_BYTE:
 					ss << (int)((char*)(m_data + m_format.getAttributeOffset(attrib)))[j];
 					break;
 				}
@@ -349,4 +349,4 @@ void Vertex::print()
 	}
 }
 
-END_CG_NAMESPACE
+END_CGF_NAMESPACE

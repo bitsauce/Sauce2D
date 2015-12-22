@@ -7,9 +7,9 @@
 //				Originally written by Marcus Loo Vergara (aka. Bitsauce)
 //									2011-2015 (C)
 
-#include <x2d/engine.h>
+#include <CGF/Common.h>
 
-BEGIN_CG_NAMESPACE
+BEGIN_CGF_NAMESPACE
 
 Console *Console::s_this = nullptr;
 
@@ -58,7 +58,7 @@ void Console::call_log(const char *msg, va_list args)
 #endif
 	
 	// Append message to log file
-	if(m_engine->isEnabled(XD_EXPORT_LOG))
+	if(m_engine->isEnabled(CGF_EXPORT_LOG))
 	{
 		m_output->append(out);
 		m_output->append("\n");
@@ -129,4 +129,4 @@ void Console::clearBuffer()
 	m_buffer.clear();
 }
 
-END_CG_NAMESPACE
+END_CGF_NAMESPACE

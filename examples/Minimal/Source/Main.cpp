@@ -1,11 +1,11 @@
 /* Main CrossGame header. Includes all the framework
    classes and various STL classes. */
-#include <x2d/x2d.h>
+#include <CGF/CGF.h>
 
 /* This just saves us some time as we don't
    have to type cg::* in front of every CG
    class/enum/etc */
-using namespace cg;
+using namespace cgf;
 
 /* This is our MinimalGame class.
    It inherits from gc::Game, which is the game managing class.

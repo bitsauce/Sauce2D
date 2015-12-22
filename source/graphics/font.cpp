@@ -1,6 +1,6 @@
-#include <x2d/graphics.h>
+#include <CGF/graphics.h>
 
-BEGIN_CG_NAMESPACE
+BEGIN_CGF_NAMESPACE
 
 class FontLoader
 {
@@ -1132,4 +1132,4 @@ void FontLoaderBinaryFormat::ReadKerningPairsBlock(int size)
 	}
 }
 
-END_CG_NAMESPACE
+END_CGF_NAMESPACE

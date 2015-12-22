@@ -7,9 +7,9 @@
 //				Originally written by Marcus Loo Vergara (aka. Bitsauce)
 //									2011-2015 (C)
 
-#include <x2d/engine.h>
+#include <CGF/Common.h>
 
-BEGIN_CG_NAMESPACE
+BEGIN_CGF_NAMESPACE
 
 Timer::Timer() :
 	m_ticksPerSec(CLOCKS_PER_SEC),
@@ -49,4 +49,4 @@ double Timer::getElapsedTime() const
     return endTime - startTime;
 }
 
-END_CG_NAMESPACE
+END_CGF_NAMESPACE
