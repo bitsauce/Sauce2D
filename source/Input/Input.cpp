@@ -14,13 +14,6 @@
 
 BEGIN_CGF_NAMESPACE
 
-Keybind::Keybind(Keycode key, function<void(KeyEvent*)> func) :
-	m_keycode(key),
-	m_scancode((Scancode) SDL_GetScancodeFromKey(key)),
-	m_function(func)
-{
-}
-
 InputManager::InputManager(string contextFile)
 {
 	// Set all str to key mappings
@@ -163,7 +156,7 @@ InputManager::InputManager(string contextFile)
 		contextNode = contextNode->FirstChild();
 		while(contextNode)
 		{
-			InputContext *inputContext = new InputContext();
+			InputContext *inputContext = new InputContext(this);
 
 			// For each key bind
 			tinyxml2::XMLNode *node = contextNode->FirstChild();
@@ -230,14 +223,15 @@ void InputManager::setContext(InputContext *inputContext)
 	m_context = inputContext;
 }
 
-InputContext *InputManager::getContext(const string & name)
+InputContext *InputManager::getContext()
 {
-	if(m_contextMap.find(name) == m_contextMap.end())
+	return m_context;
+	/*if(m_contextMap.find(name) == m_contextMap.end())
 	{
 		LOG("No input context with name '%s'", name);
 		return 0;
 	}
-	return m_contextMap[name];
+	return m_contextMap[name];*/
 }
 
 string InputManager::getClipboardString()
@@ -262,18 +256,21 @@ void InputManager::removeKeybind(KeybindPtr keybind)
 
 void InputManager::updateKeybinds(KeyEvent *e)
 {
+	//if(m_game->isEnabled(CGF_BLOCK_BACKGROUND_INPUT) && !m_game->getWindow()->checkFlags(SDL_WINDOW_INPUT_FOCUS)) return;
+
+	// Update keybinds
 	for(KeybindPtr kb : m_keybinds)
 	{
-		if(kb->m_keycode == e->getKeycode())
+		if(kb->getKeyname().getKeycode() == e->getKeycode() && kb->getFunction())
 		{
-			kb->m_function(e);
+			kb->getFunction()(e);
 		}
 	}
 
+	// Update keybinds of current context
 	if(m_context)
 	{
-		// TODO:
-		//m_context->updateKeybinds(e);
+		m_context->updateKeybinds(e);
 	}
 }
 
@@ -285,7 +282,7 @@ bool InputManager::getKeyState(const Keycode keycode) const
 bool InputManager::getKeyState(const Scancode scancode) const
 {
 	//if(m_game->isEnabled(CGF_BLOCK_BACKGROUND_INPUT) && !m_game->getWindow()->checkFlags(SDL_WINDOW_INPUT_FOCUS)) return false;
-
+ 
 	const Uint8* currentKeyStates = SDL_GetKeyboardState(NULL);
 	return currentKeyStates[scancode];
 }

@@ -2,6 +2,7 @@
 #define CGF_INPUT_CONTEXT_H
 
 #include <CGF/Config.h>
+#include <CGF/Input/InputManager.h>
 
 BEGIN_CGF_NAMESPACE
 
@@ -10,30 +11,56 @@ BEGIN_CGF_NAMESPACE
 **********************************************************************/
 
 class Game;
-enum Keycode;
 
 class CGF_API InputContext
 {
+	friend class InputManager;
 public:
+	InputContext(InputManager*);
+
 	/**
-	 * \brief Bind a function to an action for this input context.
+	 * \fn	void InputContext::addKeybind(KeybindPtr keybind);
+	 *
+	 * \brief	Bind a function to an action for this input context.
+	 *
+	 * \param	keybind	The keybind.
+	 *
+	 * ### param	name	The name.
 	 */
-	void bind(const string &action, function<void(int)> function, const bool singleShot = false);
+
+	void addKeybind(KeybindPtr keybind);
+
+	/**
+	 * \fn	void InputContext::removeKeybind(KeybindPtr keybind);
+	 *
+	 * \brief	Removes the keybind described by keybind.
+	 *
+	 * \param	keybind	The keybind.
+	 *
+	 * ### param	name	The name.
+	 */
+
+	void removeKeybind(KeybindPtr keybind);
+
+	bool getKeyState(string name) const;
 
 private:
-	void updateBindings();
 
-	// Key bind
-	struct KeyBind
-	{
-		bool pressed;
-		function<void(int)> function;
-		bool singleShot;
-	};
+	/**
+	 * \fn	void InputContext::updateKeybinds(KeyEvent *e);
+	 *
+	 * \brief	Updates the keybinds with event e.
+	 *
+	 * \param [in,out]	e	If non-null, the KeyEvent to process.
+	 */
 
-	Game *m_game;
-	map<string, KeyBind> m_nameToFunc;
-	map<string, Keycode> m_nameToKey;
+	void updateKeybinds(KeyEvent *e);
+
+	// Key binds
+	map<string, KeybindPtr> m_keybinds;
+
+	// Input manager
+	InputManager *m_inputManager;
 };
 
 END_CGF_NAMESPACE

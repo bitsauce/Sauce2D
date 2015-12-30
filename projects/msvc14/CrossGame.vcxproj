@@ -42,6 +42,7 @@
     <ClCompile Include="..\..\source\Graphics\Viewport.cpp" />
     <ClCompile Include="..\..\source\Input\Input.cpp" />
     <ClCompile Include="..\..\source\Input\InputContext.cpp" />
+    <ClCompile Include="..\..\source\Input\InputManager.cpp" />
     <ClCompile Include="..\..\source\Input\KeyListener.cpp" />
     <ClCompile Include="..\..\source\Input\MouseListener.cpp" />
     <ClCompile Include="..\..\source\Math\Matrix.cpp" />
@@ -78,6 +79,7 @@
     <ClInclude Include="..\..\include\CGF\Graphics\Viewport.h" />
     <ClInclude Include="..\..\include\CGF\Input.h" />
     <ClInclude Include="..\..\include\CGF\Input\Inputcontext.h" />
+    <ClInclude Include="..\..\include\CGF\Input\InputManager.h" />
     <ClInclude Include="..\..\include\CGF\Input\Keycodes.h" />
     <ClInclude Include="..\..\include\CGF\Input\Keylistener.h" />
     <ClInclude Include="..\..\include\CGF\Input\MouseListener.h" />

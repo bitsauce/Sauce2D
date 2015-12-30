@@ -156,6 +156,9 @@
     <ClCompile Include="..\..\source\Common\Game.cpp">
       <Filter>Source\Common</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\source\Input\InputManager.cpp">
+      <Filter>Source\Input</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\include\CGF\CGF.h">
@@ -260,13 +263,16 @@
     <ClInclude Include="..\..\include\CGF\Common\Event.h">
       <Filter>Include\CGF\Common</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\CGF\Input\Inputcontext.h">
-      <Filter>Include\CGF\Input</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\include\CGF\Input\Keycodes.h">
       <Filter>Include\CGF\Input</Filter>
     </ClInclude>
     <ClInclude Include="..\..\include\CGF\Input\Scancodes.h">
+      <Filter>Include\CGF\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\CGF\Input\Inputcontext.h">
+      <Filter>Include\CGF\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\CGF\Input\InputManager.h">
       <Filter>Include\CGF\Input</Filter>
     </ClInclude>
   </ItemGroup>

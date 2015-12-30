@@ -1,4 +1,4 @@
-#include <CGF/cgf.h>
+#include <CGF/CGF.h>
 
 using namespace cgf;
 
@@ -44,10 +44,48 @@ public:
 class Keybinding : public Game
 {
 	KeybindPtr m_keybind;
+	KeybindPtr m_jumpKeybind;
+	KeybindPtr m_runKeybind;
 public:
 	Keybinding() :
 		Game("KeyBinding")
 	{
+	}
+
+	void onStart(GameEvent *e)
+	{
+		// Get input manager
+		InputManager *input = getInputManager();
+
+		// Create a keybind which will call the function
+		// BKeyFunc when the B key is pressed.
+		m_keybind = KeybindPtr(new Keybind(CGF_KEY_B, bind(&Keybinding::BKeyFunc, this, placeholders::_1)));
+		input->addKeybind(m_keybind); // Add it to the list of keybinds
+
+		// Create an input context.
+		// Input contexts map symbolic strings to keys.
+		// For example: {{ "jump", SPACE }, {"run", LSHIFT }}
+		InputContext *context = new InputContext(input);
+
+		// Create a keybind by mapping the keyword 
+		// "jump" to the SPACE key.
+		m_jumpKeybind = KeybindPtr(new Keybind(Keyname("jump", CGF_KEY_SPACE), bind(&Keybinding::jump, this, placeholders::_1)));
+		context->addKeybind(m_jumpKeybind); // Add keybind to input context
+
+		// Create run keybind which has no funtion mapped to it.
+		// We can stil use this keybind with context->getKeyState("run").
+		m_runKeybind = KeybindPtr(new Keybind(Keyname("run", CGF_KEY_LSHIFT)));
+		context->addKeybind(m_runKeybind);
+
+		// Enable this context
+		input->setContext(context);
+	}
+
+	void onEnd(GameEvent *e)
+	{
+		InputManager *input = getInputManager();
+		input->removeKeybind(m_keybind);
+		input->getContext()->removeKeybind(m_jumpKeybind);
 	}
 
 	void BKeyFunc(KeyEvent *e)
@@ -56,27 +94,36 @@ public:
 		{
 			case EVENT_KEY_DOWN: LOG("B pressed"); break;
 			case EVENT_KEY_REPEAT: LOG("B repeating"); break;
-			case EVENT_KEY_UP: LOG("B released"); break;
+			case EVENT_KEY_UP:
+				LOG("B released");
+				m_keybind->setFunction(bind(&Keybinding::DKeyFunc, this, placeholders::_1));
+				m_keybind->getKeyname().setKeycode(CGF_KEY_D);
+				break;
 		}
-		// TODO: Allow updating keybinds
-		//m_keybind->setKeycode(CGF_KEY_D);
 	}
 
-	void onStart(GameEvent *e)
+	void DKeyFunc(KeyEvent *e)
 	{
-		InputManager *input = getInputManager();
-		m_keybind = KeybindPtr(new Keybind(CGF_KEY_B, bind(&Keybinding::BKeyFunc, this, placeholders::_1)));
-		input->addKeybind(m_keybind);
-
-		// TODO:
-		//input->getContext()->bind("jump", jumpFunc);
-		// if(input->getContext()->getKeyState("jump"))
+		switch(e->getType())
+		{
+			case EVENT_KEY_DOWN: LOG("D pressed"); break;
+			case EVENT_KEY_REPEAT: LOG("D repeating"); break;
+			case EVENT_KEY_UP:
+				LOG("D released");
+				m_keybind->setFunction(bind(&Keybinding::BKeyFunc, this, placeholders::_1));
+				m_keybind->getKeyname().setKeycode(CGF_KEY_B);
+				break;
+		}
 	}
 
-	void onEnd(GameEvent *e)
+	void jump(KeyEvent *e)
 	{
-		InputManager *input = getInputManager();
-		input->removeKeybind(m_keybind);
+		switch(e->getType())
+		{
+			case EVENT_KEY_DOWN: LOG("Jump pressed"); break;
+			case EVENT_KEY_REPEAT: LOG("Jump repeating"); break;
+			case EVENT_KEY_UP: LOG("Jump released"); break;
+		}
 	}
 
 	void onKeyEvent(KeyEvent *e)
@@ -97,7 +144,12 @@ public:
 		InputManager *input = getInputManager();
 		if(input->getKeyState(CGF_KEY_A))
 		{
-			LOG("A pressed");
+			LOG("onTick(): A pressed");
+		}
+
+		if(input->getContext()->getKeyState("run"))
+		{
+			LOG("onTick(): Run");
 		}
 	}
 };
