@@ -222,4 +222,34 @@ void Window::setVSync(const int mode)
 	SDL_GL_SetSwapInterval(mode);
 }
 
+Uint32 Window::getID() const
+{
+	return SDL_GetWindowID(m_window);
+}
+
+bool Window::handleEvent(SDL_Event &event, Game *game)
+{
+	switch(event.window.event)
+	{
+		case SDL_WINDOWEVENT_CLOSE:
+		{
+			return true;
+		}
+		break;
+
+		case SDL_WINDOWEVENT_SIZE_CHANGED:
+		{
+			// Resize viewport
+			int width = event.window.data1, height = event.window.data2;
+			m_graphicsContext->resizeViewport(width, height);
+
+			// Call event
+			WindowEvent e(WindowEvent::SIZE_CHANGED, width, height);
+			game->onEvent(&e);
+		}
+		break;
+	}
+	return false;
+}
+
 END_CGF_NAMESPACE

@@ -176,9 +176,6 @@
     <ClInclude Include="..\..\include\CGF\Input.h">
       <Filter>Include\CGF</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\CGF\Input\Inputcontext.h">
-      <Filter>Include\CGF\Input</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\include\CGF\Input\Keylistener.h">
       <Filter>Include\CGF\Input</Filter>
     </ClInclude>
@@ -259,6 +256,18 @@
     </ClInclude>
     <ClInclude Include="..\..\include\CGF\Common\IniParser.h">
       <Filter>Include\CGF\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\CGF\Common\Event.h">
+      <Filter>Include\CGF\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\CGF\Input\Inputcontext.h">
+      <Filter>Include\CGF\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\CGF\Input\Keycodes.h">
+      <Filter>Include\CGF\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\CGF\Input\Scancodes.h">
+      <Filter>Include\CGF\Input</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

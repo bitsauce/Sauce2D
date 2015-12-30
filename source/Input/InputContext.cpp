@@ -13,7 +13,7 @@ BEGIN_CGF_NAMESPACE
 
 void InputContext::updateBindings()
 {
-	if(m_game->isEnabled(CGF_BLOCK_BACKGROUND_INPUT) && !m_game->getMainWindow()->checkFlags(SDL_WINDOW_INPUT_FOCUS)) return;
+	if(m_game->isEnabled(CGF_BLOCK_BACKGROUND_INPUT) && !m_game->getWindow()->checkFlags(SDL_WINDOW_INPUT_FOCUS)) return;
 
 	// Iterate key bindings
 	//map<VirtualKey, KeyBind> mutableCopy(s_keyBindings);

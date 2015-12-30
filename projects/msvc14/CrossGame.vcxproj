@@ -54,6 +54,7 @@
     <ClInclude Include="..\..\include\CGF\Audio.h" />
     <ClInclude Include="..\..\include\CGF\CGF.h" />
     <ClInclude Include="..\..\include\CGF\Common.h" />
+    <ClInclude Include="..\..\include\CGF\Common\Event.h" />
     <ClInclude Include="..\..\include\CGF\Common\Game.h" />
     <ClInclude Include="..\..\include\CGF\Common\IniParser.h" />
     <ClInclude Include="..\..\include\CGF\Common\ResourceManager.h" />
@@ -77,8 +78,10 @@
     <ClInclude Include="..\..\include\CGF\Graphics\Viewport.h" />
     <ClInclude Include="..\..\include\CGF\Input.h" />
     <ClInclude Include="..\..\include\CGF\Input\Inputcontext.h" />
+    <ClInclude Include="..\..\include\CGF\Input\Keycodes.h" />
     <ClInclude Include="..\..\include\CGF\Input\Keylistener.h" />
     <ClInclude Include="..\..\include\CGF\Input\MouseListener.h" />
+    <ClInclude Include="..\..\include\CGF\Input\Scancodes.h" />
     <ClInclude Include="..\..\include\CGF\Math.h" />
     <ClInclude Include="..\..\include\CGF\Math\Matrix.h" />
     <ClInclude Include="..\..\include\CGF\Math\Random.h" />

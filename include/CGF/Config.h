@@ -87,8 +87,6 @@ typedef uintptr_t uintptr;
 typedef unsigned char uchar;
 typedef unsigned long ulong;
 
-typedef int VirtualKey;
-
 #define BEGIN_CGF_NAMESPACE namespace cgf {
 #define END_CGF_NAMESPACE }
 

@@ -28,6 +28,7 @@ Console::Console() :
 Console::~Console()
 {
 	delete m_output;
+	s_this = 0;
 }
 
 void Console::log(const string &msg)

@@ -8,8 +8,9 @@
 //									2011-2015 (C)
 
 #include <CGF/Common.h>
-#include <CGF/graphics.h>
-#include <CGF/audio.h>
+#include <CGF/Graphics.h>
+#include <CGF/Input.h>
+#include <CGF/Audio.h>
 
 BEGIN_CGF_NAMESPACE
 
@@ -52,9 +53,8 @@ Game::~Game()
 	//delete m_audio;
 	delete m_timer;
 	delete m_console;
+	s_game = 0;
 }
-
-#include <direct.h>
 
 //------------------------------------------------------------------------
 // Run
@@ -104,8 +104,10 @@ int Game::run()
 			THROW("Unable to initialize SDL");
 		}
 
-		m_window = new Window(m_name.c_str(), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 1280, 720, 0);
-		GraphicsContext *graphicsContext = m_window->getGraphicsContext();
+		// Initialize window
+		Window *mainWindow = new Window(m_name.c_str(), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 1280, 720, 0);
+		m_windows.push_back(mainWindow);
+		GraphicsContext *graphicsContext = mainWindow->getGraphicsContext();
 
 		// TODO: Concider moving these to a function of sorts (initGraphics())
 		// Initialize GL3W
@@ -130,7 +132,7 @@ int Game::run()
 
 		// Setup viewport
 		Vector2i size;
-		m_window->getSize(&size.x, &size.y);
+		mainWindow->getSize(&size.x, &size.y);
 		graphicsContext->resizeViewport(size.x, size.y);
 
 		// Init graphics
@@ -190,7 +192,7 @@ int Game::run()
 		GraphicsContext::s_defaultTexture = Texture2DPtr(new Texture2D(1, 1, pixel));
 
 		// Initialize input handler
-		Input::init("config:/InputDefault.ini");//(m_inputConfig);
+		m_inputManager = new InputManager("config:/InputDefault.ini");//(m_inputConfig);
 
 		// Engine initialized
 		m_initialized = true;
@@ -198,8 +200,11 @@ int Game::run()
 		LOG("** Engine Initialized **");
 
 		// Call onStart event
-		onStart(*graphicsContext);
-
+		{
+			GameEvent e(GameEvent::START);
+			onStart(&e);
+		}
+		
 		// Fps sampling
 		const uint numFpsSamples = 8;
 		double fpsSamples[numFpsSamples];
@@ -213,15 +218,15 @@ int Game::run()
 		double prevTime = m_timer->getElapsedTime();
 
 		// Make sure update is called once before draw
-		onUpdate(dt);
+		{
+			TickEvent e(dt);
+			onTick(&e);
+		}
 
 		// Game loop
 		while(m_running)
 		{
-			// Event
-			// TODO: Move this to its own function and add
-			// support for multiple windows.
-			// for(window : m_windows) window.handleEvents();
+			// Event handling
 			SDL_Event event;
 			while(SDL_PollEvent(&event))
 			{
@@ -229,71 +234,88 @@ int Game::run()
 				{
 					case SDL_WINDOWEVENT:
 					{
-						switch(event.window.event)
+						list<Window*> windows(m_windows);
+						for(Window *window : windows)
 						{
-							case SDL_WINDOWEVENT_CLOSE:
+							if(event.window.windowID == window->getID())
 							{
-								m_running = false;
-							}
-							break;
+								if(window->handleEvent(event, this))
+								{
+									// The window was closed. Release its resources.
+									m_windows.remove(window);
+									delete window;
 
-							case SDL_WINDOWEVENT_SIZE_CHANGED:
-							{
-								// Resize viewport
-								int width = event.window.data1, height = event.window.data2;
-								graphicsContext->resizeViewport(width, height);
-
-								// Call onSizeChanged event
-								onSizeChanged(width, height);
+									// If all windows are closed, end the game.
+									if(m_windows.size() == 0)
+									{
+										end();
+										goto gameloopend;
+									}
+								}
 							}
-							break;
 						}
 					}
 					break;
 
 					case SDL_KEYDOWN:
 					{
-						// Call onKeyDown event
-						onKeyDown(event.key.keysym.sym, event.key.keysym.mod, event.key.keysym.scancode);
+						if(event.key.repeat == 0)
+						{
+							KeyEvent e(KeyEvent::DOWN, (Keycode) event.key.keysym.sym, (Scancode) event.key.keysym.scancode, event.key.keysym.mod);
+							onEvent(&e);
+							m_inputManager->updateKeybinds(&e);
+						}
+						else
+						{
+							KeyEvent e(KeyEvent::REPEAT, (Keycode) event.key.keysym.sym, (Scancode) event.key.keysym.scancode, event.key.keysym.mod);
+							onEvent(&e);
+							m_inputManager->updateKeybinds(&e);
+						}
 					}
 					break;
 
 					case SDL_KEYUP:
 					{
-						// Call onKeyUp event
-						onKeyUp(event.key.keysym.sym, event.key.keysym.mod, event.key.keysym.scancode);
+						KeyEvent e(KeyEvent::UP, (Keycode) event.key.keysym.sym, (Scancode) event.key.keysym.scancode, event.key.keysym.mod);
+						onEvent(&e);
+						m_inputManager->updateKeybinds(&e);
 					}
 					break;
 
 					case SDL_MOUSEMOTION:
 					{
-						Input::s_position.set((float) event.motion.x, (float) event.motion.y);
-						onMouseMove((float) event.motion.x, (float) event.motion.y);
+						m_inputManager->m_x = event.motion.x;
+						m_inputManager->m_y = event.motion.y;
+						MouseEvent e(MouseEvent::MOVE, event.motion.x, event.motion.y, MOUSE_BUTTON_NONE, 0, 0);
+						onEvent(&e);
 					}
 					break;
 
 					case SDL_MOUSEBUTTONDOWN:
 					{
-						onMouseDown(event.button.button);
+						MouseEvent e(MouseEvent::DOWN, m_inputManager->m_x, m_inputManager->m_y, (const MouseButton) event.button.button, 0, 0);
+						onEvent(&e);
 					}
 					break;
 
 					case SDL_MOUSEBUTTONUP:
 					{
-						onMouseUp(event.button.button);
+						MouseEvent e(MouseEvent::UP, m_inputManager->m_x, m_inputManager->m_y, (const MouseButton) event.button.button, 0, 0);
+						onEvent(&e);
 					}
 					break;
 
 					case SDL_MOUSEWHEEL:
 					{
-						onMouseWheel(event.wheel.x, event.wheel.y);
+						MouseEvent e(MouseEvent::WHEEL, m_inputManager->m_x, m_inputManager->m_y, MOUSE_BUTTON_NONE, event.wheel.x, event.wheel.y);
+						onEvent(&e);
 					}
 					break;
 				}
 			}
 
 			// Check if game is paused or out of focus
-			if(m_paused || (!isEnabled(CGF_RUN_IN_BACKGROUND) && !m_window->checkFlags(SDL_WINDOW_INPUT_FOCUS)))
+			if(m_paused || (!isEnabled(CGF_RUN_IN_BACKGROUND) && !mainWindow->checkFlags(SDL_WINDOW_INPUT_FOCUS)))
 			{
 				continue;
 			}
@@ -310,22 +332,30 @@ int Game::run()
 			}
 
 			// Step begin
-			onStepBegin();
+			{
+				StepEvent e(StepEvent::BEGIN);
+				onStepBegin(&e);
+			}
 
 			// Apply time delta to accumulator
 			accumulator += deltaTime;
 			while(accumulator >= dt)
 			{
 				// Update the game
-				Input::updateBindings();
-				onUpdate(dt);
+				{
+					TickEvent e(dt);
+					onTick(&e);
+				}
 				accumulator -= dt;
 			}
 
 			// Draw the game
 			const double alpha = accumulator / dt;
-			onDraw(*graphicsContext, alpha);
-			SDL_GL_SwapWindow(m_window->getSDLHandle());
+			{
+				DrawEvent e(alpha, graphicsContext);
+				onDraw(&e);
+			}
+			SDL_GL_SwapWindow(mainWindow->getSDLHandle());
 			glClear(GL_COLOR_BUFFER_BIT);
 
 			// Add fps sample
@@ -344,18 +374,24 @@ int Game::run()
 			m_framesPerSecond = fps / numFpsSamples;
 
 			// Step end
-			onStepEnd();
+			{
+				StepEvent e(StepEvent::END);
+				onStepBegin(&e);
+			}
 		}
-
+gameloopend:
 
 		LOG("** Game Ending **");
 
 		// Call onEnd event
-		onEnd();
+		{
+			GameEvent e(GameEvent::END);
+			onEnd(&e);
+		}
 	}
 	catch(Exception e)
 	{
-		SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "An error occured", e.message().c_str(), m_window->getSDLHandle());
+		SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "An error occured", e.message().c_str(), m_windows.front()->getSDLHandle());
 		LOG("An exception occured: %s", e.message().c_str());
 		return e.errorCode();
 	}
@@ -380,6 +416,22 @@ void Game::setPaused(const bool paused)
 bool Game::isEnabled(const EngineFlag flag)
 {
 	return (m_flags & flag) != 0;
+}
+
+Window *Game::getWindow(const Sint32 id) const
+{
+	if(id < 0)
+	{
+		return m_windows.front();
+	}
+	for(Window *window : m_windows)
+	{
+		if(window->getID() == id)
+		{
+			return window;
+		}
+	}
+	return 0;
 }
 
 END_CGF_NAMESPACE

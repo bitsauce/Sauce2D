@@ -1,3 +1,4 @@
+#include "..\..\include\CGF\Input.h"
 //       ____  ____     ____                        _____             _            
 // __  _|___ \|  _ \   / ___| __ _ _ __ ___   ___  | ____|_ __   __ _(_)_ __   ___ 
 // \ \/ / __) | | | | | |  _ / _  |  _   _ \ / _ \ |  _| |  _ \ / _  | |  _ \ / _ \
@@ -13,160 +14,142 @@
 
 BEGIN_CGF_NAMESPACE
 
-Vector2 Input::s_position;
-InputContext *Input::s_context = 0;
-map<string, InputContext*> Input::s_contextMap;
-map<string, VirtualKey> Input::s_strToKey;
-map<VirtualKey, int> Input::s_mouseButtonState;
-Game *Input::s_game = 0;
+Keybind::Keybind(Keycode key, function<void(KeyEvent*)> func) :
+	m_keycode(key),
+	m_scancode((Scancode) SDL_GetScancodeFromKey(key)),
+	m_function(func)
+{
+}
 
-void Input::init(string file)
+InputManager::InputManager(string contextFile)
 {
 	// Set all str to key mappings
-	s_strToKey["space"] = CGF_KEY_SPACE;
-	s_strToKey["apostrophe"] = CGF_KEY_APOSTROPHE;
-	s_strToKey["comma"] = CGF_KEY_COMMA;
-	s_strToKey["minus"] = CGF_KEY_MINUS;
-	s_strToKey["period"] = CGF_KEY_PERIOD;
-	s_strToKey["slash"] = CGF_KEY_SLASH;
-	s_strToKey["0"] = CGF_KEY_0;
-	s_strToKey["1"] = CGF_KEY_1;
-	s_strToKey["2"] = CGF_KEY_2;
-	s_strToKey["3"] = CGF_KEY_3;
-	s_strToKey["4"] = CGF_KEY_4;
-	s_strToKey["5"] = CGF_KEY_5;
-	s_strToKey["6"] = CGF_KEY_6;
-	s_strToKey["7"] = CGF_KEY_7;
-	s_strToKey["8"] = CGF_KEY_8;
-	s_strToKey["9"] = CGF_KEY_9;
-	s_strToKey["semicolon"] = CGF_KEY_SEMICOLON;
-	s_strToKey["equal"] = CGF_KEY_EQUAL;
-	s_strToKey["a"] = CGF_KEY_A;
-	s_strToKey["b"] = CGF_KEY_B;
-	s_strToKey["c"] = CGF_KEY_C;
-	s_strToKey["d"] = CGF_KEY_D;
-	s_strToKey["e"] = CGF_KEY_E;
-	s_strToKey["f"] = CGF_KEY_F;
-	s_strToKey["g"] = CGF_KEY_G;
-	s_strToKey["h"] = CGF_KEY_H;
-	s_strToKey["i"] = CGF_KEY_I;
-	s_strToKey["j"] = CGF_KEY_J;
-	s_strToKey["k"] = CGF_KEY_K;
-	s_strToKey["l"] = CGF_KEY_L;
-	s_strToKey["m"] = CGF_KEY_M;
-	s_strToKey["n"] = CGF_KEY_N;
-	s_strToKey["o"] = CGF_KEY_O;
-	s_strToKey["p"] = CGF_KEY_P;
-	s_strToKey["q"] = CGF_KEY_Q;
-	s_strToKey["r"] = CGF_KEY_R;
-	s_strToKey["s"] = CGF_KEY_S;
-	s_strToKey["t"] = CGF_KEY_T;
-	s_strToKey["u"] = CGF_KEY_U;
-	s_strToKey["v"] = CGF_KEY_V;
-	s_strToKey["w"] = CGF_KEY_W;
-	s_strToKey["x"] = CGF_KEY_X;
-	s_strToKey["y"] = CGF_KEY_Y;
-	s_strToKey["z"] = CGF_KEY_Z;
-	s_strToKey["left_bracket"] = CGF_KEY_LEFT_BRACKET;
-	s_strToKey["backslash"] = CGF_KEY_BACKSLASH;
-	s_strToKey["right_bracket"] = CGF_KEY_RIGHT_BRACKET;
-	s_strToKey["accent"] = CGF_KEY_GRAVE_ACCENT;
-	s_strToKey["world_1"] = CGF_KEY_WORLD_1;
-	s_strToKey["world_2"] = CGF_KEY_WORLD_2;
-	s_strToKey["escape"] = CGF_KEY_ESCAPE;
-	s_strToKey["enter"] = s_strToKey["return"] = CGF_KEY_ENTER;
-	s_strToKey["tab"] = CGF_KEY_TAB;
-	s_strToKey["backspace"] = CGF_KEY_BACKSPACE;
-	s_strToKey["insert"] = CGF_KEY_INSERT;
-	s_strToKey["delete"] = CGF_KEY_DELETE;
-	s_strToKey["right"] = CGF_KEY_RIGHT;
-	s_strToKey["left"] = CGF_KEY_LEFT;
-	s_strToKey["down"] = CGF_KEY_DOWN;
-	s_strToKey["up"] = CGF_KEY_UP;
-	s_strToKey["page_up"] = CGF_KEY_PAGE_UP;
-	s_strToKey["page_down"] = CGF_KEY_PAGE_DOWN;
-	s_strToKey["home"] = CGF_KEY_HOME;
-	s_strToKey["end"] = CGF_KEY_END;
-	s_strToKey["caps_lock"] = CGF_KEY_CAPS_LOCK;
-	s_strToKey["scroll_lock"] = CGF_KEY_SCROLL_LOCK;
-	s_strToKey["num_lock"] = CGF_KEY_NUM_LOCK;
-	s_strToKey["print_screen"] = CGF_KEY_PRINT_SCREEN;
-	s_strToKey["pause"] = CGF_KEY_PAUSE;
-	s_strToKey["f1"] = CGF_KEY_F1;
-	s_strToKey["f2"] = CGF_KEY_F2;
-	s_strToKey["f3"] = CGF_KEY_F3;
-	s_strToKey["f4"] = CGF_KEY_F4;
-	s_strToKey["f5"] = CGF_KEY_F5;
-	s_strToKey["f6"] = CGF_KEY_F6;
-	s_strToKey["f7"] = CGF_KEY_F7;
-	s_strToKey["f8"] = CGF_KEY_F8;
-	s_strToKey["f9"] = CGF_KEY_F9;
-	s_strToKey["f10"] = CGF_KEY_F10;
-	s_strToKey["f11"] = CGF_KEY_F11;
-	s_strToKey["f12"] = CGF_KEY_F12;
-	s_strToKey["f13"] = CGF_KEY_F13;
-	s_strToKey["f14"] = CGF_KEY_F14;
-	s_strToKey["f15"] = CGF_KEY_F15;
-	s_strToKey["f16"] = CGF_KEY_F16;
-	s_strToKey["f17"] = CGF_KEY_F17;
-	s_strToKey["f18"] = CGF_KEY_F18;
-	s_strToKey["f19"] = CGF_KEY_F19;
-	s_strToKey["f20"] = CGF_KEY_F20;
-	s_strToKey["f21"] = CGF_KEY_F21;
-	s_strToKey["f22"] = CGF_KEY_F22;
-	s_strToKey["f23"] = CGF_KEY_F23;
-	s_strToKey["f24"] = CGF_KEY_F24;
-	s_strToKey["f25"] = CGF_KEY_F25;
-	s_strToKey["keypad_0"] = CGF_KEY_KP_0;
-	s_strToKey["keypad_1"] = CGF_KEY_KP_1;
-	s_strToKey["keypad_2"] = CGF_KEY_KP_2;
-	s_strToKey["keypad_3"] = CGF_KEY_KP_3;
-	s_strToKey["keypad_4"] = CGF_KEY_KP_4;
-	s_strToKey["keypad_5"] = CGF_KEY_KP_5;
-	s_strToKey["keypad_6"] = CGF_KEY_KP_6;
-	s_strToKey["keypad_7"] = CGF_KEY_KP_7;
-	s_strToKey["keypad_8"] = CGF_KEY_KP_8;
-	s_strToKey["keypad_9"] = CGF_KEY_KP_9;
-	s_strToKey["keypad_decimal"] = CGF_KEY_KP_DECIMAL;
-	s_strToKey["keypad_divide"] = CGF_KEY_KP_DIVIDE;
-	s_strToKey["keypad_multiply"] = CGF_KEY_KP_MULTIPLY;
-	s_strToKey["keypad_subtract"] = CGF_KEY_KP_SUBTRACT;
-	s_strToKey["keypad_add"] = CGF_KEY_KP_ADD;
-	s_strToKey["keypad_enter"] = CGF_KEY_KP_ENTER;
-	s_strToKey["keypad_equal"] = CGF_KEY_KP_EQUAL;
-	s_strToKey["left_shift"] = CGF_KEY_LEFT_SHIFT;
-	s_strToKey["left_control"] = CGF_KEY_LEFT_CONTROL;
-	s_strToKey["left_alt"] = CGF_KEY_LEFT_ALT;
-	s_strToKey["left_super"] = CGF_KEY_LEFT_SUPER;
-	s_strToKey["right_shift"] = CGF_KEY_RIGHT_SHIFT;
-	s_strToKey["right_control"] = CGF_KEY_RIGHT_CONTROL;
-	s_strToKey["right_alt"] = CGF_KEY_RIGHT_ALT;
-	s_strToKey["right_super"] = CGF_KEY_RIGHT_SUPER;
-	s_strToKey["menu"] = CGF_KEY_MENU;
-	s_strToKey["mouse_button_1"] = CGF_MOUSE_BUTTON_1;
-	s_strToKey["mouse_button_2"] = CGF_MOUSE_BUTTON_2;
-	s_strToKey["mouse_button_3"] = CGF_MOUSE_BUTTON_3;
-	s_strToKey["mouse_button_4"] = CGF_MOUSE_BUTTON_4;
-	s_strToKey["mouse_button_5"] = CGF_MOUSE_BUTTON_5;
-	s_strToKey["mouse_button_6"] = CGF_MOUSE_BUTTON_6;
-	s_strToKey["mouse_button_7"] = CGF_MOUSE_BUTTON_7;
-	s_strToKey["mouse_button_8"] = CGF_MOUSE_BUTTON_8;
-	s_strToKey["mouse_button_left"] = CGF_MOUSE_BUTTON_LEFT;
-	s_strToKey["mouse_button_right"] = CGF_MOUSE_BUTTON_RIGHT;
-	s_strToKey["mouse_button_middle"] = CGF_MOUSE_BUTTON_MIDDLE;
-
-	// Set button states
-	for(uint i = CGF_MOUSE_BUTTON_1; i < CGF_MOUSE_BUTTON_LAST; ++i)
-	{
-		//s_mouseButtonState[i] = GLFW_RELEASE;
-	}
+	m_strToKey["space"] = CGF_KEY_SPACE;
+	m_strToKey["quote"] = m_strToKey["apostrophe"] = CGF_KEY_QUOTE;
+	m_strToKey["comma"] = CGF_KEY_COMMA;
+	m_strToKey["minus"] = CGF_KEY_MINUS;
+	m_strToKey["period"] = CGF_KEY_PERIOD;
+	m_strToKey["slash"] = CGF_KEY_SLASH;
+	m_strToKey["0"] = CGF_KEY_0;
+	m_strToKey["1"] = CGF_KEY_1;
+	m_strToKey["2"] = CGF_KEY_2;
+	m_strToKey["3"] = CGF_KEY_3;
+	m_strToKey["4"] = CGF_KEY_4;
+	m_strToKey["5"] = CGF_KEY_5;
+	m_strToKey["6"] = CGF_KEY_6;
+	m_strToKey["7"] = CGF_KEY_7;
+	m_strToKey["8"] = CGF_KEY_8;
+	m_strToKey["9"] = CGF_KEY_9;
+	m_strToKey["semicolon"] = CGF_KEY_SEMICOLON;
+	m_strToKey["equals"] = CGF_KEY_EQUALS;
+	m_strToKey["a"] = CGF_KEY_A;
+	m_strToKey["b"] = CGF_KEY_B;
+	m_strToKey["c"] = CGF_KEY_C;
+	m_strToKey["d"] = CGF_KEY_D;
+	m_strToKey["e"] = CGF_KEY_E;
+	m_strToKey["f"] = CGF_KEY_F;
+	m_strToKey["g"] = CGF_KEY_G;
+	m_strToKey["h"] = CGF_KEY_H;
+	m_strToKey["i"] = CGF_KEY_I;
+	m_strToKey["j"] = CGF_KEY_J;
+	m_strToKey["k"] = CGF_KEY_K;
+	m_strToKey["l"] = CGF_KEY_L;
+	m_strToKey["m"] = CGF_KEY_M;
+	m_strToKey["n"] = CGF_KEY_N;
+	m_strToKey["o"] = CGF_KEY_O;
+	m_strToKey["p"] = CGF_KEY_P;
+	m_strToKey["q"] = CGF_KEY_Q;
+	m_strToKey["r"] = CGF_KEY_R;
+	m_strToKey["s"] = CGF_KEY_S;
+	m_strToKey["t"] = CGF_KEY_T;
+	m_strToKey["u"] = CGF_KEY_U;
+	m_strToKey["v"] = CGF_KEY_V;
+	m_strToKey["w"] = CGF_KEY_W;
+	m_strToKey["x"] = CGF_KEY_X;
+	m_strToKey["y"] = CGF_KEY_Y;
+	m_strToKey["z"] = CGF_KEY_Z;
+	m_strToKey["lbracket"] = m_strToKey["leftbracket"] = CGF_KEY_LEFTBRACKET;
+	m_strToKey["backslash"] = CGF_KEY_BACKSLASH;
+	m_strToKey["rightbracket"] = CGF_KEY_RIGHTBRACKET;
+	m_strToKey["backquote"] = CGF_KEY_BACKQUOTE;
+	m_strToKey["underscore"] = CGF_KEY_UNDERSCORE;
+	m_strToKey["at"] = CGF_KEY_AT;
+	m_strToKey["escape"] = CGF_KEY_ESCAPE;
+	m_strToKey["enter"] = m_strToKey["return"] = CGF_KEY_RETURN;
+	m_strToKey["tab"] = CGF_KEY_TAB;
+	m_strToKey["backspace"] = CGF_KEY_BACKSPACE;
+	m_strToKey["insert"] = CGF_KEY_INSERT;
+	m_strToKey["delete"] = CGF_KEY_DELETE;
+	m_strToKey["right"] = CGF_KEY_RIGHT;
+	m_strToKey["left"] = CGF_KEY_LEFT;
+	m_strToKey["down"] = CGF_KEY_DOWN;
+	m_strToKey["up"] = CGF_KEY_UP;
+	m_strToKey["pageup"] = CGF_KEY_PAGEUP;
+	m_strToKey["pagedown"] = CGF_KEY_PAGEDOWN;
+	m_strToKey["home"] = CGF_KEY_HOME;
+	m_strToKey["end"] = CGF_KEY_END;
+	m_strToKey["capslock"] = CGF_KEY_CAPSLOCK;
+	m_strToKey["scrolllock"] = CGF_KEY_SCROLLLOCK;
+	m_strToKey["numlock"] = CGF_KEY_NUMLOCKCLEAR;
+	m_strToKey["printscreen"] = CGF_KEY_PRINTSCREEN;
+	m_strToKey["pause"] = CGF_KEY_PAUSE;
+	m_strToKey["f1"] = CGF_KEY_F1;
+	m_strToKey["f2"] = CGF_KEY_F2;
+	m_strToKey["f3"] = CGF_KEY_F3;
+	m_strToKey["f4"] = CGF_KEY_F4;
+	m_strToKey["f5"] = CGF_KEY_F5;
+	m_strToKey["f6"] = CGF_KEY_F6;
+	m_strToKey["f7"] = CGF_KEY_F7;
+	m_strToKey["f8"] = CGF_KEY_F8;
+	m_strToKey["f9"] = CGF_KEY_F9;
+	m_strToKey["f10"] = CGF_KEY_F10;
+	m_strToKey["f11"] = CGF_KEY_F11;
+	m_strToKey["f12"] = CGF_KEY_F12;
+	m_strToKey["f13"] = CGF_KEY_F13;
+	m_strToKey["f14"] = CGF_KEY_F14;
+	m_strToKey["f15"] = CGF_KEY_F15;
+	m_strToKey["f16"] = CGF_KEY_F16;
+	m_strToKey["f17"] = CGF_KEY_F17;
+	m_strToKey["f18"] = CGF_KEY_F18;
+	m_strToKey["f19"] = CGF_KEY_F19;
+	m_strToKey["f20"] = CGF_KEY_F20;
+	m_strToKey["f21"] = CGF_KEY_F21;
+	m_strToKey["f22"] = CGF_KEY_F22;
+	m_strToKey["f23"] = CGF_KEY_F23;
+	m_strToKey["f24"] = CGF_KEY_F24;
+	m_strToKey["kp0"] = CGF_KEY_KP_0;
+	m_strToKey["kp1"] = CGF_KEY_KP_1;
+	m_strToKey["kp2"] = CGF_KEY_KP_2;
+	m_strToKey["kp3"] = CGF_KEY_KP_3;
+	m_strToKey["kp4"] = CGF_KEY_KP_4;
+	m_strToKey["kp5"] = CGF_KEY_KP_5;
+	m_strToKey["kp6"] = CGF_KEY_KP_6;
+	m_strToKey["kp7"] = CGF_KEY_KP_7;
+	m_strToKey["kp8"] = CGF_KEY_KP_8;
+	m_strToKey["kp9"] = CGF_KEY_KP_9;
+	m_strToKey["kpdecimal"] = CGF_KEY_KP_DECIMAL;
+	m_strToKey["kpdivide"] = CGF_KEY_KP_DIVIDE;
+	m_strToKey["kpmultiply"] = CGF_KEY_KP_MULTIPLY;
+	m_strToKey["kpminus"] = CGF_KEY_KP_MINUS;
+	m_strToKey["kpplus"] = CGF_KEY_KP_PLUS;
+	m_strToKey["kpenter"] = CGF_KEY_KP_ENTER;
+	m_strToKey["kpequals"] = CGF_KEY_KP_EQUALS;
+	m_strToKey["lshift"] = m_strToKey["leftshift"] = CGF_KEY_LSHIFT;
+	m_strToKey["lctrl"] = m_strToKey["leftctrl"] = CGF_KEY_LCTRL;
+	m_strToKey["lalt"] = m_strToKey["leftalt"] = CGF_KEY_LALT;
+	m_strToKey["lgui"] = m_strToKey["leftgui"] = CGF_KEY_LGUI;
+	m_strToKey["rshift"] = m_strToKey["rightshift"] = CGF_KEY_RSHIFT;
+	m_strToKey["rctrl"] = m_strToKey["rightctrl"] = CGF_KEY_RCTRL;
+	m_strToKey["ralt"] = m_strToKey["rightalt"] = CGF_KEY_RALT;
+	m_strToKey["rgui"] = m_strToKey["rightgui"] = CGF_KEY_RGUI;
+	m_strToKey["menu"] = CGF_KEY_MENU;
 
 	// Load input config file
-	if(util::fileExists(file))
+	if(util::fileExists(contextFile))
 	{
 		tinyxml2::XMLDocument doc;
-		util::toAbsoluteFilePath(file);
-		doc.LoadFile(file.c_str());
+		util::toAbsoluteFilePath(contextFile);
+		doc.LoadFile(contextFile.c_str());
 
 		// Get root node
 		tinyxml2::XMLNode *contextNode = doc.FirstChild();
@@ -191,10 +174,10 @@ void Input::init(string file)
 				tinyxml2::XMLElement *key = node->FirstChildElement("key");
 				if(name && key)
 				{
-					VirtualKey vk = strToKey(key->GetText());
+					Keycode vk = strToKey(key->GetText());
 					if(vk != CGF_KEY_UNKNOWN)
 					{
-						inputContext->m_nameToKey[name->GetText()] = vk;
+						//inputContext->m_nameToKey[name->GetText()] = vk;
 					}
 					else
 					{
@@ -203,92 +186,105 @@ void Input::init(string file)
 				}
 				node = node->NextSibling();
 			}
-			s_contextMap[contextNode->Value()] = inputContext;
+			m_contextMap[contextNode->Value()] = inputContext;
 			contextNode = contextNode->NextSibling();
 		}
 	}
 }
 
-Vector2i Input::getCursorPos()
+void InputManager::getPosition(Sint32 &x, Sint32 &y) const
 {
-	double x, y;
-	//glfwGetCursorPos(Window::s_window, &x, &y);
-	return Vector2i((int) x, (int) y);
+	x = m_x;
+	y = m_y;
 }
 
-void Input::setCursorPos(const Vector2i &pos)
+Sint32 InputManager::getX() const
 {
-	//glfwSetCursorPos(Window::s_window, pos.x, pos.y);
+	return m_x;
 }
 
-void Input::setCursorLimits(const Recti &area)
+Sint32 InputManager::getY() const
 {
-	RECT rect;
-	rect.top    = (long)(area.getY());
-	rect.bottom	= (long)(area.getY()+area.getHeight());
-	rect.left   = (long)(area.getX());
-	rect.right  = (long)(area.getX()+area.getHeight());
-	ClipCursor(&rect);
+	return m_y;
 }
 
-Vector2 Input::getPosition()
-{
-	return s_position;
-}
-
-VirtualKey Input::strToKey(string name)
+Keycode InputManager::strToKey(string name)
 {
 	transform(name.begin(), name.end(), name.begin(), ::tolower);
-	map<string, VirtualKey>::iterator itr;
-	if((itr = s_strToKey.find(name)) != s_strToKey.end())
+	map<string, Keycode>::iterator itr;
+	if((itr = m_strToKey.find(name)) != m_strToKey.end())
 	{
 		return itr->second;
 	}
 	return CGF_KEY_UNKNOWN;
 }
 
-void Input::setContext(InputContext * inputContext)
+void InputManager::setContext(InputContext *inputContext)
 {
 	// Set current key state for the keys in the context
 	if(inputContext)
-	for(map<string, InputContext::KeyBind>::iterator itr = inputContext->m_nameToFunc.begin(); itr != inputContext->m_nameToFunc.end(); ++itr)
+	//for(map<string, InputContext::KeyBind>::iterator itr = inputContext->m_nameToFunc.begin(); itr != inputContext->m_nameToFunc.end(); ++itr)
 	{
 		//itr->second.pressed = Input::getKeyState(inputContext->m_nameToKey[itr->first]) == GLFW_PRESS;
 	}
-	s_context = inputContext;
+	m_context = inputContext;
 }
 
-InputContext * Input::getContext(const string & name)
+InputContext *InputManager::getContext(const string & name)
 {
-	if(s_contextMap.find(name) == s_contextMap.end())
+	if(m_contextMap.find(name) == m_contextMap.end())
 	{
 		LOG("No input context with name '%s'", name);
 		return 0;
 	}
-	return s_contextMap[name];
+	return m_contextMap[name];
 }
 
-string Input::getClipboardString()
+string InputManager::getClipboardString()
 {
 	return SDL_GetClipboardText();
 }
 
-void Input::setClipboardString(const string str)
+void InputManager::setClipboardString(const string str)
 {
 	SDL_SetClipboardText(str.c_str());
 }
 
-void Input::updateBindings()
+void InputManager::addKeybind(KeybindPtr keybind)
 {
-	if(s_context)
+	m_keybinds.push_back(keybind);
+}
+
+void InputManager::removeKeybind(KeybindPtr keybind)
+{
+	m_keybinds.remove(keybind);
+}
+
+void InputManager::updateKeybinds(KeyEvent *e)
+{
+	for(KeybindPtr kb : m_keybinds)
 	{
-		s_context->updateBindings();
+		if(kb->m_keycode == e->getKeycode())
+		{
+			kb->m_function(e);
+		}
+	}
+
+	if(m_context)
+	{
+		// TODO:
+		//m_context->updateKeybinds(e);
 	}
 }
 
-int Input::getKeyState(const SDL_Scancode scancode)
+bool InputManager::getKeyState(const Keycode keycode) const
 {
-	if(s_game->isEnabled(CGF_BLOCK_BACKGROUND_INPUT) && !s_game->getMainWindow()->checkFlags(SDL_WINDOW_INPUT_FOCUS)) return false;
+	return getKeyState((Scancode) SDL_GetScancodeFromKey(keycode));
+}
+
+bool InputManager::getKeyState(const Scancode scancode) const
+{
+	//if(m_game->isEnabled(CGF_BLOCK_BACKGROUND_INPUT) && !m_game->getWindow()->checkFlags(SDL_WINDOW_INPUT_FOCUS)) return false;
 
 	const Uint8* currentKeyStates = SDL_GetKeyboardState(NULL);
 	return currentKeyStates[scancode];
