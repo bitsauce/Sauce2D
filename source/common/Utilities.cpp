@@ -135,6 +135,16 @@ void util::toDirectoryPath(string &path)
 	}
 }
 
+// TODO: This will only work on windows i think
+#include <direct.h>
+
+string util::getWorkingDirectory()
+{
+	char cwd[MAX_PATH];
+	getcwd(cwd, MAX_PATH);
+	return cwd;
+}
+
 bool util::fileExists(string filePath)
 {
 	ifstream s(getAbsoluteFilePath(filePath).c_str());

@@ -194,6 +194,8 @@ int Game::run()
 		// Initialize input handler
 		m_inputManager = new InputManager("config:/InputDefault.ini");//(m_inputConfig);
 
+		m_scene = new Scene(this);
+
 		// Engine initialized
 		m_initialized = true;
 
@@ -202,7 +204,7 @@ int Game::run()
 		// Call onStart event
 		{
 			GameEvent e(GameEvent::START);
-			onStart(&e);
+			onEvent(&e);
 		}
 		
 		// Fps sampling
@@ -220,7 +222,7 @@ int Game::run()
 		// Make sure update is called once before draw
 		{
 			TickEvent e(dt);
-			onTick(&e);
+			onEvent(&e);
 		}
 
 		// Game loop
@@ -334,7 +336,7 @@ int Game::run()
 			// Step begin
 			{
 				StepEvent e(StepEvent::BEGIN);
-				onStepBegin(&e);
+				onEvent(&e);
 			}
 
 			// Apply time delta to accumulator
@@ -344,7 +346,7 @@ int Game::run()
 				// Update the game
 				{
 					TickEvent e(dt);
-					onTick(&e);
+					onEvent(&e);
 				}
 				accumulator -= dt;
 			}
@@ -353,7 +355,7 @@ int Game::run()
 			const double alpha = accumulator / dt;
 			{
 				DrawEvent e(alpha, graphicsContext);
-				onDraw(&e);
+				onEvent(&e);
 			}
 			SDL_GL_SwapWindow(mainWindow->getSDLHandle());
 			glClear(GL_COLOR_BUFFER_BIT);
@@ -376,7 +378,7 @@ int Game::run()
 			// Step end
 			{
 				StepEvent e(StepEvent::END);
-				onStepBegin(&e);
+				onEvent(&e);
 			}
 		}
 gameloopend:
@@ -386,7 +388,7 @@ gameloopend:
 		// Call onEnd event
 		{
 			GameEvent e(GameEvent::END);
-			onEnd(&e);
+			onEvent(&e);
 		}
 	}
 	catch(Exception e)

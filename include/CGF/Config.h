@@ -155,6 +155,7 @@ namespace util
 	CGF_API string getAbsoluteFilePath(const string &assetPath);
 	CGF_API void toAbsoluteFilePath(string &assetPath);
 	CGF_API void toDirectoryPath(string &path);
+	CGF_API string getWorkingDirectory();
 
 	enum UnicodeByteOrder
 	{

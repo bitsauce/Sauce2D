@@ -752,12 +752,12 @@ private:
 };
 
 /**
- * \class	EventObject
+ * \class	GameObject
  *
- * \brief	An event object.
+ * \brief	An game object.
  */
 
-class CGF_API EventObject
+class CGF_API GameObject
 {
 public:
 
@@ -787,6 +787,13 @@ public:
 			case EVENT_MOUSE_MOVE: onMouseMove(static_cast<MouseEvent*>(event)); break;
 			case EVENT_MOUSE_WHEEL: onMouseWheel(static_cast<MouseEvent*>(event)); break;
 			case EVENT_WINDOW_SIZE_CHANGED: onWindowSizeChanged(static_cast<WindowEvent*>(event)); break;
+		}
+
+		// TODO: Needs cycle detection
+		// Pass event to children
+		for(GameObject *child : m_children)
+		{
+			child->onEvent(event);
 		}
 	}
 
@@ -974,9 +981,65 @@ public:
 	virtual void onMouseWheel(MouseEvent *e)
 	{
 	}
+
+	void addChildFirst(GameObject *child)
+	{
+		if(!child) return;
+		m_children.push_front(child);
+	}
+
+	void addChildLast(GameObject *child)
+	{
+		if(!child) return;
+		m_children.push_back(child);
+	}
+
+	void removeChild(GameObject *child)
+	{
+		if(!child) return;
+		m_children.remove(child);
+	}
+
+	list<GameObject*> getChildren()
+	{
+		return m_children;
+	}
+
+	void setUserData(void *data)
+	{
+		m_userData = data;
+	}
+
+	void *getUserData()
+	{
+		return m_userData;
+	}
+
+private:
+	// TODO: Consider using shared_ptr for GameObject*
+	list<GameObject*> m_children;
+	void *m_userData;
 };
 
-class CGF_API Game : public EventObject
+class CGF_API Scene
+{
+	friend class Game;
+public:
+	GameObject *getRoot() const
+	{
+		return m_root;
+	}
+
+private:
+	Scene(GameObject *root) :
+		m_root(root)
+	{
+	}
+
+	GameObject *m_root;
+};
+
+class CGF_API Game : public GameObject
 {
 public:
 	Game(const string &name, const string &organization = "CrossGame");
@@ -1031,7 +1094,15 @@ public:
 		return m_inputManager;
 	}
 
-	static Game *GetInstance() { return s_game; }
+	Scene *getScene()
+	{
+		return m_scene;
+	}
+
+	static Game *GetInstance()
+	{
+		return s_game;
+	}
 
 private:
 
@@ -1066,6 +1137,8 @@ private:
 	//AudioManager	*m_audio;
 	
 	InputManager *m_inputManager;
+
+	Scene *m_scene;
 	
 	/** \brief	The timer. */
 	Timer			*m_timer;

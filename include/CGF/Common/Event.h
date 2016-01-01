@@ -191,7 +191,7 @@ class CGF_API TickEvent : public Event
 {
 public:
 	TickEvent(const float delta) :
-		Event(EVENT_DRAW),
+		Event(EVENT_TICK),
 		m_delta(delta)
 	{
 	}
