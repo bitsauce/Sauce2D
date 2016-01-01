@@ -8,8 +8,8 @@
 using namespace cgf;
 
 /* This is our MinimalGame class.
-   It inherits from gc::Game, which is the game managing class.
-   gc::Game contains a bunch of virtual event methods. These
+   It inherits from cgf::Game, which is the game managing class.
+   cgf::Game contains a bunch of virtual event methods. These
    methods start with on* and are invoked at special times. 
    For instance, onUpdate is called whenever the game needs to
    update its game state, and onKeyDown is called whenever a
@@ -55,8 +55,8 @@ public:
 /* Main entry point. This is where our program first starts executing. */
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, INT)
 {
-	/* In this example we simply create our game object
-	   and call run() to start the game */
+	/* To start our game we simply create our game object
+	   and call run() */
 	MinimalGame game;
 	return game.run();
 }

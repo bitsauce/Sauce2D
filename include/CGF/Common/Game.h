@@ -22,6 +22,8 @@ BEGIN_CGF_NAMESPACE
  *
  * \brief	A macro that defines log.
  *
+ * \todo TODO: Add timestap to all console messages
+ *
  * \param	str	The string.
  * \param	...	Variable arguments providing additional information.
  */
