@@ -25,30 +25,30 @@ public:
 	}
 
 	/* onStart event. This event called once the framework has initialized,
-	   but before the game has started */
-	void onStart(GraphicsContext &graphicsContext)
+	   but before the game loop has started */
+	void onStart(GameEvent*)
 	{
-		LOG("Game started");
+		LOG("onStart");
 	}
 
 	/* onEnd event. This event is called when the game is closing. */
-	void onEnd()
+	void onEnd(GameEvent*)
 	{
-		LOG("Game ended");
+		LOG("onEnd");
 	}
 
-	/* onUpdate event. This event is called when the framework wants to update
+	/* onTick event. This event is called when the framework wants to update
 	   the game state. */
-	void onUpdate(const float dt)
+	void onTick(TickEvent*)
 	{
-		LOG("Update");
+		LOG("onTick");
 	}
 
 	/* onDraw event. This event is called then the framework wants to draw
 	   the current game state to the screen */
-	void onDraw(GraphicsContext &context, const float alpha)
+	void onDraw(DrawEvent*)
 	{
-		LOG("Draw");
+		LOG("onDraw");
 	}
 };
 

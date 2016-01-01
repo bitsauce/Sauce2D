@@ -35,3 +35,4 @@
 *.lib
 *.tlog
 *.enc
+*.opendb
