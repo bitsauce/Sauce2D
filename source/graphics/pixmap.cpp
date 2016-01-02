@@ -159,7 +159,7 @@ Pixmap::Pixmap(const string &imageFile, const bool premultiplyAlpha) :
 		m_width = m_height = 0;
 
 		// Unable to read file
-		LOG("Pixmap::Pixmap(const string &imageFile): Unable to read file '%s'", imageFile.c_str());
+		LOG("Unable to load image '%s'\n%s", imageFile.c_str(), IMG_GetError());
 	}
 }
 

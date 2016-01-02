@@ -156,15 +156,15 @@ public:
 
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, INT)
 {
-	// KeyBinding
-	{
-		Keybinding game;
-		if(game.run() != CGF_OK) return EXIT_FAILURE;
-	}
-
 	// DrawTexturedQuad
 	{
 		DrawTexturedQuad game;
+		if(game.run() != CGF_OK) return EXIT_FAILURE;
+	}
+
+	// KeyBinding
+	{
+		Keybinding game;
 		if(game.run() != CGF_OK) return EXIT_FAILURE;
 	}
 
