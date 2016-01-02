@@ -2,7 +2,7 @@
 #define CGF_RECT_H
 
 #include <CGF/config.h>
-#include <CGF/math/vector.h>
+#include <CGF/Math/Vector.h>
 
 /** \brief A class which holds a 2 dimensional Rect
  *
@@ -10,8 +10,6 @@
  * It stores the x and y coordinates, aswell as the width and height, as floating-point values.
  *
  */
-
-void RegisterRect();
 
 class Recti;
 

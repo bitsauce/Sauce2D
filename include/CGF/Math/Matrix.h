@@ -1,8 +1,8 @@
 #ifndef CGF_MATRIX_H
 #define CGF_MATRIX_H
 
-#include <CGF/config.h>
-#include <CGF/math/vector.h>
+#include <CGF/Config.h>
+#include <CGF/Math/Vector.h>
 
 /*********************************************************************
 **	2x2 Matrix														**

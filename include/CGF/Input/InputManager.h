@@ -108,6 +108,8 @@ private:
 * \brief
 */
 
+#include <CGF/Math/Vector.h>
+
 class CGF_API InputManager
 {
 	friend class Game;
@@ -122,7 +124,8 @@ public:
 	bool getKeyState(const Scancode scancode) const;
 
 	// Window-relative position
-	void getPosition(int &x, int &y) const;
+	void getPosition(Sint32 *x, Sint32 *y) const;
+	Vector2i getPosition() const;
 	Sint32 getX() const;
 	Sint32 getY() const;
 

@@ -91,18 +91,14 @@ public:
 
 	class CustomGameObject : public GameObject
 	{
-		void onEvent(Event *e)
-		{
-			depth++;
-			GameObject::onEvent(e);
-			depth--;
-		}
-
 		void onTick(TickEvent *e)
 		{
+			depth++;
 			string tabStr;
 			for(int i = 0; i < depth; ++i) tabStr += "\t";
 			LOG("%s%s onTick", tabStr.c_str(), (char*) getUserData());
+			GameObject::onTick(e);
+			depth--;
 		}
 	};
 
@@ -175,10 +171,12 @@ public:
 	void onTick(TickEvent *e)
 	{
 		LOG("%s onTick", (char*) getUserData());
+		Game::onTick(e);
 	}
 
-	void onDraw(DrawEvent*)
+	void onDraw(DrawEvent *e)
 	{
+		Game::onDraw(e);
 	}
 };
 

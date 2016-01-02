@@ -1,7 +1,7 @@
 #ifndef CGF_VECTOR_H
 #define CGF_VECTOR_H
 
-#include <CGF/config.h>
+#include <CGF/Config.h>
 
 /** \brief A class which holds a 2 dimensional vector
  *

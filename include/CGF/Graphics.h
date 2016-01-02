@@ -39,7 +39,7 @@ CGF_API extern uint QUAD_INDICES[6];
 CGF_API extern Vector4 QUAD_VERTICES[4];
 CGF_API extern Vector2 QUAD_TEXCOORD[4];
 
-class CGF_API Graphics
+/*class CGF_API Graphics
 {
 	friend class Engine;
 	friend class Window;
@@ -75,7 +75,7 @@ protected:
 
 	GraphicsContext s_graphicsContext;
 };
-
+*/
 END_CGF_NAMESPACE
 
 #endif // CGF_GRAPHICS_H

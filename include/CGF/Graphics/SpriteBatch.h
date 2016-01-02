@@ -19,7 +19,7 @@ class Sprite;
 class CGF_API SpriteBatch
 {
 public:
-	SpriteBatch(GraphicsContext &graphicsContext, const uint maxSprites = 2048);
+	SpriteBatch(GraphicsContext *graphicsContext, const uint maxSprites = 2048);
 	~SpriteBatch();
 
 	enum SpriteSortMode
@@ -54,7 +54,7 @@ public:
 	void flush();
 
 	State getState() const { return m_state; }
-	GraphicsContext &getGraphicsContext() const { return m_graphicsContext; }
+	GraphicsContext *getGraphicsContext() const { return m_graphicsContext; }
 	uint getTextureSwapCount() const;
 
 private:
@@ -74,7 +74,7 @@ private:
 	const uint m_maxSpriteCount;
 
 	// Graphics context
-	GraphicsContext &m_graphicsContext;
+	GraphicsContext *m_graphicsContext;
 };
 
 END_CGF_NAMESPACE

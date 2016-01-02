@@ -1,10 +1,10 @@
 #ifndef CGF_RECTANGLE_PACKER_H
 #define CGF_RECTANGLE_PACKER_H
 
-#include <CGF/config.h>
+#include <CGF/Config.h>
 
-#include <CGF/math/vector.h>
-#include <CGF/math/Rectangle.h>
+#include <CGF/Math/Vector.h>
+#include <CGF/Math/Rectangle.h>
 
 BEGIN_CGF_NAMESPACE
 

@@ -30,9 +30,9 @@ class CGF_API Event
 {
 protected:
 	Event(const EventType type) :
-		m_type(type)
+		m_type(type),
+		m_userData(0)
 	{
-
 	}
 
 public:
@@ -41,8 +41,19 @@ public:
 		return m_type;
 	}
 
+	void *getUserData() const
+	{
+		return m_userData;
+	}
+
+	void setUserData(void *data)
+	{
+		m_userData = data;
+	}
+
 private:
 	const EventType m_type;
+	void *m_userData;
 };
 
 class CGF_API KeyEvent : public Event
@@ -161,6 +172,7 @@ private:
 };
 
 class GraphicsContext;
+class SpriteBatch;
 
 class CGF_API DrawEvent : public Event
 {

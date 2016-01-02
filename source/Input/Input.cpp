@@ -1,4 +1,3 @@
-#include "..\..\include\CGF\Input.h"
 //       ____  ____     ____                        _____             _            
 // __  _|___ \|  _ \   / ___| __ _ _ __ ___   ___  | ____|_ __   __ _(_)_ __   ___ 
 // \ \/ / __) | | | | | |  _ / _  |  _   _ \ / _ \ |  _| |  _ \ / _  | |  _ \ / _ \
@@ -9,7 +8,6 @@
 //									2011-2015 (C)
 
 #include <CGF/Common.h>
-#include <CGF/Math.h>
 #include <CGF/Input.h>
 
 BEGIN_CGF_NAMESPACE
@@ -186,10 +184,15 @@ InputManager::InputManager(string contextFile) :
 	}
 }
 
-void InputManager::getPosition(Sint32 &x, Sint32 &y) const
+void InputManager::getPosition(Sint32 *x, Sint32 *y) const
 {
-	x = m_x;
-	y = m_y;
+	*x = m_x;
+	*y = m_y;
+}
+
+Vector2i InputManager::getPosition() const
+{
+	return Vector2i(m_x, m_y);
 }
 
 Sint32 InputManager::getX() const
@@ -217,7 +220,7 @@ void InputManager::setContext(InputContext *inputContext)
 {
 	// Set current key state for the keys in the context
 	if(inputContext)
-	//for(map<string, InputContext::KeyBind>::iterator itr = inputContext->m_nameToFunc.begin(); itr != inputContext->m_nameToFunc.end(); ++itr)
+		//for(map<string, InputContext::KeyBind>::iterator itr = inputContext->m_nameToFunc.begin(); itr != inputContext->m_nameToFunc.end(); ++itr)
 	{
 		//itr->second.pressed = Input::getKeyState(inputContext->m_nameToKey[itr->first]) == GLFW_PRESS;
 	}
@@ -229,8 +232,8 @@ InputContext *InputManager::getContext()
 	return m_context;
 	/*if(m_contextMap.find(name) == m_contextMap.end())
 	{
-		LOG("No input context with name '%s'", name);
-		return 0;
+	LOG("No input context with name '%s'", name);
+	return 0;
 	}
 	return m_contextMap[name];*/
 }
@@ -283,7 +286,7 @@ bool InputManager::getKeyState(const Keycode keycode) const
 bool InputManager::getKeyState(const Scancode scancode) const
 {
 	//if(m_game->isEnabled(CGF_BLOCK_BACKGROUND_INPUT) && !m_game->getWindow()->checkFlags(SDL_WINDOW_INPUT_FOCUS)) return false;
- 
+
 	const Uint8* currentKeyStates = SDL_GetKeyboardState(NULL);
 	return currentKeyStates[scancode];
 }

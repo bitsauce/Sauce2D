@@ -587,6 +587,23 @@ public:
 	 */
 	void getSize(int *x, int *y) const;
 
+	Vector2i getSize() const
+	{
+		Vector2i size;
+		getSize(&size.x, &size.y);
+		return size;
+	}
+
+	int getWidth() const
+	{
+		return getSize().x;
+	}
+	
+	int getHeight() const
+	{
+		return getSize().y;
+	}
+
 	/**
 	 * \brief Sets the title of the window.
 	 */
@@ -757,6 +774,12 @@ private:
  * \brief	An game object.
  */
 
+#define PROPAGATE_EVENT(eventFunc) \
+	for(GameObject *child : m_children) \
+	{ \
+		child->eventFunc(e); \
+	}
+
 class CGF_API GameObject
 {
 public:
@@ -769,32 +792,9 @@ public:
 	 * \param [in,out]	event	If non-null, the event.
 	 */
 
-	virtual void onEvent(Event *event)
+	virtual void onEvent(Event *e)
 	{
-		switch(event->getType())
-		{
-			case EVENT_START: onStart(static_cast<GameEvent*>(event)); break;
-			case EVENT_END: onEnd(static_cast<GameEvent*>(event)); break;
-			case EVENT_TICK: onTick(static_cast<TickEvent*>(event)); break;
-			case EVENT_DRAW: onDraw(static_cast<DrawEvent*>(event)); break;
-			case EVENT_STEP_BEGIN: onStepBegin(static_cast<StepEvent*>(event)); break;
-			case EVENT_STEP_END: onStepEnd(static_cast<StepEvent*>(event)); break;
-			case EVENT_KEY_DOWN:
-			case EVENT_KEY_UP:
-			case EVENT_KEY_REPEAT: onKeyEvent(static_cast<KeyEvent*>(event)); break;
-			case EVENT_MOUSE_UP: onMouseUp(static_cast<MouseEvent*>(event)); break;
-			case EVENT_MOUSE_DOWN: onMouseDown(static_cast<MouseEvent*>(event)); break;
-			case EVENT_MOUSE_MOVE: onMouseMove(static_cast<MouseEvent*>(event)); break;
-			case EVENT_MOUSE_WHEEL: onMouseWheel(static_cast<MouseEvent*>(event)); break;
-			case EVENT_WINDOW_SIZE_CHANGED: onWindowSizeChanged(static_cast<WindowEvent*>(event)); break;
-		}
-
-		// TODO: Needs cycle detection
-		// Pass event to children
-		for(GameObject *child : m_children)
-		{
-			child->onEvent(event);
-		}
+		PROPAGATE_EVENT(onEvent);
 	}
 
 	/**
@@ -804,8 +804,10 @@ public:
 	*
 	* \param [in,out]	parameter1	If non-null, the first parameter.
 	*/
-	virtual void onStart(GameEvent*)
+
+	virtual void onStart(GameEvent *e)
 	{
+		PROPAGATE_EVENT(onStart);
 	}
 
 	/**
@@ -816,8 +818,9 @@ public:
 	* \param [in,out]	parameter1	If non-null, the first parameter.
 	*/
 
-	virtual void onEnd(GameEvent*)
+	virtual void onEnd(GameEvent *e)
 	{
+		PROPAGATE_EVENT(onEnd);
 	}
 
 	/**
@@ -828,20 +831,22 @@ public:
 	* \param [in,out]	parameter1	If non-null, the first parameter.
 	*/
 
-	virtual void onTick(TickEvent*)
+	virtual void onTick(TickEvent *e)
 	{
+		PROPAGATE_EVENT(onTick);
 	}
 
 	/**
-	* \fn	virtual void Game::onDraw(DrawEvent*)
-	*
-	* \brief	An event called when the game wants to draw the current game state.
-	*
-	* \param [in,out]	parameter1	If non-null, the first parameter.
-	*/
+	 * \fn	virtual void GameObject::onDraw(DrawEvent *e)
+	 *
+	 * \brief	An event called when the game wants to draw the current game state.
+	 *
+	 * \param [in,out]	e	The event parameters.
+	 */
 
-	virtual void onDraw(DrawEvent*)
+	virtual void onDraw(DrawEvent *e)
 	{
+		PROPAGATE_EVENT(onDraw);
 	}
 
 	/**
@@ -852,8 +857,9 @@ public:
 	* \param [in,out]	parameter1	If non-null, the first parameter.
 	*/
 
-	virtual void onStepBegin(StepEvent*)
+	virtual void onStepBegin(StepEvent *e)
 	{
+		PROPAGATE_EVENT(onStepBegin);
 	}
 
 	/**
@@ -864,8 +870,9 @@ public:
 	* \param [in,out]	parameter1	If non-null, the first parameter.
 	*/
 
-	virtual void onStepEnd(StepEvent*)
+	virtual void onStepEnd(StepEvent *e)
 	{
+		PROPAGATE_EVENT(onStepEnd);
 	}
 
 	/**
@@ -876,8 +883,9 @@ public:
 	* \param [in,out]	parameter1	If non-null, the first parameter.
 	*/
 
-	virtual void onWindowSizeChanged(WindowEvent*)
+	virtual void onWindowSizeChanged(WindowEvent *e)
 	{
+		PROPAGATE_EVENT(onWindowSizeChanged);
 	}
 
 	/**
@@ -890,11 +898,13 @@ public:
 
 	virtual void onKeyEvent(KeyEvent *e)
 	{
+		PROPAGATE_EVENT(onKeyEvent);
+
 		switch(e->getType())
 		{
-			case EVENT_KEY_DOWN: onKeyDown(static_cast<KeyEvent*>(e)); break;
-			case EVENT_KEY_UP: onKeyUp(static_cast<KeyEvent*>(e)); break;
-			case EVENT_KEY_REPEAT: onKeyRepeat(static_cast<KeyEvent*>(e)); break;
+			case EVENT_KEY_DOWN: onKeyDown(e); break;
+			case EVENT_KEY_UP: onKeyUp(e); break;
+			case EVENT_KEY_REPEAT: onKeyRepeat(e); break;
 		}
 	}
 
@@ -908,6 +918,7 @@ public:
 
 	virtual void onKeyDown(KeyEvent *e)
 	{
+		PROPAGATE_EVENT(onKeyDown);
 	}
 
 	/**
@@ -920,6 +931,7 @@ public:
 
 	virtual void onKeyUp(KeyEvent *e)
 	{
+		PROPAGATE_EVENT(onKeyUp);
 	}
 
 	/**
@@ -932,6 +944,28 @@ public:
 
 	virtual void onKeyRepeat(KeyEvent *e)
 	{
+		PROPAGATE_EVENT(onKeyRepeat);
+	}
+
+	/**
+	 * \fn	virtual void GameObject::onMouseEvent(MouseEvent *e)
+	 *
+	 * \brief	Executes the mouse event action.
+	 *
+	 * \param [in,out]	e	If non-null, the MouseEvent to process.
+	 */
+
+	virtual void onMouseEvent(MouseEvent *e)
+	{
+		PROPAGATE_EVENT(onMouseEvent);
+
+		switch(e->getType())
+		{
+			case EVENT_MOUSE_UP: onMouseUp(e); break;
+			case EVENT_MOUSE_DOWN: onMouseDown(e); break;
+			case EVENT_MOUSE_MOVE: onMouseMove(e); break;
+			case EVENT_MOUSE_WHEEL: onMouseWheel(e); break;
+		}
 	}
 
 	/**
@@ -944,6 +978,7 @@ public:
 
 	virtual void onMouseMove(MouseEvent *e)
 	{
+		PROPAGATE_EVENT(onMouseMove);
 	}
 
 	/**
@@ -956,6 +991,7 @@ public:
 
 	virtual void onMouseDown(MouseEvent *e)
 	{
+		PROPAGATE_EVENT(onMouseDown);
 	}
 
 	/**
@@ -968,6 +1004,7 @@ public:
 
 	virtual void onMouseUp(MouseEvent *e)
 	{
+		PROPAGATE_EVENT(onMouseUp);
 	}
 
 	/**
@@ -980,7 +1017,16 @@ public:
 
 	virtual void onMouseWheel(MouseEvent *e)
 	{
+		PROPAGATE_EVENT(onMouseWheel);
 	}
+
+	/**
+	 * \fn	void GameObject::addChildFirst(GameObject *child)
+	 *
+	 * \brief	Adds a child first.
+	 *
+	 * \param [in,out]	child	If non-null, the child.
+	 */
 
 	void addChildFirst(GameObject *child)
 	{
@@ -988,11 +1034,27 @@ public:
 		m_children.push_front(child);
 	}
 
+	/**
+	 * \fn	void GameObject::addChildLast(GameObject *child)
+	 *
+	 * \brief	Adds a child last.
+	 *
+	 * \param [in,out]	child	If non-null, the child.
+	 */
+
 	void addChildLast(GameObject *child)
 	{
 		if(!child) return;
 		m_children.push_back(child);
 	}
+
+	/**
+	 * \fn	void GameObject::removeChild(GameObject *child)
+	 *
+	 * \brief	Removes the child described by child.
+	 *
+	 * \param [in,out]	child	If non-null, the child.
+	 */
 
 	void removeChild(GameObject *child)
 	{
@@ -1000,15 +1062,39 @@ public:
 		m_children.remove(child);
 	}
 
+	/**
+	 * \fn	list<GameObject*> GameObject::getChildren()
+	 *
+	 * \brief	Gets the children of this item.
+	 *
+	 * \return	null if it fails, else the children.
+	 */
+
 	list<GameObject*> getChildren()
 	{
 		return m_children;
 	}
 
+	/**
+	 * \fn	void GameObject::setUserData(void *data)
+	 *
+	 * \brief	Sets user data.
+	 *
+	 * \param [in,out]	data	If non-null, the data.
+	 */
+
 	void setUserData(void *data)
 	{
 		m_userData = data;
 	}
+
+	/**
+	 * \fn	void GameObject::*getUserData()
+	 *
+	 * \brief	Gets user data.
+	 *
+	 * \return	null if it fails, else the user data.
+	 */
 
 	void *getUserData()
 	{
@@ -1018,6 +1104,7 @@ public:
 private:
 	// TODO: Consider using shared_ptr for GameObject*
 	list<GameObject*> m_children;
+	bool m_eventPropagated;
 	void *m_userData;
 };
 
@@ -1038,6 +1125,8 @@ private:
 
 	GameObject *m_root;
 };
+
+class SpriteBatch;
 
 class CGF_API Game : public GameObject
 {
@@ -1099,6 +1188,38 @@ public:
 		return m_scene;
 	}
 
+	/**
+	* \fn	virtual void EventObject::onEvent(Event *event)
+	*
+	* \brief	Executes the event action.
+	*
+	* \param [in,out]	event	If non-null, the event.
+	*/
+
+	virtual void onEvent(Event *e)
+	{
+		GameObject::onEvent(e);
+
+		// Find and call the specific event function
+		switch(e->getType())
+		{
+			case EVENT_START: onStart(static_cast<GameEvent*>(e)); break;
+			case EVENT_END: onEnd(static_cast<GameEvent*>(e)); break;
+			case EVENT_TICK: onTick(static_cast<TickEvent*>(e)); break;
+			case EVENT_DRAW: onDraw(static_cast<DrawEvent*>(e)); break;
+			case EVENT_STEP_BEGIN: onStepBegin(static_cast<StepEvent*>(e)); break;
+			case EVENT_STEP_END: onStepEnd(static_cast<StepEvent*>(e)); break;
+			case EVENT_KEY_DOWN:
+			case EVENT_KEY_UP:
+			case EVENT_KEY_REPEAT: onKeyEvent(static_cast<KeyEvent*>(e)); break;
+			case EVENT_MOUSE_UP:
+			case EVENT_MOUSE_DOWN:
+			case EVENT_MOUSE_MOVE:
+			case EVENT_MOUSE_WHEEL: onMouseEvent(static_cast<MouseEvent*>(e)); break;
+			case EVENT_WINDOW_SIZE_CHANGED: onWindowSizeChanged(static_cast<WindowEvent*>(e)); break;
+		}
+	}
+
 	static Game *GetInstance()
 	{
 		return s_game;
@@ -1139,6 +1260,8 @@ private:
 	InputManager *m_inputManager;
 
 	Scene *m_scene;
+
+	//SpriteBatch *m_spriteBatch;
 	
 	/** \brief	The timer. */
 	Timer			*m_timer;

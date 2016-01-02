@@ -1,16 +1,15 @@
 #ifndef CGF_MATH_H
 #define CGF_MATH_H
 
-#include <CGF/math/Matrix.h>
-#include <CGF/math/Rectangle.h>
-#include <CGF/math/RectanglePacker.h>
-#include <CGF/math/Vector.h>
-#include <CGF/math/Random.h>
+#include <CGF/Math/Vector.h>
+#include <CGF/Math/Matrix.h>
+#include <CGF/Math/Rectangle.h>
+#include <CGF/Math/RectanglePacker.h>
+#include <CGF/Math/Random.h>
 
 #define PI 3.14159265359f
 
 BEGIN_CGF_NAMESPACE
-
 
 /**
  * \brief A class for representing colors.
