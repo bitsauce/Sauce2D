@@ -103,12 +103,12 @@ public:
 	 * will be multiplied by \p mat.
 	 * \param mat The 4x4 matrix to be multiplied with every vertex.
 	 */
-	void setModelViewMatrix(const Matrix4 &mat);
+	void setTransformationMatrix(const Matrix4 &mat);
 
 	/**
 	 * Gets the current model-view matrix
 	 */
-	Matrix4 getModelViewMatrix() const;
+	Matrix4 getTransformationMatrix() const;
 
 	/**
 	 * Pushes a matrix onto the model-view matrix stack.
@@ -279,13 +279,14 @@ private:
 	void setupContext();
 
 	SDL_GLContext m_context;
-	uint m_width, m_prevWidth;
-	uint m_height, m_prevHeight;
+	Window *m_window;
+	uint m_width;
+	uint m_height;
 	Texture2DPtr m_texture;
 	ShaderPtr m_shader;
 	BlendState m_blendState;
 	RenderTarget2D *m_renderTarget;
-	stack<Matrix4> m_modelViewMatrixStack;
+	stack<Matrix4> m_transformationMatrixStack;
 	Matrix4 m_projectionMatrix;
 
 	static ShaderPtr s_defaultShader;
