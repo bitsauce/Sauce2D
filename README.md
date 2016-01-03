@@ -1,4 +1,4 @@
-x2D-Game-Engine
+CrossGame Framework
 ===============
 
-A (eventual) cross-platform game engine framework
+A game framework built on the Simple DirectMedia Library
