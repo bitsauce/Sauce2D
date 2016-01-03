@@ -232,6 +232,16 @@ public:
 	{
 	}
 
+	Sint32 getWidth() const
+	{
+		return m_width;
+	}
+
+	Sint32 getHeight() const
+	{
+		return m_height;
+	}
+
 private:
 	Sint32 m_width, m_height;
 };

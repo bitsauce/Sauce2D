@@ -108,6 +108,7 @@ namespace math
 	CGF_API Vector2 pow(const Vector2 &v);
 	CGF_API float lerp(const float v0, const float v1, const float t);
 	CGF_API Vector2 lerp(const Vector2 &v0, const Vector2 &v1, const float t);
+	CGF_API float step(const float a, const float x);
 
 	CGF_API int mod(const int a, const int b);
 	CGF_API uint ror(const uint a, const uint b);
