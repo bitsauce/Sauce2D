@@ -171,6 +171,11 @@ public:
 	 */
 	void resizeViewport(const uint w, const uint h);
 
+	Vector2i getSize() const
+	{
+		return Vector2i(m_width, m_height);
+	}
+
 	/**
 	 * Returns the width of the viewport.
 	 */
@@ -186,7 +191,6 @@ public:
 	{
 		return m_height;
 	}
-
 	/**
 	 * Renders an indexed primitive to the screen.
 	 * \param type Types of primitives to render.

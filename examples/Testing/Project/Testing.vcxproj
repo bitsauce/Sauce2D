@@ -90,11 +90,6 @@
   <ItemGroup>
     <ClCompile Include="..\Source\Main.cpp" />
   </ItemGroup>
-  <ItemGroup>
-    <Xml Include="..\Config\DefaultConfig.ini">
-      <SubType>Designer</SubType>
-    </Xml>
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

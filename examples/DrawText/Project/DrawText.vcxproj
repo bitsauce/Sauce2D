@@ -11,9 +11,9 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{7A44F0BC-017A-4954-AC15-4B357471983C}</ProjectGuid>
+    <ProjectGuid>{8606C81C-4646-4FFF-9B83-20E7F75AE85F}</ProjectGuid>
     <RootNamespace>deferredlighting</RootNamespace>
-    <ProjectName>Minimal</ProjectName>
+    <ProjectName>DrawText</ProjectName>
     <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -42,11 +42,11 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <OutDir>..\Binaries\$(Platform)\$(Configuration)\</OutDir>
-    <TargetName>Minimal</TargetName>
+    <TargetName>DrawText</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <OutDir>..\Binaries\$(Platform)\$(Configuration)\</OutDir>
-    <TargetName>Minimal</TargetName>
+    <TargetName>DrawText</TargetName>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>

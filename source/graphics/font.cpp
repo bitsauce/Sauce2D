@@ -288,7 +288,7 @@ void Font::drawInternal(SpriteBatch *spriteBatch, float x, float y, const string
 		float ox = m_scale * float(ch->xOff);
 		float oy = m_scale * float(ch->yOff);
 
-		sprite.setRegion(TextureRegion(u, 1.f-v2, u2, 1.f-v));
+		sprite.setRegion(TextureRegion(u, v, u2, v2));
 		sprite.setPosition(x + ox, y + oy);
 		sprite.setSize(w, h);
 

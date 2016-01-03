@@ -61,6 +61,22 @@ public:
 	float getStringHeight(const string &text);
 	void draw(SpriteBatch *spriteBatch, float x, float y, const string &text, FontAlign mode = FONT_ALIGN_LEFT);
 	void draw(SpriteBatch *spriteBatch, const Vector2 &pos, const string &text, FontAlign mode = FONT_ALIGN_LEFT) { draw(spriteBatch, pos.x, pos.y, text, mode); }
+
+	/**
+	 * \fn	void Font::drawBox(SpriteBatch *spriteBatch, float x, float y, float width, const string &text, int count, FontAlign mode = FONT_ALIGN_LEFT);
+	 *
+	 * \brief	Draw text to fit within a box. The text will be split when a line exceedes \p width.
+	 *
+	 * \param [in,out]	spriteBatch	The sprite batch to draw the text to.
+	 * \param	x				   	The x coordinate.
+	 * \param	y				   	The y coordinate.
+	 * \param	width			   	The max lengt of a line.
+	 * \param	text			   	The text to draw.
+	 * \param	count			   	Number of characters of \p text to draw.
+	 * \param	mode			   	The font alignment mode.
+	 * \todo Setting \p mode to anything other than FONT_ALIGN_LEFT does nothing at the moment.
+	 */
+
 	void drawBox(SpriteBatch *spriteBatch, float x, float y, float width, const string &text, int count, FontAlign mode = FONT_ALIGN_LEFT);
 	void drawBox(SpriteBatch *spriteBatch, const Vector2 &pos, float width, const string &text, int count, FontAlign mode = FONT_ALIGN_LEFT) { drawBox(spriteBatch, pos.x, pos.y, width, text, count, mode); }
 
