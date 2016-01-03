@@ -14,6 +14,7 @@ GLuint GraphicsContext::s_vbo = 0;
 GLuint GraphicsContext::s_ibo = 0;
 
 GraphicsContext::GraphicsContext(Window *window) :
+	m_window(window),
 	m_width(0),
 	m_height(0),
 	m_renderTarget(nullptr),
@@ -59,50 +60,47 @@ void GraphicsContext::setRenderTarget(RenderTarget2D *renderTarget)
 	{
 		if(renderTarget)
 		{
-			// Bind render target
+			// Bind new render target
 			m_renderTarget = renderTarget;
 			m_renderTarget->bind();
-
-			m_prevWidth = m_width;
-			m_prevHeight = m_height;
 
 			// Resize viewport
 			resizeViewport(m_renderTarget->m_width, m_renderTarget->m_height);
 		}
-		else
+		else if(m_renderTarget)
 		{
 			// Unbind render target
 			m_renderTarget->unbind();
-			m_renderTarget = nullptr;
+			m_renderTarget = 0;
 
-			// Reset viewport
-			resizeViewport(m_prevWidth, m_prevHeight);
+			// Resize viewport
+			resizeViewport(m_window->getWidth(), m_window->getHeight());
 		}
 	}
 }
 
-void GraphicsContext::setModelViewMatrix(const Matrix4 &projmat)
+void GraphicsContext::setTransformationMatrix(const Matrix4 &projmat)
 {
-	while(!m_modelViewMatrixStack.empty()) m_modelViewMatrixStack.pop();
-	m_modelViewMatrixStack.push(projmat);
+	while(!m_transformationMatrixStack.empty()) m_transformationMatrixStack.pop();
+	m_transformationMatrixStack.push(projmat);
 }
 
-Matrix4 GraphicsContext::getModelViewMatrix() const
+Matrix4 GraphicsContext::getTransformationMatrix() const
 {
-	if(m_modelViewMatrixStack.empty()) return Matrix4();
-	return m_modelViewMatrixStack.top();
+	if(m_transformationMatrixStack.empty()) return Matrix4();
+	return m_transformationMatrixStack.top();
 }
 
 void GraphicsContext::pushMatrix(const Matrix4 &mat)
 {
-	if(m_modelViewMatrixStack.empty()) m_modelViewMatrixStack.push(mat);
-	else m_modelViewMatrixStack.push(m_modelViewMatrixStack.top() * mat);
+	if(m_transformationMatrixStack.empty()) m_transformationMatrixStack.push(mat);
+	else m_transformationMatrixStack.push(m_transformationMatrixStack.top() * mat);
 }
 
 void GraphicsContext::popMatrix()
 {
-	if(m_modelViewMatrixStack.empty()) return;
-	m_modelViewMatrixStack.pop();
+	if(m_transformationMatrixStack.empty()) return;
+	m_transformationMatrixStack.pop();
 }
 
 void GraphicsContext::setTexture(const Texture2DPtr texture)
@@ -175,7 +173,7 @@ void GraphicsContext::resizeViewport(const uint w, const uint h)
 	m_projectionMatrix.set(projMat);
 
 	// Set model-view to identity
-	setModelViewMatrix(Matrix4());
+	setTransformationMatrix(Matrix4());
 
 	// Set viewport
 	glViewport(0, 0, m_width, m_height);
@@ -197,7 +195,7 @@ void GraphicsContext::setupContext()
 	glUseProgram(shader->m_id);
 
 	// Set projection matrix
-	Matrix4 modelViewProjection = m_projectionMatrix * m_modelViewMatrixStack.top();
+	Matrix4 modelViewProjection = m_projectionMatrix * m_transformationMatrixStack.top();
 	shader->setUniformMatrix4f("u_ModelViewProj", modelViewProjection.get());
 
 	GLuint target = 0;
