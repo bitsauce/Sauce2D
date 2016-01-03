@@ -5,12 +5,12 @@
 // /_/\_\_____|____/   \____|\__ _|_| |_| |_|\___| |_____|_| |_|\__, |_|_| |_|\___|
 //                                                              |___/     
 //				Originally written by Marcus Loo Vergara (aka. Bitsauce)
-//									2011-2014 (C)
+//									2011-2015 (C)
 
-#include <x2d/audio.h>
+#include <CGF/audio.h>
 
-BEGIN_XD_NAMESPACE
-
+BEGIN_CGF_NAMESPACE
+/*
 ALenum toALFormat(AudioBuffer::Format format)
 {
 	switch(format)
@@ -129,4 +129,4 @@ void OpenALManager::setSourceMaxDist(const int sourceId, const float dist)
 	AudioSourcef(sourceId, AL_MAX_DISTANCE, dist);
 }*/
 
-END_XD_NAMESPACE
+END_CGF_NAMESPACE

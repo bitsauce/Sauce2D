@@ -5,12 +5,12 @@
 // /_/\_\_____|____/   \____|\__ _|_| |_| |_|\___| |_____|_| |_|\__, |_|_| |_|\___|
 //                                                              |___/     
 //				Originally written by Marcus Loo Vergara (aka. Bitsauce)
-//									2011-2014 (C)
+//									2011-2015 (C)
 
-#include <x2d/engine.h>
-#include <x2d/graphics.h>
+#include <CGF/Common.h>
+#include <CGF/graphics.h>
 
-BEGIN_XD_NAMESPACE
+BEGIN_CGF_NAMESPACE
 
 Sprite::Sprite(const Texture2DPtr texture, const Rect &rectangle, const Vector2 &origin, const float angle, const TextureRegion &region, const Color &color, const float depth, const Vector2 scale) :
 	m_texture(texture),
@@ -212,10 +212,10 @@ void Sprite::getVertices(Vertex *vertices, uint *indices, const uint indexOffset
 		vertices[i].set4ub(VERTEX_COLOR, m_color.r, m_color.g, m_color.b, m_color.a);
 	}
 
-	vertices[0].set4f(VERTEX_TEX_COORD, m_textureRegion.uv0.x, m_textureRegion.uv1.y);
-	vertices[1].set4f(VERTEX_TEX_COORD, m_textureRegion.uv1.x, m_textureRegion.uv1.y);
-	vertices[2].set4f(VERTEX_TEX_COORD, m_textureRegion.uv1.x, m_textureRegion.uv0.y);
-	vertices[3].set4f(VERTEX_TEX_COORD, m_textureRegion.uv0.x, m_textureRegion.uv0.y);
+	vertices[0].set4f(VERTEX_TEX_COORD, m_textureRegion.uv0.x, m_textureRegion.uv0.y);
+	vertices[1].set4f(VERTEX_TEX_COORD, m_textureRegion.uv1.x, m_textureRegion.uv0.y);
+	vertices[2].set4f(VERTEX_TEX_COORD, m_textureRegion.uv1.x, m_textureRegion.uv1.y);
+	vertices[3].set4f(VERTEX_TEX_COORD, m_textureRegion.uv0.x, m_textureRegion.uv1.y);
 	
 	indices[0] = indexOffset + QUAD_INDICES[0];
 	indices[1] = indexOffset + QUAD_INDICES[1];
@@ -225,4 +225,4 @@ void Sprite::getVertices(Vertex *vertices, uint *indices, const uint indexOffset
 	indices[5] = indexOffset + QUAD_INDICES[5];
 }
 
-END_XD_NAMESPACE
+END_CGF_NAMESPACE

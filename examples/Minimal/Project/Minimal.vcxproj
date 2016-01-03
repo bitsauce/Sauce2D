@@ -41,25 +41,26 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <OutDir>$(SolutionDir)Exe\$(Configuration)</OutDir>
-    <TargetName>$(ProjectName)_Debug</TargetName>
+    <OutDir>..\Binaries\$(Platform)\$(Configuration)\</OutDir>
+    <TargetName>Minimal</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <OutDir>$(SolutionDir)Exe\$(Configuration)</OutDir>
+    <OutDir>..\Binaries\$(Platform)\$(Configuration)\</OutDir>
+    <TargetName>Minimal</TargetName>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
-      <WarningLevel>Level3</WarningLevel>
+      <WarningLevel>Level1</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(SolutionDir)..\..\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\..\include;$(ProjectDir)..\..\..\3rdparty\SDL\include;$(ProjectDir)..\..\..\3rdparty\SDL_image;$(ProjectDir)..\..\..\3rdparty\SDL_mixer;$(ProjectDir)..\..\..\3rdparty\freetype\include;$(ProjectDir)..\..\..\3rdparty\openal\include;$(ProjectDir)..\..\..\3rdparty\gl3w\include;$(ProjectDir)..\..\..\3rdparty\tinyxml2;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>X2D_DEBUG;X2D_IMPORT;</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>
       </AdditionalLibraryDirectories>
-      <AdditionalDependencies>$(SolutionDir)..\..\build\Win32\Debug\x2dd.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>$(SolutionDir)..\..\build\$(Platform)\$(Configuration)\CrossGame.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
       <Command>copy "$(SolutionDir)..\..\build\$(Platform)\$(Configuration)\*.dll" "$(TargetDir)"</Command>
@@ -67,12 +68,12 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
-      <WarningLevel>Level3</WarningLevel>
+      <WarningLevel>Level1</WarningLevel>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(SolutionDir)..\..\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\..\include;$(ProjectDir)..\..\..\3rdparty\SDL\include;$(ProjectDir)..\..\..\3rdparty\SDL_image;$(ProjectDir)..\..\..\3rdparty\SDL_mixer;$(ProjectDir)..\..\..\3rdparty\freetype\include;$(ProjectDir)..\..\..\3rdparty\openal\include;$(ProjectDir)..\..\..\3rdparty\gl3w\include;$(ProjectDir)..\..\..\3rdparty\tinyxml2;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <PreprocessorDefinitions>X2D_IMPORT;</PreprocessorDefinitions>
     </ClCompile>
@@ -80,7 +81,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>$(SolutionDir)..\..\build\Win32\Release\x2d.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>$(SolutionDir)..\..\build\$(Platform)\$(Configuration)\CrossGame.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
       <Command>copy "$(SolutionDir)..\..\build\$(Platform)\$(Configuration)\*.dll" "$(TargetDir)"</Command>

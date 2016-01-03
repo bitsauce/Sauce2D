@@ -5,11 +5,11 @@
 // /_/\_\_____|____/   \____|\__ _|_| |_| |_|\___| |_____|_| |_|\__, |_|_| |_|\___|
 //                                                              |___/     
 //				Originally written by Marcus Loo Vergara (aka. Bitsauce)
-//									2011-2014 (C)
+//									2011-2015 (C)
 
-#include <x2d/engine.h>
+#include <CGF/Common.h>
 
-BEGIN_XD_NAMESPACE
+BEGIN_CGF_NAMESPACE
 
 IniFile::IniFile(string path) :
 	m_path(path)
@@ -105,4 +105,4 @@ void IniFile::save()
 	FileSystem::WriteFile(m_path, out.str());
 }
 
-END_XD_NAMESPACE
+END_CGF_NAMESPACE

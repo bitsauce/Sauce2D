@@ -1,42 +1,62 @@
-#include <x2d/x2d.h>
-using namespace xd;
+/* Main CrossGame header. Includes all the framework
+   classes and various STL classes. */
+#include <CGF/CGF.h>
 
+/* This just saves us some time as we don't
+   have to type cg::* in front of every CG
+   class/enum/etc */
+using namespace cgf;
+
+/* This is our MinimalGame class.
+   It inherits from cgf::Game, which is the game managing class.
+   cgf::Game contains a bunch of virtual event methods. These
+   methods start with on* and are invoked at special times. 
+   For instance, onUpdate is called whenever the game needs to
+   update its game state, and onKeyDown is called whenever a
+   key on the keyboard is pressed.*/
 class MinimalGame : public Game
 {
 public:
-	void main(GraphicsContext &graphicsContext)
+	/* Consturctor for our game class */
+	MinimalGame() :
+		/* cg::Game class takes a string which is the game name. */
+		Game("Minimal")
 	{
 	}
 
-	void update(const float dt)
+	/* onStart event. This event called once the framework has initialized,
+	   but before the game loop has started */
+	void onStart(GameEvent*)
 	{
+		LOG("onStart");
 	}
 
-	void draw(GraphicsContext &context, const float alpha)
+	/* onEnd event. This event is called when the game is closing. */
+	void onEnd(GameEvent*)
 	{
+		LOG("onEnd");
 	}
 
-	void end()
+	/* onTick event. This event is called when the framework wants to update
+	   the game state. */
+	void onTick(TickEvent*)
 	{
+		LOG("onTick");
+	}
+
+	/* onDraw event. This event is called then the framework wants to draw
+	   the current game state to the screen */
+	void onDraw(DrawEvent*)
+	{
+		LOG("onDraw");
 	}
 };
 
-// Main entry point
+/* Main entry point. This is where our program first starts executing. */
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, INT)
 {
-	// Setup game
+	/* To start our game we simply create our game object
+	   and call run() */
 	MinimalGame game;
-	game.setWorkDir("../../content/");
-
-	// Create engine
-	Engine *engine = CreateEngine();
-	if(engine->init(&game) != X2D_OK)
-	{
-		delete engine;
-		return -1;
-	}
-
-	int r = engine->run();
-	delete engine;
-	return r;
+	return game.run();
 }

@@ -5,14 +5,14 @@
 // /_/\_\_____|____/   \____|\__ _|_| |_| |_|\___| |_____|_| |_|\__, |_|_| |_|\___|
 //                                                              |___/     
 //				Originally written by Marcus Loo Vergara (aka. Bitsauce)
-//									2011-2014 (C)
+//									2011-2015 (C)
 
-#include <x2d/engine.h>
-#include <x2d/graphics.h>
+#include <CGF/Common.h>
+#include <CGF/graphics.h>
 
-#include <freeimage.h>
+#include "..\3rdparty\SDL_image\SDL_image.h"
 
-BEGIN_XD_NAMESPACE
+BEGIN_CGF_NAMESPACE
 
 GLint toInternalFormat(PixelFormat::Components fmt, PixelFormat::DataType dt)
 {
@@ -259,7 +259,8 @@ void Texture2D::updatePixmap(const Pixmap &pixmap)
 
 	// Set default filtering
 	glBindTexture(GL_TEXTURE_2D, m_id);
-	glTexImage2D(GL_TEXTURE_2D, 0, toInternalFormat(pixmap.getFormat().getComponents(), pixmap.getFormat().getDataType()), (GLsizei) m_width, (GLsizei) m_height, 0, toFormat(pixmap.getFormat().getComponents(), pixmap.getFormat().getDataType()), toGLDataType(pixmap.getFormat().getDataType()), (const GLvoid*) pixmap.getData());
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, m_width, m_height, 0, GL_RGBA, GL_UNSIGNED_BYTE, pixmap.getData());
+	//glTexImage2D(GL_TEXTURE_2D, 0, toInternalFormat(pixmap.getFormat().getComponents(), pixmap.getFormat().getDataType()), (GLsizei) m_width, (GLsizei) m_height, 0, toFormat(pixmap.getFormat().getComponents(), pixmap.getFormat().getDataType()), toGLDataType(pixmap.getFormat().getDataType()), (const GLvoid*) pixmap.getData());
 	glBindTexture(GL_TEXTURE_2D, 0);
 
 	// Regenerate mipmaps
@@ -325,24 +326,8 @@ uint Texture2D::getHeight() const
 
 void Texture2D::exportToFile(string path)
 {
-	// NOTE TO SELF: If I ever decide to implement export for integer texture, glGetTexImage() expects GL_BGRA_INTEGER instead of GL_BGRA
-	if(m_pixelFormat.getDataType() != PixelFormat::BYTE && m_pixelFormat.getDataType() != PixelFormat::UNSIGNED_BYTE)
-	{
-		LOG("Cannot export image with a pixel data type different from byte or unsigned byte");
-		return;
-	}
-
-	// Get texture data
-	uchar *data = new uchar[m_width * m_height * m_pixelFormat.getPixelSizeInBytes()];
-	glBindTexture(GL_TEXTURE_2D, m_id);
-	glGetTexImage(GL_TEXTURE_2D, 0, GL_BGRA, GL_UNSIGNED_BYTE, (GLvoid*) data);
-	glBindTexture(GL_TEXTURE_2D, 0);
-
-	FIBITMAP *bitmap = FreeImage_ConvertFromRawBits(data, m_width, m_height, m_width * 4, 32, FI_RGBA_RED_MASK, FI_RGBA_GREEN, FI_RGBA_BLUE, false);
-	util::toAbsoluteFilePath(path);
-	FreeImage_Save(FIF_PNG, bitmap, path.c_str(), PNG_DEFAULT); // For now, let's just save everything as png
-
-	delete[] data;
+	// TODO: This function might be redundant?
+	getPixmap().exportToFile(path);
 }
 
 Texture2DPtr Texture2D::loadResource(const string &name)
@@ -363,4 +348,4 @@ Texture2DPtr Texture2D::loadResource(const string &name)
 	return Texture2DPtr(new Texture2D(Pixmap(filePath, premultiply)));
 }
 
-END_XD_NAMESPACE
+END_CGF_NAMESPACE

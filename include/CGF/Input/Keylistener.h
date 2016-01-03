@@ -1,0 +1,11 @@
+#ifndef CGF_KEY_LISTENER_H
+#define CGF_KEY_LISTENER_H
+
+#include <CGF/config.h>
+
+BEGIN_CGF_NAMESPACE
+
+
+END_CGF_NAMESPACE
+
+#endif // CGF_KEY_LISTENER_H

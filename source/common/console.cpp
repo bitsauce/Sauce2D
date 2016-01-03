@@ -5,11 +5,11 @@
 // /_/\_\_____|____/   \____|\__ _|_| |_| |_|\___| |_____|_| |_|\__, |_|_| |_|\___|
 //                                                              |___/     
 //				Originally written by Marcus Loo Vergara (aka. Bitsauce)
-//									2011-2014 (C)
+//									2011-2015 (C)
 
-#include <x2d/engine.h>
+#include <CGF/Common.h>
 
-BEGIN_XD_NAMESPACE
+BEGIN_CGF_NAMESPACE
 
 Console *Console::s_this = nullptr;
 
@@ -28,6 +28,7 @@ Console::Console() :
 Console::~Console()
 {
 	delete m_output;
+	s_this = 0;
 }
 
 void Console::log(const string &msg)
@@ -52,13 +53,13 @@ void Console::call_log(const char *msg, va_list args)
 #endif
 
 	// System log
-#ifdef X2D_WINDOWS
+#ifdef __WINDOWS__
 	OutputDebugString(out.c_str());
 	OutputDebugString("\n");
 #endif
 	
 	// Append message to log file
-	if(Engine::isEnabled(XD_EXPORT_LOG))
+	if(m_engine->isEnabled(CGF_EXPORT_LOG))
 	{
 		m_output->append(out);
 		m_output->append("\n");
@@ -109,7 +110,7 @@ void Console::clear()
 
 void Console::exportFile() const
 {
-	FileSystem::WriteFile(":/console.log", m_log);
+	FileSystem::WriteFile(":/Console.log", m_log);
 }
 
 string Console::readBuffer()
@@ -129,4 +130,4 @@ void Console::clearBuffer()
 	m_buffer.clear();
 }
 
-END_XD_NAMESPACE
+END_CGF_NAMESPACE

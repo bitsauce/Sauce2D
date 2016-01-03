@@ -5,11 +5,11 @@
 // /_/\_\_____|____/   \____|\__ _|_| |_| |_|\___| |_____|_| |_|\__, |_|_| |_|\___|
 //                                                              |___/     
 //				Originally written by Marcus Loo Vergara (aka. Bitsauce)
-//									2011-2014 (C)
+//									2011-2015 (C)
 
-#include <x2d/math.h>
+#include <CGF/math.h>
 
-BEGIN_XD_NAMESPACE
+BEGIN_CGF_NAMESPACE
 
 Color &Color::operator*(const float c)
 {
@@ -117,6 +117,11 @@ Vector2 lerp(const Vector2 &v0, const Vector2 &v1, const float t)
 	return v0 * (1.0f - t) + v1 * t;
 }
 
+float step(float edge, float x)
+{
+	return x < edge ? 0.0f : 1.0f;
+}
+
 float pow(const float a, const float b)
 {
 	return powf(a, b);
@@ -130,4 +135,4 @@ int mod(const int a, const int b)
 
 }
 
-END_XD_NAMESPACE
+END_CGF_NAMESPACE

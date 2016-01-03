@@ -1,0 +1,193 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\source\Audio\Audio.cpp" />
+    <ClCompile Include="..\..\source\Audio\Buffer.cpp" />
+    <ClCompile Include="..\..\source\Audio\Source.cpp" />
+    <ClCompile Include="..\..\source\Common\Console.cpp" />
+    <ClCompile Include="..\..\source\Common\Game.cpp" />
+    <ClCompile Include="..\..\source\Common\FileSystem.cpp" />
+    <ClCompile Include="..\..\source\Common\IniParser.cpp" />
+    <ClCompile Include="..\..\source\Common\Math.cpp" />
+    <ClCompile Include="..\..\source\Common\ResourceManager.cpp" />
+    <ClCompile Include="..\..\source\Common\Timer.cpp" />
+    <ClCompile Include="..\..\source\Common\Utilities.cpp" />
+    <ClCompile Include="..\..\source\Common\Window.cpp" />
+    <ClCompile Include="..\..\source\Graphics\Animation.cpp" />
+    <ClCompile Include="..\..\source\Graphics\BlendState.cpp" />
+    <ClCompile Include="..\..\source\Graphics\Font.cpp" />
+    <ClCompile Include="..\..\source\Graphics\Graphics.cpp" />
+    <ClCompile Include="..\..\source\Graphics\GraphicsContext.cpp" />
+    <ClCompile Include="..\..\source\Graphics\Pixmap.cpp" />
+    <ClCompile Include="..\..\source\Graphics\RenderTarget.cpp" />
+    <ClCompile Include="..\..\source\Graphics\Shader.cpp" />
+    <ClCompile Include="..\..\source\Graphics\Shape.cpp" />
+    <ClCompile Include="..\..\source\Graphics\Sprite.cpp" />
+    <ClCompile Include="..\..\source\Graphics\SpriteBatch.cpp" />
+    <ClCompile Include="..\..\source\Graphics\Texture.cpp" />
+    <ClCompile Include="..\..\source\Graphics\TextureAtlas.cpp" />
+    <ClCompile Include="..\..\source\Graphics\TextureRegion.cpp" />
+    <ClCompile Include="..\..\source\Graphics\Vertex.cpp" />
+    <ClCompile Include="..\..\source\Graphics\VertexBuffer.cpp" />
+    <ClCompile Include="..\..\source\Graphics\Viewport.cpp" />
+    <ClCompile Include="..\..\source\Input\Input.cpp" />
+    <ClCompile Include="..\..\source\Input\InputContext.cpp" />
+    <ClCompile Include="..\..\source\Input\InputManager.cpp" />
+    <ClCompile Include="..\..\source\Input\KeyListener.cpp" />
+    <ClCompile Include="..\..\source\Input\MouseListener.cpp" />
+    <ClCompile Include="..\..\source\Math\Matrix.cpp" />
+    <ClCompile Include="..\..\source\Math\Random.cpp" />
+    <ClCompile Include="..\..\source\Math\Rect.cpp" />
+    <ClCompile Include="..\..\source\Math\RectanglePacker.cpp" />
+    <ClCompile Include="..\..\source\Math\Vector.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\include\CGF\Audio.h" />
+    <ClInclude Include="..\..\include\CGF\CGF.h" />
+    <ClInclude Include="..\..\include\CGF\Common.h" />
+    <ClInclude Include="..\..\include\CGF\Common\Event.h" />
+    <ClInclude Include="..\..\include\CGF\Common\Game.h" />
+    <ClInclude Include="..\..\include\CGF\Common\IniParser.h" />
+    <ClInclude Include="..\..\include\CGF\Common\ResourceManager.h" />
+    <ClInclude Include="..\..\include\CGF\Config.h" />
+    <ClInclude Include="..\..\include\CGF\Graphics.h" />
+    <ClInclude Include="..\..\include\CGF\Graphics\Animation.h" />
+    <ClInclude Include="..\..\include\CGF\Graphics\BlendState.h" />
+    <ClInclude Include="..\..\include\CGF\Graphics\Font.h" />
+    <ClInclude Include="..\..\include\CGF\Graphics\GraphicsContext.h" />
+    <ClInclude Include="..\..\include\CGF\Graphics\Pixmap.h" />
+    <ClInclude Include="..\..\include\CGF\Graphics\RenderTarget.h" />
+    <ClInclude Include="..\..\include\CGF\Graphics\Shader.h" />
+    <ClInclude Include="..\..\include\CGF\Graphics\Shape.h" />
+    <ClInclude Include="..\..\include\CGF\Graphics\Sprite.h" />
+    <ClInclude Include="..\..\include\CGF\Graphics\SpriteBatch.h" />
+    <ClInclude Include="..\..\include\CGF\Graphics\Texture.h" />
+    <ClInclude Include="..\..\include\CGF\Graphics\TextureAtlas.h" />
+    <ClInclude Include="..\..\include\CGF\Graphics\TextureRegion.h" />
+    <ClInclude Include="..\..\include\CGF\Graphics\Vertex.h" />
+    <ClInclude Include="..\..\include\CGF\Graphics\VertexBuffer.h" />
+    <ClInclude Include="..\..\include\CGF\Graphics\Viewport.h" />
+    <ClInclude Include="..\..\include\CGF\Input.h" />
+    <ClInclude Include="..\..\include\CGF\Input\Inputcontext.h" />
+    <ClInclude Include="..\..\include\CGF\Input\InputManager.h" />
+    <ClInclude Include="..\..\include\CGF\Input\Keycodes.h" />
+    <ClInclude Include="..\..\include\CGF\Input\Keylistener.h" />
+    <ClInclude Include="..\..\include\CGF\Input\MouseListener.h" />
+    <ClInclude Include="..\..\include\CGF\Input\Scancodes.h" />
+    <ClInclude Include="..\..\include\CGF\Math.h" />
+    <ClInclude Include="..\..\include\CGF\Math\Matrix.h" />
+    <ClInclude Include="..\..\include\CGF\Math\Random.h" />
+    <ClInclude Include="..\..\include\CGF\Math\Rectangle.h" />
+    <ClInclude Include="..\..\include\CGF\Math\RectanglePacker.h" />
+    <ClInclude Include="..\..\include\CGF\Math\Vector.h" />
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{F3F25B49-2C6B-4FF0-98FB-47695DF70B8A}</ProjectGuid>
+    <RootNamespace>sanangeles</RootNamespace>
+    <ProjectName>CrossGame</ProjectName>
+    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <CharacterSet>NotSet</CharacterSet>
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <PlatformToolset>v140</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <CharacterSet>NotSet</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <PlatformToolset>v140</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <OutDir>$(ProjectDir)..\..\build\$(Platform)\$(Configuration)\</OutDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <TargetName>$(ProjectName)</TargetName>
+    <LinkIncremental>true</LinkIncremental>
+    <IntDir>$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <OutDir>$(ProjectDir)..\..\build\$(Platform)\$(Configuration)\</OutDir>
+    <LinkIncremental>false</LinkIncremental>
+    <IntDir>$(Configuration)\</IntDir>
+    <TargetName>$(ProjectName)</TargetName>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\include;$(ProjectDir)..\..\source;$(ProjectDir)..\..\3rdparty\SDL\include;$(ProjectDir)..\..\3rdparty\SDL_image;$(ProjectDir)..\..\3rdparty\SDL_mixer;$(ProjectDir)..\..\3rdparty\freetype\include;$(ProjectDir)..\..\3rdparty\openal\include;$(ProjectDir)..\..\3rdparty\gl3w\include;$(ProjectDir)..\..\3rdparty\tinyxml2;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+      <WarningLevel>Level1</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>CGF_EXPORT;_ITERATOR_DEBUG_LEVEL=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <MinimalRebuild>true</MinimalRebuild>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <ExceptionHandling>Sync</ExceptionHandling>
+    </ClCompile>
+    <Link>
+      <AdditionalLibraryDirectories>
+      </AdditionalLibraryDirectories>
+      <GenerateDebugInformation>Debug</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+      <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
+      <AdditionalDependencies>$(ProjectDir)..\..\3rdparty\SDL\VisualC\SDL\$(Platform)\$(Configuration)\SDL2.lib;$(ProjectDir)..\..\3rdparty\SDL_image\VisualC\$(Platform)\$(Configuration)\SDL2_image.lib;$(ProjectDir)..\..\3rdparty\SDL_mixer\VisualC\$(Platform)\$(Configuration)\SDL2_mixer.lib;$(ProjectDir)..\..\3rdparty\gl3w\lib\$(Platform)\$(Configuration)\gl3w.lib;$(ProjectDir)..\..\3rdparty\tinyxml2\lib\$(Platform)\$(Configuration)\tinyxml2.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+    <Lib>
+      <AdditionalDependencies>glew32_d.lib;ws2_32.lib;IPHlpAPI.lib;freetype248_d.lib;OpenAL32.lib;libpng15_d.lib;angelscriptd.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)..\..\lib\glew-1.7.0\lib;$(SolutionDir)..\..\lib\openal-1.1\libs\Win32;$(SolutionDir)..\..\lib\angelscript_2.23.1\angelscript\lib;$(SolutionDir)..\..\lib\zlib-1.2.5\lib;$(SolutionDir)..\..\lib\lpng154\lib;$(SolutionDir)..\..\lib\freetype-2.4.8\lib</AdditionalLibraryDirectories>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\include;$(ProjectDir)..\..\source;$(ProjectDir)..\..\3rdparty\SDL\include;$(ProjectDir)..\..\3rdparty\SDL_image;$(ProjectDir)..\..\3rdparty\SDL_mixer;$(ProjectDir)..\..\3rdparty\freetype\include;$(ProjectDir)..\..\3rdparty\openal\include;$(ProjectDir)..\..\3rdparty\gl3w\include;$(ProjectDir)..\..\3rdparty\tinyxml2;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level1</WarningLevel>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>CGF_EXPORT;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <Optimization>Full</Optimization>
+      <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <WholeProgramOptimization>true</WholeProgramOptimization>
+    </ClCompile>
+    <Link>
+      <AdditionalLibraryDirectories>
+      </AdditionalLibraryDirectories>
+      <AdditionalDependencies>$(ProjectDir)..\..\3rdparty\SDL\VisualC\SDL\$(Platform)\$(Configuration)\SDL2.lib;$(ProjectDir)..\..\3rdparty\SDL_image\VisualC\$(Platform)\$(Configuration)\SDL2_image.lib;$(ProjectDir)..\..\3rdparty\SDL_mixer\VisualC\$(Platform)\$(Configuration)\SDL2_mixer.lib;$(ProjectDir)..\..\3rdparty\gl3w\lib\$(Platform)\$(Configuration)\gl3w.lib;$(ProjectDir)..\..\3rdparty\tinyxml2\lib\$(Platform)\$(Configuration)\tinyxml2.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+    <PostBuildEvent>
+      <Command>
+      </Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

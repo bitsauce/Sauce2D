@@ -5,14 +5,12 @@
 // /_/\_\_____|____/   \____|\__ _|_| |_| |_|\___| |_____|_| |_|\__, |_|_| |_|\___|
 //                                                              |___/     
 //				Originally written by Marcus Loo Vergara (aka. Bitsauce)
-//									2011-2014 (C)
+//									2011-2015 (C)
 
-#include <x2d/engine.h>
-#include <x2d/graphics.h>
+#include <CGF/Common.h>
+#include <CGF/graphics.h>
 
-#include <freeimage.h>
-
-BEGIN_XD_NAMESPACE
+BEGIN_CGF_NAMESPACE
 
 uint PixelFormat::getComponentCount() const
 {
@@ -102,42 +100,29 @@ Pixmap::Pixmap(const Pixmap &other)
 Pixmap::Pixmap(const string &imageFile, const bool premultiplyAlpha) :
 	m_format()
 {
-	// Load asset as a image
-	string content;
-	if(FileSystem::ReadFile(imageFile, content))
+	// Load pixmap from image file
+	SDL_Surface *surface = IMG_Load(imageFile.c_str());
+	if(surface)
 	{
-		// Attach the binary data to a memory stream
-		FIMEMORY *hmem = FreeImage_OpenMemory((uchar*) content.c_str(), content.size());
-
-		// Get the file type
-		FREE_IMAGE_FORMAT fif = FreeImage_GetFileTypeFromMemory(hmem);
-
-		// Load an image from the memory stream
-		FIBITMAP *bitmap = FreeImage_LoadFromMemory(fif, hmem, 0);
-
-		// Convert all non-32bpp bitmaps to 32bpp bitmaps
-		// TODO: I should add support for loading different bpps into graphics memory
-		if(FreeImage_GetBPP(bitmap) != 32)
+#if SDL_BYTEORDER == SDL_LIL_ENDIAN
+		if(surface->format->format != SDL_PIXELFORMAT_ABGR8888)
 		{
-			FIBITMAP *newBitmap = FreeImage_ConvertTo32Bits(bitmap);
-			FreeImage_Unload(bitmap);
-			bitmap = newBitmap;
+			SDL_Surface *oldSurface = surface;
+			surface = SDL_ConvertSurfaceFormat(oldSurface, SDL_PIXELFORMAT_ABGR8888, 0);
+			SDL_FreeSurface(oldSurface);
 		}
-
-		// Pre-multiply alpha if needed
-		if(premultiplyAlpha)
+#else
+		if(surface->format->format != SDL_PIXELFORMAT_RGBA8888)
 		{
-			FreeImage_PreMultiplyWithAlpha(bitmap);
+			SDL_Surface *oldSurface = surface;
+			surface = SDL_ConvertSurfaceFormat(oldSurface, SDL_PIXELFORMAT_RGBA8888, 0);
+			SDL_FreeSurface(oldSurface);
 		}
-
-		// Create pixmap
-		uint width = FreeImage_GetWidth(bitmap), height = FreeImage_GetHeight(bitmap);
-		BYTE *data = FreeImage_GetBits(bitmap);
-
+#endif
 		// Create pixmap data
-		if(width >= 0 && height >= 0)
+		if(surface->w >= 0 && surface->h >= 0)
 		{
-			m_data = new uchar[width * height * m_format.getPixelSizeInBytes()];
+			m_data = new uchar[surface->w * surface->h * m_format.getPixelSizeInBytes()];
 		}
 		else
 		{
@@ -145,21 +130,27 @@ Pixmap::Pixmap(const string &imageFile, const bool premultiplyAlpha) :
 		}
 
 		// Fill pixmap data
-		for(uint i = 0; i < width * height; i++) // BGRA to RGBA
+		if(premultiplyAlpha)
 		{
-			m_data[i * 4 + 0] = data[i * 4 + 2];
-			m_data[i * 4 + 1] = data[i * 4 + 1];
-			m_data[i * 4 + 2] = data[i * 4 + 0];
-			m_data[i * 4 + 3] = data[i * 4 + 3];
+			for(uint i = 0; i < surface->w * surface->h; i++)
+			{
+				uchar alpha = m_data[i * 4 + 3] = ((uchar*) surface->pixels)[i * 4 + 3];
+				m_data[i * 4 + 0] = ((uchar*) surface->pixels)[i * 4 + 0] * alpha / 255.0f;
+				m_data[i * 4 + 1] = ((uchar*) surface->pixels)[i * 4 + 1] * alpha / 255.0f;
+				m_data[i * 4 + 2] = ((uchar*) surface->pixels)[i * 4 + 2] * alpha / 255.0f;
+			}
+		}
+		else
+		{
+			memcpy(m_data, surface->pixels, surface->w * surface->h * m_format.getPixelSizeInBytes());
 		}
 
 		// Set width and height
-		m_width = width;
-		m_height = height;
+		m_width = surface->w;
+		m_height = surface->h;
 
-		// Close the memory stream
-		FreeImage_Unload(bitmap);
-		FreeImage_CloseMemory(hmem);
+		// Free surface
+		SDL_FreeSurface(surface);
 	}
 	else
 	{
@@ -168,7 +159,7 @@ Pixmap::Pixmap(const string &imageFile, const bool premultiplyAlpha) :
 		m_width = m_height = 0;
 
 		// Unable to read file
-		LOG("Pixmap::Pixmap(const string &imageFile): Unable to read file '%s'", imageFile.c_str());
+		LOG("Unable to load image '%s'\n%s", imageFile.c_str(), IMG_GetError());
 	}
 }
 
@@ -266,10 +257,11 @@ void Pixmap::exportToFile(string path) const
 		return;
 	}
 
-	FIBITMAP *bitmap = FreeImage_ConvertFromRawBits(m_data, m_width, m_height, m_width * 4, 32, FI_RGBA_RED_MASK, FI_RGBA_GREEN, FI_RGBA_BLUE, false);
+	// Convert pixmap to surface and export as a PNG image
+	SDL_Surface *surface = SDL_CreateRGBSurfaceFrom(m_data, m_width, m_height, 32, m_width * 4, R_MASK, G_MASK, B_MASK, A_MASK);
 	util::toAbsoluteFilePath(path);
-	FreeImage_Save(FIF_PNG, bitmap, path.c_str(), PNG_DEFAULT); // For now, let's just save everything as png
-
+	IMG_SavePNG(surface, path.c_str());
+	SDL_FreeSurface(surface);
 }
 
-END_XD_NAMESPACE
+END_CGF_NAMESPACE

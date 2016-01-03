@@ -4,14 +4,14 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "gl3w", "gl3w.vcxproj", "{E2
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
-		Debug|Win32 = Debug|Win32
-		Release|Win32 = Release|Win32
+		Debug|x86 = Debug|x86
+		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{E23AC19A-6A24-4EE6-B843-99001B2568F0}.Debug|Win32.ActiveCfg = Debug|Win32
-		{E23AC19A-6A24-4EE6-B843-99001B2568F0}.Debug|Win32.Build.0 = Debug|Win32
-		{E23AC19A-6A24-4EE6-B843-99001B2568F0}.Release|Win32.ActiveCfg = Release|Win32
-		{E23AC19A-6A24-4EE6-B843-99001B2568F0}.Release|Win32.Build.0 = Release|Win32
+		{E23AC19A-6A24-4EE6-B843-99001B2568F0}.Debug|x86.ActiveCfg = Debug|x86
+		{E23AC19A-6A24-4EE6-B843-99001B2568F0}.Debug|x86.Build.0 = Debug|x86
+		{E23AC19A-6A24-4EE6-B843-99001B2568F0}.Release|x86.ActiveCfg = Release|x86
+		{E23AC19A-6A24-4EE6-B843-99001B2568F0}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

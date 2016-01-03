@@ -5,14 +5,14 @@
 // /_/\_\_____|____/   \____|\__ _|_| |_| |_|\___| |_____|_| |_|\__, |_|_| |_|\___|
 //                                                              |___/     
 //				Originally written by Marcus Loo Vergara (aka. Bitsauce)
-//									2011-2014 (C)
+//									2011-2015 (C)
 
-#include <x2d/engine.h>
-#include <x2d/graphics.h>
+#include <CGF/Common.h>
+#include <CGF/graphics.h>
 
 #define ATLAS_SIZE 2048
 
-BEGIN_XD_NAMESPACE
+BEGIN_CGF_NAMESPACE
 
 TextureAtlas::TextureAtlas() :
 	m_border(1),
@@ -153,4 +153,4 @@ void TextureAtlas::update()
 	m_texture->updatePixmap(Pixmap(ATLAS_SIZE, ATLAS_SIZE, pixels));
 }
 
-END_XD_NAMESPACE
+END_CGF_NAMESPACE

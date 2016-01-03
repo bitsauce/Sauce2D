@@ -5,14 +5,14 @@
 // /_/\_\_____|____/   \____|\__ _|_| |_| |_|\___| |_____|_| |_|\__, |_|_| |_|\___|
 //                                                              |___/     
 //				Originally written by Marcus Loo Vergara (aka. Bitsauce)
-//									2011-2014 (C)
+//									2011-2015 (C)
 
-#include <x2d/engine.h>
-#include <x2d/graphics.h>
+#include <CGF/Common.h>
+#include <CGF/graphics.h>
 
-BEGIN_XD_NAMESPACE
+BEGIN_CGF_NAMESPACE
 
-SpriteBatch::SpriteBatch(GraphicsContext &graphicsContext, const uint maxSprites) :
+SpriteBatch::SpriteBatch(GraphicsContext *graphicsContext, const uint maxSprites) :
 	m_graphicsContext(graphicsContext),
 	m_beingCalled(false),
 	m_maxSpriteCount(maxSprites)
@@ -41,10 +41,10 @@ void SpriteBatch::begin(const State &state)
 	m_spriteCount = 0;
 	m_state = state;
 
-	m_prevState.projectionMatix = m_graphicsContext.getModelViewMatrix();
-	m_prevState.blendState = m_graphicsContext.getBlendState();
-	m_prevState.shader = m_graphicsContext.getShader();
-	m_prevTexture = m_graphicsContext.getTexture();
+	m_prevState.projectionMatix = m_graphicsContext->getTransformationMatrix();
+	m_prevState.blendState = m_graphicsContext->getBlendState();
+	m_prevState.shader = m_graphicsContext->getShader();
+	m_prevTexture = m_graphicsContext->getTexture();
 }
 
 void SpriteBatch::drawSprite(const Sprite &sprite)
@@ -104,9 +104,9 @@ void SpriteBatch::end()
 				// to two or more instances of SpriteBatch without introducing conflicting
 				// graphics device settings. SpriteBatch defaults to DEFERRED mode.
 
-				m_graphicsContext.setModelViewMatrix(m_state.projectionMatix);
-				m_graphicsContext.setBlendState(m_state.blendState);
-				m_graphicsContext.setShader(m_state.shader);
+				m_graphicsContext->setTransformationMatrix(m_state.projectionMatix);
+				m_graphicsContext->setBlendState(m_state.blendState);
+				m_graphicsContext->setShader(m_state.shader);
 
 				// Separate sprites by depth and texture
 				map<float, map<Texture2DPtr, list<Sprite*>>> layerTextureMap;
@@ -134,8 +134,8 @@ void SpriteBatch::end()
 						if(spriteCount > 0)
 						{
 							// Draw textured primitives
-							m_graphicsContext.setTexture(itr2->first);
-							m_graphicsContext.drawIndexedPrimitives(GraphicsContext::PRIMITIVE_TRIANGLES, m_vertices, spriteCount * 4, m_indices, spriteCount * 6);
+							m_graphicsContext->setTexture(itr2->first);
+							m_graphicsContext->drawIndexedPrimitives(GraphicsContext::PRIMITIVE_TRIANGLES, m_vertices, spriteCount * 4, m_indices, spriteCount * 6);
 							spriteCount = 0;
 						}
 					}
@@ -165,10 +165,10 @@ void SpriteBatch::end()
 		}
 	}
 		
-	m_graphicsContext.setModelViewMatrix(m_prevState.projectionMatix);
-	m_graphicsContext.setBlendState(m_prevState.blendState);
-	m_graphicsContext.setShader(m_prevState.shader);
-	m_graphicsContext.setTexture(m_prevTexture);
+	m_graphicsContext->setTransformationMatrix(m_prevState.projectionMatix);
+	m_graphicsContext->setBlendState(m_prevState.blendState);
+	m_graphicsContext->setShader(m_prevState.shader);
+	m_graphicsContext->setTexture(m_prevTexture);
 	
 	m_beingCalled = false;
 }
@@ -215,4 +215,4 @@ uint SpriteBatch::getTextureSwapCount() const
 	return textureSwapCount;
 }
 
-END_XD_NAMESPACE
+END_CGF_NAMESPACE

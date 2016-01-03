@@ -1,13 +1,30 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Source Files">
+    <Filter Include="src">
       <UniqueIdentifier>{A7D0F146-E0C0-4F64-82F0-AC5F713729F2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include">
+      <UniqueIdentifier>{b0b50d01-c9f2-4428-b784-2b1306b6bcb1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\GL">
+      <UniqueIdentifier>{ff49e419-9d7f-4124-bad9-ec9949b665fb}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\gl3w.c">
-      <Filter>Source Files</Filter>
+      <Filter>src</Filter>
     </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="include\GL\gl3w.h">
+      <Filter>include\GL</Filter>
+    </ClInclude>
+    <ClInclude Include="include\GL\glcorearb.h">
+      <Filter>include\GL</Filter>
+    </ClInclude>
+    <ClInclude Include="include\GL\wglext.h">
+      <Filter>include\GL</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
