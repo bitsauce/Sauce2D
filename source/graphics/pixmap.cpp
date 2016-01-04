@@ -250,7 +250,6 @@ void Pixmap::clear()
 
 void Pixmap::exportToFile(string path) const
 {
-	// NOTE TO SELF: If I ever decide to implement export for integer texture, glGetTexImage() expects GL_BGRA_INTEGER instead of GL_BGRA
 	if(m_format.getDataType() != PixelFormat::BYTE && m_format.getDataType() != PixelFormat::UNSIGNED_BYTE)
 	{
 		LOG("Cannot export image with a pixel data type different from byte or unsigned byte");
