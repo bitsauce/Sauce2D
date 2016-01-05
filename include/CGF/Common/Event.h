@@ -23,20 +23,22 @@ enum EventType
 	EVENT_MOUSE_UP,
 	EVENT_MOUSE_DOWN,
 	EVENT_MOUSE_MOVE,
-	EVENT_MOUSE_WHEEL
+	EVENT_MOUSE_WHEEL,
+
+	EVENT_CUSTOM
 };
 
 class CGF_API Event
 {
 protected:
-	Event(const EventType type) :
+	Event(const uint type) :
 		m_type(type),
 		m_userData(0)
 	{
 	}
 
 public:
-	EventType getType() const
+	uint getType() const
 	{
 		return m_type;
 	}
@@ -52,7 +54,7 @@ public:
 	}
 
 private:
-	const EventType m_type;
+	const uint m_type;
 	void *m_userData;
 };
 
@@ -83,7 +85,7 @@ public:
 	};
 
 	KeyEvent(const KeyEventType type, const Keycode keycode, const Scancode scanCode, const Uint16 modifiers) :
-		Event((EventType) type),
+		Event(type),
 		m_keycode(keycode),
 		m_modifiers(modifiers),
 		m_scancode(scanCode)
@@ -131,7 +133,7 @@ public:
 	};
 
 	MouseEvent(const MouseEventType type, const Sint32 x, const Sint32 y, const MouseButton button, const Sint32 wheelX, const Sint32 wheelY) :
-		Event((EventType) type),
+		Event(type),
 		m_x(x),
 		m_y(y),
 		m_button(button),
@@ -153,6 +155,11 @@ public:
 	Sint32 getY() const
 	{
 		return m_y;
+	}
+
+	Vector2i getPosition() const
+	{
+		return Vector2i(m_x, m_y);
 	}
 
 	Sint32 getWheelX() const
@@ -226,7 +233,7 @@ public:
 	};
 
 	WindowEvent(const WindowEventType type, const Sint32 width, const Sint32 height) :
-		Event((EventType) type),
+		Event(type),
 		m_width(width),
 		m_height(height)
 	{
@@ -256,7 +263,7 @@ public:
 	};
 
 	GameEvent(const GameEventType type) :
-		Event((EventType) type)
+		Event(type)
 	{
 	}
 };
@@ -271,7 +278,7 @@ public:
 	};
 
 	StepEvent(const StepEventType type) :
-		Event((EventType) type)
+		Event(type)
 	{
 	}
 };

@@ -768,22 +768,20 @@ private:
 	RetCode m_errorCode;
 };
 
-/**
- * \class	GameObject
- *
- * \brief	An game object.
- */
-
 #define PROPAGATE_EVENT(eventFunc) \
-	for(GameObject *child : m_children) \
+	for(SceneObject *child : m_children) \
 	{ \
 		child->eventFunc(e); \
 	}
 
-class CGF_API GameObject
+/**
+* \class	SceneObject
+*
+* \brief	An game object.
+*/
+class CGF_API SceneObject
 {
 public:
-
 	/**
 	 * \fn	virtual void EventObject::onEvent(Event *event)
 	 *
@@ -837,7 +835,7 @@ public:
 	}
 
 	/**
-	 * \fn	virtual void GameObject::onDraw(DrawEvent *e)
+	 * \fn	virtual void SceneObject::onDraw(DrawEvent *e)
 	 *
 	 * \brief	An event called when the game wants to draw the current game state.
 	 *
@@ -948,7 +946,7 @@ public:
 	}
 
 	/**
-	 * \fn	virtual void GameObject::onMouseEvent(MouseEvent *e)
+	 * \fn	virtual void SceneObject::onMouseEvent(MouseEvent *e)
 	 *
 	 * \brief	Executes the mouse event action.
 	 *
@@ -1021,62 +1019,101 @@ public:
 	}
 
 	/**
-	 * \fn	void GameObject::addChildFirst(GameObject *child)
+	 * \fn	void SceneObject::addChildFirst(SceneObject *child)
 	 *
 	 * \brief	Adds a child first.
 	 *
 	 * \param [in,out]	child	If non-null, the child.
 	 */
 
-	void addChildFirst(GameObject *child)
+	void addChildFirst(SceneObject *child)
 	{
 		if(!child) return;
 		m_children.push_front(child);
+		child->m_parent = this;
 	}
 
 	/**
-	 * \fn	void GameObject::addChildLast(GameObject *child)
+	 * \fn	void SceneObject::addChildLast(SceneObject *child)
 	 *
 	 * \brief	Adds a child last.
 	 *
 	 * \param [in,out]	child	If non-null, the child.
 	 */
 
-	void addChildLast(GameObject *child)
+	void addChildLast(SceneObject *child)
 	{
 		if(!child) return;
 		m_children.push_back(child);
+		child->m_parent = this;
 	}
 
 	/**
-	 * \fn	void GameObject::removeChild(GameObject *child)
+	 * \fn	void SceneObject::removeChild(SceneObject *child)
 	 *
-	 * \brief	Removes the child described by child.
+	 * \brief	Removes child.
 	 *
 	 * \param [in,out]	child	If non-null, the child.
 	 */
 
-	void removeChild(GameObject *child)
+	void removeChild(SceneObject *child)
 	{
 		if(!child) return;
 		m_children.remove(child);
 	}
 
 	/**
-	 * \fn	list<GameObject*> GameObject::getChildren()
+	 * \fn	void removeChildFront()
+	 *
+	 * \brief	Removes the first child.
+	 */
+
+	void removeChildFront()
+	{
+		if(m_children.empty()) return;
+		m_children.pop_front();
+	}
+
+	/**
+	 * \fn	void removeChildLast()
+	 *
+	 * \brief	Removes the last child.
+	 */
+
+	void removeChildLast()
+	{
+		if(m_children.empty()) return;
+		m_children.pop_back();
+	}
+
+	/**
+	 * \fn	list<SceneObject*> getChildren() const
 	 *
 	 * \brief	Gets the children of this item.
 	 *
 	 * \return	null if it fails, else the children.
 	 */
 
-	list<GameObject*> getChildren()
+	list<SceneObject*> getChildren() const
 	{
 		return m_children;
 	}
 
 	/**
-	 * \fn	void GameObject::setUserData(void *data)
+	 * \fn	SceneObject *getParent() const
+	 *
+	 * \brief	Gets the parent of this item.
+	 *
+	 * \return	null if it fails, else the parent.
+	 */
+
+	SceneObject *getParent() const
+	{
+		return m_parent;
+	}
+
+	/**
+	 * \fn	void SceneObject::setUserData(void *data)
 	 *
 	 * \brief	Sets user data.
 	 *
@@ -1089,7 +1126,7 @@ public:
 	}
 
 	/**
-	 * \fn	void GameObject::*getUserData()
+	 * \fn	void SceneObject::*getUserData()
 	 *
 	 * \brief	Gets user data.
 	 *
@@ -1102,8 +1139,9 @@ public:
 	}
 
 private:
-	// TODO: Consider using shared_ptr for GameObject*
-	list<GameObject*> m_children;
+	// TODO: Consider using shared_ptr for SceneObject*
+	list<SceneObject*> m_children;
+	SceneObject *m_parent;
 	bool m_eventPropagated;
 	void *m_userData;
 };
@@ -1112,23 +1150,23 @@ class CGF_API Scene
 {
 	friend class Game;
 public:
-	GameObject *getRoot() const
+	SceneObject *getRoot() const
 	{
 		return m_root;
 	}
 
 private:
-	Scene(GameObject *root) :
+	Scene(SceneObject *root) :
 		m_root(root)
 	{
 	}
 
-	GameObject *m_root;
+	SceneObject *m_root;
 };
 
 class SpriteBatch;
 
-class CGF_API Game : public GameObject
+class CGF_API Game : public SceneObject
 {
 public:
 	Game(const string &name, const string &organization = "CrossGame");
@@ -1198,7 +1236,7 @@ public:
 
 	virtual void onEvent(Event *e)
 	{
-		GameObject::onEvent(e);
+		SceneObject::onEvent(e);
 
 		// Find and call the specific event function
 		switch(e->getType())

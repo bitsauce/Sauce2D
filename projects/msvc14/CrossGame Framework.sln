@@ -57,6 +57,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DrawText", "..\..\examples\
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TextureAtlas", "..\..\examples\TextureAtlas\Project\TextureAtlas.vcxproj", "{F1C5574E-6A8C-42FB-BBF0-6AAB04230C42}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Gui", "..\..\examples\Gui\Project\Gui.vcxproj", "{46B706DD-17FB-4457-92E7-2DDA1878FC9A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -153,6 +155,12 @@ Global
 		{F1C5574E-6A8C-42FB-BBF0-6AAB04230C42}.Release|Win32.ActiveCfg = Release|Win32
 		{F1C5574E-6A8C-42FB-BBF0-6AAB04230C42}.Release|Win32.Build.0 = Release|Win32
 		{F1C5574E-6A8C-42FB-BBF0-6AAB04230C42}.Release|x64.ActiveCfg = Release|Win32
+		{46B706DD-17FB-4457-92E7-2DDA1878FC9A}.Debug|Win32.ActiveCfg = Debug|Win32
+		{46B706DD-17FB-4457-92E7-2DDA1878FC9A}.Debug|Win32.Build.0 = Debug|Win32
+		{46B706DD-17FB-4457-92E7-2DDA1878FC9A}.Debug|x64.ActiveCfg = Debug|Win32
+		{46B706DD-17FB-4457-92E7-2DDA1878FC9A}.Release|Win32.ActiveCfg = Release|Win32
+		{46B706DD-17FB-4457-92E7-2DDA1878FC9A}.Release|Win32.Build.0 = Release|Win32
+		{46B706DD-17FB-4457-92E7-2DDA1878FC9A}.Release|x64.ActiveCfg = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -164,5 +172,6 @@ Global
 		{10FC59C2-4E33-4135-A93B-6F89122293ED} = {52A3D16B-ED61-40D4-8804-C241B45F0B10}
 		{8606C81C-4646-4FFF-9B83-20E7F75AE85F} = {52A3D16B-ED61-40D4-8804-C241B45F0B10}
 		{F1C5574E-6A8C-42FB-BBF0-6AAB04230C42} = {52A3D16B-ED61-40D4-8804-C241B45F0B10}
+		{46B706DD-17FB-4457-92E7-2DDA1878FC9A} = {52A3D16B-ED61-40D4-8804-C241B45F0B10}
 	EndGlobalSection
 EndGlobal

@@ -26,29 +26,33 @@ public:
 
 	/* onStart event. This event called once the framework has initialized,
 	   but before the game loop has started */
-	void onStart(GameEvent*)
+	void onStart(GameEvent *e)
 	{
 		LOG("onStart");
+		Game::onStart(e);
 	}
 
 	/* onEnd event. This event is called when the game is closing. */
-	void onEnd(GameEvent*)
+	void onEnd(GameEvent *e)
 	{
 		LOG("onEnd");
+		Game::onEnd(e);
 	}
 
 	/* onTick event. This event is called when the framework wants to update
 	   the game state. */
-	void onTick(TickEvent*)
+	void onTick(TickEvent *e)
 	{
 		LOG("onTick");
+		Game::onTick(e);
 	}
 
 	/* onDraw event. This event is called then the framework wants to draw
 	   the current game state to the screen */
-	void onDraw(DrawEvent*)
+	void onDraw(DrawEvent *e)
 	{
 		LOG("onDraw");
+		Game::onDraw(e);
 	}
 };
 
