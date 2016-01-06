@@ -535,12 +535,12 @@ void GraphicsContext::drawRectangle(const float x, const float y, const float wi
 
 void GraphicsContext::drawRectangle(const Vector2 &pos, const Vector2 &size, const Color &color, const TextureRegion &textureRegion)
 {
-	drawRectangle(pos.x, pos.y, size.x, size.y, color);
+	drawRectangle(pos.x, pos.y, size.x, size.y, color, textureRegion);
 }
 
 void GraphicsContext::drawRectangle(const Rect &rect, const Color &color, const TextureRegion &textureRegion)
 {
-	drawRectangle(rect.position.x, rect.position.y, rect.size.x, rect.size.y, color);
+	drawRectangle(rect.position.x, rect.position.y, rect.size.x, rect.size.y, color, textureRegion);
 }
 
 void GraphicsContext::drawCircle(const float x, const float y, const float radius, const uint segments, const Color &color)
