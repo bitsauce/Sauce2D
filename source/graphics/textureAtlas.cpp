@@ -94,12 +94,12 @@ TextureRegion TextureAtlas::get(const int index) const
 	return get(index, 0.0f, 0.0f, 1.0f, 1.0f);
 }
 
-TextureRegion TextureAtlas::get(const int index, const Vector2 &uv0, const Vector2 &uv1) const
+TextureRegion TextureAtlas::get(const int index, const Vector2F &uv0, const Vector2F &uv1) const
 {
 	// Validate index
 	if(index < 0 || index >= m_size)
 	{
-		return TextureRegion(Vector2(0.0f), Vector2(1.0f));
+		return TextureRegion(Vector2F(0.0f), Vector2F(1.0f));
 	}
 
 	// TODO: Optimization: The texture regions can be precalculated in update() to save time
@@ -113,7 +113,7 @@ TextureRegion TextureAtlas::get(const int index, const Vector2 &uv0, const Vecto
 
 TextureRegion TextureAtlas::get(const int index, const float u0, const float v0, const float u1, const float v1) const
 {
-	return get(index, Vector2(u0, v0), Vector2(u1, v1));
+	return get(index, Vector2F(u0, v0), Vector2F(u1, v1));
 }
 
 Texture2DPtr TextureAtlas::getTexture() const

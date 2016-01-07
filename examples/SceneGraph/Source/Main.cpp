@@ -10,7 +10,7 @@ using namespace cgf;
  * dot -Tpng SceneGraph_Order.gv -o SceneGraph_Order.png
  *
  * SceneGraph.gv: A graph showing the scene graph. The nodes in the graph have their events called in a pre-order fashion.
- * SceneGraph_Order.gv: A graph showing the order of which the GameObjects will have their evens called.
+ * SceneGraph_Order.gv: A graph showing the order of which the SceneObjects will have their evens called.
  */
 int depth = 0;
 class SceneGraphGame : public Game
@@ -26,15 +26,15 @@ public:
 		// Nodes and edges
 		string nodes = "\tnode [shape=box];";
 		string sgedges, oredges;
-		GameObject *prevNode = 0;
+		SceneObject *prevNode = 0;
 
 		// Go through nodes using DFS
-		deque<GameObject*> Q;
+		deque<SceneObject*> Q;
 		Q.push_front(getScene()->getRoot());
 		while(!Q.empty())
 		{
 			// Extract first node
-			GameObject *node = Q.front();
+			SceneObject *node = Q.front();
 			Q.pop_front();
 
 			// Add node to list
@@ -48,8 +48,8 @@ public:
 			prevNode = node;
 
 			// Add tree edges
-			list<GameObject*> children = node->getChildren();
-			for(GameObject *child : children)
+			list<SceneObject*> children = node->getChildren();
+			for(SceneObject *child : children)
 			{
 				sgedges += "\t" + string((char*) node->getUserData()) + "->" + string((char*) child->getUserData()) + "\n";
 			}
@@ -89,7 +89,7 @@ public:
 		orfile.close();
 	}
 
-	class CustomGameObject : public GameObject
+	class CustomSceneObject : public SceneObject
 	{
 		void onTick(TickEvent *e)
 		{
@@ -97,7 +97,7 @@ public:
 			string tabStr;
 			for(int i = 0; i < depth; ++i) tabStr += "\t";
 			LOG("%s%s onTick", tabStr.c_str(), (char*) getUserData());
-			GameObject::onTick(e);
+			SceneObject::onTick(e);
 			depth--;
 		}
 	};
@@ -105,58 +105,58 @@ public:
 	void onStart(GameEvent*)
 	{
 		Scene *scene = getScene();
-		GameObject *root = scene->getRoot();
+		SceneObject *root = scene->getRoot();
 		root->setUserData("Root");
 
-		GameObject *gui = new CustomGameObject();
+		SceneObject *gui = new CustomSceneObject();
 		gui->setUserData("GUI");
 		root->addChildFirst(gui);
 		
 		// GUI
 		{
-			GameObject *scrollArea = new CustomGameObject();
+			SceneObject *scrollArea = new CustomSceneObject();
 			scrollArea->setUserData("ScrollArea");
 			gui->addChildFirst(scrollArea);
 
-			GameObject *button = new CustomGameObject();
+			SceneObject *button = new CustomSceneObject();
 			button->setUserData("Button");
 			gui->addChildFirst(button);
 
 			// ScrollArea
 			{
-				GameObject *image = new CustomGameObject();
+				SceneObject *image = new CustomSceneObject();
 				image->setUserData("Image");
 				scrollArea->addChildLast(image);
 
-				GameObject *radioBox1 = new CustomGameObject();
+				SceneObject *radioBox1 = new CustomSceneObject();
 				radioBox1->setUserData("RadioBox1");
 				scrollArea->addChildLast(radioBox1);
 
-				GameObject *radioBox2 = new CustomGameObject();
+				SceneObject *radioBox2 = new CustomSceneObject();
 				radioBox2->setUserData("RadioBox2");
 				scrollArea->addChildLast(radioBox2);
 			}
 		}
 
-		GameObject *game = new CustomGameObject();
+		SceneObject *game = new CustomSceneObject();
 		game->setUserData("Game");
 		root->addChildFirst(game);
 
 		// Game
 		{
-			GameObject *enemy = new CustomGameObject();
+			SceneObject *enemy = new CustomSceneObject();
 			enemy->setUserData("Enemy");
 			game->addChildFirst(enemy);
 
-			GameObject *player = new CustomGameObject();
+			SceneObject *player = new CustomSceneObject();
 			player->setUserData("Player");
 			game->addChildFirst(player);
 
-			GameObject *background = new CustomGameObject();
+			SceneObject *background = new CustomSceneObject();
 			background->setUserData("Background");
 			game->addChildFirst(background);
 
-			GameObject *camera = new CustomGameObject();
+			SceneObject *camera = new CustomSceneObject();
 			camera->setUserData("Camera");
 			game->addChildFirst(camera);
 		}

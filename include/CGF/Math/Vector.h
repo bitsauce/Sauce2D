@@ -6,318 +6,772 @@
 /** \brief A class which holds a 2 dimensional vector
  *
  * The Vector2 class is a 2 dimensional (hence the 2) vector.
- * It stores the x and y value as floating-point values.
+ * It stores the x and y value as Ting-point values.
  *
  */
 
-class Vector2i;
-class Vector3;
-class Vector4;
-
+template<typename T>
 class CGF_API Vector2
 {
 public:
-	// Constructor
-    explicit Vector2(const float xy = 0.0f);
-    Vector2(const float d[2]);
-    Vector2(const float x, const float y);
-	Vector2(const Vector2 &v);
-	Vector2(const Vector2i &v);
- 
-	// Setting
-	void set(const float x, const float y);
-
-	// Transform
-    void rotate(const float angle);
-    float angle() const;
-	float angle(const Vector2& v2) const;
-
-	// Vector functions
-    void normalize();
-    Vector2 normalized() const;
-    float dot(const Vector2& v2) const;
-    float cross(const Vector2& v2) const;
-    float distance(const Vector2& v2) const;
-	float magnitude() const;
- 
-	// Operators
-    Vector2& operator=(const Vector2& v2);
-    Vector2& operator+=(const Vector2& v2);
-    Vector2& operator-=(const Vector2& v2);
-    Vector2& operator*=(const float scalar);
-    Vector2& operator*=(const Vector2 &v2);
-    Vector2& operator/=(const float scalar);
-    Vector2& operator/=(const Vector2 &v2);
-    const Vector2 operator+(const Vector2 &v2) const;
-    const Vector2 operator-(const Vector2 &v2) const;
-    const Vector2 operator*(const float scalar) const;
-	const Vector2 operator*(const Vector2 &v2) const;
-    const Vector2 operator/(const float scalar) const;
-    const Vector2 operator/(const Vector2 &v2) const;
-    bool operator==(const Vector2& v2) const;
-    bool operator!=(const Vector2& v2) const;
- 
-    float x, y;
-};
-
-class CGF_API Vector2i
-{
-public:
-	// Constructor
-    Vector2i(int xy = 0.0f);
-    Vector2i(int x, int y);
-	Vector2i(const Vector2 &v);
- 
-	// Setting
-	void set(const int x, const int y);
-
-	// Transform
-    void rotate(const float angle);
-    float angle() const;
-	float angle(const Vector2i& v2) const;
-
-	// Vector functions
-    void normalize();
-    Vector2i normalized() const;
-    float dot(const Vector2i& v2) const;
-    float cross(const Vector2i& v2) const;
-    float distance(const Vector2i& v2) const;
-	float magnitude() const;
- 
-	// Operators
-    Vector2i& operator=(const Vector2i& v2);
-    Vector2i& operator+=(const Vector2i& v2);
-    Vector2i& operator-=(const Vector2i& v2);
-    Vector2i& operator*=(const float scalar);
-    Vector2i& operator/=(const float scalar);
-    const Vector2i operator+(const Vector2i &v2) const;
-    const Vector2i operator-(const Vector2i &v2) const;
-    const Vector2i operator*(const float scalar) const;
-    const Vector2i operator/(const float scalar) const;
-    bool operator==(const Vector2i& v2) const;
-    bool operator!=(const Vector2i& v2) const;
-
-	bool operator<(const Vector2i& v2) const
+	inline explicit Vector2(const T xy = T(0))
 	{
-		TUPLE_CMP(this->x, v2.x)
-		TUPLE_CMP(this->y, v2.y)
+		x = xy;
+		y = xy;
+	}
+
+	inline Vector2(const T d[2])
+	{
+		x = d[0];
+		y = d[1];
+	}
+
+	inline Vector2(const T x, const T y)
+	{
+		this->x = x;
+		this->y = y;
+	}
+
+	template<typename U>
+	inline Vector2(const Vector2<U> &v)
+	{
+		this->x = v.x;
+		this->y = v.y;
+	}
+ 
+	inline void set(const T x, const T y)
+	{
+		this->x = x;
+		this->y = y;
+	}
+
+	inline void rotate(const T angle)
+	{
+		x = (x * cosf(angle)) - (y * sinf(angle));
+		y = (y * cosf(angle)) + (x * sinf(angle));
+	}
+
+	inline T angle() const
+	{
+		return atan2(y, x);
+	}
+
+	inline T angle(const Vector2<T> &v2) const
+	{
+		return acos(dot(v2) / (magnitude() * v2.magnitude()));
+	}
+
+	inline void normalize()
+	{
+		T len = length();
+		if(len > T(0))
+		{
+			x /= len;
+			y /= len;
+		}
+	}
+
+	inline Vector2 normalized() const
+	{
+		T len = magnitude();
+		if(len > T(0))
+		{
+			return Vector2(x / len, y / len);
+		}
+		return Vector2();
+	}
+
+	inline T dot(const Vector2<T> &v2) const
+	{
+		return (x * v2.x) + (y * v2.y);
+	}
+
+	inline T cross(const Vector2<T> &v2) const
+	{
+		return (x * v2.y) - (y * v2.x);
+	}
+
+	inline T distance(const Vector2<T> &v2) const
+	{
+		return sqrtf(pow((v2.x - x), 2) + pow((v2.y - y), 2));
+	}
+
+	inline T magnitude() const
+	{
+		return sqrtf(x * x + y * y);
+	}
+
+	inline T length() const
+	{
+		return magnitude();
+	}
+ 
+	template<typename U>
+	inline Vector2<T> &operator=(const Vector2<U> &v2)
+	{
+		x = v2.x;
+		y = v2.y;
+		return *this;
+	}
+
+	inline Vector2<T> &operator+=(const Vector2<T> &v2)
+	{
+		x += v2.x;
+		y += v2.y;
+		return *this;
+	}
+
+	inline Vector2<T> &operator-=(const Vector2<T> &v2)
+	{
+		x -= v2.x;
+		y -= v2.y;
+		return *this;
+	}
+
+	inline Vector2<T> &operator*=(const T scalar)
+	{
+		x *= scalar;
+		y *= scalar;
+		return *this;
+	}
+
+	inline Vector2<T> &operator*=(const Vector2<T> &v2)
+	{
+		x *= v2.x;
+		y *= v2.y;
+		return *this;
+	}
+
+	inline Vector2<T> &operator/=(const T scalar)
+	{
+		x /= scalar;
+		y /= scalar;
+		return *this;
+	}
+
+	inline Vector2<T> &operator/=(const Vector2<T> &v2)
+	{
+		x /= v2.x;
+		y /= v2.y;
+		return *this;
+	}
+
+	inline const Vector2<T> operator+(const Vector2<T> &v2) const
+	{
+		return Vector2<T>(*this) += v2;
+	}
+
+	inline const Vector2<T> operator-(const Vector2<T> &v2) const
+	{
+		return Vector2<T>(*this) -= v2;
+	}
+
+	inline const Vector2<T> operator*(const T scalar) const
+	{
+		return Vector2<T>(*this) *= scalar;
+	}
+
+	inline const Vector2<T> operator*(const Vector2<T> &v2) const
+	{
+		return  Vector2<T>(*this) *= v2;
+	}
+
+	inline const Vector2<T> operator/(const T scalar) const
+	{
+		return Vector2<T>(*this) /= scalar;
+	}
+
+	inline const Vector2<T> operator/(const Vector2<T> &v2) const
+	{
+		return Vector2<T>(*this) /= v2;
+	}
+
+	inline bool operator==(const Vector2<T>& v2) const
+	{
+		return (x == v2.x) && (y == v2.y);
+	}
+
+	inline bool operator!=(const Vector2<T>& v2) const
+	{
+		return (x != v2.x) || (y != v2.y);
+	}
+
+	inline bool operator<(const Vector2<T> &v2) const
+	{
+		TUPLE_CMP(this->x, v2.x);
+		TUPLE_CMP(this->y, v2.y);
 		return false;
 	}
 
-	bool operator>(const Vector2i& v2) const
+	inline bool operator>(const Vector2<T> &v2) const
 	{
-		TUPLE_CMP2(this->x, v2.x)
-		TUPLE_CMP2(this->y, v2.y)
+		TUPLE_CMP2(this->x, v2.x);
+		TUPLE_CMP2(this->y, v2.y);
 		return false;
 	}
- 
-    int x, y;
+
+    T x, y;
 };
 
+typedef Vector2<bool> Vector2B;
+typedef Vector2<float> Vector2F;
+typedef Vector2<double> Vector2D;
+typedef Vector2<int> Vector2I;
+typedef Vector2<uint> Vector2U;
 
+/**
+ * \class	Vector3
+ *
+ * \brief	3D vector.
+ */
+
+template<typename T>
 class CGF_API Vector3
 {
 public:
-	// Constructor
-    Vector3(float xyz = 0.0f);
-    Vector3(float x, float y, float z);
-    Vector3(const Vector3 &other);
+	inline explicit Vector3(T xyz = T(0))
+	{
+		x = y = z = xyz;
+	}
 
-	// Swizzling
-	Vector3(const float x, const Vector2 &v) { this->x = x; this->y = v.x; this->z = v.y; }
-    Vector3(const Vector2 &v, const float z)  { this->x = v.x; this->y = v.y; this->z = z; }
+	inline Vector3(T x, T y, T z)
+	{
+		this->x = x;
+		this->y = y;
+		this->z = z;
+	}
 
-	Vector2 getXX() const { return Vector2(x, x); }
-	Vector2 getXY() const { return Vector2(x, y); }
-	Vector2 getXZ() const { return Vector2(x, z); }
-	Vector2 getYX() const { return Vector2(y, x); }
-	Vector2 getYY() const { return Vector2(y, y); }
-	Vector2 getYZ() const { return Vector2(y, z); }
-	Vector2 getZX() const { return Vector2(z, x); }
-	Vector2 getZY() const { return Vector2(z, y); }
-	Vector2 getZZ() const { return Vector2(z, z); }
+	inline Vector3(T d[3])
+	{
+		this->x = d[0];
+		this->y = d[1];
+		this->z = d[2];
+	}
+
+	inline Vector3(const Vector3<T> &other)
+	{
+		x = other.x;
+		y = other.y;
+		z = other.z;
+	}
+
+	inline Vector3(const T x, const Vector2<T> &v)
+	{
+		this->x = x; this->y = v.x; this->z = v.y;
+	}
+
+	inline Vector3(const Vector2<T> &v, const T z)
+	{
+		this->x = v.x; this->y = v.y; this->z = z;
+	}
+
+	inline Vector2<T> getXX() const { return Vector2<T>(x, x); }
+	inline Vector2<T> getXY() const { return Vector2<T>(x, y); }
+	inline Vector2<T> getXZ() const { return Vector2<T>(x, z); }
+	inline Vector2<T> getYX() const { return Vector2<T>(y, x); }
+	inline Vector2<T> getYY() const { return Vector2<T>(y, y); }
+	inline Vector2<T> getYZ() const { return Vector2<T>(y, z); }
+	inline Vector2<T> getZX() const { return Vector2<T>(z, x); }
+	inline Vector2<T> getZY() const { return Vector2<T>(z, y); }
+	inline Vector2<T> getZZ() const { return Vector2<T>(z, z); }
 	
-	void setXX(const Vector2 &v) { x = v.y; }
-	void setXY(const Vector2 &v) { x = v.x; y = v.y; }
-	void setXZ(const Vector2 &v) { x = v.x; z = v.y; }
-	void setYX(const Vector2 &v) { y = v.x; x = v.y; }
-	void setYY(const Vector2 &v) { y = v.y; }
-	void setYZ(const Vector2 &v) { y = v.x; z = v.y; }
-	void setZX(const Vector2 &v) { z = v.x; x = v.y; }
-	void setZY(const Vector2 &v) { z = v.x; y = v.y; }
-	void setZZ(const Vector2 &v) { z = v.y; }
+	inline void setXX(const Vector2<T> &v) { x = v.y; }
+	inline void setXY(const Vector2<T> &v) { x = v.x; y = v.y; }
+	inline void setXZ(const Vector2<T> &v) { x = v.x; z = v.y; }
+	inline void setYX(const Vector2<T> &v) { y = v.x; x = v.y; }
+	inline void setYY(const Vector2<T> &v) { y = v.y; }
+	inline void setYZ(const Vector2<T> &v) { y = v.x; z = v.y; }
+	inline void setZX(const Vector2<T> &v) { z = v.x; x = v.y; }
+	inline void setZY(const Vector2<T> &v) { z = v.x; y = v.y; }
+	inline void setZZ(const Vector2<T> &v) { z = v.y; }
  
-	// Setting
-	void set(const float x, const float y, const float z);
+	inline void set(const T x, const T y, const T z)
+	{
+		this->x = x;
+		this->y = y;
+		this->z = z;
+	}
 
-	// Null
-    void nullify();
-    bool isNull() const;
+	inline void rotate(const T angle)
+	{
+		// TODO: Missing implementation
+	}
 
-	// Transform
-    void rotate(const float angle);
-    float angle() const;
-	float angle(const Vector3& v2) const;
+	inline T angle() const
+	{
+		// TODO: Missing implementation
+		return T(0);
+	}
 
-	// Vector functions
-    void normalize();
-    Vector3 normalized() const;
-    float dot(const Vector3& v2) const;
-    Vector3 cross(const Vector3& v2) const;
-    float distance(const Vector3& v2) const;
-	float magnitude() const;
-	float length() const;
+	inline T angle(const Vector3<T> &v2) const
+	{
+		// TODO: Missing implementation
+		return T(0);
+	}
+
+	inline void normalize()
+	{
+		T len = length();
+		if(len > T(0))
+		{
+			x /= len;
+			y /= len;
+			z /= len;
+		}
+	}
+
+	inline Vector3<T> normalized() const
+	{
+		T len = length();
+		if(len > T(0))
+		{
+			return Vector3<T>(x / len, y / len, z / len);
+		}
+	}
+
+	inline T dot(const Vector3<T> &v2) const
+	{
+		return (x * v2.x) + (y * v2.y) + (z * v2.z);
+	}
+
+	inline Vector3<T> cross(const Vector3<T>& v2) const
+	{
+		return Vector3<T>((y * v2.z) - (z * v2.y), (z * v2.x) - (x * v2.z), (x * v2.y) - (y * v2.x));
+	}
+
+	inline T distance(const Vector3<T>& v2) const
+	{
+		// TODO: Missing implementation
+		return T(0);
+	}
+
+	inline T magnitude() const
+	{
+		return sqrtf(x * x + y * y + z * z);
+	}
+
+	inline T length() const
+	{
+		return magnitude();
+	}
  
-	// Operators
-    Vector3& operator=(const Vector3& v2);
-    Vector3& operator+=(const Vector3& v2);
-    Vector3& operator-=(const Vector3& v2);
-    Vector3& operator*=(const float scalar);
-    Vector3& operator/=(const float scalar);
-    const Vector3 operator+(const Vector3 &v2) const;
-    const Vector3 operator-(const Vector3 &v2) const;
-    const Vector3 operator*(const float scalar) const;
-    const Vector3 operator/(const float scalar) const;
-    bool operator==(const Vector3& v2) const;
+	inline Vector3<T>& operator=(const Vector3<T>& v2)
+	{
+		if(this == &v2) return *this;
+		x = v2.x;
+		y = v2.y;
+		z = v2.z;
+		return *this;
+	}
 
-    float x, y, z;
+	inline Vector3<T>& operator+=(const Vector3<T>& v2)
+	{
+		x += v2.x;
+		y += v2.y;
+		z += v2.z;
+		return *this;
+	}
+
+	inline Vector3<T>& operator-=(const Vector3<T>& v2)
+	{
+		x -= v2.x;
+		y -= v2.y;
+		z -= v2.z;
+		return *this;
+	}
+
+	inline Vector3<T>& operator*=(const T scalar)
+	{
+		x *= scalar;
+		y *= scalar;
+		z *= scalar;
+		return *this;
+	}
+
+	inline Vector3<T>& operator/=(const T scalar)
+	{
+		x /= scalar;
+		y /= scalar;
+		z /= scalar;
+		return *this;
+	}
+
+	inline const Vector3<T> operator+(const Vector3<T> &v2) const
+	{
+		return Vector3(*this) += v2;
+	}
+
+	inline const Vector3<T> operator-(const Vector3<T> &v2) const
+	{
+		return Vector3(*this) -= v2;
+	}
+
+	inline const Vector3<T> operator*(const T scalar) const
+	{
+		return Vector3(*this) *= scalar;
+	}
+
+	inline const Vector3<T> operator/(const T scalar) const
+	{
+		return Vector3(*this) /= scalar;
+	}
+
+	inline bool operator==(const Vector3<T>& v2) const
+	{
+		return x == v2.x && y == v2.y && z == v2.z;
+	}
+
+	inline bool operator!=(const Vector3<T>& v2) const
+	{
+		return (x != v2.x) || (y != v2.y) || (z != v2.z) ;
+	}
+
+	inline bool operator<(const Vector3<T> &v2) const
+	{
+		TUPLE_CMP(this->x, v2.x);
+		TUPLE_CMP(this->y, v2.y);
+		TUPLE_CMP(this->z, v2.z);
+		return false;
+	}
+
+	inline bool operator>(const Vector3<T> &v2) const
+	{
+		TUPLE_CMP2(this->x, v2.x);
+		TUPLE_CMP2(this->y, v2.y);
+		TUPLE_CMP2(this->z, v2.z);
+		return false;
+	}
+
+    T x, y, z;
 };
 
+typedef Vector3<bool> Vector3B;
+typedef Vector3<float> Vector3F;
+typedef Vector3<double> Vector3D;
+typedef Vector3<int> Vector3I;
+typedef Vector3<uint> Vector3U;
+
+/**
+ * \class	Vector4
+ *
+ * \brief	4D vector.
+ */
+
+template<typename T>
 class CGF_API Vector4
 {
 public:
-	// Constructor
-    Vector4(float xyzw = 0.0f);
-    Vector4(float x, float y, float z, float w);
-    Vector4(const float d[4]);
-    Vector4(const Vector2 &v0, const Vector2 &v1);
-    Vector4(const float x, const float y, const Vector2 &v);
-    Vector4(const float x, const Vector2 &v, const float w);
-    Vector4(const Vector2 &v, const float z, const float w);
-    Vector4(const float x, const Vector3 &v);
-    Vector4(const Vector3 &v, const float w);
+	inline explicit Vector4(T xyzw = T(0))
+	{
+		x = y = z = w = xyzw;
+	}
 
-	// Swizzling operators
-	Vector2 getXX() const { return Vector2(x, x); }
-	Vector2 getXY() const { return Vector2(x, y); }
-	Vector2 getXZ() const { return Vector2(x, z); }
-	Vector2 getYX() const { return Vector2(y, x); }
-	Vector2 getYY() const { return Vector2(y, y); }
-	Vector2 getYZ() const { return Vector2(y, z); }
-	Vector2 getZX() const { return Vector2(z, x); }
-	Vector2 getZY() const { return Vector2(z, y); }
-	Vector2 getZZ() const { return Vector2(z, z); }
+	inline Vector4(T x, T y, T z, T w)
+	{
+		this->x = x;
+		this->y = y;
+		this->z = z;
+		this->w = w;
+	}
+
+	inline Vector4(const T d[4])
+	{
+		this->x = d[0];
+		this->y = d[1];
+		this->z = d[2];
+		this->w = d[3];
+	}
+
+	inline Vector4(const Vector2<T> &v0, const Vector2<T> &v1)
+	{
+		this->x = v0.x;
+		this->y = v0.y;
+		this->z = v1.x;
+		this->w = v1.y;
+	}
+
+	inline Vector4(const T x, const T y, const Vector2<T> &v)
+	{
+		this->x = x;
+		this->y = y;
+		this->z = v.x;
+		this->w = v.y;
+	}
+
+	inline Vector4(const T x, const Vector2<T> &v, const T w)
+	{
+		this->x = x;
+		this->y = v.x;
+		this->z = v.y;
+		this->w = w;
+	}
+
+	inline Vector4(const Vector2<T> &v, const T z, const T w)
+	{
+		this->x = v.x;
+		this->y = v.y;
+		this->z = z;
+		this->w = w;
+	}
+
+	inline Vector4(const T x, const Vector3<T> &v)
+	{
+		this->x = x;
+		this->y = v.x;
+		this->z = v.y;
+		this->w = v.z;
+	}
+
+	inline Vector4(const Vector3<T> &v, const T w)
+	{
+		this->x = v.x;
+		this->y = v.y;
+		this->z = v.z;
+		this->w = w;
+	}
+
+	inline Vector2<T> getXX() const { return Vector2<T>(x, x); }
+	inline Vector2<T> getXY() const { return Vector2<T>(x, y); }
+	inline Vector2<T> getXZ() const { return Vector2<T>(x, z); }
+	inline Vector2<T> getYX() const { return Vector2<T>(y, x); }
+	inline Vector2<T> getYY() const { return Vector2<T>(y, y); }
+	inline Vector2<T> getYZ() const { return Vector2<T>(y, z); }
+	inline Vector2<T> getZX() const { return Vector2<T>(z, x); }
+	inline Vector2<T> getZY() const { return Vector2<T>(z, y); }
+	inline Vector2<T> getZZ() const { return Vector2<T>(z, z); }
 	
-	Vector3 getXXX() const { return Vector3(x, x, x); }
-	Vector3 getXXY() const { return Vector3(x, x, y); }
-	Vector3 getXXZ() const { return Vector3(x, x, z); }
-	Vector3 getXXW() const { return Vector3(x, x, w); }
-	Vector3 getXYX() const { return Vector3(x, y, x); }
-	Vector3 getXYY() const { return Vector3(x, y, y); }
-	Vector3 getXYZ() const { return Vector3(x, y, z); }
-	Vector3 getXYW() const { return Vector3(x, y, w); }
-	Vector3 getXZX() const { return Vector3(x, z, x); }
-	Vector3 getXZY() const { return Vector3(x, z, y); }
-	Vector3 getXZZ() const { return Vector3(x, z, z); }
-	Vector3 getXZW() const { return Vector3(x, z, w); }
-	Vector3 getXWX() const { return Vector3(x, w, x); }
-	Vector3 getXWY() const { return Vector3(x, w, y); }
-	Vector3 getXWZ() const { return Vector3(x, w, z); }
-	Vector3 getXWW() const { return Vector3(x, w, w); }
+	inline Vector3<T> getXXX() const { return Vector3<T>(x, x, x); }
+	inline Vector3<T> getXXY() const { return Vector3<T>(x, x, y); }
+	inline Vector3<T> getXXZ() const { return Vector3<T>(x, x, z); }
+	inline Vector3<T> getXXW() const { return Vector3<T>(x, x, w); }
+	inline Vector3<T> getXYX() const { return Vector3<T>(x, y, x); }
+	inline Vector3<T> getXYY() const { return Vector3<T>(x, y, y); }
+	inline Vector3<T> getXYZ() const { return Vector3<T>(x, y, z); }
+	inline Vector3<T> getXYW() const { return Vector3<T>(x, y, w); }
+	inline Vector3<T> getXZX() const { return Vector3<T>(x, z, x); }
+	inline Vector3<T> getXZY() const { return Vector3<T>(x, z, y); }
+	inline Vector3<T> getXZZ() const { return Vector3<T>(x, z, z); }
+	inline Vector3<T> getXZW() const { return Vector3<T>(x, z, w); }
+	inline Vector3<T> getXWX() const { return Vector3<T>(x, w, x); }
+	inline Vector3<T> getXWY() const { return Vector3<T>(x, w, y); }
+	inline Vector3<T> getXWZ() const { return Vector3<T>(x, w, z); }
+	inline Vector3<T> getXWW() const { return Vector3<T>(x, w, w); }
 	
-	Vector3 getYXX() const { return Vector3(y, x, x); }
-	Vector3 getYXY() const { return Vector3(y, x, y); }
-	Vector3 getYXZ() const { return Vector3(y, x, z); }
-	Vector3 getYXW() const { return Vector3(y, x, w); }
-	Vector3 getYYX() const { return Vector3(y, y, x); }
-	Vector3 getYYY() const { return Vector3(y, y, y); }
-	Vector3 getYYZ() const { return Vector3(y, y, z); }
-	Vector3 getYYW() const { return Vector3(y, y, w); }
-	Vector3 getYZX() const { return Vector3(y, z, x); }
-	Vector3 getYZY() const { return Vector3(y, z, y); }
-	Vector3 getYZZ() const { return Vector3(y, z, z); }
-	Vector3 getYZW() const { return Vector3(y, z, w); }
-	Vector3 getYWX() const { return Vector3(y, w, x); }
-	Vector3 getYWY() const { return Vector3(y, w, y); }
-	Vector3 getYWZ() const { return Vector3(y, w, z); }
-	Vector3 getYWW() const { return Vector3(y, w, w); }
+	inline Vector3<T> getYXX() const { return Vector3<T>(y, x, x); }
+	inline Vector3<T> getYXY() const { return Vector3<T>(y, x, y); }
+	inline Vector3<T> getYXZ() const { return Vector3<T>(y, x, z); }
+	inline Vector3<T> getYXW() const { return Vector3<T>(y, x, w); }
+	inline Vector3<T> getYYX() const { return Vector3<T>(y, y, x); }
+	inline Vector3<T> getYYY() const { return Vector3<T>(y, y, y); }
+	inline Vector3<T> getYYZ() const { return Vector3<T>(y, y, z); }
+	inline Vector3<T> getYYW() const { return Vector3<T>(y, y, w); }
+	inline Vector3<T> getYZX() const { return Vector3<T>(y, z, x); }
+	inline Vector3<T> getYZY() const { return Vector3<T>(y, z, y); }
+	inline Vector3<T> getYZZ() const { return Vector3<T>(y, z, z); }
+	inline Vector3<T> getYZW() const { return Vector3<T>(y, z, w); }
+	inline Vector3<T> getYWX() const { return Vector3<T>(y, w, x); }
+	inline Vector3<T> getYWY() const { return Vector3<T>(y, w, y); }
+	inline Vector3<T> getYWZ() const { return Vector3<T>(y, w, z); }
+	inline Vector3<T> getYWW() const { return Vector3<T>(y, w, w); }
 	
-	Vector3 getZXX() const { return Vector3(z, x, x); }
-	Vector3 getZXY() const { return Vector3(z, x, y); }
-	Vector3 getZXZ() const { return Vector3(z, x, z); }
-	Vector3 getZXW() const { return Vector3(z, x, w); }
-	Vector3 getZYX() const { return Vector3(z, y, x); }
-	Vector3 getZYY() const { return Vector3(z, y, y); }
-	Vector3 getZYZ() const { return Vector3(z, y, z); }
-	Vector3 getZYW() const { return Vector3(z, y, w); }
-	Vector3 getZZX() const { return Vector3(z, z, x); }
-	Vector3 getZZY() const { return Vector3(z, z, y); }
-	Vector3 getZZZ() const { return Vector3(z, z, z); }
-	Vector3 getZZW() const { return Vector3(z, z, w); }
-	Vector3 getZWX() const { return Vector3(z, w, x); }
-	Vector3 getZWY() const { return Vector3(z, w, y); }
-	Vector3 getZWZ() const { return Vector3(z, w, z); }
-	Vector3 getZWW() const { return Vector3(z, w, w); }
+	inline Vector3<T> getZXX() const { return Vector3<T>(z, x, x); }
+	inline Vector3<T> getZXY() const { return Vector3<T>(z, x, y); }
+	inline Vector3<T> getZXZ() const { return Vector3<T>(z, x, z); }
+	inline Vector3<T> getZXW() const { return Vector3<T>(z, x, w); }
+	inline Vector3<T> getZYX() const { return Vector3<T>(z, y, x); }
+	inline Vector3<T> getZYY() const { return Vector3<T>(z, y, y); }
+	inline Vector3<T> getZYZ() const { return Vector3<T>(z, y, z); }
+	inline Vector3<T> getZYW() const { return Vector3<T>(z, y, w); }
+	inline Vector3<T> getZZX() const { return Vector3<T>(z, z, x); }
+	inline Vector3<T> getZZY() const { return Vector3<T>(z, z, y); }
+	inline Vector3<T> getZZZ() const { return Vector3<T>(z, z, z); }
+	inline Vector3<T> getZZW() const { return Vector3<T>(z, z, w); }
+	inline Vector3<T> getZWX() const { return Vector3<T>(z, w, x); }
+	inline Vector3<T> getZWY() const { return Vector3<T>(z, w, y); }
+	inline Vector3<T> getZWZ() const { return Vector3<T>(z, w, z); }
+	inline Vector3<T> getZWW() const { return Vector3<T>(z, w, w); }
 	
-	Vector3 getWXX() const { return Vector3(w, x, x); }
-	Vector3 getWXY() const { return Vector3(w, x, y); }
-	Vector3 getWXZ() const { return Vector3(w, x, z); }
-	Vector3 getWXW() const { return Vector3(w, x, w); }
-	Vector3 getWYX() const { return Vector3(w, y, x); }
-	Vector3 getWYY() const { return Vector3(w, y, y); }
-	Vector3 getWYZ() const { return Vector3(w, y, z); }
-	Vector3 getWYW() const { return Vector3(w, y, w); }
-	Vector3 getWZX() const { return Vector3(w, z, x); }
-	Vector3 getWZY() const { return Vector3(w, z, y); }
-	Vector3 getWZZ() const { return Vector3(w, z, z); }
-	Vector3 getWZW() const { return Vector3(w, z, w); }
-	Vector3 getWWX() const { return Vector3(w, w, x); }
-	Vector3 getWWY() const { return Vector3(w, w, y); }
-	Vector3 getWWZ() const { return Vector3(w, w, z); }
-	Vector3 getWWW() const { return Vector3(w, w, w); }
+	inline Vector3<T> getWXX() const { return Vector3<T>(w, x, x); }
+	inline Vector3<T> getWXY() const { return Vector3<T>(w, x, y); }
+	inline Vector3<T> getWXZ() const { return Vector3<T>(w, x, z); }
+	inline Vector3<T> getWXW() const { return Vector3<T>(w, x, w); }
+	inline Vector3<T> getWYX() const { return Vector3<T>(w, y, x); }
+	inline Vector3<T> getWYY() const { return Vector3<T>(w, y, y); }
+	inline Vector3<T> getWYZ() const { return Vector3<T>(w, y, z); }
+	inline Vector3<T> getWYW() const { return Vector3<T>(w, y, w); }
+	inline Vector3<T> getWZX() const { return Vector3<T>(w, z, x); }
+	inline Vector3<T> getWZY() const { return Vector3<T>(w, z, y); }
+	inline Vector3<T> getWZZ() const { return Vector3<T>(w, z, z); }
+	inline Vector3<T> getWZW() const { return Vector3<T>(w, z, w); }
+	inline Vector3<T> getWWX() const { return Vector3<T>(w, w, x); }
+	inline Vector3<T> getWWY() const { return Vector3<T>(w, w, y); }
+	inline Vector3<T> getWWZ() const { return Vector3<T>(w, w, z); }
+	inline Vector3<T> getWWW() const { return Vector3<T>(w, w, w); }
 	
-	void setXX(const Vector2 &v) { x = v.y; }
-	void setXY(const Vector2 &v) { x = v.x; y = v.y; }
-	void setXZ(const Vector2 &v) { x = v.x; z = v.y; }
-	void setYX(const Vector2 &v) { y = v.x; x = v.y; }
-	void setYY(const Vector2 &v) { y = v.y; }
-	void setYZ(const Vector2 &v) { y = v.x; z = v.y; }
-	void setZX(const Vector2 &v) { z = v.x; x = v.y; }
-	void setZY(const Vector2 &v) { z = v.x; y = v.y; }
-	void setZZ(const Vector2 &v) { z = v.y; }
+	inline void setXX(const Vector2<T> &v) { x = v.y; }
+	inline void setXY(const Vector2<T> &v) { x = v.x; y = v.y; }
+	inline void setXZ(const Vector2<T> &v) { x = v.x; z = v.y; }
+	inline void setYX(const Vector2<T> &v) { y = v.x; x = v.y; }
+	inline void setYY(const Vector2<T> &v) { y = v.y; }
+	inline void setYZ(const Vector2<T> &v) { y = v.x; z = v.y; }
+	inline void setZX(const Vector2<T> &v) { z = v.x; x = v.y; }
+	inline void setZY(const Vector2<T> &v) { z = v.x; y = v.y; }
+	inline void setZZ(const Vector2<T> &v) { z = v.y; }
 	
-	void setXYZ(const Vector3 &v) { x = v.x; y = v.y; z = v.z; }
+	inline void setXYZ(const Vector3<T> &v) { x = v.x; y = v.y; z = v.z; }
  
-	// Setting
-	void set(const float x, const float y, const float z, const float w);
+	inline void set(const T x, const T y, const T z, const T w)
+	{
+		this->x = x;
+		this->y = y;
+		this->z = z;
+		this->w = w;
+	}
 
-	// Transform
-    void rotate(const float angle);
-    float angle() const;
-	float angle(const Vector4& v2) const;
+	inline void rotate(const T angle)
+	{
+		// TODO: Missing implementation
+	}
 
-	// Vector functions
-    void normalize();
-    Vector4 normalized() const;
-    float dot(const Vector4& v2) const;
-    Vector4 cross(const Vector4& v2) const;
-    float distance(const Vector4& v2) const;
-	float magnitude() const;
-	float length() const;
+	inline T angle() const
+	{
+		// TODO: Missing implementation
+		return T(0);
+	}
+
+	inline T angle(const Vector4& v2) const
+	{
+		// TODO: Missing implementation
+		return T(0);
+	}
+
+	inline void normalize()
+	{
+		float len = length();
+		if(len > T(0))
+		{
+			x /= len;
+			y /= len;
+			z /= len;
+			w /= len;
+		}
+	}
+
+	inline Vector4 normalized() const
+	{
+		float len = length();
+		if(len > T(0))
+		{
+			return Vector4(x / len, y / len, z / len, w / len);
+		}
+		return Vector4();
+	}
+
+	inline T dot(const Vector4& v2) const
+	{
+		return (x * v2.x) + (y * v2.y) + (z * v2.z) + (w * v2.w);
+	}
+
+	inline Vector4 cross(const Vector4& v2) const
+	{
+		// TODO: Missing implementation
+		return Vector4();
+	}
+
+	inline T distance(const Vector4& v2) const
+	{
+		// TODO: Missing implementation
+		return T(0);
+	}
+	
+	inline T magnitude() const
+	{
+		return sqrtf(x * x + y * y + z * z + w * w);
+	}
+
+	inline T length() const
+	{
+		return sqrtf(x * x + y * y + z * z + w * w);
+	}
  
 	// Operators
-    Vector4& operator=(const Vector4& v2);
-    Vector4& operator+=(const Vector4& v2);
-    Vector4& operator-=(const Vector4& v2);
-    Vector4& operator*=(const float scalar);
-    Vector4& operator/=(const float scalar);
-    const Vector4 operator+(const Vector4 &v2) const;
-    const Vector4 operator-(const Vector4 &v2) const;
-    const Vector4 operator*(const float scalar) const;
-    const Vector4 operator/(const float scalar) const;
-    bool operator==(const Vector4& v2) const;
+	inline Vector4& operator=(const Vector4& v2)
+	{
+		if(this == &v2) return *this;
+		x = v2.x;
+		y = v2.y;
+		z = v2.z;
+		w = v2.w;
+		return *this;
+	}
 
-    float x, y, z, w;
+	inline Vector4& operator+=(const Vector4& v2)
+	{
+		x += v2.x;
+		y += v2.y;
+		z += v2.z;
+		return *this;
+	}
+
+	inline Vector4& operator-=(const Vector4& v2)
+	{
+		x -= v2.x;
+		y -= v2.y;
+		z -= v2.z;
+		w -= v2.w;
+		return *this;
+	}
+
+	inline Vector4& operator*=(const T scalar)
+	{
+		x *= scalar;
+		y *= scalar;
+		z *= scalar;
+		w *= scalar;
+		return *this;
+	}
+
+	inline Vector4& operator/=(const T scalar)
+	{
+		x /= scalar;
+		y /= scalar;
+		z /= scalar;
+		w /= scalar;
+		return *this;
+	}
+
+	inline const Vector4 operator+(const Vector4 &v2) const
+	{
+		return Vector4(*this) += v2;
+	}
+
+	inline const Vector4 operator-(const Vector4 &v2) const
+	{
+		return Vector4(*this) -= v2;
+	}
+
+	inline const Vector4 operator*(const T scalar) const
+	{
+		return Vector4(*this) *= scalar;
+	}
+
+	inline const Vector4 operator/(const T scalar) const
+	{
+		return Vector4(*this) /= scalar;
+	}
+
+	inline bool operator==(const Vector4& v2) const
+	{
+		return ((x == v2.x) && (y == v2.y)) && (z == v2.z) && (w == v2.w);
+	}
+
+    T x, y, z, w;
 };
+
+typedef Vector4<bool> Vector4B;
+typedef Vector4<float> Vector4F;
+typedef Vector4<double> Vector4D;
+typedef Vector4<int> Vector4I;
+typedef Vector4<uint> Vector4U;
 
 #endif // CGF_VECTOR_H

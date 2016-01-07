@@ -1,12 +1,12 @@
 #include "Config.h"
 #include "Canvas.h"
-#include "Box.h"
+#include "Button.h"
 
 class GuiGame : public Game
 {
 	SpriteBatch *spriteBatch;
 	Canvas *canvas;
-	Box *box;
+	Button *button;
 public:
 	GuiGame() :
 		Game("Gui")
@@ -32,13 +32,12 @@ public:
 
 		spriteBatch = new SpriteBatch(getWindow()->getGraphicsContext());
 
-		box = new Box();
-		box->setWidth(0.125f, 0.3125f);
-		box->setPosition(Vector2(0.1f, 0.1f));
-		//box->setPositionPx();
-		//box->setAspectRatio();
+		button = new Button();
+		button->setWidth(0.125f, 0.3125f);
+		button->setAnchor(Vector2F(0.5f, 0.9f));
+		button->setPosition(Vector2F(0.0f, 0.0f));
 
-		canvas->addChildLast(box);
+		canvas->addChildLast(button);
 	}
 
 	void onEnd(GameEvent*)

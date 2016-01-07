@@ -12,7 +12,7 @@
 
 BEGIN_CGF_NAMESPACE
 
-Sprite::Sprite(const Texture2DPtr texture, const Rect &rectangle, const Vector2 &origin, const float angle, const TextureRegion &region, const Color &color, const float depth, const Vector2 scale) :
+Sprite::Sprite(const Texture2DPtr texture, const Rect<float> &rectangle, const Vector2F &origin, const float angle, const TextureRegion &region, const Color &color, const float depth, const Vector2F scale) :
 	m_texture(texture),
 	m_textureRegion(region),
 	m_position(rectangle.position),
@@ -29,7 +29,7 @@ Sprite::~Sprite()
 {
 }
 
-void Sprite::setPosition(const Vector2 &pos)
+void Sprite::setPosition(const Vector2F &pos)
 {
 	m_position = pos;
 }
@@ -49,7 +49,7 @@ void Sprite::setY(const float y)
 	m_position.y = y;
 }
 
-void Sprite::setSize(const Vector2 &size)
+void Sprite::setSize(const Vector2F &size)
 {
 	m_size = size;
 }
@@ -69,7 +69,7 @@ void Sprite::setHeight(const float h)
 	m_size.y = h;
 }
 
-void Sprite::setOrigin(const Vector2 &origin)
+void Sprite::setOrigin(const Vector2F &origin)
 {
 	m_origin = origin;
 }
@@ -84,10 +84,10 @@ void Sprite::setRegion(const TextureRegion &textureRegion, const bool resize)
 	m_textureRegion = textureRegion;
 	if(resize)
 	{
-		m_size = m_texture != 0 ? Vector2i(
+		m_size = m_texture != 0 ? Vector2I(
 			int(m_texture->getWidth()*m_textureRegion.uv1.x - m_texture->getWidth()*m_textureRegion.uv0.x),
 			int(m_texture->getHeight()*m_textureRegion.uv1.y - m_texture->getHeight()*m_textureRegion.uv0.y)
-			) : Vector2i(0);
+			) : Vector2I(0);
 	}
 }
 
@@ -106,7 +106,7 @@ float Sprite::getDepth() const
 	return m_depth;
 }
 
-void Sprite::move(const Vector2 &dt)
+void Sprite::move(const Vector2F &dt)
 {
 	m_position += dt;
 }
@@ -121,7 +121,7 @@ void Sprite::scale(const float scl)
 	m_size *= scl;
 }
 
-void Sprite::getAABB(Vector2 *points) const
+void Sprite::getAABB(Vector2F *points) const
 {
 	Matrix4 mat;
 	mat.scale(m_size.x, m_size.y, 1.0f);
@@ -136,7 +136,7 @@ void Sprite::getAABB(Vector2 *points) const
 	}
 }
 
-Vector2 Sprite::getPosition() const
+Vector2F Sprite::getPosition() const
 {
 	return m_position;
 }
@@ -151,7 +151,7 @@ float Sprite::getY() const
 	return m_position.y;
 }
 
-Vector2 Sprite::getSize() const
+Vector2F Sprite::getSize() const
 {
 	return m_size;
 }
@@ -166,12 +166,12 @@ float Sprite::getHeight() const
 	return m_size.y;
 }
 
-Vector2 Sprite::getOrigin() const
+Vector2F Sprite::getOrigin() const
 {
 	return m_origin;
 }
 
-Vector2 Sprite::getCenter() const
+Vector2F Sprite::getCenter() const
 {
 	return m_position + (m_size/2.0f);
 }
@@ -207,7 +207,7 @@ void Sprite::getVertices(Vertex *vertices, uint *indices, const uint indexOffset
 
 	for(int i = 0; i < 4; i++)
 	{
-		Vector2 pos = (mat * QUAD_VERTICES[i]).getXY();
+		Vector2F pos = (mat * QUAD_VERTICES[i]).getXY();
 		vertices[i].set4f(VERTEX_POSITION, pos.x, pos.y);
 		vertices[i].set4ub(VERTEX_COLOR, m_color.r, m_color.g, m_color.b, m_color.a);
 	}

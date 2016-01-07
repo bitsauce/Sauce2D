@@ -533,12 +533,12 @@ void GraphicsContext::drawRectangle(const float x, const float y, const float wi
 	drawPrimitives(PRIMITIVE_TRIANGLE_STRIP, vertices, 4);
 }
 
-void GraphicsContext::drawRectangle(const Vector2 &pos, const Vector2 &size, const Color &color, const TextureRegion &textureRegion)
+void GraphicsContext::drawRectangle(const Vector2F &pos, const Vector2F &size, const Color &color, const TextureRegion &textureRegion)
 {
 	drawRectangle(pos.x, pos.y, size.x, size.y, color, textureRegion);
 }
 
-void GraphicsContext::drawRectangle(const Rect &rect, const Color &color, const TextureRegion &textureRegion)
+void GraphicsContext::drawRectangle(const Rect<float> &rect, const Color &color, const TextureRegion &textureRegion)
 {
 	drawRectangle(rect.position.x, rect.position.y, rect.size.x, rect.size.y, color, textureRegion);
 }
@@ -564,7 +564,7 @@ void GraphicsContext::drawCircle(const float x, const float y, const float radiu
 	delete[] vertices;
 }
 
-void GraphicsContext::drawCircle(const Vector2 &center, const float radius, const uint segments, const Color &color)
+void GraphicsContext::drawCircle(const Vector2F &center, const float radius, const uint segments, const Color &color)
 {
 	drawCircle(center.x, center.y, radius, segments, color);
 }

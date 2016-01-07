@@ -16,18 +16,18 @@ uint QUAD_INDICES[6] = {
 	0, 3, 2, 0, 2, 1
 };
 
-Vector4 QUAD_VERTICES[4] = {
-	Vector4(0.0f, 0.0f, 0.0f, 1.0f),
-	Vector4(1.0f, 0.0f, 0.0f, 1.0f),
-	Vector4(1.0f, 1.0f, 0.0f, 1.0f),
-	Vector4(0.0f, 1.0f, 0.0f, 1.0f)
+Vector4<float> QUAD_VERTICES[4] = {
+	Vector4<float>(0.0f, 0.0f, 0.0f, 1.0f),
+	Vector4<float>(1.0f, 0.0f, 0.0f, 1.0f),
+	Vector4<float>(1.0f, 1.0f, 0.0f, 1.0f),
+	Vector4<float>(0.0f, 1.0f, 0.0f, 1.0f)
 };
 
-Vector2 QUAD_TEXCOORD[4] = {
-	Vector2(0.0f, 0.0f),
-	Vector2(1.0f, 0.0f),
-	Vector2(1.0f, 1.0f),
-	Vector2(0.0f, 1.0f)
+Vector2F QUAD_TEXCOORD[4] = {
+	Vector2F(0.0f, 0.0f),
+	Vector2F(1.0f, 0.0f),
+	Vector2F(1.0f, 1.0f),
+	Vector2F(0.0f, 1.0f)
 };
 
 // Standard position, color and texCoord vertex format

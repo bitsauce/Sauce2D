@@ -587,9 +587,9 @@ public:
 	 */
 	void getSize(int *x, int *y) const;
 
-	Vector2i getSize() const
+	Vector2I getSize() const
 	{
-		Vector2i size;
+		Vector2I size;
 		getSize(&size.x, &size.y);
 		return size;
 	}

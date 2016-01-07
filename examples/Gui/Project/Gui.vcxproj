@@ -88,13 +88,13 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\Source\Box.cpp" />
+    <ClCompile Include="..\Source\Button.cpp" />
     <ClCompile Include="..\Source\Canvas.cpp" />
     <ClCompile Include="..\Source\Main.cpp" />
     <ClCompile Include="..\Source\UiObject.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\Source\Box.h" />
+    <ClInclude Include="..\Source\Button.h" />
     <ClInclude Include="..\Source\Canvas.h" />
     <ClInclude Include="..\Source\Config.h" />
     <ClInclude Include="..\Source\UiEvents.h" />

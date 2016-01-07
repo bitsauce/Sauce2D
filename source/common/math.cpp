@@ -62,9 +62,9 @@ float round(const float v)
 	return (float)int((v > 0.0f) ? (v + 0.5f) : (v - 0.5f));
 }
 
-Vector2 round(const Vector2 &v)
+Vector2F round(const Vector2F &v)
 {
-	return Vector2(round(v.x), round(v.y));
+	return Vector2F(round(v.x), round(v.y));
 }
 
 float ceil(const float v)
@@ -72,9 +72,9 @@ float ceil(const float v)
 	return ceilf(v);
 }
 
-Vector2 ceil(const Vector2 &v)
+Vector2F ceil(const Vector2F &v)
 {
-	return Vector2(ceil(v.x), ceil(v.y));
+	return Vector2F(ceil(v.x), ceil(v.y));
 }
 
 float floor(const float v)
@@ -82,9 +82,9 @@ float floor(const float v)
 	return floorf(v);
 }
 
-Vector2 floor(const Vector2 &v)
+Vector2F floor(const Vector2F &v)
 {
-	return Vector2(floorf(v.x), floorf(v.y));
+	return Vector2F(floorf(v.x), floorf(v.y));
 }
 
 float abs(const float v)
@@ -92,9 +92,9 @@ float abs(const float v)
 	return ::abs(v);
 }
 
-Vector2 abs(const Vector2 &v)
+Vector2F abs(const Vector2F &v)
 {
-	return Vector2(::abs(v.x), ::abs(v.y));
+	return Vector2F(::abs(v.x), ::abs(v.y));
 }
 
 float sqrt(const float v)
@@ -102,9 +102,9 @@ float sqrt(const float v)
 	return sqrtf(v);
 }
 
-Vector2 sqrt(const Vector2 &v)
+Vector2F sqrt(const Vector2F &v)
 {
-	return Vector2(sqrtf(v.x), sqrtf(v.y));
+	return Vector2F(sqrtf(v.x), sqrtf(v.y));
 }
 
 float lerp(const float v0, const float v1, const float t)
@@ -112,7 +112,7 @@ float lerp(const float v0, const float v1, const float t)
 	return v0 * (1.0f - t) + v1 * t;
 }
 
-Vector2 lerp(const Vector2 &v0, const Vector2 &v1, const float t)
+Vector2F lerp(const Vector2F &v0, const Vector2F &v1, const float t)
 {
 	return v0 * (1.0f - t) + v1 * t;
 }

@@ -12,31 +12,7 @@
 
 const float DEG2RAD = 3.141593f / 180;
 
-/*********************************************************************
-**	2x2 Matrix														**
-**********************************************************************/
-float Matrix2::getDeterminant()
-{
-    return m[0] * m[3] - m[1] * m[2];
-}
 
-Matrix2& Matrix2::invert()
-{
-    float determinant = m[0] * m[3] - m[1] * m[2];
-    if(fabs(determinant) <= 0.00001f)
-    {
-        return identity();
-    }
-
-    float tmp = m[0];   // copy the first element
-    float invDeterminant = 1.0f / determinant;
-    m[0] =  invDeterminant * m[3];
-    m[1] = -invDeterminant * m[1];
-    m[2] = -invDeterminant * m[2];
-    m[3] =  invDeterminant * tmp;
-
-    return *this;
-}
 
 /*********************************************************************
 **	3x3 Matrix														**
@@ -358,7 +334,7 @@ float Matrix4::getCofactor(float m0, float m1, float m2,
            m2 * (m3 * m7 - m4 * m6);
 }
 
-Matrix4& Matrix4::translate(const Vector3& v)
+Matrix4& Matrix4::translate(const Vector3<float> &v)
 {
     return translate(v.x, v.y, v.z);
 }
@@ -384,7 +360,7 @@ Matrix4& Matrix4::scale(float x, float y, float z)
     return *this;
 }
 
-Matrix4& Matrix4::rotate(float angle, const Vector3& axis)
+Matrix4& Matrix4::rotate(float angle, const Vector3<float> &axis)
 {
     return rotate(angle, axis.x, axis.y, axis.z);
 }

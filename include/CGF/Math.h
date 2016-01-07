@@ -95,19 +95,19 @@ namespace math
 	CGF_API float minimum(const float a, const float b);
 
 	CGF_API float round(const float v);
-	CGF_API Vector2 round(const Vector2 &v);
+	CGF_API Vector2F round(const Vector2F &v);
 	CGF_API float ceil(const float v);
-	CGF_API Vector2 ceil(const Vector2 &v);
+	CGF_API Vector2F ceil(const Vector2F &v);
 	CGF_API float floor(const float v);
-	CGF_API Vector2 floor(const Vector2 &v);
+	CGF_API Vector2F floor(const Vector2F &v);
 	CGF_API float abs(const float v);
-	CGF_API Vector2 abs(const Vector2 &v);
+	CGF_API Vector2F abs(const Vector2F &v);
 	CGF_API float sqrt(const float v);
-	CGF_API Vector2 sqrt(const Vector2 &v);
+	CGF_API Vector2F sqrt(const Vector2F &v);
 	CGF_API float pow(const float a, const float b);
-	CGF_API Vector2 pow(const Vector2 &v);
+	CGF_API Vector2F pow(const Vector2F &v);
 	CGF_API float lerp(const float v0, const float v1, const float t);
-	CGF_API Vector2 lerp(const Vector2 &v0, const Vector2 &v1, const float t);
+	CGF_API Vector2F lerp(const Vector2F &v0, const Vector2F &v1, const float t);
 	CGF_API float step(const float a, const float x);
 
 	CGF_API int mod(const int a, const int b);

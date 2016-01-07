@@ -17,7 +17,7 @@ TextureRegion::TextureRegion() :
 	uv1(1.0f)
 {
 }
-TextureRegion::TextureRegion(const Vector2 &uv0, const Vector2 &uv1) :
+TextureRegion::TextureRegion(const Vector2F &uv0, const Vector2F &uv1) :
 	uv0(uv0),
 	uv1(uv1)
 {
@@ -52,7 +52,7 @@ TextureRegion::~TextureRegion()
 {
 }
 	
-void TextureRegion::setRegion(const Vector2 &uv0, const Vector2 &uv1)
+void TextureRegion::setRegion(const Vector2F &uv0, const Vector2F &uv1)
 {
 	this->uv0 = uv0;
 	this->uv1 = uv1;

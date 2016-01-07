@@ -94,7 +94,7 @@ public:
 		}
 
 		bool valid;
-		Vector2i canvas;
+		Vector2I canvas;
 		int area;
 		float efficiency;
 		vector<Rect> rectangles;

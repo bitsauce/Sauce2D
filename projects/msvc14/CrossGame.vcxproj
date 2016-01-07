@@ -47,7 +47,7 @@
     <ClCompile Include="..\..\source\Input\MouseListener.cpp" />
     <ClCompile Include="..\..\source\Math\Matrix.cpp" />
     <ClCompile Include="..\..\source\Math\Random.cpp" />
-    <ClCompile Include="..\..\source\Math\Rect.cpp" />
+    <ClCompile Include="..\..\source\Math\Rectangle.cpp" />
     <ClCompile Include="..\..\source\Math\RectanglePacker.cpp" />
     <ClCompile Include="..\..\source\Math\Vector.cpp" />
   </ItemGroup>

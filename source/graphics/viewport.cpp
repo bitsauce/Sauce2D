@@ -12,7 +12,7 @@
 
 BEGIN_CGF_NAMESPACE
 
-Viewport::Viewport(const Recti &view)
+Viewport::Viewport(const Rect<int> &view)
 {
 }
 

@@ -12,8 +12,8 @@ class CGF_API Shape
 	friend class Sprite;
 public:
 	Shape();
-	Shape(const Rect &rect);
-	Shape(const Vector2 &center, const float radius, const int vertCount = -1);
+	Shape(const Rect<float> &rect);
+	Shape(const Vector2F &center, const float radius, const int vertCount = -1);
 	Shape(const Vertex *vertices, const int vertCount);
 	~Shape();
 

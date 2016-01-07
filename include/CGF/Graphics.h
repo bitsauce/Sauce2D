@@ -36,8 +36,8 @@
 BEGIN_CGF_NAMESPACE
 
 CGF_API extern uint QUAD_INDICES[6];
-CGF_API extern Vector4 QUAD_VERTICES[4];
-CGF_API extern Vector2 QUAD_TEXCOORD[4];
+CGF_API extern Vector4<float> QUAD_VERTICES[4];
+CGF_API extern Vector2F QUAD_TEXCOORD[4];
 
 /*class CGF_API Graphics
 {

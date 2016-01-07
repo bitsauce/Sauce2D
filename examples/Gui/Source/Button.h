@@ -1,12 +1,12 @@
-#ifndef BOX_H
-#define BOX_H
+#ifndef BUTTON_H
+#define BUTTON_H
 
 #include "UiObject.h"
 
-class Box : public UiObject
+class Button : public UiObject
 {
 public:
-	Box();
+	Button();
 
 	void onClick(ClickEvent *e);
 	void onDraw(DrawEvent *e);
@@ -17,4 +17,4 @@ public:
 	string m_text;
 };
 
-#endif // BOX_H
+#endif // BUTTON_H

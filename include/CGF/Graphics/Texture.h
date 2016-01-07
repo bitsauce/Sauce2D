@@ -51,7 +51,7 @@ public:
 	// Size
 	uint getWidth() const;
 	uint getHeight() const;
-	Vector2i getSize() const { return Vector2i(getWidth(), getHeight()); }
+	Vector2I getSize() const { return Vector2I(getWidth(), getHeight()); }
 
 	// Pixmap (texture data)
 	Pixmap getPixmap() const;

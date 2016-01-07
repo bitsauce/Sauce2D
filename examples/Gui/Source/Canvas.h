@@ -9,7 +9,7 @@ public:
 	Canvas(Window *window);
 	Canvas(Window *window, const int width, const int height);
 
-	Vector2 getSize() const;
+	Vector2F getSize() const;
 
 private:
 	Window *m_window;

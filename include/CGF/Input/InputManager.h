@@ -125,7 +125,7 @@ public:
 
 	// Window-relative position
 	void getPosition(Sint32 *x, Sint32 *y) const;
-	Vector2i getPosition() const;
+	Vector2I getPosition() const;
 	Sint32 getX() const;
 	Sint32 getY() const;
 

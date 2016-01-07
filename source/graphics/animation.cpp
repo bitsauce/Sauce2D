@@ -21,8 +21,8 @@ SpriteAnimation::SpriteAnimation(const int nRows, const int nColumns)
 		{
 			m_textureRegions.push_back(
 				TextureRegion(
-					Vector2(float(x)/nColumns, float(y)/nRows),
-					Vector2(float(x+1)/nColumns, float(y+1)/nRows))
+					Vector2F(float(x)/nColumns, float(y)/nRows),
+					Vector2F(float(x+1)/nColumns, float(y+1)/nRows))
 				);
 		}
 	}

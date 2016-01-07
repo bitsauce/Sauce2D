@@ -21,7 +21,7 @@ Shape::Shape() :
 {
 }
 
-Shape::Shape(const Rect &rect) :
+Shape::Shape(const Rect<float> &rect) :
 	m_fillColor(255),
 	m_fillTexture(0),
 	m_penColor(255),
@@ -57,7 +57,7 @@ Shape::Shape(const Rect &rect) :
 	m_vertCount = 4;
 }
 
-Shape::Shape(const Vector2 &center, const float radius, const int vertCount) :
+Shape::Shape(const Vector2F &center, const float radius, const int vertCount) :
 	m_fillColor(255),
 	m_fillTexture(0),
 	m_penColor(255),

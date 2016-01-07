@@ -2,12 +2,12 @@
 #define CGF_BATCH_H
 
 #include <CGF/Common.h>
-#include <cgf/graphics/vertex.h>
-#include <cgf/graphics/vertexBuffer.h>
-#include <cgf/graphics/blendState.h>
-#include <cgf/graphics/texture.h>
-#include <cgf/graphics/shader.h>
-#include <cgf/graphics/font.h>
+#include <CGF/Graphics/vertex.h>
+#include <CGF/Graphics/vertexBuffer.h>
+#include <CGF/Graphics/blendState.h>
+#include <CGF/Graphics/texture.h>
+#include <CGF/Graphics/shader.h>
+#include <CGF/Graphics/font.h>
 
 BEGIN_CGF_NAMESPACE
 
@@ -49,7 +49,7 @@ public:
 
 	void begin(const State &state = State());
 	void drawSprite(const Sprite &sprite);
-	void drawText(const Vector2 &pos, const string &text, const FontPtr font);
+	void drawText(const Vector2F &pos, const string &text, const FontPtr font);
 	void end();
 	void flush();
 

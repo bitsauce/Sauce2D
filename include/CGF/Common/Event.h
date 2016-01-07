@@ -157,9 +157,9 @@ public:
 		return m_y;
 	}
 
-	Vector2i getPosition() const
+	Vector2<Sint32> getPosition() const
 	{
-		return Vector2i(m_x, m_y);
+		return Vector2<Sint32>(m_x, m_y);
 	}
 
 	Sint32 getWheelX() const

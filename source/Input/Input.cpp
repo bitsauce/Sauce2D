@@ -190,9 +190,9 @@ void InputManager::getPosition(Sint32 *x, Sint32 *y) const
 	*y = m_y;
 }
 
-Vector2i InputManager::getPosition() const
+Vector2I InputManager::getPosition() const
 {
-	return Vector2i(m_x, m_y);
+	return Vector2I(m_x, m_y);
 }
 
 Sint32 InputManager::getX() const

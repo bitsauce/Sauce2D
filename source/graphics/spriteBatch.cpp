@@ -70,7 +70,7 @@ void SpriteBatch::drawSprite(const Sprite &sprite)
 	m_sprites[m_spriteCount++] = sprite;
 }
 
-void SpriteBatch::drawText(const Vector2 &pos, const string &text, const FontPtr font)
+void SpriteBatch::drawText(const Vector2F &pos, const string &text, const FontPtr font)
 {
 	if(!m_beingCalled)
 	{

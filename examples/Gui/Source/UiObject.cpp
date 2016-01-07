@@ -28,6 +28,100 @@ bool UiObject::isPressed() const
 	return m_pressed;
 }
 
+void UiObject::setPosition(const Vector2F &position)
+{
+	setPosition(position.x, position.y);
+}
+
+void UiObject::setPosition(const float x, const float y)
+{
+	m_rect.position.set(x, y);
+}
+
+Vector2F UiObject::getPosition() const
+{
+	UiObject *parent = dynamic_cast<UiObject*>(getParent());
+	if(!parent) return m_rect.position;
+
+	Vector2F parentPos = parent->getPosition();
+	Vector2F parentSize = parent->getSize();
+	Vector2F pos = m_rect.position;
+
+	Vector2F size = m_rect.size;
+	if(size.y <= 0.0f)
+	{
+		size = Vector2F(size.x, size.x * m_aspectRatio);
+	}
+
+	parentPos += parentSize * m_anchor;
+	pos -= size * m_anchor;
+
+	return parentPos + pos * parentSize;
+}
+
+void UiObject::setSize(const Vector2F &size)
+{
+	setSize(size.x, size.y);
+}
+
+void UiObject::setSize(const float width, const float height)
+{
+	m_rect.size.set(width, height);
+}
+
+Vector2F UiObject::getSize() const
+{
+	UiObject *parent = dynamic_cast<UiObject*>(getParent());
+	if(!parent) return m_rect.size;
+
+	if(m_rect.size.y <= 0.0f)
+	{
+		return Vector2F(m_rect.size.x, m_rect.size.x * m_aspectRatio) * parent->getSize().x;
+	}
+
+	return m_rect.size * parent->getSize();
+}
+
+void UiObject::setWidth(const float width, const float aspectRatio)
+{
+	m_rect.size.set(width, -1.0f);
+	m_aspectRatio = aspectRatio;
+}
+
+RectF UiObject::getRect() const
+{
+	return RectF(getPosition(), getSize());
+}
+
+void UiObject::setAnchor(const Vector2F &anchor)
+{
+	setAnchor(anchor.x, anchor.y);
+}
+
+void UiObject::setAnchor(const float x, const float y)
+{
+	m_anchor.set(x, y);
+}
+
+void UiObject::setAnchorPx(const int x, const int y)
+{
+	UiObject *parent = dynamic_cast<UiObject*>(getParent());
+	Vector2F parentSize;
+	if(parent) parentSize = parent->getSize();
+	else parentSize = m_rect.size;
+	setAnchor(x / parentSize.x, y / parentSize.y);
+}
+
+void UiObject::setAnchorPx(const Vector2I &anchor)
+{
+	setAnchorPx(anchor.x, anchor.y);
+}
+
+void UiObject::setFocused(const bool focused)
+{
+	m_focused = focused;
+}
+
 void UiObject::onMouseEvent(MouseEvent *e)
 {
 	switch(e->getType())
@@ -48,7 +142,7 @@ void UiObject::onMouseEvent(MouseEvent *e)
 			}
 		}
 		break;
-		
+
 		case MouseEvent::DOWN:
 		{
 			if(m_hovered)
@@ -92,69 +186,4 @@ void UiObject::onMouseEvent(MouseEvent *e)
 		break;
 	}
 	SceneObject::onMouseEvent(e);
-}
-
-void UiObject::setPosition(const Vector2 &position)
-{
-	m_rect.position = position;
-}
-
-Vector2 UiObject::getPosition() const
-{
-	UiObject *parent = dynamic_cast<UiObject*>(getParent());
-	if(!parent) return m_rect.position;
-
-	Vector2 parentPos = parent->getPosition();
-	Vector2 parentSize = parent->getSize();
-	Vector2 pos = m_rect.position;
-	Vector2 size = m_rect.size;
-
-	parentPos += parentSize * m_anchor;
-	pos -= size * m_anchor;
-
-	return parentPos + pos * parentSize;
-}
-
-void UiObject::setSize(const Vector2 &size)
-{
-	setSize(size.x, size.y);
-}
-
-void UiObject::setSize(const float width, const float height)
-{
-	m_rect.size.set(width, height);
-}
-
-Vector2 UiObject::getSize() const
-{
-	UiObject *parent = dynamic_cast<UiObject*>(getParent());
-	if(!parent) return m_rect.size;
-
-	if(m_rect.size.y <= 0.0f)
-	{
-		return Vector2(m_rect.size.x, m_rect.size.x * m_aspectRatio) * parent->getSize().x;
-	}
-
-	return m_rect.size * parent->getSize();
-}
-
-void UiObject::setWidth(const float width, const float aspectRatio)
-{
-	m_rect.size.set(width, -1.0f);
-	m_aspectRatio = aspectRatio;
-}
-
-Rect UiObject::getRect() const
-{
-	return Rect(getPosition(), getSize());
-}
-
-void UiObject::setAnchor(const Vector2 &anchor)
-{
-	m_anchor = anchor;
-}
-
-void UiObject::setFocused(const bool focused)
-{
-	m_focused = focused;
 }

@@ -22,7 +22,7 @@ public:
 	void update();
 
 	TextureRegion get(const int index) const;
-	TextureRegion get(const int index, const Vector2 &uv0, const Vector2 &uv1) const;
+	TextureRegion get(const int index, const Vector2F &uv0, const Vector2F &uv1) const;
 	TextureRegion get(const int index, const float u0, const float v0, const float u1, const float v1) const;
 
 	Texture2DPtr getTexture() const;

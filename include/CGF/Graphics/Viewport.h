@@ -8,13 +8,13 @@ BEGIN_CGF_NAMESPACE
 class CGF_API Viewport
 {
 public:
-	Viewport(const Recti &view);
+	Viewport(const Rect<Sint32> &view);
 	Viewport(const int x, const int y, const int w, const int h);
 
 	void makeCurrent() const;
 
 private:
-	Recti m_viewport;
+	Rect<Sint32> m_viewport;
 };
 
 END_CGF_NAMESPACE

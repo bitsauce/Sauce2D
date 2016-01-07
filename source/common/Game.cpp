@@ -131,7 +131,7 @@ int Game::run()
 		VertexFormat::s_vct.set(VERTEX_TEX_COORD, 2);
 
 		// Setup viewport
-		Vector2i size;
+		Vector2I size;
 		mainWindow->getSize(&size.x, &size.y);
 		graphicsContext->resizeViewport(size.x, size.y);
 

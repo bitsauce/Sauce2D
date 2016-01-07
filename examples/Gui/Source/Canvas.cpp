@@ -17,16 +17,16 @@ Canvas::Canvas(Window *window, const int width, const int height) :
 	m_anchor.set(0.5f, 0.5f);
 }
 
-Vector2 Canvas::getSize() const
+Vector2F Canvas::getSize() const
 {
-	Vector2i windowSize = m_window->getSize();
+	Vector2I windowSize = m_window->getSize();
 	if(m_useWindowSize)
 	{
 		return windowSize;
 	}
 	else
 	{
-		Vector2 size;
+		Vector2F size;
 		if(windowSize.x < windowSize.y)
 		{
 			// Fit width and use inverse aspect ratio

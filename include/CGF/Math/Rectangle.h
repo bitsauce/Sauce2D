@@ -1,7 +1,7 @@
-#ifndef CGF_RECT_H
-#define CGF_RECT_H
+#ifndef CGF_RECTANGLE_H
+#define CGF_RECTANGLE_H
 
-#include <CGF/config.h>
+#include <CGF/Config.h>
 #include <CGF/Math/Vector.h>
 
 /** \brief A class which holds a 2 dimensional Rect
@@ -11,124 +11,166 @@
  *
  */
 
-class Recti;
-
+template<typename T>
 class CGF_API Rect
 {
 public:
-	Rect();
-	Rect(const Recti &r);
-	Rect(Vector2 pos, Vector2 size);
-	Rect(float x, float y, float width, float height);
-	
-	// Containers
-	bool contains(const Vector2 &point) const;
-	bool contains(const Rect &rect) const;
-
-	// Getters/Setters
-	void set(const Vector2 &pos, const Vector2 &size);
-	void set(const float x, const float y, const float width, const float height);
-	void setPos(const Vector2 &pos);
-	void setPos(const float x, const float y);
-	Vector2 getPos() const;
-	void setX(const float x);
-	float getX() const;
-	void setY(const float y);
-	float getY() const;
-	void setSize(const Vector2 &size);
-	void setSize(const float width, const float height);
-	Vector2 getSize() const;
-	void setWidth(const float width);
-	float getWidth() const;
-	void setHeight(const float height);
-	float getHeight() const;
-
-	// Getters only
-	Vector2 getCenter() const;
-	float getTop() const;
-	float getBottom() const;
-	float getLeft() const;
-	float getRight() const;
-	float getArea() const;
-
-public:
-
-	// AngelScript
-	static void DefaultConstructor(Rect *self);
-	static void CopyConstructor1(const Rect &other, Rect *self);
-	static void CopyConstructor2(const Recti &other, Rect *self);
-	static void InitConstructor1(const float x, const float y, const float width, const float height, Rect *self);
-	static void InitConstructor2(const Vector2 &pos, const Vector2 &size, Rect *self);
-
-public:
-	Vector2 position;
-	Vector2 size;
-};
-
-class CGF_API Recti
-{
-public:
-	Recti();
-	Recti(const Rect &r);
-	Recti(Vector2i pos, Vector2i size);
-	Recti(int x, int y, int width, int height);
-	
-	// Containers
-	bool contains(const Vector2i &point) const;
-	bool contains(const Recti &rect) const;
-
-	// Getters/Setters
-	void set(const Vector2i &pos, const Vector2i &size);
-	void set(const int x, const int y, const int width, const int height);
-	void setPos(const Vector2i &pos);
-	void setPos(const int x, const int y);
-	Vector2i getPos() const;
-	void setX(const int x);
-	int getX() const;
-	void setY(const int y);
-	int getY() const;
-	void setSize(const Vector2i &size);
-	void setSize(const int width, const int height);
-	Vector2i getSize() const;
-	void setWidth(const int width);
-	int getWidth() const;
-	void setHeight(const int height);
-	int getHeight() const;
-
-	// Getters only
-	Vector2 getCenter() const;
-	int getTop() const;
-	int getBottom() const;
-	int getLeft() const;
-	int getRight() const;
-	int getArea() const;
-
-	bool operator<(const Recti &other) const
+	inline explicit Rect() :
+		position(0, 0),
+		size(0, 0)
 	{
-		TUPLE_CMP(this->getPos(), other.getPos())
-		TUPLE_CMP(this->getSize(), other.getSize())
-		return false;
 	}
 
-	bool operator>(const Recti &other) const
+	inline Rect(const Vector2<T> &pos, const Vector2<T> &size) :
+		position(pos),
+		size(size)
 	{
-		TUPLE_CMP2(this->getPos(), other.getPos())
-		TUPLE_CMP2(this->getSize(), other.getSize())
-		return false;
+	}
+
+	inline Rect(T x, T y, T width, T height) :
+		position(x, y),
+		size(width, height)
+	{
+	}
+	
+	inline bool contains(const Vector2<T> &point) const
+	{
+		return point.x > getLeft() &&
+			point.x < getRight() &&
+			point.y < getBottom() &&
+			point.y > getTop();
+	}
+
+	inline bool intersect(const Rect<T> &rect) const
+	{
+		return getLeft() < rect.getRight() &&
+			getRight() > rect.getLeft() &&
+			getTop() < rect.getBottom() &&
+			getBottom() > rect.getTop();
+	}
+
+	inline void set(const Vector2<T> &pos, const Vector2<T> &size)
+	{
+		this->position = pos;
+		this->size = size;
+	}
+
+
+	inline void set(const T x, const T y, const T width, const T height)
+	{
+		position.set(x, y);
+		size.set(width, height);
+	}
+
+	inline void setPosition(const Vector2<T> &pos)
+	{
+		position = pos;
+	}
+
+	inline void setPosition(const T x, const T y)
+	{
+		position.set(x, y);
+	}
+
+	inline Vector2<T> getPosition() const
+	{
+		return position;
+	}
+
+	inline void setX(const T x)
+	{
+		position.x = x;
+	}
+
+	inline T getX() const
+	{
+		return position.x;
+	}
+
+	inline void setY(const T y)
+	{
+		position.y = y;
+	}
+
+	inline T getY() const
+	{
+		return position.y;
+	}
+
+	inline void setSize(const Vector2<T> &size)
+	{
+		this->size = size;
+	}
+
+	inline void setSize(const T width, const T height)
+	{
+		size.set(width, height);
+	}
+
+	inline Vector2<T> getSize() const
+	{
+		return size;
+	}
+
+	inline void setWidth(const T width)
+	{
+		size.x = width;
+	}
+
+	inline T getWidth() const
+	{
+		return size.x;
+	}
+
+	inline void setHeight(const T height)
+	{
+		size.y = height;
+	}
+	
+	inline T getHeight() const
+	{
+		return size.y;
+	}
+
+	inline Vector2<T> getCenter() const
+	{
+		return position + size / 2;
+	}
+
+	inline T getTop() const
+	{
+		return position.y;
+	}
+
+	inline T getBottom() const
+	{
+		return position.y + size.y;
+	}
+
+	inline T getLeft() const
+	{
+		return position.x;
+	}
+
+	inline T getRight() const
+	{
+		return position.x + size.x;
+	}
+	
+	inline T getArea() const
+	{
+		return size.x * size.y;
 	}
 
 public:
-
-	// AngelScript
-	static void DefaultConstructor(Recti *self);
-	static void CopyConstructor1(const Recti &other, Recti *self);
-	static void CopyConstructor2(const Rect &other, Recti *self);
-	static void InitConstructor1(const int x, const int y, const int width, const int height, Recti *self);
-	static void InitConstructor2(const Vector2i &pos, const Vector2i &size, Recti *self);
-
-public:
-	Vector2i position;
-	Vector2i size;
+	Vector2<T> position;
+	Vector2<T> size;
 };
 
-#endif // CGF_RECT_H
+typedef Rect<bool> RectB;
+typedef Rect<float> RectF;
+typedef Rect<double> RectD;
+typedef Rect<int> RectI;
+typedef Rect<uint> RectU;
+
+#endif // CGF_RECTANGLE_H

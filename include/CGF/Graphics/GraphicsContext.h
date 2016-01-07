@@ -171,9 +171,9 @@ public:
 	 */
 	void resizeViewport(const uint w, const uint h);
 
-	Vector2i getSize() const
+	Vector2I getSize() const
 	{
-		return Vector2i(m_width, m_height);
+		return Vector2I(m_width, m_height);
 	}
 
 	/**
@@ -230,7 +230,7 @@ public:
 	 * \param color %Color of the rectangle.
 	 * \param textureRegion Texture region of the rectangle.
 	 */
-	void drawRectangle(const Rect &rect, const Color &color = Color(255), const TextureRegion &textureRegion = TextureRegion());
+	void drawRectangle(const Rect<float> &rect, const Color &color = Color(255), const TextureRegion &textureRegion = TextureRegion());
 
 
 	/**
@@ -240,7 +240,7 @@ public:
 	 * \param color %Color of the rectangle.
 	 * \param textureRegion Texture region of the rectangle.
 	 */
-	void drawRectangle(const Vector2 &pos, const Vector2 &size, const Color &color = Color(255), const TextureRegion &textureRegion = TextureRegion());
+	void drawRectangle(const Vector2F &pos, const Vector2F &size, const Color &color = Color(255), const TextureRegion &textureRegion = TextureRegion());
 
 	/**
 	 * Renders a rectangle.
@@ -260,7 +260,7 @@ public:
 	 * \param segments Number of triangle segments to divide the circle into.
 	 * \param color %Color of the circle.
 	 */
-	void drawCircle(const Vector2 &pos, const float radius, const uint segments, const Color &color = Color(255));
+	void drawCircle(const Vector2F &pos, const float radius, const uint segments, const Color &color = Color(255));
 
 	/**
 	 * Renders a circle.

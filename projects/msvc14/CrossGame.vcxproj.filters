@@ -144,9 +144,6 @@
     <ClCompile Include="..\..\source\Math\Random.cpp">
       <Filter>Source\Math</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\source\Math\Rect.cpp">
-      <Filter>Source\Math</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\source\Math\RectanglePacker.cpp">
       <Filter>Source\Math</Filter>
     </ClCompile>
@@ -158,6 +155,9 @@
     </ClCompile>
     <ClCompile Include="..\..\source\Input\InputManager.cpp">
       <Filter>Source\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\Math\Rectangle.cpp">
+      <Filter>Source\Math</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -198,9 +198,6 @@
       <Filter>Include\CGF\Math</Filter>
     </ClInclude>
     <ClInclude Include="..\..\include\CGF\Math\RectanglePacker.h">
-      <Filter>Include\CGF\Math</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\CGF\Math\Vector.h">
       <Filter>Include\CGF\Math</Filter>
     </ClInclude>
     <ClInclude Include="..\..\include\CGF\Graphics\Sprite.h">
@@ -274,6 +271,9 @@
     </ClInclude>
     <ClInclude Include="..\..\include\CGF\Input\InputManager.h">
       <Filter>Include\CGF\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\CGF\Math\Vector.h">
+      <Filter>Include\CGF\Math</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

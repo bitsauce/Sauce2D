@@ -30,10 +30,6 @@
 **	Include	STL														**
 **********************************************************************/
 #ifdef __WINDOWS__
-	#define NOMINMAX
-	#define WIN32_LEAN_AND_MEAN
-	#include <windows.h>
-	#include <windowsx.h>
 	#include <string>
 	#include <vector>
 	#include <list>
@@ -81,10 +77,9 @@ using namespace std;
 /*********************************************************************
 **	Set typedefs													**
 **********************************************************************/
+typedef unsigned char uchar;
 typedef unsigned short ushort;
 typedef unsigned int uint;
-typedef uintptr_t uintptr;
-typedef unsigned char uchar;
 typedef unsigned long ulong;
 
 #define BEGIN_CGF_NAMESPACE namespace cgf {

@@ -60,7 +60,7 @@ public:
 	float getStringWidth(const string &text, int count = 0);
 	float getStringHeight(const string &text);
 	void draw(SpriteBatch *spriteBatch, float x, float y, const string &text, FontAlign mode = FONT_ALIGN_LEFT);
-	void draw(SpriteBatch *spriteBatch, const Vector2 &pos, const string &text, FontAlign mode = FONT_ALIGN_LEFT) { draw(spriteBatch, pos.x, pos.y, text, mode); }
+	void draw(SpriteBatch *spriteBatch, const Vector2F &pos, const string &text, FontAlign mode = FONT_ALIGN_LEFT) { draw(spriteBatch, pos.x, pos.y, text, mode); }
 
 	/**
 	 * \fn	void Font::drawBox(SpriteBatch *spriteBatch, float x, float y, float width, const string &text, int count, FontAlign mode = FONT_ALIGN_LEFT);
@@ -78,7 +78,7 @@ public:
 	 */
 
 	void drawBox(SpriteBatch *spriteBatch, float x, float y, float width, const string &text, int count, FontAlign mode = FONT_ALIGN_LEFT);
-	void drawBox(SpriteBatch *spriteBatch, const Vector2 &pos, float width, const string &text, int count, FontAlign mode = FONT_ALIGN_LEFT) { drawBox(spriteBatch, pos.x, pos.y, width, text, count, mode); }
+	void drawBox(SpriteBatch *spriteBatch, const Vector2F &pos, float width, const string &text, int count, FontAlign mode = FONT_ALIGN_LEFT) { drawBox(spriteBatch, pos.x, pos.y, width, text, count, mode); }
 
 	void setHeight(float h);
 	float getHeight() const;
