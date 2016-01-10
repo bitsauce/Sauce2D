@@ -33,6 +33,13 @@ public:
 	{
 	}
 	
+	template<typename U>
+	inline Rect(const Rect<U> &other) :
+		position(other.position),
+		size(other.size)
+	{
+	}
+
 	inline bool contains(const Vector2<T> &point) const
 	{
 		return point.x > getLeft() &&
@@ -160,6 +167,14 @@ public:
 	inline T getArea() const
 	{
 		return size.x * size.y;
+	}
+
+	template<typename U>
+	inline Rect<T> &operator=(const Rect<U> &v2)
+	{
+		position = v2.position;
+		size = v2.size;
+		return *this;
 	}
 
 public:

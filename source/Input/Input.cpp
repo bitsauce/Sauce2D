@@ -13,7 +13,9 @@
 BEGIN_CGF_NAMESPACE
 
 InputManager::InputManager(string contextFile) :
-	m_context(0)
+	m_context(0),
+	m_x(0),
+	m_y(0)
 {
 	// Set all str to key mappings
 	m_strToKey["space"] = CGF_KEY_SPACE;

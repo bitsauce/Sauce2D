@@ -16,11 +16,11 @@ uint QUAD_INDICES[6] = {
 	0, 3, 2, 0, 2, 1
 };
 
-Vector4<float> QUAD_VERTICES[4] = {
-	Vector4<float>(0.0f, 0.0f, 0.0f, 1.0f),
-	Vector4<float>(1.0f, 0.0f, 0.0f, 1.0f),
-	Vector4<float>(1.0f, 1.0f, 0.0f, 1.0f),
-	Vector4<float>(0.0f, 1.0f, 0.0f, 1.0f)
+Vector4F QUAD_VERTICES[4] = {
+	Vector4F(0.0f, 0.0f, 0.0f, 1.0f),
+	Vector4F(1.0f, 0.0f, 0.0f, 1.0f),
+	Vector4F(1.0f, 1.0f, 0.0f, 1.0f),
+	Vector4F(0.0f, 1.0f, 0.0f, 1.0f)
 };
 
 Vector2F QUAD_TEXCOORD[4] = {

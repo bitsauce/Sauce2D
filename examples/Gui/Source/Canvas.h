@@ -9,7 +9,10 @@ public:
 	Canvas(Window *window);
 	Canvas(Window *window, const int width, const int height);
 
-	Vector2F getSize() const;
+	void onWindowSizeChanged(WindowEvent *e);
+
+	virtual Vector2I getDrawPosition();
+	virtual Vector2I getDrawSize();
 
 private:
 	Window *m_window;

@@ -11,7 +11,7 @@ public:
 	void onClick(ClickEvent *e);
 	void onDraw(DrawEvent *e);
 
-public:
+private:
 	Texture2DPtr m_texture, m_textureHover, m_textureActive;
 	FontPtr m_font;
 	string m_text;

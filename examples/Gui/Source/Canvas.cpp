@@ -6,6 +6,8 @@ Canvas::Canvas(Window *window) :
 	m_canvasHeight(0),
 	m_useWindowSize(true)
 {
+	WindowEvent e(WindowEvent::SIZE_CHANGED, window, window->getWidth(), window->getHeight());
+	onWindowSizeChanged(&e);
 }
 
 Canvas::Canvas(Window *window, const int width, const int height) :
@@ -15,30 +17,22 @@ Canvas::Canvas(Window *window, const int width, const int height) :
 	m_useWindowSize(false)
 {
 	m_anchor.set(0.5f, 0.5f);
+
+	WindowEvent e(WindowEvent::SIZE_CHANGED, window, window->getWidth(), window->getHeight());
+	onWindowSizeChanged(&e);
 }
 
-Vector2F Canvas::getSize() const
+void Canvas::onWindowSizeChanged(WindowEvent *e)
 {
-	Vector2I windowSize = m_window->getSize();
-	if(m_useWindowSize)
-	{
-		return windowSize;
-	}
-	else
-	{
-		Vector2F size;
-		if(windowSize.x < windowSize.y)
-		{
-			// Fit width and use inverse aspect ratio
-			size.x = (float) min(m_canvasWidth, windowSize.x);
-			size.y = size.x * (float) m_canvasHeight / (float) m_canvasWidth;
-		}
-		else
-		{
-			// Fit height and use aspect ratio
-			size.y = (float) min(m_canvasHeight, windowSize.y);
-			size.x = size.y * (float) m_canvasWidth / (float) m_canvasHeight;
-		}
-		return size;
-	}
+	m_rect.size = m_window->getSize();
+}
+
+Vector2I Canvas::getDrawPosition()
+{
+	return Vector2I(0, 0);
+}
+
+Vector2I Canvas::getDrawSize()
+{
+	return m_window->getSize();
 }

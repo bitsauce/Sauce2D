@@ -32,19 +32,22 @@ void Button::onClick(ClickEvent *e)
 
 void Button::onDraw(DrawEvent *e)
 {
-	RectF rect = getRect();
+	RectF rect = RectF(getDrawRect());
 	GraphicsContext *g = e->getGraphicsContext();
 	if(isPressed() && isHovered())
 	{
 		g->setTexture(m_textureActive);
+		m_text = "Pressed";
 	}
 	else if(isHovered())
 	{
 		g->setTexture(m_textureHover);
+		m_text = "Hover";
 	}
 	else
 	{
 		g->setTexture(m_texture);
+		m_text = "Normal";
 	}
 	
 	g->drawRectangle(rect.position, Vector2F(16.0f), Color(255), TextureRegion(0.0f, 0.0f, 1.0f / 3.0f, 1.0f / 3.0f));
@@ -62,6 +65,4 @@ void Button::onDraw(DrawEvent *e)
 	SpriteBatch *spriteBatch = (SpriteBatch*) e->getUserData();
 	m_font->setHeight(max(rect.size.y - 34.0f, 16.0f));
 	m_font->draw(spriteBatch, rect.getCenter() - Vector2F(0.0f, m_font->getHeight() * 0.5f), m_text, FONT_ALIGN_CENTER);
-
-	m_font->draw(spriteBatch, 0, 0, "Button: [" + util::floatToStr(rect.position.x) + ", " + util::floatToStr(rect.position.y) + ", " + util::floatToStr(rect.size.x) + ", " + util::floatToStr(rect.size.y) + "]");
 }

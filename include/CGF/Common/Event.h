@@ -224,6 +224,8 @@ private:
 	const float m_delta;
 };
 
+class Window;
+
 class CGF_API WindowEvent : public Event
 {
 public:
@@ -232,11 +234,17 @@ public:
 		SIZE_CHANGED = EVENT_WINDOW_SIZE_CHANGED
 	};
 
-	WindowEvent(const WindowEventType type, const Sint32 width, const Sint32 height) :
+	WindowEvent(const WindowEventType type, Window *window, const Sint32 width, const Sint32 height) :
 		Event(type),
+		m_window(window),
 		m_width(width),
 		m_height(height)
 	{
+	}
+
+	Window *getWindow() const
+	{
+		return m_window;
 	}
 
 	Sint32 getWidth() const
@@ -250,6 +258,7 @@ public:
 	}
 
 private:
+	Window *m_window;
 	Sint32 m_width, m_height;
 };
 

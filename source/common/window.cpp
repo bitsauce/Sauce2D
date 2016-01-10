@@ -244,8 +244,16 @@ bool Window::handleEvent(SDL_Event &event, Game *game)
 			m_graphicsContext->resizeViewport(width, height);
 
 			// Call event
-			WindowEvent e(WindowEvent::SIZE_CHANGED, width, height);
-			game->onEvent(&e);
+			{
+				WindowEvent e(WindowEvent::SIZE_CHANGED, this, width, height);
+				game->onEvent(&e);
+			}
+
+			{
+				Vector2I position = game->getInputManager()->getPosition();
+				MouseEvent e(MouseEvent::MOVE, position.x, position.y, MOUSE_BUTTON_NONE, 0, 0);
+				game->onEvent(&e);
+			}
 		}
 		break;
 	}
