@@ -1,6 +1,7 @@
 #include "Button.h"
 
-Button::Button() :
+Button::Button(UiObject *parent) :
+	UiObject(parent),
 	m_texture(ResourceManager::get<Texture2D>("Button.png")),
 	m_textureHover(ResourceManager::get<Texture2D>("Hover.png")),
 	m_textureActive(ResourceManager::get<Texture2D>("Active.png")),
@@ -61,6 +62,8 @@ void Button::onDraw(DrawEvent *e)
 	g->drawRectangle(rect.position.x + rect.size.x - 16.0f, rect.position.y + 16.0f,               16.0f,               rect.size.y - 32.0f, Color(255), TextureRegion(2.0f / 3.0f, 1.0f / 3.0f, 3.0f / 3.0f, 2.0f / 3.0f));
 
 	g->drawRectangle(rect.position + Vector2F(16.0f), rect.size - Vector2F(32.0f), Color(255), TextureRegion(1.0f / 3.0f, 1.0f / 3.0f, 2.0f / 3.0f, 2.0f / 3.0f));
+
+	g->setTexture(0);
 
 	SpriteBatch *spriteBatch = (SpriteBatch*) e->getUserData();
 	m_font->setHeight(max(rect.size.y - 34.0f, 16.0f));

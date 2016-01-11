@@ -11,7 +11,8 @@ enum
 	EVENT_TYPE_HOVER_ENTER,
 	EVENT_TYPE_HOVER_LEAVE,
 	EVENT_TYPE_FOCUS_GAINED,
-	EVENT_TYPE_FOCUS_LOST
+	EVENT_TYPE_FOCUS_LOST,
+	EVENT_TYPE_RESIZE
 };
 
 class ClickEvent : public Event
@@ -79,6 +80,31 @@ public:
 
 private:
 	
+};
+
+class ResizeEvent : public Event
+{
+public:
+
+	ResizeEvent(const uint width, const uint height) :
+		Event(EVENT_TYPE_RESIZE),
+		m_width(width),
+		m_height(height)
+	{
+	}
+
+	uint getWidth() const
+	{
+		return m_width;
+	}
+
+	uint getHeight() const
+	{
+		return m_height;
+	}
+
+private:
+	const uint m_width, m_height;
 };
 
 #endif // UI_EVENTS_H

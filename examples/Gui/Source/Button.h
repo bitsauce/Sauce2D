@@ -6,7 +6,7 @@
 class Button : public UiObject
 {
 public:
-	Button();
+	Button(UiObject *parent);
 
 	void onClick(ClickEvent *e);
 	void onDraw(DrawEvent *e);

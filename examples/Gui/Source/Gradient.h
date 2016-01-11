@@ -5,7 +5,7 @@
 class Gradient : public UiObject
 {
 public:
-	Gradient();
+	Gradient(UiObject *parent);
 
 	void onDraw(DrawEvent *e);
 

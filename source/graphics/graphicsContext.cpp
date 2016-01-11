@@ -53,6 +53,17 @@ void GraphicsContext::clear(const uint mask, const Color &fillColor)
 	if(mask & STENCIL_BUFFER) glClearStencil(0.0f);
 }
 
+void GraphicsContext::enableScissor(const int x, const int y, const int w, const int h)
+{
+	glEnable(GL_SCISSOR_TEST);
+	glScissor(x, y, w, h);
+}
+
+void GraphicsContext::disableScissor()
+{
+	glDisable(GL_SCISSOR_TEST);
+}
+
 void GraphicsContext::setRenderTarget(RenderTarget2D *renderTarget)
 {
 	// Setup viewport and projection
@@ -65,7 +76,7 @@ void GraphicsContext::setRenderTarget(RenderTarget2D *renderTarget)
 			m_renderTarget->bind();
 
 			// Resize viewport
-			resizeViewport(m_renderTarget->m_width, m_renderTarget->m_height);
+			resizeViewport(m_renderTarget->m_width, m_renderTarget->m_height, true);
 		}
 		else if(m_renderTarget)
 		{
@@ -149,7 +160,7 @@ void GraphicsContext::saveScreenshot(string path)
 }
 
 // Orthographic projection
-void GraphicsContext::resizeViewport(const uint w, const uint h)
+void GraphicsContext::resizeViewport(const uint w, const uint h, const bool flipY)
 {
 	// Set size
 	m_width = w;
@@ -158,8 +169,8 @@ void GraphicsContext::resizeViewport(const uint w, const uint h)
 	// Set orthographic projection
 	float l = 0.0f,
 		r = (float) m_width,
-		b = (float) m_height,
-		t = 0.0f,
+		b = flipY ? 0.0f : (float) m_height,
+		t = flipY ? (float)m_height : 0.0f,
 		n = -1.0f,
 		f = 1.0f;
 

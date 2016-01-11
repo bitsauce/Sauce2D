@@ -1,6 +1,7 @@
 #include "Config.h"
 #include "Canvas.h"
 #include "Button.h"
+#include "LineEdit.h"
 #include "Gradient.h"
 
 class GuiGame : public Game
@@ -35,19 +36,22 @@ public:
 		canvas = new Canvas(getWindow(), 1280, 720);
 		addChildLast(canvas);
 
-		spriteBatch = new SpriteBatch(getWindow()->getGraphicsContext());
+		GraphicsContext *gfx = getWindow()->getGraphicsContext();
+		spriteBatch = new SpriteBatch(gfx);
 
-		Gradient *back = new Gradient();
+		Gradient *back = new Gradient(canvas);
 		back->setAnchor(0.5f, 0.5f);
 		back->setWidth(1.0f, 720.0f / 1280.0f);
-		canvas->addChildLast(back);
 
-		button = new Button();
-		button->setWidth(0.125f, 0.3125f);
-		button->setAnchor(Vector2F(0.5f, 0.85f));
-		button->setPosition(Vector2F(0.0f, 0.0f));
+		button = new Button(back);
+		button->setHeight(40.0f / 720.0f, 1.0f / 0.3125f);
+		button->setAnchor(0.5f, 0.85f);
+		button->setPosition(0.0f, 0.0f);
 
-		back->addChildLast(button);
+		LineEdit *lineEdit = new LineEdit(gfx, back);
+		lineEdit->setSize(200.0f / 1280.0f, 40.0f / 720.0f);
+		lineEdit->setPosition(0.0f, -0.5f);
+		lineEdit->setAnchor(0.5f, 0.85f);
 	}
 
 	void onEnd(GameEvent*)
@@ -67,7 +71,7 @@ public:
 
 		// Show cursor position
 		Vector2I pos = getInputManager()->getPosition();
-		font->draw(spriteBatch, Vector2F(10), util::intToStr(pos.x) + ", " + util::intToStr(pos.y));
+		font->draw(spriteBatch, Vector2F(10), "FPS: " + util::floatToStr(getFPS()) + "\nCursor Pos: " + util::intToStr(pos.x) + ", " + util::intToStr(pos.y));
 
 		spriteBatch->end();
 	}

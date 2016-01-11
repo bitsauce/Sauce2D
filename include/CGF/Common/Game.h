@@ -906,6 +906,11 @@ public:
 		}
 	}
 
+	virtual void onTextInput(TextEvent *e)
+	{
+		PROPAGATE_EVENT(onTextInput);
+	}
+
 	/**
 	 * \fn	virtual void EventObject::onKeyDown(KeyEvent *e)
 	 *
@@ -1250,6 +1255,7 @@ public:
 			case EVENT_KEY_DOWN:
 			case EVENT_KEY_UP:
 			case EVENT_KEY_REPEAT: onKeyEvent(static_cast<KeyEvent*>(e)); break;
+			case EVENT_TEXT_INPUT: onTextInput(static_cast<TextEvent*>(e));
 			case EVENT_MOUSE_UP:
 			case EVENT_MOUSE_DOWN:
 			case EVENT_MOUSE_MOVE:

@@ -1,6 +1,7 @@
 #include "Gradient.h"
 
-Gradient::Gradient() :
+Gradient::Gradient(UiObject *parent) :
+	UiObject(parent),
 	m_topColor(200, 200, 200),
 	m_bottomColor(250, 250, 250)
 {

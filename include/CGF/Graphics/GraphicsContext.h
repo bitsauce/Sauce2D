@@ -82,6 +82,9 @@ public:
 	 */
 	void clear(const uint mask, const Color &fillColor = Color(0, 0, 0, 0));
 
+	void enableScissor(const int x, const int y, const int w, const int h);
+	void disableScissor();
+
 	/**
 	 * Sets a render target. This means that everything drawn after this function call
 	 * will be rendered to the given \p renderTarget instead of the screen.
@@ -169,7 +172,7 @@ public:
 	 * \param w Width of the viewport in pixels
 	 * \param h Height of the viewport in pixels
 	 */
-	void resizeViewport(const uint w, const uint h);
+	void resizeViewport(const uint w, const uint h, const bool flipY = false);
 
 	Vector2I getSize() const
 	{

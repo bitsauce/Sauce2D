@@ -196,6 +196,8 @@ int Game::run()
 
 		m_scene = new Scene(this);
 
+		SDL_StartTextInput();
+
 		// Engine initialized
 		m_initialized = true;
 
@@ -281,6 +283,16 @@ int Game::run()
 						KeyEvent e(KeyEvent::UP, (Keycode) event.key.keysym.sym, (Scancode) event.key.keysym.scancode, event.key.keysym.mod);
 						onEvent(&e);
 						m_inputManager->updateKeybinds(&e);
+					}
+					break;
+
+					case SDL_TEXTINPUT:
+					{
+						if((SDL_GetModState() & (KMOD_CTRL | KMOD_ALT)) == 0)
+						{
+							TextEvent e(event.text.text[0]);
+							onEvent(&e);
+						}
 					}
 					break;
 
@@ -383,6 +395,8 @@ int Game::run()
 		}
 gameloopend:
 
+		SDL_StopTextInput();
+		
 		LOG("** Game Ending **");
 
 		// Call onEnd event

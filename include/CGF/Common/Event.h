@@ -20,6 +20,8 @@ enum EventType
 	EVENT_KEY_UP,
 	EVENT_KEY_REPEAT,
 
+	EVENT_TEXT_INPUT,
+
 	EVENT_MOUSE_UP,
 	EVENT_MOUSE_DOWN,
 	EVENT_MOUSE_MOVE,
@@ -111,6 +113,24 @@ private:
 	const Keycode m_keycode;
 	const Scancode m_scancode;
 	const Uint16 m_modifiers;
+};
+
+class CGF_API TextEvent : public Event
+{
+public:
+	TextEvent(const char c) :
+		Event(EVENT_TEXT_INPUT),
+		m_char(c)
+	{
+	}
+
+	char getChar() const
+	{
+		return m_char;
+	}
+
+private:
+	const char m_char;
 };
 
 enum MouseButton
