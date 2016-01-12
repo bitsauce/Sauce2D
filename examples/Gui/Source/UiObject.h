@@ -80,10 +80,17 @@ public:
 	virtual void onMouseEvent(MouseEvent *e);
 	
 private:
+	/** \brief	The parent UiObject. */
 	UiObject * const m_parent;
 
 	/** \brief	Rectangle of the ui element in relative coordinates [0, 1]. */
 	RectF m_rect;
+
+	/** \brief	The click timer. */
+	SimpleTimer m_clickTimer;
+
+	/** \brief	Number of clicks. */
+	int m_clickCount;
 
 	/** \brief	The aspect ratio. */
 	float m_aspectRatio;

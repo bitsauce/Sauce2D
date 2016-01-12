@@ -16,7 +16,10 @@ LineEdit::LineEdit(GraphicsContext *gfx, UiObject *parent) :
 	m_textureInactive(ResourceManager::get<Texture2D>("Input_Inactive.png?PremultiplyAlpha")),
 	m_renderTarget(0),
 	m_dirty(true),
-	m_spriteBatch(gfx, 100)
+	m_spriteBatch(gfx, 100),
+	m_wordBegin(0),
+	m_wordEnd(0),
+	m_text("Test   string    lol    wat")
 {
 }
 
@@ -50,6 +53,8 @@ void LineEdit::onTick(TickEvent *e)
 	}
 	UiObject::onTick(e);
 }
+
+int test = 0;
 
 void LineEdit::onDraw(DrawEvent *e)
 {
@@ -118,13 +123,17 @@ void LineEdit::onDraw(DrawEvent *e)
 			);
 	}
 
+	Color color = isFocused() ? Color(0, 0, 0, 127) : Color(127, 127, 127, 127);
+
+	g->enableScissor(rect.position.x + 8, 720 - rect.position.y - rect.size.y, rect.size.x - 16, rect.size.y);
 	g->drawRectangle(
 		rect.position.x + textOffset.x + m_font->getStringWidth(m_text.substr(0, m_cursor.getSelectionStart())),
 		rect.position.y + textOffset.y,
 		m_font->getStringWidth(m_text.substr(m_cursor.getSelectionStart(), m_cursor.getSelectionLength())),
 		m_font->getHeight(),
-		Color(0, 0, 0, 127)
+		color
 		);
+	g->disableScissor();
 }
 
 void LineEdit::onResize(ResizeEvent *e)
@@ -332,6 +341,16 @@ void LineEdit::onKeyEvent(KeyEvent *e)
 		}
 		break;
 
+		case CGF_KEY_A:
+		{
+			if((e->getModifiers() & KeyEvent::CTRL) != 0)
+			{
+				m_cursor.setPosition(0);
+				m_cursor.setPosition(m_text.size(), true);
+			}
+		}
+		break;
+
 		// Copy
 		case CGF_KEY_C:
 		{
@@ -340,6 +359,7 @@ void LineEdit::onKeyEvent(KeyEvent *e)
 				// TODO
 			}
 		}
+		break;
 
 		// Cut
 		case CGF_KEY_X:
@@ -349,6 +369,7 @@ void LineEdit::onKeyEvent(KeyEvent *e)
 				// TODO
 			}
 		}
+		break;
 
 		// Paste
 		case CGF_KEY_V:
@@ -368,6 +389,61 @@ void LineEdit::onKeyEvent(KeyEvent *e)
 
 void LineEdit::onClick(ClickEvent *e)
 {
-	m_cursor.setPosition(getTextIndexAtPosition(e->getMouseEvent()->getPosition()));
+	const Vector2I mousePosition = e->getMouseEvent()->getPosition();
+	switch(e->getType())
+	{
+		case ClickEvent::BEGIN:
+		{
+			if((e->getClickCount() - 1) % 2 == 0)
+			{
+				m_cursor.setPosition(getTextIndexAtPosition(mousePosition));
+			}
+			else if((e->getClickCount() - 1) % 2 == 1)
+			{
+				int tmp = getTextIndexAtPosition(mousePosition);
+				while(tmp > 0 && m_text[tmp - 1] != ' ') tmp--;
+				m_cursor.setPosition(m_wordBegin = tmp);
+				while(tmp < m_text.size() && m_text[tmp++] != ' ');
+				while(tmp < m_text.size() && m_text[tmp] == ' ') tmp++;
+				m_cursor.setPosition(m_wordEnd = tmp, true);
+			}
+		}
+		break;
+
+		case ClickEvent::DRAG:
+		{
+			if((e->getClickCount() - 1) % 2 == 0)
+			{
+				m_cursor.setPosition(getTextIndexAtPosition(mousePosition), true);
+			}
+			else if((e->getClickCount() - 1) % 2 == 1)
+			{
+				int tmp = getTextIndexAtPosition(mousePosition);
+				if(tmp < m_wordBegin)
+				{
+					m_cursor.setPosition(m_wordEnd);
+				}
+				else
+				{
+					m_cursor.setPosition(m_wordBegin);
+				}
+
+				if(tmp < m_wordBegin)
+				{
+					while(tmp > 0 && m_text[--tmp] != ' ');
+				}
+
+				if(tmp > 0)
+				{
+					while(tmp < m_text.size() && m_text[tmp] != ' ') tmp++;
+					while(tmp < m_text.size() && m_text[++tmp] == ' ');
+				}
+
+				m_cursor.setPosition(tmp, true);
+
+			}
+		}
+		break;
+	}
 	m_cursorTime = 1.0f;
 }

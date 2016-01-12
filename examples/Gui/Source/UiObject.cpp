@@ -6,7 +6,9 @@ UiObject::UiObject(UiObject *parent) :
 	m_rect(),
 	m_hovered(false),
 	m_pressed(false),
-	m_focused(false)
+	m_focused(false),
+	m_clickCount(0),
+	m_clickTimer()
 {
 	if(parent)
 	{
@@ -177,6 +179,12 @@ void UiObject::onMouseEvent(MouseEvent *e)
 				HoverEvent event(HoverEvent::LEAVE, e);
 				onHover(&event);
 			}
+
+			if(m_pressed)
+			{
+				ClickEvent event(ClickEvent::DRAG, m_clickCount, e);
+				onClick(&event);
+			}
 		}
 		break;
 
@@ -185,7 +193,19 @@ void UiObject::onMouseEvent(MouseEvent *e)
 			if(m_hovered)
 			{
 				m_pressed = true;
-				ClickEvent event(ClickEvent::BEGIN, e);
+
+				if(m_clickTimer.stop() < 0.2f)
+				{
+					m_clickTimer.start();
+				}
+				else
+				{
+					m_clickCount = 0;
+				}
+
+				m_clickCount++;
+
+				ClickEvent event(ClickEvent::BEGIN, m_clickCount, e);
 				onClick(&event);
 			}
 		}
@@ -197,8 +217,18 @@ void UiObject::onMouseEvent(MouseEvent *e)
 			{
 				if(m_hovered)
 				{
-					ClickEvent event(ClickEvent::DONE, e);
+					ClickEvent event(ClickEvent::DONE, m_clickCount, e);
 					onClick(&event);
+
+					if(m_clickTimer.stop() < 0.2f)
+					{
+						m_clickTimer.start();
+					}
+					else
+					{
+						m_clickCount = 0;
+					}
+
 					if(!m_focused)
 					{
 						m_focused = true;
@@ -208,7 +238,7 @@ void UiObject::onMouseEvent(MouseEvent *e)
 				}
 				else
 				{
-					ClickEvent event(ClickEvent::CANCELED, e);
+					ClickEvent event(ClickEvent::CANCELED, m_clickCount, e);
 					onClick(&event);
 				}
 				m_pressed = false;

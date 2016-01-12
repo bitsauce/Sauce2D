@@ -6,6 +6,7 @@
 enum
 {
 	EVENT_TYPE_CLICK_BEGIN = EVENT_CUSTOM,
+	EVENT_TYPE_CLICK_DRAG,
 	EVENT_TYPE_CLICK_DONE,
 	EVENT_TYPE_CLICK_CANCELED,
 	EVENT_TYPE_HOVER_ENTER,
@@ -21,14 +22,21 @@ public:
 	enum ClickEventType
 	{
 		BEGIN = EVENT_TYPE_CLICK_BEGIN,
+		DRAG = EVENT_TYPE_CLICK_DRAG,
 		DONE = EVENT_TYPE_CLICK_DONE,
 		CANCELED = EVENT_TYPE_CLICK_CANCELED
 	};
 
-	ClickEvent(ClickEventType type, MouseEvent *mouseEvent) :
+	ClickEvent(ClickEventType type, int clickCount, MouseEvent *mouseEvent) :
 		Event(type),
+		m_clickCount(clickCount),
 		m_mouseEvent(mouseEvent)
 	{
+	}
+
+	int getClickCount() const
+	{
+		return m_clickCount;
 	}
 
 	MouseEvent *getMouseEvent() const
@@ -37,7 +45,8 @@ public:
 	}
 
 private:
-	MouseEvent *m_mouseEvent;
+	const int m_clickCount;
+	MouseEvent *const m_mouseEvent;
 };
 
 class HoverEvent : public Event

@@ -114,6 +114,7 @@ protected:
 	// Data
 	Cursor m_cursor;
 	string m_text;
+	int m_wordBegin, m_wordEnd;
 	float m_cursorTime;
 	float m_offsetX;
 	bool m_dirty;

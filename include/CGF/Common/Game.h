@@ -208,22 +208,33 @@ public:
 	long getTickCount() const;
 
 private:
+
 	/** \brief	The frequency. */
 	LARGE_INTEGER m_frequency;
+
 	/** \brief	The start. */
 	LARGE_INTEGER m_start;
+
 	/** \brief	The end. */
 	LARGE_INTEGER m_end;
+
 	/** \brief	true to running. */
 	bool m_running;
+};
 
-	/**
-	 * \brief	The ticks per security.
-	 *
-	 * ### summary	\brief	The ticks per security.
-	 */
+class CGF_API SimpleTimer
+{
+public:
+	SimpleTimer();
 
-	int m_ticksPerSec;
+	void start();
+	float stop();
+
+	float getElapsedTime() const;
+
+private:
+	clock_t m_startTick;
+	bool m_running;
 };
 
 /*********************************************************************

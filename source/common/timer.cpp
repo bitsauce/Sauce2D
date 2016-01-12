@@ -12,16 +12,10 @@
 BEGIN_CGF_NAMESPACE
 
 Timer::Timer() :
-	m_ticksPerSec(CLOCKS_PER_SEC),
 	m_running(false)
 {
     QueryPerformanceFrequency(&m_frequency);
 	m_start.QuadPart = m_end.QuadPart = 0;
-}
-
-long Timer::getTickCount() const
-{
-	return clock();
 }
 
 void Timer::start()
@@ -47,6 +41,33 @@ double Timer::getElapsedTime() const
 	double startTime = m_start.QuadPart * (1.0 / m_frequency.QuadPart);
 	double endTime = end.QuadPart * (1.0 / m_frequency.QuadPart);
     return endTime - startTime;
+}
+
+SimpleTimer::SimpleTimer() :
+	m_startTick(0),
+	m_running(false)
+{
+}
+
+void SimpleTimer::start()
+{
+	m_running = true;
+	m_startTick = clock();
+}
+
+float SimpleTimer::stop()
+{
+	if(!m_running)
+	{
+		return 0.0f;
+	}
+	m_running = false;
+	return getElapsedTime();
+}
+
+float SimpleTimer::getElapsedTime() const
+{
+	return float(clock() - m_startTick) / float(CLOCKS_PER_SEC);
 }
 
 END_CGF_NAMESPACE
