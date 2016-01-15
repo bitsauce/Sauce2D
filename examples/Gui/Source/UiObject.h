@@ -52,6 +52,11 @@ public:
 	void setPosition(const float x, const float y);
 	Vector2F getPosition() const;
 
+	// Set/get origin
+	void setOrigin(const Vector2F &origin);
+	void setOrigin(const float x, const float y);
+	Vector2F getOrigin() const;
+
 	// Set/get size
 	void setSize(const Vector2F &size);
 	void setSize(const float width, const float height);
@@ -81,6 +86,8 @@ public:
 	virtual Vector2I getDrawSize();
 	RectI getDrawRect();
 
+	virtual void onDraw(DrawEvent *e);
+
 	/**
 	 * \fn	virtual void UiObject::onMouseEvent(MouseEvent *e);
 	 *
@@ -109,6 +116,9 @@ private:
 
 	/** \brief	Screen anchor in relative coordinates [0, 1]. */
 	Vector2F m_anchor;
+
+	/** \brief	The origin. */
+	Vector2F m_origin;
 
 	/** \brief	true if cursor is hovering the ui object. */
 	bool m_hovered;

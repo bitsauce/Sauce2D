@@ -12,4 +12,5 @@ public:
 private:
 	Color m_topColor, m_bottomColor;
 	Vertex m_vertices[4];
+	FontPtr m_font;
 };

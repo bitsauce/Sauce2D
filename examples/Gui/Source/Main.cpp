@@ -4,6 +4,13 @@
 #include "LineEdit.h"
 #include "Gradient.h"
 
+// TODO:
+// Make a general sizing system. Currently the aspect ratio version
+// of setSize (setWidth/Height) does not work with the positioning system.
+// Alternatively, get rid of the aspect ratio system, and 
+// simply make sure the parent object has a constant aspect ratio to
+// make sure the child elements aren't stretched.
+
 class GuiGame : public Game
 {
 	SpriteBatch *spriteBatch;
@@ -44,8 +51,9 @@ public:
 		back->setWidth(1.0f, 720.0f / 1280.0f);
 
 		button = new Button(back);
-		button->setHeight(40.0f / 720.0f, 1.0f / 0.3125f);
+		button->setSize(40 / 1280.0f, 40.0f / 720.0f);// setHeight(40.0f / 720.0f, 1.0f / 0.3125f);
 		button->setAnchor(0.5f, 0.85f);
+		button->setOrigin(0.5f, 0.5f);
 		button->setPosition(0.0f, 0.0f);
 
 		LineEdit *lineEdit = new LineEdit(gfx, back);
@@ -68,10 +76,6 @@ public:
 		e->setUserData(spriteBatch);
 		spriteBatch->begin();
 		Game::onDraw(e);
-
-		// Show cursor position
-		Vector2I pos = getInputManager()->getPosition();
-		font->draw(spriteBatch, Vector2F(10), "FPS: " + util::floatToStr(getFPS()) + "\nCursor Pos: " + util::intToStr(pos.x) + ", " + util::intToStr(pos.y));
 
 		spriteBatch->end();
 	}

@@ -68,4 +68,6 @@ void Button::onDraw(DrawEvent *e)
 	SpriteBatch *spriteBatch = (SpriteBatch*) e->getUserData();
 	m_font->setHeight(max(rect.size.y - 34.0f, 16.0f));
 	m_font->draw(spriteBatch, rect.getCenter() - Vector2F(0.0f, m_font->getHeight() * 0.5f), m_text, FONT_ALIGN_CENTER);
+
+	UiObject::onDraw(e);
 }

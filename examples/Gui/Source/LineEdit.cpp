@@ -1,8 +1,7 @@
 #include "LineEdit.h"
 
 // TODO:
-// - CTRL + Z, CTRL + Y (Done, but not tested extensivly)
-// - Also, for some reason the positioning system doesn't work anymore. So fix it!
+// - There is a bug when marking text while m_offsetX > 0
 
 LineEdit::LineEdit(GraphicsContext *gfx, UiObject *parent) :
 	UiObject(parent),
@@ -72,12 +71,12 @@ void LineEdit::onDraw(DrawEvent *e)
 	RectF rect = getDrawRect();
 	GraphicsContext *g = e->getGraphicsContext();
 
+	if(m_dirty) updateOffset();
+
 	Vector2F textOffset = Vector2F(8.0f - m_offsetX, rect.size.y * 0.5f - m_font->getHeight() * 0.5f);
 
 	if(m_dirty)
 	{
-		updateOffset();
-
 		// Update line edit visualization
 		g->setRenderTarget(m_renderTarget);
 
@@ -147,6 +146,8 @@ void LineEdit::onDraw(DrawEvent *e)
 		color
 		);
 	g->disableScissor();
+
+	UiObject::onDraw(e);
 }
 
 void LineEdit::onResize(ResizeEvent *e)
@@ -213,9 +214,12 @@ int LineEdit::getTextIndexAtPosition(Vector2I pos)
 	RectI rect = getDrawRect();
 	pos -= rect.position;
 	pos -= Vector2F(8.0f - m_offsetX, rect.size.y * 0.5f - m_font->getHeight() * 0.5f);
+	float width = 0.0f;
 	for(int i = 0; i < (int) state->text.size(); ++i)
 	{
-		if(pos.x < m_font->getStringWidth(state->text, i + 1))
+		string ch; ch += state->text[i];
+		width += m_font->getStringWidth(ch);
+		if(pos.x < width)
 		{
 			return i;
 		}
@@ -228,13 +232,13 @@ void LineEdit::updateOffset()
 	Vector2I size = getDrawSize();
 	TextState *state = *m_undoItr;
 	float cursorPos = m_font->getStringWidth(state->text.substr(0, state->cursor.getPosition()));
-	if(cursorPos - m_offsetX > size.x - 16.0f)
+	//if(cursorPos - m_offsetX > size.x - 16.0f)
 	{
-		m_offsetX += (cursorPos - m_offsetX) - (size.x - 16.0f);
+		m_offsetX = max(cursorPos - (size.x - 16.0f), 0.0f);
 	}
-	else if(cursorPos - m_offsetX < 0.0f)
+	//else if(cursorPos - m_offsetX < 0.0f)
 	{
-		m_offsetX += cursorPos - m_offsetX;
+	//	m_offsetX += cursorPos - m_offsetX;
 	}
 }
 
@@ -485,6 +489,11 @@ void LineEdit::onKeyEvent(KeyEvent *e)
 		// Undo
 		case CGF_KEY_Z:
 		{
+			if(modShift)
+			{
+				goto redo;
+			}
+
 			if(modCtrl)
 			{
 				if(!m_states.empty() && m_undoItr != m_states.begin())
@@ -499,6 +508,7 @@ void LineEdit::onKeyEvent(KeyEvent *e)
 		// Redo
 		case CGF_KEY_Y:
 		{
+			redo:
 			if(modCtrl)
 			{
 				if(!m_states.empty() && *m_undoItr != m_states.back())

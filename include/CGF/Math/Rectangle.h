@@ -12,7 +12,7 @@
  */
 
 template<typename T>
-class CGF_API Rect
+class Rect
 {
 public:
 	inline explicit Rect() :

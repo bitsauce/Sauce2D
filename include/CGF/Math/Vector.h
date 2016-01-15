@@ -11,7 +11,7 @@
  */
 
 template<typename T>
-class CGF_API Vector2
+class Vector2
 {
 public:
 	inline explicit Vector2(const T xy = T(0))
@@ -56,7 +56,8 @@ public:
 		return atan2(y, x);
 	}
 
-	inline T angle(const Vector2<T> &v2) const
+	template<typename U>
+	inline T angle(const Vector2<U> &v2) const
 	{
 		return acos(dot(v2) / (magnitude() * v2.magnitude()));
 	}
@@ -81,17 +82,20 @@ public:
 		return Vector2();
 	}
 
-	inline T dot(const Vector2<T> &v2) const
+	template<typename U>
+	inline T dot(const Vector2<U> &v2) const
 	{
 		return (x * v2.x) + (y * v2.y);
 	}
 
-	inline T cross(const Vector2<T> &v2) const
+	template<typename U>
+	inline T cross(const Vector2<U> &v2) const
 	{
 		return (x * v2.y) - (y * v2.x);
 	}
 
-	inline T distance(const Vector2<T> &v2) const
+	template<typename U>
+	inline T distance(const Vector2<U> &v2) const
 	{
 		return sqrtf(pow((v2.x - x), 2) + pow((v2.y - y), 2));
 	}
@@ -114,14 +118,16 @@ public:
 		return *this;
 	}
 
-	inline Vector2<T> &operator+=(const Vector2<T> &v2)
+	template<typename U>
+	inline Vector2<T> &operator+=(const Vector2<U> &v2)
 	{
 		x += v2.x;
 		y += v2.y;
 		return *this;
 	}
 
-	inline Vector2<T> &operator-=(const Vector2<T> &v2)
+	template<typename U>
+	inline Vector2<T> &operator-=(const Vector2<U> &v2)
 	{
 		x -= v2.x;
 		y -= v2.y;
@@ -135,7 +141,8 @@ public:
 		return *this;
 	}
 
-	inline Vector2<T> &operator*=(const Vector2<T> &v2)
+	template<typename U>
+	inline Vector2<T> &operator*=(const Vector2<U> &v2)
 	{
 		x *= v2.x;
 		y *= v2.y;
@@ -149,19 +156,22 @@ public:
 		return *this;
 	}
 
-	inline Vector2<T> &operator/=(const Vector2<T> &v2)
+	template<typename U>
+	inline Vector2<T> &operator/=(const Vector2<U> &v2)
 	{
 		x /= v2.x;
 		y /= v2.y;
 		return *this;
 	}
 
-	inline const Vector2<T> operator+(const Vector2<T> &v2) const
+	template<typename U>
+	inline const Vector2<T> operator+(const Vector2<U> &v2) const
 	{
 		return Vector2<T>(*this) += v2;
 	}
 
-	inline const Vector2<T> operator-(const Vector2<T> &v2) const
+	template<typename U>
+	inline const Vector2<T> operator-(const Vector2<U> &v2) const
 	{
 		return Vector2<T>(*this) -= v2;
 	}
@@ -171,7 +181,8 @@ public:
 		return Vector2<T>(*this) *= scalar;
 	}
 
-	inline const Vector2<T> operator*(const Vector2<T> &v2) const
+	template<typename U>
+	inline const Vector2<T> operator*(const Vector2<U> &v2) const
 	{
 		return  Vector2<T>(*this) *= v2;
 	}
@@ -181,29 +192,34 @@ public:
 		return Vector2<T>(*this) /= scalar;
 	}
 
-	inline const Vector2<T> operator/(const Vector2<T> &v2) const
+	template<typename U>
+	inline const Vector2<T> operator/(const Vector2<U> &v2) const
 	{
 		return Vector2<T>(*this) /= v2;
 	}
 
-	inline bool operator==(const Vector2<T>& v2) const
+	template<typename U>
+	inline bool operator==(const Vector2<U> &v2) const
 	{
 		return (x == v2.x) && (y == v2.y);
 	}
 
-	inline bool operator!=(const Vector2<T>& v2) const
+	template<typename U>
+	inline bool operator!=(const Vector2<U> &v2) const
 	{
 		return (x != v2.x) || (y != v2.y);
 	}
 
-	inline bool operator<(const Vector2<T> &v2) const
+	template<typename U>
+	inline bool operator<(const Vector2<U> &v2) const
 	{
 		TUPLE_CMP(this->x, v2.x);
 		TUPLE_CMP(this->y, v2.y);
 		return false;
 	}
 
-	inline bool operator>(const Vector2<T> &v2) const
+	template<typename U>
+	inline bool operator>(const Vector2<U> &v2) const
 	{
 		TUPLE_CMP2(this->x, v2.x);
 		TUPLE_CMP2(this->y, v2.y);
@@ -226,7 +242,7 @@ typedef Vector2<uint> Vector2U;
  */
 
 template<typename T>
-class CGF_API Vector3
+class Vector3
 {
 public:
 	inline explicit Vector3(T xyz = T(0))
@@ -458,7 +474,7 @@ typedef Vector3<uint> Vector3U;
  */
 
 template<typename T>
-class CGF_API Vector4
+class Vector4
 {
 public:
 	inline explicit Vector4(T xyzw = T(0))

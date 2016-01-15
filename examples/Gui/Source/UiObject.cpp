@@ -3,6 +3,7 @@
 UiObject::UiObject(UiObject *parent) :
 	m_parent(parent),
 	m_anchor(0.0f, 0.0f),
+	m_origin(0.0f, 0.0f),
 	m_rect(),
 	m_hovered(false),
 	m_pressed(false),
@@ -53,6 +54,21 @@ void UiObject::setPosition(const float x, const float y)
 Vector2F UiObject::getPosition() const
 {
 	return m_rect.position;
+}
+
+void UiObject::setOrigin(const Vector2F &origin)
+{
+	m_origin = origin;
+}
+
+void UiObject::setOrigin(const float x, const float y)
+{
+	m_origin.set(x, y);
+}
+
+Vector2F UiObject::getOrigin() const
+{
+	return m_origin;
 }
 
 void UiObject::setSize(const Vector2F &size)
@@ -129,7 +145,7 @@ Vector2I UiObject::getDrawPosition()
 	}
 	else if(size.x <= 0.0f)
 	{
-		size = Vector2F(m_rect.size.y * m_aspectRatio, m_rect.size.y);
+		size = Vector2F(m_rect.size.y * m_aspectRatio / m_parent->getAspectRatio(), m_rect.size.y);
 	}
 	parentPos += parentSize * m_anchor;
 	pos -= size * m_anchor;
@@ -159,6 +175,24 @@ Vector2I UiObject::getDrawSize()
 RectI UiObject::getDrawRect()
 {
 	return RectI(getDrawPosition(), getDrawSize());
+}
+
+void UiObject::onDraw(DrawEvent *e)
+{
+	RectI rect = getDrawRect();
+
+	GraphicsContext *g = e->getGraphicsContext();
+	g->drawRectangle(rect, Color(20, 20, 255, 127));
+
+	g->drawCircle(rect.position + rect.size * m_origin, 2.5f, 5, Color(20, 255, 20, 255));
+
+	if(m_parent)
+	{
+		RectI parentRect = m_parent->getDrawRect();
+		g->drawCircle(parentRect.position + parentRect.size * m_anchor, 2.5f, 5, Color(255, 20, 20, 255));
+	}
+
+	SceneObject::onDraw(e);
 }
 
 void UiObject::onMouseEvent(MouseEvent *e)

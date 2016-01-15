@@ -21,7 +21,7 @@ BEGIN_CGF_NAMESPACE
  * Where ResourceClass is the name the class of the type of resource you are trying to load.
  * ResouceManager can currently load image files and font files.
  */
-class CGF_API ResourceManager
+class /*CGF_API*/ ResourceManager
 {
 public:
 	/**
