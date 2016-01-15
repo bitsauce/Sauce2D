@@ -33,7 +33,19 @@ public:
 	bool isPressed() const;
 
 	// Resize event
-	virtual void onResize(ResizeEvent*) { }
+	virtual void onResize(ResizeEvent *e)
+	{
+		for(SceneObject *child : getChildren())
+		{
+			UiObject *uiChild = dynamic_cast<UiObject*>(child);
+			if(uiChild)
+			{
+				Vector2I size = uiChild->getDrawSize();
+				ResizeEvent e(size.x, size.y);
+				uiChild->onResize(&e);
+			}
+		}
+	}
 
 	// Set/get position
 	void setPosition(const Vector2F &position);

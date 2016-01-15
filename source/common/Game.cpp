@@ -265,13 +265,13 @@ int Game::run()
 					{
 						if(event.key.repeat == 0)
 						{
-							KeyEvent e(KeyEvent::DOWN, (Keycode) event.key.keysym.sym, (Scancode) event.key.keysym.scancode, event.key.keysym.mod);
+							KeyEvent e(KeyEvent::DOWN, m_inputManager, (Keycode) event.key.keysym.sym, (Scancode) event.key.keysym.scancode, event.key.keysym.mod);
 							onEvent(&e);
 							m_inputManager->updateKeybinds(&e);
 						}
 						else
 						{
-							KeyEvent e(KeyEvent::REPEAT, (Keycode) event.key.keysym.sym, (Scancode) event.key.keysym.scancode, event.key.keysym.mod);
+							KeyEvent e(KeyEvent::REPEAT, m_inputManager, (Keycode) event.key.keysym.sym, (Scancode) event.key.keysym.scancode, event.key.keysym.mod);
 							onEvent(&e);
 							m_inputManager->updateKeybinds(&e);
 						}
@@ -280,7 +280,7 @@ int Game::run()
 
 					case SDL_KEYUP:
 					{
-						KeyEvent e(KeyEvent::UP, (Keycode) event.key.keysym.sym, (Scancode) event.key.keysym.scancode, event.key.keysym.mod);
+						KeyEvent e(KeyEvent::UP, m_inputManager, (Keycode) event.key.keysym.sym, (Scancode) event.key.keysym.scancode, event.key.keysym.mod);
 						onEvent(&e);
 						m_inputManager->updateKeybinds(&e);
 					}

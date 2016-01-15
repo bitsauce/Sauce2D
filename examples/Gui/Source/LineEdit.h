@@ -12,10 +12,7 @@ public:
 	LineEdit(GraphicsContext *gfx, UiObject *parent);
 	~LineEdit();
 
-	void setAcceptFunc(function<void()> func)
-	{
-		m_acceptFunc = func;
-	}
+	void setAcceptFunc(function<void()> func);
 
 	void setText(const string &text);
 	string getText() const;
@@ -52,7 +49,7 @@ public:
 			}
 			
 			// Update position
-			m_position = math::clamp(position, 0, m_lineEdit->m_text.size());
+			m_position = math::clamp(position, 0, m_lineEdit->getText().size());
 
 			// Calculate selection length
 			if(anchor)
@@ -65,7 +62,7 @@ public:
 			}
 
 			// Update text offsets
-			m_lineEdit->updateOffset();
+			m_lineEdit->m_dirty = true;
 		}
 
 		void setLength(const int length)
@@ -95,9 +92,16 @@ public:
 		int m_length;
 	};
 
+	struct TextState
+	{
+		Cursor cursor;
+		string text;
+	};
+
 protected:
-	void insertAt(const int pos, const string &str);
-	void removeAt(const int pos, const int length = 1);
+	TextState *insertAt(const int pos, const string &str);
+	TextState *removeAt(const int pos, const int length = 1);
+	TextState *addUndoState();
 	int getTextIndexAtPosition(Vector2I pos);
 	void updateOffset();
 	void onTextInput(TextEvent *e);
@@ -112,8 +116,9 @@ protected:
 	Color m_color;
 
 	// Data
-	Cursor m_cursor;
-	string m_text;
+	SimpleTimer m_textTimer;
+	list<TextState*> m_states;
+	list<TextState*>::iterator m_undoItr;
 	int m_wordBegin, m_wordEnd;
 	float m_cursorTime;
 	float m_offsetX;

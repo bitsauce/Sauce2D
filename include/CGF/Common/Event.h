@@ -86,12 +86,18 @@ public:
 		REPEAT = EVENT_KEY_REPEAT
 	};
 
-	KeyEvent(const KeyEventType type, const Keycode keycode, const Scancode scanCode, const Uint16 modifiers) :
+	KeyEvent(const KeyEventType type, InputManager *inputManager, const Keycode keycode, const Scancode scanCode, const Uint16 modifiers) :
 		Event(type),
+		m_inputManager(inputManager),
 		m_keycode(keycode),
 		m_modifiers(modifiers),
 		m_scancode(scanCode)
 	{
+	}
+
+	InputManager *getInputManager() const
+	{
+		return m_inputManager;
 	}
 
 	Keycode getKeycode() const
@@ -110,6 +116,7 @@ public:
 	}
 
 private:
+	InputManager * const m_inputManager;
 	const Keycode m_keycode;
 	const Scancode m_scancode;
 	const Uint16 m_modifiers;
