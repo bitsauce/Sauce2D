@@ -44,7 +44,10 @@ Game::Game(const string &name, const string &organization) :
 		THROW("A game already exists!");
 	}
 	s_game = this;
+
+	ResourceManager::s_resources = new map<string, void*>();
 }
+map<string, void*> *ResourceManager::s_resources;
 
 Game::~Game()
 {
@@ -53,6 +56,7 @@ Game::~Game()
 	//delete m_audio;
 	delete m_timer;
 	delete m_console;
+	delete ResourceManager::s_resources;
 	s_game = 0;
 }
 

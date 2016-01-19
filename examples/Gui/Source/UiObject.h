@@ -62,10 +62,6 @@ public:
 	void setSize(const float width, const float height);
 	Vector2F getSize() const;
 
-	void setWidth(const float width, const float aspectRatio = -1.0f);
-	void setHeight(const float height, const float aspectRatio = -1.0f);
-	float getAspectRatio() const;
-
 	void setRect(const RectF &rect);
 	RectF getRect() const;
 
@@ -110,9 +106,6 @@ private:
 
 	/** \brief	Number of clicks. */
 	int m_clickCount;
-
-	/** \brief	The aspect ratio. */
-	float m_aspectRatio;
 
 	/** \brief	Screen anchor in relative coordinates [0, 1]. */
 	Vector2F m_anchor;

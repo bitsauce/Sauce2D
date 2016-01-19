@@ -232,13 +232,13 @@ void LineEdit::updateOffset()
 	Vector2I size = getDrawSize();
 	TextState *state = *m_undoItr;
 	float cursorPos = m_font->getStringWidth(state->text.substr(0, state->cursor.getPosition()));
-	//if(cursorPos - m_offsetX > size.x - 16.0f)
+	if(cursorPos - m_offsetX > size.x - 16.0f)
 	{
 		m_offsetX = max(cursorPos - (size.x - 16.0f), 0.0f);
 	}
-	//else if(cursorPos - m_offsetX < 0.0f)
+	else if(cursorPos - m_offsetX < 0.0f)
 	{
-	//	m_offsetX += cursorPos - m_offsetX;
+		m_offsetX = cursorPos;
 	}
 }
 

@@ -19,6 +19,7 @@ Canvas::Canvas(Window *window, const int width, const int height) :
 	m_useWindowSize(false)
 {
 	setAnchor(0.5f, 0.5f);
+	setOrigin(0.5f, 0.5f);
 
 	WindowEvent e(WindowEvent::SIZE_CHANGED, window, window->getWidth(), window->getHeight());
 	onWindowSizeChanged(&e);
@@ -26,16 +27,36 @@ Canvas::Canvas(Window *window, const int width, const int height) :
 
 void Canvas::onWindowSizeChanged(WindowEvent *e)
 {
-	setSize(m_window->getSize());
+	Vector2F size;
+	if(e->getWidth() > e->getHeight())
+	{
+		// Fit width and use inverse aspect ratio
+		size.x = (float) min(m_canvasWidth, e->getWidth());
+		size.y = size.x * (float) m_canvasHeight / (float) m_canvasWidth;
+	}
+	else
+	{
+		// Fit height and use aspect ratio
+		size.y = (float) min(m_canvasHeight, e->getHeight());
+		size.x = size.y * (float) m_canvasWidth / (float) m_canvasHeight;
+	}
+	setSize(size);
 	UiObject::onWindowSizeChanged(e);
 }
 
 Vector2I Canvas::getDrawPosition()
 {
-	return Vector2I(0, 0);
+	Vector2F parentPos = Vector2F();
+	Vector2F parentSize = m_window->getSize();
+	Vector2F pos = Vector2F();
+	Vector2F size = getSize();
+
+	parentPos += parentSize * Vector2F(0.5f, 0.5f);
+	pos -= size * Vector2F(0.5f, 0.5f);
+	return parentPos + pos;
 }
 
 Vector2I Canvas::getDrawSize()
 {
-	return m_window->getSize();
+	return getSize();
 }

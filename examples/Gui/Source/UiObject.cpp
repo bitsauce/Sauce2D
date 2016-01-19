@@ -90,18 +90,6 @@ Vector2F UiObject::getSize() const
 	return m_rect.size;
 }
 
-void UiObject::setWidth(const float width, const float aspectRatio)
-{
-	m_rect.size.set(width, -1.0f);
-	m_aspectRatio = aspectRatio;
-}
-
-void UiObject::setHeight(const float width, const float aspectRatio)
-{
-	m_rect.size.set(-1.0f, width);
-	m_aspectRatio = aspectRatio;
-}
-
 void UiObject::setRect(const RectF &rect)
 {
 	m_rect = rect;
@@ -139,16 +127,9 @@ Vector2I UiObject::getDrawPosition()
 	Vector2F parentSize = m_parent->getDrawSize();
 	Vector2F pos = m_rect.position;
 	Vector2F size = m_rect.size;
-	if(size.y <= 0.0f)
-	{
-		size = Vector2F(m_rect.size.x, m_rect.size.x * m_aspectRatio / m_parent->getAspectRatio());
-	}
-	else if(size.x <= 0.0f)
-	{
-		size = Vector2F(m_rect.size.y * m_aspectRatio / m_parent->getAspectRatio(), m_rect.size.y);
-	}
+
 	parentPos += parentSize * m_anchor;
-	pos -= size * m_anchor;
+	pos -= size * m_origin;
 	return parentPos + pos * parentSize;
 }
 
@@ -159,16 +140,6 @@ Vector2I UiObject::getDrawSize()
 		LOG("UiObject not a child of Canvas!");
 		return Vector2I();
 	}
-
-	if(m_rect.size.y <= 0.0f)
-	{
-		return Vector2F(m_rect.size.x, m_rect.size.x * m_aspectRatio) * m_parent->getDrawSize().x;
-	}
-	else if(m_rect.size.x <= 0.0f)
-	{
-		return Vector2F(m_rect.size.y * m_aspectRatio, m_rect.size.y) * m_parent->getDrawSize().y;
-	}
-	
 	return m_rect.size * m_parent->getDrawSize();
 }
 
@@ -181,7 +152,7 @@ void UiObject::onDraw(DrawEvent *e)
 {
 	RectI rect = getDrawRect();
 
-	GraphicsContext *g = e->getGraphicsContext();
+	/*GraphicsContext *g = e->getGraphicsContext();
 	g->drawRectangle(rect, Color(20, 20, 255, 127));
 
 	g->drawCircle(rect.position + rect.size * m_origin, 2.5f, 5, Color(20, 255, 20, 255));
@@ -190,7 +161,7 @@ void UiObject::onDraw(DrawEvent *e)
 	{
 		RectI parentRect = m_parent->getDrawRect();
 		g->drawCircle(parentRect.position + parentRect.size * m_anchor, 2.5f, 5, Color(255, 20, 20, 255));
-	}
+	}*/
 
 	SceneObject::onDraw(e);
 }
@@ -287,9 +258,4 @@ void UiObject::onMouseEvent(MouseEvent *e)
 		break;
 	}
 	SceneObject::onMouseEvent(e);
-}
-
-float UiObject::getAspectRatio() const
-{
-	return m_rect.size.y / m_rect.size.x;
 }

@@ -16,15 +16,12 @@ void Button::onClick(ClickEvent *e)
 	switch(e->getType())
 	{
 		case ClickEvent::DONE:
-			LOG("Clicked!");
 			break;
 
 		case ClickEvent::BEGIN:
-			LOG("Click Begin");
 			break;
 
 		case ClickEvent::CANCELED:
-			LOG("Click Canceled");
 			break;
 	}
 

@@ -48,10 +48,11 @@ public:
 
 		Gradient *back = new Gradient(canvas);
 		back->setAnchor(0.5f, 0.5f);
-		back->setWidth(1.0f, 720.0f / 1280.0f);
+		back->setOrigin(0.5f, 0.5f);
+		back->setSize(1.0f, 1.0f);
 
 		button = new Button(back);
-		button->setSize(40 / 1280.0f, 40.0f / 720.0f);// setHeight(40.0f / 720.0f, 1.0f / 0.3125f);
+		button->setSize(150.0f / 1280.0f, 40.0f / 720.0f);
 		button->setAnchor(0.5f, 0.85f);
 		button->setOrigin(0.5f, 0.5f);
 		button->setPosition(0.0f, 0.0f);
@@ -60,6 +61,7 @@ public:
 		lineEdit->setSize(200.0f / 1280.0f, 40.0f / 720.0f);
 		lineEdit->setPosition(0.0f, -0.5f);
 		lineEdit->setAnchor(0.5f, 0.85f);
+		lineEdit->setOrigin(0.5f, 0.5f);
 	}
 
 	void onEnd(GameEvent*)
