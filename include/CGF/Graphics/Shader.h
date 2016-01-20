@@ -20,6 +20,7 @@ public:
 
 	void link();
 	
+	// Instance ->
 	void setUniform1i(const string &name, const int v0);
 	void setUniform2i(const string &name, const int v0, const int v1);
 	void setUniform3i(const string &name, const int v0, const int v1, const int v2);
@@ -37,6 +38,7 @@ public:
 	void setUniform4f(const string &name, const float v0, const float v1, const float v2, const float v3);
 	void setUniformMatrix4f(const string &name, const float *v0);
 	void setSampler2D(const string &name, Texture2DPtr texture);
+	// <- Instance
 
 	void exportAssembly(const string &fileName);
 	

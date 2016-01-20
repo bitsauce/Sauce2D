@@ -4,8 +4,7 @@ Canvas::Canvas(Window *window) :
 	UiObject(0),
 	m_window(window),
 	m_canvasWidth(0),
-	m_canvasHeight(0),
-	m_useWindowSize(true)
+	m_canvasHeight(0)
 {
 	WindowEvent e(WindowEvent::SIZE_CHANGED, window, window->getWidth(), window->getHeight());
 	onWindowSizeChanged(&e);
@@ -15,8 +14,7 @@ Canvas::Canvas(Window *window, const int width, const int height) :
 	UiObject(0),
 	m_window(window),
 	m_canvasWidth(width),
-	m_canvasHeight(height),
-	m_useWindowSize(false)
+	m_canvasHeight(height)
 {
 	setAnchor(0.5f, 0.5f);
 	setOrigin(0.5f, 0.5f);
@@ -28,7 +26,11 @@ Canvas::Canvas(Window *window, const int width, const int height) :
 void Canvas::onWindowSizeChanged(WindowEvent *e)
 {
 	Vector2F size;
-	if(e->getWidth() > e->getHeight())
+	if(m_canvasWidth <= 0 || m_canvasHeight <= 0)
+	{
+		size.set(e->getWidth(), e->getHeight());
+	}
+	else if(e->getWidth() > e->getHeight())
 	{
 		// Fit width and use inverse aspect ratio
 		size.x = (float) min(m_canvasWidth, e->getWidth());

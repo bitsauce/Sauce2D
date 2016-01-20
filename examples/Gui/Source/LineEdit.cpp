@@ -1,8 +1,5 @@
 #include "LineEdit.h"
 
-// TODO:
-// - There is a bug when marking text while m_offsetX > 0
-
 LineEdit::LineEdit(GraphicsContext *gfx, UiObject *parent) :
 	UiObject(parent),
 	m_cursorTime(0.0f),

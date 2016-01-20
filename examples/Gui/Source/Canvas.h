@@ -17,7 +17,6 @@ public:
 private:
 	Window *m_window;
 	const int m_canvasWidth, m_canvasHeight;
-	const bool m_useWindowSize;
 };
 
 #endif // CANVAS_H

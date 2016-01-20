@@ -59,7 +59,32 @@ public:
 
 	float getStringWidth(const string &text, int count = 0);
 	float getStringHeight(const string &text);
+
+	/**
+	 * \fn	void Font::draw(SpriteBatch *spriteBatch, float x, float y, const string &text, FontAlign mode = FONT_ALIGN_LEFT);
+	 *
+	 * \brief	Draws \p text to the screen.
+	 *
+	 * \param [in,out]	spriteBatch	The sprite batch to draw the text with.
+	 * \param	x				   	The x coordinate.
+	 * \param	y				   	The y coordinate.
+	 * \param	text			   	The text to draw.
+	 * \param	mode			   	The font alignment mode.
+	 */
+
 	void draw(SpriteBatch *spriteBatch, float x, float y, const string &text, FontAlign mode = FONT_ALIGN_LEFT);
+
+	/**
+	 * \fn	void Font::draw(SpriteBatch *spriteBatch, const Vector2F &pos, const string &text, FontAlign mode = FONT_ALIGN_LEFT)
+	 *
+	 * \brief	Draws \p text to the screen.
+	 *
+	 * \param [in,out]	spriteBatch	The sprite batch to draw the text with.
+	 * \param	pos				   	The position.
+	 * \param	text			   	The text to draw.
+	 * \param	mode			   	The font alignment mode.
+	 */
+
 	void draw(SpriteBatch *spriteBatch, const Vector2F &pos, const string &text, FontAlign mode = FONT_ALIGN_LEFT) { draw(spriteBatch, pos.x, pos.y, text, mode); }
 
 	/**
@@ -70,7 +95,7 @@ public:
 	 * \param [in,out]	spriteBatch	The sprite batch to draw the text to.
 	 * \param	x				   	The x coordinate.
 	 * \param	y				   	The y coordinate.
-	 * \param	width			   	The max lengt of a line.
+	 * \param	width			   	The max width of a line.
 	 * \param	text			   	The text to draw.
 	 * \param	count			   	Number of characters of \p text to draw.
 	 * \param	mode			   	The font alignment mode.
@@ -107,9 +132,10 @@ protected:
 	CharDescr m_defChar;
 	bool m_hasOutline;
 
-	float m_scale;
-	float m_depth;
-	Color m_color;
+	// Technically, position, text and alignment mode can be a part of FontInstance
+	float m_scale; // Instance
+	float m_depth; // Instance
+	Color m_color; // Instance
 	FontTextEncoding m_encoding;
 
 	map<int, CharDescr*> m_chars;

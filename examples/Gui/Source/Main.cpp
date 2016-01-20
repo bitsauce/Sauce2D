@@ -4,13 +4,6 @@
 #include "LineEdit.h"
 #include "Gradient.h"
 
-// TODO:
-// Make a general sizing system. Currently the aspect ratio version
-// of setSize (setWidth/Height) does not work with the positioning system.
-// Alternatively, get rid of the aspect ratio system, and 
-// simply make sure the parent object has a constant aspect ratio to
-// make sure the child elements aren't stretched.
-
 class GuiGame : public Game
 {
 	SpriteBatch *spriteBatch;
@@ -25,20 +18,24 @@ public:
 
 	void onKeyDown(KeyEvent *e)
 	{
-		switch(e->getKeycode())
+		if((e->getModifiers() & KeyEvent::CTRL) != 0)
 		{
-			case CGF_KEY_1: getWindow()->setSize(800, 600); break;
-			case CGF_KEY_2: getWindow()->setSize(1024, 1024); break;
-			case CGF_KEY_3: getWindow()->setSize(1280, 720); break;
-			case CGF_KEY_4: getWindow()->setSize(1920, 1080); break;
-			case CGF_KEY_5: getWindow()->setSize(600, 800); break;
+			switch(e->getKeycode())
+			{
+				case CGF_KEY_1: getWindow()->setSize(800, 600); break;
+				case CGF_KEY_2: getWindow()->setSize(600, 800); break;
+				case CGF_KEY_3: getWindow()->setSize(1024, 1024); break;
+				case CGF_KEY_4: getWindow()->setSize(1280, 720); break;
+				case CGF_KEY_5: getWindow()->setSize(1920, 1080); break;
+			}
 		}
 		Game::onKeyDown(e);
 	}
 
 	void onStart(GameEvent*)
 	{
-		font = ResourceManager::get<Font>("Font.fnt");
+		// Font holds a shared_ptr<FontResource>, which is loaded by the ResourceManager
+		/*Font*/ font = ResourceManager::get<Font>("Font.fnt");
 
 		canvas = new Canvas(getWindow(), 1280, 720);
 		addChildLast(canvas);
@@ -78,7 +75,6 @@ public:
 		e->setUserData(spriteBatch);
 		spriteBatch->begin();
 		Game::onDraw(e);
-
 		spriteBatch->end();
 	}
 };
