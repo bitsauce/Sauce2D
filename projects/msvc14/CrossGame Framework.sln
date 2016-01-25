@@ -31,33 +31,33 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CrossGame", "CrossGame.vcxp
 		{DA956FD3-E142-46F2-9DD5-C78BEBB56B7A} = {DA956FD3-E142-46F2-9DD5-C78BEBB56B7A}
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Examples", "Examples", "{52A3D16B-ED61-40D4-8804-C241B45F0B10}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Samples", "Samples", "{52A3D16B-ED61-40D4-8804-C241B45F0B10}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Minimal", "..\..\examples\Minimal\Project\Minimal.vcxproj", "{7A44F0BC-017A-4954-AC15-4B357471983C}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Minimal", "..\..\samples\Minimal\Project\Minimal.vcxproj", "{7A44F0BC-017A-4954-AC15-4B357471983C}"
 	ProjectSection(ProjectDependencies) = postProject
 		{F3F25B49-2C6B-4FF0-98FB-47695DF70B8A} = {F3F25B49-2C6B-4FF0-98FB-47695DF70B8A}
 	EndProjectSection
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Testing", "..\..\examples\Testing\Project\Testing.vcxproj", "{615FF2A0-5F99-4B6A-B3DE-2D52C773A9A9}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Testing", "..\..\samples\Testing\Project\Testing.vcxproj", "{615FF2A0-5F99-4B6A-B3DE-2D52C773A9A9}"
 	ProjectSection(ProjectDependencies) = postProject
 		{F3F25B49-2C6B-4FF0-98FB-47695DF70B8A} = {F3F25B49-2C6B-4FF0-98FB-47695DF70B8A}
 	EndProjectSection
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SceneGraph", "..\..\examples\SceneGraph\Project\SceneGraph.vcxproj", "{3A838EE6-19C4-4687-B7E4-06D574F4A7E8}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SceneGraph", "..\..\samples\SceneGraph\Project\SceneGraph.vcxproj", "{3A838EE6-19C4-4687-B7E4-06D574F4A7E8}"
 	ProjectSection(ProjectDependencies) = postProject
 		{F3F25B49-2C6B-4FF0-98FB-47695DF70B8A} = {F3F25B49-2C6B-4FF0-98FB-47695DF70B8A}
 	EndProjectSection
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "FullScreen", "..\..\examples\FullScreen\Project\FullScreen.vcxproj", "{10FC59C2-4E33-4135-A93B-6F89122293ED}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "FullScreen", "..\..\samples\FullScreen\Project\FullScreen.vcxproj", "{10FC59C2-4E33-4135-A93B-6F89122293ED}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DrawText", "..\..\examples\DrawText\Project\DrawText.vcxproj", "{8606C81C-4646-4FFF-9B83-20E7F75AE85F}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DrawText", "..\..\samples\DrawText\Project\DrawText.vcxproj", "{8606C81C-4646-4FFF-9B83-20E7F75AE85F}"
 	ProjectSection(ProjectDependencies) = postProject
 		{F3F25B49-2C6B-4FF0-98FB-47695DF70B8A} = {F3F25B49-2C6B-4FF0-98FB-47695DF70B8A}
 	EndProjectSection
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TextureAtlas", "..\..\examples\TextureAtlas\Project\TextureAtlas.vcxproj", "{F1C5574E-6A8C-42FB-BBF0-6AAB04230C42}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TextureAtlas", "..\..\samples\TextureAtlas\Project\TextureAtlas.vcxproj", "{F1C5574E-6A8C-42FB-BBF0-6AAB04230C42}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Gui", "..\..\examples\Gui\Project\Gui.vcxproj", "{46B706DD-17FB-4457-92E7-2DDA1878FC9A}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Gui", "..\..\samples\Gui\Project\Gui.vcxproj", "{46B706DD-17FB-4457-92E7-2DDA1878FC9A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
