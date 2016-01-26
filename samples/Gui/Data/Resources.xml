@@ -1,0 +1,33 @@
+<resources>
+	<!--Button-->
+	<texture>
+		<name>ButtonActive</name>
+		<path>Images/Button_Active.png</path>
+	</texture>
+	<texture>
+		<name>ButtonHover</name>
+		<path>Images/Button_Hover.png</path>
+	</texture>
+	<texture>
+		<name>ButtonInactive</name>
+		<path>Images/Button_Inactive.png</path>
+	</texture>
+	
+	<!--LineEdit-->
+	<texture>
+		<name>InputActive</name>
+		<path>Images/Input_Active.png</path>
+		<premultiplyAlpha>true</premultiplyAlpha>
+	</texture>
+	<texture>
+		<name>InputInactive</name>
+		<path>Images/Input_Inactive.png</path>
+		<premultiplyAlpha>true</premultiplyAlpha>
+	</texture>
+
+	<!--Fonts-->
+	<font>
+		<name>Font</name>
+		<path>Fonts/Font.fnt</path>
+	</font>
+</resources>

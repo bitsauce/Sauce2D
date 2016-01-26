@@ -12,7 +12,7 @@
 
 BEGIN_CGF_NAMESPACE
 
-Sprite::Sprite(const Texture2DPtr texture, const Rect<float> &rectangle, const Vector2F &origin, const float angle, const TextureRegion &region, const Color &color, const float depth, const Vector2F scale) :
+Sprite::Sprite(Texture2D *texture, const Rect<float> &rectangle, const Vector2F &origin, const float angle, const TextureRegion &region, const Color &color, const float depth, const Vector2F scale) :
 	m_texture(texture),
 	m_textureRegion(region),
 	m_position(rectangle.position),
@@ -191,7 +191,7 @@ TextureRegion Sprite::getRegion() const
 	return m_textureRegion;
 }
 
-Texture2DPtr Sprite::getTexture() const
+Texture2D *Sprite::getTexture() const
 {
 	return m_texture;
 }

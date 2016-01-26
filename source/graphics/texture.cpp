@@ -330,22 +330,14 @@ void Texture2D::exportToFile(string path)
 	getPixmap().exportToFile(path);
 }
 
-Texture2DPtr Texture2D::loadResource(const string &name)
+Texture2D::Texture2D(ResourceDesc *desc_)
 {
-	// Split input
-	vector<string> strings = util::splitString(name, "?");
-	string filePath = strings[0];
-	bool premultiply = false;
-	for(uint i = 1; i < strings.size(); ++i)
-	{
-		if(strings[i] == "PremultiplyAlpha")
-		{
-			premultiply = true;
-		}
-	}
-
 	// Load texture from file
-	return Texture2DPtr(new Texture2D(Pixmap(filePath, premultiply)));
+	TextureResourceDesc *desc = static_cast<TextureResourceDesc*>(desc_);
+	if(desc)
+	{
+		init(Pixmap(desc->getPath(), desc->getPremultiplyAlpha()));
+	}
 }
 
 END_CGF_NAMESPACE

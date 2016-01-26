@@ -21,7 +21,7 @@ public:
 	//void addVertices(const vector<Vertex> &vertices);
 
 	void setFillColor(const Color &color);
-	void setFillTexture(const Texture2DPtr &texture);
+	void setFillTexture(Texture2D *texture);
 	void setPenColor(const Color &color);
 	void setPenSize(const float size);
 
@@ -35,7 +35,7 @@ private:
 	bool validate();
 
 	Color m_fillColor;
-	Texture2DPtr m_fillTexture;
+	Texture2D *m_fillTexture;
 	Color m_penColor;
 	float m_penSize;
 	Vertex *m_vertices;

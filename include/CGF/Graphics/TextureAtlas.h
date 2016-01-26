@@ -12,7 +12,7 @@ class CGF_API TextureAtlas
 {
 public:
 	TextureAtlas();
-	TextureAtlas(vector<Texture2DPtr> textures, const int border = 1);
+	TextureAtlas(vector<Texture2D*> textures, const int border = 1);
 	TextureAtlas(vector<Pixmap> &pixmaps, const int border = 1);
 	~TextureAtlas();
 
@@ -25,7 +25,7 @@ public:
 	TextureRegion get(const int index, const Vector2F &uv0, const Vector2F &uv1) const;
 	TextureRegion get(const int index, const float u0, const float v0, const float u1, const float v1) const;
 
-	Texture2DPtr getTexture() const;
+	Texture2D *getTexture() const;
 	
 	struct AtlasPage
 	{
@@ -57,7 +57,7 @@ public:
 private:
 	void init(const vector<Pixmap> &pixmaps);
 
-	Texture2DPtr m_texture;
+	Texture2D *m_texture;
 	RectanglePacker m_texturePacker;
 	RectanglePacker::Result m_result;
 	int m_size;

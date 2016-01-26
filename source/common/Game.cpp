@@ -44,10 +44,7 @@ Game::Game(const string &name, const string &organization) :
 		THROW("A game already exists!");
 	}
 	s_game = this;
-
-	ResourceManager::s_resources = new map<string, void*>();
 }
-map<string, void*> *ResourceManager::s_resources;
 
 Game::~Game()
 {
@@ -56,7 +53,7 @@ Game::~Game()
 	//delete m_audio;
 	delete m_timer;
 	delete m_console;
-	delete ResourceManager::s_resources;
+	delete m_resourceManager;
 	s_game = 0;
 }
 
@@ -107,6 +104,9 @@ int Game::run()
 		{
 			THROW("Unable to initialize SDL");
 		}
+
+		// Initialize resource manager
+		m_resourceManager = new ResourceManager("Resources.xml");
 
 		// Initialize window
 		Window *mainWindow = new Window(m_name.c_str(), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 1280, 720, 0);
@@ -193,7 +193,7 @@ int Game::run()
 
 		uchar pixel[4];
 		pixel[0] = pixel[1] = pixel[2] = pixel[3] = 255;
-		GraphicsContext::s_defaultTexture = Texture2DPtr(new Texture2D(1, 1, pixel));
+		GraphicsContext::s_defaultTexture = new Texture2D(1, 1, pixel);
 
 		// Initialize input handler
 		m_inputManager = new InputManager("config:/InputDefault.ini");//(m_inputConfig);

@@ -110,9 +110,9 @@ protected:
 
 	// Visualization
 	SpriteBatch m_spriteBatch;
-	Texture2DPtr m_textureActive, m_textureInactive;
+	Resource<Texture2D> m_textureActive, m_textureInactive;
 	RenderTarget2D *m_renderTarget;
-	FontPtr m_font;
+	Resource<Font> m_font;
 	Color m_color;
 
 	// Data

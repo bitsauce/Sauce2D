@@ -2,13 +2,13 @@
 
 Button::Button(UiObject *parent) :
 	UiObject(parent),
-	m_texture(ResourceManager::get<Texture2D>("Button.png")),
-	m_textureHover(ResourceManager::get<Texture2D>("Hover.png")),
-	m_textureActive(ResourceManager::get<Texture2D>("Active.png")),
-	m_font(ResourceManager::get<Font>("Font.fnt")),
+	m_texture(Game::GetInstance()->getResourceManager()->get<Texture2D>("ButtonInactive")),
+	m_textureHover(Game::GetInstance()->getResourceManager()->get<Texture2D>("ButtonHover")),
+	m_textureActive(Game::GetInstance()->getResourceManager()->get<Texture2D>("ButtonActive")),
+	m_font(Game::GetInstance()->getResourceManager()->get<Font>("Font")),
 	m_text("Button")
 {
-	m_font->setColor(Color(0, 0, 0, 255));
+	m_font.get()->setColor(Color(0, 0, 0, 255));
 }
 
 void Button::onClick(ClickEvent *e)
@@ -34,17 +34,17 @@ void Button::onDraw(DrawEvent *e)
 	GraphicsContext *g = e->getGraphicsContext();
 	if(isPressed() && isHovered())
 	{
-		g->setTexture(m_textureActive);
+		g->setTexture(m_textureActive.get());
 		m_text = "Pressed";
 	}
 	else if(isHovered())
 	{
-		g->setTexture(m_textureHover);
+		g->setTexture(m_textureHover.get());
 		m_text = "Hover";
 	}
 	else
 	{
-		g->setTexture(m_texture);
+		g->setTexture(m_texture.get());
 		m_text = "Normal";
 	}
 	
@@ -63,8 +63,8 @@ void Button::onDraw(DrawEvent *e)
 	g->setTexture(0);
 
 	SpriteBatch *spriteBatch = (SpriteBatch*) e->getUserData();
-	m_font->setHeight(max(rect.size.y - 34.0f, 16.0f));
-	m_font->draw(spriteBatch, rect.getCenter() - Vector2F(0.0f, m_font->getHeight() * 0.5f), m_text, FONT_ALIGN_CENTER);
+	m_font.get()->setHeight(max(rect.size.y - 34.0f, 16.0f));
+	m_font.get()->draw(spriteBatch, rect.getCenter() - Vector2F(0.0f, m_font.get()->getHeight() * 0.5f), m_text, FONT_ALIGN_CENTER);
 
 	UiObject::onDraw(e);
 }

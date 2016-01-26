@@ -13,7 +13,7 @@ class CGF_API Sprite
 {
 	friend class SpriteBatch;
 public:
-	Sprite(const Texture2DPtr texture = nullptr, const Rect<float> &rectangle = Rect<float>(0, 0, 0, 0), const Vector2F &origin = Vector2F(0.0f, 0.0f), const float angle = 0.0f, const TextureRegion &region = TextureRegion(), const Color &color = Color(255), const float depth = 0.0f, const Vector2F scale = Vector2F(1.0f, 1.0f));
+	Sprite(Texture2D *texture = 0, const Rect<float> &rectangle = Rect<float>(0, 0, 0, 0), const Vector2F &origin = Vector2F(0.0f, 0.0f), const float angle = 0.0f, const TextureRegion &region = TextureRegion(), const Color &color = Color(255), const float depth = 0.0f, const Vector2F scale = Vector2F(1.0f, 1.0f));
 	//Sprite(const Texture2DPtr texture, const Rect &rectangle, const TextureRegion &region = TextureRegion(), const Color &color = Color(255), const float depth = 0.0f);
 	//Sprite(const Texture2DPtr texture, const Rect &rectangle, const TextureRegion &region = TextureRegion(), const Color &color = Color(255), const float depth = 0.0f);
 	//Sprite(const Texture2DPtr texture, const Vector2 &center, const TextureRegion &region = TextureRegion(), const Color &color = Color(255), const float depth = 0.0f);
@@ -60,11 +60,11 @@ public:
 	float getRotation() const;
 	Color getColor() const;
 	TextureRegion getRegion() const;
-	void setTexture(const Texture2DPtr texture) { m_texture = texture; }
-	Texture2DPtr getTexture() const;
+	void setTexture(Texture2D *texture) { m_texture = texture; }
+	Texture2D *getTexture() const;
 
 private:
-	Texture2DPtr m_texture;
+	Texture2D *m_texture;
 	TextureRegion m_textureRegion;
 	Vector2F m_position;
 	Vector2F m_size;

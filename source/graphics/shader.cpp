@@ -500,7 +500,7 @@ void Shader::setUniformMatrix4f(const string & name, const float * v0)
 	}
 }
 
-void Shader::setSampler2D(const string &name, Texture2DPtr texture)
+void Shader::setSampler2D(const string &name, Texture2D *texture)
 {
 	// TODO: We should actually store a handle to the texture object to avoid it being destroyed
 	map<string, Uniform*>::iterator itr;

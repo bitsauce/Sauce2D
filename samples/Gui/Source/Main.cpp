@@ -9,7 +9,7 @@ class GuiGame : public Game
 	SpriteBatch *spriteBatch;
 	Canvas *canvas;
 	Button *button;
-	FontPtr font;
+
 public:
 	GuiGame() :
 		Game("Gui")
@@ -34,9 +34,6 @@ public:
 
 	void onStart(GameEvent*)
 	{
-		// Font holds a shared_ptr<FontResource>, which is loaded by the ResourceManager
-		/*Font*/ font = ResourceManager::get<Font>("Font.fnt");
-
 		canvas = new Canvas(getWindow(), 1280, 720);
 		addChildLast(canvas);
 

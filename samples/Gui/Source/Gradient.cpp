@@ -4,7 +4,7 @@ Gradient::Gradient(UiObject *parent) :
 	UiObject(parent),
 	m_topColor(200, 200, 200),
 	m_bottomColor(250, 250, 250),
-	m_font(ResourceManager::get<Font>("Font.fnt"))
+	m_font(Game::GetInstance()->getResourceManager()->get<Font>("Font"))
 {
 }
 
@@ -30,7 +30,7 @@ void Gradient::onDraw(DrawEvent *e)
 	Vector2I pos = game->getInputManager()->getPosition();
 	string str = "FPS: " + util::floatToStr(game->getFPS()) + "\nCursor Pos: " + util::intToStr(pos.x) + ", " + util::intToStr(pos.y) + "\nCanvas aspect ratio: " + util::floatToStr((float)rect.size.y / (float)rect.size.x);
 
-	m_font->draw(spriteBatch, Vector2F(10.0f), str);
+	m_font.get()->draw(spriteBatch, Vector2F(10.0f), str);
 
 	SceneObject::onDraw(e);
 }

@@ -7,9 +7,6 @@ BEGIN_CGF_NAMESPACE
 
 class SpriteBatch;
 
-class Font;
-typedef shared_ptr<Font> FontPtr;
-
 class FontLoader;
 class Texture2D;
 
@@ -49,7 +46,7 @@ enum FontAlign
 class CGF_API Font
 {
 public:
-	Font(string fontFile);
+	Font(ResourceDesc *desc);
 	~Font();
 
 	void setTextEncoding(FontTextEncoding encoding);
@@ -111,8 +108,6 @@ public:
 	float getBottomOffset() const;
 	float getTopOffset() const;
 
-	static FontPtr loadResource(const string &fontFile);
-
 protected:
 	friend class FontLoader;
 
@@ -139,7 +134,7 @@ protected:
 	FontTextEncoding m_encoding;
 
 	map<int, CharDescr*> m_chars;
-	vector<shared_ptr<Texture2D>> m_pages;
+	vector<Texture2D*> m_pages;
 };
 
 template CGF_API class shared_ptr<Font>;

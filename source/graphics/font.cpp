@@ -61,7 +61,7 @@ public:
 // This is the Font class that is used to write text with bitmap fonts.
 //=============================================================================
 
-Font::Font(string fontFile)
+Font::Font(ResourceDesc *desc)
 {
 	m_fontHeight = 0;
 	m_base = 0;
@@ -74,21 +74,21 @@ Font::Font(string fontFile)
 	m_depth = 0.0f;
 
 	// Load the font
-	util::toAbsoluteFilePath(fontFile);
-
-	FileReader *file = new FileReader(fontFile);
-	if (file->isOpen())
+	FileReader *file = new FileReader(desc->getPath());
+	if(file->isOpen())
 	{
 		// Determine format by reading the first bytes of the file
 		char fmt[3];
 		file->readBytes(fmt, 3);
 
 		FontLoader *loader = 0;
-		if (strcmp(fmt, "BMF") == 0) {
-			loader = new FontLoaderBinaryFormat(file, this, fontFile);
+		if(strcmp(fmt, "BMF") == 0)
+		{
+			loader = new FontLoaderBinaryFormat(file, this, desc->getPath());
 		}
-		else {
-			loader = new FontLoaderTextFormat(file, this, fontFile);
+		else
+		{
+			loader = new FontLoaderTextFormat(file, this, desc->getPath());
 		}
 
 		loader->Load();
@@ -105,12 +105,11 @@ Font::~Font()
 		it++;
 	}
 
+	for(Texture2D *texture : m_pages)
+	{
+		delete texture;
+	}
 	m_pages.clear();
-}
-
-FontPtr Font::loadResource(const string &fontFile)
-{
-	return FontPtr(new Font(fontFile));
 }
 
 void Font::setTextEncoding(FontTextEncoding encoding)
@@ -529,7 +528,7 @@ void FontLoader::loadPage(int id, const char *pageFile, string fontFile)
 	// Load the font textures
 	fontFile += pageFile;
 
-	m_font->m_pages[id] = ResourceManager::get<Texture2D>(fontFile);
+	m_font->m_pages[id] = new Texture2D(Pixmap(fontFile));
 }
 
 void FontLoader::SetFontInfo(int outlineThickness)

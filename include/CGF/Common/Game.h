@@ -1237,6 +1237,11 @@ public:
 		return m_inputManager;
 	}
 
+	ResourceManager *getResourceManager()
+	{
+		return m_resourceManager;
+	}
+
 	Scene *getScene()
 	{
 		return m_scene;
@@ -1311,6 +1316,8 @@ private:
 	FileSystem		*m_fileSystem;
 	
 	//AudioManager	*m_audio;
+	
+	ResourceManager *m_resourceManager;
 	
 	InputManager *m_inputManager;
 

@@ -2,10 +2,10 @@
 
 Label::Label(UiObject *parent) :
 	UiObject(parent),
-	m_font(ResourceManager::get<Font>("Font.fnt")),
+	m_font(Game::GetInstance()->getResourceManager()->get<Font>("Font.fnt")),
 	m_text("")
 {
-	m_font->setColor(Color(0, 0, 0, 255));
+	m_font.get()->setColor(Color(0, 0, 0, 255));
 }
 
 void Label::onDraw(DrawEvent *e)
@@ -14,8 +14,8 @@ void Label::onDraw(DrawEvent *e)
 	GraphicsContext *g = e->getGraphicsContext();;
 
 	SpriteBatch *spriteBatch = (SpriteBatch*) e->getUserData();
-	m_font->setHeight(max(rect.size.y - 34.0f, 16.0f));
-	m_font->draw(spriteBatch, rect.getCenter() - Vector2F(0.0f, m_font->getHeight() * 0.5f), m_text);
+	m_font.get()->setHeight(max(rect.size.y - 34.0f, 16.0f));
+	m_font.get()->draw(spriteBatch, rect.getCenter() - Vector2F(0.0f, m_font.get()->getHeight() * 0.5f), m_text);
 
 	UiObject::onDraw(e);
 }

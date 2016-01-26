@@ -4,9 +4,9 @@ LineEdit::LineEdit(GraphicsContext *gfx, UiObject *parent) :
 	UiObject(parent),
 	m_cursorTime(0.0f),
 	m_offsetX(0.0f),
-	m_font(ResourceManager::get<Font>("Font.fnt")),
-	m_textureActive(ResourceManager::get<Texture2D>("Input_Active.png?PremultiplyAlpha")),
-	m_textureInactive(ResourceManager::get<Texture2D>("Input_Inactive.png?PremultiplyAlpha")),
+	m_font(Game::GetInstance()->getResourceManager()->get<Font>("Font")),
+	m_textureActive(Game::GetInstance()->getResourceManager()->get<Texture2D>("InputActive")),
+	m_textureInactive(Game::GetInstance()->getResourceManager()->get<Texture2D>("InputInactive")),
 	m_renderTarget(0),
 	m_dirty(true),
 	m_spriteBatch(gfx, 100),
@@ -48,7 +48,7 @@ string LineEdit::getText() const
 
 void LineEdit::setTextColor(const Color &color)
 {
-	m_font->setColor(color);
+	m_font.get()->setColor(color);
 }
 
 void LineEdit::onTick(TickEvent *e)
@@ -70,7 +70,7 @@ void LineEdit::onDraw(DrawEvent *e)
 
 	if(m_dirty) updateOffset();
 
-	Vector2F textOffset = Vector2F(8.0f - m_offsetX, rect.size.y * 0.5f - m_font->getHeight() * 0.5f);
+	Vector2F textOffset = Vector2F(8.0f - m_offsetX, rect.size.y * 0.5f - m_font.get()->getHeight() * 0.5f);
 
 	if(m_dirty)
 	{
@@ -79,11 +79,11 @@ void LineEdit::onDraw(DrawEvent *e)
 
 		if(isFocused())
 		{
-			g->setTexture(m_textureActive);
+			g->setTexture(m_textureActive.get());
 		}
 		else
 		{
-			g->setTexture(m_textureInactive);
+			g->setTexture(m_textureInactive.get());
 		}
 
 		const float w = m_renderTarget->getWidth(), h = m_renderTarget->getHeight();
@@ -101,11 +101,11 @@ void LineEdit::onDraw(DrawEvent *e)
 		int begin = getTextIndexAtPosition(rect.position);
 		int end = getTextIndexAtPosition(rect.position + rect.size);
 		string visibleText = state->text.substr(begin, end - begin);
-		float dx = m_font->getStringWidth(state->text.substr(0, end)) - m_font->getStringWidth(visibleText);
+		float dx = m_font.get()->getStringWidth(state->text.substr(0, end)) - m_font.get()->getStringWidth(visibleText);
 
 		g->enableScissor(8, 0, w - 16, h);
 		m_spriteBatch.begin();
-		m_font->draw(&m_spriteBatch, textOffset.x + dx, textOffset.y, visibleText);
+		m_font.get()->draw(&m_spriteBatch, textOffset.x + dx, textOffset.y, visibleText);
 		m_spriteBatch.end();
 		g->disableScissor();
 
@@ -125,10 +125,10 @@ void LineEdit::onDraw(DrawEvent *e)
 	if(isFocused() && m_cursorTime >= 0.5f)
 	{
 		g->drawRectangle(
-			rect.position.x + textOffset.x + m_font->getStringWidth(state->text.substr(0, state->cursor.getPosition())),
+			rect.position.x + textOffset.x + m_font.get()->getStringWidth(state->text.substr(0, state->cursor.getPosition())),
 			rect.position.y + textOffset.y,
-			2, m_font->getHeight(),
-			m_font->getColor()
+			2, m_font.get()->getHeight(),
+			m_font.get()->getColor()
 			);
 	}
 
@@ -136,10 +136,10 @@ void LineEdit::onDraw(DrawEvent *e)
 
 	g->enableScissor(rect.position.x + 8, g->getHeight() - rect.position.y - rect.size.y, rect.size.x - 16, rect.size.y);
 	g->drawRectangle(
-		rect.position.x + textOffset.x + m_font->getStringWidth(state->text.substr(0, state->cursor.getSelectionStart())),
+		rect.position.x + textOffset.x + m_font.get()->getStringWidth(state->text.substr(0, state->cursor.getSelectionStart())),
 		rect.position.y + textOffset.y,
-		m_font->getStringWidth(state->text.substr(state->cursor.getSelectionStart(), state->cursor.getSelectionLength())),
-		m_font->getHeight(),
+		m_font.get()->getStringWidth(state->text.substr(state->cursor.getSelectionStart(), state->cursor.getSelectionLength())),
+		m_font.get()->getHeight(),
 		color
 		);
 	g->disableScissor();
@@ -210,12 +210,12 @@ int LineEdit::getTextIndexAtPosition(Vector2I pos)
 	TextState *state = *m_undoItr;
 	RectI rect = getDrawRect();
 	pos -= rect.position;
-	pos -= Vector2F(8.0f - m_offsetX, rect.size.y * 0.5f - m_font->getHeight() * 0.5f);
+	pos -= Vector2F(8.0f - m_offsetX, rect.size.y * 0.5f - m_font.get()->getHeight() * 0.5f);
 	float width = 0.0f;
 	for(int i = 0; i < (int) state->text.size(); ++i)
 	{
 		string ch; ch += state->text[i];
-		width += m_font->getStringWidth(ch);
+		width += m_font.get()->getStringWidth(ch);
 		if(pos.x < width)
 		{
 			return i;
@@ -228,7 +228,7 @@ void LineEdit::updateOffset()
 {
 	Vector2I size = getDrawSize();
 	TextState *state = *m_undoItr;
-	float cursorPos = m_font->getStringWidth(state->text.substr(0, state->cursor.getPosition()));
+	float cursorPos = m_font.get()->getStringWidth(state->text.substr(0, state->cursor.getPosition()));
 	if(cursorPos - m_offsetX > size.x - 16.0f)
 	{
 		m_offsetX = max(cursorPos - (size.x - 16.0f), 0.0f);

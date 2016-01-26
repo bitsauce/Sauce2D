@@ -49,7 +49,7 @@ public:
 
 	void begin(const State &state = State());
 	void drawSprite(const Sprite &sprite);
-	void drawText(const Vector2F &pos, const string &text, const FontPtr font);
+	void drawText(const Vector2F &pos, const string &text, Font *font);
 	void end();
 	void flush();
 
@@ -61,7 +61,7 @@ private:
 
 	// SpriteBatch state
 	State m_state, m_prevState;
-	Texture2DPtr m_prevTexture;
+	Texture2D *m_prevTexture;
 
 	// Set between begin() and end()
 	bool m_beingCalled;

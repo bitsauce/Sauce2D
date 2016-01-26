@@ -133,7 +133,7 @@ void Shape::setFillColor(const Color &color)
 	m_fillColor = color;
 }
 
-void Shape::setFillTexture(const Texture2DPtr &texture)
+void Shape::setFillTexture(Texture2D *texture)
 {
 	m_fillTexture = texture;
 }

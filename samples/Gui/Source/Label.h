@@ -11,7 +11,7 @@ public:
 	void onDraw(DrawEvent *e);
 
 private:
-	FontPtr m_font;
+	Resource<Font> m_font;
 	string m_text;
 };
 

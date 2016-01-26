@@ -12,8 +12,8 @@ public:
 	void onDraw(DrawEvent *e);
 
 private:
-	Texture2DPtr m_texture, m_textureHover, m_textureActive;
-	FontPtr m_font;
+	Resource<Texture2D> m_texture, m_textureHover, m_textureActive;
+	Resource<Font> m_font;
 	string m_text;
 };
 

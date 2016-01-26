@@ -130,12 +130,12 @@ public:
 	 * applied to it.
 	 * \param texture Texture to apply to the primitives.
 	 */
-	void setTexture(const Texture2DPtr texture);
+	void setTexture(Texture2D *texture);
 
 	/**
 	 * Gets the current texture.
 	 */
-	Texture2DPtr getTexture() const;
+	Texture2D *getTexture() const;
 
 	/**
 	 * Set shader. Every vertex and fragment rendered after this will
@@ -289,7 +289,7 @@ private:
 	Window *m_window;
 	uint m_width;
 	uint m_height;
-	Texture2DPtr m_texture;
+	Texture2D *m_texture;
 	ShaderPtr m_shader;
 	BlendState m_blendState;
 	RenderTarget2D *m_renderTarget;
@@ -297,7 +297,7 @@ private:
 	Matrix4 m_projectionMatrix;
 
 	static ShaderPtr s_defaultShader;
-	static Texture2DPtr s_defaultTexture;
+	static Texture2D *s_defaultTexture;
 	static GLuint s_vao;
 	static GLuint s_vbo;
 	static GLuint s_ibo;

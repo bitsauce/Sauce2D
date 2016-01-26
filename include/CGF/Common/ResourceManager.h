@@ -9,6 +9,43 @@
 
 BEGIN_CGF_NAMESPACE
 
+template<typename T>
+using Resource = shared_ptr<T>;
+
+template<typename T>
+using ResourceGuard = weak_ptr<T>;
+
+enum ResourceType
+{
+	RESOURCE_TYPE_TEXTURE,
+	RESOURCE_TYPE_SHADER,
+	RESOURCE_TYPE_FONT
+};
+
+class CGF_API ResourceDesc
+{
+public:
+	ResourceDesc(ResourceType type, const string &path) :
+		m_type(type),
+		m_path(path)
+	{
+	}
+
+	string getPath() const
+	{
+		return m_path;
+	}
+
+	ResourceType getType() const
+	{
+		return m_type;
+	}
+
+private:
+	const ResourceType m_type;
+	const string m_path;
+};
+
 /**
  * \brief This class handles resource loading and handling.
  *
@@ -32,32 +69,46 @@ class CGF_API ResourceManager
 {
 	friend class Game;
 public:
-	/**
-	 * Returns a resource given a file path. If this is the first time the
-	 * resource was accessed, it will be loaded from the disk. If it was
-	 * already loaded, this returns a pointer to the existing resource.
-	 *
-	 * \param filePath The file path to the resource file
-	 * \note This can only load Texture2D and Font.
-	 */
 	template<typename T>
-	static shared_ptr<T> get(string fileName)
+	Resource<T> get(string name)
 	{
-		util::toAbsoluteFilePath(fileName);
-
-		// NOTE TO SELF: I need to notify the resource manager of resources that have been deleted so I can remove it from s_resources.
-		if(s_resources->find(fileName) != s_resources->end())
+		// Check if resource is already loaded
 		{
-			return *(shared_ptr<T>*)(*s_resources)[fileName];
+			map<string, void*>::iterator itr;
+			if((itr = m_resources.find(name)) != m_resources.end())
+			{
+				ResourceGuard<T> *guard = static_cast<ResourceGuard<T>*>(itr->second);
+				if(!guard->expired())
+				{
+					return guard->lock();
+				}
+			}
 		}
 
-		shared_ptr<T> resource = T::loadResource(fileName);
-		(*s_resources)[fileName] = new shared_ptr<T>(resource);
-		return resource;
+		// The resource is not loaded, check if we have a resource descriptor
+		{
+			map<string, ResourceDesc*>::iterator itr;
+			if((itr = m_resourceDesc.find(name)) != m_resourceDesc.end())
+			{
+				Resource<T> resource(new T(itr->second));
+				if(resource)
+				{
+					m_resources[name] = new ResourceGuard<T>(resource);
+					return resource;
+				}
+			}
+		}
+
+		// Resource was not found
+		//LOG("Resource '%s' was not found", name.c_str());
+		return 0;
 	}
 
 private:
-	static map<string, void*> *s_resources;
+	ResourceManager(const string &resourceFile);
+
+	map<string, void*> m_resources;
+	map<string, ResourceDesc*> m_resourceDesc;
 };
 
 END_CGF_NAMESPACE

@@ -5,9 +5,6 @@
 #include <CGF/Graphics/Pixmap.h>
 
 BEGIN_CGF_NAMESPACE
-	
-class Texture2D;
-typedef shared_ptr<Texture2D> Texture2DPtr;
 
 class CGF_API Texture2D
 {
@@ -61,7 +58,7 @@ public:
 
 	void exportToFile(string path);
 
-	static Texture2DPtr loadResource(const string &name);
+	Texture2D(ResourceDesc *desc);
 
 private:
 	void init(const Pixmap &pixmap);
@@ -80,7 +77,25 @@ private:
 	PixelFormat m_pixelFormat;
 };
 
-template CGF_API class shared_ptr<Texture2D>;
+template class CGF_API shared_ptr<Texture2D>;
+
+class TextureResourceDesc : public ResourceDesc
+{
+public:
+	TextureResourceDesc(const string &path, const bool premultiplyAlpha) :
+		ResourceDesc(RESOURCE_TYPE_TEXTURE, path),
+		m_premultiplyAlpha(premultiplyAlpha)
+	{
+	}
+
+	bool getPremultiplyAlpha() const
+	{
+		return m_premultiplyAlpha;
+	}
+
+private:
+	const bool m_premultiplyAlpha;
+};
 
 END_CGF_NAMESPACE
 
