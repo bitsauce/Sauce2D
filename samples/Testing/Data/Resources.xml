@@ -1,0 +1,10 @@
+<resources>
+	<font>
+		<name>Arial</name>
+		<path>Arial.fnt</path>
+	</font>
+	<texture>
+		<name>Koala</name>
+		<path>Koala.jpg</path>
+	</texture>
+</resources>

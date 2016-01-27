@@ -11,9 +11,11 @@ LineEdit::LineEdit(GraphicsContext *gfx, UiObject *parent) :
 	m_dirty(true),
 	m_spriteBatch(gfx, 100),
 	m_wordBegin(0),
-	m_wordEnd(0)
+	m_wordEnd(0),
+	m_defaultText(""),
+	m_color(0, 0, 0, 255)
 {
-	setText("Test   string    lol    wat");
+	setText("");
 }
 
 LineEdit::~LineEdit()
@@ -48,11 +50,17 @@ string LineEdit::getText() const
 
 void LineEdit::setTextColor(const Color &color)
 {
-	m_font.get()->setColor(color);
+	m_color = color;
+}
+
+void LineEdit::setDefaultText(const string &def)
+{
+	m_defaultText = def;
 }
 
 void LineEdit::onTick(TickEvent *e)
 {
+	// Update cursor blink time
 	m_cursorTime -= e->getDelta();
 	if(m_cursorTime <= 0.0f)
 	{
@@ -63,20 +71,27 @@ void LineEdit::onTick(TickEvent *e)
 
 void LineEdit::onDraw(DrawEvent *e)
 {
+	// Get state variables
 	TextState *state = *m_undoItr;
-
 	RectF rect = getDrawRect();
 	GraphicsContext *g = e->getGraphicsContext();
 
-	if(m_dirty) updateOffset();
+	// Update text offset if dirty
+	if(m_dirty)
+	{
+		updateOffset();
+	}
 
-	Vector2F textOffset = Vector2F(8.0f - m_offsetX, rect.size.y * 0.5f - m_font.get()->getHeight() * 0.5f);
+	// Get text offset
+	Vector2F textOffset = Vector2F(8.0f - m_offsetX, rect.size.y * 0.5f - m_font->getHeight() * 0.5f);
 
+	// Update visualization if dirty
 	if(m_dirty)
 	{
 		// Update line edit visualization
 		g->setRenderTarget(m_renderTarget);
 
+		// Set texture
 		if(isFocused())
 		{
 			g->setTexture(m_textureActive.get());
@@ -86,6 +101,7 @@ void LineEdit::onDraw(DrawEvent *e)
 			g->setTexture(m_textureInactive.get());
 		}
 
+		// Render input rectangle
 		const float w = m_renderTarget->getWidth(), h = m_renderTarget->getHeight();
 		g->drawRectangle(0.0f,      0.0f,      16.0f, 16.0f, Color(255), TextureRegion(0.0f, 0.0f, 1.0f / 3.0f, 1.0f / 3.0f));
 		g->drawRectangle(w - 16.0f, 0.0f,      16.0f, 16.0f, Color(255), TextureRegion(2.0f / 3.0f, 0.0f, 1.0f, 1.0f / 3.0f));
@@ -98,19 +114,37 @@ void LineEdit::onDraw(DrawEvent *e)
 		g->drawRectangle(16.0f, 16.0f, w - 32.0f, h - 32.0f, Color(255), TextureRegion(1.0f / 3.0f, 1.0f / 3.0f, 2.0f / 3.0f, 2.0f / 3.0f));
 		g->setTexture(0);
 
-		int begin = getTextIndexAtPosition(rect.position);
-		int end = getTextIndexAtPosition(rect.position + rect.size);
-		string visibleText = state->text.substr(begin, end - begin);
-		float dx = m_font.get()->getStringWidth(state->text.substr(0, end)) - m_font.get()->getStringWidth(visibleText);
+		// Get the string to render and set text color
+		string text;
+		if(state->text.empty())
+		{
+			// Use default string if line edit is empty
+			text = m_defaultText;
+			m_font->setColor(Color(127, 127, 127));
+		}
+		else
+		{
+			text = state->text;
+			m_font->setColor(m_color);
+		}
 
+		// Find the visible portion of the text
+		int begin = getTextIndexAtPosition(text, rect.position);
+		int end = getTextIndexAtPosition(text, rect.position + rect.size);
+		string visibleText = text.substr(begin, end - begin);
+		float dx = m_font->getStringWidth(text.substr(0, end)) - m_font->getStringWidth(visibleText);
+
+		// Draw and clip the text using scissoring rectangle
 		g->enableScissor(8, 0, w - 16, h);
 		m_spriteBatch.begin();
-		m_font.get()->draw(&m_spriteBatch, textOffset.x + dx, textOffset.y, visibleText);
+		m_font->draw(&m_spriteBatch, textOffset.x + dx, textOffset.y, visibleText);
 		m_spriteBatch.end();
 		g->disableScissor();
 
+		// Reset render target
 		g->setRenderTarget(0);
 
+		// No longer dirty
 		m_dirty = false;
 	}
 
@@ -125,22 +159,21 @@ void LineEdit::onDraw(DrawEvent *e)
 	if(isFocused() && m_cursorTime >= 0.5f)
 	{
 		g->drawRectangle(
-			rect.position.x + textOffset.x + m_font.get()->getStringWidth(state->text.substr(0, state->cursor.getPosition())),
+			rect.position.x + textOffset.x + m_font->getStringWidth(state->text.substr(0, state->cursor.getPosition())),
 			rect.position.y + textOffset.y,
-			2, m_font.get()->getHeight(),
-			m_font.get()->getColor()
+			2, m_font->getHeight(),
+			m_color
 			);
 	}
 
-	Color color = isFocused() ? Color(0, 0, 0, 127) : Color(127, 127, 127, 127);
-
+	// Draw selection rectangle
 	g->enableScissor(rect.position.x + 8, g->getHeight() - rect.position.y - rect.size.y, rect.size.x - 16, rect.size.y);
 	g->drawRectangle(
-		rect.position.x + textOffset.x + m_font.get()->getStringWidth(state->text.substr(0, state->cursor.getSelectionStart())),
+		rect.position.x + textOffset.x + m_font->getStringWidth(state->text.substr(0, state->cursor.getSelectionStart())),
 		rect.position.y + textOffset.y,
-		m_font.get()->getStringWidth(state->text.substr(state->cursor.getSelectionStart(), state->cursor.getSelectionLength())),
-		m_font.get()->getHeight(),
-		color
+		m_font->getStringWidth(state->text.substr(state->cursor.getSelectionStart(), state->cursor.getSelectionLength())),
+		m_font->getHeight(),
+		isFocused() ? Color(0, 0, 0, 127) : Color(127, 127, 127, 127)
 		);
 	g->disableScissor();
 
@@ -204,31 +237,27 @@ LineEdit::TextState *LineEdit::removeAt(const int pos, const int length)
 	return state;
 }
 
-int LineEdit::getTextIndexAtPosition(Vector2I pos)
+int LineEdit::getTextIndexAtPosition(const string &str, Vector2I pos)
 {
 	// TODO: Use binary search instead of linear
-	TextState *state = *m_undoItr;
 	RectI rect = getDrawRect();
 	pos -= rect.position;
-	pos -= Vector2F(8.0f - m_offsetX, rect.size.y * 0.5f - m_font.get()->getHeight() * 0.5f);
-	float width = 0.0f;
-	for(int i = 0; i < (int) state->text.size(); ++i)
+	pos -= Vector2F(8.0f - m_offsetX, rect.size.y * 0.5f - m_font->getHeight() * 0.5f);
+	for(int i = 0; i < (int) str.size(); ++i)
 	{
-		string ch; ch += state->text[i];
-		width += m_font.get()->getStringWidth(ch);
-		if(pos.x < width)
+		if(pos.x < m_font->getStringWidth(str.substr(0, i)))
 		{
 			return i;
 		}
 	}
-	return state->text.size();
+	return str.size();
 }
 
 void LineEdit::updateOffset()
 {
 	Vector2I size = getDrawSize();
 	TextState *state = *m_undoItr;
-	float cursorPos = m_font.get()->getStringWidth(state->text.substr(0, state->cursor.getPosition()));
+	float cursorPos = m_font->getStringWidth(state->text.substr(0, state->cursor.getPosition()));
 	if(cursorPos - m_offsetX > size.x - 16.0f)
 	{
 		m_offsetX = max(cursorPos - (size.x - 16.0f), 0.0f);
@@ -531,11 +560,12 @@ void LineEdit::onClick(ClickEvent *e)
 		{
 			if((e->getClickCount() - 1) % 2 == 0)
 			{
-				state->cursor.setPosition(getTextIndexAtPosition(mousePosition));
+				state->cursor.setPosition(getTextIndexAtPosition(state->text, mousePosition));
 			}
 			else if((e->getClickCount() - 1) % 2 == 1)
 			{
-				int tmp = getTextIndexAtPosition(mousePosition);
+				int tmp = getTextIndexAtPosition(state->text, mousePosition);
+				while(tmp > 0 && state->text[tmp - 1] == ' ') tmp--;
 				while(tmp > 0 && state->text[tmp - 1] != ' ') tmp--;
 				state->cursor.setPosition(m_wordBegin = tmp);
 				while(tmp < state->text.size() && state->text[tmp++] != ' ');
@@ -549,11 +579,11 @@ void LineEdit::onClick(ClickEvent *e)
 		{
 			if((e->getClickCount() - 1) % 2 == 0)
 			{
-				state->cursor.setPosition(getTextIndexAtPosition(mousePosition), true);
+				state->cursor.setPosition(getTextIndexAtPosition(state->text, mousePosition), true);
 			}
 			else if((e->getClickCount() - 1) % 2 == 1)
 			{
-				int tmp = getTextIndexAtPosition(mousePosition);
+				int tmp = getTextIndexAtPosition(state->text, mousePosition);
 				if(tmp < m_wordBegin)
 				{
 					state->cursor.setPosition(m_wordEnd);

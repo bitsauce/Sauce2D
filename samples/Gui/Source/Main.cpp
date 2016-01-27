@@ -56,6 +56,7 @@ public:
 		lineEdit->setPosition(0.0f, -0.5f);
 		lineEdit->setAnchor(0.5f, 0.85f);
 		lineEdit->setOrigin(0.5f, 0.5f);
+		lineEdit->setDefaultText("World name");
 	}
 
 	void onEnd(GameEvent*)

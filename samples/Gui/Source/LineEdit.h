@@ -5,6 +5,12 @@
 
 class UiObject;
 
+/**
+ * \class	LineEdit
+ *
+ * \brief	A single line text input.
+ */
+
 class LineEdit : public UiObject
 {
 	friend class Cursor;
@@ -12,12 +18,55 @@ public:
 	LineEdit(GraphicsContext *gfx, UiObject *parent);
 	~LineEdit();
 
-	void setAcceptFunc(function<void()> func);
+	/**
+	 * \fn	void LineEdit::setText(const string &text);
+	 *
+	 * \brief	Sets the input string in the line edit.
+	 *
+	 * \param	text	The input string.
+	 */
 
 	void setText(const string &text);
+
+	/**
+	 * \fn	string LineEdit::getText() const;
+	 *
+	 * \brief	Gets the input string in the line edit.
+	 *
+	 * \return	The input string.
+	 */
+
 	string getText() const;
 
+	/**
+	 * \fn	void LineEdit::setAcceptFunc(function<void()> func);
+	 *
+	 * \brief	Sets the function called when return is pressed.
+	 *
+	 * \param	func	The function pointer.
+	 */
+
+	void setAcceptFunc(function<void()> func);
+
+	/**
+	 * \fn	void LineEdit::setTextColor(const Color &color);
+	 *
+	 * \brief	Sets text color.
+	 *
+	 * \param	color	The text color.
+	 */
+
 	void setTextColor(const Color &color);
+
+	/**
+	 * \fn	void LineEdit::setDefaultText(const string &def);
+	 *
+	 * \brief	Sets the string which is show when the line edit is empty.
+	 *
+	 * \param	def	The default string.
+	 */
+
+	void setDefaultText(const string &def);
 
 	void onTick(TickEvent *e);
 	void onDraw(DrawEvent *e);
@@ -102,7 +151,7 @@ protected:
 	TextState *insertAt(const int pos, const string &str);
 	TextState *removeAt(const int pos, const int length = 1);
 	TextState *addUndoState();
-	int getTextIndexAtPosition(Vector2I pos);
+	int getTextIndexAtPosition(const string &str, Vector2I pos);
 	void updateOffset();
 	void onTextInput(TextEvent *e);
 	void onKeyEvent(KeyEvent *e);
@@ -119,6 +168,7 @@ protected:
 	SimpleTimer m_textTimer;
 	list<TextState*> m_states;
 	list<TextState*>::iterator m_undoItr;
+	string m_defaultText;
 	int m_wordBegin, m_wordEnd;
 	float m_cursorTime;
 	float m_offsetX;

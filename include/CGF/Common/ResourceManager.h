@@ -82,6 +82,10 @@ public:
 				{
 					return guard->lock();
 				}
+				else
+				{
+					delete guard;
+				}
 			}
 		}
 
