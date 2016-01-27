@@ -35,12 +35,12 @@ public:
 	~AudioManager();
 
 	// Listener position
-	void setPosition(const Vector2 &position);
-	Vector2 getPosition() const;
+	void setPosition(const Vector2F &position);
+	Vector2F getPosition() const;
 
 	// Listener velocity
 	void setVelocity(const Vector2&);
-	Vector2 getVelocity() const;
+	Vector2F getVelocity() const;
 
 	// Listener orientation
 	void setOrientation(const Vector3&);
@@ -97,9 +97,9 @@ public:
 	bool isPlaying() const;
 
 	void setPosition(const Vector2&);
-	Vector2 getPosition() const;
+	Vector2F getPosition() const;
 	void setVelocity(const Vector2&);
-	Vector2 getVelocity() const;
+	Vector2F getVelocity() const;
 	void setLooping(const bool);
 	bool getLooping() const;
 	void setGain(const float);

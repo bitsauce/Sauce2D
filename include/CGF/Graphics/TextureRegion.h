@@ -19,7 +19,7 @@ public:
 	void setRegion(const Vector2F &uv0, const Vector2F &uv1);
 	void setRegion(const float u0, const float v0, const float u1, const float v1);
 
-	//TextureRegion getSubRegion(const Vector2 &uv0, const Vector2 &uv1);
+	//TextureRegion getSubRegion(const Vector2F &uv0, const Vector2F &uv1);
 	//TextureRegion getSubRegion(const float u0, const float v0, const float u1, const float v1);
 
 	Vector2F uv0;

@@ -6,14 +6,12 @@
 
 BEGIN_CGF_NAMESPACE
 
-class Shader;
-typedef shared_ptr<Shader> ShaderPtr;
-
 class CGF_API Shader
 {
 	friend class GraphicsContext;
 public:
 	Shader(const string &vertexSource, const string &fragmentSource);
+	Shader(ResourceDesc *desc);
 	~Shader();
 
 	void bindFragLocation(const uint location, const string &name);
@@ -41,8 +39,6 @@ public:
 	// <- Instance
 
 	void exportAssembly(const string &fileName);
-	
-	static ShaderPtr loadResource(const string &name);
 
 private:
 	

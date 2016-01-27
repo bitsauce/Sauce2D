@@ -2,6 +2,7 @@
 #define CGF_RESOURCE_MANAGER_H
 
 #include <CGF/Config.h>
+#include <CGF/Common/Game.h>
 
 /*********************************************************************
 **	Resource manager												**
@@ -59,7 +60,7 @@ private:
 
 // TODO: Separate resources from instances of resources.
 // 
-// For example changing the color of a FontPtr loaded with ResourceManager
+// For example changing the color of a Resource<Font> loaded with ResourceManager
 // will change the color of all instances loaded with ResourceManager.
 //  
 // To fix this, separate the Font class into FontInstance and FontResource,
@@ -104,7 +105,7 @@ public:
 		}
 
 		// Resource was not found
-		//LOG("Resource '%s' was not found", name.c_str());
+		LOG("Resource '%s' was not found", name.c_str());
 		return 0;
 	}
 

@@ -189,7 +189,7 @@ int Game::run()
 			"	out_FragColor = texture(u_Texture, v_TexCoord) * v_VertexColor;\n"
 			"}\n";
 
-		GraphicsContext::s_defaultShader = ShaderPtr(new Shader(vertexShader, fragmentShader));
+		GraphicsContext::s_defaultShader = new Shader(vertexShader, fragmentShader);
 
 		uchar pixel[4];
 		pixel[0] = pixel[1] = pixel[2] = pixel[3] = 255;

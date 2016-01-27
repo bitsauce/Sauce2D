@@ -3,7 +3,7 @@
 BEGIN_CGF_NAMESPACE
 
 // Default shader. Used when no shader is set.
-ShaderPtr GraphicsContext::s_defaultShader = 0;
+Shader *GraphicsContext::s_defaultShader = 0;
 
 // Default texture. Empty texture used when no texture is set.
 Texture2D *GraphicsContext::s_defaultTexture = 0;
@@ -124,12 +124,12 @@ Texture2D *GraphicsContext::getTexture() const
 	return m_texture;
 }
 
-void GraphicsContext::setShader(const ShaderPtr shader)
+void GraphicsContext::setShader(Shader *shader)
 {
 	m_shader = shader;
 }
 
-ShaderPtr GraphicsContext::getShader() const
+Shader *GraphicsContext::getShader() const
 {
 	return m_shader;
 }
@@ -195,7 +195,7 @@ void GraphicsContext::setupContext()
 	// Set blend func
 	glBlendFuncSeparate(m_blendState.m_src, m_blendState.m_dst, m_blendState.m_alphaSrc, m_blendState.m_alphaDst);
 
-	ShaderPtr shader = m_shader;
+	Shader *shader = m_shader;
 	if(!shader)
 	{
 		shader = s_defaultShader;

@@ -61,34 +61,4 @@ ResourceManager::ResourceManager(const string &resourceFile)
 	}
 }
 
-/*template<typename T>
-Resource<T> ResourceManager::get(string name)
-{
-	// Check if resource is already loaded
-	{
-		map<string, void*>::iterator itr;
-		if((itr = m_resources.find(name)) != m_resources.end())
-		{
-			return *(Resource<T>*)itr->second;
-		}
-	}
-
-	// The resource is not loaded, check if we have a resource descriptor
-	{
-		map<string, ResourceDesc*>::iterator itr;
-		if((itr = m_resourceDesc.find(name)) != m_resourceDesc.end())
-		{
-			Resource<T> resource = T::loadResource(itr->second);
-			if(resource)
-			{
-				m_resources[name] = resource;
-			}
-		}
-	}
-
-	// Resource was not found
-	LOG("Resource '%s' was not found", name.c_str());
-	return 0;
-}*/
-
 END_CGF_NAMESPACE

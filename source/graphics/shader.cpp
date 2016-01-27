@@ -144,6 +144,26 @@ Shader::Shader(const string &vertexSource, const string &fragmentSource)
 	}
 }
 
+Shader::Shader(ResourceDesc *desc)
+{
+	// TODO
+	/*FileReader *fileReader;
+
+	fileReader = new FileReader(util::getAbsoluteFilePath(name + ".vert"));
+	string vertexSource = fileReader->readAll();
+	fileReader->close();
+	delete fileReader;
+
+	fileReader = new FileReader(util::getAbsoluteFilePath(name + ".frag"));
+	string fragmentSource = fileReader->readAll();
+	fileReader->close();
+	delete fileReader;
+
+	LOG("Compiling shader program: %s", name.c_str());
+
+	return ShaderPtr(new Shader(vertexSource, fragmentSource));*/
+}
+
 Shader::~Shader()
 {
 	// Delete shader buffers as they are loaded into the shader program
@@ -551,25 +571,6 @@ void Shader::exportAssembly(const string & fileName)
 
 	// Clean up
 	delete[] binary;
-}
-
-ShaderPtr Shader::loadResource(const string &name)
-{
-	FileReader *fileReader;
-
-	fileReader = new FileReader(util::getAbsoluteFilePath(name + ".vert"));
-	string vertexSource = fileReader->readAll();
-	fileReader->close();
-	delete fileReader;
-
-	fileReader = new FileReader(util::getAbsoluteFilePath(name + ".frag"));
-	string fragmentSource = fileReader->readAll();
-	fileReader->close();
-	delete fileReader;
-
-	LOG("Compiling shader program: %s", name.c_str());
-
-	return ShaderPtr(new Shader(vertexSource, fragmentSource));
 }
 
 END_CGF_NAMESPACE

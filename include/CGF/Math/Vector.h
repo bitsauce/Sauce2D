@@ -5,7 +5,7 @@
 
 /** \brief A class which holds a 2 dimensional vector
  *
- * The Vector2 class is a 2 dimensional (hence the 2) vector.
+ * The Vector2F class is a 2 dimensional (hence the 2) vector.
  * It stores the x and y value as Ting-point values.
  *
  */
@@ -72,14 +72,14 @@ public:
 		}
 	}
 
-	inline Vector2 normalized() const
+	inline Vector2<T> normalized() const
 	{
 		T len = magnitude();
 		if(len > T(0))
 		{
 			return Vector2(x / len, y / len);
 		}
-		return Vector2();
+		return Vector2<T>();
 	}
 
 	template<typename U>

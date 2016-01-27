@@ -5,7 +5,7 @@ using namespace cgf;
 class DrawTextGame : public Game
 {
 	SpriteBatch *m_spriteBatch;
-	FontPtr m_font;
+	Resource<Font> m_font;
 
 public:
 	DrawTextGame() :
@@ -16,7 +16,7 @@ public:
 	void onStart(GameEvent*)
 	{
 		m_spriteBatch = new SpriteBatch(getWindow()->getGraphicsContext());
-		m_font = ResourceManager::get<Font>("Arial.fnt");
+		m_font = getResourceManager()->get<Font>("Arial");
 	}
 
 	void onEnd(GameEvent*)

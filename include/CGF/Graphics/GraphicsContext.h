@@ -142,12 +142,12 @@ public:
 	 * have the effect of \p shader applied to them.
 	 * \param shader Shader to render the primitves with.
 	 */
-	void setShader(const ShaderPtr shader);
+	void setShader(Shader *shader);
 
 	/**
 	 * Returns the current shader.
 	 */
-	ShaderPtr getShader() const;
+	Shader *getShader() const;
 
 	/**
 	 * Set blend state. Every pixel rendered after this will use a 
@@ -290,13 +290,13 @@ private:
 	uint m_width;
 	uint m_height;
 	Texture2D *m_texture;
-	ShaderPtr m_shader;
+	Shader *m_shader;
 	BlendState m_blendState;
 	RenderTarget2D *m_renderTarget;
 	stack<Matrix4> m_transformationMatrixStack;
 	Matrix4 m_projectionMatrix;
 
-	static ShaderPtr s_defaultShader;
+	static Shader *s_defaultShader;
 	static Texture2D *s_defaultTexture;
 	static GLuint s_vao;
 	static GLuint s_vbo;
