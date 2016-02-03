@@ -134,7 +134,7 @@ protected:
 	FontTextEncoding m_encoding;
 
 	map<int, CharDescr*> m_chars;
-	vector<Texture2D*> m_pages;
+	vector<Resource<Texture2D>> m_pages;
 };
 
 template CGF_API class shared_ptr<Font>;

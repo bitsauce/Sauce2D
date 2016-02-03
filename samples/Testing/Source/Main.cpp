@@ -8,8 +8,7 @@ using namespace cgf;
 // Rendering said image to the screen
 class DrawTexturedQuad : public Game
 {
-	Resource<Texture2D> texture;
-	Texture2D *textureSaved;
+	Resource<Texture2D> texture, textureSaved;
 public:
 	DrawTexturedQuad() :
 		Game("DrawTexturedQuad")
@@ -20,12 +19,11 @@ public:
 	{
 		texture = getResourceManager()->get<Texture2D>("Koala");
 		texture->exportToFile(":/Content/Texture_Saved.png");
-		textureSaved = new Texture2D(Pixmap("Texture_Saved.png"));
+		textureSaved = Resource<Texture2D>(new Texture2D(Pixmap("Texture_Saved.png")));
 	}
 
 	void onEnd(GameEvent *e)
 	{
-		delete textureSaved;
 	}
 
 	void onUpdate(TickEvent *e)
@@ -35,7 +33,7 @@ public:
 	void onDraw(DrawEvent *e)
 	{
 		GraphicsContext *context = e->getGraphicsContext();
-		context->setTexture(texture.get());
+		context->setTexture(texture);
 		context->drawRectangle(0, 0, context->getWidth() / 2, context->getHeight());
 		context->setTexture(textureSaved);
 		context->drawRectangle(context->getWidth() / 2, 0, context->getWidth() / 2, context->getHeight());

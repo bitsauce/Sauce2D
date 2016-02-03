@@ -193,7 +193,7 @@ int Game::run()
 
 		uchar pixel[4];
 		pixel[0] = pixel[1] = pixel[2] = pixel[3] = 255;
-		GraphicsContext::s_defaultTexture = new Texture2D(1, 1, pixel);
+		GraphicsContext::s_defaultTexture = Resource<Texture2D>(new Texture2D(1, 1, pixel));
 
 		// Initialize input handler
 		m_inputManager = new InputManager("config:/InputDefault.ini");//(m_inputConfig);

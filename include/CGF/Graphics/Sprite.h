@@ -2,7 +2,7 @@
 #define CGF_SPRITE_H
 
 #include <CGF/Common.h>
-#include <cgf/graphics/textureRegion.h>
+#include <CGF/Graphics/TextureRegion.h>
 
 BEGIN_CGF_NAMESPACE
 
@@ -13,7 +13,7 @@ class CGF_API Sprite
 {
 	friend class SpriteBatch;
 public:
-	Sprite(Texture2D *texture = 0, const Rect<float> &rectangle = Rect<float>(0, 0, 0, 0), const Vector2F &origin = Vector2F(0.0f, 0.0f), const float angle = 0.0f, const TextureRegion &region = TextureRegion(), const Color &color = Color(255), const float depth = 0.0f, const Vector2F scale = Vector2F(1.0f, 1.0f));
+	Sprite(Resource<Texture2D> texture = Resource<Texture2D>(0), const Rect<float> &rectangle = Rect<float>(0, 0, 0, 0), const Vector2F &origin = Vector2F(0.0f, 0.0f), const float angle = 0.0f, const TextureRegion &region = TextureRegion(), const Color &color = Color(255), const float depth = 0.0f, const Vector2F scale = Vector2F(1.0f, 1.0f));
 	//Sprite(const Resource<Texture2D> texture, const Rect &rectangle, const TextureRegion &region = TextureRegion(), const Color &color = Color(255), const float depth = 0.0f);
 	//Sprite(const Resource<Texture2D> texture, const Rect &rectangle, const TextureRegion &region = TextureRegion(), const Color &color = Color(255), const float depth = 0.0f);
 	//Sprite(const Resource<Texture2D> texture, const Vector2F &center, const TextureRegion &region = TextureRegion(), const Color &color = Color(255), const float depth = 0.0f);
@@ -60,11 +60,11 @@ public:
 	float getRotation() const;
 	Color getColor() const;
 	TextureRegion getRegion() const;
-	void setTexture(Texture2D *texture) { m_texture = texture; }
-	Texture2D *getTexture() const;
+	void setTexture(Resource<Texture2D> texture) { m_texture = texture; }
+	Resource<Texture2D> getTexture() const;
 
 private:
-	Texture2D *m_texture;
+	Resource<Texture2D> m_texture;
 	TextureRegion m_textureRegion;
 	Vector2F m_position;
 	Vector2F m_size;

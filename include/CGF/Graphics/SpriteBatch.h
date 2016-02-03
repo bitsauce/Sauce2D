@@ -61,7 +61,7 @@ private:
 
 	// SpriteBatch state
 	State m_state, m_prevState;
-	Texture2D *m_prevTexture;
+	Resource<Texture2D> m_prevTexture;
 
 	// Set between begin() and end()
 	bool m_beingCalled;

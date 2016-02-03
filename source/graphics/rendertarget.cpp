@@ -21,16 +21,16 @@ RenderTarget2D::RenderTarget2D(const uint width, const uint height, const uint c
 	glGenFramebuffers(1, &m_id);
 
 	// Allocate textures
-	m_textures = new Texture2D*[m_textureCount];
+	m_textures = new Resource<Texture2D>[m_textureCount];
 	m_buffers = new GLenum[m_textureCount];
 	for(uint i = 0; i < m_textureCount; ++i)
 	{
-		m_textures[i] = new Texture2D(width, height, 0, fmt);
+		m_textures[i] = Resource<Texture2D>(new Texture2D(width, height, 0, fmt));
 		m_buffers[i] = GL_COLOR_ATTACHMENT0 + i;
 	}
 }
 
-RenderTarget2D::RenderTarget2D(Texture2D *target) :
+RenderTarget2D::RenderTarget2D(Resource<Texture2D> target) :
 	m_width(target->getWidth()),
 	m_height(target->getHeight()),
 	m_textureCount(1)
@@ -39,7 +39,7 @@ RenderTarget2D::RenderTarget2D(Texture2D *target) :
 	glGenFramebuffers(1, &m_id);
 
 	// Set texture variables
-	(m_textures = new Texture2D*[1])[0] = target;
+	(m_textures = new Resource<Texture2D>[1])[0] = target;
 	(m_buffers = new GLenum[1])[0] = GL_COLOR_ATTACHMENT0;
 }
 

@@ -104,11 +104,6 @@ Font::~Font()
 		delete it->second;
 		it++;
 	}
-
-	for(Texture2D *texture : m_pages)
-	{
-		delete texture;
-	}
 	m_pages.clear();
 }
 
@@ -528,7 +523,7 @@ void FontLoader::loadPage(int id, const char *pageFile, string fontFile)
 	// Load the font textures
 	fontFile += pageFile;
 
-	m_font->m_pages[id] = new Texture2D(Pixmap(fontFile));
+	m_font->m_pages[id] = Resource<Texture2D>(new Texture2D(Pixmap(fontFile)));
 }
 
 void FontLoader::SetFontInfo(int outlineThickness)

@@ -6,7 +6,7 @@ BEGIN_CGF_NAMESPACE
 Shader *GraphicsContext::s_defaultShader = 0;
 
 // Default texture. Empty texture used when no texture is set.
-Texture2D *GraphicsContext::s_defaultTexture = 0;
+Resource<Texture2D> GraphicsContext::s_defaultTexture = 0;
 
 // Vertex array object
 GLuint GraphicsContext::s_vao = 0;
@@ -114,12 +114,12 @@ void GraphicsContext::popMatrix()
 	m_transformationMatrixStack.pop();
 }
 
-void GraphicsContext::setTexture(Texture2D *texture)
+void GraphicsContext::setTexture(Resource<Texture2D> texture)
 {
 	m_texture = texture;
 }
 
-Texture2D *GraphicsContext::getTexture() const
+Resource<Texture2D> GraphicsContext::getTexture() const
 {
 	return m_texture;
 }

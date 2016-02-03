@@ -105,7 +105,7 @@ public:
 		}
 
 		// Resource was not found
-		LOG("Resource '%s' was not found", name.c_str());
+		//LOG("Resource '%s' was not found", name.c_str());
 		return 0;
 	}
 

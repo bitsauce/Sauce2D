@@ -94,11 +94,11 @@ void LineEdit::onDraw(DrawEvent *e)
 		// Set texture
 		if(isFocused())
 		{
-			g->setTexture(m_textureActive.get());
+			g->setTexture(m_textureActive);
 		}
 		else
 		{
-			g->setTexture(m_textureInactive.get());
+			g->setTexture(m_textureInactive);
 		}
 
 		// Render input rectangle

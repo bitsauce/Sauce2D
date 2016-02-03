@@ -21,12 +21,12 @@ TextureAtlas::TextureAtlas() :
 	init(vector<Pixmap>());
 }
 
-TextureAtlas::TextureAtlas(vector<Texture2D*> textures, const int border) :
+TextureAtlas::TextureAtlas(vector<Resource<Texture2D>> textures, const int border) :
 	m_border(border),
 	m_texture(0)
 {
 	vector<Pixmap> pixmaps;
-	for(vector<Texture2D*>::iterator itr = textures.begin(); itr != textures.end(); ++itr)
+	for(vector<Resource<Texture2D>>::iterator itr = textures.begin(); itr != textures.end(); ++itr)
 	{
 		if(*itr)
 		{
@@ -55,7 +55,7 @@ TextureAtlas::~TextureAtlas()
 void TextureAtlas::init(const vector<Pixmap> &pixmaps)
 {
 	// Create a texture for the atlas
-	m_texture = new Texture2D(ATLAS_SIZE, ATLAS_SIZE);
+	m_texture = Resource<Texture2D>(new Texture2D(ATLAS_SIZE, ATLAS_SIZE));
 	m_texturePacker.setMaxWidth(ATLAS_SIZE);
 
 	// Set as uninitialized
@@ -75,7 +75,7 @@ void TextureAtlas::init(const vector<Pixmap> &pixmaps)
 	m_initialized = true;
 }
 
-void TextureAtlas::add(Texture2D *texture)
+void TextureAtlas::add(Resource<Texture2D> texture)
 {
 	add(texture->getPixmap());
 }
@@ -116,7 +116,7 @@ TextureRegion TextureAtlas::get(const int index, const float u0, const float v0,
 	return get(index, Vector2F(u0, v0), Vector2F(u1, v1));
 }
 
-Texture2D* TextureAtlas::getTexture() const
+Resource<Texture2D> TextureAtlas::getTexture() const
 {
 	return m_texture;
 }

@@ -34,17 +34,17 @@ void Button::onDraw(DrawEvent *e)
 	GraphicsContext *g = e->getGraphicsContext();
 	if(isPressed() && isHovered())
 	{
-		g->setTexture(m_textureActive.get());
+		g->setTexture(m_textureActive);
 		m_text = "Pressed";
 	}
 	else if(isHovered())
 	{
-		g->setTexture(m_textureHover.get());
+		g->setTexture(m_textureHover);
 		m_text = "Hover";
 	}
 	else
 	{
-		g->setTexture(m_texture.get());
+		g->setTexture(m_texture);
 		m_text = "Normal";
 	}
 	
