@@ -1,23 +1,4 @@
 /**
- * \file	C:\Users\Marcus\Documents\GitHub\x2D-Game-Engine\include\CGF\Common\Game.h
- *
- * \brief	Declares the game class.
- */
-
-#ifndef CGF_ENGINE_H
-#define CGF_ENGINE_H
-
-#include <CGF/Config.h>
-#include <CGF/Math.h>
-#include <CGF/Input.h>
-
-#include <CGF/Common/ResourceManager.h>
-#include <CGF/Common/IniParser.h>
-#include <CGF/Common/Event.h>
-
-BEGIN_CGF_NAMESPACE
-
-/**
  * \def	LOG(str, ...) Console::Log(str, __VA_ARGS__);
  *
  * \brief	A macro that defines log.
@@ -41,22 +22,34 @@ BEGIN_CGF_NAMESPACE
 
 #define THROW(str, ...) throw Exception(CGF_RUNTIME_EXCEPTION, str, __VA_ARGS__)
 
+#ifndef CGF_ENGINE_H
+#define CGF_ENGINE_H
+
+#include <CGF/Config.h>
+#include <CGF/Math.h>
+#include <CGF/Input.h>
+
+#include <CGF/Common/ResourceManager.h>
+#include <CGF/Common/IniParser.h>
+#include <CGF/Common/Event.h>
+
+BEGIN_CGF_NAMESPACE
+
 /*********************************************************************
 **	Game console													**
 **********************************************************************/
 
 class FileSystem;
+class FileReader;
+class FileWriter;
+class AudioManager;
+class Graphics;
 
 /**
  * \class	FileReader
  *
  * \brief	A file reader.
  */
-
-class FileReader;
-class FileWriter;
-class AudioManager;
-class Graphics;
 
 class CGF_API Console
 {

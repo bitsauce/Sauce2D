@@ -53,9 +53,9 @@ private:
  * Resources in this context are objects which are loaded from the hard drive
  * and which should only be read once.
  *
- * Resources are loaded as follows \code ResouceClassPtr resource = ResourceManager::get<ResourceClass>("path_to_file.res"); \endcode
- * Where ResourceClass is the name the class of the type of resource you are trying to load.
- * ResouceManager can currently load image files and font files.
+ * Resources are loaded as follows \code Resouce<ResourceClass> resource = game->getResourceManager()->get<ResourceClass>("ResourceName"); \endcode
+ * Where ResourceClass is the class name of the type of resource you are trying to load.
+ * ResouceManager can currently load image files, font files and shaders.
  */
 
 // TODO: Separate resources from instances of resources.
@@ -105,7 +105,8 @@ public:
 		}
 
 		// Resource was not found
-		//LOG("Resource '%s' was not found", name.c_str());
+		// TODO: When a resource is not found, return a dummy resource instead of a nullptr.
+		LOG("Resource '%s' was not found", name.c_str());
 		return 0;
 	}
 
