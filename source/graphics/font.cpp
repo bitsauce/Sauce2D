@@ -61,8 +61,10 @@ public:
 // This is the Font class that is used to write text with bitmap fonts.
 //=============================================================================
 
-Font::Font(ResourceDesc *desc)
+Font::Font(ResourceDesc *desc_)
 {
+	FontResourceDesc *desc = (FontResourceDesc*) desc_;
+
 	m_fontHeight = 0;
 	m_base = 0;
 	m_scaleW = 0;

@@ -9,9 +9,9 @@ BEGIN_CGF_NAMESPACE
 class CGF_API Shader
 {
 	friend class GraphicsContext;
+	friend class ResourceManager;
 public:
 	Shader(const string &vertexSource, const string &fragmentSource);
-	Shader(ResourceDesc *desc);
 	~Shader();
 
 	void bindFragLocation(const uint location, const string &name);
@@ -41,7 +41,11 @@ public:
 	void exportAssembly(const string &fileName);
 
 private:
-	
+
+	Shader(ResourceDesc *desc);
+
+	void init(const string &vertexSource, const string &fragmentSource);
+
 	// Uniform struct
 	struct Uniform
 	{
@@ -69,6 +73,30 @@ private:
 };
 
 template CGF_API class shared_ptr<Shader>;
+
+class ShaderResourceDesc : public ResourceDesc
+{
+public:
+	ShaderResourceDesc(const string &name, const string &vertexFilePath, const string &fragmentFilePath) :
+		ResourceDesc(RESOURCE_TYPE_TEXTURE, name),
+		m_vertexFilePath(vertexFilePath),
+		m_fragmentFilePath(fragmentFilePath)
+	{
+	}
+
+	string getVertexFilePath() const
+	{
+		return m_vertexFilePath;
+	}
+	
+	string getFragmentFilePath() const
+	{
+		return m_fragmentFilePath;
+	}
+
+private:
+	const string m_vertexFilePath, m_fragmentFilePath;
+};
 
 END_CGF_NAMESPACE
 

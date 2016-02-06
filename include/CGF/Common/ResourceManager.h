@@ -26,15 +26,15 @@ enum ResourceType
 class CGF_API ResourceDesc
 {
 public:
-	ResourceDesc(ResourceType type, const string &path) :
+	ResourceDesc(ResourceType type, const string &name) :
 		m_type(type),
-		m_path(path)
+		m_name(name)
 	{
 	}
 
-	string getPath() const
+	string getName() const
 	{
-		return m_path;
+		return m_name;
 	}
 
 	ResourceType getType() const
@@ -44,7 +44,7 @@ public:
 
 private:
 	const ResourceType m_type;
-	const string m_path;
+	const string m_name;
 };
 
 /**

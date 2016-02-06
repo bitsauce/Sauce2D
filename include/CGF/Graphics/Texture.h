@@ -82,10 +82,16 @@ template class CGF_API shared_ptr<Texture2D>;
 class TextureResourceDesc : public ResourceDesc
 {
 public:
-	TextureResourceDesc(const string &path, const bool premultiplyAlpha) :
-		ResourceDesc(RESOURCE_TYPE_TEXTURE, path),
-		m_premultiplyAlpha(premultiplyAlpha)
+	TextureResourceDesc(const string &name, const string &path, const bool premultiplyAlpha) :
+		ResourceDesc(RESOURCE_TYPE_TEXTURE, name),
+		m_premultiplyAlpha(premultiplyAlpha),
+		m_path(path)
 	{
+	}
+
+	string getPath() const
+	{
+		return m_path;
 	}
 
 	bool getPremultiplyAlpha() const
@@ -95,6 +101,32 @@ public:
 
 private:
 	const bool m_premultiplyAlpha;
+	const string m_path;
+};
+
+class FontResourceDesc : public ResourceDesc
+{
+public:
+	FontResourceDesc(const string &name, const string &path, const bool premultiplyAlpha) :
+		ResourceDesc(RESOURCE_TYPE_FONT, name),
+		m_premultiplyAlpha(premultiplyAlpha),
+		m_path(path)
+	{
+	}
+
+	string getPath() const
+	{
+		return m_path;
+	}
+
+	bool getPremultiplyAlpha() const
+	{
+		return m_premultiplyAlpha;
+	}
+
+private:
+	const bool m_premultiplyAlpha;
+	const string m_path;
 };
 
 END_CGF_NAMESPACE

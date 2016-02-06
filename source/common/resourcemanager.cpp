@@ -9,6 +9,7 @@
 
 #include <CGF/Common.h>
 #include <CGF/Graphics/Texture.h>
+#include <CGF/Graphics/Shader.h>
 
 BEGIN_CGF_NAMESPACE
 
@@ -34,24 +35,46 @@ ResourceManager::ResourceManager(const string &resourceFile)
 		{
 			// For each resource entry
 			tinyxml2::XMLElement *name = resourceNode->FirstChildElement("name");
-			tinyxml2::XMLElement *path = resourceNode->FirstChildElement("path");
 
 			// Get name and path
-			if(name && path)
+			if(name)
 			{
 				string type = resourceNode->Value();
 				if(type == "texture")
 				{
+					tinyxml2::XMLElement *path = resourceNode->FirstChildElement("path");
 					tinyxml2::XMLElement *premul = resourceNode->FirstChildElement("premultiplyAlpha");
-					m_resourceDesc[name->GetText()] =
-						new TextureResourceDesc(
-							path->GetText(),
-							premul && string(premul->GetText()) == "true"
-							);
+					if(path)
+					{
+						m_resourceDesc[name->GetText()] =
+							new TextureResourceDesc(
+								name->GetText(),
+								path->GetText(),
+								premul && string(premul->GetText()) == "true"
+								);
+					}
 				}
 				else if(type == "font")
 				{
-					m_resourceDesc[name->GetText()] = new ResourceDesc(RESOURCE_TYPE_FONT, path->GetText());
+					tinyxml2::XMLElement *path = resourceNode->FirstChildElement("path");
+					tinyxml2::XMLElement *premul = resourceNode->FirstChildElement("premultiplyAlpha");
+					if(path)
+					{
+						m_resourceDesc[name->GetText()] = new FontResourceDesc(
+							name->GetText(),
+							path->GetText(),
+							premul && string(premul->GetText()) == "true"
+							);
+					}
+				}
+				else if(type == "shader")
+				{
+					tinyxml2::XMLElement *vertexFilePath = resourceNode->FirstChildElement("vertexFilePath");
+					tinyxml2::XMLElement *fragmentFilePath = resourceNode->FirstChildElement("fragmentFilePath");
+					if(vertexFilePath && fragmentFilePath)
+					{
+						m_resourceDesc[name->GetText()] = new ShaderResourceDesc(name->GetText(), vertexFilePath->GetText(), fragmentFilePath->GetText());
+					}
 				}
 			}
 

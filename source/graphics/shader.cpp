@@ -18,16 +18,45 @@ BEGIN_CGF_NAMESPACE
 
 Shader::Shader(const string &vertexSource, const string &fragmentSource)
 {
+	init(vertexSource, fragmentSource);
+}
+
+Shader::Shader(ResourceDesc *desc_)
+{
+	ShaderResourceDesc *desc = (ShaderResourceDesc*) desc_;
+	string vertexSource, fragmentSource;
+	if(desc)
+	{
+		FileReader *fileReader;
+
+		fileReader = new FileReader(util::getAbsoluteFilePath(desc->getVertexFilePath()));
+		vertexSource = fileReader->readAll();
+		fileReader->close();
+		delete fileReader;
+
+		fileReader = new FileReader(util::getAbsoluteFilePath(desc->getFragmentFilePath()));
+		fragmentSource = fileReader->readAll();
+		fileReader->close();
+		delete fileReader;
+
+		LOG("Compiling shader program: %s", desc->getName().c_str());
+	}
+
+	init(vertexSource.c_str(), fragmentSource.c_str());
+}
+
+void Shader::init(const string &vertexSource, const string &fragmentSource)
+{
 	// Create vertex and fragment shaders
-    m_vertShaderID = glCreateShader(GL_VERTEX_SHADER);
-    m_fragShaderID = glCreateShader(GL_FRAGMENT_SHADER);
+	m_vertShaderID = glCreateShader(GL_VERTEX_SHADER);
+	m_fragShaderID = glCreateShader(GL_FRAGMENT_SHADER);
 
 	// Result variables
 	GLint success;
 
 	// Create modified shader code
-	string vertexSourceModified = "#version 130\n" + vertexSource;
-	string fragmentSourceModified = "#version 130\n" + fragmentSource;
+	string vertexSourceModified = "#version 130\n" + string(vertexSource);
+	string fragmentSourceModified = "#version 130\n" + string(fragmentSource);
 
 	LOG("Compiling vertex shader...");
 
@@ -35,10 +64,10 @@ Shader::Shader(const string &vertexSource, const string &fragmentSource)
 	const char *data = vertexSourceModified.c_str();
 	int len = vertexSourceModified.length();
 	glShaderSource(m_vertShaderID, 1, &data, &len);
-    glCompileShader(m_vertShaderID);
+	glCompileShader(m_vertShaderID);
 
-    // Validate vertex shader
-    glGetShaderiv(m_vertShaderID, GL_COMPILE_STATUS, &success);
+	// Validate vertex shader
+	glGetShaderiv(m_vertShaderID, GL_COMPILE_STATUS, &success);
 	if(!success)
 	{
 		// Get log length
@@ -60,7 +89,7 @@ Shader::Shader(const string &vertexSource, const string &fragmentSource)
 	data = fragmentSourceModified.c_str();
 	len = fragmentSourceModified.length();
 	glShaderSource(m_fragShaderID, 1, &data, &len);
-    glCompileShader(m_fragShaderID);
+	glCompileShader(m_fragShaderID);
 
 	// Validate fragment shader
 	glGetShaderiv(m_fragShaderID, GL_COMPILE_STATUS, &success);
@@ -79,10 +108,10 @@ Shader::Shader(const string &vertexSource, const string &fragmentSource)
 		THROW(compileLog.c_str());
 	}
 
-    // Create shader program
-    m_id = glCreateProgram();
-    glAttachShader(m_id, m_vertShaderID);
-    glAttachShader(m_id, m_fragShaderID);
+	// Create shader program
+	m_id = glCreateProgram();
+	glAttachShader(m_id, m_vertShaderID);
+	glAttachShader(m_id, m_fragShaderID);
 
 	glBindAttribLocation(m_id, 0, "in_Position");
 	glBindAttribLocation(m_id, 1, "in_VertexColor");
@@ -142,26 +171,6 @@ Shader::Shader(const string &vertexSource, const string &fragmentSource)
 
 		m_uniforms[strName] = uniform;
 	}
-}
-
-Shader::Shader(ResourceDesc *desc)
-{
-	// TODO
-	/*FileReader *fileReader;
-
-	fileReader = new FileReader(util::getAbsoluteFilePath(name + ".vert"));
-	string vertexSource = fileReader->readAll();
-	fileReader->close();
-	delete fileReader;
-
-	fileReader = new FileReader(util::getAbsoluteFilePath(name + ".frag"));
-	string fragmentSource = fileReader->readAll();
-	fileReader->close();
-	delete fileReader;
-
-	LOG("Compiling shader program: %s", name.c_str());
-
-	return ShaderPtr(new Shader(vertexSource, fragmentSource));*/
 }
 
 Shader::~Shader()

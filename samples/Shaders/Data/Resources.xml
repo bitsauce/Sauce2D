@@ -1,0 +1,7 @@
+<resources>
+	<shader>
+		<name>Shader</name>
+		<vertexFilePath>Shader.vert</vertexFilePath>
+		<fragmentFilePath>Shader.frag</fragmentFilePath>
+	</shader>
+</resources>
