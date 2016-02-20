@@ -11,9 +11,6 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\source\Audio\Audio.cpp" />
-    <ClCompile Include="..\..\source\Audio\Buffer.cpp" />
-    <ClCompile Include="..\..\source\Audio\Source.cpp" />
     <ClCompile Include="..\..\source\Common\Console.cpp" />
     <ClCompile Include="..\..\source\Common\Game.cpp" />
     <ClCompile Include="..\..\source\Common\FileSystem.cpp" />

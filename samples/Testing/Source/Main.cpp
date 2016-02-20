@@ -43,9 +43,9 @@ public:
 
 class Keybinding : public Game
 {
-	KeybindPtr m_keybind;
-	KeybindPtr m_jumpKeybind;
-	KeybindPtr m_runKeybind;
+	Keybind m_keybind;
+	Keybind m_jumpKeybind;
+	Keybind m_runKeybind;
 public:
 	Keybinding() :
 		Game("KeyBinding")
@@ -59,8 +59,9 @@ public:
 
 		// Create a keybind which will call the function
 		// BKeyFunc when the B key is pressed.
-		m_keybind = KeybindPtr(new Keybind(CGF_KEY_B, bind(&Keybinding::BKeyFunc, this, placeholders::_1)));
-		input->addKeybind(m_keybind); // Add it to the list of keybinds
+		m_keybind = Keybind(CGF_KEY_B, bind(&Keybinding::BKeyFunc, this, placeholders::_1));
+		//m_keybind = getInputManager()->ceateKeybind(CGF_KEY_B, bind(&Keybinding::BKeyFunc, this, placeholders::_1));
+		input->addKeybind(&m_keybind); // Add it to the list of keybinds
 
 		// Create an input context.
 		// Input contexts map symbolic strings to keys.
@@ -69,13 +70,13 @@ public:
 
 		// Create a keybind by mapping the keyword 
 		// "jump" to the SPACE key.
-		m_jumpKeybind = KeybindPtr(new Keybind(Keyname("jump", CGF_KEY_SPACE), bind(&Keybinding::jump, this, placeholders::_1)));
-		context->addKeybind(m_jumpKeybind); // Add keybind to input context
+		m_jumpKeybind = Keybind(CGF_KEY_SPACE, bind(&Keybinding::jump, this, placeholders::_1));
+		context->addKeybind("jump", &m_jumpKeybind); // Add keybind to input context
 
 		// Create run keybind which has no funtion mapped to it.
 		// We can stil use this keybind with context->getKeyState("run").
-		m_runKeybind = KeybindPtr(new Keybind(Keyname("run", CGF_KEY_LSHIFT)));
-		context->addKeybind(m_runKeybind);
+		m_runKeybind = Keybind(CGF_KEY_LSHIFT);
+		context->addKeybind("run", &m_runKeybind);
 
 		// Enable this context
 		input->setContext(context);
@@ -84,8 +85,8 @@ public:
 	void onEnd(GameEvent *e)
 	{
 		InputManager *input = getInputManager();
-		input->removeKeybind(m_keybind);
-		input->getContext()->removeKeybind(m_jumpKeybind);
+		input->removeKeybind(&m_keybind);
+		input->getContext()->removeKeybind(&m_jumpKeybind);
 	}
 
 	void BKeyFunc(KeyEvent *e)
@@ -96,8 +97,8 @@ public:
 			case EVENT_KEY_REPEAT: LOG("B repeating"); break;
 			case EVENT_KEY_UP:
 				LOG("B released");
-				m_keybind->setFunction(bind(&Keybinding::DKeyFunc, this, placeholders::_1));
-				m_keybind->getKeyname().setKeycode(CGF_KEY_D);
+				m_keybind.setFunction(bind(&Keybinding::DKeyFunc, this, placeholders::_1));
+				m_keybind.setKeycode(CGF_KEY_D);
 				break;
 		}
 	}
@@ -110,8 +111,8 @@ public:
 			case EVENT_KEY_REPEAT: LOG("D repeating"); break;
 			case EVENT_KEY_UP:
 				LOG("D released");
-				m_keybind->setFunction(bind(&Keybinding::BKeyFunc, this, placeholders::_1));
-				m_keybind->getKeyname().setKeycode(CGF_KEY_B);
+				m_keybind.setFunction(bind(&Keybinding::BKeyFunc, this, placeholders::_1));
+				m_keybind.setKeycode(CGF_KEY_B);
 				break;
 		}
 	}

@@ -16,42 +16,51 @@ InputContext::InputContext(InputManager *mgr) :
 {
 }
 
-void InputContext::addKeybind(KeybindPtr keybind)
+void InputContext::addKeybind(const string &name, Keybind *keybind)
 {
-	if(keybind->getKeyname().isValid())
+	if(!name.empty() && keybind)
 	{
-		m_keybinds[keybind->getKeyname().getName()] = keybind;
+		m_keybinds[name] = keybind;
 	}
 }
 
-void InputContext::removeKeybind(KeybindPtr keybind)
+void InputContext::removeKeybind(Keybind *keybind)
 {
-	if(keybind->getKeyname().isValid())
+	for(map<string, Keybind*>::iterator itr = m_keybinds.begin(); itr != m_keybinds.end(); itr++)
 	{
-		map<string, KeybindPtr>::iterator itr;
-		if((itr = m_keybinds.find(keybind->getKeyname().getName())) == m_keybinds.end())
+		if(itr->second == keybind)
 		{
 			m_keybinds.erase(itr);
+			break;
 		}
+	}
+}
+
+void InputContext::removeKeybind(const string &name)
+{
+	map<string, Keybind*>::iterator itr;
+	if((itr = m_keybinds.find(name)) != m_keybinds.end())
+	{
+		m_keybinds.erase(itr);
 	}
 }
 
 bool InputContext::getKeyState(string name) const
 {
-	map<string, KeybindPtr>::const_iterator itr;
+	map<string, Keybind*>::const_iterator itr;
 	if((itr = m_keybinds.find(name)) == m_keybinds.end())
 	{
 		return false;
 	}
-	return m_inputManager->getKeyState(itr->second->getKeyname().getKeycode());
+	return m_inputManager->getKeyState(itr->second->getKeycode());
 }
 
 void InputContext::updateKeybinds(KeyEvent *e)
 {
-	for(map<string, KeybindPtr>::iterator itr = m_keybinds.begin(); itr != m_keybinds.end(); ++itr)
+	for(map<string, Keybind*>::iterator itr = m_keybinds.begin(); itr != m_keybinds.end(); ++itr)
 	{
-		KeybindPtr kb = itr->second;
-		if(kb->getKeyname().getKeycode() == e->getKeycode() && kb->getFunction())
+		Keybind* kb = itr->second;
+		if(kb->getKeycode() == e->getKeycode() && kb->getFunction())
 		{
 			kb->getFunction()(e);
 		}

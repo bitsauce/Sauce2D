@@ -12,33 +12,25 @@ class KeyEvent;
 class InputContext;
 
 /**
-* \class	Keyname
+* \class	Keybind
 *
-* \brief	A keyname.
+* \brief
 */
-class Keyname
+
+class CGF_API Keybind
 {
 public:
-	Keyname() :
-		m_name(""),
-		m_keycode(CGF_KEY_UNKNOWN)
+	Keybind();
+	Keybind(Keycode keycode, function<void(KeyEvent*)> func = function<void(KeyEvent*)>());
+
+	function<void(KeyEvent*)> getFunction() const
 	{
+		return m_function;
 	}
 
-	Keyname(const string name, const Keycode keycode) :
-		m_name(name),
-		m_keycode(keycode)
+	void setFunction(function<void(KeyEvent*)> func)
 	{
-	}
-
-	string getName() const
-	{
-		return m_name;
-	}
-
-	void setName(const string name)
-	{
-		m_name = name;
+		m_function = func;
 	}
 
 	Keycode getKeycode() const
@@ -51,54 +43,8 @@ public:
 		m_keycode = keycode;
 	}
 
-	bool isValid() const
-	{
-		return !m_name.empty() && m_keycode != CGF_KEY_UNKNOWN;
-	}
-
 private:
-	string m_name;
 	Keycode m_keycode;
-};
-
-/**
-* \class	Keybind
-*
-* \brief
-*/
-
-class Keybind;
-typedef shared_ptr<Keybind> KeybindPtr;
-
-class CGF_API Keybind
-{
-public:
-	Keybind();
-	Keybind(Keyname keyname, function<void(KeyEvent*)> func = function<void(KeyEvent*)>());
-	Keybind(Keycode keycode, function<void(KeyEvent*)> func = function<void(KeyEvent*)>());
-
-	Keyname &getKeyname()
-	{
-		return m_keyname;
-	}
-
-	void setKeyname(Keyname keyname)
-	{
-		m_keyname = keyname;
-	}
-
-	function<void(KeyEvent*)> getFunction() const
-	{
-		return m_function;
-	}
-
-	void setFunction(function<void(KeyEvent*)> func)
-	{
-		m_function = func;
-	}
-
-private:
-	Keyname m_keyname;
 	function<void(KeyEvent*)> m_function;
 };
 
@@ -115,6 +61,7 @@ class CGF_API InputManager
 	friend class Game;
 public:
 	InputManager(string contextFile);
+	~InputManager();
 
 	// Desktop cursor functions
 	//void setCursorLimits(const int x, const int y, const int w, const int h);
@@ -131,7 +78,11 @@ public:
 
 	// Input context
 	void setContext(InputContext *inputContext);
-	InputContext *getContext();
+	InputContext *getContext() const
+	{
+		return m_context;
+	}
+	InputContext *getContextByName(const string &name);
 
 	// Clipboard
 	string getClipboardString();
@@ -150,7 +101,7 @@ public:
 	* \return	A KeybindPtr.
 	*/
 
-	void addKeybind(KeybindPtr keybind);
+	void addKeybind(Keybind *keybind);
 
 	/**
 	* \fn	void InputManager::removeKeybind(KeybindPtr keybind);
@@ -160,7 +111,7 @@ public:
 	* \param	keybind	The keybind.
 	*/
 
-	void removeKeybind(KeybindPtr keybind);
+	void removeKeybind(Keybind *keybind);
 
 private:
 	// Update bindings
@@ -177,7 +128,8 @@ private:
 	map<string, Keycode> m_strToKey;
 
 	// Key binds
-	list<KeybindPtr> m_keybinds;
+	list<Keybind*> m_keybinds;
+	list<Keybind*> m_contextKeybinds;
 };
 
 

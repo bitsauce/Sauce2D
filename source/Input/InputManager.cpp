@@ -3,19 +3,13 @@
 BEGIN_CGF_NAMESPACE
 
 Keybind::Keybind() :
-	m_keyname(),
+	m_keycode(CGF_KEY_UNKNOWN),
 	m_function()
 {
 }
 
-Keybind::Keybind(Keyname keyname, function<void(KeyEvent*)> func) :
-	m_keyname(keyname),
-	m_function(func)
-{
-}
-
 Keybind::Keybind(Keycode keycode, function<void(KeyEvent*)> func) :
-	m_keyname("", keycode),
+	m_keycode(keycode),
 	m_function(func)
 {
 }

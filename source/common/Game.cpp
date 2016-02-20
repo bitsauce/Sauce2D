@@ -196,7 +196,7 @@ int Game::run()
 		GraphicsContext::s_defaultTexture = Resource<Texture2D>(new Texture2D(1, 1, pixel));
 
 		// Initialize input handler
-		m_inputManager = new InputManager("config:/InputDefault.ini");//(m_inputConfig);
+		m_inputManager = new InputManager("InputConfig.xml");
 
 		m_scene = new Scene(this);
 

@@ -146,7 +146,7 @@ InputManager::InputManager(string contextFile) :
 		doc.LoadFile(contextFile.c_str());
 
 		// Get root node
-		tinyxml2::XMLNode *contextNode = doc.FirstChild();
+		tinyxml2::XMLNode *contextNode = doc.FirstChildElement();
 		if(!contextNode)
 		{
 			LOG("Invalid input config file");
@@ -154,13 +154,13 @@ InputManager::InputManager(string contextFile) :
 		}
 
 		// For each context
-		contextNode = contextNode->FirstChild();
+		contextNode = contextNode->FirstChildElement();
 		while(contextNode)
 		{
 			InputContext *inputContext = new InputContext(this);
 
 			// For each key bind
-			tinyxml2::XMLNode *node = contextNode->FirstChild();
+			tinyxml2::XMLNode *node = contextNode->FirstChildElement();
 			while(node)
 			{
 				// Get name and key
@@ -171,7 +171,9 @@ InputManager::InputManager(string contextFile) :
 					Keycode vk = strToKey(key->GetText());
 					if(vk != CGF_KEY_UNKNOWN)
 					{
-						//inputContext->m_nameToKey[name->GetText()] = vk;
+						Keybind *kb = new Keybind(vk);
+						inputContext->addKeybind(name->GetText(), kb);
+						m_contextKeybinds.push_back(kb);
 					}
 					else
 					{
@@ -184,6 +186,15 @@ InputManager::InputManager(string contextFile) :
 			contextNode = contextNode->NextSibling();
 		}
 	}
+}
+
+InputManager::~InputManager()
+{
+	for(Keybind *kb : m_contextKeybinds)
+	{
+		delete kb;
+	}
+	m_contextKeybinds.clear();
 }
 
 void InputManager::getPosition(Sint32 *x, Sint32 *y) const
@@ -229,15 +240,14 @@ void InputManager::setContext(InputContext *inputContext)
 	m_context = inputContext;
 }
 
-InputContext *InputManager::getContext()
+InputContext *InputManager::getContextByName(const string &name)
 {
-	return m_context;
-	/*if(m_contextMap.find(name) == m_contextMap.end())
+	if(m_contextMap.find(name) == m_contextMap.end())
 	{
-	LOG("No input context with name '%s'", name);
-	return 0;
+		LOG("No input context with name '%s'", name);
+		return 0;
 	}
-	return m_contextMap[name];*/
+	return m_contextMap[name];
 }
 
 string InputManager::getClipboardString()
@@ -250,12 +260,12 @@ void InputManager::setClipboardString(const string str)
 	SDL_SetClipboardText(str.c_str());
 }
 
-void InputManager::addKeybind(KeybindPtr keybind)
+void InputManager::addKeybind(Keybind *keybind)
 {
 	m_keybinds.push_back(keybind);
 }
 
-void InputManager::removeKeybind(KeybindPtr keybind)
+void InputManager::removeKeybind(Keybind *keybind)
 {
 	m_keybinds.remove(keybind);
 }
@@ -265,9 +275,9 @@ void InputManager::updateKeybinds(KeyEvent *e)
 	//if(m_game->isEnabled(CGF_BLOCK_BACKGROUND_INPUT) && !m_game->getWindow()->checkFlags(SDL_WINDOW_INPUT_FOCUS)) return;
 
 	// Update keybinds
-	for(KeybindPtr kb : m_keybinds)
+	for(Keybind *kb : m_keybinds)
 	{
-		if(kb->getKeyname().getKeycode() == e->getKeycode() && kb->getFunction())
+		if(kb->getKeycode() == e->getKeycode() && kb->getFunction())
 		{
 			kb->getFunction()(e);
 		}

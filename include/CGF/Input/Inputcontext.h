@@ -28,7 +28,17 @@ public:
 	 * ### param	name	The name.
 	 */
 
-	void addKeybind(KeybindPtr keybind);
+	void addKeybind(const string &name, Keybind* keybind);
+
+	Keybind *getKeybind(const string &name)
+	{
+		map<string, Keybind*>::iterator itr;
+		if((itr = m_keybinds.find(name)) != m_keybinds.end())
+		{
+			return itr->second;
+		}
+		return 0;
+	}
 
 	/**
 	 * \fn	void InputContext::removeKeybind(KeybindPtr keybind);
@@ -40,7 +50,8 @@ public:
 	 * ### param	name	The name.
 	 */
 
-	void removeKeybind(KeybindPtr keybind);
+	void removeKeybind(Keybind *keybind);
+	void removeKeybind(const string &name);
 
 	bool getKeyState(string name) const;
 
@@ -57,7 +68,7 @@ private:
 	void updateKeybinds(KeyEvent *e);
 
 	// Key binds
-	map<string, KeybindPtr> m_keybinds;
+	map<string, Keybind*> m_keybinds;
 
 	// Input manager
 	InputManager *m_inputManager;
