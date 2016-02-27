@@ -67,6 +67,7 @@ public:
 	//void setCursorLimits(const int x, const int y, const int w, const int h);
 
 	// Key state function
+	bool getKeyState(const MouseButton mouseButton) const;
 	bool getKeyState(const Keycode keycode) const;
 	bool getKeyState(const Scancode scancode) const;
 

@@ -140,14 +140,6 @@ private:
 	const char m_char;
 };
 
-enum MouseButton
-{
-	MOUSE_BUTTON_NONE = 0,
-	MOUSE_BUTTON_LEFT = SDL_BUTTON_LEFT,
-	MOUSE_BUTTON_MIDDLE = SDL_BUTTON_MIDDLE,
-	MOUSE_BUTTON_RIGHT = SDL_BUTTON_RIGHT,
-};
-
 class CGF_API MouseEvent : public Event
 {
 public:

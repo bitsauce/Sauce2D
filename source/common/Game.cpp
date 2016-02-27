@@ -304,7 +304,7 @@ int Game::run()
 					{
 						m_inputManager->m_x = event.motion.x;
 						m_inputManager->m_y = event.motion.y;
-						MouseEvent e(MouseEvent::MOVE, event.motion.x, event.motion.y, MOUSE_BUTTON_NONE, 0, 0);
+						MouseEvent e(MouseEvent::MOVE, event.motion.x, event.motion.y, CGF_MOUSE_BUTTON_NONE, 0, 0);
 						onEvent(&e);
 					}
 					break;
@@ -325,7 +325,7 @@ int Game::run()
 
 					case SDL_MOUSEWHEEL:
 					{
-						MouseEvent e(MouseEvent::WHEEL, m_inputManager->m_x, m_inputManager->m_y, MOUSE_BUTTON_NONE, event.wheel.x, event.wheel.y);
+						MouseEvent e(MouseEvent::WHEEL, m_inputManager->m_x, m_inputManager->m_y, CGF_MOUSE_BUTTON_NONE, event.wheel.x, event.wheel.y);
 						onEvent(&e);
 					}
 					break;

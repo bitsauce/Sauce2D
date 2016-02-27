@@ -290,6 +290,11 @@ void InputManager::updateKeybinds(KeyEvent *e)
 	}
 }
 
+bool InputManager::getKeyState(const MouseButton mouseButton) const
+{
+	return SDL_GetMouseState(NULL, NULL) & SDL_BUTTON(mouseButton) != 0;
+}
+
 bool InputManager::getKeyState(const Keycode keycode) const
 {
 	return getKeyState((Scancode) SDL_GetScancodeFromKey(keycode));
