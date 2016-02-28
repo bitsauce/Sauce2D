@@ -18,125 +18,123 @@ InputManager::InputManager(string contextFile) :
 	m_y(0)
 {
 	// Set all str to key mappings
-	m_strToKey["space"] = CGF_KEY_SPACE;
-	m_strToKey["quote"] = m_strToKey["apostrophe"] = CGF_KEY_QUOTE;
-	m_strToKey["comma"] = CGF_KEY_COMMA;
-	m_strToKey["minus"] = CGF_KEY_MINUS;
-	m_strToKey["period"] = CGF_KEY_PERIOD;
-	m_strToKey["slash"] = CGF_KEY_SLASH;
-	m_strToKey["0"] = CGF_KEY_0;
-	m_strToKey["1"] = CGF_KEY_1;
-	m_strToKey["2"] = CGF_KEY_2;
-	m_strToKey["3"] = CGF_KEY_3;
-	m_strToKey["4"] = CGF_KEY_4;
-	m_strToKey["5"] = CGF_KEY_5;
-	m_strToKey["6"] = CGF_KEY_6;
-	m_strToKey["7"] = CGF_KEY_7;
-	m_strToKey["8"] = CGF_KEY_8;
-	m_strToKey["9"] = CGF_KEY_9;
-	m_strToKey["semicolon"] = CGF_KEY_SEMICOLON;
-	m_strToKey["equals"] = CGF_KEY_EQUALS;
-	m_strToKey["a"] = CGF_KEY_A;
-	m_strToKey["b"] = CGF_KEY_B;
-	m_strToKey["c"] = CGF_KEY_C;
-	m_strToKey["d"] = CGF_KEY_D;
-	m_strToKey["e"] = CGF_KEY_E;
-	m_strToKey["f"] = CGF_KEY_F;
-	m_strToKey["g"] = CGF_KEY_G;
-	m_strToKey["h"] = CGF_KEY_H;
-	m_strToKey["i"] = CGF_KEY_I;
-	m_strToKey["j"] = CGF_KEY_J;
-	m_strToKey["k"] = CGF_KEY_K;
-	m_strToKey["l"] = CGF_KEY_L;
-	m_strToKey["m"] = CGF_KEY_M;
-	m_strToKey["n"] = CGF_KEY_N;
-	m_strToKey["o"] = CGF_KEY_O;
-	m_strToKey["p"] = CGF_KEY_P;
-	m_strToKey["q"] = CGF_KEY_Q;
-	m_strToKey["r"] = CGF_KEY_R;
-	m_strToKey["s"] = CGF_KEY_S;
-	m_strToKey["t"] = CGF_KEY_T;
-	m_strToKey["u"] = CGF_KEY_U;
-	m_strToKey["v"] = CGF_KEY_V;
-	m_strToKey["w"] = CGF_KEY_W;
-	m_strToKey["x"] = CGF_KEY_X;
-	m_strToKey["y"] = CGF_KEY_Y;
-	m_strToKey["z"] = CGF_KEY_Z;
-	m_strToKey["lbracket"] = m_strToKey["leftbracket"] = CGF_KEY_LEFTBRACKET;
-	m_strToKey["backslash"] = CGF_KEY_BACKSLASH;
-	m_strToKey["rightbracket"] = CGF_KEY_RIGHTBRACKET;
-	m_strToKey["backquote"] = CGF_KEY_BACKQUOTE;
-	m_strToKey["underscore"] = CGF_KEY_UNDERSCORE;
-	m_strToKey["at"] = CGF_KEY_AT;
-	m_strToKey["escape"] = CGF_KEY_ESCAPE;
-	m_strToKey["enter"] = m_strToKey["return"] = CGF_KEY_RETURN;
-	m_strToKey["tab"] = CGF_KEY_TAB;
-	m_strToKey["backspace"] = CGF_KEY_BACKSPACE;
-	m_strToKey["insert"] = CGF_KEY_INSERT;
-	m_strToKey["delete"] = CGF_KEY_DELETE;
-	m_strToKey["right"] = CGF_KEY_RIGHT;
-	m_strToKey["left"] = CGF_KEY_LEFT;
-	m_strToKey["down"] = CGF_KEY_DOWN;
-	m_strToKey["up"] = CGF_KEY_UP;
-	m_strToKey["pageup"] = CGF_KEY_PAGEUP;
-	m_strToKey["pagedown"] = CGF_KEY_PAGEDOWN;
-	m_strToKey["home"] = CGF_KEY_HOME;
-	m_strToKey["end"] = CGF_KEY_END;
-	m_strToKey["capslock"] = CGF_KEY_CAPSLOCK;
-	m_strToKey["scrolllock"] = CGF_KEY_SCROLLLOCK;
-	m_strToKey["numlock"] = CGF_KEY_NUMLOCKCLEAR;
-	m_strToKey["printscreen"] = CGF_KEY_PRINTSCREEN;
-	m_strToKey["pause"] = CGF_KEY_PAUSE;
-	m_strToKey["f1"] = CGF_KEY_F1;
-	m_strToKey["f2"] = CGF_KEY_F2;
-	m_strToKey["f3"] = CGF_KEY_F3;
-	m_strToKey["f4"] = CGF_KEY_F4;
-	m_strToKey["f5"] = CGF_KEY_F5;
-	m_strToKey["f6"] = CGF_KEY_F6;
-	m_strToKey["f7"] = CGF_KEY_F7;
-	m_strToKey["f8"] = CGF_KEY_F8;
-	m_strToKey["f9"] = CGF_KEY_F9;
-	m_strToKey["f10"] = CGF_KEY_F10;
-	m_strToKey["f11"] = CGF_KEY_F11;
-	m_strToKey["f12"] = CGF_KEY_F12;
-	m_strToKey["f13"] = CGF_KEY_F13;
-	m_strToKey["f14"] = CGF_KEY_F14;
-	m_strToKey["f15"] = CGF_KEY_F15;
-	m_strToKey["f16"] = CGF_KEY_F16;
-	m_strToKey["f17"] = CGF_KEY_F17;
-	m_strToKey["f18"] = CGF_KEY_F18;
-	m_strToKey["f19"] = CGF_KEY_F19;
-	m_strToKey["f20"] = CGF_KEY_F20;
-	m_strToKey["f21"] = CGF_KEY_F21;
-	m_strToKey["f22"] = CGF_KEY_F22;
-	m_strToKey["f23"] = CGF_KEY_F23;
-	m_strToKey["f24"] = CGF_KEY_F24;
-	m_strToKey["kp0"] = CGF_KEY_KP_0;
-	m_strToKey["kp1"] = CGF_KEY_KP_1;
-	m_strToKey["kp2"] = CGF_KEY_KP_2;
-	m_strToKey["kp3"] = CGF_KEY_KP_3;
-	m_strToKey["kp4"] = CGF_KEY_KP_4;
-	m_strToKey["kp5"] = CGF_KEY_KP_5;
-	m_strToKey["kp6"] = CGF_KEY_KP_6;
-	m_strToKey["kp7"] = CGF_KEY_KP_7;
-	m_strToKey["kp8"] = CGF_KEY_KP_8;
-	m_strToKey["kp9"] = CGF_KEY_KP_9;
-	m_strToKey["kpdecimal"] = CGF_KEY_KP_DECIMAL;
-	m_strToKey["kpdivide"] = CGF_KEY_KP_DIVIDE;
-	m_strToKey["kpmultiply"] = CGF_KEY_KP_MULTIPLY;
-	m_strToKey["kpminus"] = CGF_KEY_KP_MINUS;
-	m_strToKey["kpplus"] = CGF_KEY_KP_PLUS;
-	m_strToKey["kpenter"] = CGF_KEY_KP_ENTER;
-	m_strToKey["kpequals"] = CGF_KEY_KP_EQUALS;
-	m_strToKey["lshift"] = m_strToKey["leftshift"] = CGF_KEY_LSHIFT;
-	m_strToKey["lctrl"] = m_strToKey["leftctrl"] = CGF_KEY_LCTRL;
-	m_strToKey["lalt"] = m_strToKey["leftalt"] = CGF_KEY_LALT;
-	m_strToKey["lgui"] = m_strToKey["leftgui"] = CGF_KEY_LGUI;
-	m_strToKey["rshift"] = m_strToKey["rightshift"] = CGF_KEY_RSHIFT;
-	m_strToKey["rctrl"] = m_strToKey["rightctrl"] = CGF_KEY_RCTRL;
-	m_strToKey["ralt"] = m_strToKey["rightalt"] = CGF_KEY_RALT;
-	m_strToKey["rgui"] = m_strToKey["rightgui"] = CGF_KEY_RGUI;
-	m_strToKey["menu"] = CGF_KEY_MENU;
+	m_strToKey["space"] = CGF_SCANCODE_SPACE;
+	m_strToKey["quote"] = m_strToKey["apostrophe"] = CGF_SCANCODE_APOSTROPHE;
+	m_strToKey["comma"] = CGF_SCANCODE_COMMA;
+	m_strToKey["minus"] = CGF_SCANCODE_MINUS;
+	m_strToKey["period"] = CGF_SCANCODE_PERIOD;
+	m_strToKey["slash"] = CGF_SCANCODE_SLASH;
+	m_strToKey["0"] = CGF_SCANCODE_0;
+	m_strToKey["1"] = CGF_SCANCODE_1;
+	m_strToKey["2"] = CGF_SCANCODE_2;
+	m_strToKey["3"] = CGF_SCANCODE_3;
+	m_strToKey["4"] = CGF_SCANCODE_4;
+	m_strToKey["5"] = CGF_SCANCODE_5;
+	m_strToKey["6"] = CGF_SCANCODE_6;
+	m_strToKey["7"] = CGF_SCANCODE_7;
+	m_strToKey["8"] = CGF_SCANCODE_8;
+	m_strToKey["9"] = CGF_SCANCODE_9;
+	m_strToKey["semicolon"] = CGF_SCANCODE_SEMICOLON;
+	m_strToKey["equals"] = CGF_SCANCODE_EQUALS;
+	m_strToKey["a"] = CGF_SCANCODE_A;
+	m_strToKey["b"] = CGF_SCANCODE_B;
+	m_strToKey["c"] = CGF_SCANCODE_C;
+	m_strToKey["d"] = CGF_SCANCODE_D;
+	m_strToKey["e"] = CGF_SCANCODE_E;
+	m_strToKey["f"] = CGF_SCANCODE_F;
+	m_strToKey["g"] = CGF_SCANCODE_G;
+	m_strToKey["h"] = CGF_SCANCODE_H;
+	m_strToKey["i"] = CGF_SCANCODE_I;
+	m_strToKey["j"] = CGF_SCANCODE_J;
+	m_strToKey["k"] = CGF_SCANCODE_K;
+	m_strToKey["l"] = CGF_SCANCODE_L;
+	m_strToKey["m"] = CGF_SCANCODE_M;
+	m_strToKey["n"] = CGF_SCANCODE_N;
+	m_strToKey["o"] = CGF_SCANCODE_O;
+	m_strToKey["p"] = CGF_SCANCODE_P;
+	m_strToKey["q"] = CGF_SCANCODE_Q;
+	m_strToKey["r"] = CGF_SCANCODE_R;
+	m_strToKey["s"] = CGF_SCANCODE_S;
+	m_strToKey["t"] = CGF_SCANCODE_T;
+	m_strToKey["u"] = CGF_SCANCODE_U;
+	m_strToKey["v"] = CGF_SCANCODE_V;
+	m_strToKey["w"] = CGF_SCANCODE_W;
+	m_strToKey["x"] = CGF_SCANCODE_X;
+	m_strToKey["y"] = CGF_SCANCODE_Y;
+	m_strToKey["z"] = CGF_SCANCODE_Z;
+	m_strToKey["lbracket"] = m_strToKey["leftbracket"] = CGF_SCANCODE_LEFTBRACKET;
+	m_strToKey["backslash"] = CGF_SCANCODE_BACKSLASH;
+	m_strToKey["rightbracket"] = CGF_SCANCODE_RIGHTBRACKET;
+	m_strToKey["tilde"] = CGF_SCANCODE_GRAVE;
+	m_strToKey["escape"] = CGF_SCANCODE_ESCAPE;
+	m_strToKey["enter"] = m_strToKey["return"] = CGF_SCANCODE_RETURN;
+	m_strToKey["tab"] = CGF_SCANCODE_TAB;
+	m_strToKey["backspace"] = CGF_SCANCODE_BACKSPACE;
+	m_strToKey["insert"] = CGF_SCANCODE_INSERT;
+	m_strToKey["delete"] = CGF_SCANCODE_DELETE;
+	m_strToKey["right"] = CGF_SCANCODE_RIGHT;
+	m_strToKey["left"] = CGF_SCANCODE_LEFT;
+	m_strToKey["down"] = CGF_SCANCODE_DOWN;
+	m_strToKey["up"] = CGF_SCANCODE_UP;
+	m_strToKey["pageup"] = CGF_SCANCODE_PAGEUP;
+	m_strToKey["pagedown"] = CGF_SCANCODE_PAGEDOWN;
+	m_strToKey["home"] = CGF_SCANCODE_HOME;
+	m_strToKey["end"] = CGF_SCANCODE_END;
+	m_strToKey["capslock"] = CGF_SCANCODE_CAPSLOCK;
+	m_strToKey["scrolllock"] = CGF_SCANCODE_SCROLLLOCK;
+	m_strToKey["numlock"] = CGF_SCANCODE_NUMLOCKCLEAR;
+	m_strToKey["printscreen"] = CGF_SCANCODE_PRINTSCREEN;
+	m_strToKey["pause"] = CGF_SCANCODE_PAUSE;
+	m_strToKey["f1"] = CGF_SCANCODE_F1;
+	m_strToKey["f2"] = CGF_SCANCODE_F2;
+	m_strToKey["f3"] = CGF_SCANCODE_F3;
+	m_strToKey["f4"] = CGF_SCANCODE_F4;
+	m_strToKey["f5"] = CGF_SCANCODE_F5;
+	m_strToKey["f6"] = CGF_SCANCODE_F6;
+	m_strToKey["f7"] = CGF_SCANCODE_F7;
+	m_strToKey["f8"] = CGF_SCANCODE_F8;
+	m_strToKey["f9"] = CGF_SCANCODE_F9;
+	m_strToKey["f10"] = CGF_SCANCODE_F10;
+	m_strToKey["f11"] = CGF_SCANCODE_F11;
+	m_strToKey["f12"] = CGF_SCANCODE_F12;
+	m_strToKey["f13"] = CGF_SCANCODE_F13;
+	m_strToKey["f14"] = CGF_SCANCODE_F14;
+	m_strToKey["f15"] = CGF_SCANCODE_F15;
+	m_strToKey["f16"] = CGF_SCANCODE_F16;
+	m_strToKey["f17"] = CGF_SCANCODE_F17;
+	m_strToKey["f18"] = CGF_SCANCODE_F18;
+	m_strToKey["f19"] = CGF_SCANCODE_F19;
+	m_strToKey["f20"] = CGF_SCANCODE_F20;
+	m_strToKey["f21"] = CGF_SCANCODE_F21;
+	m_strToKey["f22"] = CGF_SCANCODE_F22;
+	m_strToKey["f23"] = CGF_SCANCODE_F23;
+	m_strToKey["f24"] = CGF_SCANCODE_F24;
+	m_strToKey["kp0"] = CGF_SCANCODE_KP_0;
+	m_strToKey["kp1"] = CGF_SCANCODE_KP_1;
+	m_strToKey["kp2"] = CGF_SCANCODE_KP_2;
+	m_strToKey["kp3"] = CGF_SCANCODE_KP_3;
+	m_strToKey["kp4"] = CGF_SCANCODE_KP_4;
+	m_strToKey["kp5"] = CGF_SCANCODE_KP_5;
+	m_strToKey["kp6"] = CGF_SCANCODE_KP_6;
+	m_strToKey["kp7"] = CGF_SCANCODE_KP_7;
+	m_strToKey["kp8"] = CGF_SCANCODE_KP_8;
+	m_strToKey["kp9"] = CGF_SCANCODE_KP_9;
+	m_strToKey["kpdecimal"] = CGF_SCANCODE_KP_DECIMAL;
+	m_strToKey["kpdivide"] = CGF_SCANCODE_KP_DIVIDE;
+	m_strToKey["kpmultiply"] = CGF_SCANCODE_KP_MULTIPLY;
+	m_strToKey["kpminus"] = CGF_SCANCODE_KP_MINUS;
+	m_strToKey["kpplus"] = CGF_SCANCODE_KP_PLUS;
+	m_strToKey["kpenter"] = CGF_SCANCODE_KP_ENTER;
+	m_strToKey["kpequals"] = CGF_SCANCODE_KP_EQUALS;
+	m_strToKey["lshift"] = m_strToKey["leftshift"] = CGF_SCANCODE_LSHIFT;
+	m_strToKey["lctrl"] = m_strToKey["leftctrl"] = CGF_SCANCODE_LCTRL;
+	m_strToKey["lalt"] = m_strToKey["leftalt"] = CGF_SCANCODE_LALT;
+	m_strToKey["lgui"] = m_strToKey["leftgui"] = CGF_SCANCODE_LGUI;
+	m_strToKey["rshift"] = m_strToKey["rightshift"] = CGF_SCANCODE_RSHIFT;
+	m_strToKey["rctrl"] = m_strToKey["rightctrl"] = CGF_SCANCODE_RCTRL;
+	m_strToKey["ralt"] = m_strToKey["rightalt"] = CGF_SCANCODE_RALT;
+	m_strToKey["rgui"] = m_strToKey["rightgui"] = CGF_SCANCODE_RGUI;
+	m_strToKey["menu"] = CGF_SCANCODE_MENU;
 
 	// Load input config file
 	if(util::fileExists(contextFile))
@@ -168,10 +166,10 @@ InputManager::InputManager(string contextFile) :
 				tinyxml2::XMLElement *key = node->FirstChildElement("key");
 				if(name && key)
 				{
-					Keycode vk = strToKey(key->GetText());
-					if(vk != CGF_KEY_UNKNOWN)
+					Scancode scancode = toScancode(key->GetText());
+					if(scancode != CGF_SCANCODE_UNKNOWN)
 					{
-						Keybind *kb = new Keybind(vk);
+						Keybind *kb = new Keybind(scancode);
 						inputContext->addKeybind(name->GetText(), kb);
 						m_contextKeybinds.push_back(kb);
 					}
@@ -218,15 +216,15 @@ Sint32 InputManager::getY() const
 	return m_y;
 }
 
-Keycode InputManager::strToKey(string name)
+Scancode InputManager::toScancode(string name)
 {
 	transform(name.begin(), name.end(), name.begin(), ::tolower);
-	map<string, Keycode>::iterator itr;
+	map<string, Scancode>::iterator itr;
 	if((itr = m_strToKey.find(name)) != m_strToKey.end())
 	{
 		return itr->second;
 	}
-	return CGF_KEY_UNKNOWN;
+	return CGF_SCANCODE_UNKNOWN;
 }
 
 void InputManager::setContext(InputContext *inputContext)
@@ -277,7 +275,7 @@ void InputManager::updateKeybinds(KeyEvent *e)
 	// Update keybinds
 	for(Keybind *kb : m_keybinds)
 	{
-		if(kb->getKeycode() == e->getKeycode() && kb->getFunction())
+		if(kb->getScancode() == e->getScancode() && kb->getFunction())
 		{
 			kb->getFunction()(e);
 		}

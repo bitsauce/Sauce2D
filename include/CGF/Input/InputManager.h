@@ -22,6 +22,7 @@ class CGF_API Keybind
 public:
 	Keybind();
 	Keybind(Keycode keycode, function<void(KeyEvent*)> func = function<void(KeyEvent*)>());
+	Keybind(Scancode scancode, function<void(KeyEvent*)> func = function<void(KeyEvent*)>());
 
 	function<void(KeyEvent*)> getFunction() const
 	{
@@ -33,18 +34,21 @@ public:
 		m_function = func;
 	}
 
-	Keycode getKeycode() const
+	Keycode getKeycode() const;
+	void setKeycode(const Keycode keycode);
+
+	Scancode getScancode() const
 	{
-		return m_keycode;
+		return m_scancode;
 	}
 
-	void setKeycode(const Keycode keycode)
+	void setScancode(const Scancode scancode)
 	{
-		m_keycode = keycode;
+		m_scancode = scancode;
 	}
 
 private:
-	Keycode m_keycode;
+	Scancode m_scancode;
 	function<void(KeyEvent*)> m_function;
 };
 
@@ -90,7 +94,7 @@ public:
 	void setClipboardString(const string);
 
 	// Virtual key to string
-	Keycode strToKey(string name);
+	Scancode toScancode(string name);
 
 	/**
 	* \fn	KeybindPtr InputManager::addKeybind(KeybindPtr keybind);
@@ -126,7 +130,7 @@ private:
 	map<string, InputContext*> m_contextMap;
 
 	// String to key map
-	map<string, Keycode> m_strToKey;
+	map<string, Scancode> m_strToKey;
 
 	// Key binds
 	list<Keybind*> m_keybinds;

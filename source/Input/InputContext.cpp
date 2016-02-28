@@ -52,7 +52,7 @@ bool InputContext::getKeyState(string name) const
 	{
 		return false;
 	}
-	return m_inputManager->getKeyState(itr->second->getKeycode());
+	return m_inputManager->getKeyState(itr->second->getScancode());
 }
 
 void InputContext::updateKeybinds(KeyEvent *e)
@@ -60,7 +60,7 @@ void InputContext::updateKeybinds(KeyEvent *e)
 	for(map<string, Keybind*>::iterator itr = m_keybinds.begin(); itr != m_keybinds.end(); ++itr)
 	{
 		Keybind* kb = itr->second;
-		if(kb->getKeycode() == e->getKeycode() && kb->getFunction())
+		if(kb->getScancode() == e->getScancode() && kb->getFunction())
 		{
 			kb->getFunction()(e);
 		}

@@ -134,7 +134,8 @@ public:
 		return *this;
 	}
 
-	inline Vector2<T> &operator*=(const T scalar)
+	template<typename U>
+	inline Vector2<T> &operator*=(const U scalar)
 	{
 		x *= scalar;
 		y *= scalar;
@@ -149,7 +150,8 @@ public:
 		return *this;
 	}
 
-	inline Vector2<T> &operator/=(const T scalar)
+	template<typename U>
+	inline Vector2<T> &operator/=(const U scalar)
 	{
 		x /= scalar;
 		y /= scalar;
@@ -176,7 +178,8 @@ public:
 		return Vector2<T>(*this) -= v2;
 	}
 
-	inline const Vector2<T> operator*(const T scalar) const
+	template<typename U>
+	inline const Vector2<T> operator*(const U scalar) const
 	{
 		return Vector2<T>(*this) *= scalar;
 	}
@@ -187,7 +190,8 @@ public:
 		return  Vector2<T>(*this) *= v2;
 	}
 
-	inline const Vector2<T> operator/(const T scalar) const
+	template<typename U>
+	inline const Vector2<T> operator/(const U scalar) const
 	{
 		return Vector2<T>(*this) /= scalar;
 	}
