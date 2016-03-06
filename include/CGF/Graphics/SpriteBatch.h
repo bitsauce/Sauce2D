@@ -33,17 +33,17 @@ public:
 
 	struct State
 	{
-		State(const SpriteSortMode mode = DEFERRED, const BlendState blendState = BlendState::PRESET_ALPHA_BLEND, const Matrix4 &projectionMatrix = Matrix4(), Resource<Shader> shader = nullptr) :
+		State(const SpriteSortMode mode = DEFERRED, const BlendState blendState = BlendState::PRESET_ALPHA_BLEND, const Matrix4 &transformationMatix = Matrix4(), Resource<Shader> shader = nullptr) :
 			mode(mode),
 			blendState(blendState),
-			projectionMatix(projectionMatrix),
+			transformationMatix(transformationMatix),
 			shader(shader)
 		{
 		}
 
 		SpriteSortMode mode;
 		BlendState blendState;
-		Matrix4 projectionMatix;
+		Matrix4 transformationMatix;
 		Resource<Shader> shader;
 	};
 

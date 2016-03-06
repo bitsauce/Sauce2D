@@ -230,6 +230,13 @@ public:
 		return false;
 	}
 
+	string toString() const
+	{
+		stringstream ss;
+		ss << "[" << x << ", " << y << "]";
+		return ss.str();
+	}
+
     T x, y;
 };
 

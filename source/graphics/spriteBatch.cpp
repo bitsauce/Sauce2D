@@ -41,7 +41,7 @@ void SpriteBatch::begin(const State &state)
 	m_spriteCount = 0;
 	m_state = state;
 
-	m_prevState.projectionMatix = m_graphicsContext->getTransformationMatrix();
+	m_prevState.transformationMatix = m_graphicsContext->getTransformationMatrix();
 	m_prevState.blendState = m_graphicsContext->getBlendState();
 	m_prevState.shader = m_graphicsContext->getShader();
 	m_prevTexture = m_graphicsContext->getTexture();
@@ -104,7 +104,7 @@ void SpriteBatch::end()
 				// to two or more instances of SpriteBatch without introducing conflicting
 				// graphics device settings. SpriteBatch defaults to DEFERRED mode.
 
-				m_graphicsContext->setTransformationMatrix(m_state.projectionMatix);
+				m_graphicsContext->setTransformationMatrix(m_state.transformationMatix);
 				m_graphicsContext->setBlendState(m_state.blendState);
 				m_graphicsContext->setShader(m_state.shader);
 
@@ -165,7 +165,7 @@ void SpriteBatch::end()
 		}
 	}
 		
-	m_graphicsContext->setTransformationMatrix(m_prevState.projectionMatix);
+	m_graphicsContext->setTransformationMatrix(m_prevState.transformationMatix);
 	m_graphicsContext->setBlendState(m_prevState.blendState);
 	m_graphicsContext->setShader(m_prevState.shader);
 	m_graphicsContext->setTexture(m_prevTexture);
