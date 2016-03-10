@@ -26,7 +26,7 @@ public:
 	{
 	}
 
-	void onUpdate(TickEvent *e)
+	void onTick(TickEvent *e)
 	{
 	}
 

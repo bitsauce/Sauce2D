@@ -182,24 +182,6 @@ public:
 	void  stop();
 	double getElapsedTime() const;
 
-	/**
-	 * \fn	void Timer::getTicksPerSecond();
-	 *
-	 * \brief	System clock.
-	 */
-
-	void getTicksPerSecond();
-
-	/**
-	 * \fn	long Timer::getTickCount() const;
-	 *
-	 * \brief	Gets tick count.
-	 *
-	 * \return	The tick count.
-	 */
-
-	long getTickCount() const;
-
 private:
 
 	/** \brief	The frequency. */
