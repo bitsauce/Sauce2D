@@ -61,6 +61,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Gui", "..\..\samples\Gui\Pr
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Shaders", "..\..\samples\Shaders\Project\Shaders.vcxproj", "{CA716EDE-0239-4856-B247-8236B85635FA}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Keybinds", "..\..\samples\Keybinds\Project\Keybinds.vcxproj", "{732EE2F1-689C-43BB-B0A7-17F44AE5E056}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -169,6 +171,12 @@ Global
 		{CA716EDE-0239-4856-B247-8236B85635FA}.Release|Win32.ActiveCfg = Release|Win32
 		{CA716EDE-0239-4856-B247-8236B85635FA}.Release|Win32.Build.0 = Release|Win32
 		{CA716EDE-0239-4856-B247-8236B85635FA}.Release|x64.ActiveCfg = Release|Win32
+		{732EE2F1-689C-43BB-B0A7-17F44AE5E056}.Debug|Win32.ActiveCfg = Debug|Win32
+		{732EE2F1-689C-43BB-B0A7-17F44AE5E056}.Debug|Win32.Build.0 = Debug|Win32
+		{732EE2F1-689C-43BB-B0A7-17F44AE5E056}.Debug|x64.ActiveCfg = Debug|Win32
+		{732EE2F1-689C-43BB-B0A7-17F44AE5E056}.Release|Win32.ActiveCfg = Release|Win32
+		{732EE2F1-689C-43BB-B0A7-17F44AE5E056}.Release|Win32.Build.0 = Release|Win32
+		{732EE2F1-689C-43BB-B0A7-17F44AE5E056}.Release|x64.ActiveCfg = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -182,5 +190,6 @@ Global
 		{F1C5574E-6A8C-42FB-BBF0-6AAB04230C42} = {52A3D16B-ED61-40D4-8804-C241B45F0B10}
 		{46B706DD-17FB-4457-92E7-2DDA1878FC9A} = {52A3D16B-ED61-40D4-8804-C241B45F0B10}
 		{CA716EDE-0239-4856-B247-8236B85635FA} = {52A3D16B-ED61-40D4-8804-C241B45F0B10}
+		{732EE2F1-689C-43BB-B0A7-17F44AE5E056} = {52A3D16B-ED61-40D4-8804-C241B45F0B10}
 	EndGlobalSection
 EndGlobal

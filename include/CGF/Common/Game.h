@@ -1174,6 +1174,8 @@ public:
 	void setPaused(const bool paused);
 
 	// Check game config
+	void setFlags(const uint flags);
+	uint getFlags() const;
 	bool isEnabled(const EngineFlag flag);
 
 	// Get binary path

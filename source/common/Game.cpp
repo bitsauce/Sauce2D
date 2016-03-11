@@ -433,6 +433,16 @@ void Game::setPaused(const bool paused)
 	m_paused = paused;
 }
 
+void Game::setFlags(const uint flags)
+{
+	m_flags = flags;
+}
+
+uint Game::getFlags() const
+{
+	return m_flags;
+}
+
 bool Game::isEnabled(const EngineFlag flag)
 {
 	return (m_flags & flag) != 0;

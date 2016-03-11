@@ -41,133 +41,64 @@ public:
 	}
 };
 
-class Keybinding : public Game
+class Testing : public Game
 {
-	Keybind m_keybind;
-	Keybind m_jumpKeybind;
-	Keybind m_runKeybind;
+	float x, prevX;
+	bool move;
+
 public:
-	Keybinding() :
-		Game("KeyBinding")
+	Testing() :
+		Game("Testing"),
+		x(0.0f),
+		prevX(0.0f),
+		move(false)
 	{
+		setFlags(CGF_RUN_IN_BACKGROUND);
 	}
 
-	void onStart(GameEvent *e)
+	void onStart(GameEvent *)
 	{
-		// Get input manager
-		InputManager *input = getInputManager();
-
-		// Create a keybind which will call the function
-		// BKeyFunc when the B key is pressed.
-		m_keybind = Keybind(CGF_KEY_B, bind(&Keybinding::BKeyFunc, this, placeholders::_1));
-		//m_keybind = getInputManager()->ceateKeybind(CGF_KEY_B, bind(&Keybinding::BKeyFunc, this, placeholders::_1));
-		input->addKeybind(&m_keybind); // Add it to the list of keybinds
-
-		// Create an input context.
-		// Input contexts map symbolic strings to keys.
-		// For example: {{ "jump", SPACE }, {"run", LSHIFT }}
-		InputContext *context = new InputContext(input);
-
-		// Create a keybind by mapping the keyword 
-		// "jump" to the SPACE key.
-		m_jumpKeybind = Keybind(CGF_KEY_SPACE, bind(&Keybinding::jump, this, placeholders::_1));
-		context->addKeybind("jump", &m_jumpKeybind); // Add keybind to input context
-
-		// Create run keybind which has no funtion mapped to it.
-		// We can stil use this keybind with context->getKeyState("run").
-		m_runKeybind = Keybind(CGF_KEY_LSHIFT);
-		context->addKeybind("run", &m_runKeybind);
-
-		// Enable this context
-		input->setContext(context);
+		getWindow()->setSize(800, 600);
 	}
 
-	void onEnd(GameEvent *e)
+	void onKeyDown(KeyEvent *e)
 	{
-		InputManager *input = getInputManager();
-		input->removeKeybind(&m_keybind);
-		input->getContext()->removeKeybind(&m_jumpKeybind);
-	}
-
-	void BKeyFunc(KeyEvent *e)
-	{
-		switch(e->getType())
-		{
-			case EVENT_KEY_DOWN: LOG("B pressed"); break;
-			case EVENT_KEY_REPEAT: LOG("B repeating"); break;
-			case EVENT_KEY_UP:
-				LOG("B released");
-				m_keybind.setFunction(bind(&Keybinding::DKeyFunc, this, placeholders::_1));
-				m_keybind.setKeycode(CGF_KEY_D);
-				break;
-		}
-	}
-
-	void DKeyFunc(KeyEvent *e)
-	{
-		switch(e->getType())
-		{
-			case EVENT_KEY_DOWN: LOG("D pressed"); break;
-			case EVENT_KEY_REPEAT: LOG("D repeating"); break;
-			case EVENT_KEY_UP:
-				LOG("D released");
-				m_keybind.setFunction(bind(&Keybinding::BKeyFunc, this, placeholders::_1));
-				m_keybind.setKeycode(CGF_KEY_B);
-				break;
-		}
-	}
-
-	void jump(KeyEvent *e)
-	{
-		switch(e->getType())
-		{
-			case EVENT_KEY_DOWN: LOG("Jump pressed"); break;
-			case EVENT_KEY_REPEAT: LOG("Jump repeating"); break;
-			case EVENT_KEY_UP: LOG("Jump released"); break;
-		}
-	}
-
-	void onKeyEvent(KeyEvent *e)
-	{
-		if(e->getKeycode() == CGF_KEY_C)
-		{
-			switch(e->getType())
-			{
-				case EVENT_KEY_DOWN: LOG("C pressed"); break;
-				case EVENT_KEY_REPEAT: LOG("C repeating"); break;
-				case EVENT_KEY_UP: LOG("C released"); break;
-			}
-		}
+		move = !move;
 	}
 
 	void onTick(TickEvent *e)
 	{
-		InputManager *input = getInputManager();
-		if(input->getKeyState(CGF_KEY_A))
+		if(move)
 		{
-			LOG("onTick(): A pressed");
+			prevX = x;
+			x += 10.0f;
+			if(x > getWindow()->getWidth())
+			{
+				prevX = x = x - getWindow()->getWidth();
+			}
 		}
+	}
 
-		if(input->getContext()->getKeyState("run"))
-		{
-			LOG("onTick(): Run");
-		}
+	void onDraw(DrawEvent *e)
+	{
+		GraphicsContext *context = e->getGraphicsContext();
+		context->drawRectangle(math::lerp(prevX, x, e->getAlpha()) - 50, context->getHeight() * 0.5f - 50, 100, 100, Color(255));
 	}
 };
 
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, INT)
 {
-	// DrawTexturedQuad
+	// Testing
 	{
-		DrawTexturedQuad game;
+		Testing game;
 		if(game.run() != CGF_OK) return EXIT_FAILURE;
 	}
 
-	// KeyBinding
-	{
-		Keybinding game;
+	// DrawTexturedQuad
+	/*{
+		DrawTexturedQuad game;
 		if(game.run() != CGF_OK) return EXIT_FAILURE;
-	}
+	}*/
 
 	return EXIT_SUCCESS;
 }
