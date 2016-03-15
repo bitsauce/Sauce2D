@@ -136,6 +136,10 @@ InputManager::InputManager(string contextFile) :
 	m_strToKey["rgui"] = m_strToKey["rightgui"] = CGF_SCANCODE_RGUI;
 	m_strToKey["menu"] = CGF_SCANCODE_MENU;
 
+	m_strToKey["lmb"] = CGF_MOUSE_BUTTON_LEFT;
+	m_strToKey["rmb"] = CGF_MOUSE_BUTTON_RIGHT;
+	m_strToKey["wheel"] = CGF_MOUSE_BUTTON_MIDDLE;
+
 	// Load input config file
 	if(util::fileExists(contextFile))
 	{
@@ -219,10 +223,13 @@ Sint32 InputManager::getY() const
 Scancode InputManager::toScancode(string name)
 {
 	transform(name.begin(), name.end(), name.begin(), ::tolower);
-	map<string, Scancode>::iterator itr;
+	map<string, ScancodeMouseButton>::iterator itr;
 	if((itr = m_strToKey.find(name)) != m_strToKey.end())
 	{
-		return itr->second;
+		if(itr->second.isScancode)
+		{
+			return (Scancode) itr->second.code;
+		}
 	}
 	return CGF_SCANCODE_UNKNOWN;
 }

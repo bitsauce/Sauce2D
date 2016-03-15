@@ -129,8 +129,24 @@ private:
 	InputContext *m_context;
 	map<string, InputContext*> m_contextMap;
 
+	struct ScancodeMouseButton
+	{
+		void operator=(Scancode s)
+		{
+			code = s; isScancode = true;
+		}
+
+		void operator=(MouseButton m)
+		{
+			code = m; isScancode = false;
+		}
+
+		int code;
+		bool isScancode;
+	};
+
 	// String to key map
-	map<string, Scancode> m_strToKey;
+	map<string, ScancodeMouseButton> m_strToKey;
 
 	// Key binds
 	list<Keybind*> m_keybinds;
