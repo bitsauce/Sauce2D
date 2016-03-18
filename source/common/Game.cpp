@@ -269,13 +269,13 @@ int Game::run()
 					{
 						if(event.key.repeat == 0)
 						{
-							KeyEvent e(KeyEvent::DOWN, m_inputManager, (Keycode) event.key.keysym.sym, (Scancode) event.key.keysym.scancode, event.key.keysym.mod);
+							KeyEvent e(KeyEvent::DOWN, m_inputManager, (Scancode) event.key.keysym.scancode, event.key.keysym.mod);
 							onEvent(&e);
 							m_inputManager->updateKeybinds(&e);
 						}
 						else
 						{
-							KeyEvent e(KeyEvent::REPEAT, m_inputManager, (Keycode) event.key.keysym.sym, (Scancode) event.key.keysym.scancode, event.key.keysym.mod);
+							KeyEvent e(KeyEvent::REPEAT, m_inputManager, (Scancode) event.key.keysym.scancode, event.key.keysym.mod);
 							onEvent(&e);
 							m_inputManager->updateKeybinds(&e);
 						}
@@ -284,7 +284,7 @@ int Game::run()
 
 					case SDL_KEYUP:
 					{
-						KeyEvent e(KeyEvent::UP, m_inputManager, (Keycode) event.key.keysym.sym, (Scancode) event.key.keysym.scancode, event.key.keysym.mod);
+						KeyEvent e(KeyEvent::UP, m_inputManager, (Scancode) event.key.keysym.scancode, event.key.keysym.mod);
 						onEvent(&e);
 						m_inputManager->updateKeybinds(&e);
 					}
@@ -311,20 +311,33 @@ int Game::run()
 
 					case SDL_MOUSEBUTTONDOWN:
 					{
-						MouseEvent e(MouseEvent::DOWN, m_inputManager->m_x, m_inputManager->m_y, (const MouseButton) event.button.button, 0, 0);
-						onEvent(&e);
+						// MouseEvent
+						MouseEvent mouseEvent(MouseEvent::DOWN, m_inputManager->m_x, m_inputManager->m_y, (const MouseButton) event.button.button, 0, 0);
+						onEvent(&mouseEvent);
+
+						// KeyEvent
+						KeyEvent keyEvent(KeyEvent::DOWN, m_inputManager, (const MouseButton) event.button.button, event.key.keysym.mod);
+						onEvent(&keyEvent);
+						m_inputManager->updateKeybinds(&keyEvent);
 					}
 					break;
 
 					case SDL_MOUSEBUTTONUP:
 					{
+						// MouseEvent
 						MouseEvent e(MouseEvent::UP, m_inputManager->m_x, m_inputManager->m_y, (const MouseButton) event.button.button, 0, 0);
 						onEvent(&e);
+
+						// KeyEvent
+						KeyEvent keyEvent(KeyEvent::UP, m_inputManager, (const MouseButton) event.button.button, event.key.keysym.mod);
+						onEvent(&keyEvent);
+						m_inputManager->updateKeybinds(&keyEvent);
 					}
 					break;
 
 					case SDL_MOUSEWHEEL:
 					{
+						// Scroll event
 						MouseEvent e(MouseEvent::WHEEL, m_inputManager->m_x, m_inputManager->m_y, CGF_MOUSE_BUTTON_NONE, event.wheel.x, event.wheel.y);
 						onEvent(&e);
 					}

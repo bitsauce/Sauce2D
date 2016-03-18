@@ -86,12 +86,11 @@ public:
 		REPEAT = EVENT_KEY_REPEAT
 	};
 
-	KeyEvent(const KeyEventType type, InputManager *inputManager, const Keycode keycode, const Scancode scanCode, const Uint16 modifiers) :
+	KeyEvent(const KeyEventType type, InputManager *inputManager, const InputButton inputButton, const Uint16 modifiers) :
 		Event(type),
 		m_inputManager(inputManager),
-		m_keycode(keycode),
-		m_modifiers(modifiers),
-		m_scancode(scanCode)
+		m_inputButton(inputButton),
+		m_modifiers(modifiers)
 	{
 	}
 
@@ -100,14 +99,19 @@ public:
 		return m_inputManager;
 	}
 
+	InputButton getInputButton() const
+	{
+		return m_inputButton;
+	}
+
 	Keycode getKeycode() const
 	{
-		return m_keycode;
+		return (Keycode) SDL_GetKeyFromScancode((SDL_Scancode) m_inputButton.getCode());
 	}
 
 	Scancode getScancode() const
 	{
-		return m_scancode;
+		return (Scancode) m_inputButton.getCode();
 	}
 
 	Uint16 getModifiers() const
@@ -117,8 +121,7 @@ public:
 
 private:
 	InputManager * const m_inputManager;
-	const Keycode m_keycode;
-	const Scancode m_scancode;
+	const InputButton m_inputButton;
 	const Uint16 m_modifiers;
 };
 

@@ -8,6 +8,97 @@
 
 BEGIN_CGF_NAMESPACE
 
+class CGF_API InputButton
+{
+public:
+	enum Type
+	{
+		NONE,
+		KEYBOARD,
+		MOUSE,
+		GAMEPAD
+	};
+
+	InputButton() :
+		code(0),
+		type(NONE)
+	{
+	}
+
+	InputButton(const Keycode keycode) :
+		code(SDL_GetScancodeFromKey((SDL_Keycode) keycode)),
+		type(KEYBOARD)
+	{
+	}
+
+	InputButton(const Scancode scancode) :
+		code(scancode),
+		type(KEYBOARD)
+	{
+	}
+
+	InputButton(const MouseButton mouseButton) :
+		code(mouseButton),
+		type(MOUSE)
+	{
+	}
+
+	InputButton &operator=(const Scancode scancode)
+	{
+		code = scancode;
+		type = KEYBOARD;
+		return *this;
+	}
+
+	InputButton &operator=(const Keycode keycode)
+	{
+		code = SDL_GetScancodeFromKey((SDL_Keycode) keycode);
+		type = KEYBOARD;
+		return *this;
+	}
+
+	InputButton &operator=(const MouseButton mouseButton)
+	{
+		code = mouseButton;
+		type = MOUSE;
+		return *this;
+	}
+
+	bool operator==(const InputButton inputButton)
+	{
+		return type == inputButton.type && code == inputButton.code;
+	}
+
+	bool operator==(const Scancode scancode)
+	{
+		return type == KEYBOARD && code == scancode;
+	}
+
+	bool operator==(const Keycode keycode)
+	{
+		return type == KEYBOARD && code == SDL_GetScancodeFromKey((SDL_Keycode) keycode);
+	}
+
+	bool operator==(const MouseButton mouseButton)
+	{
+		return type == MOUSE && code == mouseButton;
+	}
+
+	Type getType() const
+	{
+		return type;
+	}
+
+	uint getCode() const
+	{
+		return code;
+	}
+
+private:
+	uint code;
+	Type type;
+};
+
 class KeyEvent;
 class InputContext;
 
@@ -21,8 +112,7 @@ class CGF_API Keybind
 {
 public:
 	Keybind();
-	Keybind(Keycode keycode, function<void(KeyEvent*)> func = function<void(KeyEvent*)>());
-	Keybind(Scancode scancode, function<void(KeyEvent*)> func = function<void(KeyEvent*)>());
+	Keybind(InputButton keycode, function<void(KeyEvent*)> func = function<void(KeyEvent*)>());
 
 	function<void(KeyEvent*)> getFunction() const
 	{
@@ -34,21 +124,18 @@ public:
 		m_function = func;
 	}
 
-	Keycode getKeycode() const;
-	void setKeycode(const Keycode keycode);
-
-	Scancode getScancode() const
+	InputButton getInputButton() const
 	{
-		return m_scancode;
+		return m_inputButton;
 	}
 
-	void setScancode(const Scancode scancode)
+	void setInputButton(const InputButton inputButton)
 	{
-		m_scancode = scancode;
+		m_inputButton = inputButton;
 	}
 
 private:
-	Scancode m_scancode;
+	InputButton m_inputButton;
 	function<void(KeyEvent*)> m_function;
 };
 
@@ -71,9 +158,7 @@ public:
 	//void setCursorLimits(const int x, const int y, const int w, const int h);
 
 	// Key state function
-	bool getKeyState(const MouseButton mouseButton) const;
-	bool getKeyState(const Keycode keycode) const;
-	bool getKeyState(const Scancode scancode) const;
+	bool getKeyState(const InputButton inputButton) const;
 
 	// Window-relative position
 	void getPosition(Sint32 *x, Sint32 *y) const;
@@ -129,24 +214,8 @@ private:
 	InputContext *m_context;
 	map<string, InputContext*> m_contextMap;
 
-	struct ScancodeMouseButton
-	{
-		void operator=(Scancode s)
-		{
-			code = s; isScancode = true;
-		}
-
-		void operator=(MouseButton m)
-		{
-			code = m; isScancode = false;
-		}
-
-		int code;
-		bool isScancode;
-	};
-
 	// String to key map
-	map<string, ScancodeMouseButton> m_strToKey;
+	map<string, InputButton> m_strToKey;
 
 	// Key binds
 	list<Keybind*> m_keybinds;

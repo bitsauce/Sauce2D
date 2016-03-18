@@ -223,12 +223,12 @@ Sint32 InputManager::getY() const
 Scancode InputManager::toScancode(string name)
 {
 	transform(name.begin(), name.end(), name.begin(), ::tolower);
-	map<string, ScancodeMouseButton>::iterator itr;
+	map<string, InputButton>::iterator itr;
 	if((itr = m_strToKey.find(name)) != m_strToKey.end())
 	{
-		if(itr->second.isScancode)
+		if(itr->second.getType() == InputButton::KEYBOARD)
 		{
-			return (Scancode) itr->second.code;
+			return (Scancode) itr->second.getCode();
 		}
 	}
 	return CGF_SCANCODE_UNKNOWN;
@@ -236,12 +236,6 @@ Scancode InputManager::toScancode(string name)
 
 void InputManager::setContext(InputContext *inputContext)
 {
-	// Set current key state for the keys in the context
-	if(inputContext)
-		//for(map<string, InputContext::KeyBind>::iterator itr = inputContext->m_nameToFunc.begin(); itr != inputContext->m_nameToFunc.end(); ++itr)
-	{
-		//itr->second.pressed = Input::getKeyState(inputContext->m_nameToKey[itr->first]) == GLFW_PRESS;
-	}
 	m_context = inputContext;
 }
 
@@ -282,7 +276,7 @@ void InputManager::updateKeybinds(KeyEvent *e)
 	// Update keybinds
 	for(Keybind *kb : m_keybinds)
 	{
-		if(kb->getScancode() == e->getScancode() && kb->getFunction())
+		if(kb->getInputButton() == e->getInputButton() && kb->getFunction())
 		{
 			kb->getFunction()(e);
 		}
@@ -295,22 +289,15 @@ void InputManager::updateKeybinds(KeyEvent *e)
 	}
 }
 
-bool InputManager::getKeyState(const MouseButton mouseButton) const
-{
-	return SDL_GetMouseState(NULL, NULL) & SDL_BUTTON(mouseButton) != 0;
-}
-
-bool InputManager::getKeyState(const Keycode keycode) const
-{
-	return getKeyState((Scancode) SDL_GetScancodeFromKey(keycode));
-}
-
-bool InputManager::getKeyState(const Scancode scancode) const
+bool InputManager::getKeyState(const InputButton inputButton) const
 {
 	//if(m_game->isEnabled(CGF_BLOCK_BACKGROUND_INPUT) && !m_game->getWindow()->checkFlags(SDL_WINDOW_INPUT_FOCUS)) return false;
-
-	const Uint8* currentKeyStates = SDL_GetKeyboardState(NULL);
-	return currentKeyStates[scancode];
+	switch(inputButton.getType())
+	{
+		case InputButton::KEYBOARD: return SDL_GetKeyboardState(NULL)[inputButton.getCode()];
+		case InputButton::MOUSE: return SDL_GetMouseState(NULL, NULL) & SDL_BUTTON(inputButton.getCode()) != 0;
+	}
+	return false;
 }
 
 END_CGF_NAMESPACE

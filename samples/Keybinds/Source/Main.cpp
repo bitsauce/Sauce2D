@@ -7,6 +7,7 @@ class Keybinds : public Game
 	Keybind m_keybind;
 	Keybind m_jumpKeybind;
 	Keybind m_runKeybind;
+	Keybind m_shootKeybind;
 public:
 	Keybinds() :
 		Game("KeyBinding")
@@ -19,9 +20,13 @@ public:
 		InputManager *input = getInputManager();
 
 		// Create a keybind which will call the function
-		// BKeyFunc when the B key is pressed.
-		m_keybind = Keybind(CGF_KEY_B, bind(&Keybinds::BKeyFunc, this, placeholders::_1));
+		// KeyFunc1 when the '1' key is pressed.
+		m_keybind = Keybind(CGF_KEY_1, bind(&Keybinds::keyFunc1, this, placeholders::_1));
 		input->addKeybind(&m_keybind); // Add it to the list of keybinds
+
+		// It is also posible to bind mouse buttons to functions
+		m_shootKeybind = Keybind(CGF_MOUSE_BUTTON_LEFT, bind(&Keybinds::shoot, this, placeholders::_1));
+		input->addKeybind(&m_shootKeybind);
 
 		// Create an input context.
 		// Input contexts map symbolic strings to keys.
@@ -49,31 +54,43 @@ public:
 		input->getContext()->removeKeybind(&m_jumpKeybind);
 	}
 
-	void BKeyFunc(KeyEvent *e)
+	void keyFunc1(KeyEvent *e)
 	{
 		switch(e->getType())
 		{
-			case EVENT_KEY_DOWN: LOG("B pressed"); break;
-			case EVENT_KEY_REPEAT: LOG("B repeating"); break;
+			case EVENT_KEY_DOWN: LOG("1 pressed"); break;
+			case EVENT_KEY_REPEAT: LOG("1 repeating"); break;
 			case EVENT_KEY_UP:
-				LOG("B released");
-				m_keybind.setFunction(bind(&Keybinds::DKeyFunc, this, placeholders::_1));
-				m_keybind.setKeycode(CGF_KEY_D);
+				LOG("1 released");
+				LOG("Button set to 2");
+				m_keybind.setFunction(bind(&Keybinds::keyFunc2, this, placeholders::_1));
+				m_keybind.setInputButton(CGF_KEY_2);
 				break;
 		}
 	}
 
-	void DKeyFunc(KeyEvent *e)
+	void keyFunc2(KeyEvent *e)
 	{
 		switch(e->getType())
 		{
-			case EVENT_KEY_DOWN: LOG("D pressed"); break;
-			case EVENT_KEY_REPEAT: LOG("D repeating"); break;
+			case EVENT_KEY_DOWN: LOG("2 pressed"); break;
+			case EVENT_KEY_REPEAT: LOG("2 repeating"); break;
 			case EVENT_KEY_UP:
-				LOG("D released");
-				m_keybind.setFunction(bind(&Keybinds::BKeyFunc, this, placeholders::_1));
-				m_keybind.setKeycode(CGF_KEY_B);
+				LOG("2 released");
+				LOG("Button set to 1");
+				m_keybind.setFunction(bind(&Keybinds::keyFunc1, this, placeholders::_1));
+				m_keybind.setInputButton(CGF_KEY_1);
 				break;
+		}
+	}
+
+	void shoot(KeyEvent *e)
+	{
+		switch(e->getType())
+		{
+			case EVENT_KEY_DOWN: LOG("Shoot pressed"); break;
+			case EVENT_KEY_REPEAT: LOG("Shoot repeating"); break; // EVENT_KEY_REPEAT is not called when pressing mouse buttons
+			case EVENT_KEY_UP: LOG("Shoot released"); break;
 		}
 	}
 
