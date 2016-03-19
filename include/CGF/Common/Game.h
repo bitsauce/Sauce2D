@@ -755,7 +755,8 @@ private:
 };
 
 #define PROPAGATE_EVENT(eventFunc) \
-	for(SceneObject *child : m_children) \
+	list<SceneObject*> children(m_children); \
+	for(SceneObject *child : children) \
 	{ \
 		child->eventFunc(e); \
 	}

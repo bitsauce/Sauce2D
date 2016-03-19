@@ -170,16 +170,16 @@ InputManager::InputManager(string contextFile) :
 				tinyxml2::XMLElement *key = node->FirstChildElement("key");
 				if(name && key)
 				{
-					Scancode scancode = toScancode(key->GetText());
-					if(scancode != CGF_SCANCODE_UNKNOWN)
+					InputButton inputButton = toInputButton(key->GetText());
+					if(inputButton.getType() != InputButton::NONE)
 					{
-						Keybind *kb = new Keybind(scancode);
+						Keybind *kb = new Keybind(inputButton);
 						inputContext->addKeybind(name->GetText(), kb);
 						m_contextKeybinds.push_back(kb);
 					}
 					else
 					{
-						LOG("Input::loadInputConfig(): Unknown key '%s'", key->GetText());
+						LOG("Unknown key '%s'", key->GetText());
 					}
 				}
 				node = node->NextSibling();
@@ -220,16 +220,13 @@ Sint32 InputManager::getY() const
 	return m_y;
 }
 
-Scancode InputManager::toScancode(string name)
+InputButton InputManager::toInputButton(string name) const
 {
 	transform(name.begin(), name.end(), name.begin(), ::tolower);
-	map<string, InputButton>::iterator itr;
+	map<string, InputButton>::const_iterator itr;
 	if((itr = m_strToKey.find(name)) != m_strToKey.end())
 	{
-		if(itr->second.getType() == InputButton::KEYBOARD)
-		{
-			return (Scancode) itr->second.getCode();
-		}
+		return itr->second;
 	}
 	return CGF_SCANCODE_UNKNOWN;
 }

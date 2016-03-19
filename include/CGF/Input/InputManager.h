@@ -179,7 +179,7 @@ public:
 	void setClipboardString(const string);
 
 	// Virtual key to string
-	Scancode toScancode(string name);
+	InputButton toInputButton(string name) const;
 
 	/**
 	* \fn	KeybindPtr InputManager::addKeybind(KeybindPtr keybind);
