@@ -9,6 +9,7 @@ using namespace cgf;
 class DrawTexturedQuad : public Game
 {
 	Resource<Texture2D> texture, textureSaved;
+	StaticVertexBuffer *vbo;
 public:
 	DrawTexturedQuad() :
 		Game("DrawTexturedQuad")
@@ -89,16 +90,16 @@ public:
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, INT)
 {
 	// Testing
-	{
+	/*{
 		Testing game;
 		if(game.run() != CGF_OK) return EXIT_FAILURE;
-	}
+	}*/
 
 	// DrawTexturedQuad
-	/*{
+	{
 		DrawTexturedQuad game;
 		if(game.run() != CGF_OK) return EXIT_FAILURE;
-	}*/
+	}
 
 	return EXIT_SUCCESS;
 }

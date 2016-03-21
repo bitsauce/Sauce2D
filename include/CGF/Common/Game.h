@@ -68,7 +68,7 @@ public:
 	/**
 	 * \fn	void Console::log(const string &msg);
 	 *
-	 * \brief	Logs the given message.
+	 * \brief	Ouputs \p msg to the console
 	 *
 	 * \param	msg	The message.
 	 */

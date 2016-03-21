@@ -14,7 +14,8 @@ BEGIN_CGF_NAMESPACE
 
 VertexBuffer::VertexBuffer(const BufferType type) :
 	m_format(),
-	m_type(type)
+	m_type(type),
+	m_size(0)
 {
 	glGenBuffers(1, &m_id);
 }
@@ -93,7 +94,8 @@ StaticVertexBuffer::StaticVertexBuffer(const Vertex *vertices, const uint vertex
 // -------------------------------------------------------------------------------------
 
 IndexBuffer::IndexBuffer(const BufferType type) :
-	m_type(type)
+	m_type(type),
+	m_size(0)
 {
 	glGenBuffers(1, &m_id);
 }
