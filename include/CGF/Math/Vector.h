@@ -245,6 +245,7 @@ typedef Vector2<float> Vector2F;
 typedef Vector2<double> Vector2D;
 typedef Vector2<int> Vector2I;
 typedef Vector2<uint> Vector2U;
+typedef Vector2<uchar> Vector2UB;
 
 /**
  * \class	Vector3
@@ -291,6 +292,13 @@ public:
 	{
 		this->x = v.x; this->y = v.y; this->z = z;
 	}
+	
+	inline T getR() const { return x; }
+	inline T setR(const T &v) { x = v; }
+	inline T getG() const { return y; }
+	inline T setG(const T &v) { y = v; }
+	inline T getB() const { return z; }
+	inline T setB(const T &v) { z = v; }
 
 	inline Vector2<T> getXX() const { return Vector2<T>(x, x); }
 	inline Vector2<T> getXY() const { return Vector2<T>(x, y); }
@@ -319,21 +327,24 @@ public:
 		this->z = z;
 	}
 
-	inline void rotate(const T angle)
+	template<typename U>
+	inline void rotate(const U angle)
 	{
 		// TODO: Missing implementation
 	}
 
-	inline T angle() const
+	template<typename U>
+	inline U angle() const
 	{
 		// TODO: Missing implementation
-		return T(0);
+		return 0.0f;
 	}
 
-	inline T angle(const Vector3<T> &v2) const
+	template<typename U>
+	inline U angle(const Vector3<T> &v2) const
 	{
 		// TODO: Missing implementation
-		return T(0);
+		return 0.0f;
 	}
 
 	inline void normalize()
@@ -356,7 +367,8 @@ public:
 		}
 	}
 
-	inline T dot(const Vector3<T> &v2) const
+	template<typename U>
+	inline U dot(const Vector3<T> &v2) const
 	{
 		return (x * v2.x) + (y * v2.y) + (z * v2.z);
 	}
@@ -366,18 +378,21 @@ public:
 		return Vector3<T>((y * v2.z) - (z * v2.y), (z * v2.x) - (x * v2.z), (x * v2.y) - (y * v2.x));
 	}
 
-	inline T distance(const Vector3<T>& v2) const
+	template<typename U>
+	inline U distance(const Vector3<T>& v2) const
 	{
 		// TODO: Missing implementation
-		return T(0);
+		return 0.0f;
 	}
 
-	inline T magnitude() const
+	template<typename U>
+	inline U magnitude() const
 	{
 		return sqrtf(x * x + y * y + z * z);
 	}
 
-	inline T length() const
+	template<typename U>
+	inline U length() const
 	{
 		return magnitude();
 	}
@@ -407,7 +422,8 @@ public:
 		return *this;
 	}
 
-	inline Vector3<T>& operator*=(const T scalar)
+	template<typename U>
+	inline Vector3<T>& operator*=(const U scalar)
 	{
 		x *= scalar;
 		y *= scalar;
@@ -415,7 +431,8 @@ public:
 		return *this;
 	}
 
-	inline Vector3<T>& operator/=(const T scalar)
+	template<typename U>
+	inline Vector3<T>& operator/=(const U scalar)
 	{
 		x /= scalar;
 		y /= scalar;
@@ -433,12 +450,14 @@ public:
 		return Vector3(*this) -= v2;
 	}
 
-	inline const Vector3<T> operator*(const T scalar) const
+	template<typename U>
+	inline const Vector3<T> operator*(const U scalar) const
 	{
 		return Vector3(*this) *= scalar;
 	}
 
-	inline const Vector3<T> operator/(const T scalar) const
+	template<typename U>
+	inline const Vector3<T> operator/(const U scalar) const
 	{
 		return Vector3(*this) /= scalar;
 	}
@@ -477,6 +496,8 @@ typedef Vector3<float> Vector3F;
 typedef Vector3<double> Vector3D;
 typedef Vector3<int> Vector3I;
 typedef Vector3<uint> Vector3U;
+typedef Vector3<uchar> Vector3UB;
+typedef Vector3<uchar> ColorRGB;
 
 /**
  * \class	Vector4
@@ -556,6 +577,18 @@ public:
 		this->z = v.z;
 		this->w = w;
 	}
+	
+	inline T getR() const { return x; }
+	inline T setR(const T &v) { x = v; }
+	inline T getG() const { return y; }
+	inline T setG(const T &v) { y = v; }
+	inline T getB() const { return z; }
+	inline T setB(const T &v) { z = v; }
+	inline T getA() const { return w; }
+	inline T setA(const T &v) { w = v; }
+
+	inline Vector3<T> getRGB() const { return Vector3<T>(x, y, z); }
+	inline void setRGB(const Vector3<T> &rgb) { x = rgb.x; y = rgb.y; z = rgb.z; }
 
 	inline Vector2<T> getXX() const { return Vector2<T>(x, x); }
 	inline Vector2<T> getXY() const { return Vector2<T>(x, y); }
@@ -655,18 +688,21 @@ public:
 		this->w = w;
 	}
 
-	inline void rotate(const T angle)
+	template<typename U>
+	inline void rotate(const U angle)
 	{
 		// TODO: Missing implementation
 	}
 
-	inline T angle() const
+	template<typename U>
+	inline U angle() const
 	{
 		// TODO: Missing implementation
 		return T(0);
 	}
 
-	inline T angle(const Vector4& v2) const
+	template<typename U>
+	inline U angle(const Vector4& v2) const
 	{
 		// TODO: Missing implementation
 		return T(0);
@@ -674,7 +710,7 @@ public:
 
 	inline void normalize()
 	{
-		float len = length();
+		T len = length();
 		if(len > T(0))
 		{
 			x /= len;
@@ -686,7 +722,7 @@ public:
 
 	inline Vector4 normalized() const
 	{
-		float len = length();
+		T len = length();
 		if(len > T(0))
 		{
 			return Vector4(x / len, y / len, z / len, w / len);
@@ -694,7 +730,8 @@ public:
 		return Vector4();
 	}
 
-	inline T dot(const Vector4& v2) const
+	template<typename U>
+	inline U dot(const Vector4& v2) const
 	{
 		return (x * v2.x) + (y * v2.y) + (z * v2.z) + (w * v2.w);
 	}
@@ -710,13 +747,15 @@ public:
 		// TODO: Missing implementation
 		return T(0);
 	}
-	
-	inline T magnitude() const
+
+	template<typename U>
+	inline U magnitude() const
 	{
 		return sqrtf(x * x + y * y + z * z + w * w);
 	}
 
-	inline T length() const
+	template<typename U>
+	inline U length() const
 	{
 		return sqrtf(x * x + y * y + z * z + w * w);
 	}
@@ -749,7 +788,8 @@ public:
 		return *this;
 	}
 
-	inline Vector4& operator*=(const T scalar)
+	template<typename U>
+	inline Vector4& operator*=(const U scalar)
 	{
 		x *= scalar;
 		y *= scalar;
@@ -758,7 +798,8 @@ public:
 		return *this;
 	}
 
-	inline Vector4& operator/=(const T scalar)
+	template<typename U>
+	inline Vector4& operator/=(const U scalar)
 	{
 		x /= scalar;
 		y /= scalar;
@@ -777,12 +818,14 @@ public:
 		return Vector4(*this) -= v2;
 	}
 
-	inline const Vector4 operator*(const T scalar) const
+	template<typename U>
+	inline const Vector4 operator*(const U scalar) const
 	{
 		return Vector4(*this) *= scalar;
 	}
 
-	inline const Vector4 operator/(const T scalar) const
+	template<typename U>
+	inline const Vector4 operator/(const U scalar) const
 	{
 		return Vector4(*this) /= scalar;
 	}
@@ -800,5 +843,7 @@ typedef Vector4<float> Vector4F;
 typedef Vector4<double> Vector4D;
 typedef Vector4<int> Vector4I;
 typedef Vector4<uint> Vector4U;
+typedef Vector4<uchar> Vector4UB;
+typedef Vector4<uchar> Color;
 
 #endif // CGF_VECTOR_H

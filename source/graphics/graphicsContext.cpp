@@ -44,9 +44,9 @@ void GraphicsContext::disable(const Capability cap)
 
 void GraphicsContext::clear(const uint mask, const Color &fillColor)
 {
-	if(mask & COLOR_BUFFER) glClearColor(fillColor.r / 255.0f, fillColor.g / 255.0f, fillColor.b / 255.0f, fillColor.a / 255.0f);
-	if(mask & DEPTH_BUFFER) glClearDepth(fillColor.r / 255.0f);
-	if(mask & STENCIL_BUFFER) glClearStencil(fillColor.r / 255.0f);
+	if(mask & COLOR_BUFFER) glClearColor(fillColor.getR() / 255.0f, fillColor.getG() / 255.0f, fillColor.getB() / 255.0f, fillColor.getA() / 255.0f);
+	if(mask & DEPTH_BUFFER) glClearDepth(fillColor.getR() / 255.0f);
+	if(mask & STENCIL_BUFFER) glClearStencil(fillColor.getR() / 255.0f);
 	glClear(mask);
 	if(mask & COLOR_BUFFER) glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 	if(mask & DEPTH_BUFFER) glClearDepth(0.0f);
@@ -249,6 +249,9 @@ void GraphicsContext::setupContext()
 
 void GraphicsContext::drawIndexedPrimitives(const PrimitiveType type, const Vertex *vertices, const uint vertexCount, const uint *indices, const uint indexCount)
 {
+	// If there are no vertices to draw, do nothing
+	if(vertexCount == 0 || indexCount == 0) return;
+
 	setupContext();
 
 	// Get vertices and vertex data
@@ -325,6 +328,9 @@ void GraphicsContext::drawIndexedPrimitives(const PrimitiveType type, const Vert
 
 void GraphicsContext::drawIndexedPrimitives(const PrimitiveType type, const VertexBuffer *vbo, const IndexBuffer *ibo)
 {
+	// If one of the buffers are empty, do nothing
+	if(vbo->getSize() == 0 || ibo->getSize() == 0) return; 
+
 	setupContext();
 
 	// Bind vertices and indices array
@@ -389,6 +395,9 @@ void GraphicsContext::drawIndexedPrimitives(const PrimitiveType type, const Vert
 
 void GraphicsContext::drawPrimitives(const PrimitiveType type, const Vertex *vertices, const uint vertexCount)
 {
+	// If there are no vertices to draw, do nothing
+	if(vertexCount == 0) return;
+
 	setupContext();
 
 	// Get vertices and vertex data
@@ -462,6 +471,9 @@ void GraphicsContext::drawPrimitives(const PrimitiveType type, const Vertex *ver
 
 void GraphicsContext::drawPrimitives(const PrimitiveType type, const VertexBuffer *vbo)
 {
+	// If the buffer is empty, do nothing
+	if(vbo->getSize() == 0) return;
+
 	setupContext();
 
 	// Bind vertices and indices array
@@ -531,10 +543,10 @@ void GraphicsContext::drawRectangle(const float x, const float y, const float wi
 	vertices[2].set4f(VERTEX_POSITION, x + width, y);
 	vertices[3].set4f(VERTEX_POSITION, x + width, y + height);
 
-	vertices[0].set4ub(VERTEX_COLOR, color.r, color.g, color.b, color.a);
-	vertices[1].set4ub(VERTEX_COLOR, color.r, color.g, color.b, color.a);
-	vertices[2].set4ub(VERTEX_COLOR, color.r, color.g, color.b, color.a);
-	vertices[3].set4ub(VERTEX_COLOR, color.r, color.g, color.b, color.a);
+	vertices[0].set4ub(VERTEX_COLOR, color.getR(), color.getG(), color.getB(), color.getA());
+	vertices[1].set4ub(VERTEX_COLOR, color.getR(), color.getG(), color.getB(), color.getA());
+	vertices[2].set4ub(VERTEX_COLOR, color.getR(), color.getG(), color.getB(), color.getA());
+	vertices[3].set4ub(VERTEX_COLOR, color.getR(), color.getG(), color.getB(), color.getA());
 
 	vertices[0].set4f(VERTEX_TEX_COORD, textureRegion.uv0.x, textureRegion.uv0.y);
 	vertices[1].set4f(VERTEX_TEX_COORD, textureRegion.uv0.x, textureRegion.uv1.y);
@@ -559,14 +571,14 @@ void GraphicsContext::drawCircle(const float x, const float y, const float radiu
 	Vertex *vertices = new Vertex[segments + 2];
 
 	vertices[0].set4f(VERTEX_POSITION, x, y);
-	vertices[0].set4ub(VERTEX_COLOR, color.r, color.g, color.b, color.a);
+	vertices[0].set4ub(VERTEX_COLOR, color.getR(), color.getG(), color.getB(), color.getA());
 	vertices[0].set4f(VERTEX_TEX_COORD, 0.5f, 0.5f);
 
 	for(uint i = 1; i < segments + 2; ++i)
 	{
 		float r = (2.0f*PI*i) / segments;
 		vertices[i].set4f(VERTEX_POSITION, x + cos(r) * radius, y + sin(r) * radius);
-		vertices[i].set4ub(VERTEX_COLOR, color.r, color.g, color.b, color.a);
+		vertices[i].set4ub(VERTEX_COLOR, color.getR(), color.getG(), color.getB(), color.getA());
 		vertices[i].set4f(VERTEX_TEX_COORD, (1.0f + cos(r)) / 2.0f, (1.0f + sin(r)) / 2.0f);
 	}
 

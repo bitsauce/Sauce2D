@@ -11,74 +11,6 @@
 
 BEGIN_CGF_NAMESPACE
 
-/**
- * \brief A class for representing colors.
- *
- * This class represents a color with red, green, blue and alpha channels (RGBA). Each channel is a byte in size.
- */
-struct CGF_API Color
-{
-	/**
-	 * Constructs a color setting all its components to equal \p v
-	 * \param v Value of RGBA
-	 */
-	Color(uchar v = 0)
-	{
-		r = g = b = a = v;
-	}
-
-	/**
-	 * Constructs a color setting all the components
-	 * \param r Red component
-	 * \param g Green component
-	 * \param b Blue component
-	 * \param a Alpha component
-	 */
-	Color(uchar r, uchar g, uchar b, uchar a = 255)
-	{
-		this->r = r; this->g = g; this->b = b; this->a = a;
-	}
-	
-	/**
-	 * Adds this color to another and claps the values of the components in the range [0-255]
-	 * \param c Other color object
-	 */
-	Color &operator+(const Color &c)
-	{
-		r = (uchar) min(r + c.r, 255);
-		g = (uchar) min(g + c.g, 255);
-		b = (uchar) min(b + c.b, 255);
-		a = (uchar) min(a + c.a, 255);
-		return *this;
-	}
-
-	/**
-	 * Multiplies all components of this color with a scalar and claps the values of the components in the range [0-255]
-	 * \param scale Scalar
-	 */
-	Color &operator*(const float scale);
-
-	/**
-	 * Red component
-	 */
-	uchar r;
-
-	/**
-	 * Green component
-	 */
-	uchar g;
-
-	/**
-	 * Blue component
-	 */
-	uchar b;
-
-	/**
-	 * Alpha component
-	 */
-	uchar a;
-};
-
 namespace math
 {
 	// Degrees/Radians
@@ -106,8 +38,12 @@ namespace math
 	CGF_API Vector2F sqrt(const Vector2F &v);
 	CGF_API float pow(const float a, const float b);
 	CGF_API Vector2F pow(const Vector2F &v);
-	CGF_API float lerp(const float v0, const float v1, const float t);
-	CGF_API Vector2F lerp(const Vector2F &v0, const Vector2F &v1, const float t);
+
+	template<typename T> T lerp(const T &v0, const T &v1, const float t)
+	{
+		return v0 * (1.0f - t) + v1 * t;
+	}
+	
 	CGF_API float step(const float a, const float x);
 
 	CGF_API int mod(const int a, const int b);

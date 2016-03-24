@@ -11,15 +11,6 @@
 
 BEGIN_CGF_NAMESPACE
 
-Color &Color::operator*(const float c)
-{
-	r = (uchar) (r * c);
-	g = (uchar) (g * c);
-	b = (uchar) (b * c);
-	a = (uchar) (a * c);
-	return *this;
-}
-
 namespace math {
 
 float radToDeg(const float rad)
@@ -105,16 +96,6 @@ float sqrt(const float v)
 Vector2F sqrt(const Vector2F &v)
 {
 	return Vector2F(sqrtf(v.x), sqrtf(v.y));
-}
-
-float lerp(const float v0, const float v1, const float t)
-{
-	return v0 * (1.0f - t) + v1 * t;
-}
-
-Vector2F lerp(const Vector2F &v0, const Vector2F &v1, const float t)
-{
-	return v0 * (1.0f - t) + v1 * t;
 }
 
 float step(float edge, float x)

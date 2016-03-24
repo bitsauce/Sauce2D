@@ -35,10 +35,13 @@ void VertexBuffer::setData(const Vertex *vertices, const uint vertexCount)
 		vertices[i].getData(vertexData + i * m_format.getVertexSizeInBytes());
 	}
 
-	// Upload vertex data
-	glBindBuffer(GL_ARRAY_BUFFER, m_id);
-	glBufferData(GL_ARRAY_BUFFER, vertexCount * m_format.getVertexSizeInBytes(), vertexData, m_type);
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	if(vertexCount > 0)
+	{
+		// Upload vertex data
+		glBindBuffer(GL_ARRAY_BUFFER, m_id);
+		glBufferData(GL_ARRAY_BUFFER, vertexCount * m_format.getVertexSizeInBytes(), vertexData, m_type);
+		glBindBuffer(GL_ARRAY_BUFFER, 0);
+	}
 
 	delete[] vertexData;
 
@@ -107,10 +110,13 @@ IndexBuffer::~IndexBuffer()
 
 void IndexBuffer::setData(const uint *indices, const uint indexCount)
 {
-	// Upload index data
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_id);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, indexCount * sizeof(uint), indices, m_type);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+	if(indexCount > 0)
+	{
+		// Upload index data
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_id);
+		glBufferData(GL_ELEMENT_ARRAY_BUFFER, indexCount * sizeof(uint), indices, m_type);
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+	}
 	
 	m_size = indexCount;
 }

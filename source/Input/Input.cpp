@@ -292,7 +292,7 @@ bool InputManager::getKeyState(const InputButton inputButton) const
 	switch(inputButton.getType())
 	{
 		case InputButton::KEYBOARD: return SDL_GetKeyboardState(NULL)[inputButton.getCode()];
-		case InputButton::MOUSE: return SDL_GetMouseState(NULL, NULL) & SDL_BUTTON(inputButton.getCode()) != 0;
+		case InputButton::MOUSE: return (SDL_GetMouseState(NULL, NULL) & SDL_BUTTON(inputButton.getCode())) != 0;
 	}
 	return false;
 }
