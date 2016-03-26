@@ -20,7 +20,7 @@ public:
 		y = xy;
 	}
 
-	inline Vector2(const T d[2])
+	inline explicit Vector2(const T d[2])
 	{
 		x = d[0];
 		y = d[1];
@@ -269,7 +269,7 @@ public:
 		this->z = z;
 	}
 
-	inline Vector3(T d[3])
+	inline explicit Vector3(T d[3])
 	{
 		this->x = d[0];
 		this->y = d[1];
@@ -522,7 +522,7 @@ public:
 		this->w = w;
 	}
 
-	inline Vector4(const T d[4])
+	inline explicit Vector4(const T d[4])
 	{
 		this->x = d[0];
 		this->y = d[1];

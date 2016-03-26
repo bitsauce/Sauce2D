@@ -128,7 +128,7 @@ void Sprite::getAABB(Vector2F *points) const
 	mat.translate(-m_origin.x, -m_origin.y, 0.0f);
 	mat.scale(m_scale.x, m_scale.y, 1.0f);
 	mat.rotateZ(m_angle);
-	mat.translate(m_position.x + m_origin.x, m_position.y + m_origin.y, 0.0f);
+	mat.translate(m_position.x, m_position.y, 0.0f);
 
 	for(int i = 0; i < 4; i++)
 	{
@@ -173,7 +173,20 @@ Vector2F Sprite::getOrigin() const
 
 Vector2F Sprite::getCenter() const
 {
-	return m_position + (m_size/2.0f);
+	if(m_angle == 0.0f)
+	{
+		return m_position + (m_size / 2.0f);
+	}
+
+	// Get center from average of the AABB
+	Vector2F points[4];
+	getAABB(points);
+	Vector2F center;
+	for(int i = 0; i < 4; i++)
+	{
+		center += points[i];
+	}
+	return center * 0.25f;
 }
 
 float Sprite::getRotation() const
@@ -203,7 +216,7 @@ void Sprite::getVertices(Vertex *vertices, uint *indices, const uint indexOffset
 	mat.translate(-m_origin.x, -m_origin.y, 0.0f);
 	mat.scale(m_scale.x, m_scale.y, 1.0f);
 	mat.rotateZ(m_angle);
-	mat.translate(m_position.x + m_origin.x, m_position.y + m_origin.y, 0.0f);
+	mat.translate(m_position.x, m_position.y, 0.0f);
 
 	for(int i = 0; i < 4; i++)
 	{
