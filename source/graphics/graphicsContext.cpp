@@ -149,11 +149,12 @@ void GraphicsContext::saveScreenshot(string path)
 	// Get frame buffer data
 	uchar *data = new uchar[m_width * m_height * 4];
 	glReadBuffer(GL_FRONT);
-	glReadPixels(0, 0, m_width, m_height, GL_BGRA, GL_UNSIGNED_BYTE, data);
+	glReadPixels(0, 0, m_width, m_height, GL_RGBA, GL_UNSIGNED_BYTE, data);
 	glReadBuffer(GL_BACK);
 
 	// NOTE: This function is not tested!
 	Pixmap pixmap(m_width, m_height, data);
+	pixmap.flipY();
 	pixmap.exportToFile(path);
 
 	delete[] data;

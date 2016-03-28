@@ -76,6 +76,8 @@ public:
 	void getPixel(const uint x, const uint y, void *data) const;
 	void setPixel(const uint x, const uint y, const void *data);
 
+	void flipY();
+
 	void fill(const void *data);
 	void clear();
 

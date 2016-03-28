@@ -229,6 +229,24 @@ void Pixmap::setPixel(const uint x, const uint y, const void *data)
 	}
 }
 
+void Pixmap::flipY()
+{
+	uchar *pixel0 = new uchar[m_format.getPixelSizeInBytes()];
+	uchar *pixel1 = new uchar[m_format.getPixelSizeInBytes()];
+	for(int y0 = 0, y1 = m_height - 1; y0 < m_height / 2; y0++, y1--)
+	{
+		for(int x = 0; x < m_width; ++x)
+		{
+			getPixel(x, y0, pixel0);
+			getPixel(x, y1, pixel1);
+			setPixel(x, y1, pixel0);
+			setPixel(x, y0, pixel1);
+		}
+	}
+	delete[] pixel0;
+	delete[] pixel1;
+}
+
 void Pixmap::fill(const void *data)
 {
 	for(uint y = 0; y < m_height; ++y)
