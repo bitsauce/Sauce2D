@@ -47,6 +47,7 @@ public:
 	{
 		PRIMITIVE_POINTS = GL_POINTS,					///< Points. 1 vertex per primitive.
 		PRIMITIVE_LINES = GL_LINES,						///< Lines. 2 vertex per primitive.
+		PRIMITIVE_LINE_STRIP = GL_LINE_STRIP,			///< Line strip. 2 vertex for the first primitive, 1 for the next.
 		PRIMITIVE_TRIANGLES = GL_TRIANGLES,				///< Triangles. 3 vertex per primitive.
 		PRIMITIVE_TRIANGLE_STRIP = GL_TRIANGLE_STRIP,	///< Triangle strip. 3 vertex for the first primitive, 1 vertex for the next.
 		PRIMITIVE_TRIANGLE_FAN = GL_TRIANGLE_FAN		///< Triangle fan. 3 vertex for the first primitive, 1 vertex for the next.
@@ -74,6 +75,9 @@ public:
 	 * \param cap Capability to disable.
 	 */
 	void disable(const Capability cap);
+
+	void setPointSize(const float pointSize);
+	void setLineWidth(const float lineWidth);
 
 	/**
 	 * Clears the back buffer using \p mask.
@@ -173,6 +177,8 @@ public:
 	 * \param h Height of the viewport in pixels
 	 */
 	void resizeViewport(const uint w, const uint h, const bool flipY = false);
+
+	void setProjectionMatrix(const Matrix4 matrix);
 
 	Vector2I getSize() const
 	{

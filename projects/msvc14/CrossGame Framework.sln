@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.24720.0
+VisualStudioVersion = 14.0.23107.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "gl3w", "..\..\3rdparty\gl3w\gl3w.vcxproj", "{E23AC19A-6A24-4EE6-B843-99001B2568F0}"
 EndProject
@@ -62,6 +62,8 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Shaders", "..\..\samples\Shaders\Project\Shaders.vcxproj", "{CA716EDE-0239-4856-B247-8236B85635FA}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Keybinds", "..\..\samples\Keybinds\Project\Keybinds.vcxproj", "{732EE2F1-689C-43BB-B0A7-17F44AE5E056}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "RandomNoiseGPU", "..\..\samples\RandomNoiseGPU\Project\RandomNoiseGPU.vcxproj", "{7F4BAC8A-5B6C-4120-B1B4-8772C5022352}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -177,6 +179,12 @@ Global
 		{732EE2F1-689C-43BB-B0A7-17F44AE5E056}.Release|Win32.ActiveCfg = Release|Win32
 		{732EE2F1-689C-43BB-B0A7-17F44AE5E056}.Release|Win32.Build.0 = Release|Win32
 		{732EE2F1-689C-43BB-B0A7-17F44AE5E056}.Release|x64.ActiveCfg = Release|Win32
+		{7F4BAC8A-5B6C-4120-B1B4-8772C5022352}.Debug|Win32.ActiveCfg = Debug|Win32
+		{7F4BAC8A-5B6C-4120-B1B4-8772C5022352}.Debug|Win32.Build.0 = Debug|Win32
+		{7F4BAC8A-5B6C-4120-B1B4-8772C5022352}.Debug|x64.ActiveCfg = Debug|Win32
+		{7F4BAC8A-5B6C-4120-B1B4-8772C5022352}.Release|Win32.ActiveCfg = Release|Win32
+		{7F4BAC8A-5B6C-4120-B1B4-8772C5022352}.Release|Win32.Build.0 = Release|Win32
+		{7F4BAC8A-5B6C-4120-B1B4-8772C5022352}.Release|x64.ActiveCfg = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -191,5 +199,6 @@ Global
 		{46B706DD-17FB-4457-92E7-2DDA1878FC9A} = {52A3D16B-ED61-40D4-8804-C241B45F0B10}
 		{CA716EDE-0239-4856-B247-8236B85635FA} = {52A3D16B-ED61-40D4-8804-C241B45F0B10}
 		{732EE2F1-689C-43BB-B0A7-17F44AE5E056} = {52A3D16B-ED61-40D4-8804-C241B45F0B10}
+		{7F4BAC8A-5B6C-4120-B1B4-8772C5022352} = {52A3D16B-ED61-40D4-8804-C241B45F0B10}
 	EndGlobalSection
 EndGlobal

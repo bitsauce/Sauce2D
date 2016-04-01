@@ -1,7 +1,7 @@
 from shutil import *
 import os
 
-project_name = input("Project name: ")
+project_name = input("Project name: ").strip();
 
 sln_file = project_name + "/" + project_name + ".sln"
 proj_file = project_name + "/Project/" + project_name + ".vcxproj"

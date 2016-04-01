@@ -11,9 +11,9 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{7A44F0BC-017A-4954-AC15-4B357471983C}</ProjectGuid>
+    <ProjectGuid>{7F4BAC8A-5B6C-4120-B1B4-8772C5022352}</ProjectGuid>
     <RootNamespace>deferredlighting</RootNamespace>
-    <ProjectName>Minimal</ProjectName>
+    <ProjectName>RandomGeneration</ProjectName>
     <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -41,25 +41,26 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <OutDir>$(SolutionDir)Exe\$(Configuration)</OutDir>
-    <TargetName>$(ProjectName)_Debug</TargetName>
+    <OutDir>..\Binaries\$(Platform)\$(Configuration)\</OutDir>
+    <TargetName>RandomNoiseGPU</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <OutDir>$(SolutionDir)Exe\$(Configuration)</OutDir>
+    <OutDir>..\Binaries\$(Platform)\$(Configuration)\</OutDir>
+    <TargetName>RandomNoiseGPU</TargetName>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
-      <WarningLevel>Level3</WarningLevel>
+      <WarningLevel>Level1</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(SolutionDir)..\..\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>X2D_DEBUG;X2D_IMPORT;</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\..\include;$(ProjectDir)..\..\..\3rdparty\SDL\include;$(ProjectDir)..\..\..\3rdparty\SDL_image;$(ProjectDir)..\..\..\3rdparty\SDL_mixer;$(ProjectDir)..\..\..\3rdparty\freetype\include;$(ProjectDir)..\..\..\3rdparty\openal\include;$(ProjectDir)..\..\..\3rdparty\gl3w\include;$(ProjectDir)..\..\..\3rdparty\tinyxml2;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>CGF_DEBUG;CGF_IMPORT;</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>
       </AdditionalLibraryDirectories>
-      <AdditionalDependencies>$(SolutionDir)..\..\build\Win32\Debug\x2dd.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>$(SolutionDir)..\..\build\$(Platform)\$(Configuration)\CrossGame.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
       <Command>copy "$(SolutionDir)..\..\build\$(Platform)\$(Configuration)\*.dll" "$(TargetDir)"</Command>
@@ -67,20 +68,20 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
-      <WarningLevel>Level3</WarningLevel>
+      <WarningLevel>Level1</WarningLevel>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(SolutionDir)..\..\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\..\include;$(ProjectDir)..\..\..\3rdparty\SDL\include;$(ProjectDir)..\..\..\3rdparty\SDL_image;$(ProjectDir)..\..\..\3rdparty\SDL_mixer;$(ProjectDir)..\..\..\3rdparty\freetype\include;$(ProjectDir)..\..\..\3rdparty\openal\include;$(ProjectDir)..\..\..\3rdparty\gl3w\include;$(ProjectDir)..\..\..\3rdparty\tinyxml2;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
-      <PreprocessorDefinitions>X2D_IMPORT;</PreprocessorDefinitions>
+      <PreprocessorDefinitions>CGF_IMPORT;</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>$(SolutionDir)..\..\build\Win32\Release\x2d.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>$(SolutionDir)..\..\build\$(Platform)\$(Configuration)\CrossGame.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
       <Command>copy "$(SolutionDir)..\..\build\$(Platform)\$(Configuration)\*.dll" "$(TargetDir)"</Command>
@@ -88,6 +89,15 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\Source\Main.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Xml Include="..\Data\Resources.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\Data\Shader\Generation.frag" />
+    <None Include="..\Data\Shader\Generation.vert" />
+    <None Include="..\Data\Shader\Testing.frag" />
+    <None Include="..\Data\Shader\Testing.vert" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

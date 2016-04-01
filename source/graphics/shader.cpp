@@ -145,10 +145,10 @@ void Shader::init(const string &vertexSource, const string &fragmentSource)
 			case GL_INT_SAMPLER_2D:
 			case GL_SAMPLER_2D:
 
-			case GL_INT:		dataSize = INT_SIZE; break;
-			case GL_INT_VEC2:	dataSize = INT_SIZE * 2; break;
-			case GL_INT_VEC3:	dataSize = INT_SIZE * 3; break;
-			case GL_INT_VEC4:	dataSize = INT_SIZE * 4; break;
+			case GL_INT: case GL_BOOL:				dataSize = INT_SIZE; break;
+			case GL_INT_VEC2: case GL_BOOL_VEC2:	dataSize = INT_SIZE * 2; break;
+			case GL_INT_VEC3: case GL_BOOL_VEC3:	dataSize = INT_SIZE * 3; break;
+			case GL_INT_VEC4: case GL_BOOL_VEC4:	dataSize = INT_SIZE * 4; break;
 
 			case GL_UNSIGNED_INT:		dataSize = INT_SIZE; break;
 			case GL_UNSIGNED_INT_VEC2:	dataSize = INT_SIZE * 2; break;
@@ -178,7 +178,8 @@ Shader::~Shader()
 	// Delete shader buffers as they are loaded into the shader program
 	glDeleteShader(m_vertShaderID);
 	glDeleteShader(m_fragShaderID);
-	for(map<string, Uniform*>::iterator itr = m_uniforms.begin(); itr != m_uniforms.end(); ++itr) {
+	for(map<string, Uniform*>::iterator itr = m_uniforms.begin(); itr != m_uniforms.end(); ++itr)
+	{
 		delete itr->second;
 	}
 }
@@ -220,7 +221,7 @@ void Shader::setUniform1i(const string &name, const int v0)
 	if((itr = m_uniforms.find(name)) != m_uniforms.end())
 	{
 		Uniform *uniform = itr->second;
-		if(uniform->type == GL_INT)
+		if(uniform->type == GL_INT || uniform->type == GL_BOOL)
 		{
 			((GLint*) uniform->data)[0] = v0;
 		}
@@ -241,7 +242,7 @@ void Shader::setUniform2i(const string &name, const int v0, const int v1)
 	if((itr = m_uniforms.find(name)) != m_uniforms.end())
 	{
 		Uniform *uniform = itr->second;
-		if(uniform->type == GL_INT_VEC2)
+		if(uniform->type == GL_INT_VEC2 || uniform->type == GL_BOOL_VEC2)
 		{
 			((GLint*) uniform->data)[0] = v0;
 			((GLint*) uniform->data)[1] = v1;
@@ -263,7 +264,7 @@ void Shader::setUniform3i(const string &name, const int v0, const int v1, const 
 	if((itr = m_uniforms.find(name)) != m_uniforms.end())
 	{
 		Uniform *uniform = itr->second;
-		if(uniform->type == GL_INT_VEC3)
+		if(uniform->type == GL_INT_VEC3 || uniform->type == GL_BOOL_VEC3)
 		{
 			((GLint*) uniform->data)[0] = v0;
 			((GLint*) uniform->data)[1] = v1;
@@ -286,7 +287,7 @@ void Shader::setUniform4i(const string &name, const int v0, const int v1, const 
 	if((itr = m_uniforms.find(name)) != m_uniforms.end())
 	{
 		Uniform *uniform = itr->second;
-		if(uniform->type == GL_INT_VEC4)
+		if(uniform->type == GL_INT_VEC4 || uniform->type == GL_BOOL_VEC4)
 		{
 			((GLint*) uniform->data)[0] = v0;
 			((GLint*) uniform->data)[1] = v1;

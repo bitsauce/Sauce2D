@@ -42,6 +42,17 @@ void GraphicsContext::disable(const Capability cap)
 	glDisable(cap);
 }
 
+
+void GraphicsContext::setPointSize(const float pointSize)
+{
+	glPointSize(pointSize);
+}
+
+void GraphicsContext::setLineWidth(const float lineWidth)
+{
+	glLineWidth(lineWidth);
+}
+
 void GraphicsContext::clear(const uint mask, const Color &fillColor)
 {
 	if(mask & COLOR_BUFFER) glClearColor(fillColor.getR() / 255.0f, fillColor.getG() / 255.0f, fillColor.getB() / 255.0f, fillColor.getA() / 255.0f);
@@ -176,8 +187,8 @@ void GraphicsContext::resizeViewport(const uint w, const uint h, const bool flip
 		f = 1.0f;
 
 	float projMat[16] = {
-		2.0f / (r - l),	0.0f,					0.0f,				-((r + l) / (r - l)),
-		0.0f,				2.0f / (t - b),		0.0f,				-((t + b) / (t - b)),
+		2.0f / (r - l),		0.0f,					0.0f,				-((r + l) / (r - l)),
+		0.0f,				2.0f / (t - b),			0.0f,				-((t + b) / (t - b)),
 		0.0f,				0.0f,					-2.0f / (f - n),	-((f + n) / (f - n)),
 		0.0f,				0.0f,					0.0f,				1.0f
 	};
@@ -189,6 +200,11 @@ void GraphicsContext::resizeViewport(const uint w, const uint h, const bool flip
 
 	// Set viewport
 	glViewport(0, 0, m_width, m_height);
+}
+
+void GraphicsContext::setProjectionMatrix(const Matrix4 matrix)
+{
+	m_projectionMatrix = matrix;
 }
 
 void GraphicsContext::setupContext()
@@ -218,10 +234,10 @@ void GraphicsContext::setupContext()
 		const Shader::Uniform *uniform = itr->second;
 		switch(uniform->type)
 		{
-			case GL_INT: glUniform1i(uniform->loc, ((GLint*) uniform->data)[0]); break;
-			case GL_INT_VEC2: glUniform2i(uniform->loc, ((GLint*) uniform->data)[0], ((GLint*) uniform->data)[1]); break;
-			case GL_INT_VEC3: glUniform3i(uniform->loc, ((GLint*) uniform->data)[0], ((GLint*) uniform->data)[1], ((GLint*) uniform->data)[2]); break;
-			case GL_INT_VEC4: glUniform4i(uniform->loc, ((GLint*) uniform->data)[0], ((GLint*) uniform->data)[1], ((GLint*) uniform->data)[2], ((GLint*) uniform->data)[3]); break;
+			case GL_INT: case GL_BOOL: glUniform1i(uniform->loc, ((GLint*) uniform->data)[0]); break;
+			case GL_INT_VEC2: case GL_BOOL_VEC2: glUniform2i(uniform->loc, ((GLint*) uniform->data)[0], ((GLint*) uniform->data)[1]); break;
+			case GL_INT_VEC3: case GL_BOOL_VEC3: glUniform3i(uniform->loc, ((GLint*) uniform->data)[0], ((GLint*) uniform->data)[1], ((GLint*) uniform->data)[2]); break;
+			case GL_INT_VEC4: case GL_BOOL_VEC4: glUniform4i(uniform->loc, ((GLint*) uniform->data)[0], ((GLint*) uniform->data)[1], ((GLint*) uniform->data)[2], ((GLint*) uniform->data)[3]); break;
 
 			case GL_UNSIGNED_INT: glUniform1ui(uniform->loc, ((GLuint*) uniform->data)[0]); break;
 			case GL_UNSIGNED_INT_VEC2: glUniform2ui(uniform->loc, ((GLuint*) uniform->data)[0], ((GLuint*) uniform->data)[1]); break;

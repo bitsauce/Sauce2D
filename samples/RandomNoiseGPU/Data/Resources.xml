@@ -1,0 +1,30 @@
+<resources>
+	<texture>
+		<name>Gradient</name>
+		<path>Images/Gradient.png</path>
+	</texture>
+	<font>
+		<name>Arial</name>
+		<path>Font/Arial.fnt</path>
+	</font>
+	<shader>
+		<name>Simplex3D</name>
+		<fragmentFilePath>Shader/Simplex3D.frag</fragmentFilePath>
+		<vertexFilePath>Shader/Simplex3D.vert</vertexFilePath>
+	</shader>
+	<shader>
+		<name>Noise</name>
+		<fragmentFilePath>Shader/Noise.frag</fragmentFilePath>
+		<vertexFilePath>Shader/Noise.vert</vertexFilePath>
+	</shader>
+	<shader>
+		<name>Voronoise</name>
+		<fragmentFilePath>Shader/Voronoise.frag</fragmentFilePath>
+		<vertexFilePath>Shader/Voronoise.vert</vertexFilePath>
+	</shader>
+	<shader>
+		<name>Fractal2D</name>
+		<fragmentFilePath>Shader/Fractal2D.frag</fragmentFilePath>
+		<vertexFilePath>Shader/Fractal2D.vert</vertexFilePath>
+	</shader>
+</resources>

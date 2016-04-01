@@ -1,0 +1,16 @@
+<resources>
+	<font>
+		<name>Font</name>
+		<path>Font.fnt</path>
+	</font>
+	<shader>
+		<name>Testing</name>
+		<fragmentFilePath>Shader/Testing.frag</fragmentFilePath>
+		<vertexFilePath>Shader/Testing.vert</vertexFilePath>
+	</shader>
+	<shader>
+		<name>Generation</name>
+		<fragmentFilePath>Shader/Generation.frag</fragmentFilePath>
+		<vertexFilePath>Shader/Generation.vert</vertexFilePath>
+	</shader>
+</resources>
