@@ -166,129 +166,381 @@ VertexFormat Vertex::getFormat() const
 	return m_format;
 }
 
-void Vertex::set4f(const VertexAttribute attrib, const float v0, const float v1, const float v2, const float v3)
+void Vertex::set1f(const VertexAttribute attrib, const float v0)
 {
-	if(m_format.isAttributeEnabled(attrib))
+	if(m_format.isAttributeEnabled(attrib) || m_format.getElementCount(attrib) != 1)
 	{
-		switch(m_format.getElementCount(attrib))
-		{
-		case 4: ((float*)(m_data + m_format.getAttributeOffset(attrib)))[3] = v3;
-		case 3: ((float*)(m_data + m_format.getAttributeOffset(attrib)))[2] = v2;
-		case 2: ((float*)(m_data + m_format.getAttributeOffset(attrib)))[1] = v1;
-		case 1: ((float*)(m_data + m_format.getAttributeOffset(attrib)))[0] = v0;
-		}
+		((float*) (m_data + m_format.getAttributeOffset(attrib)))[0] = v0;
 	}
 	else
 	{
-		LOG("void Vertex::set(): Attribute not enabled with the current vertex format.");
+		LOG("Vertex format does not match");
+	}
+}
+
+void Vertex::set1ui(const VertexAttribute attrib, const uint v0)
+{
+	if(m_format.isAttributeEnabled(attrib) || m_format.getElementCount(attrib) != 1)
+	{
+		((uint*) (m_data + m_format.getAttributeOffset(attrib)))[0] = v0;
+	}
+	else
+	{
+		LOG("Vertex format does not match");
+	}
+}
+
+void Vertex::set1i(const VertexAttribute attrib, const int v0)
+{
+	if(m_format.isAttributeEnabled(attrib) || m_format.getElementCount(attrib) != 1)
+	{
+		((int*) (m_data + m_format.getAttributeOffset(attrib)))[0] = v0;
+	}
+	else
+	{
+		LOG("Vertex format does not match");
+	}
+}
+
+void Vertex::set1us(const VertexAttribute attrib, const ushort v0)
+{
+	if(m_format.isAttributeEnabled(attrib) || m_format.getElementCount(attrib) != 1)
+	{
+		((ushort*) (m_data + m_format.getAttributeOffset(attrib)))[0] = v0;
+	}
+	else
+	{
+		LOG("Vertex format does not match");
+	}
+}
+
+void Vertex::set1s(const VertexAttribute attrib, const short v0)
+{
+	if(m_format.isAttributeEnabled(attrib) || m_format.getElementCount(attrib) != 1)
+	{
+		((short*) (m_data + m_format.getAttributeOffset(attrib)))[0] = v0;
+	}
+	else
+	{
+		LOG("Vertex format does not match");
+	}
+}
+
+void Vertex::set1ub(const VertexAttribute attrib, const uchar v0)
+{
+	if(m_format.isAttributeEnabled(attrib) || m_format.getElementCount(attrib) != 1)
+	{
+		((uchar*) (m_data + m_format.getAttributeOffset(attrib)))[0] = v0;
+	}
+	else
+	{
+		LOG("Vertex format does not match");
+	}
+}
+
+void Vertex::set1b(const VertexAttribute attrib, const char v0)
+{
+	if(m_format.isAttributeEnabled(attrib) || m_format.getElementCount(attrib) != 1)
+	{
+		((char*) (m_data + m_format.getAttributeOffset(attrib)))[0] = v0;
+	}
+	else
+	{
+		LOG("Vertex format does not match");
+	}
+}
+
+void Vertex::set2f(const VertexAttribute attrib, const float v0, const float v1)
+{
+	if(m_format.isAttributeEnabled(attrib) || m_format.getElementCount(attrib) != 2)
+	{
+		((float*) (m_data + m_format.getAttributeOffset(attrib)))[0] = v0;
+		((float*) (m_data + m_format.getAttributeOffset(attrib)))[1] = v1;
+	}
+	else
+	{
+		LOG("Vertex format does not match");
+	}
+}
+
+void Vertex::set2ui(const VertexAttribute attrib, const uint v0, const uint v1)
+{
+	if(m_format.isAttributeEnabled(attrib) || m_format.getElementCount(attrib) != 2)
+	{
+		((uint*) (m_data + m_format.getAttributeOffset(attrib)))[0] = v0;
+		((uint*) (m_data + m_format.getAttributeOffset(attrib)))[1] = v1;
+	}
+	else
+	{
+		LOG("Vertex format does not match");
+	}
+}
+
+void Vertex::set2i(const VertexAttribute attrib, const int v0, const int v1)
+{
+	if(m_format.isAttributeEnabled(attrib) || m_format.getElementCount(attrib) != 2)
+	{
+		((int*) (m_data + m_format.getAttributeOffset(attrib)))[0] = v0;
+		((int*) (m_data + m_format.getAttributeOffset(attrib)))[1] = v1;
+	}
+	else
+	{
+		LOG("Vertex format does not match");
+	}
+}
+
+void Vertex::set2us(const VertexAttribute attrib, const ushort v0, const ushort v1)
+{
+	if(m_format.isAttributeEnabled(attrib) || m_format.getElementCount(attrib) != 2)
+	{
+		((ushort*) (m_data + m_format.getAttributeOffset(attrib)))[0] = v0;
+		((ushort*) (m_data + m_format.getAttributeOffset(attrib)))[1] = v1;
+	}
+	else
+	{
+		LOG("Vertex format does not match");
+	}
+}
+
+void Vertex::set2s(const VertexAttribute attrib, const short v0, const short v1)
+{
+	if(m_format.isAttributeEnabled(attrib) || m_format.getElementCount(attrib) != 2)
+	{
+		((short*) (m_data + m_format.getAttributeOffset(attrib)))[0] = v0;
+		((short*) (m_data + m_format.getAttributeOffset(attrib)))[1] = v1;
+	}
+	else
+	{
+		LOG("Vertex format does not match");
+	}
+}
+
+void Vertex::set2ub(const VertexAttribute attrib, const uchar v0, const uchar v1)
+{
+	if(m_format.isAttributeEnabled(attrib) || m_format.getElementCount(attrib) != 2)
+	{
+		((uchar*) (m_data + m_format.getAttributeOffset(attrib)))[0] = v0;
+		((uchar*) (m_data + m_format.getAttributeOffset(attrib)))[1] = v1;
+	}
+	else
+	{
+		LOG("Vertex format does not match");
+	}
+}
+
+void Vertex::set2b(const VertexAttribute attrib, const char v0, const char v1)
+{
+	if(m_format.isAttributeEnabled(attrib) || m_format.getElementCount(attrib) != 2)
+	{
+		((char*) (m_data + m_format.getAttributeOffset(attrib)))[0] = v0;
+		((char*) (m_data + m_format.getAttributeOffset(attrib)))[1] = v1;
+	}
+	else
+	{
+		LOG("Vertex format does not match");
+	}
+}
+
+void Vertex::set3f(const VertexAttribute attrib, const float v0, const float v1, const float v2)
+{
+	if(m_format.isAttributeEnabled(attrib) || m_format.getElementCount(attrib) != 3)
+	{
+		((float*) (m_data + m_format.getAttributeOffset(attrib)))[0] = v0;
+		((float*) (m_data + m_format.getAttributeOffset(attrib)))[1] = v1;
+		((float*) (m_data + m_format.getAttributeOffset(attrib)))[2] = v2;
+	}
+	else
+	{
+		LOG("Vertex format does not match");
+	}
+}
+
+void Vertex::set3ui(const VertexAttribute attrib, const uint v0, const uint v1, const uint v2)
+{
+	if(m_format.isAttributeEnabled(attrib) || m_format.getElementCount(attrib) != 3)
+	{
+		((uint*) (m_data + m_format.getAttributeOffset(attrib)))[0] = v0;
+		((uint*) (m_data + m_format.getAttributeOffset(attrib)))[1] = v1;
+		((uint*) (m_data + m_format.getAttributeOffset(attrib)))[2] = v2;
+	}
+	else
+	{
+		LOG("Vertex format does not match");
+	}
+}
+
+void Vertex::set3i(const VertexAttribute attrib, const int v0, const int v1, const int v2)
+{
+	if(m_format.isAttributeEnabled(attrib) || m_format.getElementCount(attrib) != 3)
+	{
+		((int*) (m_data + m_format.getAttributeOffset(attrib)))[0] = v0;
+		((int*) (m_data + m_format.getAttributeOffset(attrib)))[1] = v1;
+		((int*) (m_data + m_format.getAttributeOffset(attrib)))[2] = v2;
+	}
+	else
+	{
+		LOG("Vertex format does not match");
+	}
+}
+
+void Vertex::set3us(const VertexAttribute attrib, const ushort v0, const ushort v1, const ushort v2)
+{
+	if(m_format.isAttributeEnabled(attrib) || m_format.getElementCount(attrib) != 3)
+	{
+		((ushort*) (m_data + m_format.getAttributeOffset(attrib)))[0] = v0;
+		((ushort*) (m_data + m_format.getAttributeOffset(attrib)))[1] = v1;
+		((ushort*) (m_data + m_format.getAttributeOffset(attrib)))[2] = v2;
+	}
+	else
+	{
+		LOG("Vertex format does not match");
+	}
+}
+
+void Vertex::set3s(const VertexAttribute attrib, const short v0, const short v1, const short v2)
+{
+	if(m_format.isAttributeEnabled(attrib) || m_format.getElementCount(attrib) != 3)
+	{
+		((short*) (m_data + m_format.getAttributeOffset(attrib)))[0] = v0;
+		((short*) (m_data + m_format.getAttributeOffset(attrib)))[1] = v1;
+		((short*) (m_data + m_format.getAttributeOffset(attrib)))[2] = v2;
+	}
+	else
+	{
+		LOG("Vertex format does not match");
+	}
+}
+
+void Vertex::set3ub(const VertexAttribute attrib, const uchar v0, const uchar v1, const uchar v2)
+{
+	if(m_format.isAttributeEnabled(attrib) || m_format.getElementCount(attrib) != 3)
+	{
+		((uchar*) (m_data + m_format.getAttributeOffset(attrib)))[0] = v0;
+		((uchar*) (m_data + m_format.getAttributeOffset(attrib)))[1] = v1;
+		((uchar*) (m_data + m_format.getAttributeOffset(attrib)))[2] = v2;
+	}
+	else
+	{
+		LOG("Vertex format does not match");
+	}
+}
+
+void Vertex::set3b(const VertexAttribute attrib, const char v0, const char v1, const char v2)
+{
+	if(m_format.isAttributeEnabled(attrib) || m_format.getElementCount(attrib) != 3)
+	{
+		((char*) (m_data + m_format.getAttributeOffset(attrib)))[0] = v0;
+		((char*) (m_data + m_format.getAttributeOffset(attrib)))[1] = v1;
+		((char*) (m_data + m_format.getAttributeOffset(attrib)))[2] = v2;
+	}
+	else
+	{
+		LOG("Vertex format does not match");
+	}
+}
+
+void Vertex::set4f(const VertexAttribute attrib, const float v0, const float v1, const float v2, const float v3)
+{
+	if(m_format.isAttributeEnabled(attrib) || m_format.getElementCount(attrib) != 4)
+	{
+		((float*) (m_data + m_format.getAttributeOffset(attrib)))[0] = v0;
+		((float*) (m_data + m_format.getAttributeOffset(attrib)))[1] = v1;
+		((float*) (m_data + m_format.getAttributeOffset(attrib)))[2] = v2;
+		((float*) (m_data + m_format.getAttributeOffset(attrib)))[3] = v3;
+	}
+	else
+	{
+		LOG("Vertex format does not match");
 	}
 }
 
 void Vertex::set4ui(const VertexAttribute attrib, const uint v0, const uint v1, const uint v2, const uint v3)
 {
-	if(m_format.isAttributeEnabled(attrib))
+	if(m_format.isAttributeEnabled(attrib) || m_format.getElementCount(attrib) != 4)
 	{
-		switch(m_format.getElementCount(attrib))
-		{
-		case 4: ((uint*)(m_data + m_format.getAttributeOffset(attrib)))[3] = v3;
-		case 3: ((uint*)(m_data + m_format.getAttributeOffset(attrib)))[2] = v2;
-		case 2: ((uint*)(m_data + m_format.getAttributeOffset(attrib)))[1] = v1;
-		case 1: ((uint*)(m_data + m_format.getAttributeOffset(attrib)))[0] = v0;
-		}
+		((uint*) (m_data + m_format.getAttributeOffset(attrib)))[0] = v0;
+		((uint*) (m_data + m_format.getAttributeOffset(attrib)))[1] = v1;
+		((uint*) (m_data + m_format.getAttributeOffset(attrib)))[2] = v2;
+		((uint*) (m_data + m_format.getAttributeOffset(attrib)))[3] = v3;
 	}
 	else
 	{
-		LOG("void Vertex::set(): Attribute not enabled with the current vertex format.");
+		LOG("Vertex format does not match");
 	}
 }
 
 void Vertex::set4i(const VertexAttribute attrib, const int v0, const int v1, const int v2, const int v3)
 {
-	if(m_format.isAttributeEnabled(attrib))
+	if(m_format.isAttributeEnabled(attrib) || m_format.getElementCount(attrib) != 4)
 	{
-		switch(m_format.getElementCount(attrib))
-		{
-		case 4: ((int*)(m_data + m_format.getAttributeOffset(attrib)))[3] = v3;
-		case 3: ((int*)(m_data + m_format.getAttributeOffset(attrib)))[2] = v2;
-		case 2: ((int*)(m_data + m_format.getAttributeOffset(attrib)))[1] = v1;
-		case 1: ((int*)(m_data + m_format.getAttributeOffset(attrib)))[0] = v0;
-		}
+		((int*) (m_data + m_format.getAttributeOffset(attrib)))[0] = v0;
+		((int*) (m_data + m_format.getAttributeOffset(attrib)))[1] = v1;
+		((int*) (m_data + m_format.getAttributeOffset(attrib)))[2] = v2;
+		((int*) (m_data + m_format.getAttributeOffset(attrib)))[3] = v3;
 	}
 	else
 	{
-		LOG("void Vertex::set(): Attribute not enabled with the current vertex format.");
+		LOG("Vertex format does not match");
 	}
 }
 
 void Vertex::set4us(const VertexAttribute attrib, const ushort v0, const ushort v1, const ushort v2, const ushort v3)
 {
-	if(m_format.isAttributeEnabled(attrib))
+	if(m_format.isAttributeEnabled(attrib) || m_format.getElementCount(attrib) != 4)
 	{
-		switch(m_format.getElementCount(attrib))
-		{
-		case 4: ((ushort*)(m_data + m_format.getAttributeOffset(attrib)))[3] = v3;
-		case 3: ((ushort*)(m_data + m_format.getAttributeOffset(attrib)))[2] = v2;
-		case 2: ((ushort*)(m_data + m_format.getAttributeOffset(attrib)))[1] = v1;
-		case 1: ((ushort*)(m_data + m_format.getAttributeOffset(attrib)))[0] = v0;
-		}
+		((ushort*) (m_data + m_format.getAttributeOffset(attrib)))[0] = v0;
+		((ushort*) (m_data + m_format.getAttributeOffset(attrib)))[1] = v1;
+		((ushort*) (m_data + m_format.getAttributeOffset(attrib)))[2] = v2;
+		((ushort*) (m_data + m_format.getAttributeOffset(attrib)))[3] = v3;
 	}
 	else
 	{
-		LOG("void Vertex::set(): Attribute not enabled with the current vertex format.");
+		LOG("Vertex format does not match");
 	}
 }
 
 void Vertex::set4s(const VertexAttribute attrib, const short v0, const short v1, const short v2, const short v3)
 {
-	if(m_format.isAttributeEnabled(attrib))
+	if(m_format.isAttributeEnabled(attrib) || m_format.getElementCount(attrib) != 4)
 	{
-		switch(m_format.getElementCount(attrib))
-		{
-		case 4: ((short*)(m_data + m_format.getAttributeOffset(attrib)))[3] = v3;
-		case 3: ((short*)(m_data + m_format.getAttributeOffset(attrib)))[2] = v2;
-		case 2: ((short*)(m_data + m_format.getAttributeOffset(attrib)))[1] = v1;
-		case 1: ((short*)(m_data + m_format.getAttributeOffset(attrib)))[0] = v0;
-		}
+		((short*) (m_data + m_format.getAttributeOffset(attrib)))[0] = v0;
+		((short*) (m_data + m_format.getAttributeOffset(attrib)))[1] = v1;
+		((short*) (m_data + m_format.getAttributeOffset(attrib)))[2] = v2;
+		((short*) (m_data + m_format.getAttributeOffset(attrib)))[3] = v3;
 	}
 	else
 	{
-		LOG("void Vertex::set(): Attribute not enabled with the current vertex format.");
+		LOG("Vertex format does not match");
 	}
 }
 
 void Vertex::set4ub(const VertexAttribute attrib, const uchar v0, const uchar v1, const uchar v2, const uchar v3)
 {
-	if(m_format.isAttributeEnabled(attrib))
+	if(m_format.isAttributeEnabled(attrib) || m_format.getElementCount(attrib) != 4)
 	{
-		switch(m_format.getElementCount(attrib))
-		{
-		case 4: ((uchar*)(m_data + m_format.getAttributeOffset(attrib)))[3] = v3;
-		case 3: ((uchar*)(m_data + m_format.getAttributeOffset(attrib)))[2] = v2;
-		case 2: ((uchar*)(m_data + m_format.getAttributeOffset(attrib)))[1] = v1;
-		case 1: ((uchar*)(m_data + m_format.getAttributeOffset(attrib)))[0] = v0;
-		}
+		((uchar*) (m_data + m_format.getAttributeOffset(attrib)))[0] = v0;
+		((uchar*) (m_data + m_format.getAttributeOffset(attrib)))[1] = v1;
+		((uchar*) (m_data + m_format.getAttributeOffset(attrib)))[2] = v2;
+		((uchar*) (m_data + m_format.getAttributeOffset(attrib)))[3] = v3;
 	}
 	else
 	{
-		LOG("void Vertex::set(): Attribute not enabled with the current vertex format.");
+		LOG("Vertex format does not match");
 	}
 }
 
 void Vertex::set4b(const VertexAttribute attrib, const char v0, const char v1, const char v2, const char v3)
 {
-	if(m_format.isAttributeEnabled(attrib))
+	if(m_format.isAttributeEnabled(attrib) || m_format.getElementCount(attrib) != 4)
 	{
-		switch(m_format.getElementCount(attrib))
-		{
-		case 4: ((char*)(m_data + m_format.getAttributeOffset(attrib)))[3] = v3;
-		case 3: ((char*)(m_data + m_format.getAttributeOffset(attrib)))[2] = v2;
-		case 2: ((char*)(m_data + m_format.getAttributeOffset(attrib)))[1] = v1;
-		case 1: ((char*)(m_data + m_format.getAttributeOffset(attrib)))[0] = v0;
-		}
+		((char*) (m_data + m_format.getAttributeOffset(attrib)))[0] = v0;
+		((char*) (m_data + m_format.getAttributeOffset(attrib)))[1] = v1;
+		((char*) (m_data + m_format.getAttributeOffset(attrib)))[2] = v2;
+		((char*) (m_data + m_format.getAttributeOffset(attrib)))[3] = v3;
 	}
 	else
 	{
-		LOG("void Vertex::set(): Attribute not enabled with the current vertex format.");
+		LOG("Vertex format does not match");
 	}
 }
 

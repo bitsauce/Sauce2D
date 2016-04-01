@@ -553,24 +553,28 @@ void GraphicsContext::drawPrimitives(const PrimitiveType type, const VertexBuffe
 
 void GraphicsContext::drawRectangle(const float x, const float y, const float width, const float height, const Color &color, const TextureRegion &textureRegion)
 {
-	Vertex vertices[4]; // TODO: This should be a member variable to avoid memory allocations for each drawRectangle.
+	// Make sure we have enought vertices
+	if(m_vertices.size() < 4)
+	{
+		m_vertices.resize(4);
+	}
 
-	vertices[0].set4f(VERTEX_POSITION, x, y);
-	vertices[1].set4f(VERTEX_POSITION, x, y + height);
-	vertices[2].set4f(VERTEX_POSITION, x + width, y);
-	vertices[3].set4f(VERTEX_POSITION, x + width, y + height);
+	m_vertices[0].set2f(VERTEX_POSITION, x, y);
+	m_vertices[1].set2f(VERTEX_POSITION, x, y + height);
+	m_vertices[2].set2f(VERTEX_POSITION, x + width, y);
+	m_vertices[3].set2f(VERTEX_POSITION, x + width, y + height);
 
-	vertices[0].set4ub(VERTEX_COLOR, color.getR(), color.getG(), color.getB(), color.getA());
-	vertices[1].set4ub(VERTEX_COLOR, color.getR(), color.getG(), color.getB(), color.getA());
-	vertices[2].set4ub(VERTEX_COLOR, color.getR(), color.getG(), color.getB(), color.getA());
-	vertices[3].set4ub(VERTEX_COLOR, color.getR(), color.getG(), color.getB(), color.getA());
+	m_vertices[0].set4ub(VERTEX_COLOR, color.getR(), color.getG(), color.getB(), color.getA());
+	m_vertices[1].set4ub(VERTEX_COLOR, color.getR(), color.getG(), color.getB(), color.getA());
+	m_vertices[2].set4ub(VERTEX_COLOR, color.getR(), color.getG(), color.getB(), color.getA());
+	m_vertices[3].set4ub(VERTEX_COLOR, color.getR(), color.getG(), color.getB(), color.getA());
 
-	vertices[0].set4f(VERTEX_TEX_COORD, textureRegion.uv0.x, textureRegion.uv0.y);
-	vertices[1].set4f(VERTEX_TEX_COORD, textureRegion.uv0.x, textureRegion.uv1.y);
-	vertices[2].set4f(VERTEX_TEX_COORD, textureRegion.uv1.x, textureRegion.uv0.y);
-	vertices[3].set4f(VERTEX_TEX_COORD, textureRegion.uv1.x, textureRegion.uv1.y);
+	m_vertices[0].set2f(VERTEX_TEX_COORD, textureRegion.uv0.x, textureRegion.uv0.y);
+	m_vertices[1].set2f(VERTEX_TEX_COORD, textureRegion.uv0.x, textureRegion.uv1.y);
+	m_vertices[2].set2f(VERTEX_TEX_COORD, textureRegion.uv1.x, textureRegion.uv0.y);
+	m_vertices[3].set2f(VERTEX_TEX_COORD, textureRegion.uv1.x, textureRegion.uv1.y);
 
-	drawPrimitives(PRIMITIVE_TRIANGLE_STRIP, vertices, 4);
+	drawPrimitives(PRIMITIVE_TRIANGLE_STRIP, &m_vertices[0], 4);
 }
 
 void GraphicsContext::drawRectangle(const Vector2F &pos, const Vector2F &size, const Color &color, const TextureRegion &textureRegion)
@@ -585,23 +589,25 @@ void GraphicsContext::drawRectangle(const Rect<float> &rect, const Color &color,
 
 void GraphicsContext::drawCircle(const float x, const float y, const float radius, const uint segments, const Color &color)
 {
-	Vertex *vertices = new Vertex[segments + 2];
+	// Make sure we have enought vertices
+	if(m_vertices.size() < segments + 2)
+	{
+		m_vertices.resize(segments + 2);
+	}
 
-	vertices[0].set4f(VERTEX_POSITION, x, y);
-	vertices[0].set4ub(VERTEX_COLOR, color.getR(), color.getG(), color.getB(), color.getA());
-	vertices[0].set4f(VERTEX_TEX_COORD, 0.5f, 0.5f);
+	m_vertices[0].set2f(VERTEX_POSITION, x, y);
+	m_vertices[0].set4ub(VERTEX_COLOR, color.getR(), color.getG(), color.getB(), color.getA());
+	m_vertices[0].set2f(VERTEX_TEX_COORD, 0.5f, 0.5f);
 
 	for(uint i = 1; i < segments + 2; ++i)
 	{
-		float r = (2.0f*PI*i) / segments;
-		vertices[i].set4f(VERTEX_POSITION, x + cos(r) * radius, y + sin(r) * radius);
-		vertices[i].set4ub(VERTEX_COLOR, color.getR(), color.getG(), color.getB(), color.getA());
-		vertices[i].set4f(VERTEX_TEX_COORD, (1.0f + cos(r)) / 2.0f, (1.0f + sin(r)) / 2.0f);
+		float r = (2.0f * PI * i) / segments;
+		m_vertices[i].set2f(VERTEX_POSITION, x + cos(r) * radius, y + sin(r) * radius);
+		m_vertices[i].set4ub(VERTEX_COLOR, color.getR(), color.getG(), color.getB(), color.getA());
+		m_vertices[i].set2f(VERTEX_TEX_COORD, (1.0f + cos(r)) / 2.0f, (1.0f + sin(r)) / 2.0f);
 	}
 
-	drawPrimitives(PRIMITIVE_TRIANGLE_FAN, vertices, segments + 2);
-
-	delete[] vertices;
+	drawPrimitives(PRIMITIVE_TRIANGLE_FAN, &m_vertices[0], segments + 2);
 }
 
 void GraphicsContext::drawCircle(const Vector2F &center, const float radius, const uint segments, const Color &color)

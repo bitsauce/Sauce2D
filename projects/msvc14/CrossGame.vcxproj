@@ -28,7 +28,6 @@
     <ClCompile Include="..\..\source\Graphics\Pixmap.cpp" />
     <ClCompile Include="..\..\source\Graphics\RenderTarget.cpp" />
     <ClCompile Include="..\..\source\Graphics\Shader.cpp" />
-    <ClCompile Include="..\..\source\Graphics\Shape.cpp" />
     <ClCompile Include="..\..\source\Graphics\Sprite.cpp" />
     <ClCompile Include="..\..\source\Graphics\SpriteBatch.cpp" />
     <ClCompile Include="..\..\source\Graphics\Texture.cpp" />
@@ -65,7 +64,6 @@
     <ClInclude Include="..\..\include\CGF\Graphics\Pixmap.h" />
     <ClInclude Include="..\..\include\CGF\Graphics\RenderTarget.h" />
     <ClInclude Include="..\..\include\CGF\Graphics\Shader.h" />
-    <ClInclude Include="..\..\include\CGF\Graphics\Shape.h" />
     <ClInclude Include="..\..\include\CGF\Graphics\Sprite.h" />
     <ClInclude Include="..\..\include\CGF\Graphics\SpriteBatch.h" />
     <ClInclude Include="..\..\include\CGF\Graphics\Texture.h" />

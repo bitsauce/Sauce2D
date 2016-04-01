@@ -90,9 +90,6 @@
     <ClCompile Include="..\..\source\Graphics\Shader.cpp">
       <Filter>Source\Graphics</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\source\Graphics\Shape.cpp">
-      <Filter>Source\Graphics</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\source\Graphics\Sprite.cpp">
       <Filter>Source\Graphics</Filter>
     </ClCompile>
@@ -234,9 +231,6 @@
       <Filter>Include\CGF\Graphics</Filter>
     </ClInclude>
     <ClInclude Include="..\..\include\CGF\Graphics\Shader.h">
-      <Filter>Include\CGF\Graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\CGF\Graphics\Shape.h">
       <Filter>Include\CGF\Graphics</Filter>
     </ClInclude>
     <ClInclude Include="..\..\include\CGF\Common\ResourceManager.h">

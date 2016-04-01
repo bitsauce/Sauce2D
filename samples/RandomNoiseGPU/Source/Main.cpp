@@ -81,7 +81,7 @@ public:
 			Vertex vertices[256];
 			for(int i = 0; i < 256; i++)
 			{
-				vertices[i].set4f(VERTEX_POSITION, i, 256 - (histogram[i] / float(maxValue)) * 256);
+				vertices[i].set2f(VERTEX_POSITION, i, 256 - (histogram[i] / float(maxValue)) * 256);
 				vertices[i].set4ub(VERTEX_COLOR, 255, 0, 0, 255);
 			}
 			context->drawRectangle(0, 0, 256, 256, Color(0, 0, 0, 200));

@@ -120,7 +120,7 @@ void LineEdit::onDraw(DrawEvent *e)
 		{
 			// Use default string if line edit is empty
 			text = m_defaultText;
-			m_font->setColor(Color(127, 127, 127));
+			m_font->setColor(Color(127, 127, 127, 255));
 		}
 		else
 		{

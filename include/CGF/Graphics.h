@@ -10,7 +10,6 @@
 #include <CGF/Graphics/RenderTarget.h>
 #include <CGF/Graphics/Pixmap.h>
 #include <CGF/Graphics/Shader.h>
-#include <CGF/Graphics/Shape.h>
 #include <CGF/Graphics/Sprite.h>
 #include <CGF/Graphics/Texture.h>
 #include <CGF/Graphics/TextureAtlas.h>

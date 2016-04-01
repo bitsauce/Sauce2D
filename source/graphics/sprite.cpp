@@ -221,14 +221,14 @@ void Sprite::getVertices(Vertex *vertices, uint *indices, const uint indexOffset
 	for(int i = 0; i < 4; i++)
 	{
 		Vector2F pos = (mat * QUAD_VERTICES[i]).getXY();
-		vertices[i].set4f(VERTEX_POSITION, pos.x, pos.y);
+		vertices[i].set2f(VERTEX_POSITION, pos.x, pos.y);
 		vertices[i].set4ub(VERTEX_COLOR, m_color.getR(), m_color.getG(), m_color.getB(), m_color.getA());
 	}
 
-	vertices[0].set4f(VERTEX_TEX_COORD, m_textureRegion.uv0.x, m_textureRegion.uv0.y);
-	vertices[1].set4f(VERTEX_TEX_COORD, m_textureRegion.uv1.x, m_textureRegion.uv0.y);
-	vertices[2].set4f(VERTEX_TEX_COORD, m_textureRegion.uv1.x, m_textureRegion.uv1.y);
-	vertices[3].set4f(VERTEX_TEX_COORD, m_textureRegion.uv0.x, m_textureRegion.uv1.y);
+	vertices[0].set2f(VERTEX_TEX_COORD, m_textureRegion.uv0.x, m_textureRegion.uv0.y);
+	vertices[1].set2f(VERTEX_TEX_COORD, m_textureRegion.uv1.x, m_textureRegion.uv0.y);
+	vertices[2].set2f(VERTEX_TEX_COORD, m_textureRegion.uv1.x, m_textureRegion.uv1.y);
+	vertices[3].set2f(VERTEX_TEX_COORD, m_textureRegion.uv0.x, m_textureRegion.uv1.y);
 	
 	indices[0] = indexOffset + QUAD_INDICES[0];
 	indices[1] = indexOffset + QUAD_INDICES[1];

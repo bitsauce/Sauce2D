@@ -2,14 +2,14 @@
 #define GRAPHICS_CONTEXT_H
 
 #include <CGF/Common.h>
-#include <CGF/graphics/shader.h>
-#include <CGF/graphics/blendState.h>
-#include <CGF/graphics/textureRegion.h>
+#include <CGF/Graphics/Shader.h>
+#include <CGF/Graphics/BlendState.h>
+#include <CGF/Graphics/TextureRegion.h>
 
 BEGIN_CGF_NAMESPACE
 
-class RenderTarget2D;
 class Vertex;
+class RenderTarget2D;
 class VertexBuffer;
 class IndexBuffer;
 
@@ -301,6 +301,8 @@ private:
 	RenderTarget2D *m_renderTarget;
 	stack<Matrix4> m_transformationMatrixStack;
 	Matrix4 m_projectionMatrix;
+
+	vector<Vertex> m_vertices; // Vertices for when needed
 
 	static Resource<Shader> s_defaultShader;
 	static Resource<Texture2D> s_defaultTexture;
