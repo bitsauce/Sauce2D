@@ -77,6 +77,9 @@ void main()
 	// Get noise value
 	float value = fractalNoise1D(4, 5.0 * blockPos.x / u_Resolution.x);
 
+	// Create cliffs/overhangs
+	value -= fractalNoise2D(4, 5.0 * blockPos / u_Resolution);
+
 	// Apply gradient
 	value += 2.0 * (MOUNTAIN_BOTTOM - blockPos.y) / (MOUNTAIN_BOTTOM - MOUNTAIN_TOP) - 1.0;
 
