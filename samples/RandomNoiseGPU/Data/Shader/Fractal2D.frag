@@ -10,7 +10,7 @@ uint hash(uint seed)
     seed *= 0x27D4EB2DU;
     seed = seed ^ (seed >> 15U);
     return seed;
-}*
+}
 
 uint hash(uvec2 v)
 {
