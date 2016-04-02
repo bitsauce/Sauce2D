@@ -31,10 +31,10 @@ Console::~Console()
 	s_this = 0;
 }
 
-void Console::log(const string &msg)
+/*void Console::log(const string &msg)
 {
 	Log(msg.c_str());
-}
+}*/
 
 void Console::call_log(const char *msg, va_list args)
 {
@@ -87,13 +87,13 @@ void Console::call_log(const char *msg, va_list args)
 	delete newMsg;
 #endif
 
-void Console::Log(const char *msg, ...)
+void Console::Log(const char *function, const int line, const char *msg, ...)
 {
 	// Get argument lists
 	va_list args;
 	va_start(args, msg);
 
-	CALL_LOG("%s", msg);
+	CALL_LOG("[%s (%i)] %s", function, line, msg);
 
 	va_end(args);
 }

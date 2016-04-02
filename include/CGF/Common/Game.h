@@ -9,7 +9,7 @@
  * \param	...	Variable arguments providing additional information.
  */
 
-#define LOG(str, ...) Console::Log(str, __VA_ARGS__)
+#define LOG(str, ...) Console::Log(__FUNCTION__, __LINE__, str, __VA_ARGS__)
 
 /**
  * \def	THROW(str, ...) throw Exception(CGF_RUNTIME_EXCEPTION, str, __VA_ARGS__);
@@ -73,7 +73,7 @@ public:
 	 * \param	msg	The message.
 	 */
 
-	void log(const string &msg);
+	//void log(const string &msg);
 
 	/**
 	 * \fn	void Console::logf(const char *msg, ...);
@@ -124,7 +124,7 @@ public:
 	bool hasBuffer() const;
 	void clearBuffer();
 
-	static void Log(const char *msg, ...);
+	static void Log(const char *function, const int line, const char *msg, ...);
 
 private:
 

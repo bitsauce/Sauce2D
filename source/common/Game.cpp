@@ -87,7 +87,7 @@ int Game::run()
 
 		m_console = new Console();
 		m_fileSystem = new FileSystem();
-		if(true)//isEnabled(CGF_EXPORT_LOG))
+		if(isEnabled(CGF_EXPORT_LOG))
 		{
 			m_console->m_output = new FileWriter(util::getAbsoluteFilePath("bin:/Console.log"));
 		}
