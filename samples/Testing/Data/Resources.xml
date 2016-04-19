@@ -7,4 +7,20 @@
 		<name>Koala</name>
 		<path>Koala.jpg</path>
 	</texture>
+	<texture>
+		<name>Tile</name>
+		<path>Tile.png</path>
+	</texture>
+	<texture>
+		<name>Building</name>
+		<path>Building.png</path>
+	</texture>
+	<texture>
+		<name>UnitA</name>
+		<path>UnitA.png</path>
+	</texture>
+	<texture>
+		<name>UnitB</name>
+		<path>UnitB.png</path>
+	</texture>
 </resources>
