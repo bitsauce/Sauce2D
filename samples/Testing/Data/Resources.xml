@@ -23,4 +23,16 @@
 		<name>UnitB</name>
 		<path>UnitB.png</path>
 	</texture>
+
+	<shader>
+		<name>BuildingsShader</name>
+		<vertexFilePath>BuildingsShader.vert</vertexFilePath>
+		<fragmentFilePath>BuildingsShader.frag</fragmentFilePath>
+	</shader>
+
+	<shader>
+		<name>UnitsShader</name>
+		<vertexFilePath>UnitsShader.vert</vertexFilePath>
+		<fragmentFilePath>UnitsShader.frag</fragmentFilePath>
+	</shader>
 </resources>

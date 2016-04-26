@@ -104,10 +104,7 @@ public:
 		return m_inputButton;
 	}
 
-	Keycode getKeycode() const
-	{
-		return (Keycode) SDL_GetKeyFromScancode((SDL_Scancode) m_inputButton.getCode());
-	}
+	Keycode getKeycode() const;
 
 	Scancode getScancode() const
 	{

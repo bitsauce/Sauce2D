@@ -52,20 +52,37 @@ class Testing : public Game
 	Resource<Texture2D> tileTexture, buildingTexture, unitATexture, unitBTexture;
 	StaticVertexBuffer *tileVBO;
 	StaticIndexBuffer *tileIBO;
+	
+	RenderTarget2D *buildingsRT;
+	RenderTarget2D *unitsRT;
+
+	Resource<Shader> buildingsShader, unitShader;
+
+	bool showBuildings;
+	bool showUnits;
+	bool showTiles;
 
 public:
 	Testing() :
-		Game("Testing")
+		Game("Testing"),
+		showBuildings(true),
+		showUnits(true),
+		showTiles(true)
 	{
 		setFlags(CGF_RUN_IN_BACKGROUND);
 	}
 
 	void onStart(GameEvent *)
 	{
+		getWindow()->setSize(1280, 720);
+
 		tileTexture = getResourceManager()->get<Texture2D>("Tile");
 		buildingTexture = getResourceManager()->get<Texture2D>("Building");
 		unitATexture = getResourceManager()->get<Texture2D>("UnitA");
 		unitBTexture = getResourceManager()->get<Texture2D>("UnitB");
+
+		buildingsShader = getResourceManager()->get<Shader>("BuildingsShader");
+		unitShader = getResourceManager()->get<Shader>("UnitShader");
 
 		Vertex *vertices = new Vertex[WORLD_WIDTH * WORLD_HEIGHT * 4];
 		uint *indices = new uint[WORLD_WIDTH * WORLD_HEIGHT * 6];
@@ -104,9 +121,59 @@ public:
 		tileIBO = new StaticIndexBuffer(indices, WORLD_WIDTH * WORLD_HEIGHT * 6);
 	}
 
+	void onWindowSizeChanged(WindowEvent *e)
+	{
+		buildingsRT = new RenderTarget2D(e->getWidth(), e->getHeight());
+		unitsRT = new RenderTarget2D(e->getWidth(), e->getHeight());
+	}
+
 	void onTick(TickEvent *e)
 	{
 
+	}
+
+	void onKeyEvent(KeyEvent *e)
+	{
+		if(e->getType() != KeyEvent::DOWN) return;
+		if(e->getScancode() == CGF_SCANCODE_1) showBuildings = !showBuildings;
+		else if(e->getScancode() == CGF_SCANCODE_2) showUnits = !showUnits;
+		else if(e->getScancode() == CGF_SCANCODE_3) showTiles = !showTiles;
+	}
+
+	void drawBuildings(GraphicsContext *context)
+	{
+		context->setRenderTarget(buildingsRT);
+
+		if(getInputManager()->getKeyState(CGF_SCANCODE_Q)) context->setShader(buildingsShader);
+
+		// Draw buildings
+		{
+			int y = 3;
+			int x = 3;
+
+			float xf = x + (y % 2 == 0 ? 0.0f : 0.5f);
+			float yf = y * 0.5f;
+			context->setTexture(buildingTexture);
+			buildingsShader->setSampler2D("u_Texture", buildingTexture);
+			context->drawRectangle(xf * TILE_WIDTH, yf * TILE_HEIGHT, TILE_WIDTH, TILE_HEIGHT * 2);
+		}
+
+		{
+			int y = 3;
+			int x = 5;
+
+			float xf = x + (y % 2 == 0 ? 0.0f : 0.5f);
+			float yf = y * 0.5f;
+			context->setTexture(buildingTexture);
+			context->drawRectangle(xf * TILE_WIDTH, yf * TILE_HEIGHT, TILE_WIDTH, TILE_HEIGHT * 2);
+		}
+
+		context->setShader(0);
+
+		context->setRenderTarget(0);
+
+		context->setTexture(buildingsRT->getTexture());
+		context->drawRectangle(0, 0, buildingsRT->getWidth(), buildingsRT->getHeight());
 	}
 
 	void onDraw(DrawEvent *e)
@@ -121,29 +188,12 @@ public:
 		context->drawIndexedPrimitives(GraphicsContext::PRIMITIVE_TRIANGLES, tileVBO, tileIBO);
 		context->popMatrix();
 
-		// Draw building
+		if(showBuildings)
 		{
-			int y = 3;
-			int x = 3;
-
-			float xf = x + (y % 2 == 0 ? 0.0f : 0.5f);
-			float yf = y * 0.5f;
-			context->setTexture(buildingTexture);
-			context->drawRectangle(xf*TILE_WIDTH, yf*TILE_HEIGHT, TILE_WIDTH, TILE_HEIGHT * 2);
-		}
-
-		{
-			int y = 3;
-			int x = 5;
-
-			float xf = x + (y % 2 == 0 ? 0.0f : 0.5f);
-			float yf = y * 0.5f;
-			context->setTexture(buildingTexture);
-			context->drawRectangle(xf*TILE_WIDTH, yf*TILE_HEIGHT, TILE_WIDTH, TILE_HEIGHT * 2);
+			drawBuildings(e->getGraphicsContext());
 		}
 
 		// Draw units
-
 		{
 			int y = 1;
 			int x = 3;
