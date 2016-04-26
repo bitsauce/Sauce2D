@@ -27,6 +27,11 @@ Exception::Exception(RetCode code, const char * msg, ...) :
 	va_end(args);
 }
 
+Keycode KeyEvent::getKeycode() const
+{
+	return (Keycode) SDL_GetKeyFromScancode((SDL_Scancode) m_inputButton.getCode());
+}
+
 Game *Game::s_game = 0;
 
 // TODO: Might want to do some validation check on the name
