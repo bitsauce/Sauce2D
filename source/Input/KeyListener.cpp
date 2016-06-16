@@ -7,9 +7,9 @@
 //				Originally written by Marcus Loo Vergara (aka. Bitsauce)
 //									2011-2015 (C)
 
-#include <CGF/Common.h>
+#include <Sauce/Common.h>
 
-BEGIN_CGF_NAMESPACE
+BEGIN_SAUCE_NAMESPACE
 
 /*list<KeyListener*> KeyListener::s_keyListeners;
 
@@ -25,7 +25,7 @@ KeyListener::~KeyListener()
 
 void KeyListener::callCharEvent(const uint c)
 {
-	if(Engine::isEnabled(CGF_BLOCK_BACKGROUND_INPUT) && !Window::hasFocus()) return;
+	if(Engine::isEnabled(SAUCE_BLOCK_BACKGROUND_INPUT) && !Window::hasFocus()) return;
 	for(list<KeyListener*>::iterator itr = s_keyListeners.begin(); itr != s_keyListeners.end(); ++itr)
 	{
 		(*itr)->charEvent(c);
@@ -34,11 +34,11 @@ void KeyListener::callCharEvent(const uint c)
 
 void KeyListener::callKeyEvent(const KeyEvent & event)
 {
-	if(Engine::isEnabled(CGF_BLOCK_BACKGROUND_INPUT) && !Window::hasFocus()) return;
+	if(Engine::isEnabled(SAUCE_BLOCK_BACKGROUND_INPUT) && !Window::hasFocus()) return;
 	for(list<KeyListener*>::iterator itr = s_keyListeners.begin(); itr != s_keyListeners.end(); ++itr)
 	{
 		(*itr)->keyEvent(event);
 	}
 }*/
 
-END_CGF_NAMESPACE
+END_SAUCE_NAMESPACE

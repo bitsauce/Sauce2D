@@ -7,12 +7,12 @@
 //				Originally written by Marcus Loo Vergara (aka. Bitsauce)
 //									2011-2015 (C)
 
-#include <CGF/Common.h>
-#include <CGF/graphics.h>
+#include <Sauce/Common.h>
+#include <Sauce/graphics.h>
 
 #include "..\3rdparty\SDL_image\SDL_image.h"
 
-BEGIN_CGF_NAMESPACE
+BEGIN_SAUCE_NAMESPACE
 
 GLint toInternalFormat(PixelFormat::Components fmt, PixelFormat::DataType dt)
 {
@@ -340,4 +340,4 @@ Texture2D::Texture2D(ResourceDesc *desc_)
 	}
 }
 
-END_CGF_NAMESPACE
+END_SAUCE_NAMESPACE

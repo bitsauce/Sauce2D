@@ -7,10 +7,10 @@
 //				Originally written by Marcus Loo Vergara (aka. Bitsauce)
 //									2011-2015 (C)
 
-#include <CGF/Common.h>
-#include <CGF/graphics.h>
+#include <Sauce/Common.h>
+#include <Sauce/graphics.h>
 
-BEGIN_CGF_NAMESPACE
+BEGIN_SAUCE_NAMESPACE
 
 //--------------------------------------------------------------------
 // Window
@@ -251,7 +251,7 @@ bool Window::handleEvent(SDL_Event &event, Game *game)
 
 			{
 				Vector2I position = game->getInputManager()->getPosition();
-				MouseEvent e(MouseEvent::MOVE, position.x, position.y, CGF_MOUSE_BUTTON_NONE, 0, 0);
+				MouseEvent e(MouseEvent::MOVE, position.x, position.y, SAUCE_MOUSE_BUTTON_NONE, 0, 0);
 				game->onEvent(&e);
 			}
 		}
@@ -260,4 +260,4 @@ bool Window::handleEvent(SDL_Event &event, Game *game)
 	return false;
 }
 
-END_CGF_NAMESPACE
+END_SAUCE_NAMESPACE

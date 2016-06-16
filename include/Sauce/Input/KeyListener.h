@@ -1,0 +1,11 @@
+#ifndef SAUCE_KEY_LISTENER_H
+#define SAUCE_KEY_LISTENER_H
+
+#include <Sauce/config.h>
+
+BEGIN_SAUCE_NAMESPACE
+
+
+END_SAUCE_NAMESPACE
+
+#endif // SAUCE_KEY_LISTENER_H

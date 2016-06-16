@@ -1,7 +1,7 @@
 
-#include <CGF/CGF.h>
+#include <Sauce/Sauce.h>
 
-using namespace cgf;
+using namespace sauce;
 
 class ShadersGame : public Game
 {

@@ -22,11 +22,11 @@ public:
 		{
 			switch(e->getKeycode())
 			{
-				case CGF_KEY_1: getWindow()->setSize(800, 600); break;
-				case CGF_KEY_2: getWindow()->setSize(600, 800); break;
-				case CGF_KEY_3: getWindow()->setSize(1024, 1024); break;
-				case CGF_KEY_4: getWindow()->setSize(1280, 720); break;
-				case CGF_KEY_5: getWindow()->setSize(1920, 1080); break;
+				case SAUCE_KEY_1: getWindow()->setSize(800, 600); break;
+				case SAUCE_KEY_2: getWindow()->setSize(600, 800); break;
+				case SAUCE_KEY_3: getWindow()->setSize(1024, 1024); break;
+				case SAUCE_KEY_4: getWindow()->setSize(1280, 720); break;
+				case SAUCE_KEY_5: getWindow()->setSize(1920, 1080); break;
 			}
 		}
 		Game::onKeyDown(e);

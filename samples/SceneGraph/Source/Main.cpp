@@ -1,6 +1,6 @@
-#include <CGF/CGF.h>
+#include <Sauce/Sauce.h>
 
-using namespace cgf;
+using namespace sauce;
 
 /**
  * This example construts a simple scene graph and outputs two Graphviz (.gv) files.

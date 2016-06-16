@@ -7,9 +7,9 @@
 //				Originally written by Marcus Loo Vergara (aka. Bitsauce)
 //									2011-2015 (C)
 
-#include <CGF/Common.h>
+#include <Sauce/Common.h>
 
-BEGIN_CGF_NAMESPACE
+BEGIN_SAUCE_NAMESPACE
 
 Console *Console::s_this = nullptr;
 
@@ -59,7 +59,7 @@ void Console::call_log(const char *msg, va_list args)
 #endif
 	
 	// Append message to log file
-	if(m_engine->isEnabled(CGF_EXPORT_LOG))
+	if(m_engine->isEnabled(SAUCE_EXPORT_LOG))
 	{
 		m_output->append(out);
 		m_output->append("\n");
@@ -130,4 +130,4 @@ void Console::clearBuffer()
 	m_buffer.clear();
 }
 
-END_CGF_NAMESPACE
+END_SAUCE_NAMESPACE

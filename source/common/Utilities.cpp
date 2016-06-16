@@ -7,11 +7,11 @@
 //				Originally written by Marcus Loo Vergara (aka. Bitsauce)
 //									2011-2015 (C)
 
-#include <CGF/Common.h>
+#include <Sauce/Common.h>
 #include <sstream>
 #include <fstream>
 
-BEGIN_CGF_NAMESPACE
+BEGIN_SAUCE_NAMESPACE
 
 vector<string> util::splitString(const string& src, const string& delim)
 {
@@ -346,4 +346,4 @@ int util::encodeUTF16(unsigned int value, char *outEncodedBuffer, unsigned int *
 	}
 }
 
-END_CGF_NAMESPACE
+END_SAUCE_NAMESPACE

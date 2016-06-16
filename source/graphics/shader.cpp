@@ -7,14 +7,14 @@
 //				Originally written by Marcus Loo Vergara (aka. Bitsauce)
 //									2011-2015 (C)
 
-#include <CGF/Common.h>
-#include <CGF/graphics.h>
+#include <Sauce/Common.h>
+#include <Sauce/graphics.h>
 
 const int INT_SIZE = sizeof(GLint);
 const int FLOAT_SIZE = sizeof(GLfloat);
 const int PTR_SIZE = sizeof(void*);
 
-BEGIN_CGF_NAMESPACE
+BEGIN_SAUCE_NAMESPACE
 
 Shader::Shader(const string &vertexSource, const string &fragmentSource)
 {
@@ -583,4 +583,4 @@ void Shader::exportAssembly(const string & fileName)
 	delete[] binary;
 }
 
-END_CGF_NAMESPACE
+END_SAUCE_NAMESPACE

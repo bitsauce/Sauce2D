@@ -1,6 +1,6 @@
-#include <CGF/graphics.h>
+#include <Sauce/graphics.h>
 
-BEGIN_CGF_NAMESPACE
+BEGIN_SAUCE_NAMESPACE
 
 class FontLoader
 {
@@ -1128,4 +1128,4 @@ void FontLoaderBinaryFormat::ReadKerningPairsBlock(int size)
 	}
 }
 
-END_CGF_NAMESPACE
+END_SAUCE_NAMESPACE

@@ -7,10 +7,10 @@
 //				Originally written by Marcus Loo Vergara (aka. Bitsauce)
 //									2011-2015 (C)
 
-#include <CGF/Common.h>
-#include <CGF/graphics.h>
+#include <Sauce/Common.h>
+#include <Sauce/graphics.h>
 
-BEGIN_CGF_NAMESPACE
+BEGIN_SAUCE_NAMESPACE
 
 Sprite::Sprite(Resource<Texture2D> texture, const Rect<float> &rectangle, const Vector2F &origin, const float angle, const TextureRegion &region, const Color &color, const float depth, const Vector2F scale) :
 	m_texture(texture),
@@ -238,4 +238,4 @@ void Sprite::getVertices(Vertex *vertices, uint *indices, const uint indexOffset
 	indices[5] = indexOffset + QUAD_INDICES[5];
 }
 
-END_CGF_NAMESPACE
+END_SAUCE_NAMESPACE

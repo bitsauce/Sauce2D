@@ -1,6 +1,6 @@
-#include <CGF/graphics.h>
+#include <Sauce/graphics.h>
 
-BEGIN_CGF_NAMESPACE
+BEGIN_SAUCE_NAMESPACE
 
 // Default shader. Used when no shader is set.
 Resource<Shader> GraphicsContext::s_defaultShader = 0;
@@ -615,4 +615,4 @@ void GraphicsContext::drawCircle(const Vector2F &center, const float radius, con
 	drawCircle(center.x, center.y, radius, segments, color);
 }
 
-END_CGF_NAMESPACE
+END_SAUCE_NAMESPACE

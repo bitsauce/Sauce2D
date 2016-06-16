@@ -7,9 +7,9 @@
 //				Originally written by Marcus Loo Vergara (aka. Bitsauce)
 //									2011-2015 (C)
 
-#include <CGF/Common.h>
+#include <Sauce/Common.h>
 
-BEGIN_CGF_NAMESPACE
+BEGIN_SAUCE_NAMESPACE
 
 /*list<MouseListener*> MouseListener::s_mouseListeners;
 
@@ -25,11 +25,11 @@ MouseListener::~MouseListener()
 
 void MouseListener::callMouseWheelEvent(const int delta)
 {
-	if(Engine::isEnabled(CGF_BLOCK_BACKGROUND_INPUT) && !Window::hasFocus()) return;
+	if(Engine::isEnabled(SAUCE_BLOCK_BACKGROUND_INPUT) && !Window::hasFocus()) return;
 	for(list<MouseListener*>::iterator itr = s_mouseListeners.begin(); itr != s_mouseListeners.end(); ++itr)
 	{
 		(*itr)->mouseWheelEvent(delta);
 	}
 }*/
 
-END_CGF_NAMESPACE
+END_SAUCE_NAMESPACE

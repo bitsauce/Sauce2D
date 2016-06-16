@@ -1,11 +1,11 @@
 /* Main CrossGame header. Includes all the framework
    classes and various STL classes. */
-#include <CGF/CGF.h>
+#include <Sauce/Sauce.h>
 
 /* This just saves us some time as we don't
    have to type cg::* in front of every CG
    class/enum/etc */
-using namespace cgf;
+using namespace sauce;
 
 /* This is our FullScreenGame class.
    It inherits from cgf::Game, which is the game managing class.

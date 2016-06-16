@@ -7,10 +7,10 @@
 //				Originally written by Marcus Loo Vergara (aka. Bitsauce)
 //									2011-2015 (C)
 
-#include <CGF/Common.h>
-#include <CGF/graphics.h>
+#include <Sauce/Common.h>
+#include <Sauce/graphics.h>
 
-BEGIN_CGF_NAMESPACE
+BEGIN_SAUCE_NAMESPACE
 
 /*********************************************************************
 **	Vertex format													**
@@ -46,16 +46,16 @@ void VertexFormat::set(const VertexAttribute attrib, const int size, const DataT
 				m_attributes[at].offset = m_vertexByteSize;
 				switch(getDataType(at))
 				{
-				case CGF_FLOAT:
+				case SAUCE_FLOAT:
 					m_vertexByteSize += sizeof(float)*getElementCount(at); break;
-				case CGF_UINT:
-				case CGF_INT:
+				case SAUCE_UINT:
+				case SAUCE_INT:
 					m_vertexByteSize += sizeof(int)*getElementCount(at); break;
-				case CGF_USHORT:
-				case CGF_SHORT:
+				case SAUCE_USHORT:
+				case SAUCE_SHORT:
 					m_vertexByteSize += sizeof(short)*getElementCount(at); break;
-				case CGF_UBYTE:
-				case CGF_BYTE:
+				case SAUCE_UBYTE:
+				case SAUCE_BYTE:
 					m_vertexByteSize += sizeof(char)*getElementCount(at); break;
 				}
 			}
@@ -578,19 +578,19 @@ void Vertex::print()
 			{
 				switch(m_format.getDataType(attrib))
 				{
-				case CGF_FLOAT:
+				case SAUCE_FLOAT:
 					ss << ((float*)(m_data + m_format.getAttributeOffset(attrib)))[j];
 					break;
-				case CGF_UINT:
-				case CGF_INT:
+				case SAUCE_UINT:
+				case SAUCE_INT:
 					ss << ((int*)(m_data + m_format.getAttributeOffset(attrib)))[j];
 					break;
-				case CGF_USHORT:
-				case CGF_SHORT:
+				case SAUCE_USHORT:
+				case SAUCE_SHORT:
 					ss << ((short*)(m_data + m_format.getAttributeOffset(attrib)))[j];
 					break;
-				case CGF_UBYTE:
-				case CGF_BYTE:
+				case SAUCE_UBYTE:
+				case SAUCE_BYTE:
 					ss << (int)((char*)(m_data + m_format.getAttributeOffset(attrib)))[j];
 					break;
 				}
@@ -601,4 +601,4 @@ void Vertex::print()
 	}
 }
 
-END_CGF_NAMESPACE
+END_SAUCE_NAMESPACE

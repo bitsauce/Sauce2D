@@ -7,10 +7,10 @@
 //				Originally written by Marcus Loo Vergara (aka. Bitsauce)
 //									2011-2015 (C)
 
-#include <CGF/Common.h>
-#include <CGF/graphics.h>
+#include <Sauce/Common.h>
+#include <Sauce/graphics.h>
 
-BEGIN_CGF_NAMESPACE
+BEGIN_SAUCE_NAMESPACE
 
 Viewport::Viewport(const Rect<int> &view)
 {
@@ -25,4 +25,4 @@ void Viewport::makeCurrent() const
 	//Gfx::setViewport(this);
 }
 
-END_CGF_NAMESPACE
+END_SAUCE_NAMESPACE

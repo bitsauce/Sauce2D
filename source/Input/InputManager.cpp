@@ -1,6 +1,6 @@
-#include <CGF/Input.h>
+#include <Sauce/Input.h>
 
-BEGIN_CGF_NAMESPACE
+BEGIN_SAUCE_NAMESPACE
 
 Keybind::Keybind() :
 	m_inputButton(),
@@ -24,4 +24,4 @@ void Keybind::setKeycode(const Keycode keycode)
 	m_scancode = (Scancode) SDL_GetScancodeFromKey((SDL_Keycode) keycode);
 }*/
 
-END_CGF_NAMESPACE
+END_SAUCE_NAMESPACE

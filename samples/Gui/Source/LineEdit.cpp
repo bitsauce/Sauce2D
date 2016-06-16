@@ -323,7 +323,7 @@ void LineEdit::onKeyEvent(KeyEvent *e)
 	switch(e->getKeycode())
 	{
 		// Enter
-		case CGF_KEY_RETURN:
+		case SAUCE_KEY_RETURN:
 		{
 			// Call accept function
 			if(m_acceptFunc)
@@ -334,7 +334,7 @@ void LineEdit::onKeyEvent(KeyEvent *e)
 		}
 
 		// Backspace
-		case CGF_KEY_BACKSPACE:
+		case SAUCE_KEY_BACKSPACE:
 		{
 			if(!modCtrl)
 			{
@@ -369,7 +369,7 @@ void LineEdit::onKeyEvent(KeyEvent *e)
 		}
 
 		// Delete
-		case CGF_KEY_DELETE:
+		case SAUCE_KEY_DELETE:
 		{
 			if(!modCtrl)
 			{
@@ -403,7 +403,7 @@ void LineEdit::onKeyEvent(KeyEvent *e)
 		break;
 
 		// Left cursor key
-		case CGF_KEY_LEFT:
+		case SAUCE_KEY_LEFT:
 		{
 			if(modCtrl)
 			{
@@ -422,7 +422,7 @@ void LineEdit::onKeyEvent(KeyEvent *e)
 		break;
 
 		// Right cursor key
-		case CGF_KEY_RIGHT:
+		case SAUCE_KEY_RIGHT:
 		{
 			if(modCtrl)
 			{
@@ -441,20 +441,20 @@ void LineEdit::onKeyEvent(KeyEvent *e)
 		break;
 
 		// Home key
-		case CGF_KEY_HOME:
+		case SAUCE_KEY_HOME:
 		{
 			state->cursor.setPosition(0, modShift);
 		}
 		break;
 
 		// End key
-		case CGF_KEY_END:
+		case SAUCE_KEY_END:
 		{
 			state->cursor.setPosition(state->text.size(), modShift);
 		}
 		break;
 
-		case CGF_KEY_A:
+		case SAUCE_KEY_A:
 		{
 			if(modCtrl)
 			{
@@ -465,8 +465,8 @@ void LineEdit::onKeyEvent(KeyEvent *e)
 		break;
 
 		// Cut and copy
-		case CGF_KEY_X:
-		case CGF_KEY_C:
+		case SAUCE_KEY_X:
+		case SAUCE_KEY_C:
 		{
 			if(modCtrl)
 			{
@@ -475,7 +475,7 @@ void LineEdit::onKeyEvent(KeyEvent *e)
 					// Put selected text on clipboard
 					e->getInputManager()->setClipboardString(state->text.substr(state->cursor.getSelectionStart(), state->cursor.getSelectionLength()));
 
-					if(e->getKeycode() == CGF_KEY_X)
+					if(e->getKeycode() == SAUCE_KEY_X)
 					{
 						// For cut we remove the selected text afterwards
 						state = removeAt(state->cursor.getSelectionStart(), state->cursor.getSelectionLength());
@@ -487,7 +487,7 @@ void LineEdit::onKeyEvent(KeyEvent *e)
 		break;
 
 		// Paste
-		case CGF_KEY_V:
+		case SAUCE_KEY_V:
 		{
 			if(modCtrl)
 			{
@@ -513,7 +513,7 @@ void LineEdit::onKeyEvent(KeyEvent *e)
 		break;
 
 		// Undo
-		case CGF_KEY_Z:
+		case SAUCE_KEY_Z:
 		{
 			if(modShift)
 			{
@@ -532,7 +532,7 @@ void LineEdit::onKeyEvent(KeyEvent *e)
 		break;
 
 		// Redo
-		case CGF_KEY_Y:
+		case SAUCE_KEY_Y:
 		{
 			redo:
 			if(modCtrl)

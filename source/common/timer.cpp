@@ -7,9 +7,9 @@
 //				Originally written by Marcus Loo Vergara (aka. Bitsauce)
 //									2011-2015 (C)
 
-#include <CGF/Common.h>
+#include <Sauce/Common.h>
 
-BEGIN_CGF_NAMESPACE
+BEGIN_SAUCE_NAMESPACE
 
 Timer::Timer() :
 	m_running(false)
@@ -70,4 +70,4 @@ float SimpleTimer::getElapsedTime() const
 	return float(clock() - m_startTick) / float(CLOCKS_PER_SEC);
 }
 
-END_CGF_NAMESPACE
+END_SAUCE_NAMESPACE

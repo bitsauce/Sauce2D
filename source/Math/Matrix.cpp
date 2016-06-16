@@ -8,7 +8,7 @@
 //									2011-2015 (C)
 // Inspired by: http://www.songho.ca/opengl/gl_matrix.html
 
-#include <CGF/math.h>
+#include <Sauce/math.h>
 
 const float DEG2RAD = 3.141593f / 180;
 

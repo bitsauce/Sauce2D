@@ -8,9 +8,9 @@
 //									2011-2015 (C)
 // Inspired by: http://www.codeproject.com/Articles/210979/Fast-optimizing-rectangle-packing-algorithm-for-bu (i think)
 
-#include <CGF/math.h>
+#include <Sauce/math.h>
 
-BEGIN_CGF_NAMESPACE
+BEGIN_SAUCE_NAMESPACE
 
 bool heightSort(RectanglePacker::Rect i, RectanglePacker::Rect j)
 {
@@ -136,5 +136,5 @@ void RectanglePacker::clearRects()
 	m_rectangles.clear();
 }
 
-END_CGF_NAMESPACE
+END_SAUCE_NAMESPACE
  

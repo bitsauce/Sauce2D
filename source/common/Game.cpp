@@ -7,12 +7,12 @@
 //				Originally written by Marcus Loo Vergara (aka. Bitsauce)
 //									2011-2015 (C)
 
-#include <CGF/Common.h>
-#include <CGF/Graphics.h>
-#include <CGF/Input.h>
-#include <CGF/Audio.h>
+#include <Sauce/Common.h>
+#include <Sauce/Graphics.h>
+#include <Sauce/Input.h>
+#include <Sauce/Audio.h>
 
-BEGIN_CGF_NAMESPACE
+BEGIN_SAUCE_NAMESPACE
 
 Exception::Exception(RetCode code, const char * msg, ...) :
 	m_errorCode(code)
@@ -78,7 +78,7 @@ int Game::run()
 
 		// TODO: Implement an engine config file
 		// (DefaultConfig.ini for instance). It should
-		// set the value of CGF_EXPORT_LOG and CGF_VERBOSE, etc.
+		// set the value of SAUCE_EXPORT_LOG and SAUCE_VERBOSE, etc.
 		//
 		// ConfigFile default("config:/DefaultConfig.ini");
 		// default.getValue("Window/ResolutionX");
@@ -92,7 +92,7 @@ int Game::run()
 
 		m_console = new Console();
 		m_fileSystem = new FileSystem();
-		if(isEnabled(CGF_EXPORT_LOG))
+		if(isEnabled(SAUCE_EXPORT_LOG))
 		{
 			m_console->m_output = new FileWriter(util::getAbsoluteFilePath("bin:/Console.log"));
 		}
@@ -136,7 +136,7 @@ int Game::run()
 
 		// Setup default vertex format
 		VertexFormat::s_vct.set(VERTEX_POSITION, 2);
-		VertexFormat::s_vct.set(VERTEX_COLOR, 4, CGF_UBYTE);
+		VertexFormat::s_vct.set(VERTEX_COLOR, 4, SAUCE_UBYTE);
 		VertexFormat::s_vct.set(VERTEX_TEX_COORD, 2);
 
 		// Setup viewport
@@ -309,7 +309,7 @@ int Game::run()
 					{
 						m_inputManager->m_x = event.motion.x;
 						m_inputManager->m_y = event.motion.y;
-						MouseEvent e(MouseEvent::MOVE, event.motion.x, event.motion.y, CGF_MOUSE_BUTTON_NONE, 0, 0);
+						MouseEvent e(MouseEvent::MOVE, event.motion.x, event.motion.y, SAUCE_MOUSE_BUTTON_NONE, 0, 0);
 						onEvent(&e);
 					}
 					break;
@@ -343,7 +343,7 @@ int Game::run()
 					case SDL_MOUSEWHEEL:
 					{
 						// Scroll event
-						MouseEvent e(MouseEvent::WHEEL, m_inputManager->m_x, m_inputManager->m_y, CGF_MOUSE_BUTTON_NONE, event.wheel.x, event.wheel.y);
+						MouseEvent e(MouseEvent::WHEEL, m_inputManager->m_x, m_inputManager->m_y, SAUCE_MOUSE_BUTTON_NONE, event.wheel.x, event.wheel.y);
 						onEvent(&e);
 					}
 					break;
@@ -351,7 +351,7 @@ int Game::run()
 			}
 
 			// Check if game is paused or out of focus
-			if(m_paused || (!isEnabled(CGF_RUN_IN_BACKGROUND) && !mainWindow->checkFlags(SDL_WINDOW_INPUT_FOCUS)))
+			if(m_paused || (!isEnabled(SAUCE_RUN_IN_BACKGROUND) && !mainWindow->checkFlags(SDL_WINDOW_INPUT_FOCUS)))
 			{
 				continue;
 			}
@@ -436,9 +436,9 @@ gameloopend:
 	catch(...)
 	{
 		LOG("Unknown exception occured.");
-		return CGF_UNKNOWN_EXCEPTION;
+		return SAUCE_UNKNOWN_EXCEPTION;
 	}
-	return CGF_OK;
+	return SAUCE_OK;
 }
 
 void Game::end()
@@ -482,4 +482,4 @@ Window *Game::getWindow(const Sint32 id) const
 	return 0;
 }
 
-END_CGF_NAMESPACE
+END_SAUCE_NAMESPACE

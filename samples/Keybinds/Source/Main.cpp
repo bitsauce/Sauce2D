@@ -1,6 +1,6 @@
-#include <CGF/CGF.h>
+#include <Sauce/Sauce.h>
 
-using namespace cgf;
+using namespace sauce;
 
 class Keybinds : public Game
 {
@@ -21,11 +21,11 @@ public:
 
 		// Create a keybind which will call the function
 		// KeyFunc1 when the '1' key is pressed.
-		m_keybind = Keybind(CGF_KEY_1, bind(&Keybinds::keyFunc1, this, placeholders::_1));
+		m_keybind = Keybind(SAUCE_KEY_1, bind(&Keybinds::keyFunc1, this, placeholders::_1));
 		input->addKeybind(&m_keybind); // Add it to the list of keybinds
 
 		// It is also posible to bind mouse buttons to functions
-		m_shootKeybind = Keybind(CGF_MOUSE_BUTTON_LEFT, bind(&Keybinds::shoot, this, placeholders::_1));
+		m_shootKeybind = Keybind(SAUCE_MOUSE_BUTTON_LEFT, bind(&Keybinds::shoot, this, placeholders::_1));
 		input->addKeybind(&m_shootKeybind);
 
 		// Create an input context.
@@ -35,12 +35,12 @@ public:
 
 		// Create a keybind by mapping the keyword 
 		// "jump" to the SPACE key.
-		m_jumpKeybind = Keybind(CGF_KEY_SPACE, bind(&Keybinds::jump, this, placeholders::_1));
+		m_jumpKeybind = Keybind(SAUCE_KEY_SPACE, bind(&Keybinds::jump, this, placeholders::_1));
 		context->addKeybind("jump", &m_jumpKeybind); // Add keybind to input context
 
 													 // Create run keybind which has no funtion mapped to it.
 													 // We can stil use this keybind with context->getKeyState("run").
-		m_runKeybind = Keybind(CGF_KEY_LSHIFT);
+		m_runKeybind = Keybind(SAUCE_KEY_LSHIFT);
 		context->addKeybind("run", &m_runKeybind);
 
 		// Enable this context
@@ -64,7 +64,7 @@ public:
 				LOG("1 released");
 				LOG("Button set to 2");
 				m_keybind.setFunction(bind(&Keybinds::keyFunc2, this, placeholders::_1));
-				m_keybind.setInputButton(CGF_KEY_2);
+				m_keybind.setInputButton(SAUCE_KEY_2);
 				break;
 		}
 	}
@@ -79,7 +79,7 @@ public:
 				LOG("2 released");
 				LOG("Button set to 1");
 				m_keybind.setFunction(bind(&Keybinds::keyFunc1, this, placeholders::_1));
-				m_keybind.setInputButton(CGF_KEY_1);
+				m_keybind.setInputButton(SAUCE_KEY_1);
 				break;
 		}
 	}
@@ -106,7 +106,7 @@ public:
 
 	void onKeyEvent(KeyEvent *e)
 	{
-		if(e->getKeycode() == CGF_KEY_C)
+		if(e->getKeycode() == SAUCE_KEY_C)
 		{
 			switch(e->getType())
 			{
@@ -120,7 +120,7 @@ public:
 	void onTick(TickEvent *e)
 	{
 		InputManager *input = getInputManager();
-		if(input->getKeyState(CGF_KEY_A))
+		if(input->getKeyState(SAUCE_KEY_A))
 		{
 			LOG("onTick(): A pressed");
 		}

@@ -1,6 +1,6 @@
-#include <CGF/CGF.h>
+#include <Sauce/Sauce.h>
 
-using namespace cgf;
+using namespace sauce;
 
 // This tests:
 // Loading texture from image file
@@ -69,7 +69,7 @@ public:
 		showUnits(true),
 		showTiles(true)
 	{
-		setFlags(CGF_RUN_IN_BACKGROUND);
+		setFlags(SAUCE_RUN_IN_BACKGROUND);
 	}
 
 	void onStart(GameEvent *)
@@ -135,16 +135,16 @@ public:
 	void onKeyEvent(KeyEvent *e)
 	{
 		if(e->getType() != KeyEvent::DOWN) return;
-		if(e->getScancode() == CGF_SCANCODE_1) showBuildings = !showBuildings;
-		else if(e->getScancode() == CGF_SCANCODE_2) showUnits = !showUnits;
-		else if(e->getScancode() == CGF_SCANCODE_3) showTiles = !showTiles;
+		if(e->getScancode() == SAUCE_SCANCODE_1) showBuildings = !showBuildings;
+		else if(e->getScancode() == SAUCE_SCANCODE_2) showUnits = !showUnits;
+		else if(e->getScancode() == SAUCE_SCANCODE_3) showTiles = !showTiles;
 	}
 
 	void drawBuildings(GraphicsContext *context)
 	{
 		context->setRenderTarget(buildingsRT);
 
-		if(getInputManager()->getKeyState(CGF_SCANCODE_Q)) context->setShader(buildingsShader);
+		if(getInputManager()->getKeyState(SAUCE_SCANCODE_Q)) context->setShader(buildingsShader);
 
 		// Draw buildings
 		{
@@ -222,13 +222,13 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, INT)
 	// Testing
 	{
 		Testing game;
-		if(game.run() != CGF_OK) return EXIT_FAILURE;
+		if(game.run() != SAUCE_OK) return EXIT_FAILURE;
 	}
 
 	// DrawTexturedQuad
 	{
 		DrawTexturedQuad game;
-		if(game.run() != CGF_OK) return EXIT_FAILURE;
+		if(game.run() != SAUCE_OK) return EXIT_FAILURE;
 	}
 
 	return EXIT_SUCCESS;

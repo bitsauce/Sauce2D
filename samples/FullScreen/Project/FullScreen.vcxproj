@@ -60,7 +60,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>
       </AdditionalLibraryDirectories>
-      <AdditionalDependencies>$(SolutionDir)..\..\build\$(Platform)\$(Configuration)\CrossGame.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>$(SolutionDir)..\..\build\$(Platform)\$(Configuration)\$(SolutionName).lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
       <Command>copy "$(SolutionDir)..\..\build\$(Platform)\$(Configuration)\*.dll" "$(TargetDir)"</Command>
@@ -81,7 +81,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>$(SolutionDir)..\..\build\$(Platform)\$(Configuration)\CrossGame.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>$(SolutionDir)..\..\build\$(Platform)\$(Configuration)\$(SolutionName).lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
       <Command>copy "$(SolutionDir)..\..\build\$(Platform)\$(Configuration)\*.dll" "$(TargetDir)"</Command>

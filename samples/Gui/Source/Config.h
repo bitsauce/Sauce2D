@@ -1,7 +1,7 @@
 #ifndef CONFIG_H
 #define CONFIG_H
 
-#include <CGF/CGF.h>
-using namespace cgf;
+#include <Sauce/Sauce.h>
+using namespace sauce;
 
 #endif // CONFIG_H

@@ -1,6 +1,6 @@
-#include <CGF/graphics.h>
+#include <Sauce/graphics.h>
 
-BEGIN_CGF_NAMESPACE
+BEGIN_SAUCE_NAMESPACE
 
 BlendState::BlendState(const Preset preset)
 {
@@ -42,4 +42,4 @@ BlendState::BlendState(const BlendFactor csrc, const BlendFactor cdst, const Ble
 {
 }
 
-END_CGF_NAMESPACE
+END_SAUCE_NAMESPACE

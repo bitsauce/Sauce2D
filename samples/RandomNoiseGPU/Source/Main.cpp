@@ -1,6 +1,6 @@
-#include <CGF/CGF.h>
+#include <Sauce/Sauce.h>
 
-using namespace cgf;
+using namespace sauce;
 
 class RandomNoiseGPU : public Game
 {
@@ -13,7 +13,7 @@ public:
 	RandomNoiseGPU() :
 		Game("RandomNoiseGPU")
 	{
-		setFlags(CGF_EXPORT_LOG);
+		setFlags(SAUCE_EXPORT_LOG);
 	}
 
 	void onStart(GameEvent *e)
@@ -58,7 +58,7 @@ public:
 		context->drawRectangle(Vector2F(0, 0), getWindow()->getSize());
 		context->setTexture(0);
 
-		if(getInputManager()->getKeyState(CGF_KEY_SPACE))
+		if(getInputManager()->getKeyState(SAUCE_KEY_SPACE))
 		{
 			Pixmap pixmap = m_renderTarget->getTexture()->getPixmap();
 			uchar data[4];

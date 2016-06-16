@@ -7,9 +7,9 @@
 //				Originally written by Marcus Loo Vergara (aka. Bitsauce)
 //									2011-2015 (C)
 
-#include <CGF/Common.h>
+#include <Sauce/Common.h>
 
-BEGIN_CGF_NAMESPACE
+BEGIN_SAUCE_NAMESPACE
 
 FileSystem *FileSystem::s_this = nullptr;
 
@@ -225,4 +225,4 @@ bool FileSystem::makeDir(const string &path)
 	return true;
 }
 
-END_CGF_NAMESPACE
+END_SAUCE_NAMESPACE

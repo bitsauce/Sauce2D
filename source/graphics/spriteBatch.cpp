@@ -7,10 +7,10 @@
 //				Originally written by Marcus Loo Vergara (aka. Bitsauce)
 //									2011-2015 (C)
 
-#include <CGF/Common.h>
-#include <CGF/graphics.h>
+#include <Sauce/Common.h>
+#include <Sauce/graphics.h>
 
-BEGIN_CGF_NAMESPACE
+BEGIN_SAUCE_NAMESPACE
 
 SpriteBatch::SpriteBatch(GraphicsContext *graphicsContext, const uint maxSprites) :
 	m_graphicsContext(graphicsContext),
@@ -215,4 +215,4 @@ uint SpriteBatch::getTextureSwapCount() const
 	return textureSwapCount;
 }
 
-END_CGF_NAMESPACE
+END_SAUCE_NAMESPACE

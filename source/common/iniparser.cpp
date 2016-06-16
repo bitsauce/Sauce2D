@@ -7,9 +7,9 @@
 //				Originally written by Marcus Loo Vergara (aka. Bitsauce)
 //									2011-2015 (C)
 
-#include <CGF/Common.h>
+#include <Sauce/Common.h>
 
-BEGIN_CGF_NAMESPACE
+BEGIN_SAUCE_NAMESPACE
 
 IniFile::IniFile(string path) :
 	m_path(path)
@@ -105,4 +105,4 @@ void IniFile::save()
 	FileSystem::WriteFile(m_path, out.str());
 }
 
-END_CGF_NAMESPACE
+END_SAUCE_NAMESPACE

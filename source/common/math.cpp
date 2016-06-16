@@ -7,9 +7,9 @@
 //				Originally written by Marcus Loo Vergara (aka. Bitsauce)
 //									2011-2015 (C)
 
-#include <CGF/math.h>
+#include <Sauce/math.h>
 
-BEGIN_CGF_NAMESPACE
+BEGIN_SAUCE_NAMESPACE
 
 namespace math {
 
@@ -116,4 +116,4 @@ int mod(const int a, const int b)
 
 }
 
-END_CGF_NAMESPACE
+END_SAUCE_NAMESPACE

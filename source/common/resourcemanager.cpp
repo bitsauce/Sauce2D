@@ -7,11 +7,11 @@
 //				Originally written by Marcus Loo Vergara (aka. Bitsauce)
 //									2011-2015 (C)
 
-#include <CGF/Common.h>
-#include <CGF/Graphics/Texture.h>
-#include <CGF/Graphics/Shader.h>
+#include <Sauce/Common.h>
+#include <Sauce/Graphics/Texture.h>
+#include <Sauce/Graphics/Shader.h>
 
-BEGIN_CGF_NAMESPACE
+BEGIN_SAUCE_NAMESPACE
 
 ResourceManager::ResourceManager(const string &resourceFile)
 {
@@ -84,4 +84,4 @@ ResourceManager::ResourceManager(const string &resourceFile)
 	}
 }
 
-END_CGF_NAMESPACE
+END_SAUCE_NAMESPACE

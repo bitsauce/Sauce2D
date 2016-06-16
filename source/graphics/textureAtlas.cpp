@@ -7,12 +7,12 @@
 //				Originally written by Marcus Loo Vergara (aka. Bitsauce)
 //									2011-2015 (C)
 
-#include <CGF/Common.h>
-#include <CGF/graphics.h>
+#include <Sauce/Common.h>
+#include <Sauce/graphics.h>
 
 #define ATLAS_SIZE 2048
 
-BEGIN_CGF_NAMESPACE
+BEGIN_SAUCE_NAMESPACE
 
 TextureAtlas::TextureAtlas() :
 	m_border(1),
@@ -153,4 +153,4 @@ void TextureAtlas::update()
 	m_texture->updatePixmap(Pixmap(ATLAS_SIZE, ATLAS_SIZE, pixels));
 }
 
-END_CGF_NAMESPACE
+END_SAUCE_NAMESPACE

@@ -8,9 +8,9 @@
 //									2011-2015 (C)
 // Inspired by: http://en.wikipedia.org/wiki/Xorshift
 
-#include <CGF/math.h>
+#include <Sauce/math.h>
 
-BEGIN_CGF_NAMESPACE
+BEGIN_SAUCE_NAMESPACE
 
 void Random::setSeed(uint32_t seed)
 {
@@ -72,4 +72,4 @@ uint32_t Random::getInt(uint32_t offset) const
 	return offset * 314159265;
 }
 
-END_CGF_NAMESPACE
+END_SAUCE_NAMESPACE
