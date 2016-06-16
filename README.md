@@ -34,3 +34,4 @@ SauceEngine is a game engine built on the [Simple DirectMedia Library](https://w
 * Audio playback
 * Joystick/Gamepad input
 * Networking
+* Multi-platform support
