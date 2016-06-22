@@ -156,8 +156,8 @@ public:
 		m_x(x),
 		m_y(y),
 		m_button(button),
-		m_wheelX(x),
-		m_wheelY(y)
+		m_wheelX(wheelX),
+		m_wheelY(wheelY)
 	{
 	}
 

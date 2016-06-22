@@ -1,0 +1,57 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="..\Source\Main.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Data">
+      <UniqueIdentifier>{1f83d0bc-36ec-43db-8ed6-5a11d080a60e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Data\Shaders">
+      <UniqueIdentifier>{5c4ae474-6a0b-4276-a0c5-18f53574b3f0}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <Xml Include="..\Data\Resources.xml">
+      <Filter>Data</Filter>
+    </Xml>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\Data\Shaders\Calculate_Distance.vert">
+      <Filter>Data\Shaders</Filter>
+    </None>
+    <None Include="..\Data\Shaders\Distort.frag">
+      <Filter>Data\Shaders</Filter>
+    </None>
+    <None Include="..\Data\Shaders\Distort.vert">
+      <Filter>Data\Shaders</Filter>
+    </None>
+    <None Include="..\Data\Shaders\Draw_Shadows.frag">
+      <Filter>Data\Shaders</Filter>
+    </None>
+    <None Include="..\Data\Shaders\Draw_Shadows.vert">
+      <Filter>Data\Shaders</Filter>
+    </None>
+    <None Include="..\Data\Shaders\Reduce.frag">
+      <Filter>Data\Shaders</Filter>
+    </None>
+    <None Include="..\Data\Shaders\Reduce.vert">
+      <Filter>Data\Shaders</Filter>
+    </None>
+    <None Include="..\Data\Shaders\Blur_Shadows_H.frag">
+      <Filter>Data\Shaders</Filter>
+    </None>
+    <None Include="..\Data\Shaders\Blur_Shadows_H.vert">
+      <Filter>Data\Shaders</Filter>
+    </None>
+    <None Include="..\Data\Shaders\Blur_Shadows_V.frag">
+      <Filter>Data\Shaders</Filter>
+    </None>
+    <None Include="..\Data\Shaders\Blur_Shadows_V.vert">
+      <Filter>Data\Shaders</Filter>
+    </None>
+    <None Include="..\Data\Shaders\Calculate_Distance.frag">
+      <Filter>Data\Shaders</Filter>
+    </None>
+  </ItemGroup>
+</Project>

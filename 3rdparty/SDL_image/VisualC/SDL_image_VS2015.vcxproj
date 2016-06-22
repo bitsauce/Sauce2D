@@ -130,7 +130,7 @@
       <OutputFile>.\Debug/SDL2_image.bsc</OutputFile>
     </Bscmake>
     <PostBuildEvent>
-      <Command>copy "$(TargetPath)" "$(ProjectDir)..\..\..\build\$(Platform)\$(Configuration)\$(TargetName)$(TargetExt)"</Command>
+      <Command>copy "$(TargetDir)*.dll" "$(ProjectDir)..\..\..\build\$(Platform)\$(Configuration)\"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -203,7 +203,7 @@
       <OutputFile>.\Release/SDL2_image.bsc</OutputFile>
     </Bscmake>
     <PostBuildEvent>
-      <Command>copy "$(TargetPath)" "$(ProjectDir)..\..\..\build\$(Platform)\$(Configuration)\$(TargetName)$(TargetExt)"</Command>
+      <Command>copy "$(TargetDir)*.dll" "$(ProjectDir)..\..\..\build\$(Platform)\$(Configuration)\"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">

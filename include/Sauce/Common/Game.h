@@ -908,7 +908,7 @@ public:
 
 	virtual void onKeyDown(KeyEvent *e)
 	{
-		PROPAGATE_EVENT(onKeyDown);
+		//PROPAGATE_EVENT(onKeyDown);
 	}
 
 	/**
@@ -921,7 +921,7 @@ public:
 
 	virtual void onKeyUp(KeyEvent *e)
 	{
-		PROPAGATE_EVENT(onKeyUp);
+		//PROPAGATE_EVENT(onKeyUp);
 	}
 
 	/**
@@ -934,7 +934,7 @@ public:
 
 	virtual void onKeyRepeat(KeyEvent *e)
 	{
-		PROPAGATE_EVENT(onKeyRepeat);
+		//PROPAGATE_EVENT(onKeyRepeat);
 	}
 
 	/**
@@ -968,7 +968,7 @@ public:
 
 	virtual void onMouseMove(MouseEvent *e)
 	{
-		PROPAGATE_EVENT(onMouseMove);
+		//PROPAGATE_EVENT(onMouseMove);
 	}
 
 	/**
@@ -981,7 +981,7 @@ public:
 
 	virtual void onMouseDown(MouseEvent *e)
 	{
-		PROPAGATE_EVENT(onMouseDown);
+		//PROPAGATE_EVENT(onMouseDown);
 	}
 
 	/**
@@ -994,7 +994,7 @@ public:
 
 	virtual void onMouseUp(MouseEvent *e)
 	{
-		PROPAGATE_EVENT(onMouseUp);
+		//PROPAGATE_EVENT(onMouseUp);
 	}
 
 	/**
@@ -1007,7 +1007,7 @@ public:
 
 	virtual void onMouseWheel(MouseEvent *e)
 	{
-		PROPAGATE_EVENT(onMouseWheel);
+		//PROPAGATE_EVENT(onMouseWheel);
 	}
 
 	/**

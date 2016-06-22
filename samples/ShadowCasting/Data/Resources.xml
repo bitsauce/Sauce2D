@@ -1,0 +1,41 @@
+<resources>
+	<texture>
+		<name>Sprites/Scene</name>
+		<path>Sprites/Scene.png</path>
+	</texture>
+	<texture>
+		<name>Sprites/Tile</name>
+		<path>Sprites/Tile.png</path>
+	</texture>
+
+	<shader>
+		<name>Shaders/Blur_Shadows_H</name>
+		<vertexFilePath>Shaders/Blur_Shadows_H.vert</vertexFilePath>
+		<fragmentFilePath>Shaders/Blur_Shadows_H.frag</fragmentFilePath>
+	</shader>
+	<shader>
+		<name>Shaders/Blur_Shadows_V</name>
+		<vertexFilePath>Shaders/Blur_Shadows_V.vert</vertexFilePath>
+		<fragmentFilePath>Shaders/Blur_Shadows_V.frag</fragmentFilePath>
+	</shader>
+	<shader>
+		<name>Shaders/Calculate_Distance</name>
+		<vertexFilePath>Shaders/Calculate_Distance.vert</vertexFilePath>
+		<fragmentFilePath>Shaders/Calculate_Distance.frag</fragmentFilePath>
+	</shader>
+	<shader>
+		<name>Shaders/Distort</name>
+		<vertexFilePath>Shaders/Distort.vert</vertexFilePath>
+		<fragmentFilePath>Shaders/Distort.frag</fragmentFilePath>
+	</shader>
+	<shader>
+		<name>Shaders/Draw_Shadows</name>
+		<vertexFilePath>Shaders/Draw_Shadows.vert</vertexFilePath>
+		<fragmentFilePath>Shaders/Draw_Shadows.frag</fragmentFilePath>
+	</shader>
+	<shader>
+		<name>Shaders/Reduce</name>
+		<vertexFilePath>Shaders/Reduce.vert</vertexFilePath>
+		<fragmentFilePath>Shaders/Reduce.frag</fragmentFilePath>
+	</shader>
+</resources>

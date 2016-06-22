@@ -42,6 +42,42 @@ public:
 	}
 };
 
+int clickCount = 0;
+
+class Bug : public Game
+{
+	class A : public SceneObject
+	{
+		void onKeyDown(KeyEvent *e)
+		{
+			LOG("Click count: %i", ++clickCount);
+		}
+	};
+
+public:
+	Bug() :
+		Game("Bug")
+	{
+	}
+
+	void onStart(GameEvent *e)
+	{
+		addChildLast(new A());
+	}
+
+	void onEnd(GameEvent *e)
+	{
+	}
+
+	void onTick(TickEvent *e)
+	{
+	}
+
+	void onDraw(DrawEvent *e)
+	{
+	}
+};
+
 #define WORLD_HEIGHT 10
 #define WORLD_WIDTH 10
 #define TILE_WIDTH 120
@@ -219,7 +255,13 @@ public:
 
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, INT)
 {
-	// Testing
+	// Bug fix
+	{
+		Bug game;
+		if(game.run() != SAUCE_OK) return EXIT_FAILURE;
+	}
+
+	// Isometric
 	{
 		Testing game;
 		if(game.run() != SAUCE_OK) return EXIT_FAILURE;

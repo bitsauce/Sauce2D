@@ -99,8 +99,8 @@ public:
 	 * \todo Setting \p mode to anything other than FONT_ALIGN_LEFT does nothing at the moment.
 	 */
 
-	void drawBox(SpriteBatch *spriteBatch, float x, float y, float width, const string &text, int count, FontAlign mode = FONT_ALIGN_LEFT);
-	void drawBox(SpriteBatch *spriteBatch, const Vector2F &pos, float width, const string &text, int count, FontAlign mode = FONT_ALIGN_LEFT) { drawBox(spriteBatch, pos.x, pos.y, width, text, count, mode); }
+	void drawBox(SpriteBatch *spriteBatch, float x, float y, float width, const string &text, int count = -1, FontAlign mode = FONT_ALIGN_LEFT);
+	void drawBox(SpriteBatch *spriteBatch, const Vector2F &pos, float width, const string &text, int count = -1, FontAlign mode = FONT_ALIGN_LEFT) { drawBox(spriteBatch, pos.x, pos.y, width, text, count, mode); }
 
 	void setHeight(float h);
 	float getHeight() const;

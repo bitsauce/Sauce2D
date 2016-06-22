@@ -34,6 +34,7 @@ public:
 	void setUniform2f(const string &name, const float *v);
 	void setUniform3f(const string &name, const float v0, const float v1, const float v2);
 	void setUniform4f(const string &name, const float v0, const float v1, const float v2, const float v3);
+	void setUniform4f(const string &name, const float *v);
 	void setUniformMatrix4f(const string &name, const float *v0);
 	void setSampler2D(const string &name, Resource<Texture2D> texture);
 	// <- Instance

@@ -1,7 +1,7 @@
-varying vec2 v_texCoord;
+in vec2 v_TexCoord;
+out vec4 out_FragColor;
 
-//uniform float u_width;
-uniform sampler2D u_texture;
+uniform sampler2D u_Texture;
 
 float getShadowDistanceH(vec2 texCoord, float displacementV)
 {
@@ -16,7 +16,7 @@ float getShadowDistanceH(vec2 texCoord, float displacementV)
 
 	vec2 newCoords = vec2(texCoord.x, v0);
 	//horizontal info was stored in the Red component
-	return texture2D(u_texture, newCoords).r;
+	return texture(u_Texture, newCoords).r;
 }
 
 float getShadowDistanceV(vec2 texCoord, float displacementV)
@@ -32,13 +32,13 @@ float getShadowDistanceV(vec2 texCoord, float displacementV)
 
 	vec2 newCoords = vec2(texCoord.y, v0);
 	// vertical info was stored in the Green component
-	return texture2D(u_texture, newCoords).g;
+	return texture(u_Texture, newCoords).g;
 }
 
 void main()
 {
 	// distance of this pixel from the center
-	float distance = length(v_texCoord - 0.5);
+	float distance = length(v_TexCoord - 0.5);
 	//distance *= u_width;
 	//distance -= 2.0; // apply a 2-pixel bias
 
@@ -46,17 +46,17 @@ void main()
 	float shadowMapDistance;
 
 	// coords in [-1,1]
-	float nY = 2.0 *(v_texCoord.y - 0.5);
-	float nX = 2.0 *(v_texCoord.x - 0.5);
+	float nY = 2.0 *(v_TexCoord.y - 0.5);
+	float nX = 2.0 *(v_TexCoord.x - 0.5);
 
 	// we use these to determine which quadrant we are in
 	if(abs(nY) < abs(nX))
 	{
-		shadowMapDistance = getShadowDistanceH(v_texCoord, 0.0);
+		shadowMapDistance = getShadowDistanceH(v_TexCoord, 0.0);
 	}
 	else
 	{
-		shadowMapDistance = getShadowDistanceV(v_texCoord, 0.0);
+		shadowMapDistance = getShadowDistanceV(v_TexCoord, 0.0);
 	}
 
 	// if distance to this pixel is lower than distance from shadowMap, 
@@ -64,5 +64,5 @@ void main()
 	float light = distance < shadowMapDistance ? 1.0 : 0.0;
 	light += 0.5;
 
-	gl_FragColor = vec4(light, light, length(v_texCoord - 0.5), 1.0);
+	out_FragColor = vec4(light, light, length(v_TexCoord - 0.5), 1.0);
 }
