@@ -202,6 +202,11 @@ public:
 		return Vector2<T>(*this) /= v2;
 	}
 
+	inline const Vector2<T> operator-()
+	{
+		return *this *= -1;
+	}
+
 	template<typename U>
 	inline bool operator==(const Vector2<U> &v2) const
 	{
