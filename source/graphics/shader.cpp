@@ -1,11 +1,13 @@
-//       ____  ____     ____                        _____             _            
-// __  _|___ \|  _ \   / ___| __ _ _ __ ___   ___  | ____|_ __   __ _(_)_ __   ___ 
-// \ \/ / __) | | | | | |  _ / _  |  _   _ \ / _ \ |  _| |  _ \ / _  | |  _ \ / _ \
-//  >  < / __/| |_| | | |_| | (_| | | | | | |  __/ | |___| | | | (_| | | | | |  __/
-// /_/\_\_____|____/   \____|\__ _|_| |_| |_|\___| |_____|_| |_|\__, |_|_| |_|\___|
-//                                                              |___/     
-//				Originally written by Marcus Loo Vergara (aka. Bitsauce)
-//									2011-2015 (C)
+//     _____                        ______             _            
+//    / ____|                      |  ____|           (_)           
+//   | (___   __ _ _   _  ___ ___  | |__   _ __   __ _ _ _ __   ___ 
+//    \___ \ / _` | | | |/ __/ _ \ |  __| | '_ \ / _` | | '_ \ / _ \
+//    ____) | (_| | |_| | (_|  __/ | |____| | | | (_| | | | | |  __/
+//   |_____/ \__,_|\__,_|\___\___| |______|_| |_|\__, |_|_| |_|\___|
+//                                                __/ |             
+//                                               |___/              
+// Made by Marcus "Bitsauce" Loo Vergara
+// 2011-2016 (C)
 
 #include <Sauce/Common.h>
 #include <Sauce/graphics.h>
@@ -438,7 +440,7 @@ void Shader::setUniform2f(const string &name, const float v0, const float v1)
 	}
 }
 
-void Shader::setUniform2f(const string & name, const float * v)
+void Shader::setUniform2f(const string & name, const float *v)
 {
 	map<string, Uniform*>::iterator itr;
 	if((itr = m_uniforms.find(name)) != m_uniforms.end())
@@ -494,6 +496,27 @@ void Shader::setUniform4f(const string &name, const float v0, const float v1, co
 			((GLfloat*) uniform->data)[1] = v1;
 			((GLfloat*) uniform->data)[2] = v2;
 			((GLfloat*) uniform->data)[3] = v3;
+		}
+		else
+		{
+			LOG("Uniform '%s' is not type 'vec4'", name.c_str());
+		}
+	}
+	else
+	{
+		LOG("Uniform '%s' does not exist.", name.c_str());
+	}
+}
+
+void Shader::setUniform4f(const string &name, const float *v)
+{
+	map<string, Uniform*>::iterator itr;
+	if((itr = m_uniforms.find(name)) != m_uniforms.end())
+	{
+		Uniform *uniform = itr->second;
+		if(uniform->type == GL_FLOAT_VEC4)
+		{
+			memcpy(uniform->data, v, 4 * uniform->count * FLOAT_SIZE);
 		}
 		else
 		{
