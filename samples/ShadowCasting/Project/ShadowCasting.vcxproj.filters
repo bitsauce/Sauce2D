@@ -53,5 +53,17 @@
     <None Include="..\Data\Shaders\Calculate_Distance.frag">
       <Filter>Data\Shaders</Filter>
     </None>
+    <None Include="..\Data\Shaders\Shadow_Map.vert">
+      <Filter>Data\Shaders</Filter>
+    </None>
+    <None Include="..\Data\Shaders\Shadow_Map.frag">
+      <Filter>Data\Shaders</Filter>
+    </None>
+    <None Include="..\Data\Shaders\Shadow_Render.vert">
+      <Filter>Data\Shaders</Filter>
+    </None>
+    <None Include="..\Data\Shaders\Shadow_Render.frag">
+      <Filter>Data\Shaders</Filter>
+    </None>
   </ItemGroup>
 </Project>
