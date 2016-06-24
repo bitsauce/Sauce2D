@@ -96,18 +96,6 @@
     </Xml>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\Data\Shaders\Blur_Shadows_H.frag" />
-    <None Include="..\Data\Shaders\Blur_Shadows_H.vert" />
-    <None Include="..\Data\Shaders\Blur_Shadows_V.frag" />
-    <None Include="..\Data\Shaders\Blur_Shadows_V.vert" />
-    <None Include="..\Data\Shaders\Calculate_Distance.frag" />
-    <None Include="..\Data\Shaders\Calculate_Distance.vert" />
-    <None Include="..\Data\Shaders\Distort.frag" />
-    <None Include="..\Data\Shaders\Distort.vert" />
-    <None Include="..\Data\Shaders\Draw_Shadows.frag" />
-    <None Include="..\Data\Shaders\Draw_Shadows.vert" />
-    <None Include="..\Data\Shaders\Reduce.frag" />
-    <None Include="..\Data\Shaders\Reduce.vert" />
     <None Include="..\Data\Shaders\Shadow_Map.frag" />
     <None Include="..\Data\Shaders\Shadow_Map.vert" />
     <None Include="..\Data\Shaders\Shadow_Render.frag" />

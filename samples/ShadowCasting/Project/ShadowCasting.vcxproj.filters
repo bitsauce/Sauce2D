@@ -17,42 +17,6 @@
     </Xml>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\Data\Shaders\Calculate_Distance.vert">
-      <Filter>Data\Shaders</Filter>
-    </None>
-    <None Include="..\Data\Shaders\Distort.frag">
-      <Filter>Data\Shaders</Filter>
-    </None>
-    <None Include="..\Data\Shaders\Distort.vert">
-      <Filter>Data\Shaders</Filter>
-    </None>
-    <None Include="..\Data\Shaders\Draw_Shadows.frag">
-      <Filter>Data\Shaders</Filter>
-    </None>
-    <None Include="..\Data\Shaders\Draw_Shadows.vert">
-      <Filter>Data\Shaders</Filter>
-    </None>
-    <None Include="..\Data\Shaders\Reduce.frag">
-      <Filter>Data\Shaders</Filter>
-    </None>
-    <None Include="..\Data\Shaders\Reduce.vert">
-      <Filter>Data\Shaders</Filter>
-    </None>
-    <None Include="..\Data\Shaders\Blur_Shadows_H.frag">
-      <Filter>Data\Shaders</Filter>
-    </None>
-    <None Include="..\Data\Shaders\Blur_Shadows_H.vert">
-      <Filter>Data\Shaders</Filter>
-    </None>
-    <None Include="..\Data\Shaders\Blur_Shadows_V.frag">
-      <Filter>Data\Shaders</Filter>
-    </None>
-    <None Include="..\Data\Shaders\Blur_Shadows_V.vert">
-      <Filter>Data\Shaders</Filter>
-    </None>
-    <None Include="..\Data\Shaders\Calculate_Distance.frag">
-      <Filter>Data\Shaders</Filter>
-    </None>
     <None Include="..\Data\Shaders\Shadow_Map.vert">
       <Filter>Data\Shaders</Filter>
     </None>
