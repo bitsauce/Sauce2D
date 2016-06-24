@@ -2,20 +2,24 @@
 
 using namespace sauce;
 
+Random random;
+
 // This sample implements 2D shadow casting based on this technique:
 // http://www.catalinzima.com/2010/07/my-technique-for-the-shader-based-dynamic-2d-shadows/
 class ShadowCastingGame : public Game
 {
 private:
+	SpriteBatch *spriteBatch;
+	Resource<Font> font;
+
 	RenderTarget2D* castersRenderTarget;
 	RenderTarget2D* distancesRenderTarget;
 	RenderTarget2D* distortRenderTarget;
 	RenderTarget2D** reductionRenderTargets;
 	RenderTarget2D* shadowsRenderTarget;
-
 	RenderTarget2D* blurHRenderTarget;
-
 	RenderTarget2D* blurVRenderTarget;
+	RenderTarget2D* resultRenderTarget;
 
 	Resource<Texture2D> sceneTexture;
 	Resource<Texture2D> tileTexture;
@@ -25,12 +29,33 @@ private:
 	Resource<Shader> shadowShader;
 	Resource<Shader> blurShadowVShader;
 	Resource<Shader> blurShadowHShader;
-	int reductionChainCount;
+	int reductionCount;
 	int baseSize;
-	int depthBufferSize;
+	int lightMapSize;
+
+	struct Light
+	{
+		Light()
+		{
+			randomize();
+		}
+
+		void randomize()
+		{
+			this->radius = random.nextInt(200, 1000);
+			this->color = Color(random.nextInt(80, 255), random.nextInt(80, 255), random.nextInt(80, 255), 255);
+		}
+
+		Vector2F position;
+		int radius;
+		Color color;
+	};
+
+	Light *light;
+	vector<Light*> lights;
 
 	int state;
-	
+
 	enum ShadowmapSize
 	{
 		Size128 = 6,
@@ -44,28 +69,24 @@ private:
 public:
 	ShadowCastingGame() :
 		Game("ShadowCasting"),
-		state(0)
+		state(0),
+		castersRenderTarget(0),
+		distancesRenderTarget(0),
+		distortRenderTarget(0),
+		reductionRenderTargets(0),
+		shadowsRenderTarget(0),
+		blurHRenderTarget(0),
+		blurVRenderTarget(0),
+		resultRenderTarget(0),
+		reductionCount(0)
 	{
 	}
 
 	void onStart(GameEvent *e)
 	{
-		int size = Size512;
-		reductionChainCount = size;
-		baseSize = 2 << reductionChainCount;
-		depthBufferSize = 2 << size;
+		spriteBatch = new SpriteBatch(getWindow()->getGraphicsContext());
 
-		castersRenderTarget = new RenderTarget2D(baseSize, baseSize);
-		distancesRenderTarget = new RenderTarget2D(baseSize, baseSize);
-		distortRenderTarget = new RenderTarget2D(baseSize, baseSize);
-		reductionRenderTargets = new RenderTarget2D*[reductionChainCount];
-		for(int i = 0; i < reductionChainCount; i++)
-		{
-			reductionRenderTargets[i] = new RenderTarget2D(2 << i, baseSize);
-		}
-		shadowsRenderTarget = new RenderTarget2D(baseSize, baseSize);
-		blurHRenderTarget = new RenderTarget2D(baseSize, baseSize);
-		blurVRenderTarget = new RenderTarget2D(baseSize, baseSize);
+		font = getResourceManager()->get<Font>("Fonts/Debug_Font");
 
 		sceneTexture = getResourceManager()->get<Texture2D>("Sprites/Scene");
 		tileTexture = getResourceManager()->get<Texture2D>("Sprites/Tile");
@@ -78,15 +99,88 @@ public:
 		blurShadowHShader = getResourceManager()->get<Shader>("Shaders/Blur_Shadows_H");
 		blurShadowVShader = getResourceManager()->get<Shader>("Shaders/Blur_Shadows_V");
 
+		light = new Light();
+		lights.push_back(light);
+
+		lightMapSize = Size512;
+		setLightMapResolution(lightMapSize);
+
 		Game::onStart(e);
 	}
 
-	void onKeyDown(KeyEvent *e)
+	void setLightMapResolution(const int size)
 	{
-		Keycode k = e->getKeycode();
-		if(k >= SAUCE_KEY_0 && k <= SAUCE_KEY_9)
+		for(int i = 0; i < reductionCount; i++)
 		{
-			state = k - SAUCE_KEY_0;
+			delete reductionRenderTargets[i];
+		}
+
+		reductionCount = size;
+		baseSize = 2 << size;
+
+		delete castersRenderTarget;
+		delete distancesRenderTarget;
+		delete distortRenderTarget;
+		delete[] reductionRenderTargets;
+		delete shadowsRenderTarget;
+		delete blurHRenderTarget;
+		delete blurVRenderTarget;
+		delete resultRenderTarget;
+
+		Vector2I windowSize = getWindow()->getSize();
+
+		castersRenderTarget = new RenderTarget2D(baseSize, baseSize);
+		distancesRenderTarget = new RenderTarget2D(baseSize, baseSize);
+		distortRenderTarget = new RenderTarget2D(baseSize, baseSize);
+		reductionRenderTargets = new RenderTarget2D*[reductionCount];
+		for(int i = 0; i < reductionCount; i++)
+		{
+			reductionRenderTargets[i] = new RenderTarget2D(2 << i, baseSize);
+		}
+		shadowsRenderTarget = new RenderTarget2D(baseSize, baseSize);
+		blurHRenderTarget = new RenderTarget2D(baseSize, baseSize);
+		blurVRenderTarget = new RenderTarget2D(baseSize, baseSize);
+		resultRenderTarget = new RenderTarget2D(windowSize.x, windowSize.y);
+	}
+
+	void onKeyEvent(KeyEvent *e)
+	{
+		if(e->getType() == KeyEvent::DOWN)
+		{
+			Keycode k = e->getKeycode();
+			if(k >= SAUCE_KEY_0 && k <= SAUCE_KEY_9)
+			{
+				state = k - SAUCE_KEY_0;
+			}
+
+			if(e->getKeycode() == SAUCE_KEY_UP)
+			{
+				setLightMapResolution(++lightMapSize);
+			}
+			else if(e->getKeycode() == SAUCE_KEY_DOWN)
+			{
+				setLightMapResolution(--lightMapSize);
+			}
+		}
+
+		if(e->getType() != KeyEvent::UP && e->getKeycode() == SAUCE_KEY_SPACE)
+		{
+			light->randomize();
+		}
+	}
+
+	void onMouseMove(MouseEvent *e)
+	{
+		light->position = e->getPosition();
+	}
+
+	void onMouseDown(MouseEvent *e)
+	{
+		if(e->getButton() == SAUCE_MOUSE_BUTTON_LEFT)
+		{
+			light = new Light();
+			light->position = e->getPosition();
+			lights.push_back(light);
 		}
 	}
 
@@ -104,126 +198,95 @@ public:
 	{
 		GraphicsContext *graphicsContext = e->getGraphicsContext();
 
-		graphicsContext->setRenderTarget(castersRenderTarget);
-		graphicsContext->clear(GraphicsContext::COLOR_BUFFER);
-		graphicsContext->setTexture(sceneTexture);
-		graphicsContext->drawRectangle(((Vector2F(512 * 0.5f) - getInputManager()->getPosition()) / 512.0f) * baseSize, Vector2F(baseSize));
+		graphicsContext->setRenderTarget(resultRenderTarget);
+		graphicsContext->clear(GraphicsContext::COLOR_BUFFER, Color(0, 0, 0, 255));
 
-		graphicsContext->setRenderTarget(distancesRenderTarget);
-		graphicsContext->clear(GraphicsContext::COLOR_BUFFER, Color(255));
-
-		graphicsContext->setShader(calcDistanceShader);
-		calcDistanceShader->setSampler2D("u_Texture", castersRenderTarget->getTexture());
-		graphicsContext->drawRectangle(0, 0, baseSize, baseSize);
-
-		graphicsContext->setRenderTarget(distortRenderTarget);
-		graphicsContext->clear(GraphicsContext::COLOR_BUFFER);
-
-		graphicsContext->setShader(distortShader);
-		distortShader->setSampler2D("u_Texture", distancesRenderTarget->getTexture());
-		graphicsContext->drawRectangle(0, 0, baseSize, baseSize);
-
-		Resource<Texture2D> reducedTexture = applyHorizontalReduction(graphicsContext, distortRenderTarget);
-		graphicsContext->setRenderTarget(shadowsRenderTarget);
-		graphicsContext->clear(GraphicsContext::COLOR_BUFFER);
-
-		graphicsContext->setShader(shadowShader);
-		shadowShader->setSampler2D("u_Texture", reducedTexture);
-		graphicsContext->drawRectangle(0, 0, baseSize, baseSize);
-
-		graphicsContext->setRenderTarget(blurHRenderTarget);
-		graphicsContext->clear(GraphicsContext::COLOR_BUFFER);
-
-		graphicsContext->setShader(blurShadowHShader);
-		blurShadowHShader->setSampler2D("u_Texture", shadowsRenderTarget->getTexture());
-		blurShadowHShader->setUniform1f("u_Width", baseSize);
-		graphicsContext->drawRectangle(0, 0, baseSize, baseSize);
-
-		graphicsContext->setRenderTarget(blurVRenderTarget);
-		graphicsContext->clear(GraphicsContext::COLOR_BUFFER);
-
-		graphicsContext->setShader(blurShadowVShader);
-		blurShadowVShader->setSampler2D("u_Texture", blurHRenderTarget->getTexture());
-		blurShadowVShader->setUniform1f("u_Width", baseSize);
-		graphicsContext->drawRectangle(0, 0, baseSize, baseSize);
-
-		graphicsContext->setRenderTarget(nullptr);
-		graphicsContext->setShader(nullptr);
-
-		switch(state)
+		for(Light *l : lights)
 		{
-			case 0:
-			{
-				// Draw tiles using repeat
-				{
-					Vector2F windowSize = getWindow()->getSize();
-					float u = (float) windowSize.x / tileTexture->getWidth(), v = (float) windowSize.y / tileTexture->getHeight();
-					graphicsContext->setTexture(tileTexture);
-					graphicsContext->drawRectangle(0, 0, windowSize.x, windowSize.y, Color(255), TextureRegion(0, 0, u, v));
-				}
+			graphicsContext->disable(GraphicsContext::BLEND);
 
-				// Draw scene
-				graphicsContext->setTexture(sceneTexture);
-				graphicsContext->drawRectangle(0, 0, 512, 512);
+			graphicsContext->setRenderTarget(castersRenderTarget);
+			graphicsContext->setShader(0);
+			graphicsContext->setTexture(sceneTexture);
+			graphicsContext->drawRectangle(((Vector2F(l->radius * 0.5f) - l->position) / l->radius) * baseSize, sceneTexture->getSize() * baseSize / l->radius);
 
-				graphicsContext->setBlendState(BlendState::PRESET_MULTIPLY);
-				graphicsContext->setTexture(blurVRenderTarget->getTexture());
-				graphicsContext->drawRectangle(getInputManager()->getPosition() - Vector2F(512 * 0.5f), Vector2F(512));
-				graphicsContext->setBlendState(BlendState::PRESET_ALPHA_BLEND);
-			}
-			break;
+			graphicsContext->setRenderTarget(distancesRenderTarget);
+			graphicsContext->setShader(calcDistanceShader);
+			calcDistanceShader->setSampler2D("u_Texture", castersRenderTarget->getTexture());
+			graphicsContext->drawRectangle(0, 0, baseSize, baseSize);
 
-			case 1:
-			{
-				graphicsContext->setTexture(distancesRenderTarget->getTexture());
-				graphicsContext->drawRectangle(0, 0, 512, 512);
-			}
-			break;
+			graphicsContext->setRenderTarget(distortRenderTarget);
+			graphicsContext->setShader(distortShader);
+			distortShader->setSampler2D("u_Texture", distancesRenderTarget->getTexture());
+			graphicsContext->drawRectangle(0, 0, baseSize, baseSize);
 
-			case 2:
-			{
-				graphicsContext->setTexture(distortRenderTarget->getTexture());
-				graphicsContext->drawRectangle(0, 0, 512, 512);
-			}
-			break;
+			Resource<Texture2D> reducedTexture = applyHorizontalReduction(graphicsContext, distortRenderTarget);
 
-			case 3:
-			{
-				graphicsContext->setTexture(shadowsRenderTarget->getTexture());
-				graphicsContext->drawRectangle(0, 0, 512, 512);
-			}
-			break;
+			graphicsContext->setRenderTarget(shadowsRenderTarget);
+			graphicsContext->setShader(shadowShader);
+			shadowShader->setSampler2D("u_Texture", reducedTexture);
+			graphicsContext->drawRectangle(0, 0, baseSize, baseSize);
 
-			case 4:
-			{
-				graphicsContext->setTexture(castersRenderTarget->getTexture());
-				graphicsContext->drawRectangle(0, 0, 512, 512);
-			}
-			break;
+			graphicsContext->setRenderTarget(blurHRenderTarget);
+			graphicsContext->setShader(blurShadowHShader);
+			blurShadowHShader->setSampler2D("u_Texture", shadowsRenderTarget->getTexture());
+			blurShadowHShader->setUniform1f("u_Width", baseSize);
+			graphicsContext->drawRectangle(0, 0, baseSize, baseSize);
 
-			case 5:
-			{
-				graphicsContext->setTexture(blurHRenderTarget->getTexture());
-				graphicsContext->drawRectangle(0, 0, 512, 512);
-			}
-			break;
+			graphicsContext->setRenderTarget(blurVRenderTarget);
+			graphicsContext->setShader(blurShadowVShader);
+			blurShadowVShader->setSampler2D("u_Texture", blurHRenderTarget->getTexture());
+			blurShadowVShader->setUniform1f("u_Width", baseSize);
+			graphicsContext->drawRectangle(0, 0, baseSize, baseSize);
 
-			case 6:
-			{
-				graphicsContext->setTexture(blurVRenderTarget->getTexture());
-				graphicsContext->drawRectangle(0, 0, 512, 512);
-			}
-			break;
+			graphicsContext->enable(GraphicsContext::BLEND);
+
+			graphicsContext->setRenderTarget(resultRenderTarget);
+			graphicsContext->setShader(0);
+			graphicsContext->setBlendState(BlendState::PRESET_ADDITIVE);
+			graphicsContext->setTexture(blurVRenderTarget->getTexture());
+			graphicsContext->drawRectangle(l->position - Vector2F(l->radius * 0.5f), Vector2F(l->radius), l->color);
 		}
+
 		graphicsContext->setTexture(0);
-		graphicsContext->drawCircle(Vector2F(baseSize * 0.5f), 10, 10, Color(255));
+		graphicsContext->setRenderTarget(0);
+		graphicsContext->enable(GraphicsContext::BLEND);
+		graphicsContext->setBlendState(BlendState::PRESET_ALPHA_BLEND);
+
+		Vector2F windowSize = getWindow()->getSize();
+
+		// Draw tiles using repeat
+		float u = (float) windowSize.x / tileTexture->getWidth(), v = (float) windowSize.y / tileTexture->getHeight();
+		graphicsContext->setTexture(tileTexture);
+		graphicsContext->drawRectangle(0, 0, windowSize.x, windowSize.y, Color(255), TextureRegion(0, 0, u, v));
+
+		// Draw scene
+		graphicsContext->setTexture(sceneTexture);
+		graphicsContext->drawRectangle(0, 0, windowSize.x, windowSize.y);
+
+		// Draw shadows
+		graphicsContext->setRenderTarget(0);
+		graphicsContext->setBlendState(BlendState::PRESET_MULTIPLY);
+		graphicsContext->setTexture(resultRenderTarget->getTexture());
+		graphicsContext->drawRectangle(0, 0, windowSize.x, windowSize.y);
+		graphicsContext->setBlendState(BlendState::PRESET_ALPHA_BLEND);
+
+		// Draw info
+		stringstream ss;
+		ss << "FPS: " << getFPS() << endl;
+		ss << "Lights: " << lights.size() << endl;
+		ss << "Light map resolution: " << baseSize << "x" << baseSize << endl;
+		spriteBatch->begin();
+		font->setColor(Color(255));
+		font->draw(spriteBatch, Vector2F(5.0f), ss.str());
+		spriteBatch->end();
 
 		Game::onDraw(e);
 	}
 
 	Resource<Texture2D> applyHorizontalReduction(GraphicsContext *graphicsContext, RenderTarget2D *source)
 	{
-		int step = reductionChainCount - 1;
+		int step = reductionCount - 1;
 		RenderTarget2D *s = source;
 		RenderTarget2D *d = reductionRenderTargets[step];
 		graphicsContext->setShader(reductionShader);
@@ -233,7 +296,6 @@ public:
 			d = reductionRenderTargets[step];
 
 			graphicsContext->setRenderTarget(d);
-			graphicsContext->clear(GraphicsContext::COLOR_BUFFER, Color(255));
 
 			reductionShader->setSampler2D("u_Texture", s->getTexture());
 			Vector2F textureDimentions(1.0f / (float) s->getWidth(), 1.0f / (float) s->getHeight());
@@ -248,7 +310,6 @@ public:
 		graphicsContext->setShader(nullptr);
 		graphicsContext->setRenderTarget(nullptr);
 
-		//copy to destination
 		return d->getTexture();
 	}
 };

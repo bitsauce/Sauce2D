@@ -8,7 +8,7 @@ const float minBlur = 0.0;
 const float maxBlur = 5.0;
 
 #define KERNEL_SIZE 13
-const float OFFSET[KERNEL_SIZE] = float[](
+float OFFSET[KERNEL_SIZE] = float[](
 	-6.0,
 	-5.0,
 	-4.0,
@@ -24,7 +24,7 @@ const float OFFSET[KERNEL_SIZE] = float[](
 	 6.0
 );
 
-const float WEIGHT[KERNEL_SIZE] = float[](
+float WEIGHT[KERNEL_SIZE] = float[](
 	0.002216,
 	0.008764,
 	0.026995,
@@ -50,5 +50,5 @@ void main()
 	}
 	float d = 2.0 * length(v_TexCoord - 0.5);
 	float attenuation = pow(clamp(1.0 - d, 0.0, 1.0), 1.0);
-	out_FragColor = vec4(vec3(sum * attenuation) * vec3(1.0, 1.0, 0.0), 1.0);
+	out_FragColor = vec4(vec3(sum * attenuation), 1.0);
 }

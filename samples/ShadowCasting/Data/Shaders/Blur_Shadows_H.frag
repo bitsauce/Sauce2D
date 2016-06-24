@@ -8,7 +8,7 @@ const float minBlur = 0.0;
 const float maxBlur = 5.0;
 
 #define KERNEL_SIZE 13
-const float OFFSET[KERNEL_SIZE] = float[](
+float OFFSET[KERNEL_SIZE] = float[](
 	-6.0,
 	-5.0,
 	-4.0,
@@ -24,7 +24,7 @@ const float OFFSET[KERNEL_SIZE] = float[](
 	 6.0
 );
 
-const float WEIGHT[KERNEL_SIZE] = float[](
+float WEIGHT[KERNEL_SIZE] = float[](
 	0.002216,
 	0.008764,
 	0.026995,

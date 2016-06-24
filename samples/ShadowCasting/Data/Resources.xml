@@ -1,4 +1,9 @@
 <resources>
+	<font>
+		<name>Fonts/Debug_Font</name>
+		<path>Fonts/Debug_Font.fnt</path>
+	</font>
+		
 	<texture>
 		<name>Sprites/Scene</name>
 		<path>Sprites/Scene.png</path>
