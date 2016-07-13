@@ -147,6 +147,9 @@
     <ClCompile Include="..\..\source\Input\InputButton.cpp">
       <Filter>Source\Input</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\source\common\tinyxml2.cpp">
+      <Filter>Source\Common</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\include\Sauce\Math\Matrix.h">
@@ -268,6 +271,9 @@
     </ClInclude>
     <ClInclude Include="..\..\include\Sauce\Input\InputButton.h">
       <Filter>Include\Sauce\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\Sauce\Common\tinyxml2.h">
+      <Filter>Include\Sauce\Common</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

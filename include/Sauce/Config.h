@@ -52,7 +52,6 @@
 	#include <queue>
 	#include "..\3rdparty\gl3w\include\GL\gl3w.h"
 	#include "..\3rdparty\gl3w\include\GL\wglext.h"
-	#include "..\3rdparty\tinyxml2\tinyxml2.h"
 #elif __LINUX__
 	#include <sys/socket.h>
 	#include <netinet/in.h>

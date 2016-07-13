@@ -1,11 +1,12 @@
-
 #include <Sauce/Sauce.h>
 
 using namespace sauce;
 
 class ShadersGame : public Game
 {
+private:
 	Resource<Shader> shader;
+
 public:
 	ShadersGame() :
 		Game("Shaders")

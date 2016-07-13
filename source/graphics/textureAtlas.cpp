@@ -1,156 +1,83 @@
-//       ____  ____     ____                        _____             _            
-// __  _|___ \|  _ \   / ___| __ _ _ __ ___   ___  | ____|_ __   __ _(_)_ __   ___ 
-// \ \/ / __) | | | | | |  _ / _  |  _   _ \ / _ \ |  _| |  _ \ / _  | |  _ \ / _ \
-//  >  < / __/| |_| | | |_| | (_| | | | | | |  __/ | |___| | | | (_| | | | | |  __/
-// /_/\_\_____|____/   \____|\__ _|_| |_| |_|\___| |_____|_| |_|\__, |_|_| |_|\___|
-//                                                              |___/     
-//				Originally written by Marcus Loo Vergara (aka. Bitsauce)
-//									2011-2015 (C)
-
 #include <Sauce/Common.h>
-#include <Sauce/graphics.h>
-
-#define ATLAS_SIZE 2048
+#include <Sauce/Graphics.h>
 
 BEGIN_SAUCE_NAMESPACE
 
-TextureAtlas::TextureAtlas() :
-	m_border(1),
-	m_texture(0)
-{
-	init(vector<Pixmap>());
-}
-
-TextureAtlas::TextureAtlas(vector<Resource<Texture2D>> textures, const int border) :
+TextureAtlas::TextureAtlas(const int width, const int height, const int border) :
 	m_border(border),
-	m_texture(0)
+	m_texture(0),
+	m_width(width),
+	m_height(height)
 {
-	vector<Pixmap> pixmaps;
-	for(vector<Resource<Texture2D>>::iterator itr = textures.begin(); itr != textures.end(); ++itr)
-	{
-		if(*itr)
-		{
-			pixmaps.push_back((*itr)->getPixmap());
-		}
-	}
-
-	init(pixmaps);
-}
-
-TextureAtlas::TextureAtlas(vector<Pixmap> &pixmaps, const int border) :
-	m_border(border),
-	m_texture(0)
-{
-	init(pixmaps);
+	// Create a texture for the atlas
+	m_texture = Resource<Texture2D>(new Texture2D(width, height));
+	m_rectanglePacker.setMaxWidth(width);
 }
 
 TextureAtlas::~TextureAtlas()
 {
-	for(vector<RectanglePacker::Rect>::iterator itr = m_result.rectangles.begin(); itr != m_result.rectangles.end(); ++itr)
+	if(m_result.valid)
 	{
-		delete (AtlasPage*) (*itr).getData();
+		for(map<string, RectanglePacker::Entry>::iterator itr = m_result.rectangles.begin(); itr != m_result.rectangles.end(); ++itr)
+		{
+			delete (Pixmap*) itr->second.getData();
+		}
 	}
 }
 
-void TextureAtlas::init(const vector<Pixmap> &pixmaps)
+void TextureAtlas::add(const string &key, Resource<Texture2D> texture)
 {
-	// Create a texture for the atlas
-	m_texture = Resource<Texture2D>(new Texture2D(ATLAS_SIZE, ATLAS_SIZE));
-	m_texturePacker.setMaxWidth(ATLAS_SIZE);
-
-	// Set as uninitialized
-	m_initialized = false;
-	m_size = 0;
-
-	// Add all pixmaps
-	for(vector<Pixmap>::const_iterator itr = pixmaps.begin(); itr != pixmaps.end(); ++itr)
-	{
-		add(*itr);
-	}
-
-	// Update atlas texture
-	update();
-
-	// Set as initialized
-	m_initialized = true;
+	add(key, texture->getPixmap());
 }
 
-void TextureAtlas::add(Resource<Texture2D> texture)
+void TextureAtlas::add(const string & key, const Pixmap & pixmap)
 {
-	add(texture->getPixmap());
+	m_rectanglePacker.addRectangle(key, pixmap.getWidth() + m_border * 2, pixmap.getHeight() + m_border * 2, new Pixmap(pixmap));
 }
 
-void TextureAtlas::add(const Pixmap &pixmap)
+TextureRegion TextureAtlas::get(const string & key) const
 {
-	m_texturePacker.addRect(RectanglePacker::Rect(pixmap.getWidth() + m_border * 2, pixmap.getHeight() + m_border * 2, new AtlasPage(pixmap, m_size++)));
-	if(m_initialized)
-	{
-		update();
-	}
+	return get(key, 0.0f, 0.0f, 1.0f, 1.0f);
 }
 
-TextureRegion TextureAtlas::get(const int index) const
+TextureRegion TextureAtlas::get(const string &key, const Vector2F & uv0, const Vector2F & uv1) const
 {
-	return get(index, 0.0f, 0.0f, 1.0f, 1.0f);
-}
-
-TextureRegion TextureAtlas::get(const int index, const Vector2F &uv0, const Vector2F &uv1) const
-{
-	// Validate index
-	if(index < 0 || index >= m_size)
-	{
-		return TextureRegion(Vector2F(0.0f), Vector2F(1.0f));
-	}
+	// Validate input
+	if(!m_result.valid) return TextureRegion();
+	if(m_result.rectangles.find(key) == m_result.rectangles.end()) return TextureRegion();
 
 	// TODO: Optimization: The texture regions can be precalculated in update() to save time
 	// Get texture region
-	const RectanglePacker::Rect &rect = m_result.rectangles[index];
+	const RectanglePacker::Entry &rect = m_result.rectangles.at(key);
 	return TextureRegion(
-		((rect.getX() + m_border) + (rect.getWidth() - m_border * 2) * uv0.x) / ATLAS_SIZE, ((rect.getY() + m_border) + (rect.getHeight() - m_border * 2) * uv0.y) / ATLAS_SIZE,
-		((rect.getX() + m_border) + (rect.getWidth() - m_border * 2) * uv1.x) / ATLAS_SIZE, ((rect.getY() + m_border) + (rect.getHeight() - m_border * 2) * uv1.y) / ATLAS_SIZE
+		((rect.getX() + m_border) + (rect.getWidth() - m_border * 2) * uv0.x) / m_width, ((rect.getY() + m_border) + (rect.getHeight() - m_border * 2) * uv0.y) / m_height,
+		((rect.getX() + m_border) + (rect.getWidth() - m_border * 2) * uv1.x) / m_width, ((rect.getY() + m_border) + (rect.getHeight() - m_border * 2) * uv1.y) / m_height
 		);
+
 }
 
-TextureRegion TextureAtlas::get(const int index, const float u0, const float v0, const float u1, const float v1) const
+void TextureAtlas::create()
 {
-	return get(index, Vector2F(u0, v0), Vector2F(u1, v1));
-}
+	uchar *pixels = new uchar[m_width * m_height * 4];
+	memset(pixels, 0, m_width * m_height * 4);
 
-Resource<Texture2D> TextureAtlas::getTexture() const
-{
-	return m_texture;
-}
-
-bool sortResult(RectanglePacker::Rect r1, RectanglePacker::Rect r2)
-{
-	return ((TextureAtlas::AtlasPage*)r1.getData())->getIndex() < ((TextureAtlas::AtlasPage*)r2.getData())->getIndex();
-}
-
-void TextureAtlas::update()
-{
-	uchar *pixels = new uchar[ATLAS_SIZE * ATLAS_SIZE * 4];
-	memset(pixels, 0, ATLAS_SIZE * ATLAS_SIZE * 4);
-
-	const RectanglePacker::Result result = m_texturePacker.pack();
-	for(vector<RectanglePacker::Rect>::const_iterator itr = result.rectangles.begin(); itr != result.rectangles.end(); ++itr)
+	const RectanglePacker::Result result = m_rectanglePacker.pack();
+	for(map<string, RectanglePacker::Entry>::const_iterator itr = result.rectangles.begin(); itr != result.rectangles.end(); ++itr)
 	{
-		const RectanglePacker::Rect &rect = (*itr);
-		const Pixmap *pixmap = ((AtlasPage*) rect.getData())->getPixmap();
+		const RectanglePacker::Entry &rect = itr->second;
+		const Pixmap *pixmap = (Pixmap*) rect.getData();
 		for(uint x = 0; x < pixmap->getWidth(); x++)
 		{
 			for(uint y = 0; y < pixmap->getHeight(); y++)
 			{
-				int dataPos = ((rect.getX() + x + m_border) + ((rect.getY() + y + m_border) * ATLAS_SIZE)) * 4;
+				int dataPos = ((rect.getX() + x + m_border) + ((rect.getY() + y + m_border) * m_width)) * 4;
 				int pagePos = (x + y * pixmap->getWidth()) * 4;
 				memcpy(pixels + dataPos, pixmap->getData() + pagePos, 4);
 			}
 		}
 	}
 	m_result = result;
-
-	sort(m_result.rectangles.begin(), m_result.rectangles.end(), sortResult);
-
-	m_texture->updatePixmap(Pixmap(ATLAS_SIZE, ATLAS_SIZE, pixels));
+	m_texture->updatePixmap(Pixmap(m_width, m_height, pixels));
 }
 
 END_SAUCE_NAMESPACE

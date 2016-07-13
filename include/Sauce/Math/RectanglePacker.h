@@ -22,46 +22,31 @@ public:
 		m_maxWidth = width;
 	}
 
-	class SAUCE_API Rect
+
+	class SAUCE_API Entry : public Rect<uint>
 	{
 		friend class RectanglePacker;
 	public:
-		Rect(const uint width, const uint height, void *data) :
-			data(data),
-			x(0),
-			y(0),
-			width(width),
-			height(height)
+		Entry() : 
+			valid(false)
+		{
+
+		}
+
+		Entry(const string key, const uint width, const uint height, void *data) :
+			Rect(0, 0, width, height),
+			valid(true),
+			key(key),
+			data(data)
 		{
 		}
 
-		Rect(const Rect &other) :
-			data(other.data),
-			x(other.x),
-			y(other.y),
-			width(other.width),
-			height(other.height)
+		Entry(const Entry &other) :
+			Rect(other),
+			valid(other.valid),
+			key(other.key),
+			data(other.data)
 		{
-		}
-
-		uint getX() const
-		{
-			return x;
-		}
-
-		uint getY() const
-		{
-			return y;
-		}
-
-		uint getWidth() const
-		{
-			return width;
-		}
-
-		uint getHeight() const
-		{
-			return height;
 		}
 
 		const void *getData() const
@@ -70,13 +55,14 @@ public:
 		}
 
 	private:
-		uint x, y;
-		uint width, height; // Should be const but cannot be, as it breaks operator=.
+		bool valid;
+		string key;
 		void *data;
 	};
 
-	struct SAUCE_API Result
+	class SAUCE_API Result
 	{
+	public:
 		Result() :
 			valid(false),
 			canvas(0),
@@ -97,15 +83,15 @@ public:
 		Vector2I canvas;
 		int area;
 		float efficiency;
-		vector<Rect> rectangles;
+		map<string, Entry> rectangles;
 	};
 
 	const Result pack();
-	void addRect(const Rect rectangle);
-	void clearRects();
+	void addRectangle(const string &key, const uint width, const uint height, void *data = 0);
+	void clear();
 
 private:
-	vector<Rect> m_rectangles;
+	vector<Entry> m_rectangles;
 	int m_maxWidth;
 };
 

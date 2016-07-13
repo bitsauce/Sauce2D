@@ -13,17 +13,19 @@ public:
 
 	void onStart(GameEvent*)
 	{
+		// Setup texture atlas
+		textureAtlas = new TextureAtlas();
+
 		// Here we load Image0, Image1, ..., until Image[i] is not a file.
-		vector<Pixmap> pixmaps;
 		int i = 0;
 		while(util::fileExists("Image" + util::intToStr(i) + ".png"))
 		{
-			pixmaps.push_back(Pixmap("Image" + util::intToStr(i) + ".png"));
+			textureAtlas->add("Image" + util::intToStr(i), Pixmap("Image" + util::intToStr(i) + ".png"));
 			i++;
 		}
 
 		// Create a texture atlas using these images
-		textureAtlas = new TextureAtlas(pixmaps);
+		textureAtlas->create();
 
 		// Save the atlas to Atlas.png (just to show how the altas it looks like)
 		textureAtlas->getTexture()->exportToFile("Atlas.png");
@@ -42,7 +44,7 @@ public:
 		// Here we draw Image0 using the texture atlas
 		GraphicsContext *graphicsContext = e->getGraphicsContext();
 		graphicsContext->setTexture(textureAtlas->getTexture());
-		graphicsContext->drawRectangle(100, 100, 190, 177, Color(255), textureAtlas->get(0));
+		graphicsContext->drawRectangle(100, 100, 190, 177, Color(255), textureAtlas->get("Image1"));
 		graphicsContext->setTexture(0);
 	}
 };

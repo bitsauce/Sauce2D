@@ -18,6 +18,7 @@
     <ClCompile Include="..\..\source\Common\Math.cpp" />
     <ClCompile Include="..\..\source\Common\ResourceManager.cpp" />
     <ClCompile Include="..\..\source\Common\Timer.cpp" />
+    <ClCompile Include="..\..\source\common\tinyxml2.cpp" />
     <ClCompile Include="..\..\source\Common\Utilities.cpp" />
     <ClCompile Include="..\..\source\Common\Window.cpp" />
     <ClCompile Include="..\..\source\Graphics\Animation.cpp" />
@@ -56,6 +57,7 @@
     <ClInclude Include="..\..\include\Sauce\Common\Game.h" />
     <ClInclude Include="..\..\include\Sauce\Common\IniParser.h" />
     <ClInclude Include="..\..\include\Sauce\Common\ResourceManager.h" />
+    <ClInclude Include="..\..\include\Sauce\Common\tinyxml2.h" />
     <ClInclude Include="..\..\include\Sauce\Config.h" />
     <ClInclude Include="..\..\include\Sauce\Graphics.h" />
     <ClInclude Include="..\..\include\Sauce\Graphics\Animation.h" />
@@ -130,7 +132,7 @@
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
-      <AdditionalIncludeDirectories>$(ProjectDir)..\..\include;$(ProjectDir)..\..\source;$(ProjectDir)..\..\3rdparty\SDL\include;$(ProjectDir)..\..\3rdparty\SDL_image;$(ProjectDir)..\..\3rdparty\SDL_mixer;$(ProjectDir)..\..\3rdparty\freetype\include;$(ProjectDir)..\..\3rdparty\openal\include;$(ProjectDir)..\..\3rdparty\gl3w\include;$(ProjectDir)..\..\3rdparty\tinyxml2;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\include;$(ProjectDir)..\..\source;$(ProjectDir)..\..\3rdparty\SDL\include;$(ProjectDir)..\..\3rdparty\SDL_image;$(ProjectDir)..\..\3rdparty\SDL_mixer;$(ProjectDir)..\..\3rdparty\freetype\include;$(ProjectDir)..\..\3rdparty\openal\include;$(ProjectDir)..\..\3rdparty\gl3w\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -152,7 +154,7 @@
       <GenerateDebugInformation>Debug</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
-      <AdditionalDependencies>$(ProjectDir)..\..\3rdparty\SDL\VisualC\SDL\$(Platform)\$(Configuration)\SDL2.lib;$(ProjectDir)..\..\3rdparty\SDL_image\VisualC\$(Platform)\$(Configuration)\SDL2_image.lib;$(ProjectDir)..\..\3rdparty\SDL_mixer\VisualC\$(Platform)\$(Configuration)\SDL2_mixer.lib;$(ProjectDir)..\..\3rdparty\gl3w\lib\$(Platform)\$(Configuration)\gl3w.lib;$(ProjectDir)..\..\3rdparty\tinyxml2\lib\$(Platform)\$(Configuration)\tinyxml2.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>$(ProjectDir)..\..\3rdparty\SDL\VisualC\SDL\$(Platform)\$(Configuration)\SDL2.lib;$(ProjectDir)..\..\3rdparty\SDL_image\VisualC\$(Platform)\$(Configuration)\SDL2_image.lib;$(ProjectDir)..\..\3rdparty\SDL_mixer\VisualC\$(Platform)\$(Configuration)\SDL2_mixer.lib;$(ProjectDir)..\..\3rdparty\gl3w\lib\$(Platform)\$(Configuration)\gl3w.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <Lib>
       <AdditionalDependencies>glew32_d.lib;ws2_32.lib;IPHlpAPI.lib;freetype248_d.lib;OpenAL32.lib;libpng15_d.lib;angelscriptd.lib;%(AdditionalDependencies)</AdditionalDependencies>
@@ -161,7 +163,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
-      <AdditionalIncludeDirectories>$(ProjectDir)..\..\include;$(ProjectDir)..\..\source;$(ProjectDir)..\..\3rdparty\SDL\include;$(ProjectDir)..\..\3rdparty\SDL_image;$(ProjectDir)..\..\3rdparty\SDL_mixer;$(ProjectDir)..\..\3rdparty\freetype\include;$(ProjectDir)..\..\3rdparty\openal\include;$(ProjectDir)..\..\3rdparty\gl3w\include;$(ProjectDir)..\..\3rdparty\tinyxml2;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\include;$(ProjectDir)..\..\source;$(ProjectDir)..\..\3rdparty\SDL\include;$(ProjectDir)..\..\3rdparty\SDL_image;$(ProjectDir)..\..\3rdparty\SDL_mixer;$(ProjectDir)..\..\3rdparty\freetype\include;$(ProjectDir)..\..\3rdparty\openal\include;$(ProjectDir)..\..\3rdparty\gl3w\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -179,7 +181,7 @@
     <Link>
       <AdditionalLibraryDirectories>
       </AdditionalLibraryDirectories>
-      <AdditionalDependencies>$(ProjectDir)..\..\3rdparty\SDL\VisualC\SDL\$(Platform)\$(Configuration)\SDL2.lib;$(ProjectDir)..\..\3rdparty\SDL_image\VisualC\$(Platform)\$(Configuration)\SDL2_image.lib;$(ProjectDir)..\..\3rdparty\SDL_mixer\VisualC\$(Platform)\$(Configuration)\SDL2_mixer.lib;$(ProjectDir)..\..\3rdparty\gl3w\lib\$(Platform)\$(Configuration)\gl3w.lib;$(ProjectDir)..\..\3rdparty\tinyxml2\lib\$(Platform)\$(Configuration)\tinyxml2.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>$(ProjectDir)..\..\3rdparty\SDL\VisualC\SDL\$(Platform)\$(Configuration)\SDL2.lib;$(ProjectDir)..\..\3rdparty\SDL_image\VisualC\$(Platform)\$(Configuration)\SDL2_image.lib;$(ProjectDir)..\..\3rdparty\SDL_mixer\VisualC\$(Platform)\$(Configuration)\SDL2_mixer.lib;$(ProjectDir)..\..\3rdparty\gl3w\lib\$(Platform)\$(Configuration)\gl3w.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
       <Command>

@@ -11,21 +11,25 @@ BEGIN_SAUCE_NAMESPACE
 class SAUCE_API TextureAtlas
 {
 public:
-	TextureAtlas();
-	TextureAtlas(vector<Resource<Texture2D>> textures, const int border = 1);
-	TextureAtlas(vector<Pixmap> &pixmaps, const int border = 1);
+	TextureAtlas(const int width = 2048, const int height = 2048, const int border = 1);
 	~TextureAtlas();
 
-	void add(Resource<Texture2D> texture);
-	void add(const Pixmap &pixmap);
+	void add(const string &key, Resource<Texture2D> texture);
+	void add(const string &key, const Pixmap &pixmap);
 
-	void update();
+	TextureRegion get(const string &key) const;
+	TextureRegion get(const string &key, const Vector2F &uv0, const Vector2F &uv1) const;
+	TextureRegion get(const string &key, const float u0, const float v0, const float u1, const float v1) const
+	{
+		return get(key, Vector2F(u0, v0), Vector2F(u1, v1));
+	}
 
-	TextureRegion get(const int index) const;
-	TextureRegion get(const int index, const Vector2F &uv0, const Vector2F &uv1) const;
-	TextureRegion get(const int index, const float u0, const float v0, const float u1, const float v1) const;
+	Resource<Texture2D> getTexture() const
+	{
+		return m_texture;
+	}
 
-	Resource<Texture2D> getTexture() const;
+	void create();
 	
 	struct AtlasPage
 	{
@@ -55,14 +59,16 @@ public:
 	};
 
 private:
-	void init(const vector<Pixmap> &pixmaps);
-
+	// Atlas texture
 	Resource<Texture2D> m_texture;
-	RectanglePacker m_texturePacker;
-	RectanglePacker::Result m_result;
-	int m_size;
-	bool m_initialized;
+
+	// Atlas properties
+	int m_width, m_height;
 	int m_border;
+
+	// Rectangle packer result
+	RectanglePacker m_rectanglePacker;
+	RectanglePacker::Result m_result;
 };
 
 END_SAUCE_NAMESPACE

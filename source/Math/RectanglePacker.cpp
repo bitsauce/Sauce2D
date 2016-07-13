@@ -1,18 +1,10 @@
-//       ____  ____     ____                        _____             _            
-// __  _|___ \|  _ \   / ___| __ _ _ __ ___   ___  | ____|_ __   __ _(_)_ __   ___ 
-// \ \/ / __) | | | | | |  _ / _  |  _   _ \ / _ \ |  _| |  _ \ / _  | |  _ \ / _ \
-//  >  < / __/| |_| | | |_| | (_| | | | | | |  __/ | |___| | | | (_| | | | | |  __/
-// /_/\_\_____|____/   \____|\__ _|_| |_| |_|\___| |_____|_| |_|\__, |_|_| |_|\___|
-//                                                              |___/     
-//				Originally written by Marcus Loo Vergara (aka. Bitsauce)
-//									2011-2015 (C)
 // Inspired by: http://www.codeproject.com/Articles/210979/Fast-optimizing-rectangle-packing-algorithm-for-bu (i think)
 
 #include <Sauce/math.h>
 
 BEGIN_SAUCE_NAMESPACE
 
-bool heightSort(RectanglePacker::Rect i, RectanglePacker::Rect j)
+bool heightSort(RectanglePacker::Entry i, RectanglePacker::Entry j)
 {
 	return i.getHeight() > j.getHeight();
 }
@@ -31,21 +23,21 @@ const RectanglePacker::Result RectanglePacker::pack()
 	// Find total area and max height
 	uint totalArea = 0;
 	uint rightMost = 0;
-	uint maxWidth = 0, maxHeight = m_rectangles[0].height;
-	for(uint i = 0; i < m_rectangles.size(); i++)
+	uint maxWidth = 0, maxHeight = m_rectangles[0].getHeight();
+	for(vector<Entry>::iterator itr = m_rectangles.begin(); itr != m_rectangles.end(); itr++)
 	{
-		Rect &rect = m_rectangles[i];
-		totalArea += rect.height * rect.height;
-		if(maxWidth < rect.width)
+		Entry &rect = *itr;
+		totalArea += rect.getHeight() * rect.getHeight();
+		if(maxWidth < rect.getWidth())
 		{
-			maxWidth = rect.width;
+			maxWidth = rect.getWidth();
 		}
 	}
 
 	// Setup loop vars
 	uint canvasWidth = m_maxWidth, canvasHeight = maxHeight;
-	vector<::Rect<int>> cells;
-	cells.push_back(::Rect<int>(0, 0, canvasWidth, canvasHeight));
+	vector<Rect<int>> cells;
+	cells.push_back(Rect<int>(0, 0, canvasWidth, canvasHeight));
 	Result bestResult;
 	Result result;
 
@@ -54,14 +46,14 @@ const RectanglePacker::Result RectanglePacker::pack()
 	while(canvasWidth >= maxWidth)
 	{
 		// Get rectangle
-		Rect &rect = m_rectangles[idx++];
+		Entry &rect = m_rectangles[idx++];
 
 		// Find best cell
 		int bestCellIdx = -1;
 		for(uint i = 0; i < cells.size(); i++)
 		{
-			::Rect<int> *cell = &cells[i];
-			if((uint) cell->getWidth() >= rect.width && (uint) cell->getHeight() >= rect.height)
+			Rect<int> *cell = &cells[i];
+			if((uint) cell->getWidth() >= rect.getWidth() && (uint) cell->getHeight() >= rect.getHeight())
 			{
 				if(bestCellIdx < 0 || cell->getArea() < cells[bestCellIdx].getArea())
 					bestCellIdx = i;
@@ -72,28 +64,27 @@ const RectanglePacker::Result RectanglePacker::pack()
 		{
 			// If no cell was found, add more to the height and retry
 			cells.clear();
-			cells.push_back(::Rect<int>(0, 0, canvasWidth, ++canvasHeight));
+			cells.push_back(Rect<int>(0, 0, canvasWidth, ++canvasHeight));
 			result.clear();
 			idx = rightMost = 0;
 		}
 		else
 		{
 			// Store cell and remove
-			::Rect<int> cell = cells[bestCellIdx];
+			Rect<int> cell = cells[bestCellIdx];
 			cells.erase(cells.begin() + bestCellIdx);
 
 			// Place rectangle into results
-			rect.x = cell.getX();
-			rect.y = cell.getY();
-			result.rectangles.push_back(rect);
-			if(rect.x + rect.width > rightMost)
+			rect.position = cell.position;
+			result.rectangles[rect.key] = rect;
+			if(rect.getX() + rect.getWidth() > rightMost)
 			{
-				rightMost = rect.x + rect.width;
+				rightMost = rect.getX() + rect.getWidth();
 			}
 
 			// Split the cell into 2 smaller cells
-			::Rect<int> c1(cell.getX() + rect.width, cell.getY(), cell.getWidth() - rect.width, rect.height);   // +1 for padding pixel
-			::Rect<int> c2(cell.getX(), cell.getY() + rect.height, cell.getWidth(), cell.getHeight() - rect.height); // +1 for padding pixel
+			Rect<int> c1(cell.getX() + rect.getWidth(), cell.getY(), cell.getWidth() - rect.getWidth(), rect.getHeight());
+			Rect<int> c2(cell.getX(), cell.getY() + rect.getHeight(), cell.getWidth(), cell.getHeight() - rect.getHeight());
 
 			if(c1.getArea() > 0) cells.push_back(c1);
 			if(c2.getArea() > 0) cells.push_back(c2);
@@ -117,7 +108,7 @@ const RectanglePacker::Result RectanglePacker::pack()
 
 				// Retry with different dimensions
 				cells.clear();
-				cells.push_back(::Rect<int>(0, 0, --canvasWidth, canvasHeight));
+				cells.push_back(Rect<int>(0, 0, --canvasWidth, canvasHeight));
 				result.clear();
 				idx = rightMost = 0;
 			}
@@ -126,12 +117,12 @@ const RectanglePacker::Result RectanglePacker::pack()
 	return bestResult;
 }
 
-void RectanglePacker::addRect(const Rect rect)
+void RectanglePacker::addRectangle(const string &key, const uint width, const uint height, void *data)
 {
-	m_rectangles.push_back(rect);
+	m_rectangles.push_back(Entry(key, width, height, data));
 }
 
-void RectanglePacker::clearRects()
+void RectanglePacker::clear()
 {
 	m_rectangles.clear();
 }

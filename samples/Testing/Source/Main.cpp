@@ -62,7 +62,6 @@ public:
 
 	void onStart(GameEvent *e)
 	{
-		addChildLast(new A());
 	}
 
 	void onEnd(GameEvent *e)
