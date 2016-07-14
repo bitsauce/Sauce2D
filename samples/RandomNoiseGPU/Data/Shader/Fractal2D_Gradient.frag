@@ -1,6 +1,7 @@
 in vec2 v_TexCoord;
 out vec4 out_FragColor;
 uniform float u_Time;
+uniform sampler2D u_Gradient;
 
 int hash(int x)
 {
@@ -59,5 +60,5 @@ float fractalNoise2D(int octaves, vec2 pos)
 
 void main()
 {
-	out_FragColor = vec4(vec3(fractalNoise2D(4, v_TexCoord * 10.0)), 1.0);
+	out_FragColor = vec4(texture(u_Gradient, vec2(fractalNoise2D(4, v_TexCoord * 10.0), 0.5)).rgb, 1.0);
 }

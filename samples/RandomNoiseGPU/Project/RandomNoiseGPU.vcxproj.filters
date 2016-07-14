@@ -38,5 +38,11 @@
     <None Include="..\Data\Shader\Voronoise.vert">
       <Filter>Data</Filter>
     </None>
+    <None Include="..\Data\Shader\Fractal2D_Gradient.frag">
+      <Filter>Data</Filter>
+    </None>
+    <None Include="..\Data\Shader\Fractal2D_Gradient.vert">
+      <Filter>Data</Filter>
+    </None>
   </ItemGroup>
 </Project>

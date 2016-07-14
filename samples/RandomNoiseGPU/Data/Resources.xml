@@ -27,4 +27,9 @@
 		<fragmentFilePath>Shader/Fractal2D.frag</fragmentFilePath>
 		<vertexFilePath>Shader/Fractal2D.vert</vertexFilePath>
 	</shader>
+	<shader>
+		<name>Fractal2D_Gradient</name>
+		<fragmentFilePath>Shader/Fractal2D_Gradient.frag</fragmentFilePath>
+		<vertexFilePath>Shader/Fractal2D_Gradient.vert</vertexFilePath>
+	</shader>
 </resources>

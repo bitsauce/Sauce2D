@@ -96,6 +96,8 @@
   <ItemGroup>
     <None Include="..\Data\Shader\Fractal2D.frag" />
     <None Include="..\Data\Shader\Fractal2D.vert" />
+    <None Include="..\Data\Shader\Fractal2D_Gradient.frag" />
+    <None Include="..\Data\Shader\Fractal2D_Gradient.vert" />
     <None Include="..\Data\Shader\Noise.frag" />
     <None Include="..\Data\Shader\Noise.vert" />
     <None Include="..\Data\Shader\Voronoise.frag" />
