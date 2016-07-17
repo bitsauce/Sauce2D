@@ -65,16 +65,21 @@ public:
 	};
 
 	/**
-	 * Enables the select capability.
+	 * Enables the capability \p cap.
 	 * \param cap Capability to enable.
 	 */
 	void enable(const Capability cap);
 
 	/**
-	 * Disables the select capability.
+	 * Disables the capability \p cap.
 	 * \param cap Capability to disable.
 	 */
 	void disable(const Capability cap);
+
+	/**
+	 * Returns true if capability \p cap is enabled
+	 */
+	bool isEnabled(const Capability cap);
 
 	void setPointSize(const float pointSize);
 	void setLineWidth(const float lineWidth);

@@ -1,8 +1,8 @@
-#include <CGF/CGF.h>
+#include <Sauce/Sauce.h>
 
-using namespace cgf;
+using namespace sauce;
 
-class RandomNoiseGPU : public Game
+class RandomGeneration : public Game
 {
 	Resource<Shader> m_noiseShader;
 	Resource<RenderTarget2D> m_renderTarget;
@@ -16,8 +16,8 @@ class RandomNoiseGPU : public Game
 	SpriteBatch *m_spriteBatch;
 
 public:
-	RandomNoiseGPU() :
-		Game("RandomNoiseGPU")
+	RandomGeneration() :
+		Game("RandomGeneration")
 	{
 	}
 
@@ -47,34 +47,34 @@ public:
 	{
 		m_time += e->getDelta();
 
-		m_position.x += (getInputManager()->getKeyState(CGF_KEY_RIGHT) - getInputManager()->getKeyState(CGF_KEY_LEFT)) * 10.0f * ((getInputManager()->getKeyState(CGF_KEY_LSHIFT) || getInputManager()->getKeyState(CGF_KEY_RSHIFT)) ? 5.0f : 1.0f) * m_scale;
-		m_position.y += (getInputManager()->getKeyState(CGF_KEY_DOWN) - getInputManager()->getKeyState(CGF_KEY_UP)) * 10.0f * ((getInputManager()->getKeyState(CGF_KEY_LSHIFT) || getInputManager()->getKeyState(CGF_KEY_RSHIFT)) ? 5.0f : 1.0f) * m_scale;
+		m_position.x += (getInputManager()->getKeyState(SAUCE_KEY_RIGHT) - getInputManager()->getKeyState(SAUCE_KEY_LEFT)) * 10.0f * ((getInputManager()->getKeyState(SAUCE_KEY_LSHIFT) || getInputManager()->getKeyState(SAUCE_KEY_RSHIFT)) ? 5.0f : 1.0f) * m_scale;
+		m_position.y += (getInputManager()->getKeyState(SAUCE_KEY_DOWN) - getInputManager()->getKeyState(SAUCE_KEY_UP)) * 10.0f * ((getInputManager()->getKeyState(SAUCE_KEY_LSHIFT) || getInputManager()->getKeyState(SAUCE_KEY_RSHIFT)) ? 5.0f : 1.0f) * m_scale;
 
 		float prevScale = m_scale;
-		if(getInputManager()->getKeyState(CGF_KEY_PLUS))
+		if(getInputManager()->getKeyState(SAUCE_KEY_PLUS))
 		{
 			m_scale /= 1.1;
 			m_position -= Vector2F(getWindow()->getSize()) * 0.5f * (m_scale - prevScale);
 		}
-		else if(getInputManager()->getKeyState(CGF_KEY_MINUS))
+		else if(getInputManager()->getKeyState(SAUCE_KEY_MINUS))
 		{
 			m_scale *= 1.1;
 			m_position -= Vector2F(getWindow()->getSize()) * 0.5f * (m_scale - prevScale);
 		}
 
-		if(getInputManager()->getKeyState(CGF_KEY_0))
+		if(getInputManager()->getKeyState(SAUCE_KEY_0))
 		{
 			m_seed = m_rand.nextInt(1000);
 		}
 
-		m_cliffingDelta += (getInputManager()->getKeyState(CGF_KEY_2) - getInputManager()->getKeyState(CGF_KEY_1)) * ((getInputManager()->getKeyState(CGF_KEY_LSHIFT) || getInputManager()->getKeyState(CGF_KEY_RSHIFT)) ? 5.0f : 1.0f);
+		m_cliffingDelta += (getInputManager()->getKeyState(SAUCE_KEY_2) - getInputManager()->getKeyState(SAUCE_KEY_1)) * ((getInputManager()->getKeyState(SAUCE_KEY_LSHIFT) || getInputManager()->getKeyState(SAUCE_KEY_RSHIFT)) ? 5.0f : 1.0f);
 
-		if(getInputManager()->getKeyState(CGF_KEY_0))
+		if(getInputManager()->getKeyState(SAUCE_KEY_0))
 		{
 			m_seed = m_rand.nextInt(1000);
 		}
 
-		m_showNoise = getInputManager()->getKeyState(CGF_KEY_SPACE);
+		m_showNoise = getInputManager()->getKeyState(SAUCE_KEY_SPACE);
 
 		Game::onTick(e);
 	}
@@ -120,6 +120,6 @@ public:
 
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, INT)
 {
-	RandomNoiseGPU game;
+	RandomGeneration game;
 	return game.run();
 }

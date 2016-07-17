@@ -42,6 +42,10 @@ void GraphicsContext::disable(const Capability cap)
 	glDisable(cap);
 }
 
+bool GraphicsContext::isEnabled(const Capability cap)
+{
+	return (bool)glIsEnabled(cap);
+}
 
 void GraphicsContext::setPointSize(const float pointSize)
 {

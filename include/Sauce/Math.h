@@ -41,6 +41,7 @@ namespace math
 
 	template<typename T> T lerp(const T &v0, const T &v1, const float t)
 	{
+		if(v0 == v1) return v0;
 		return v0 * (1.0f - t) + v1 * t;
 	}
 	
