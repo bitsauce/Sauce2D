@@ -1161,7 +1161,7 @@ class SpriteBatch;
 class SAUCE_API Game : public SceneObject
 {
 public:
-	Game(const string &name, const string &organization = "CrossGame");
+	Game(const string &name, const string &organization = "SuperSauce");
 	~Game();
 
 public:
