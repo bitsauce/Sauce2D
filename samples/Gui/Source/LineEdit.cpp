@@ -83,7 +83,7 @@ void LineEdit::onDraw(DrawEvent *e)
 	}
 
 	// Get text offset
-	Vector2F textOffset = Vector2F(8.0f - m_offsetX, rect.size.y * 0.5f - m_font->getHeight() * 0.5f);
+	Vector2I textOffset(8.0f - m_offsetX, rect.size.y * 0.5f - m_font->getHeight() * 0.5f);
 
 	// Update visualization if dirty
 	if(m_dirty)
@@ -136,7 +136,7 @@ void LineEdit::onDraw(DrawEvent *e)
 
 		// Draw and clip the text using scissoring rectangle
 		g->enableScissor(8, 0, w - 16, h);
-		m_spriteBatch.begin();
+		m_spriteBatch.begin(SpriteBatch::State(SpriteBatch::DEFERRED, BlendState(BlendState::BLEND_SRC_ALPHA, BlendState::BLEND_ONE_MINUS_SRC_ALPHA, BlendState::BLEND_ONE, BlendState::BLEND_ONE_MINUS_SRC_ALPHA)));
 		m_font->draw(&m_spriteBatch, textOffset.x + dx, textOffset.y, visibleText);
 		m_spriteBatch.end();
 		g->disableScissor();
