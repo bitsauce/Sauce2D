@@ -39,12 +39,38 @@ namespace math
 	SAUCE_API float pow(const float a, const float b);
 	SAUCE_API Vector2F pow(const Vector2F &v);
 
-	template<typename T> T lerp(const T &v0, const T &v1, const float t)
+	// Fast but inaccurate linear interpolation function
+	/*template<typename T> T lerp(const T &v0, const T &v1, const float t)
 	{
-		if(v0 == v1) return v0;
 		return v0 * (1.0f - t) + v1 * t;
 	}
+
+	// Slow but accurate linear interpolation function
+	// This will give correct values when v0 == v1, and it will give correct values when t = 0 or 1
+	template<typename T> T lerp2(const T &v0, const T &v1, float t)
+	{
+		if(t < 0.5f)
+		{
+			return v0 + (v1 - v0) * t;
+		}
+		else
+		{
+			return v1 - (v1 - v0) * (1.0f - t);
+		}
+	}*/
 	
+	template<typename T> T lerp(const T &v0, const T &v1, float t)
+	{
+		if(t < 0.5f)
+		{
+			return v0 + (v1 - v0) * t;
+		}
+		else
+		{
+			return v1 - (v1 - v0) * (1.0f - t);
+		}
+	}
+
 	SAUCE_API float step(const float a, const float x);
 
 	SAUCE_API int mod(const int a, const int b);
