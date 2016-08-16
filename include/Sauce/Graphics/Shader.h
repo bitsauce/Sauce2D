@@ -37,6 +37,9 @@ public:
 	void setUniform4f(const string &name, const float *v);
 	void setUniformMatrix4f(const string &name, const float *v0);
 	void setSampler2D(const string &name, Resource<Texture2D> texture);
+
+	void setUniformColor(const string &name, const Color &color);
+	void setUniformColorRGB(const string &name, const ColorRGB &color);
 	// <- Instance
 
 	void exportAssembly(const string &fileName);

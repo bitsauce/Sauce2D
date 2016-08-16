@@ -19,9 +19,9 @@ BlendState::BlendState(const Preset preset)
 		m_src = m_alphaSrc = BLEND_DST_COLOR;
 		m_dst = m_alphaDst = BLEND_ZERO;
 		break;
-	case PRESET_NON_PREMULTIPLIED:
-		m_src = BLEND_SRC_ALPHA; m_alphaSrc = BLEND_ONE;
-		m_dst = BLEND_ONE_MINUS_SRC_ALPHA; m_alphaDst = BLEND_ONE;
+	case PRESET_PREMULTIPLIED_ALPHA:
+		m_src = BLEND_ONE; m_alphaSrc = BLEND_ONE;
+		m_dst = BLEND_ONE_MINUS_SRC_ALPHA; m_alphaDst = BLEND_ONE_MINUS_SRC_ALPHA;
 		break;
 	}
 }

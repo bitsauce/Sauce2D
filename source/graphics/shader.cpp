@@ -577,6 +577,53 @@ void Shader::setSampler2D(const string &name, Resource<Texture2D> texture)
 	}
 }
 
+void Shader::setUniformColor(const string &name, const Color &color)
+{
+	map<string, Uniform*>::iterator itr;
+	if((itr = m_uniforms.find(name)) != m_uniforms.end())
+	{
+		Uniform *uniform = itr->second;
+		if(uniform->type == GL_FLOAT_VEC4)
+		{
+			((GLfloat*) uniform->data)[0] = color.getR() / 255.0f;
+			((GLfloat*) uniform->data)[1] = color.getG() / 255.0f;
+			((GLfloat*) uniform->data)[2] = color.getB() / 255.0f;
+			((GLfloat*) uniform->data)[3] = color.getA() / 255.0f;
+		}
+		else
+		{
+			LOG("Uniform '%s' is not type 'vec4'", name.c_str());
+		}
+	}
+	else
+	{
+		LOG("Uniform '%s' does not exist.", name.c_str());
+	}
+}
+
+void Shader::setUniformColorRGB(const string &name, const ColorRGB &color)
+{
+	map<string, Uniform*>::iterator itr;
+	if((itr = m_uniforms.find(name)) != m_uniforms.end())
+	{
+		Uniform *uniform = itr->second;
+		if(uniform->type == GL_FLOAT_VEC3)
+		{
+			((GLfloat*) uniform->data)[0] = color.getR() / 255.0f;
+			((GLfloat*) uniform->data)[1] = color.getG() / 255.0f;
+			((GLfloat*) uniform->data)[2] = color.getB() / 255.0f;
+		}
+		else
+		{
+			LOG("Uniform '%s' is not type 'vec3'", name.c_str());
+		}
+	}
+	else
+	{
+		LOG("Uniform '%s' does not exist.", name.c_str());
+	}
+}
+
 void Shader::exportAssembly(const string & fileName)
 {
 	if(!glGetProgramBinary)
