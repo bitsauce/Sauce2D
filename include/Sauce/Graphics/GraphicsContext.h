@@ -139,24 +139,24 @@ public:
 	 * applied to it.
 	 * \param texture Texture to apply to the primitives.
 	 */
-	void setTexture(Resource<Texture2D> texture);
+	void setTexture(shared_ptr<Texture2D> texture);
 
 	/**
 	 * Gets the current texture.
 	 */
-	Resource<Texture2D> getTexture() const;
+	shared_ptr<Texture2D> getTexture() const;
 
 	/**
 	 * Set shader. Every vertex and fragment rendered after this will
 	 * have the effect of \p shader applied to them.
 	 * \param shader Shader to render the primitves with.
 	 */
-	void setShader(Resource<Shader> shader);
+	void setShader(shared_ptr<Shader> shader);
 
 	/**
 	 * Returns the current shader.
 	 */
-	Resource<Shader> getShader() const;
+	shared_ptr<Shader> getShader() const;
 
 	/**
 	 * Set blend state. Every pixel rendered after this will use a 
@@ -300,8 +300,8 @@ private:
 	Window *m_window;
 	uint m_width;
 	uint m_height;
-	Resource<Texture2D> m_texture;
-	Resource<Shader> m_shader;
+	shared_ptr<Texture2D> m_texture;
+	shared_ptr<Shader> m_shader;
 	BlendState m_blendState;
 	RenderTarget2D *m_renderTarget;
 	stack<Matrix4> m_transformationMatrixStack;
@@ -309,8 +309,8 @@ private:
 
 	vector<Vertex> m_vertices; // Vertices for when needed
 
-	static Resource<Shader> s_defaultShader;
-	static Resource<Texture2D> s_defaultTexture;
+	static shared_ptr<Shader> s_defaultShader;
+	static shared_ptr<Texture2D> s_defaultTexture;
 	static GLuint s_vao;
 	static GLuint s_vbo;
 	static GLuint s_ibo;

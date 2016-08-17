@@ -4,7 +4,7 @@ Gradient::Gradient(UiObject *parent) :
 	UiObject(parent),
 	m_topColor(200, 200, 200, 255),
 	m_bottomColor(250, 250, 250, 255),
-	m_font(Game::GetInstance()->getResourceManager()->get<Font>("Font"))
+	m_font(Resource<Font>("Font"))
 {
 }
 

@@ -74,17 +74,17 @@ public:
 		m_spriteBatch = new SpriteBatch(getWindow()->getGraphicsContext());
 
 		// Load font
-		m_font = getResourceManager()->get<Font>("Fonts/Debug_Font");
+		m_font = Resource<Font>("Fonts/Debug_Font");
 		m_font->setColor(Color(255));
 
 		// Load sprites
-		m_sceneTexture = getResourceManager()->get<Texture2D>("Sprites/Scene");
-		m_tileTexture = getResourceManager()->get<Texture2D>("Sprites/Tile");
+		m_sceneTexture = Resource<Texture2D>("Sprites/Scene");
+		m_tileTexture = Resource<Texture2D>("Sprites/Tile");
 		m_tileTexture->setWrapping(Texture2D::REPEAT);
 
 		// Load shaders
-		m_shadowMapShader = getResourceManager()->get<Shader>("Shaders/Shadow_Map");
-		m_shadowRenderShader = getResourceManager()->get<Shader>("Shaders/Shadow_Render");
+		m_shadowMapShader = Resource<Shader>("Shaders/Shadow_Map");
+		m_shadowRenderShader = Resource<Shader>("Shaders/Shadow_Render");
 
 		// Create light object
 		m_currentLight = new Light();

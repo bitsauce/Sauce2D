@@ -16,7 +16,7 @@ public:
 	void onStart(GameEvent*)
 	{
 		m_spriteBatch = new SpriteBatch(getWindow()->getGraphicsContext());
-		m_font = getResourceManager()->get<Font>("Arial");
+		m_font = Resource<Font>("Arial");
 	}
 
 	void onEnd(GameEvent*)

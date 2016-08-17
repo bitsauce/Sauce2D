@@ -12,10 +12,10 @@ class SAUCE_API RenderTarget2D
 	friend class GraphicsContext;
 public:
 	RenderTarget2D(const uint width, const uint height, const uint targetCount = 1, const PixelFormat &fmt = PixelFormat());
-	RenderTarget2D(Resource<Texture2D> target);
+	RenderTarget2D(shared_ptr<Texture2D> target);
 	~RenderTarget2D();
 
-	Resource<Texture2D> getTexture(const uint target = 0) { if(target < m_textureCount) return m_textures[target]; else return nullptr; }
+	shared_ptr<Texture2D> getTexture(const uint target = 0) { if(target < m_textureCount) return m_textures[target]; else return nullptr; }
 
 	uint getWidth() const { return m_width; }
 	uint getHeight() const { return m_height; }
@@ -29,7 +29,7 @@ private:
 
 	uint m_width, m_height;
 	uint m_textureCount;
-	Resource<Texture2D> *m_textures;
+	shared_ptr<Texture2D> *m_textures;
 };
 
 END_SAUCE_NAMESPACE

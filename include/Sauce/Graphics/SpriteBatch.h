@@ -33,7 +33,7 @@ public:
 
 	struct State
 	{
-		State(const SpriteSortMode mode = DEFERRED, const BlendState blendState = BlendState::PRESET_ALPHA_BLEND, const Matrix4 &transformationMatix = Matrix4(), Resource<Shader> shader = nullptr) :
+		State(const SpriteSortMode mode = DEFERRED, const BlendState blendState = BlendState::PRESET_ALPHA_BLEND, const Matrix4 &transformationMatix = Matrix4(), shared_ptr<Shader> shader = nullptr) :
 			mode(mode),
 			blendState(blendState),
 			transformationMatix(transformationMatix),
@@ -44,7 +44,7 @@ public:
 		SpriteSortMode mode;
 		BlendState blendState;
 		Matrix4 transformationMatix;
-		Resource<Shader> shader;
+		shared_ptr<Shader> shader;
 	};
 
 	void begin(const State &state = State());
@@ -61,7 +61,7 @@ private:
 
 	// SpriteBatch state
 	State m_state, m_prevState;
-	Resource<Texture2D> m_prevTexture;
+	shared_ptr<Texture2D> m_prevTexture;
 
 	// Set between begin() and end()
 	bool m_beingCalled;

@@ -295,6 +295,14 @@ public:
 	 */
 
 	FileReader &operator>>(char &c) { stream >> c; return *this; }
+	FileReader &operator>>(uchar &c)
+	{
+		stream >> c; return *this;
+	}
+	FileReader &operator>>(float &f)
+	{
+		stream >> f; return *this;
+	}
 
 private:
 	/** \brief	The stream. */
@@ -370,6 +378,11 @@ public:
 	 */
 
 	FileWriter &operator<<(char c) { stream << c; return *this; }
+
+	FileWriter &operator<<(float f)
+	{
+		stream << f; return *this;
+	}
 
 private:
 	/** \brief	The stream. */

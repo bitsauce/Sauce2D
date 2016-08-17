@@ -24,7 +24,7 @@ public:
 		return get(key, Vector2F(u0, v0), Vector2F(u1, v1));
 	}
 
-	Resource<Texture2D> getTexture() const
+	shared_ptr<Texture2D> getTexture() const
 	{
 		return m_texture;
 	}
@@ -60,7 +60,7 @@ public:
 
 private:
 	// Atlas texture
-	Resource<Texture2D> m_texture;
+	shared_ptr<Texture2D> m_texture;
 
 	// Atlas properties
 	int m_width, m_height;

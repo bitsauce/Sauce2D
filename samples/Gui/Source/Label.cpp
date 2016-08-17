@@ -2,7 +2,7 @@
 
 Label::Label(UiObject *parent) :
 	UiObject(parent),
-	m_font(Game::GetInstance()->getResourceManager()->get<Font>("Font.fnt")),
+	m_font(Resource<Font>("Font.fnt")),
 	m_text("")
 {
 	m_font.get()->setColor(Color(0, 0, 0, 255));

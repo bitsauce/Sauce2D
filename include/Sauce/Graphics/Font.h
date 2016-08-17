@@ -134,7 +134,7 @@ protected:
 	FontTextEncoding m_encoding;
 
 	map<int, CharDescr*> m_chars;
-	vector<Resource<Texture2D>> m_pages;
+	vector<shared_ptr<Texture2D>> m_pages;
 };
 
 template SAUCE_API class shared_ptr<Font>;

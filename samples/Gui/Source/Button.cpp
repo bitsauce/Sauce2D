@@ -2,10 +2,10 @@
 
 Button::Button(UiObject *parent) :
 	UiObject(parent),
-	m_texture(Game::GetInstance()->getResourceManager()->get<Texture2D>("ButtonInactive")),
-	m_textureHover(Game::GetInstance()->getResourceManager()->get<Texture2D>("ButtonHover")),
-	m_textureActive(Game::GetInstance()->getResourceManager()->get<Texture2D>("ButtonActive")),
-	m_font(Game::GetInstance()->getResourceManager()->get<Font>("Font")),
+	m_texture(Resource<Texture2D>("ButtonInactive")),
+	m_textureHover(Resource<Texture2D>("ButtonHover")),
+	m_textureActive(Resource<Texture2D>("ButtonActive")),
+	m_font(Resource<Font>("Font")),
 	m_text("Button")
 {
 	m_font.get()->setColor(Color(0, 0, 0, 255));

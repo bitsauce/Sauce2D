@@ -109,7 +109,7 @@ void SpriteBatch::end()
 				m_graphicsContext->setShader(m_state.shader);
 
 				// Separate sprites by depth and texture
-				map<float, map<Resource<Texture2D>, list<Sprite*>>> layerTextureMap;
+				map<float, map<shared_ptr<Texture2D>, list<Sprite*>>> layerTextureMap;
 				for(uint i = 0; i < m_spriteCount; ++i)
 				{
 					Sprite *sprite = &m_sprites[i];
@@ -117,11 +117,11 @@ void SpriteBatch::end()
 				}
 
 				// For each depth
-				for(map<float, map<Resource<Texture2D>, list<Sprite*>>>::iterator itr1 = layerTextureMap.begin(); itr1 != layerTextureMap.end(); ++itr1)
+				for(map<float, map<shared_ptr<Texture2D>, list<Sprite*>>>::iterator itr1 = layerTextureMap.begin(); itr1 != layerTextureMap.end(); ++itr1)
 				{
 					// For each texture
 					uint spriteCount = 0;
-					for(map<Resource<Texture2D>, list<Sprite*>>::iterator itr2 = itr1->second.begin(); itr2 != itr1->second.end(); ++itr2)
+					for(map<shared_ptr<Texture2D>, list<Sprite*>>::iterator itr2 = itr1->second.begin(); itr2 != itr1->second.end(); ++itr2)
 					{
 						// Batch all sprite vertex data
 						for(list<Sprite*>::iterator itr3 = itr2->second.begin(); itr3 != itr2->second.end(); ++itr3)
@@ -190,7 +190,7 @@ void SpriteBatch::flush()
 uint SpriteBatch::getTextureSwapCount() const
 {
 	// Separate sprites by depth and texture
-	map<float, map<Resource<Texture2D>, list<Sprite*>>> layerTextureMap;
+	map<float, map<shared_ptr<Texture2D>, list<Sprite*>>> layerTextureMap;
 	for(uint i = 0; i < m_spriteCount; ++i)
 	{
 		Sprite *sprite = &m_sprites[i];
@@ -199,10 +199,10 @@ uint SpriteBatch::getTextureSwapCount() const
 
 	// For each depth
 	uint textureSwapCount = 0;
-	for(map<float, map<Resource<Texture2D>, list<Sprite*>>>::iterator itr1 = layerTextureMap.begin(); itr1 != layerTextureMap.end(); ++itr1)
+	for(map<float, map<shared_ptr<Texture2D>, list<Sprite*>>>::iterator itr1 = layerTextureMap.begin(); itr1 != layerTextureMap.end(); ++itr1)
 	{
 		// For each texture
-		for(map<Resource<Texture2D>, list<Sprite*>>::iterator itr2 = itr1->second.begin(); itr2 != itr1->second.end(); ++itr2)
+		for(map<shared_ptr<Texture2D>, list<Sprite*>>::iterator itr2 = itr1->second.begin(); itr2 != itr1->second.end(); ++itr2)
 		{
 			// If we have sprites
 			if(itr2->second.size() > 0)

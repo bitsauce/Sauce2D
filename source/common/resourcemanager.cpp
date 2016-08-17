@@ -1,11 +1,3 @@
-//       ____  ____     ____                        _____             _            
-// __  _|___ \|  _ \   / ___| __ _ _ __ ___   ___  | ____|_ __   __ _(_)_ __   ___ 
-// \ \/ / __) | | | | | |  _ / _  |  _   _ \ / _ \ |  _| |  _ \ / _  | |  _ \ / _ \
-//  >  < / __/| |_| | | |_| | (_| | | | | | |  __/ | |___| | | | (_| | | | | |  __/
-// /_/\_\_____|____/   \____|\__ _|_| |_| |_|\___| |_____|_| |_|\__, |_|_| |_|\___|
-//                                                              |___/     
-//				Originally written by Marcus Loo Vergara (aka. Bitsauce)
-//									2011-2015 (C)
 
 #include <Sauce/Common.h>
 #include <Sauce/Graphics/Texture.h>
@@ -13,8 +5,13 @@
 
 BEGIN_SAUCE_NAMESPACE
 
+ResourceManager *ResourceManager::s_this = 0;
+
 ResourceManager::ResourceManager(const string &resourceFile)
 {
+	if(s_this) THROW("ResourceManager::s_this != 0");
+	s_this = this;
+
 	// Load resource file
 	if(util::fileExists(resourceFile))
 	{

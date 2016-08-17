@@ -10,7 +10,7 @@ TextureAtlas::TextureAtlas(const int width, const int height, const int border) 
 	m_height(height)
 {
 	// Create a texture for the atlas
-	m_texture = Resource<Texture2D>(new Texture2D(width, height));
+	m_texture = shared_ptr<Texture2D>(new Texture2D(width, height));
 	m_rectanglePacker.setMaxWidth(width);
 }
 

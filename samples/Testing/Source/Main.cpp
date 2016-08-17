@@ -8,7 +8,8 @@ using namespace sauce;
 // Rendering said image to the screen
 class DrawTexturedQuad : public Game
 {
-	Resource<Texture2D> texture, textureSaved;
+	Resource<Texture2D> texture;
+	shared_ptr<Texture2D> textureSaved;
 	StaticVertexBuffer *vbo;
 public:
 	DrawTexturedQuad() :
@@ -18,9 +19,9 @@ public:
 
 	void onStart(GameEvent *e)
 	{
-		texture = getResourceManager()->get<Texture2D>("Koala");
+		texture = Resource<Texture2D>("Koala");
 		texture->exportToFile(":/Content/Texture_Saved.png");
-		textureSaved = Resource<Texture2D>(new Texture2D(Pixmap("Texture_Saved.png")));
+		textureSaved = shared_ptr<Texture2D>(new Texture2D(Pixmap("Texture_Saved.png")));
 	}
 
 	void onEnd(GameEvent *e)
@@ -42,41 +43,7 @@ public:
 	}
 };
 
-int clickCount = 0;
-
-class Bug : public Game
-{
-	class A : public SceneObject
-	{
-		void onKeyDown(KeyEvent *e)
-		{
-			LOG("Click count: %i", ++clickCount);
-		}
-	};
-
-public:
-	Bug() :
-		Game("Bug")
-	{
-	}
-
-	void onStart(GameEvent *e)
-	{
-	}
-
-	void onEnd(GameEvent *e)
-	{
-	}
-
-	void onTick(TickEvent *e)
-	{
-	}
-
-	void onDraw(DrawEvent *e)
-	{
-	}
-};
-
+/*
 #define WORLD_HEIGHT 10
 #define WORLD_WIDTH 10
 #define TILE_WIDTH 120
@@ -251,26 +218,22 @@ public:
 		}
 	}
 };
+*/
 
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, INT)
 {
-	// Bug fix
-	{
-		Bug game;
-		if(game.run() != SAUCE_OK) return EXIT_FAILURE;
-	}
-
-	// Isometric
-	{
-		Testing game;
-		if(game.run() != SAUCE_OK) return EXIT_FAILURE;
-	}
 
 	// DrawTexturedQuad
 	{
 		DrawTexturedQuad game;
 		if(game.run() != SAUCE_OK) return EXIT_FAILURE;
 	}
+
+	// Isometric
+	/*{
+		Testing game;
+		if(game.run() != SAUCE_OK) return EXIT_FAILURE;
+	}*/
 
 	return EXIT_SUCCESS;
 }

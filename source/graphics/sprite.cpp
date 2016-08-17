@@ -12,7 +12,7 @@
 
 BEGIN_SAUCE_NAMESPACE
 
-Sprite::Sprite(Resource<Texture2D> texture, const Rect<float> &rectangle, const Vector2F &origin, const float angle, const TextureRegion &region, const Color &color, const float depth, const Vector2F scale) :
+Sprite::Sprite(shared_ptr<Texture2D> texture, const Rect<float> &rectangle, const Vector2F &origin, const float angle, const TextureRegion &region, const Color &color, const float depth, const Vector2F scale) :
 	m_texture(texture),
 	m_textureRegion(region),
 	m_position(rectangle.position),
@@ -204,7 +204,7 @@ TextureRegion Sprite::getRegion() const
 	return m_textureRegion;
 }
 
-Resource<Texture2D> Sprite::getTexture() const
+shared_ptr<Texture2D> Sprite::getTexture() const
 {
 	return m_texture;
 }

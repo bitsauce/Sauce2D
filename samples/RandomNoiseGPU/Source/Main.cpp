@@ -6,7 +6,7 @@ class RandomNoiseGPU : public Game
 {
 	Resource<Shader> m_noiseShader;
 	Resource<Texture2D> m_gradientTexture;
-	Resource<RenderTarget2D> m_renderTarget;
+	shared_ptr<RenderTarget2D> m_renderTarget;
 	float m_time;
 
 public:
@@ -18,9 +18,9 @@ public:
 
 	void onStart(GameEvent *e)
 	{
-		m_noiseShader = getResourceManager()->get<Shader>("Fractal2D_Gradient");
-		m_gradientTexture = getResourceManager()->get<Texture2D>("Gradient");
-		m_renderTarget = Resource<RenderTarget2D>(new RenderTarget2D(getWindow()->getWidth(), getWindow()->getHeight()));
+		m_noiseShader = Resource<Shader>("Fractal2D_Gradient");
+		m_gradientTexture = Resource<Texture2D>("Gradient");
+		m_renderTarget = shared_ptr<RenderTarget2D>(new RenderTarget2D(getWindow()->getWidth(), getWindow()->getHeight()));
 
 		/*m_noiseShader->setUniform1f("u_Frequency", 0.5f);
 		m_noiseShader->setUniform1f("u_Gain", 0.5f);

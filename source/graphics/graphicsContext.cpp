@@ -3,10 +3,10 @@
 BEGIN_SAUCE_NAMESPACE
 
 // Default shader. Used when no shader is set.
-Resource<Shader> GraphicsContext::s_defaultShader = 0;
+shared_ptr<Shader> GraphicsContext::s_defaultShader = 0;
 
 // Default texture. Empty texture used when no texture is set.
-Resource<Texture2D> GraphicsContext::s_defaultTexture = 0;
+shared_ptr<Texture2D> GraphicsContext::s_defaultTexture = 0;
 
 // Vertex array object
 GLuint GraphicsContext::s_vao = 0;
@@ -129,22 +129,22 @@ void GraphicsContext::popMatrix()
 	m_transformationMatrixStack.pop();
 }
 
-void GraphicsContext::setTexture(Resource<Texture2D> texture)
+void GraphicsContext::setTexture(shared_ptr<Texture2D> texture)
 {
 	m_texture = texture;
 }
 
-Resource<Texture2D> GraphicsContext::getTexture() const
+shared_ptr<Texture2D> GraphicsContext::getTexture() const
 {
 	return m_texture;
 }
 
-void GraphicsContext::setShader(Resource<Shader> shader)
+void GraphicsContext::setShader(shared_ptr<Shader> shader)
 {
 	m_shader = shader;
 }
 
-Resource<Shader> GraphicsContext::getShader() const
+shared_ptr<Shader> GraphicsContext::getShader() const
 {
 	return m_shader;
 }
@@ -216,7 +216,7 @@ void GraphicsContext::setupContext()
 	// Set blend func
 	glBlendFuncSeparate(m_blendState.m_src, m_blendState.m_dst, m_blendState.m_alphaSrc, m_blendState.m_alphaDst);
 
-	Resource<Shader> shader = m_shader;
+	shared_ptr<Shader> shader = m_shader;
 	if(!shader)
 	{
 		shader = s_defaultShader;

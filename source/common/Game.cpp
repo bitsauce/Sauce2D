@@ -195,11 +195,11 @@ int Game::run()
 			"	out_FragColor = texture(u_Texture, v_TexCoord) * v_VertexColor;\n"
 			"}\n";
 
-		GraphicsContext::s_defaultShader = Resource<Shader>(new Shader(vertexShader, fragmentShader));
+		GraphicsContext::s_defaultShader = shared_ptr<Shader>(new Shader(vertexShader, fragmentShader));
 
 		uchar pixel[4];
 		pixel[0] = pixel[1] = pixel[2] = pixel[3] = 255;
-		GraphicsContext::s_defaultTexture = Resource<Texture2D>(new Texture2D(1, 1, pixel));
+		GraphicsContext::s_defaultTexture = shared_ptr<Texture2D>(new Texture2D(1, 1, pixel));
 
 		// Initialize input handler
 		m_inputManager = new InputManager("InputConfig.xml");
