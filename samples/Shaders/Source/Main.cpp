@@ -15,7 +15,7 @@ public:
 
 	void onStart(GameEvent *e)
 	{
-		shader = getResourceManager()->get<Shader>("Shader");
+		shader = Resource<Shader>("Shader");
 		Game::onStart(e);
 	}
 
