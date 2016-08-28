@@ -274,6 +274,7 @@ public:
 	 * \param segments Number of triangle segments to divide the circle into.
 	 * \param color %Color of the circle.
 	 */
+	void drawCircleGradient(const Vector2F &pos, const float radius, const uint segments, const Color &center = Color(255), const Color &outer = Color(255));
 	void drawCircle(const Vector2F &pos, const float radius, const uint segments, const Color &color = Color(255));
 
 	/**
@@ -284,6 +285,7 @@ public:
 	 * \param segments Number of triangle segments to divide the circle into.
 	 * \param color %Color of the circle.
 	 */
+	void drawCircleGradient(const float x, const float y, const float radius, const uint segments, const Color &center = Color(255), const Color &outer = Color(255));
 	void drawCircle(const float x, const float y, const float radius, const uint segments, const Color &color = Color(255));
 
 	SDL_GLContext getSDLHandle() const
