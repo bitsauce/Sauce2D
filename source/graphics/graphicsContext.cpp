@@ -591,7 +591,7 @@ void GraphicsContext::drawRectangle(const Rect<float> &rect, const Color &color,
 	drawRectangle(rect.position.x, rect.position.y, rect.size.x, rect.size.y, color, textureRegion);
 }
 
-void GraphicsContext::drawCircle(const float x, const float y, const float radius, const uint segments, const Color &color)
+void GraphicsContext::drawCircleGradient(const float x, const float y, const float radius, const uint segments, const Color &center, const Color &outer)
 {
 	// Make sure we have enought vertices
 	if(m_vertices.size() < segments + 2)
@@ -600,23 +600,33 @@ void GraphicsContext::drawCircle(const float x, const float y, const float radiu
 	}
 
 	m_vertices[0].set2f(VERTEX_POSITION, x, y);
-	m_vertices[0].set4ub(VERTEX_COLOR, color.getR(), color.getG(), color.getB(), color.getA());
+	m_vertices[0].set4ub(VERTEX_COLOR, center.getR(), center.getG(), center.getB(), center.getA());
 	m_vertices[0].set2f(VERTEX_TEX_COORD, 0.5f, 0.5f);
 
 	for(uint i = 1; i < segments + 2; ++i)
 	{
 		float r = (2.0f * PI * i) / segments;
 		m_vertices[i].set2f(VERTEX_POSITION, x + cos(r) * radius, y + sin(r) * radius);
-		m_vertices[i].set4ub(VERTEX_COLOR, color.getR(), color.getG(), color.getB(), color.getA());
+		m_vertices[i].set4ub(VERTEX_COLOR, outer.getR(), outer.getG(), outer.getB(), outer.getA());
 		m_vertices[i].set2f(VERTEX_TEX_COORD, (1.0f + cos(r)) / 2.0f, (1.0f + sin(r)) / 2.0f);
 	}
 
 	drawPrimitives(PRIMITIVE_TRIANGLE_FAN, &m_vertices[0], segments + 2);
 }
 
-void GraphicsContext::drawCircle(const Vector2F &center, const float radius, const uint segments, const Color &color)
+void GraphicsContext::drawCircleGradient(const Vector2F &pos, const float radius, const uint segments, const Color &center, const Color &outer)
 {
-	drawCircle(center.x, center.y, radius, segments, color);
+	drawCircleGradient(pos.x, pos.y, radius, segments, center, outer);
+}
+
+void GraphicsContext::drawCircle(const float x, const float y, const float radius, const uint segments, const Color &color)
+{
+	drawCircleGradient(x, y, radius, segments, color, color);
+}
+
+void GraphicsContext::drawCircle(const Vector2F &pos, const float radius, const uint segments, const Color &color)
+{
+	drawCircleGradient(pos.x, pos.y, radius, segments, color, color);
 }
 
 END_SAUCE_NAMESPACE
