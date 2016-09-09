@@ -94,30 +94,33 @@ public:
 	{
 		GraphicsContext *context = e->getGraphicsContext();
 
-		const uint segments = 4;
+		Vertex *vertices = context->getVertices(5);
 
-		Vertex *vertices = context->getVertices(segments + 2);
-
-		float x = 100, y = 500;
-
-		vertices[0].set2f(VERTEX_POSITION, x, y);
+		vertices[0].set2f(VERTEX_POSITION, 0.0f, 0.0f);
 		vertices[0].set4ub(VERTEX_COLOR, 255, 255, 255, 255);
-		vertices[0].set2f(VERTEX_TEX_COORD, 0.5f, 0.5f);
 
-		float angle = 0.0f;
+		float dir = 0.0f;
+		float ang = PI / 4.0f;
+		float rad = 500.0f;
 
-		float f = angle - PI / 4.0f;
+		float f3 = dir - ang;
+		float f4 = dir + ang;
+		vertices[2].set2f(VERTEX_POSITION, cos(f3), sin(f3));
+		vertices[2].set4ub(VERTEX_COLOR, 0, 0, 0, 0);
+		vertices[3].set2f(VERTEX_POSITION, cos(f4), sin(f4));
+		vertices[3].set4ub(VERTEX_COLOR, 0, 0, 0, 0);
 
-		for(uint i = 1; i < segments + 2; ++i)
-		{
-			vertices[i].set2f(VERTEX_POSITION, x + cos(f) * 500, y + sin(f) * 500);
-			vertices[i].set4ub(VERTEX_COLOR, 0, 0, 0, 0);
-			vertices[i].set2f(VERTEX_TEX_COORD, (1.0f + cos(f)) / 2.0f, (1.0f + sin(f)) / 2.0f);
+		vertices[1].set2f(VERTEX_POSITION, cos(dir + PI) * 0.5f, sin(dir + PI) * 0.5f);
+		vertices[1].set4ub(VERTEX_COLOR, 0, 0, 0, 0);
+		vertices[4].set2f(VERTEX_POSITION, cos(dir + PI) * 0.5f, sin(dir + PI) * 0.5f);
+		vertices[4].set4ub(VERTEX_COLOR, 0, 0, 0, 0);
 
-			f += (PI / 2.0f) / (segments + 2);
-		}
-
-		context->drawPrimitives(GraphicsContext::PRIMITIVE_TRIANGLE_FAN, &vertices[0], segments + 2);
+		Matrix4 mat;
+		mat.scale(rad);
+		mat.translate(100, 500, 0.0);
+		context->pushMatrix(mat);
+		context->drawPrimitives(GraphicsContext::PRIMITIVE_TRIANGLE_FAN, &vertices[0], 5);
+		context->popMatrix();
 	}
 };
 
