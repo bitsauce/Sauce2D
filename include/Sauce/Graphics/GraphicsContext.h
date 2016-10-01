@@ -293,6 +293,8 @@ public:
 		return m_context;
 	}
 
+	Vertex *getVertices(const uint vertexCount);
+
 private:
 	GraphicsContext(Window *window);
 	~GraphicsContext();

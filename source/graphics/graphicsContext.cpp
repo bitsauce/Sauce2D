@@ -1,3 +1,4 @@
+#include "..\..\include\Sauce\Graphics\GraphicsContext.h"
 #include <Sauce/graphics.h>
 
 BEGIN_SAUCE_NAMESPACE
@@ -12,6 +13,15 @@ shared_ptr<Texture2D> GraphicsContext::s_defaultTexture = 0;
 GLuint GraphicsContext::s_vao = 0;
 GLuint GraphicsContext::s_vbo = 0;
 GLuint GraphicsContext::s_ibo = 0;
+
+Vertex *GraphicsContext::getVertices(const uint vertexCount)
+{
+	if(vertexCount > m_vertices.size())
+	{
+		m_vertices.resize(vertexCount);
+	}
+	return &m_vertices[0];
+}
 
 GraphicsContext::GraphicsContext(Window *window) :
 	m_window(window),
