@@ -43,7 +43,6 @@ public:
 	}
 };
 
-/*
 #define WORLD_HEIGHT 10
 #define WORLD_WIDTH 10
 #define TILE_WIDTH 120
@@ -57,6 +56,8 @@ class Testing : public Game
 	
 	RenderTarget2D *buildingsRT;
 	RenderTarget2D *unitsRT;
+
+	Texture2D *tileDepthTexture;
 
 	Resource<Shader> buildingsShader, unitShader;
 
@@ -78,13 +79,15 @@ public:
 	{
 		getWindow()->setSize(1280, 720);
 
-		tileTexture = getResourceManager()->get<Texture2D>("Tile");
-		buildingTexture = getResourceManager()->get<Texture2D>("Building");
-		unitATexture = getResourceManager()->get<Texture2D>("UnitA");
-		unitBTexture = getResourceManager()->get<Texture2D>("UnitB");
+		tileTexture = Resource<Texture2D>("Tile");
+		buildingTexture = Resource<Texture2D>("Building");
+		unitATexture = Resource<Texture2D>("UnitA");
+		unitBTexture = Resource<Texture2D>("UnitB");
 
-		buildingsShader = getResourceManager()->get<Shader>("BuildingsShader");
-		unitShader = getResourceManager()->get<Shader>("UnitShader");
+		buildingsShader = Resource<Shader>("BuildingsShader");
+		unitShader = Resource<Shader>("UnitShader");
+
+		tileDepthTexture = new Texture2D(WORLD_WIDTH * TILE_WIDTH, WORLD_HEIGHT * TILE_HEIGHT);
 
 		Vertex *vertices = new Vertex[WORLD_WIDTH * WORLD_HEIGHT * 4];
 		uint *indices = new uint[WORLD_WIDTH * WORLD_HEIGHT * 6];
@@ -93,18 +96,28 @@ public:
 			int y = i / WORLD_HEIGHT;
 			int x = i - y * WORLD_HEIGHT;
 
-			float xf = x + (y % 2 == 0 ? 0.0f : 0.5f);
-			float yf = y * 0.5f;
+			// Get tile coordinate
+			Vector3F origin = Vector3F((x - y - 1) * TILE_WIDTH / 2, (x + y) * ((TILE_HEIGHT - 1) / 2 + 1), 0);
 
-			vertices[i * 4 + 0].set2f(VERTEX_POSITION, xf,     yf);
-			vertices[i * 4 + 1].set2f(VERTEX_POSITION, xf + 1, yf);
-			vertices[i * 4 + 2].set2f(VERTEX_POSITION, xf,     yf + 1);
-			vertices[i * 4 + 3].set2f(VERTEX_POSITION, xf + 1, yf + 1);
+			vertices[i * 4 + 0].set2f(VERTEX_POSITION, origin.x, origin.y);
+			vertices[i * 4 + 1].set2f(VERTEX_POSITION, TILE_WIDTH*2 + origin.x, origin.y);
+			vertices[i * 4 + 3].set2f(VERTEX_POSITION, TILE_WIDTH*2 + origin.x, TILE_HEIGHT*2 + origin.y);
+			vertices[i * 4 + 2].set2f(VERTEX_POSITION, origin.x, TILE_HEIGHT*2 + origin.y);
 
-			vertices[i * 4 + 0].set2f(VERTEX_TEX_COORD, 0.0f, 0.0f);
-			vertices[i * 4 + 1].set2f(VERTEX_TEX_COORD, 1.0f, 0.0f);
-			vertices[i * 4 + 2].set2f(VERTEX_TEX_COORD, 0.0f, 1.0f);
-			vertices[i * 4 + 3].set2f(VERTEX_TEX_COORD, 1.0f, 1.0f);
+			if((x + y) % 2 == 0)
+			{
+				vertices[i * 4 + 0].set2f(VERTEX_TEX_COORD, 0.0f, 0.0f);
+				vertices[i * 4 + 1].set2f(VERTEX_TEX_COORD, 0.5f, 0.0f);
+				vertices[i * 4 + 2].set2f(VERTEX_TEX_COORD, 0.0f, 1.0f);
+				vertices[i * 4 + 3].set2f(VERTEX_TEX_COORD, 0.5f, 1.0f);
+			}
+			else
+			{
+				vertices[i * 4 + 0].set2f(VERTEX_TEX_COORD, 0.5f, 0.0f);
+				vertices[i * 4 + 1].set2f(VERTEX_TEX_COORD, 1.0f, 0.0f);
+				vertices[i * 4 + 2].set2f(VERTEX_TEX_COORD, 0.5f, 1.0f);
+				vertices[i * 4 + 3].set2f(VERTEX_TEX_COORD, 1.0f, 1.0f);
+			}
 
 			vertices[i * 4 + 0].set4ub(VERTEX_COLOR, 255, 255, 255, 255);
 			vertices[i * 4 + 1].set4ub(VERTEX_COLOR, 255, 255, 255, 255);
@@ -183,14 +196,10 @@ public:
 		GraphicsContext *context = e->getGraphicsContext();
 
 		// Draw tiles
-		Matrix4 tileMatrix;
-		tileMatrix.scale(TILE_WIDTH, TILE_HEIGHT, 1.0f);
-		context->pushMatrix(tileMatrix);
 		context->setTexture(tileTexture);
 		context->drawIndexedPrimitives(GraphicsContext::PRIMITIVE_TRIANGLES, tileVBO, tileIBO);
-		context->popMatrix();
 
-		if(showBuildings)
+		/*if(showBuildings)
 		{
 			drawBuildings(e->getGraphicsContext());
 		}
@@ -215,25 +224,24 @@ public:
 			float yf = y * 0.5f;
 			context->setTexture(unitBTexture);
 			context->drawRectangle(xf*TILE_WIDTH, yf*TILE_HEIGHT, TILE_WIDTH * 3, TILE_HEIGHT * 4);
-		}
+		}*/
 	}
 };
-*/
 
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, INT)
 {
 
 	// DrawTexturedQuad
-	{
+	/*{
 		DrawTexturedQuad game;
 		if(game.run() != SAUCE_OK) return EXIT_FAILURE;
-	}
+	}*/
 
 	// Isometric
-	/*{
+	{
 		Testing game;
 		if(game.run() != SAUCE_OK) return EXIT_FAILURE;
-	}*/
+	}
 
 	return EXIT_SUCCESS;
 }
