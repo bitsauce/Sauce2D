@@ -35,4 +35,10 @@
 		<vertexFilePath>UnitsShader.vert</vertexFilePath>
 		<fragmentFilePath>UnitsShader.frag</fragmentFilePath>
 	</shader>
+
+	<shader>
+		<name>TileDepth</name>
+		<vertexFilePath>TileDepth.vert</vertexFilePath>
+		<fragmentFilePath>TileDepth.frag</fragmentFilePath>
+	</shader>
 </resources>

@@ -93,6 +93,10 @@
   <ItemGroup>
     <Xml Include="..\Data\Resources.xml" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="..\Data\TileDepth.frag" />
+    <None Include="..\Data\TileDepth.vert" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
