@@ -52,19 +52,22 @@ class Testing : public Game
 {
 	Resource<Texture2D> tileTexture, buildingTexture, unitATexture, unitBTexture;
 
-	StaticVertexBuffer *buildingVBO;
-	StaticIndexBuffer *buildingIBO;
-	RenderTarget2D *buildingRenderTarget;
-	Resource<Shader> buildingDepthShader;
-
-	RenderTarget2D *unitDepthRenderTarget;
-	Resource<Shader> unitDepthShader;
-
 	StaticVertexBuffer *tileVBO;
 	StaticIndexBuffer *tileIBO;
-	RenderTarget2D *tileDepthRenderTarget;
+	RenderTarget2D *tileColorRenderTarget, *tileDepthRenderTarget;
 	Resource<Shader> tileDepthShader;
 
+	StaticVertexBuffer *buildingVBO;
+	StaticIndexBuffer *buildingIBO;
+	RenderTarget2D *buildingColorRenderTarget, *buildingDepthRenderTarget;
+	//Resource<Shader> buildingDepthShader;
+
+	StaticVertexBuffer *unitVBO;
+	StaticIndexBuffer *unitIBO;
+	RenderTarget2D *unitColorRenderTarget, *unitDepthRenderTarget;
+	Resource<Shader> unitDepthShader;
+
+	Resource<Shader> finalShader;
 
 	bool showBuildings;
 	bool showUnits;
@@ -89,14 +92,19 @@ public:
 		unitATexture = Resource<Texture2D>("UnitA");
 		unitBTexture = Resource<Texture2D>("UnitB");
 
-		buildingRenderTarget = new RenderTarget2D(getWindow()->getWidth(), getWindow()->getHeight());
-		buildingDepthShader = Resource<Shader>("BuildingDepth");
+		buildingColorRenderTarget = new RenderTarget2D(WORLD_WIDTH * TILE_WIDTH, WORLD_HEIGHT * TILE_HEIGHT);
+		buildingDepthRenderTarget = new RenderTarget2D(WORLD_WIDTH * TILE_WIDTH, WORLD_HEIGHT * TILE_HEIGHT);
+		//buildingDepthShader = Resource<Shader>("BuildingDepth");
 
-		unitDepthShader = Resource<Shader>("UnitDepth");
-		unitDepthRenderTarget = new RenderTarget2D(getWindow()->getWidth(), getWindow()->getHeight());
-
-		tileDepthShader = Resource<Shader>("TileDepth");
+		tileColorRenderTarget = new RenderTarget2D(WORLD_WIDTH * TILE_WIDTH, WORLD_HEIGHT * TILE_HEIGHT);
 		tileDepthRenderTarget = new RenderTarget2D(WORLD_WIDTH * TILE_WIDTH, WORLD_HEIGHT * TILE_HEIGHT);
+		tileDepthShader = Resource<Shader>("TileDepth");
+
+		unitColorRenderTarget = new RenderTarget2D(WORLD_WIDTH * TILE_WIDTH, WORLD_HEIGHT * TILE_HEIGHT);
+		unitDepthRenderTarget = new RenderTarget2D(WORLD_WIDTH * TILE_WIDTH, WORLD_HEIGHT * TILE_HEIGHT);
+		unitDepthShader = Resource<Shader>("UnitDepth");
+
+		finalShader = Resource<Shader>("FinalShader");
 
 		VertexFormat fmt;
 		fmt.set(VERTEX_POSITION, 3);
@@ -153,8 +161,8 @@ public:
 		//delete[] indices;
 
 		int buildingCount = 0;
-		vertices = fmt.createVertices(WORLD_WIDTH * WORLD_HEIGHT * 4);
-		indices = new uint[WORLD_WIDTH * WORLD_HEIGHT * 6];
+		vertices = fmt.createVertices(2 * 4);
+		indices = new uint[2 * 6];
 
 		{
 			int y = 5;
@@ -162,25 +170,15 @@ public:
 
 			Vector2F origin = Vector2F((x - y) * TILE_WIDTH / 2, (x + y) * math::ceil(TILE_HEIGHT / 2.0f));
 
-			vertices[buildingCount * 4 + 0].set3f(VERTEX_POSITION, origin.x, origin.y, (x + y) / 18.0f);
-			vertices[buildingCount * 4 + 1].set3f(VERTEX_POSITION, TILE_WIDTH + origin.x, origin.y, (x + y) / 18.0f);
-			vertices[buildingCount * 4 + 3].set3f(VERTEX_POSITION, TILE_WIDTH + origin.x, TILE_HEIGHT * 2 + origin.y, (x + y) / 18.0f);
-			vertices[buildingCount * 4 + 2].set3f(VERTEX_POSITION, origin.x, TILE_HEIGHT * 2 + origin.y, (x + y) / 18.0f);
+			vertices[buildingCount * 4 + 0].set3f(VERTEX_POSITION, origin.x, origin.y, (x + y + 1) / 18.0f);
+			vertices[buildingCount * 4 + 1].set3f(VERTEX_POSITION, TILE_WIDTH + origin.x, origin.y, (x + y + 1) / 18.0f);
+			vertices[buildingCount * 4 + 3].set3f(VERTEX_POSITION, TILE_WIDTH + origin.x, TILE_HEIGHT * 2 + origin.y, (x + y + 1) / 18.0f);
+			vertices[buildingCount * 4 + 2].set3f(VERTEX_POSITION, origin.x, TILE_HEIGHT * 2 + origin.y, (x + y + 1) / 18.0f);
 
-			if((x + y) % 2 == 0)
-			{
-				vertices[buildingCount * 4 + 0].set2f(VERTEX_TEX_COORD, 0.0f, 0.0f);
-				vertices[buildingCount * 4 + 1].set2f(VERTEX_TEX_COORD, 0.5f, 0.0f);
-				vertices[buildingCount * 4 + 2].set2f(VERTEX_TEX_COORD, 0.0f, 1.0f);
-				vertices[buildingCount * 4 + 3].set2f(VERTEX_TEX_COORD, 0.5f, 1.0f);
-			}
-			else
-			{
-				vertices[buildingCount * 4 + 0].set2f(VERTEX_TEX_COORD, 0.5f, 0.0f);
-				vertices[buildingCount * 4 + 1].set2f(VERTEX_TEX_COORD, 1.0f, 0.0f);
-				vertices[buildingCount * 4 + 2].set2f(VERTEX_TEX_COORD, 0.5f, 1.0f);
-				vertices[buildingCount * 4 + 3].set2f(VERTEX_TEX_COORD, 1.0f, 1.0f);
-			}
+			vertices[buildingCount * 4 + 0].set2f(VERTEX_TEX_COORD, 0.0f, 0.0f);
+			vertices[buildingCount * 4 + 1].set2f(VERTEX_TEX_COORD, 1.0f, 0.0f);
+			vertices[buildingCount * 4 + 2].set2f(VERTEX_TEX_COORD, 0.0f, 1.0f);
+			vertices[buildingCount * 4 + 3].set2f(VERTEX_TEX_COORD, 1.0f, 1.0f);
 
 			vertices[buildingCount * 4 + 0].set4ub(VERTEX_COLOR, 255, 255, 255, 255);
 			vertices[buildingCount * 4 + 1].set4ub(VERTEX_COLOR, 255, 255, 255, 255);
@@ -203,10 +201,10 @@ public:
 
 			Vector2F origin = Vector2F((x - y) * TILE_WIDTH / 2, (x + y) * math::ceil(TILE_HEIGHT / 2.0f));
 
-			vertices[buildingCount * 4 + 0].set3f(VERTEX_POSITION, origin.x, origin.y, (x + y) / 18.0f);
-			vertices[buildingCount * 4 + 1].set3f(VERTEX_POSITION, TILE_WIDTH + origin.x, origin.y, (x + y) / 18.0f);
-			vertices[buildingCount * 4 + 3].set3f(VERTEX_POSITION, TILE_WIDTH + origin.x, TILE_HEIGHT * 2 + origin.y, (x + y) / 18.0f);
-			vertices[buildingCount * 4 + 2].set3f(VERTEX_POSITION, origin.x, TILE_HEIGHT * 2 + origin.y, (x + y) / 18.0f);
+			vertices[buildingCount * 4 + 0].set3f(VERTEX_POSITION, origin.x, origin.y, (x + y + 1) / 18.0f);
+			vertices[buildingCount * 4 + 1].set3f(VERTEX_POSITION, TILE_WIDTH + origin.x, origin.y, (x + y + 1) / 18.0f);
+			vertices[buildingCount * 4 + 3].set3f(VERTEX_POSITION, TILE_WIDTH + origin.x, TILE_HEIGHT * 2 + origin.y, (x + y + 1) / 18.0f);
+			vertices[buildingCount * 4 + 2].set3f(VERTEX_POSITION, origin.x, TILE_HEIGHT * 2 + origin.y, (x + y + 1) / 18.0f);
 
 			vertices[buildingCount * 4 + 0].set2f(VERTEX_TEX_COORD, 0.0f, 0.0f);
 			vertices[buildingCount * 4 + 1].set2f(VERTEX_TEX_COORD, 1.0f, 0.0f);
@@ -228,11 +226,49 @@ public:
 			buildingCount++;
 		}
 
-		buildingVBO = new StaticVertexBuffer(vertices, WORLD_WIDTH * WORLD_HEIGHT * 4);
-		buildingIBO = new StaticIndexBuffer(indices, WORLD_WIDTH * WORLD_HEIGHT * 6);
+		buildingVBO = new StaticVertexBuffer(vertices, buildingCount * 4);
+		buildingIBO = new StaticIndexBuffer(indices, buildingCount * 6);
 
 		//delete[] vertices;
 		//delete[] indices;
+
+		int unitCount = 0;
+		vertices = fmt.createVertices(1 * 4);
+		indices = new uint[1 * 6];
+
+		{
+			int y = 4;
+			int x = 2 - 1;
+
+			Vector2F origin = Vector2F((x - y) * TILE_WIDTH / 2, (x + y) * math::ceil(TILE_HEIGHT / 2.0f));
+
+			vertices[unitCount * 4 + 0].set3f(VERTEX_POSITION, origin.x, origin.y, (x + y - 0) / 18.0f);
+			vertices[unitCount * 4 + 1].set3f(VERTEX_POSITION, TILE_WIDTH * 3 + origin.x, origin.y, (x + y - 0) / 18.0f);
+			vertices[unitCount * 4 + 3].set3f(VERTEX_POSITION, TILE_WIDTH * 3 + origin.x, TILE_HEIGHT * 4 + origin.y, (x + y + 6) / 18.0f);
+			vertices[unitCount * 4 + 2].set3f(VERTEX_POSITION, origin.x, TILE_HEIGHT * 4 + origin.y, (x + y + 6) / 18.0f);
+
+			vertices[unitCount * 4 + 0].set2f(VERTEX_TEX_COORD, 0.0f, 0.0f);
+			vertices[unitCount * 4 + 1].set2f(VERTEX_TEX_COORD, 1.0f, 0.0f);
+			vertices[unitCount * 4 + 2].set2f(VERTEX_TEX_COORD, 0.0f, 1.0f);
+			vertices[unitCount * 4 + 3].set2f(VERTEX_TEX_COORD, 1.0f, 1.0f);
+
+			vertices[unitCount * 4 + 0].set4ub(VERTEX_COLOR, 255, 255, 255, 255);
+			vertices[unitCount * 4 + 1].set4ub(VERTEX_COLOR, 255, 255, 255, 255);
+			vertices[unitCount * 4 + 2].set4ub(VERTEX_COLOR, 255, 255, 255, 255);
+			vertices[unitCount * 4 + 3].set4ub(VERTEX_COLOR, 255, 255, 255, 255);
+
+			indices[unitCount * 6 + 0] = unitCount * 4 + 0;
+			indices[unitCount * 6 + 1] = unitCount * 4 + 2;
+			indices[unitCount * 6 + 2] = unitCount * 4 + 1;
+			indices[unitCount * 6 + 3] = unitCount * 4 + 1;
+			indices[unitCount * 6 + 4] = unitCount * 4 + 2;
+			indices[unitCount * 6 + 5] = unitCount * 4 + 3;
+
+			unitCount++;
+		}
+
+		unitVBO = new StaticVertexBuffer(vertices, unitCount * 4);
+		unitIBO = new StaticIndexBuffer(indices, unitCount * 6);
 	}
 
 	void onTick(TickEvent *e)
@@ -248,74 +284,91 @@ public:
 		else if(e->getScancode() == SAUCE_SCANCODE_3) showTiles = !showTiles;
 	}
 
-	void drawBuildings(GraphicsContext *context)
-	{
-		//context->setRenderTarget(buildingRenderTarget);
-
-		context->setShader(tileDepthShader);
-		tileDepthShader->setSampler2D("u_Texture", buildingTexture);
-
-		context->drawIndexedPrimitives(GraphicsContext::PRIMITIVE_TRIANGLES, buildingVBO, buildingIBO);
-
-		context->setShader(0);
-	}
-
 	void onDraw(DrawEvent *e)
 	{
 		GraphicsContext *context = e->getGraphicsContext();
 
-		context->pushMatrix(Matrix4().translate(5.25f * TILE_WIDTH, 0.0f, 0.0f));
+		Matrix4 mat;
+		mat.translate(5.25f * TILE_WIDTH, 0.0f, 0.0f);
 
-		// Draw tiles
+		// Quick note: You might be able to draw both the color and the depth
+		// in one pass using multiple render targets
+
+		// Draw tile depth
+		context->setRenderTarget(tileDepthRenderTarget);
+		context->pushMatrix(mat);
+		context->setShader(tileDepthShader);
+		tileDepthShader->setSampler2D("u_Texture", tileTexture);
+		context->drawIndexedPrimitives(GraphicsContext::PRIMITIVE_TRIANGLES, tileVBO, tileIBO);
+		context->setShader(0);
+		context->popMatrix();
+		context->setRenderTarget(0);
+
+		// Draw tile color
+		context->setRenderTarget(tileColorRenderTarget);
+		context->pushMatrix(mat);
+		context->setTexture(tileTexture);
+		context->drawIndexedPrimitives(GraphicsContext::PRIMITIVE_TRIANGLES, tileVBO, tileIBO);
+		context->popMatrix();
+		context->setRenderTarget(0);
+
+		// Draw building depth
+		context->setRenderTarget(buildingDepthRenderTarget);
+		context->pushMatrix(mat);
+		context->setShader(tileDepthShader);
+		tileDepthShader->setSampler2D("u_Texture", buildingTexture);
+		context->drawIndexedPrimitives(GraphicsContext::PRIMITIVE_TRIANGLES, buildingVBO, buildingIBO);
+		context->setShader(0);
+		context->popMatrix();
+		context->setRenderTarget(0);
+
+		// Draw building color
+		context->setRenderTarget(buildingColorRenderTarget);
+		context->pushMatrix(mat);
+		context->setTexture(buildingTexture);
+		context->drawIndexedPrimitives(GraphicsContext::PRIMITIVE_TRIANGLES, buildingVBO, buildingIBO);
+		context->popMatrix();
+		context->setRenderTarget(0);
+
+		// Draw unit depth
+		context->setRenderTarget(unitDepthRenderTarget);
+		context->pushMatrix(mat);
+		context->setShader(unitDepthShader);
+		unitDepthShader->setSampler2D("u_Texture", unitATexture);
+		unitDepthShader->setSampler2D("u_TileDepthTexture", tileDepthRenderTarget->getTexture());
+		context->drawIndexedPrimitives(GraphicsContext::PRIMITIVE_TRIANGLES, unitVBO, unitIBO);
+		context->setShader(0);
+		context->popMatrix();
+		context->setRenderTarget(0);
+
+		// Draw unit color
+		context->setRenderTarget(unitColorRenderTarget);
+		context->pushMatrix(mat);
+		context->setTexture(unitATexture);
+		context->drawIndexedPrimitives(GraphicsContext::PRIMITIVE_TRIANGLES, unitVBO, unitIBO);
+		context->popMatrix();
+		context->setRenderTarget(0);
+
+
 		if(getInputManager()->getKeyState(SAUCE_KEY_K))
 		{
-			context->setShader(tileDepthShader);
-			tileDepthShader->setSampler2D("u_Texture", tileTexture);
+			context->setTexture(unitDepthRenderTarget->getTexture());
+			context->drawRectangle(0, 0, unitDepthRenderTarget->getTexture()->getWidth(), unitDepthRenderTarget->getTexture()->getHeight());
 		}
 		else
 		{
-			context->setTexture(tileTexture);
-		}
 
-		context->drawIndexedPrimitives(GraphicsContext::PRIMITIVE_TRIANGLES, tileVBO, tileIBO);
-
-		if(getInputManager()->getKeyState(SAUCE_KEY_K))
-		{
+			// Draw final
+			context->setShader(finalShader);
+			finalShader->setSampler2D("u_TileColorTexture", tileColorRenderTarget->getTexture());
+			finalShader->setSampler2D("u_TileDepthTexture", tileDepthRenderTarget->getTexture());
+			finalShader->setSampler2D("u_BuildingColorTexture", buildingColorRenderTarget->getTexture());
+			finalShader->setSampler2D("u_BuildingDepthTexture", buildingDepthRenderTarget->getTexture());
+			finalShader->setSampler2D("u_UnitColorTexture", unitColorRenderTarget->getTexture());
+			finalShader->setSampler2D("u_UnitDepthTexture", unitDepthRenderTarget->getTexture());
+			context->drawRectangle(0, 0, WORLD_WIDTH * TILE_WIDTH, WORLD_HEIGHT * TILE_HEIGHT);
 			context->setShader(0);
 		}
-
-		//context->setRenderTarget(tileDepthRenderTarget);
-
-
-		//context->setRenderTarget(0);
-
-		if(showBuildings)
-		{
-			drawBuildings(e->getGraphicsContext());
-		}
-		context->popMatrix();
-
-		// Draw units
-	/*	{
-			int y = 1;
-			int x = 3;
-
-			float xf = x + (y % 2 == 0 ? 0.0f : 0.5f);
-			float yf = y * 0.5f;
-			context->setTexture(unitATexture);
-			context->drawRectangle(xf*TILE_WIDTH, yf*TILE_HEIGHT, TILE_WIDTH*3, TILE_HEIGHT * 4);
-		}
-
-
-		{
-			int y = 1;
-			int x = 3;
-
-			float xf = x + (y % 2 == 0 ? 0.0f : 0.5f);
-			float yf = y * 0.5f;
-			context->setTexture(unitBTexture);
-			context->drawRectangle(xf*TILE_WIDTH, yf*TILE_HEIGHT, TILE_WIDTH * 3, TILE_HEIGHT * 4);
-		}*/
 	}
 };
 

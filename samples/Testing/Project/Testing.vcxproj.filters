@@ -18,5 +18,17 @@
     <None Include="..\Data\TileDepth.frag">
       <Filter>Data</Filter>
     </None>
+    <None Include="..\Data\FinalShader.vert">
+      <Filter>Data</Filter>
+    </None>
+    <None Include="..\Data\FinalShader.frag">
+      <Filter>Data</Filter>
+    </None>
+    <None Include="..\Data\UnitDepth.vert">
+      <Filter>Data</Filter>
+    </None>
+    <None Include="..\Data\UnitDepth.frag">
+      <Filter>Data</Filter>
+    </None>
   </ItemGroup>
 </Project>

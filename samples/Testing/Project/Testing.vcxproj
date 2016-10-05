@@ -94,8 +94,12 @@
     <Xml Include="..\Data\Resources.xml" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\Data\FinalShader.frag" />
+    <None Include="..\Data\FinalShader.vert" />
     <None Include="..\Data\TileDepth.frag" />
     <None Include="..\Data\TileDepth.vert" />
+    <None Include="..\Data\UnitDepth.frag" />
+    <None Include="..\Data\UnitDepth.vert" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
