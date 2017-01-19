@@ -1,6 +1,15 @@
 #include "..\..\include\Sauce\Graphics\GraphicsContext.h"
 #include <Sauce/graphics.h>
 
+#define GL_CHECK_ERROR \
+	{ \
+		GLenum error; \
+		if((error = glGetError()) != GL_NO_ERROR) \
+		{ \
+			THROW("glGetError() returned 0x%X", error); \
+		} \
+	}
+
 BEGIN_SAUCE_NAMESPACE
 
 // Default shader. Used when no shader is set.
@@ -351,10 +360,10 @@ void GraphicsContext::drawIndexedPrimitives(const PrimitiveType type, const Vert
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 
-	GL_CHECK_ERROR
+	GL_CHECK_ERROR;
 
-		// Release vertex data
-		delete[] vertexData;
+	// Release vertex data
+	delete[] vertexData;
 }
 
 void GraphicsContext::drawIndexedPrimitives(const PrimitiveType type, const VertexBuffer *vbo, const IndexBuffer *ibo)
@@ -421,7 +430,7 @@ void GraphicsContext::drawIndexedPrimitives(const PrimitiveType type, const Vert
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 
-	GL_CHECK_ERROR
+	GL_CHECK_ERROR;
 }
 
 void GraphicsContext::drawPrimitives(const PrimitiveType type, const Vertex *vertices, const uint vertexCount)
@@ -494,10 +503,10 @@ void GraphicsContext::drawPrimitives(const PrimitiveType type, const Vertex *ver
 	// Reset vbo buffers
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 
-	GL_CHECK_ERROR
+	GL_CHECK_ERROR;
 
-		// Release vertex data
-		delete[] vertexData;
+	// Release vertex data
+	delete[] vertexData;
 }
 
 void GraphicsContext::drawPrimitives(const PrimitiveType type, const VertexBuffer *vbo)
@@ -562,12 +571,12 @@ void GraphicsContext::drawPrimitives(const PrimitiveType type, const VertexBuffe
 	// Reset vbo buffers
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 
-	GL_CHECK_ERROR
+	GL_CHECK_ERROR;
 }
 
 void GraphicsContext::drawRectangle(const float x, const float y, const float width, const float height, const Color &color, const TextureRegion &textureRegion)
 {
-	// Make sure we have enought vertices
+	// Make sure we have enough vertices
 	if(m_vertices.size() < 4)
 	{
 		m_vertices.resize(4);

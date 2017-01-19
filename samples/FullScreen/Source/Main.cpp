@@ -20,7 +20,7 @@ public:
 	/* Consturctor for our game class */
 	FullScreenGame() :
 		/* cg::Game class takes a string which is the game name. */
-		Game("FullScreen")
+		Game("FullScreen", SAUCE_WINDOW_RESIZABLE)
 	{
 	}
 

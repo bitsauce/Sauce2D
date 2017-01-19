@@ -12,7 +12,7 @@ class GuiGame : public Game
 
 public:
 	GuiGame() :
-		Game("Gui")
+		Game("Gui", SAUCE_WINDOW_RESIZABLE)
 	{
 	}
 

@@ -27,10 +27,10 @@ Game *Game::s_game = 0;
 
 // TODO: Might want to do some validation check on the name
 // and org name so that the pref path won't bug out
-Game::Game(const string &name, const string &organization) :
+Game::Game(const string &name, const string &organization, const uint flags) :
 	m_name(name),
 	m_organization(organization),
-	m_flags(0),
+	m_flags(flags),
 	m_initialized(false),
 	m_paused(false),
 	m_running(false)
@@ -40,6 +40,11 @@ Game::Game(const string &name, const string &organization) :
 		THROW("A game already exists!");
 	}
 	s_game = this;
+}
+
+Game::Game(const string &name, const uint flags) :
+	Game(name, SAUCE_DEFAULT_ORGANIZATION, flags)
+{
 }
 
 Game::~Game()
@@ -114,8 +119,14 @@ int Game::run()
 		// Initialize resource manager
 		m_resourceManager = new ResourceManager("Resources.xml");
 
+		Uint8 windowFlags = 0;
+		if(isEnabled(SAUCE_WINDOW_RESIZABLE))
+		{
+			windowFlags |= SDL_WINDOW_RESIZABLE;
+		}
+
 		// Initialize window
-		Window *mainWindow = new Window(m_name.c_str(), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 1280, 720, 0);
+		Window *mainWindow = new Window(m_name.c_str(), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 1280, 720, windowFlags);
 		m_windows.push_back(mainWindow);
 		GraphicsContext *graphicsContext = mainWindow->getGraphicsContext();
 
@@ -450,11 +461,6 @@ void Game::end()
 void Game::setPaused(const bool paused)
 {
 	m_paused = paused;
-}
-
-void Game::setFlags(const uint flags)
-{
-	m_flags = flags;
 }
 
 uint Game::getFlags() const

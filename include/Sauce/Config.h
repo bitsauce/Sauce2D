@@ -84,6 +84,8 @@ typedef unsigned long ulong;
 #define BEGIN_SAUCE_NAMESPACE namespace sauce {
 #define END_SAUCE_NAMESPACE }
 
+#define SAUCE_DEFAULT_ORGANIZATION "SuperSauceEngine"
+
 BEGIN_SAUCE_NAMESPACE
 
 /*********************************************************************
@@ -105,7 +107,8 @@ enum EngineFlag
 	SAUCE_EXPORT_LOG				= 1 << 0, ///< Export the output log to a log file.
 	SAUCE_RUN_IN_BACKGROUND			= 1 << 1, ///< This will allow the program to run while not focused.
 	SAUCE_BLOCK_BACKGROUND_INPUT	= 1 << 2, ///< If SAUCE_RUN_IN_BACKGROUND is set, this will block input while program is out of focus. 
-	SAUCE_VERBOSE					= 1 << 4  ///< This will make the engine produce more verbose messages from engine calls.
+	SAUCE_VERBOSE					= 1 << 4,  ///< This will make the engine produce more verbose messages from engine calls.
+	SAUCE_WINDOW_RESIZABLE			= 1 << 5
 };
 
 /*********************************************************************

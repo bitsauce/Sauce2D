@@ -1174,7 +1174,8 @@ class SpriteBatch;
 class SAUCE_API Game : public SceneObject
 {
 public:
-	Game(const string &name, const string &organization = "SuperSauce");
+	Game(const string &name, const string &organization = SAUCE_DEFAULT_ORGANIZATION, const uint flags = 0);
+	Game(const string &name, const uint flags);
 	~Game();
 
 public:
@@ -1188,7 +1189,6 @@ public:
 	void setPaused(const bool paused);
 
 	// Check game config
-	void setFlags(const uint flags);
 	uint getFlags() const;
 	bool isEnabled(const EngineFlag flag);
 
@@ -1323,7 +1323,7 @@ private:
 	Console			*m_console;
 
 	/** \brief	Engine running flags. */
-	uint m_flags;
+	const uint m_flags;
 
 	/**
 	 * \property	string m_binaryPath, m_prefPath
