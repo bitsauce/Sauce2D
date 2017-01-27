@@ -82,14 +82,14 @@ bool util::strToBool(const string &str)
 string util::intToStr(const int value)
 {
 	stringstream ss;
-	(stringstream&) ss << value;
+	ss << value;
 	return ss.str();
 }
 
 string util::floatToStr(const float value)
 {
 	stringstream ss;
-	(stringstream&) ss << value;
+	ss << value;
 	return ss.str();
 }
 

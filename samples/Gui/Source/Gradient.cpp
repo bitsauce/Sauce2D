@@ -10,7 +10,8 @@ Gradient::Gradient(UiObject *parent) :
 
 void Gradient::onDraw(DrawEvent *e)
 {
-	RectI rect = getDrawRect();
+	RectI rect = { Vector2I(0), e->getGraphicsContext()->getSize() };
+
 	GraphicsContext *g = e->getGraphicsContext();
 
 	// Draw gradient
@@ -30,7 +31,7 @@ void Gradient::onDraw(DrawEvent *e)
 	Vector2I pos = game->getInputManager()->getPosition();
 	string str = "FPS: " + util::floatToStr(game->getFPS()) + "\nCursor Pos: " + util::intToStr(pos.x) + ", " + util::intToStr(pos.y) + "\nCanvas aspect ratio: " + util::floatToStr((float)rect.size.y / (float)rect.size.x);
 
-	m_font.get()->draw(spriteBatch, Vector2F(10.0f), str);
+	m_font->draw(spriteBatch, rect.position + Vector2F(10.0f), str);
 
 	SceneObject::onDraw(e);
 }

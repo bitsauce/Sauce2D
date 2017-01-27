@@ -26,22 +26,8 @@ Canvas::Canvas(Window *window, const int width, const int height) :
 void Canvas::onWindowSizeChanged(WindowEvent *e)
 {
 	Vector2F size;
-	if(m_canvasWidth <= 0 || m_canvasHeight <= 0)
-	{
-		size.set(e->getWidth(), e->getHeight());
-	}
-	else if(e->getWidth() > e->getHeight())
-	{
-		// Fit width and use inverse aspect ratio
-		size.x = (float) min(m_canvasWidth, e->getWidth());
-		size.y = size.x * (float) m_canvasHeight / (float) m_canvasWidth;
-	}
-	else
-	{
-		// Fit height and use aspect ratio
-		size.y = (float) min(m_canvasHeight, e->getHeight());
-		size.x = size.y * (float) m_canvasWidth / (float) m_canvasHeight;
-	}
+	size.x = (float) min(m_canvasWidth, e->getWidth());
+	size.y = (float) min(m_canvasHeight, e->getHeight());
 	setSize(size);
 	UiObject::onWindowSizeChanged(e);
 }

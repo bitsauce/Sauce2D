@@ -75,12 +75,11 @@ class Testing : public Game
 
 public:
 	Testing() :
-		Game("Testing"),
+		Game("Testing", SAUCE_RUN_IN_BACKGROUND),
 		showBuildings(true),
 		showUnits(true),
 		showTiles(true)
 	{
-		setFlags(SAUCE_RUN_IN_BACKGROUND);
 	}
 
 	void onStart(GameEvent *)
@@ -376,16 +375,16 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, INT)
 {
 
 	// DrawTexturedQuad
-	/*{
+	{
 		DrawTexturedQuad game;
 		if(game.run() != SAUCE_OK) return EXIT_FAILURE;
-	}*/
+	}
 
 	// Isometric
-	{
+	/*{
 		Testing game;
 		if(game.run() != SAUCE_OK) return EXIT_FAILURE;
-	}
+	}*/
 
 	return EXIT_SUCCESS;
 }
