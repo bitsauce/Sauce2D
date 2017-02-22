@@ -31,7 +31,7 @@ SauceEngine is a game engine built on the [Simple DirectMedia Library](https://w
 * Rectangle packer class
 
 # Samples Included
-* **DrawText**: Shows how to draw text from a [BMFont](http://www.angelcode.com/products/bmfont/) file. This includes drawing text bound to a box and colored text.
+* **DrawText**: Shows how to draw text from using [BMFont](http://www.angelcode.com/products/bmfont/). This includes drawing text bound to a box and colored text.
 * **Gui**: Shows an implementation of a Graphical User Interface. This sample includes a line-edit which supports most of the common features of a single-line text-editor. Also features a button. The GUI-element supports relative positioning and anchoring.
 * **Keybinds**: Shows how to bind keys to methods/functions, and how to use InputContexts.
 * **RandomNoiseGPU**: Shows how to render random noise on the GPU using shaders.
@@ -45,3 +45,4 @@ SauceEngine is a game engine built on the [Simple DirectMedia Library](https://w
 * Joystick/Gamepad input
 * Networking
 * Multi-platform support
+* Multi-language support
