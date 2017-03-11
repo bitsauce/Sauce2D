@@ -269,6 +269,35 @@ public:
 	void drawRectangle(const float x, const float y, const float width, const float height, const Color &color = Color(255), const TextureRegion &textureRegion = TextureRegion());
 
 	/**
+	* Renders a rectangle outline.
+	* \param rect Rectangle to render.
+	* \param color %Color of the rectangle.
+	* \param textureRegion Texture region of the rectangle.
+	*/
+	void drawRectangleOutline(const Rect<float> &rect, const Color &color = Color(255), const TextureRegion &textureRegion = TextureRegion());
+
+
+	/**
+	* Renders a rectangle outline.
+	* \param pos Top-left corner of the rectangle.
+	* \param size Size of the rectangle.
+	* \param color %Color of the rectangle.
+	* \param textureRegion Texture region of the rectangle.
+	*/
+	void drawRectangleOutline(const Vector2F &pos, const Vector2F &size, const Color &color = Color(255), const TextureRegion &textureRegion = TextureRegion());
+
+	/**
+	* Renders a rectangle outline.
+	* \param x Left x position of the rectangle.
+	* \param y Top y position of the rectangle.
+	* \param width Width of the rectangle.
+	* \param height Height of the rectangle.
+	* \param color %Color of the rectangle.
+	* \param textureRegion Texture region of the rectangle.
+	*/
+	void drawRectangleOutline(const float x, const float y, const float width, const float height, const Color &color = Color(255), const TextureRegion &textureRegion = TextureRegion());
+
+	/**
 	 * Renders a circle.
 	 * \param pos Center of the circle.
 	 * \param radius Radius of the circle.
