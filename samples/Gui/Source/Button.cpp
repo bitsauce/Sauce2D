@@ -8,7 +8,8 @@ Button::Button(UiObject *parent) :
 	m_font(Resource<Font>("Font")),
 	m_text("Button")
 {
-	m_font.get()->setColor(Color(0, 0, 0, 255));
+	m_renderTarget = new RenderTarget2D(150, 40);
+	m_spriteBatch = 0;
 }
 
 void Button::onClick(ClickEvent *e)
@@ -30,41 +31,61 @@ void Button::onClick(ClickEvent *e)
 
 void Button::onDraw(DrawEvent *e)
 {
-	RectF rect = RectF(getDrawRect());
-	GraphicsContext *g = e->getGraphicsContext();
+	GraphicsContext *graphicsContext = e->getGraphicsContext();
+	if(!m_spriteBatch)
+	{
+		m_spriteBatch =  new SpriteBatch(graphicsContext);
+	}
+
+	// Draw button to render target
+	graphicsContext->setRenderTarget(m_renderTarget);
+
 	if(isPressed() && isHovered())
 	{
-		g->setTexture(m_textureActive);
+		graphicsContext->setTexture(m_textureActive);
 		m_text = "Pressed";
 	}
 	else if(isHovered())
 	{
-		g->setTexture(m_textureHover);
+		graphicsContext->setTexture(m_textureHover);
 		m_text = "Hover";
 	}
 	else
 	{
-		g->setTexture(m_texture);
+		graphicsContext->setTexture(m_texture);
 		m_text = "Normal";
 	}
+
+	const Vector2I size(150, 40);
 	
-	g->drawRectangle(rect.position, Vector2F(16.0f), Color(255), TextureRegion(0.0f, 0.0f, 1.0f / 3.0f, 1.0f / 3.0f));
-	g->drawRectangle(rect.position.x + rect.size.x - 16.0f, rect.position.y, 16.0f, 16.0f, Color(255), TextureRegion(2.0f / 3.0f, 0.0f, 1.0f, 1.0f / 3.0f));
-	g->drawRectangle(rect.position.x, rect.position.y + rect.size.y - 16.0f, 16.0f, 16.0f, Color(255), TextureRegion(0.0f, 2.0f / 3.0f, 1.0f / 3.0f, 1.0f));
-	g->drawRectangle(rect.position + rect.size - Vector2F(16.0f), Vector2F(16.0f), Color(255), TextureRegion(2.0f / 3.0f, 2.0f / 3.0f, 1.0f, 1.0f));
+	graphicsContext->drawRectangle(0.0f,           0.0f,           16.0f, 16.0f, Color(255), TextureRegion(0.0f, 0.0f, 1.0f / 3.0f, 1.0f / 3.0f));
+	graphicsContext->drawRectangle(size.x - 16.0f, 0.0f,           16.0f, 16.0f, Color(255), TextureRegion(2.0f / 3.0f, 0.0f, 1.0f, 1.0f / 3.0f));
+	graphicsContext->drawRectangle(0.0f,           size.y - 16.0f, 16.0f, 16.0f, Color(255), TextureRegion(0.0f, 2.0f / 3.0f, 1.0f / 3.0f, 1.0f));
+	graphicsContext->drawRectangle(size.x - 16.0f, size.y - 16.0f, 16.0f, 16.0f, Color(255), TextureRegion(2.0f / 3.0f, 2.0f / 3.0f, 1.0f, 1.0f));
 
-	g->drawRectangle(rect.position.x + 16.0f,               rect.position.y,                       rect.size.x - 32.0f, 16.0f,               Color(255), TextureRegion(1.0f / 3.0f, 0.0f / 3.0f, 2.0f / 3.0f, 1.0f / 3.0f));
-	g->drawRectangle(rect.position.x + 16.0f,               rect.position.y + rect.size.y - 16.0f, rect.size.x - 32.0f, 16.0f,               Color(255), TextureRegion(1.0f / 3.0f, 2.0f / 3.0f, 2.0f / 3.0f, 3.0f / 3.0f));
-	g->drawRectangle(rect.position.x,                       rect.position.y + 16.0f,               16.0f,               rect.size.y - 32.0f, Color(255), TextureRegion(0.0f / 3.0f, 1.0f / 3.0f, 1.0f / 3.0f, 2.0f / 3.0f));
-	g->drawRectangle(rect.position.x + rect.size.x - 16.0f, rect.position.y + 16.0f,               16.0f,               rect.size.y - 32.0f, Color(255), TextureRegion(2.0f / 3.0f, 1.0f / 3.0f, 3.0f / 3.0f, 2.0f / 3.0f));
+	graphicsContext->drawRectangle(16.0f,          0.0f,           size.x - 32.0f, 16.0f,          Color(255), TextureRegion(1.0f / 3.0f, 0.0f / 3.0f, 2.0f / 3.0f, 1.0f / 3.0f));
+	graphicsContext->drawRectangle(16.0f,          size.y - 16.0f, size.x - 32.0f, 16.0f,          Color(255), TextureRegion(1.0f / 3.0f, 2.0f / 3.0f, 2.0f / 3.0f, 3.0f / 3.0f));
+	graphicsContext->drawRectangle(0.0f,           16.0f,          16.0f,          size.y - 32.0f, Color(255), TextureRegion(0.0f / 3.0f, 1.0f / 3.0f, 1.0f / 3.0f, 2.0f / 3.0f));
+	graphicsContext->drawRectangle(size.x - 16.0f, 16.0f,          16.0f,          size.y - 32.0f, Color(255), TextureRegion(2.0f / 3.0f, 1.0f / 3.0f, 3.0f / 3.0f, 2.0f / 3.0f));
 
-	g->drawRectangle(rect.position + Vector2F(16.0f), rect.size - Vector2F(32.0f), Color(255), TextureRegion(1.0f / 3.0f, 1.0f / 3.0f, 2.0f / 3.0f, 2.0f / 3.0f));
+	graphicsContext->drawRectangle(Vector2F(16.0f), size - Vector2F(32.0f), Color(255), TextureRegion(1.0f / 3.0f, 1.0f / 3.0f, 2.0f / 3.0f, 2.0f / 3.0f));
 
-	g->setTexture(0);
+	graphicsContext->setTexture(0);
 
-	SpriteBatch *spriteBatch = (SpriteBatch*) e->getUserData();
-	m_font.get()->setHeight(max(rect.size.y - 34.0f, 16.0f));
-	m_font.get()->draw(spriteBatch, rect.getCenter() - Vector2F(0.0f, m_font.get()->getHeight() * 0.5f), m_text, FONT_ALIGN_CENTER);
+	graphicsContext->setRenderTarget(0);
+
+	// Draw button from render target
+	RectI rect = getDrawRect();
+	graphicsContext->setTexture(m_renderTarget->getTexture());
+	graphicsContext->drawRectangle(rect);
+	graphicsContext->setTexture(0);
+
+	m_spriteBatch->begin();
+	m_font->setHeight(min(rect.size.y, 16.0f));
+	m_font->setColor(Color(0, 0, 0, 255));
+	m_font->draw(m_spriteBatch, Vector2I(rect.position + rect.size / 2 - Vector2F(0.0f, m_font->getHeight() * 0.5f)), m_text, FONT_ALIGN_CENTER);
+	m_font->setHeight(16.0f);
+	m_spriteBatch->end();
 
 	UiObject::onDraw(e);
 }

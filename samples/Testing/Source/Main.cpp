@@ -40,6 +40,8 @@ public:
 		context->setTexture(textureSaved);
 		context->drawRectangle(context->getWidth() / 2, 0, context->getWidth() / 2, context->getHeight());
 		context->setTexture(0);
+
+		context->drawRectangleOutline(100, 100, 100, 100, Color(0, 0, 0, 255));
 	}
 };
 

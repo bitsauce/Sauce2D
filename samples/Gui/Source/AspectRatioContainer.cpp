@@ -27,8 +27,7 @@ void AspectRatioContainer::onDraw(DrawEvent *e)
 {
 	UiObject::onDraw(e);
 
-	// TODO: Draw outline?
 	//if(debug) {
-	e->getGraphicsContext()->drawRectangle(getDrawRect(), Color(127, 127, 127, 127));
+		e->getGraphicsContext()->drawRectangleOutline(getDrawRect(), Color(127));
 	//}
 }

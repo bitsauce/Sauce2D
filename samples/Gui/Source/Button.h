@@ -15,6 +15,8 @@ private:
 	Resource<Texture2D> m_texture, m_textureHover, m_textureActive;
 	Resource<Font> m_font;
 	string m_text;
+	RenderTarget2D *m_renderTarget;
+	SpriteBatch *m_spriteBatch;
 };
 
 #endif // BUTTON_H
