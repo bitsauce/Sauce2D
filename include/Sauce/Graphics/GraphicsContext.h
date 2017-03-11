@@ -48,6 +48,7 @@ public:
 		PRIMITIVE_POINTS = GL_POINTS,					///< Points. 1 vertex per primitive.
 		PRIMITIVE_LINES = GL_LINES,						///< Lines. 2 vertex per primitive.
 		PRIMITIVE_LINE_STRIP = GL_LINE_STRIP,			///< Line strip. 2 vertex for the first primitive, 1 for the next.
+		PRIMITIVE_LINE_LOOP = GL_LINE_LOOP,				///< Line loop. n lines
 		PRIMITIVE_TRIANGLES = GL_TRIANGLES,				///< Triangles. 3 vertex per primitive.
 		PRIMITIVE_TRIANGLE_STRIP = GL_TRIANGLE_STRIP,	///< Triangle strip. 3 vertex for the first primitive, 1 vertex for the next.
 		PRIMITIVE_TRIANGLE_FAN = GL_TRIANGLE_FAN		///< Triangle fan. 3 vertex for the first primitive, 1 vertex for the next.

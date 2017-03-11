@@ -572,8 +572,16 @@ void Vertex::print()
 		VertexAttribute attrib = VertexAttribute(i);
 		if(m_format.isAttributeEnabled(attrib))
 		{
-			LOG("Attrib: %i", attrib);
 			stringstream ss;
+			ss << "Attrib: ";
+			switch(attrib)
+			{
+				case VERTEX_POSITION: ss << "Position: "; break;
+				case VERTEX_COLOR: ss << "Color: "; break;
+				case VERTEX_TEX_COORD: ss << "Tex Coord: "; break;
+				case VERTEX_NORMAL: ss << "Normal: "; break;
+			}
+
 			for(int j = 0; j < m_format.getElementCount(attrib); j++)
 			{
 				switch(m_format.getDataType(attrib))

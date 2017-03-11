@@ -610,6 +610,45 @@ void GraphicsContext::drawRectangle(const Rect<float> &rect, const Color &color,
 	drawRectangle(rect.position.x, rect.position.y, rect.size.x, rect.size.y, color, textureRegion);
 }
 
+void GraphicsContext::drawRectangleOutline(const float x, const float y, const float width, const float height, const Color &color, const TextureRegion &textureRegion)
+{
+	// Make sure we have enough vertices
+	if(m_vertices.size() < 8)
+	{
+		m_vertices.resize(8);
+	}
+
+	m_vertices[0].set2f(VERTEX_POSITION, x, y);
+	m_vertices[1].set2f(VERTEX_POSITION, x, y + height);
+
+	m_vertices[2].set2f(VERTEX_POSITION, x, y + height);
+	m_vertices[3].set2f(VERTEX_POSITION, x + width, y + height);
+	
+	m_vertices[4].set2f(VERTEX_POSITION, x + width, y + height);
+	m_vertices[5].set2f(VERTEX_POSITION, x + width, y);
+
+	m_vertices[6].set2f(VERTEX_POSITION, x + width, y);
+	m_vertices[7].set2f(VERTEX_POSITION, x, y);
+
+	for(int i = 0; i < 8; i++)
+	{
+		m_vertices[i].set4ub(VERTEX_COLOR, color.getR(), color.getG(), color.getB(), color.getA());
+		m_vertices[i].set2f(VERTEX_TEX_COORD, 0.0f, 0.0f);
+	}
+
+	drawPrimitives(PRIMITIVE_LINES, &m_vertices[0], 8);
+}
+
+void GraphicsContext::drawRectangleOutline(const Vector2F &pos, const Vector2F &size, const Color &color, const TextureRegion &textureRegion)
+{
+	drawRectangleOutline(pos.x, pos.y, size.x, size.y, color, textureRegion);
+}
+
+void GraphicsContext::drawRectangleOutline(const Rect<float> &rect, const Color &color, const TextureRegion &textureRegion)
+{
+	drawRectangleOutline(rect.position.x, rect.position.y, rect.size.x, rect.size.y, color, textureRegion);
+}
+
 void GraphicsContext::drawCircleGradient(const float x, const float y, const float radius, const uint segments, const Color &center, const Color &outer)
 {
 	// Make sure we have enought vertices
