@@ -9,6 +9,7 @@ class GuiGame : public Game
 	SpriteBatch *spriteBatch;
 	Canvas *canvas;
 	Button *button;
+	AspectRatioContainer *aspectRatioContainer;
 	Resource<Font> font;
 
 public:
@@ -26,14 +27,13 @@ public:
 	{
 		font = Resource<Font>("Font");
 
-		GraphicsContext *gfx = getWindow()->getGraphicsContext();
-		spriteBatch = new SpriteBatch(gfx);
+		GraphicsContext *graphicsContext = getWindow()->getGraphicsContext();
+		spriteBatch = new SpriteBatch(graphicsContext);
 
-		canvas = new Canvas(canvas, getWindow());
-		canvas->setSize(1.0f, 1.0f);
+		canvas = new Canvas(getWindow());
 		addChildLast(canvas);
 
-		AspectRatioContainer *aspectRatioContainer = new AspectRatioContainer(getWindow(), 1280, 720);
+		aspectRatioContainer = new AspectRatioContainer(canvas, getWindow(), 1280, 1280.0f / 720.0f);
 		aspectRatioContainer->setAnchor(0.5f, 0.5f);
 		aspectRatioContainer->setOrigin(0.5f, 0.5f);
 		aspectRatioContainer->setSize(1.0f, 1.0f);
@@ -44,7 +44,7 @@ public:
 		button->setOrigin(0.5f, 0.5f);
 		button->setPosition(0.0f, 0.0f);
 
-		LineEdit *lineEdit = new LineEdit(gfx, aspectRatioContainer);
+		LineEdit *lineEdit = new LineEdit(graphicsContext, aspectRatioContainer);
 		lineEdit->setSize(200.0f / 1280.0f, 40.0f / 720.0f);
 		lineEdit->setPosition(0.0f, -0.5f);
 		lineEdit->setAnchor(0.5f, 0.85f);
@@ -77,7 +77,8 @@ public:
 		stringstream ss;
 		ss << "FPS: " << game->getFPS() << "\n";
 		ss << "Cursor position: " << game->getInputManager()->getPosition() << "\n";
-		ss << "Canvas aspect ratio: " << canvas->getAspectRatio() << "\n";
+		ss << "Canvas size: " << canvas->getDrawSize().x << "x" << canvas->getDrawSize().y << " (" << canvas->getAspectRatio() << ")\n";
+		ss << "Aspect ratio container size: " << aspectRatioContainer->getDrawSize().x << "x" << aspectRatioContainer->getDrawSize().y << " (" << aspectRatioContainer->getAspectRatio() << ")\n";
 
 		font->draw(spriteBatch, Vector2F(10.0f), ss.str());
 

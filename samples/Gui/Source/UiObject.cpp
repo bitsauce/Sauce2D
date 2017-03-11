@@ -103,7 +103,7 @@ RectF UiObject::getRect() const
 float UiObject::getAspectRatio() const
 {
 	const Vector2I drawSize = getDrawSize();
-	return drawSize.x / drawSize.y;
+	return (float) drawSize.x / (float) drawSize.y;
 }
 
 void UiObject::setAnchor(const Vector2F &anchor)

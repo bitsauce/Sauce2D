@@ -1,11 +1,12 @@
 #include "Canvas.h"
 
-Canvas::Canvas(UiObject *parent, Window *window) :
-	UiObject(parent),
+Canvas::Canvas(Window *window) :
+	UiObject(0),
 	m_window(window),
 	m_topColor(200, 200, 200, 255),
 	m_bottomColor(250, 250, 250, 255)
 {
+	setSize(1.0f, 1.0f);
 }
 
 void Canvas::onDraw(DrawEvent *e)
@@ -23,15 +24,15 @@ void Canvas::onDraw(DrawEvent *e)
 	m_vertices[3].set4ub(VERTEX_COLOR, m_bottomColor.getR(), m_bottomColor.getG(), m_bottomColor.getB(), m_bottomColor.getA());
 	e->getGraphicsContext()->drawPrimitives(GraphicsContext::PRIMITIVE_TRIANGLE_STRIP, m_vertices, 4);
 
-	SceneObject::onDraw(e);
+	UiObject::onDraw(e);
 }
 
-Vector2I Canvas::getDrawPosition()
+Vector2I Canvas::getDrawPosition() const
 {
 	return Vector2I(0, 0);
 }
 
-Vector2I Canvas::getDrawSize()
+Vector2I Canvas::getDrawSize() const
 {
 	return m_window->getSize();
 }

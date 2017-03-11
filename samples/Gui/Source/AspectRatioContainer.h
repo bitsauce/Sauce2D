@@ -6,19 +6,15 @@
 class AspectRatioContainer : public UiObject
 {
 public:
-	AspectRatioContainer(Window *window);
-	AspectRatioContainer(Window *window, const int width, const int height);
+	AspectRatioContainer(UiObject *parent, Window *window, const int maxWidth, const float aspectRatio);
 
 	void onWindowSizeChanged(WindowEvent *e);
-
-	Vector2I getDrawPosition();
-	Vector2I getDrawSize();
-
 	void onDraw(DrawEvent *e);
 
 private:
 	Window *m_window;
-	const int m_canvasWidth, m_canvasHeight;
+	const int m_maxWidth;
+	const float m_aspectRatio;
 };
 
 #endif // CANVAS_H

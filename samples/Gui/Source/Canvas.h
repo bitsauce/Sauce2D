@@ -5,12 +5,12 @@
 class Canvas : public UiObject
 {
 public:
-	Canvas(UiObject *parent, Window *window);
+	Canvas(Window *window);
 
 	void onDraw(DrawEvent *e);
 
-	Vector2I getDrawPosition();
-	Vector2I getDrawSize();
+	Vector2I getDrawPosition() const;
+	Vector2I getDrawSize() const;
 
 private:
 	Color m_topColor, m_bottomColor;

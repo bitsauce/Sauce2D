@@ -1,20 +1,10 @@
 #include "AspectRatioContainer.h"
 
-AspectRatioContainer::AspectRatioContainer(Window *window) :
-	UiObject(0),
+AspectRatioContainer::AspectRatioContainer(UiObject *parent, Window *window, const int maxWidth, const float aspectRatio) :
+	UiObject(parent),
 	m_window(window),
-	m_canvasWidth(0),
-	m_canvasHeight(0)
-{
-	WindowEvent e(WindowEvent::SIZE_CHANGED, window, window->getWidth(), window->getHeight());
-	onWindowSizeChanged(&e);
-}
-
-AspectRatioContainer::AspectRatioContainer(Window *window, const int width, const int height) :
-	UiObject(0),
-	m_window(window),
-	m_canvasWidth(width),
-	m_canvasHeight(height)
+	m_maxWidth(maxWidth),
+	m_aspectRatio(aspectRatio)
 {
 	setAnchor(0.5f, 0.5f);
 	setOrigin(0.5f, 0.5f);
@@ -25,32 +15,20 @@ AspectRatioContainer::AspectRatioContainer(Window *window, const int width, cons
 
 void AspectRatioContainer::onWindowSizeChanged(WindowEvent *e)
 {
+	// NOTE: There might be some simplification potential here
 	Vector2F size;
-	size.x = (float) min(m_canvasWidth, e->getWidth());
-	size.y = (float) min(m_canvasHeight, e->getHeight());
+	size.x = min(m_aspectRatio / ((float) e->getWidth() / (float) e->getHeight()), min((float) m_maxWidth / (float) e->getWidth(), 1.0f));
+	size.y = min(((float) e->getWidth() / (float) e->getHeight()) / m_aspectRatio, min((float) (m_maxWidth / m_aspectRatio) / (float) e->getHeight(), 1.0f));
 	setSize(size);
 	UiObject::onWindowSizeChanged(e);
-}
-
-Vector2I AspectRatioContainer::getDrawPosition()
-{
-	Vector2F parentPos = Vector2F();
-	Vector2F parentSize = m_window->getSize();
-	Vector2F pos = Vector2F();
-	Vector2F size = getSize();
-
-	parentPos += parentSize * Vector2F(0.5f, 0.5f);
-	pos -= size * Vector2F(0.5f, 0.5f);
-	return parentPos + pos;
-}
-
-Vector2I AspectRatioContainer::getDrawSize()
-{
-	return getSize();
 }
 
 void AspectRatioContainer::onDraw(DrawEvent *e)
 {
 	UiObject::onDraw(e);
+
+	// TODO: Draw outline?
+	//if(debug) {
 	e->getGraphicsContext()->drawRectangle(getDrawRect(), Color(127, 127, 127, 127));
+	//}
 }
