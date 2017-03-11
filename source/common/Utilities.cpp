@@ -113,11 +113,11 @@ string util::getAbsoluteFilePath(const string &path)
 	}
 	else if(path.substr(0, 7) == "prefs:/")
 	{
-		return Game::GetInstance()->getPrefPath() + path.substr(7, string::npos);
+		return Game::Get()->getPrefPath() + path.substr(7, string::npos);
 	}
 	else if(path.substr(0, 5) == "bin:/")
 	{
-		return Game::GetInstance()->getBinaryPath() + path.substr(5, string::npos);
+		return Game::Get()->getBinaryPath() + path.substr(5, string::npos);
 	}
 	return path;
 }

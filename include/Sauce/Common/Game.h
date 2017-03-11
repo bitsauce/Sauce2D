@@ -366,6 +366,7 @@ public:
 
 	bool operator!() const { return !stream; }
 	FileWriter &operator<<(int i) { stream << i; return *this; }
+	FileWriter &operator<<(uint i) { stream << i; return *this; }
 
 	/**
 	 * \fn	FileWriter FileWriter::&operator<<(char c)
@@ -1271,9 +1272,9 @@ public:
 		}
 	}
 
-	static Game *GetInstance()
+	static Game *Get()
 	{
-		return s_game;
+		return s_this;
 	}
 
 private:
@@ -1336,7 +1337,7 @@ private:
 	string m_binaryPath, m_prefPath;
 
 	// Static game
-	static Game *s_game;
+	static Game *s_this;
 };
 
 END_SAUCE_NAMESPACE

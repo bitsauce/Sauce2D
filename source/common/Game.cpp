@@ -23,7 +23,7 @@ Keycode KeyEvent::getKeycode() const
 	return (Keycode) SDL_GetKeyFromScancode((SDL_Scancode) m_inputButton.getCode());
 }
 
-Game *Game::s_game = 0;
+Game *Game::s_this = 0;
 
 // TODO: Might want to do some validation check on the name
 // and org name so that the pref path won't bug out
@@ -35,11 +35,11 @@ Game::Game(const string &name, const string &organization, const uint flags) :
 	m_paused(false),
 	m_running(false)
 {
-	if(s_game)
+	if(s_this)
 	{
 		THROW("A game already exists!");
 	}
-	s_game = this;
+	s_this = this;
 }
 
 Game::Game(const string &name, const uint flags) :
@@ -55,7 +55,7 @@ Game::~Game()
 	delete m_timer;
 	delete m_console;
 	delete m_resourceManager;
-	s_game = 0;
+	s_this = 0;
 }
 
 //------------------------------------------------------------------------

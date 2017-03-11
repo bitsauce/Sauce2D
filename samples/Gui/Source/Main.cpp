@@ -1,14 +1,15 @@
 #include "Config.h"
-#include "Canvas.h"
+#include "AspectRatioContainer.h"
 #include "Button.h"
 #include "LineEdit.h"
-#include "Gradient.h"
+#include "Canvas.h"
 
 class GuiGame : public Game
 {
 	SpriteBatch *spriteBatch;
 	Canvas *canvas;
 	Button *button;
+	Resource<Font> font;
 
 public:
 	GuiGame() :
@@ -18,40 +19,32 @@ public:
 
 	void onKeyDown(KeyEvent *e)
 	{
-		if((e->getModifiers() & KeyEvent::CTRL) != 0)
-		{
-			switch(e->getKeycode())
-			{
-				case SAUCE_KEY_1: getWindow()->setSize(800, 600); break;
-				case SAUCE_KEY_2: getWindow()->setSize(600, 800); break;
-				case SAUCE_KEY_3: getWindow()->setSize(1024, 1024); break;
-				case SAUCE_KEY_4: getWindow()->setSize(1280, 720); break;
-				case SAUCE_KEY_5: getWindow()->setSize(1920, 1080); break;
-			}
-		}
 		Game::onKeyDown(e);
 	}
 
 	void onStart(GameEvent*)
 	{
-		canvas = new Canvas(getWindow(), 1280, 720);
-		addChildLast(canvas);
+		font = Resource<Font>("Font");
 
 		GraphicsContext *gfx = getWindow()->getGraphicsContext();
 		spriteBatch = new SpriteBatch(gfx);
 
-		Gradient *back = new Gradient(canvas);
-		back->setAnchor(0.5f, 0.5f);
-		back->setOrigin(0.5f, 0.5f);
-		back->setSize(1.0f, 1.0f);
+		canvas = new Canvas(canvas, getWindow());
+		canvas->setSize(1.0f, 1.0f);
+		addChildLast(canvas);
 
-		button = new Button(back);
+		AspectRatioContainer *aspectRatioContainer = new AspectRatioContainer(getWindow(), 1280, 720);
+		aspectRatioContainer->setAnchor(0.5f, 0.5f);
+		aspectRatioContainer->setOrigin(0.5f, 0.5f);
+		aspectRatioContainer->setSize(1.0f, 1.0f);
+
+		button = new Button(aspectRatioContainer);
 		button->setSize(150.0f / 1280.0f, 40.0f / 720.0f);
 		button->setAnchor(0.5f, 0.85f);
 		button->setOrigin(0.5f, 0.5f);
 		button->setPosition(0.0f, 0.0f);
 
-		LineEdit *lineEdit = new LineEdit(gfx, back);
+		LineEdit *lineEdit = new LineEdit(gfx, aspectRatioContainer);
 		lineEdit->setSize(200.0f / 1280.0f, 40.0f / 720.0f);
 		lineEdit->setPosition(0.0f, -0.5f);
 		lineEdit->setAnchor(0.5f, 0.85f);
@@ -70,9 +63,24 @@ public:
 
 	void onDraw(DrawEvent *e)
 	{
+		// Setup sprite batch
 		e->setUserData(spriteBatch);
 		spriteBatch->begin();
+
+		// Draw UI objects
 		Game::onDraw(e);
+
+		// Draw debug info
+		Game *game = Game::Get();
+
+		// Make debugstring
+		stringstream ss;
+		ss << "FPS: " << game->getFPS() << "\n";
+		ss << "Cursor position: " << game->getInputManager()->getPosition() << "\n";
+		ss << "Canvas aspect ratio: " << canvas->getAspectRatio() << "\n";
+
+		font->draw(spriteBatch, Vector2F(10.0f), ss.str());
+
 		spriteBatch->end();
 	}
 };

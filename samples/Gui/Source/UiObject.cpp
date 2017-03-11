@@ -100,6 +100,12 @@ RectF UiObject::getRect() const
 	return m_rect;
 }
 
+float UiObject::getAspectRatio() const
+{
+	const Vector2I drawSize = getDrawSize();
+	return drawSize.x / drawSize.y;
+}
+
 void UiObject::setAnchor(const Vector2F &anchor)
 {
 	setAnchor(anchor.x, anchor.y);
@@ -115,7 +121,7 @@ void UiObject::setAnchor(const float x, const float y)
 	m_anchor.set(x, y);
 }
 
-Vector2I UiObject::getDrawPosition()
+Vector2I UiObject::getDrawPosition() const
 {
 	if(!m_parent)
 	{
@@ -133,7 +139,7 @@ Vector2I UiObject::getDrawPosition()
 	return parentPos + pos * parentSize;
 }
 
-Vector2I UiObject::getDrawSize()
+Vector2I UiObject::getDrawSize() const
 {
 	if(!m_parent)
 	{
@@ -143,7 +149,7 @@ Vector2I UiObject::getDrawSize()
 	return m_rect.size * m_parent->getDrawSize();
 }
 
-RectI UiObject::getDrawRect()
+RectI UiObject::getDrawRect() const
 {
 	return RectI(getDrawPosition(), getDrawSize());
 }

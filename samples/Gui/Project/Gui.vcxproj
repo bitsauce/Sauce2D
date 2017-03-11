@@ -89,8 +89,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\Source\Button.cpp" />
+    <ClCompile Include="..\Source\AspectRatioContainer.cpp" />
     <ClCompile Include="..\Source\Canvas.cpp" />
-    <ClCompile Include="..\Source\Gradient.cpp" />
     <ClCompile Include="..\Source\Label.cpp" />
     <ClCompile Include="..\Source\LineEdit.cpp" />
     <ClCompile Include="..\Source\Main.cpp" />
@@ -98,9 +98,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Source\Button.h" />
-    <ClInclude Include="..\Source\Canvas.h" />
+    <ClInclude Include="..\Source\AspectRatioContainer.h" />
     <ClInclude Include="..\Source\Config.h" />
-    <ClInclude Include="..\Source\Gradient.h" />
+    <ClInclude Include="..\Source\Canvas.h" />
     <ClInclude Include="..\Source\Label.h" />
     <ClInclude Include="..\Source\LineEdit.h" />
     <ClInclude Include="..\Source\UiEvents.h" />

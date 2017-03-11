@@ -238,8 +238,14 @@ public:
 	string toString() const
 	{
 		stringstream ss;
-		ss << "[" << x << ", " << y << "]";
+		ss << *this;
 		return ss.str();
+	}
+
+	friend ostream& operator<<(ostream &os, const Vector2<T> &rhs)
+	{
+		os << "[" << rhs.x << ", " << rhs.y << "]";
+		return os;
 	}
 
     T x, y;
@@ -491,6 +497,19 @@ public:
 		TUPLE_CMP2(this->y, v2.y);
 		TUPLE_CMP2(this->z, v2.z);
 		return false;
+	}
+
+	inline string toString() const
+	{
+		stringstream ss;
+		ss << *this;
+		return ss.str();
+	}
+
+	friend ostream& operator<<(ostream &os, const Vector3<T> &rhs)
+	{
+		os << "[" << rhs.x << ", " << rhs.y << ", " << rhs.z << "]";
+		return os;
 	}
 
     T x, y, z;

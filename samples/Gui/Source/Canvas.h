@@ -1,22 +1,19 @@
-#ifndef CANVAS_H
-#define CANVAS_H
+#pragma once
 
 #include "UiObject.h"
 
 class Canvas : public UiObject
 {
 public:
-	Canvas(Window *window);
-	Canvas(Window *window, const int width, const int height);
+	Canvas(UiObject *parent, Window *window);
 
-	void onWindowSizeChanged(WindowEvent *e);
+	void onDraw(DrawEvent *e);
 
 	Vector2I getDrawPosition();
 	Vector2I getDrawSize();
 
 private:
+	Color m_topColor, m_bottomColor;
+	Vertex m_vertices[4];
 	Window *m_window;
-	const int m_canvasWidth, m_canvasHeight;
 };
-
-#endif // CANVAS_H

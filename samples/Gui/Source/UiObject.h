@@ -65,6 +65,8 @@ public:
 	void setRect(const RectF &rect);
 	RectF getRect() const;
 
+	float getAspectRatio() const;
+
 	/**
 	 * \fn	void UiObject::setAnchor(const float x, const float y);
 	 *
@@ -78,9 +80,9 @@ public:
 	void setAnchor(const Vector2F &anchor);
 	Vector2F getAnchor() const;
 
-	virtual Vector2I getDrawPosition();
-	virtual Vector2I getDrawSize();
-	RectI getDrawRect();
+	virtual Vector2I getDrawPosition() const;
+	virtual Vector2I getDrawSize() const;
+	RectI getDrawRect() const;
 
 	virtual void onDraw(DrawEvent *e);
 

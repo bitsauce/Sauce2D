@@ -1,50 +1,37 @@
 #include "Canvas.h"
 
-Canvas::Canvas(Window *window) :
-	UiObject(0),
+Canvas::Canvas(UiObject *parent, Window *window) :
+	UiObject(parent),
 	m_window(window),
-	m_canvasWidth(0),
-	m_canvasHeight(0)
+	m_topColor(200, 200, 200, 255),
+	m_bottomColor(250, 250, 250, 255)
 {
-	WindowEvent e(WindowEvent::SIZE_CHANGED, window, window->getWidth(), window->getHeight());
-	onWindowSizeChanged(&e);
 }
 
-Canvas::Canvas(Window *window, const int width, const int height) :
-	UiObject(0),
-	m_window(window),
-	m_canvasWidth(width),
-	m_canvasHeight(height)
+void Canvas::onDraw(DrawEvent *e)
 {
-	setAnchor(0.5f, 0.5f);
-	setOrigin(0.5f, 0.5f);
+	RectI rect = { Vector2I(0), e->getGraphicsContext()->getSize() };
 
-	WindowEvent e(WindowEvent::SIZE_CHANGED, window, window->getWidth(), window->getHeight());
-	onWindowSizeChanged(&e);
-}
+	// Draw gradient
+	m_vertices[0].set2f(VERTEX_POSITION, rect.getLeft(), rect.getTop());
+	m_vertices[1].set2f(VERTEX_POSITION, rect.getLeft(), rect.getBottom());
+	m_vertices[2].set2f(VERTEX_POSITION, rect.getRight(), rect.getTop());
+	m_vertices[3].set2f(VERTEX_POSITION, rect.getRight(), rect.getBottom());
+	m_vertices[0].set4ub(VERTEX_COLOR, m_topColor.getR(), m_topColor.getG(), m_topColor.getB(), m_topColor.getA());
+	m_vertices[1].set4ub(VERTEX_COLOR, m_bottomColor.getR(), m_bottomColor.getG(), m_bottomColor.getB(), m_bottomColor.getA());
+	m_vertices[2].set4ub(VERTEX_COLOR, m_topColor.getR(), m_topColor.getG(), m_topColor.getB(), m_topColor.getA());
+	m_vertices[3].set4ub(VERTEX_COLOR, m_bottomColor.getR(), m_bottomColor.getG(), m_bottomColor.getB(), m_bottomColor.getA());
+	e->getGraphicsContext()->drawPrimitives(GraphicsContext::PRIMITIVE_TRIANGLE_STRIP, m_vertices, 4);
 
-void Canvas::onWindowSizeChanged(WindowEvent *e)
-{
-	Vector2F size;
-	size.x = (float) min(m_canvasWidth, e->getWidth());
-	size.y = (float) min(m_canvasHeight, e->getHeight());
-	setSize(size);
-	UiObject::onWindowSizeChanged(e);
+	SceneObject::onDraw(e);
 }
 
 Vector2I Canvas::getDrawPosition()
 {
-	Vector2F parentPos = Vector2F();
-	Vector2F parentSize = m_window->getSize();
-	Vector2F pos = Vector2F();
-	Vector2F size = getSize();
-
-	parentPos += parentSize * Vector2F(0.5f, 0.5f);
-	pos -= size * Vector2F(0.5f, 0.5f);
-	return parentPos + pos;
+	return Vector2I(0, 0);
 }
 
 Vector2I Canvas::getDrawSize()
 {
-	return getSize();
+	return m_window->getSize();
 }
