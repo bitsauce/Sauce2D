@@ -1,6 +1,6 @@
 #include "LineEdit.h"
 
-LineEdit::LineEdit(GraphicsContext *gfx, UiObject *parent) :
+LineEdit::LineEdit(UiObject *parent, GraphicsContext *graphicsContext, const uint width, const uint height) :
 	UiObject(parent),
 	m_cursorTime(0.0f),
 	m_offsetX(0.0f),
@@ -8,14 +8,16 @@ LineEdit::LineEdit(GraphicsContext *gfx, UiObject *parent) :
 	m_textureActive(Resource<Texture2D>("InputActive")),
 	m_textureInactive(Resource<Texture2D>("InputInactive")),
 	m_renderTarget(0),
-	m_dirty(true),
-	m_spriteBatch(gfx, 100),
+	m_dirtyGraphics(true),
+	m_dirtyTextGraphics(true),
+	m_spriteBatch(graphicsContext, 100),
 	m_wordBegin(0),
 	m_wordEnd(0),
 	m_defaultText(""),
 	m_color(0, 0, 0, 255)
 {
 	setText("");
+	m_renderTarget = new RenderTarget2D(width, height);
 }
 
 LineEdit::~LineEdit()
@@ -40,7 +42,7 @@ void LineEdit::setText(const string &text)
 		state->cursor.setPosition(text.size());
 	}
 
-	m_dirty = true;
+	m_dirtyTextGraphics = true;
 }
 
 string LineEdit::getText() const
@@ -74,10 +76,43 @@ void LineEdit::onDraw(DrawEvent *e)
 	// Get state variables
 	TextState *state = *m_undoItr;
 	RectF rect = getDrawRect();
-	GraphicsContext *g = e->getGraphicsContext();
+	GraphicsContext *graphicsContext = e->getGraphicsContext();
+
+	// Update background graphics if dirty
+	if(m_dirtyGraphics)
+	{
+		// Update line edit visualization
+		graphicsContext->setRenderTarget(m_renderTarget);
+
+		// Set texture
+		if(isFocused())
+		{
+			graphicsContext->setTexture(m_textureActive);
+		}
+		else
+		{
+			graphicsContext->setTexture(m_textureInactive);
+		}
+
+		// Render input rectangle
+		const float w = m_renderTarget->getWidth(), h = m_renderTarget->getHeight();
+		graphicsContext->drawRectangle(0.0f, 0.0f, 16.0f, 16.0f, Color(255), TextureRegion(0.0f, 0.0f, 1.0f / 3.0f, 1.0f / 3.0f));
+		graphicsContext->drawRectangle(w - 16.0f, 0.0f, 16.0f, 16.0f, Color(255), TextureRegion(2.0f / 3.0f, 0.0f, 1.0f, 1.0f / 3.0f));
+		graphicsContext->drawRectangle(0.0f, h - 16.0f, 16.0f, 16.0f, Color(255), TextureRegion(0.0f, 2.0f / 3.0f, 1.0f / 3.0f, 1.0f));
+		graphicsContext->drawRectangle(w - 16.0f, h - 16.0f, 16.0f, 16.0f, Color(255), TextureRegion(2.0f / 3.0f, 2.0f / 3.0f, 1.0f, 1.0f));
+		graphicsContext->drawRectangle(16.0f, 0.0f, w - 32.0f, 16.0f, Color(255), TextureRegion(1.0f / 3.0f, 0.0f / 3.0f, 2.0f / 3.0f, 1.0f / 3.0f));
+		graphicsContext->drawRectangle(16.0f, h - 16.0f, w - 32.0f, 16.0f, Color(255), TextureRegion(1.0f / 3.0f, 2.0f / 3.0f, 2.0f / 3.0f, 3.0f / 3.0f));
+		graphicsContext->drawRectangle(0.0f, 16.0f, 16.0f, h - 32.0f, Color(255), TextureRegion(0.0f / 3.0f, 1.0f / 3.0f, 1.0f / 3.0f, 2.0f / 3.0f));
+		graphicsContext->drawRectangle(w - 16.0f, 16.0f, 16.0f, h - 32.0f, Color(255), TextureRegion(2.0f / 3.0f, 1.0f / 3.0f, 3.0f / 3.0f, 2.0f / 3.0f));
+		graphicsContext->drawRectangle(16.0f, 16.0f, w - 32.0f, h - 32.0f, Color(255), TextureRegion(1.0f / 3.0f, 1.0f / 3.0f, 2.0f / 3.0f, 2.0f / 3.0f));
+		graphicsContext->setTexture(0);
+		graphicsContext->setRenderTarget(0);
+
+		m_dirtyGraphics = false;
+	}
 
 	// Update text offset if dirty
-	if(m_dirty)
+	if(m_dirtyTextGraphics)
 	{
 		updateOffset();
 	}
@@ -85,34 +120,16 @@ void LineEdit::onDraw(DrawEvent *e)
 	// Get text offset
 	Vector2I textOffset(8.0f - m_offsetX, rect.size.y * 0.5f - m_font->getHeight() * 0.5f);
 
-	// Update visualization if dirty
-	if(m_dirty)
+	// Update text graphics if dirty
+	if(m_dirtyTextGraphics)
 	{
-		// Update line edit visualization
-		g->setRenderTarget(m_renderTarget);
+		graphicsContext->setRenderTarget(m_renderTargetText);
 
-		// Set texture
-		if(isFocused())
-		{
-			g->setTexture(m_textureActive);
-		}
-		else
-		{
-			g->setTexture(m_textureInactive);
-		}
-
-		// Render input rectangle
-		const float w = m_renderTarget->getWidth(), h = m_renderTarget->getHeight();
-		g->drawRectangle(0.0f,      0.0f,      16.0f, 16.0f, Color(255), TextureRegion(0.0f, 0.0f, 1.0f / 3.0f, 1.0f / 3.0f));
-		g->drawRectangle(w - 16.0f, 0.0f,      16.0f, 16.0f, Color(255), TextureRegion(2.0f / 3.0f, 0.0f, 1.0f, 1.0f / 3.0f));
-		g->drawRectangle(0.0f,      h - 16.0f, 16.0f, 16.0f, Color(255), TextureRegion(0.0f, 2.0f / 3.0f, 1.0f / 3.0f, 1.0f));
-		g->drawRectangle(w - 16.0f, h - 16.0f, 16.0f, 16.0f, Color(255), TextureRegion(2.0f / 3.0f, 2.0f / 3.0f, 1.0f, 1.0f));
-		g->drawRectangle(16.0f,     0.0f,      w - 32.0f, 16.0f,     Color(255), TextureRegion(1.0f / 3.0f, 0.0f / 3.0f, 2.0f / 3.0f, 1.0f / 3.0f));
-		g->drawRectangle(16.0f,     h - 16.0f, w - 32.0f, 16.0f,     Color(255), TextureRegion(1.0f / 3.0f, 2.0f / 3.0f, 2.0f / 3.0f, 3.0f / 3.0f));
-		g->drawRectangle(0.0f,      16.0f,     16.0f,     h - 32.0f, Color(255), TextureRegion(0.0f / 3.0f, 1.0f / 3.0f, 1.0f / 3.0f, 2.0f / 3.0f));
-		g->drawRectangle(w - 16.0f, 16.0f,     16.0f,     h - 32.0f, Color(255), TextureRegion(2.0f / 3.0f, 1.0f / 3.0f, 3.0f / 3.0f, 2.0f / 3.0f));
-		g->drawRectangle(16.0f, 16.0f, w - 32.0f, h - 32.0f, Color(255), TextureRegion(1.0f / 3.0f, 1.0f / 3.0f, 2.0f / 3.0f, 2.0f / 3.0f));
-		g->setTexture(0);
+		// Clear previous text
+		// OPTIMIZATION: Only update the text which changed
+		graphicsContext->setBlendState(BlendState(BlendState::BLEND_ZERO, BlendState::BLEND_ZERO));
+		graphicsContext->drawRectangle(0, 0, m_renderTargetText->getWidth(), m_renderTargetText->getHeight());
+		graphicsContext->setBlendState(BlendState(BlendState::PRESET_ALPHA_BLEND));
 
 		// Get the string to render and set text color
 		string text;
@@ -135,30 +152,34 @@ void LineEdit::onDraw(DrawEvent *e)
 		float dx = m_font->getStringWidth(text.substr(0, end)) - m_font->getStringWidth(visibleText);
 
 		// Draw and clip the text using scissoring rectangle
-		g->enableScissor(8, 0, w - 16, h);
+		const float w = m_renderTargetText->getWidth(), h = m_renderTargetText->getHeight();
+		graphicsContext->enableScissor(8, 0, w - 16, h);
 		m_spriteBatch.begin(SpriteBatch::State(SpriteBatch::DEFERRED, BlendState(BlendState::BLEND_SRC_ALPHA, BlendState::BLEND_ONE_MINUS_SRC_ALPHA, BlendState::BLEND_ONE, BlendState::BLEND_ONE_MINUS_SRC_ALPHA)));
 		m_font->draw(&m_spriteBatch, textOffset.x + dx, textOffset.y, visibleText);
 		m_spriteBatch.end();
-		g->disableScissor();
+		graphicsContext->disableScissor();
 
 		// Reset render target
-		g->setRenderTarget(0);
+		graphicsContext->setRenderTarget(0);
 
 		// No longer dirty
-		m_dirty = false;
+		m_dirtyTextGraphics = false;
 	}
 
 	// Draw line edit visualization
-	g->setBlendState(BlendState(BlendState::BLEND_ONE, BlendState::BLEND_ONE_MINUS_SRC_ALPHA));
-	g->setTexture(m_renderTarget->getTexture());
-	g->drawRectangle(rect);
-	g->setTexture(0);
-	g->setBlendState(BlendState(BlendState::PRESET_ALPHA_BLEND));
+	graphicsContext->setBlendState(BlendState(BlendState::BLEND_ONE, BlendState::BLEND_ONE_MINUS_SRC_ALPHA));
+	graphicsContext->setTexture(m_renderTarget->getTexture());
+	graphicsContext->drawRectangle(rect);
+	graphicsContext->setTexture(0);
+	graphicsContext->setTexture(m_renderTargetText->getTexture());
+	graphicsContext->drawRectangle(rect);
+	graphicsContext->setTexture(0);
+	graphicsContext->setBlendState(BlendState(BlendState::PRESET_ALPHA_BLEND));
 
 	// Draw text cursor
 	if(isFocused() && m_cursorTime >= 0.5f)
 	{
-		g->drawRectangle(
+		graphicsContext->drawRectangle(
 			rect.position.x + textOffset.x + m_font->getStringWidth(state->text.substr(0, state->cursor.getPosition())),
 			rect.position.y + textOffset.y,
 			2, m_font->getHeight(),
@@ -167,30 +188,30 @@ void LineEdit::onDraw(DrawEvent *e)
 	}
 
 	// Draw selection rectangle
-	g->enableScissor(rect.position.x + 8, g->getHeight() - rect.position.y - rect.size.y, rect.size.x - 16, rect.size.y);
-	g->drawRectangle(
+	graphicsContext->enableScissor(rect.position.x + 8, graphicsContext->getHeight() - rect.position.y - rect.size.y, rect.size.x - 16, rect.size.y);
+	graphicsContext->drawRectangle(
 		rect.position.x + textOffset.x + m_font->getStringWidth(state->text.substr(0, state->cursor.getSelectionStart())),
 		rect.position.y + textOffset.y,
 		m_font->getStringWidth(state->text.substr(state->cursor.getSelectionStart(), state->cursor.getSelectionLength())),
 		m_font->getHeight(),
 		isFocused() ? Color(0, 0, 0, 127) : Color(127, 127, 127, 127)
 		);
-	g->disableScissor();
+	graphicsContext->disableScissor();
 
 	UiObject::onDraw(e);
 }
 
 void LineEdit::onResize(ResizeEvent *e)
 {
-	delete m_renderTarget;
-	m_renderTarget = new RenderTarget2D(e->getWidth(), e->getHeight());
-	m_dirty = true;
+	delete m_renderTargetText;
+	m_renderTargetText = new RenderTarget2D(e->getWidth(), e->getHeight());
+	m_dirtyTextGraphics = true;
 }
 
 void LineEdit::onFocus(FocusEvent * e)
 {
 	// Mark as dirty
-	m_dirty = true;
+	m_dirtyGraphics = true;
 }
 
 LineEdit::TextState *LineEdit::insertAt(const int pos, const string &str)
@@ -210,7 +231,7 @@ LineEdit::TextState *LineEdit::insertAt(const int pos, const string &str)
 	state->text += str + endStr;
 
 	// Mark as dirty
-	m_dirty = true;
+	m_dirtyTextGraphics = true;
 
 	return state;
 }
@@ -232,7 +253,7 @@ LineEdit::TextState *LineEdit::removeAt(const int pos, const int length)
 	state->text += endStr;
 
 	// Mark as dirty
-	m_dirty = true;
+	m_dirtyTextGraphics = true;
 
 	return state;
 }
@@ -525,7 +546,7 @@ void LineEdit::onKeyEvent(KeyEvent *e)
 				if(!m_states.empty() && m_undoItr != m_states.begin())
 				{
 					m_undoItr--;
-					m_dirty = true;
+					m_dirtyTextGraphics = true;
 				}
 			}
 		}
@@ -540,7 +561,7 @@ void LineEdit::onKeyEvent(KeyEvent *e)
 				if(!m_states.empty() && *m_undoItr != m_states.back())
 				{
 					m_undoItr++;
-					m_dirty = true;
+					m_dirtyTextGraphics = true;
 				}
 			}
 		}

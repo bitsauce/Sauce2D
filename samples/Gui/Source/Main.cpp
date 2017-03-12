@@ -8,7 +8,10 @@ class GuiGame : public Game
 {
 	SpriteBatch *spriteBatch;
 	Canvas *canvas;
-	Button *button;
+	Button *button1;
+	Button *button2;
+	Button *button3;
+	LineEdit *lineEdit;
 	AspectRatioContainer *aspectRatioContainer;
 	Resource<Font> font;
 
@@ -36,15 +39,26 @@ public:
 		aspectRatioContainer = new AspectRatioContainer(canvas, getWindow(), 1280, 1280.0f / 720.0f);
 		aspectRatioContainer->setAnchor(0.5f, 0.5f);
 		aspectRatioContainer->setOrigin(0.5f, 0.5f);
-		aspectRatioContainer->setSize(1.0f, 1.0f);
 
-		button = new Button(aspectRatioContainer);
-		button->setSize(150.0f / 1280.0f, 40.0f / 720.0f);
-		button->setAnchor(0.5f, 0.85f);
-		button->setOrigin(0.5f, 0.5f);
-		button->setPosition(0.0f, 0.0f);
+		button1 = new Button(aspectRatioContainer, 150, 40);
+		button1->setSize(150.0f / 1280.0f, 40.0f / 720.0f);
+		button1->setAnchor(0.5f, 0.85f);
+		button1->setOrigin(0.5f, 0.5f);
+		button1->setPosition(0.0f, 0.0f);
 
-		LineEdit *lineEdit = new LineEdit(graphicsContext, aspectRatioContainer);
+		button2 = new Button(aspectRatioContainer, 1280, 40);
+		button2->setSize(1.0f, 40.0f / 720.0f);
+		button2->setAnchor(0.5f, 1.0f - 20.0f / 720.0f);
+		button2->setOrigin(0.5f, 0.5f);
+		button2->setPosition(0.0f, 0.0f);
+
+		button3 = new Button(canvas, 40, 40);
+		button3->setSize(40.0f / 1280.0f, 40.0f / 720.0f);
+		button3->setAnchor(1.0f, 0.0f);
+		button3->setOrigin(1.0f, 0.0f);
+		button3->setPosition(0.0f, 0.0f);
+
+		lineEdit = new LineEdit(aspectRatioContainer, graphicsContext, 200, 40);
 		lineEdit->setSize(200.0f / 1280.0f, 40.0f / 720.0f);
 		lineEdit->setPosition(0.0f, -0.5f);
 		lineEdit->setAnchor(0.5f, 0.85f);
@@ -54,6 +68,12 @@ public:
 
 	void onEnd(GameEvent*)
 	{
+		delete button1;
+		delete button2;
+		delete aspectRatioContainer;
+		delete button3;
+		delete canvas;
+		delete lineEdit;
 	}
 
 	void onTick(TickEvent *e)

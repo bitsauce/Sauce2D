@@ -1,6 +1,6 @@
 #include "Button.h"
 
-Button::Button(UiObject *parent) :
+Button::Button(UiObject *parent, const uint btnWidth, const uint btnHeight) :
 	UiObject(parent),
 	m_texture(Resource<Texture2D>("ButtonInactive")),
 	m_textureHover(Resource<Texture2D>("ButtonHover")),
@@ -8,7 +8,7 @@ Button::Button(UiObject *parent) :
 	m_font(Resource<Font>("Font")),
 	m_text("Button")
 {
-	m_renderTarget = new RenderTarget2D(150, 40);
+	m_renderTarget = new RenderTarget2D(btnWidth, btnHeight);
 	m_spriteBatch = 0;
 }
 
@@ -56,7 +56,7 @@ void Button::onDraw(DrawEvent *e)
 		m_text = "Normal";
 	}
 
-	const Vector2I size(150, 40);
+	const Vector2I size(m_renderTarget->getWidth(), m_renderTarget->getHeight());
 	
 	graphicsContext->drawRectangle(0.0f,           0.0f,           16.0f, 16.0f, Color(255), TextureRegion(0.0f, 0.0f, 1.0f / 3.0f, 1.0f / 3.0f));
 	graphicsContext->drawRectangle(size.x - 16.0f, 0.0f,           16.0f, 16.0f, Color(255), TextureRegion(2.0f / 3.0f, 0.0f, 1.0f, 1.0f / 3.0f));

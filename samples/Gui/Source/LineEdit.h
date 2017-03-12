@@ -15,7 +15,7 @@ class LineEdit : public UiObject
 {
 	friend class Cursor;
 public:
-	LineEdit(GraphicsContext *gfx, UiObject *parent);
+	LineEdit(UiObject *parent, GraphicsContext *graphicsContext, const uint width, const uint height);
 	~LineEdit();
 
 	/**
@@ -111,7 +111,7 @@ public:
 			}
 
 			// Update text offsets
-			m_lineEdit->m_dirty = true;
+			m_lineEdit->m_dirtyTextGraphics = true;
 		}
 
 		void setLength(const int length)
@@ -161,6 +161,7 @@ protected:
 	SpriteBatch m_spriteBatch;
 	Resource<Texture2D> m_textureActive, m_textureInactive;
 	RenderTarget2D *m_renderTarget;
+	RenderTarget2D *m_renderTargetText;
 	Resource<Font> m_font;
 	Color m_color;
 
@@ -172,7 +173,7 @@ protected:
 	int m_wordBegin, m_wordEnd;
 	float m_cursorTime;
 	float m_offsetX;
-	bool m_dirty;
+	bool m_dirtyGraphics, m_dirtyTextGraphics;
 	function<void()> m_acceptFunc;
 };
 
