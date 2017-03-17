@@ -11,9 +11,8 @@ class RandomNoiseGPU : public Game
 
 public:
 	RandomNoiseGPU() :
-		Game("RandomNoiseGPU")
+		Game("RandomNoiseGPU", SAUCE_EXPORT_LOG)
 	{
-		setFlags(SAUCE_EXPORT_LOG);
 	}
 
 	void onStart(GameEvent *e)

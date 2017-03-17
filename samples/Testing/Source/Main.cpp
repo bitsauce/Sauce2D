@@ -11,6 +11,8 @@ class DrawTexturedQuad : public Game
 	Resource<Texture2D> texture;
 	shared_ptr<Texture2D> textureSaved;
 	StaticVertexBuffer *vbo;
+	RenderTarget2D *renderTarget;
+	shared_ptr<Texture2D> testTexture;
 public:
 	DrawTexturedQuad() :
 		Game("DrawTexturedQuad")
@@ -22,6 +24,8 @@ public:
 		texture = Resource<Texture2D>("Koala");
 		texture->exportToFile(":/Content/Texture_Saved.png");
 		textureSaved = shared_ptr<Texture2D>(new Texture2D(Pixmap("Texture_Saved.png")));
+		renderTarget = new RenderTarget2D(0, 1);
+		testTexture = shared_ptr<Texture2D>(new Texture2D(0, 0));
 	}
 
 	void onEnd(GameEvent *e)
@@ -35,13 +39,94 @@ public:
 	void onDraw(DrawEvent *e)
 	{
 		GraphicsContext *context = e->getGraphicsContext();
-		context->setTexture(texture);
+		context->setRenderTarget(renderTarget);
+		context->setTexture(testTexture);
 		context->drawRectangle(0, 0, context->getWidth() / 2, context->getHeight());
 		context->setTexture(textureSaved);
 		context->drawRectangle(context->getWidth() / 2, 0, context->getWidth() / 2, context->getHeight());
 		context->setTexture(0);
+		context->setRenderTarget(0);
 
 		context->drawRectangleOutline(100, 100, 100, 100, Color(0, 0, 0, 255));
+	}
+};
+
+// This tests event passing
+class EventsTest : public Game
+{
+	class Object : public SceneObject
+	{
+	public:
+		Object(string s) : name(s)
+		{
+		}
+
+		void onEvent(Event *e)
+		{
+			string tabs;
+			SceneObject *s = this;
+			while(s = s->getParent()) tabs += "\t";
+			LOG("%s%s: Event", tabs.c_str(), name.c_str());
+			SceneObject::onEvent(e);
+		}
+
+		void onTick(TickEvent *e)
+		{
+			string tabs;
+			SceneObject *s = this;
+			while(s = s->getParent()) tabs += "\t";
+			LOG("%s%s: Tick", tabs.c_str(), name.c_str());
+			SceneObject::onTick(e);
+		}
+
+	private:
+		const string name;
+	};
+
+public:
+	EventsTest() :
+		Game("EventsTest")
+	{
+	}
+
+	//	Desired output:
+	//	Game: Pre tick
+	//		A: Event
+	//		A: Tick
+	//		B: Event
+	//		B: Tick
+	//			B1: Event
+	//			B1: Tick
+	//			B2: Event
+	//			B2: Tick
+	//			B3: Event
+	//			B3: Tick
+	//		C: Event
+	//		C: Tick
+	//	Game: Post tick
+	void onStart(GameEvent *e)
+	{
+		addChildLast(new Object("A"));
+		Object *b; addChildLast(b = new Object("B"));
+		b->addChildLast(new Object("B1"));
+		b->addChildLast(new Object("B2"));
+		b->addChildLast(new Object("B3"));
+		addChildLast(new Object("C"));
+	}
+
+	void onEnd(GameEvent *e)
+	{
+	}
+
+	void onTick(TickEvent *e)
+	{
+		LOG("Game: Pre tick");
+		Game::onTick(e);
+		LOG("Game: Post tick");
+	}
+
+	void onDraw(DrawEvent *e)
+	{
 	}
 };
 
@@ -375,6 +460,11 @@ public:
 
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, INT)
 {
+	// EventsTest
+	{
+		EventsTest game;
+		if(game.run() != SAUCE_OK) return EXIT_FAILURE;
+	}
 
 	// DrawTexturedQuad
 	{
