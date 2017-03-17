@@ -1,8 +1,20 @@
 #include "Config.h"
-#include "AspectRatioContainer.h"
-#include "Button.h"
-#include "LineEdit.h"
-#include "Canvas.h"
+#include "Gui/AspectRatioContainer.h"
+#include "Gui/Button.h"
+#include "Gui/LineEdit.h"
+#include "Gui/Canvas.h"
+#include "Gui/Gui.h"
+#include "Gui/Background.h"
+
+// TODO: Expand this sample so it can:
+// o Go from one menu to another (with crossfade)
+// o Manage a menu stack.
+//   Example: Main Menu -> Start Game -> Options -> Back -> Back -> Options
+//   Should both show the same options menu
+// o Pop-up messages
+// o Sliders
+// o Animated buttons
+// o Button sounds
 
 class GuiGame : public Game
 {
@@ -14,6 +26,7 @@ class GuiGame : public Game
 	LineEdit *lineEdit;
 	AspectRatioContainer *aspectRatioContainer;
 	Resource<Font> font;
+	Gui *gui;
 
 public:
 	GuiGame() :
@@ -33,10 +46,13 @@ public:
 		GraphicsContext *graphicsContext = getWindow()->getGraphicsContext();
 		spriteBatch = new SpriteBatch(graphicsContext);
 
-		canvas = new Canvas(getWindow());
-		addChildLast(canvas);
+		gui = new Gui();
 
-		aspectRatioContainer = new AspectRatioContainer(canvas, getWindow(), 1280, 1280.0f / 720.0f);
+		canvas = new Canvas(getWindow());
+
+		Background *bg = new Background(canvas);
+
+		aspectRatioContainer = new AspectRatioContainer(bg, getWindow(), 1280, 1280.0f / 720.0f);
 		aspectRatioContainer->setAnchor(0.5f, 0.5f);
 		aspectRatioContainer->setOrigin(0.5f, 0.5f);
 
@@ -52,7 +68,7 @@ public:
 		button2->setOrigin(0.5f, 0.5f);
 		button2->setPosition(0.0f, 0.0f);
 
-		button3 = new Button(canvas, 40, 40);
+		button3 = new Button(bg, 40, 40);
 		button3->setSize(40.0f / 1280.0f, 40.0f / 720.0f);
 		button3->setAnchor(1.0f, 0.0f);
 		button3->setOrigin(1.0f, 0.0f);
@@ -64,6 +80,9 @@ public:
 		lineEdit->setAnchor(0.5f, 0.85f);
 		lineEdit->setOrigin(0.5f, 0.5f);
 		lineEdit->setDefaultText("World name");
+
+		gui->pushCanvas(canvas);
+		addChildLast(gui);
 	}
 
 	void onEnd(GameEvent*)
@@ -88,16 +107,13 @@ public:
 		spriteBatch->begin();
 
 		// Draw UI objects
-		Game::onDraw(e);
+		SceneObject::onDraw(e);
 
 		// Draw debug info
-		Game *game = Game::Get();
-
-		// Make debugstring
 		stringstream ss;
-		ss << "FPS: " << game->getFPS() << "\n";
-		ss << "Cursor position: " << game->getInputManager()->getPosition() << "\n";
-		ss << "Canvas size: " << canvas->getDrawSize().x << "x" << canvas->getDrawSize().y << " (" << canvas->getAspectRatio() << ")\n";
+		ss << "FPS: " << getFPS() << "\n";
+		ss << "Cursor position: " << getInputManager()->getPosition() << "\n";
+		ss << "Canvas size: " << canvas->getSize().x << "x" << canvas->getSize().y << " (" << canvas->getAspectRatio() << ")\n";
 		ss << "Aspect ratio container size: " << aspectRatioContainer->getDrawSize().x << "x" << aspectRatioContainer->getDrawSize().y << " (" << aspectRatioContainer->getAspectRatio() << ")\n";
 
 		font->draw(spriteBatch, Vector2F(10.0f), ss.str());

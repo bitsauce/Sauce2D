@@ -1,0 +1,68 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="..\Source\Main.cpp" />
+    <ClCompile Include="..\Source\Gui\Canvas.cpp">
+      <Filter>Gui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Gui\Label.cpp">
+      <Filter>Gui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Gui\LineEdit.cpp">
+      <Filter>Gui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Gui\UiObject.cpp">
+      <Filter>Gui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Gui\AspectRatioContainer.cpp">
+      <Filter>Gui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Gui\Button.cpp">
+      <Filter>Gui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Gui\Gui.cpp">
+      <Filter>Gui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Gui\Background.cpp">
+      <Filter>Gui</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\Source\Config.h" />
+    <ClInclude Include="..\Source\Gui\Button.h">
+      <Filter>Gui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Gui\Canvas.h">
+      <Filter>Gui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Gui\Label.h">
+      <Filter>Gui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Gui\LineEdit.h">
+      <Filter>Gui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Gui\UiEvents.h">
+      <Filter>Gui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Gui\UiObject.h">
+      <Filter>Gui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Gui\AspectRatioContainer.h">
+      <Filter>Gui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Gui\Gui.h">
+      <Filter>Gui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Gui\Background.h">
+      <Filter>Gui</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Xml Include="..\Data\Resources.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Gui">
+      <UniqueIdentifier>{ddc1ae98-f3fb-4e09-bd26-6c59732d84a3}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

@@ -8,7 +8,7 @@ class AspectRatioContainer : public UiObject
 public:
 	AspectRatioContainer(UiObject *parent, Window *window, const int maxWidth, const float aspectRatio);
 
-	void onWindowSizeChanged(WindowEvent *e);
+	void onResize(ResizeEvent *e);
 	void onDraw(DrawEvent *e);
 
 private:

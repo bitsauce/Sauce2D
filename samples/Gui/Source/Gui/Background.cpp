@@ -1,15 +1,14 @@
-#include "Canvas.h"
+#include "Background.h"
 
-Canvas::Canvas(Window *window) :
-	UiObject(0),
-	m_window(window),
+Background::Background(UiObject *parent) :
+	UiObject(parent),
 	m_topColor(200, 200, 200, 255),
 	m_bottomColor(250, 250, 250, 255)
 {
 	setSize(1.0f, 1.0f);
 }
 
-void Canvas::onDraw(DrawEvent *e)
+void Background::onDraw(DrawEvent *e)
 {
 	RectI rect = { Vector2I(0), e->getGraphicsContext()->getSize() };
 
@@ -25,14 +24,4 @@ void Canvas::onDraw(DrawEvent *e)
 	e->getGraphicsContext()->drawPrimitives(GraphicsContext::PRIMITIVE_TRIANGLE_STRIP, m_vertices, 4);
 
 	UiObject::onDraw(e);
-}
-
-Vector2I Canvas::getDrawPosition() const
-{
-	return Vector2I(0, 0);
-}
-
-Vector2I Canvas::getDrawSize() const
-{
-	return m_window->getSize();
 }
