@@ -36,19 +36,6 @@ Window::Window(const string &title, const int x, const int y, const int w, const
 
 	// Create graphics manager of this window
 	m_graphicsContext = new GraphicsContext(this);
-
-	// Set callbacks
-	/*glfwSetFramebufferSizeCallback(s_window, sizeChanged);
-	glfwSetWindowFocusCallback(s_window, focusChanged);
-	glfwSetKeyCallback(s_window, keyCallback);
-	glfwSetCharCallback(s_window, charCallback);
-	glfwSetMouseButtonCallback(s_window, mouseButtonCallback);
-	glfwSetCursorPosCallback(s_window, cursorMoveCallback);
-	glfwSetScrollCallback(s_window, scrollCallback);
-
-	glfwMakeContextCurrent(s_window);
-	Graphics::setVsync(1);
-	glfwShowWindow(s_window);*/
 }
 
 Window::~Window()

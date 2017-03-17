@@ -17,6 +17,8 @@ RenderTarget2D::RenderTarget2D(const uint width, const uint height, const uint c
 	m_height(height),
 	m_textureCount(count)
 {
+	if(width == 0 || height == 0) THROW("RenderTarget2D(): width and height must be greater than 0.");
+
 	// Generate framebuffer
 	glGenFramebuffers(1, &m_id);
 
