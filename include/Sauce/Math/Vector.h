@@ -248,6 +248,8 @@ public:
 		return os;
 	}
 
+	static const Vector2<T> Zero;
+
     T x, y;
 };
 

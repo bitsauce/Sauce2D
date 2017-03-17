@@ -57,6 +57,7 @@
     <ClInclude Include="..\..\include\Sauce\Common\Game.h" />
     <ClInclude Include="..\..\include\Sauce\Common\IniParser.h" />
     <ClInclude Include="..\..\include\Sauce\Common\ResourceManager.h" />
+    <ClInclude Include="..\..\include\Sauce\Common\SceneObject.h" />
     <ClInclude Include="..\..\include\Sauce\Common\tinyxml2.h" />
     <ClInclude Include="..\..\include\Sauce\Config.h" />
     <ClInclude Include="..\..\include\Sauce\Graphics.h" />

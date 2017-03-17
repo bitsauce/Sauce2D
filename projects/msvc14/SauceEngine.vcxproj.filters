@@ -275,5 +275,8 @@
     <ClInclude Include="..\..\include\Sauce\Common\tinyxml2.h">
       <Filter>Include\Sauce\Common</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\include\Sauce\Common\SceneObject.h">
+      <Filter>Include\Sauce\Common</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
