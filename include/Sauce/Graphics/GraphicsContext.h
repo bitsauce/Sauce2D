@@ -22,6 +22,19 @@ class SAUCE_API GraphicsContext
 	friend class Window;
 public:
 
+	// State
+	struct State
+	{
+		uint width;
+		uint height;
+		shared_ptr<Texture2D> texture;
+		shared_ptr<Shader> shader;
+		BlendState blendState;
+		RenderTarget2D *renderTarget;
+		stack<Matrix4> transformationMatrixStack;
+		Matrix4 projectionMatrix;
+	};
+
 	/**
 	 * Graphics capabilites.
 	 * For enabling and disabling certain rendering options.
@@ -101,14 +114,18 @@ public:
 	 * TODO: Implement a render target stack.
 	 * \param renderTarget The target buffer to render to.
 	 */
-	void setRenderTarget(RenderTarget2D *renderTarget);
+	void pushRenderTarget(RenderTarget2D *renderTarget);
+	void popRenderTarget();
+
+	void pushState(const State &state);
+	void popState();
 
 	/**
 	 * Get current render target.
 	 */
 	RenderTarget2D *getRenderTarget() const
 	{
-		return m_renderTarget;
+		return m_stateStack.top().renderTarget;
 	}
 	
 	/**
@@ -188,7 +205,7 @@ public:
 
 	Vector2I getSize() const
 	{
-		return Vector2I(m_width, m_height);
+		return Vector2I(m_stateStack.top().width, m_stateStack.top().height);
 	}
 
 	/**
@@ -196,7 +213,7 @@ public:
 	 */
 	uint getWidth() const
 	{
-		return m_width;
+		return m_stateStack.top().width;
 	}
 
 	/**
@@ -204,7 +221,7 @@ public:
 	 */
 	uint getHeight() const
 	{
-		return m_height;
+		return m_stateStack.top().height;
 	}
 	/**
 	 * Renders an indexed primitive to the screen.
@@ -245,7 +262,7 @@ public:
 	 * \param color %Color of the rectangle.
 	 * \param textureRegion Texture region of the rectangle.
 	 */
-	void drawRectangle(const Rect<float> &rect, const Color &color = Color(255), const TextureRegion &textureRegion = TextureRegion());
+	void drawRectangle(const Rect<float> &rect, const Color &color = Color::White, const TextureRegion &textureRegion = TextureRegion());
 
 
 	/**
@@ -255,7 +272,7 @@ public:
 	 * \param color %Color of the rectangle.
 	 * \param textureRegion Texture region of the rectangle.
 	 */
-	void drawRectangle(const Vector2F &pos, const Vector2F &size, const Color &color = Color(255), const TextureRegion &textureRegion = TextureRegion());
+	void drawRectangle(const Vector2F &pos, const Vector2F &size, const Color &color = Color::White, const TextureRegion &textureRegion = TextureRegion());
 
 	/**
 	 * Renders a rectangle.
@@ -266,7 +283,7 @@ public:
 	 * \param color %Color of the rectangle.
 	 * \param textureRegion Texture region of the rectangle.
 	 */
-	void drawRectangle(const float x, const float y, const float width, const float height, const Color &color = Color(255), const TextureRegion &textureRegion = TextureRegion());
+	void drawRectangle(const float x, const float y, const float width, const float height, const Color &color = Color::White, const TextureRegion &textureRegion = TextureRegion());
 
 	/**
 	* Renders a rectangle outline.
@@ -274,7 +291,7 @@ public:
 	* \param color %Color of the rectangle.
 	* \param textureRegion Texture region of the rectangle.
 	*/
-	void drawRectangleOutline(const Rect<float> &rect, const Color &color = Color(255), const TextureRegion &textureRegion = TextureRegion());
+	void drawRectangleOutline(const Rect<float> &rect, const Color &color = Color::White, const TextureRegion &textureRegion = TextureRegion());
 
 
 	/**
@@ -284,7 +301,7 @@ public:
 	* \param color %Color of the rectangle.
 	* \param textureRegion Texture region of the rectangle.
 	*/
-	void drawRectangleOutline(const Vector2F &pos, const Vector2F &size, const Color &color = Color(255), const TextureRegion &textureRegion = TextureRegion());
+	void drawRectangleOutline(const Vector2F &pos, const Vector2F &size, const Color &color = Color::White, const TextureRegion &textureRegion = TextureRegion());
 
 	/**
 	* Renders a rectangle outline.
@@ -295,7 +312,7 @@ public:
 	* \param color %Color of the rectangle.
 	* \param textureRegion Texture region of the rectangle.
 	*/
-	void drawRectangleOutline(const float x, const float y, const float width, const float height, const Color &color = Color(255), const TextureRegion &textureRegion = TextureRegion());
+	void drawRectangleOutline(const float x, const float y, const float width, const float height, const Color &color = Color::White, const TextureRegion &textureRegion = TextureRegion());
 
 	/**
 	 * Renders a circle.
@@ -304,8 +321,8 @@ public:
 	 * \param segments Number of triangle segments to divide the circle into.
 	 * \param color %Color of the circle.
 	 */
-	void drawCircleGradient(const Vector2F &pos, const float radius, const uint segments, const Color &center = Color(255), const Color &outer = Color(255));
-	void drawCircle(const Vector2F &pos, const float radius, const uint segments, const Color &color = Color(255));
+	void drawCircleGradient(const Vector2F &pos, const float radius, const uint segments, const Color &center = Color::White, const Color &outer = Color::White);
+	void drawCircle(const Vector2F &pos, const float radius, const uint segments, const Color &color = Color::White);
 
 	/**
 	 * Renders a circle.
@@ -315,8 +332,8 @@ public:
 	 * \param segments Number of triangle segments to divide the circle into.
 	 * \param color %Color of the circle.
 	 */
-	void drawCircleGradient(const float x, const float y, const float radius, const uint segments, const Color &center = Color(255), const Color &outer = Color(255));
-	void drawCircle(const float x, const float y, const float radius, const uint segments, const Color &color = Color(255));
+	void drawCircleGradient(const float x, const float y, const float radius, const uint segments, const Color &center = Color::White, const Color &outer = Color::White);
+	void drawCircle(const float x, const float y, const float radius, const uint segments, const Color &color = Color::White);
 
 	SDL_GLContext getSDLHandle() const
 	{
@@ -332,14 +349,8 @@ private:
 
 	SDL_GLContext m_context;
 	Window *m_window;
-	uint m_width;
-	uint m_height;
-	shared_ptr<Texture2D> m_texture;
-	shared_ptr<Shader> m_shader;
-	BlendState m_blendState;
-	RenderTarget2D *m_renderTarget;
-	stack<Matrix4> m_transformationMatrixStack;
-	Matrix4 m_projectionMatrix;
+
+	stack<State> m_stateStack;
 
 	vector<Vertex> m_vertices; // Vertices for when needed
 

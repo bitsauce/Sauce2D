@@ -870,6 +870,19 @@ typedef Vector4<double> Vector4D;
 typedef Vector4<int> Vector4I;
 typedef Vector4<uint> Vector4U;
 typedef Vector4<uchar> Vector4UB;
-typedef Vector4<uchar> Color;
+
+class Color : public Vector4<uchar>
+{
+public:
+	Color();
+	Color(const uchar r, const uchar g, const uchar b, const uchar a = 255);
+
+	static const Color Black;
+	static const Color White;
+	static const Color Red;
+	static const Color Green;
+	static const Color Blue;
+	static const Color Yellow;
+};
 
 #endif // SAUCE_VECTOR_H

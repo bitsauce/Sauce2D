@@ -130,6 +130,48 @@ public:
 	}
 };
 
+// Test render target stack
+class RenderTargetTest : public Game
+{
+	RenderTarget2D *rt1, *rt2, *rt3;
+
+public:
+	RenderTargetTest() :
+		Game("RenderTargetTest")
+	{
+	}
+
+	void onStart(GameEvent *e)
+	{
+		rt1 = new RenderTarget2D(getWindow()->getWidth(), getWindow()->getHeight());
+		rt1 = new RenderTarget2D(200, 50);
+		rt1 = new RenderTarget2D(100, 100);
+	}
+
+	void onEnd(GameEvent *e)
+	{
+	}
+
+	void onTick(TickEvent *e)
+	{
+	}
+
+	void onDraw(DrawEvent *e)
+	{
+		GraphicsContext* graphicsContext = e->getGraphicsContext();
+		graphicsContext->pushRenderTarget(r1);
+		{
+			graphicsContext->pushRenderTarget(r2);
+			{
+				graphicsContext->drawRectangle(0, 0, 100, 100, Color::Red);
+			}
+			graphicsContext->popRenderTarget(r2);
+		}
+		graphicsContext->popRenderTarget();
+	}
+};
+
+
 #define WORLD_HEIGHT 10
 #define WORLD_WIDTH 10
 #define TILE_WIDTH 120
@@ -462,6 +504,12 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, INT)
 {
 	// EventsTest
 	{
+		RenderTargetTest game;
+		if(game.run() != SAUCE_OK) return EXIT_FAILURE;
+	}
+
+	// EventsTest
+	/*{
 		EventsTest game;
 		if(game.run() != SAUCE_OK) return EXIT_FAILURE;
 	}
@@ -473,7 +521,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, INT)
 	}
 
 	// Isometric
-	/*{
+	{
 		Testing game;
 		if(game.run() != SAUCE_OK) return EXIT_FAILURE;
 	}*/

@@ -98,30 +98,44 @@ void GraphicsContext::disableScissor()
 	glDisable(GL_SCISSOR_TEST);
 }
 
-void GraphicsContext::setRenderTarget(RenderTarget2D *renderTarget)
+void GraphicsContext::pushRenderTarget(RenderTarget2D *renderTarget)
+{
+	State newState = m_state;
+	newState.renderTarget = renderTarget;
+	pushState(newState);
+}
+
+void GraphicsContext::popRenderTarget()
+{
+	popState();
+}
+
+void GraphicsContext::pushState(const State &state)
 {
 	// Setup viewport and projection
-	if(m_renderTarget != renderTarget)
+	if(m_stateStack.top().renderTarget != state.renderTarget)
 	{
-		if(renderTarget)
+		if(state.renderTarget)
 		{
 			// Bind new render target
-			m_renderTarget = renderTarget;
-			m_renderTarget->bind();
+			m_stateStack.top().renderTarget = state.renderTarget;
+			m_stateStack.top().renderTarget->bind();
 
 			// Resize viewport
-			resizeViewport(m_renderTarget->m_width, m_renderTarget->m_height, true);
+			resizeViewport(m_stateStack.top().renderTarget->m_width, m_stateStack.top().renderTarget->m_height, true);
 		}
-		else if(m_renderTarget)
+		else if(m_stateStack.top().renderTarget)
 		{
 			// Unbind render target
-			m_renderTarget->unbind();
-			m_renderTarget = 0;
+			m_stateStack.top().renderTarget->unbind();
+			m_stateStack.top().renderTarget = 0;
 
 			// Resize viewport
 			resizeViewport(m_window->getWidth(), m_window->getHeight());
 		}
 	}
+
+	m_stateStack.push(state);
 }
 
 void GraphicsContext::setTransformationMatrix(const Matrix4 &projmat)
