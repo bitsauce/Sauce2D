@@ -26,6 +26,9 @@
     <ClCompile Include="..\Source\Gui\Background.cpp">
       <Filter>Gui</Filter>
     </ClCompile>
+    <ClCompile Include="..\Source\Gui\DialogBoxCanvas.cpp">
+      <Filter>Gui</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Source\Config.h" />
@@ -54,6 +57,9 @@
       <Filter>Gui</Filter>
     </ClInclude>
     <ClInclude Include="..\Source\Gui\Background.h">
+      <Filter>Gui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Gui\DialogBoxCanvas.h">
       <Filter>Gui</Filter>
     </ClInclude>
   </ItemGroup>

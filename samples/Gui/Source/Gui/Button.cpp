@@ -5,8 +5,7 @@ Button::Button(UiObject *parent, const uint btnWidth, const uint btnHeight) :
 	m_texture(Resource<Texture2D>("ButtonInactive")),
 	m_textureHover(Resource<Texture2D>("ButtonHover")),
 	m_textureActive(Resource<Texture2D>("ButtonActive")),
-	m_font(Resource<Font>("Font")),
-	m_text("Button")
+	m_font(Resource<Font>("Font"))
 {
 	m_renderTarget = new RenderTarget2D(btnWidth, btnHeight);
 	m_spriteBatch = 0;
@@ -17,12 +16,10 @@ void Button::onClick(ClickEvent *e)
 	switch(e->getType())
 	{
 		case ClickEvent::DONE:
-			break;
-
-		case ClickEvent::BEGIN:
-			break;
-
-		case ClickEvent::CANCELED:
+			if(m_clickCallback)
+			{
+				m_clickCallback();
+			}
 			break;
 	}
 
@@ -32,28 +29,28 @@ void Button::onClick(ClickEvent *e)
 void Button::onDraw(DrawEvent *e)
 {
 	GraphicsContext *graphicsContext = e->getGraphicsContext();
+
 	if(!m_spriteBatch)
 	{
 		m_spriteBatch =  new SpriteBatch(graphicsContext);
 	}
 
 	// Draw button to render target
+	graphicsContext->pushState();
 	graphicsContext->setRenderTarget(m_renderTarget);
+	graphicsContext->setBlendState(BlendState(BlendState::BLEND_SRC_ALPHA, BlendState::BLEND_ZERO, BlendState::BLEND_ONE, BlendState::BLEND_ZERO));
 
 	if(isPressed() && isHovered())
 	{
 		graphicsContext->setTexture(m_textureActive);
-		m_text = "Pressed";
 	}
 	else if(isHovered())
 	{
 		graphicsContext->setTexture(m_textureHover);
-		m_text = "Hover";
 	}
 	else
 	{
 		graphicsContext->setTexture(m_texture);
-		m_text = "Normal";
 	}
 
 	const Vector2I size(m_renderTarget->getWidth(), m_renderTarget->getHeight());
@@ -69,10 +66,7 @@ void Button::onDraw(DrawEvent *e)
 	graphicsContext->drawRectangle(size.x - 16.0f, 16.0f,          16.0f,          size.y - 32.0f, Color::White, TextureRegion(2.0f / 3.0f, 1.0f / 3.0f, 3.0f / 3.0f, 2.0f / 3.0f));
 
 	graphicsContext->drawRectangle(Vector2F(16.0f), size - Vector2F(32.0f), Color::White, TextureRegion(1.0f / 3.0f, 1.0f / 3.0f, 2.0f / 3.0f, 2.0f / 3.0f));
-
-	graphicsContext->setTexture(0);
-
-	graphicsContext->setRenderTarget(0);
+	graphicsContext->popState();
 
 	// Draw button from render target
 	RectI rect = getDrawRect();
@@ -80,7 +74,7 @@ void Button::onDraw(DrawEvent *e)
 	graphicsContext->drawRectangle(rect);
 	graphicsContext->setTexture(0);
 
-	m_spriteBatch->begin();
+	m_spriteBatch->begin(SpriteBatch::State(SpriteBatch::DEFERRED, BlendState(BlendState::BLEND_SRC_ALPHA, BlendState::BLEND_ONE_MINUS_SRC_ALPHA, BlendState::BLEND_ONE, BlendState::BLEND_ONE_MINUS_SRC_ALPHA)));
 	m_font->setHeight(min(rect.size.y, 16.0f));
 	m_font->setColor(Color(0, 0, 0, 255));
 	m_font->draw(m_spriteBatch, Vector2I(rect.position + rect.size / 2 - Vector2F(0.0f, m_font->getHeight() * 0.5f)), m_text, FONT_ALIGN_CENTER);
@@ -88,4 +82,9 @@ void Button::onDraw(DrawEvent *e)
 	m_spriteBatch->end();
 
 	UiObject::onDraw(e);
+}
+
+void Button::setOnClickCallback(function<void()> callback)
+{
+	m_clickCallback = callback;
 }

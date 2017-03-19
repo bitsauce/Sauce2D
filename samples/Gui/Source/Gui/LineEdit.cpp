@@ -82,7 +82,9 @@ void LineEdit::onDraw(DrawEvent *e)
 	if(m_dirtyGraphics)
 	{
 		// Update line edit visualization
+		graphicsContext->pushState();
 		graphicsContext->setRenderTarget(m_renderTarget);
+		graphicsContext->setBlendState(BlendState(BlendState::BLEND_SRC_ALPHA, BlendState::BLEND_ZERO, BlendState::BLEND_ONE, BlendState::BLEND_ZERO));
 
 		// Set texture
 		if(isFocused())
@@ -105,8 +107,7 @@ void LineEdit::onDraw(DrawEvent *e)
 		graphicsContext->drawRectangle(0.0f, 16.0f, 16.0f, h - 32.0f, Color::White, TextureRegion(0.0f / 3.0f, 1.0f / 3.0f, 1.0f / 3.0f, 2.0f / 3.0f));
 		graphicsContext->drawRectangle(w - 16.0f, 16.0f, 16.0f, h - 32.0f, Color::White, TextureRegion(2.0f / 3.0f, 1.0f / 3.0f, 3.0f / 3.0f, 2.0f / 3.0f));
 		graphicsContext->drawRectangle(16.0f, 16.0f, w - 32.0f, h - 32.0f, Color::White, TextureRegion(1.0f / 3.0f, 1.0f / 3.0f, 2.0f / 3.0f, 2.0f / 3.0f));
-		graphicsContext->setTexture(0);
-		graphicsContext->setRenderTarget(0);
+		graphicsContext->popState();
 
 		m_dirtyGraphics = false;
 	}
@@ -123,13 +124,14 @@ void LineEdit::onDraw(DrawEvent *e)
 	// Update text graphics if dirty
 	if(m_dirtyTextGraphics)
 	{
+		graphicsContext->pushState();
 		graphicsContext->setRenderTarget(m_renderTargetText);
 
 		// Clear previous text
 		// OPTIMIZATION: Only update the text which changed
 		graphicsContext->setBlendState(BlendState(BlendState::BLEND_ZERO, BlendState::BLEND_ZERO));
 		graphicsContext->drawRectangle(0, 0, m_renderTargetText->getWidth(), m_renderTargetText->getHeight());
-		graphicsContext->setBlendState(BlendState(BlendState::PRESET_ALPHA_BLEND));
+		graphicsContext->setBlendState(BlendState(BlendState::BLEND_SRC_ALPHA, BlendState::BLEND_ONE_MINUS_SRC_ALPHA, BlendState::BLEND_ONE, BlendState::BLEND_ONE_MINUS_SRC_ALPHA));
 
 		// Get the string to render and set text color
 		string text;
@@ -160,7 +162,7 @@ void LineEdit::onDraw(DrawEvent *e)
 		graphicsContext->disableScissor();
 
 		// Reset render target
-		graphicsContext->setRenderTarget(0);
+		graphicsContext->popState();
 
 		// No longer dirty
 		m_dirtyTextGraphics = false;

@@ -3,14 +3,17 @@
 	<texture>
 		<name>ButtonActive</name>
 		<path>Images/Button_Active.png</path>
+		<premultiplyAlpha>true</premultiplyAlpha>
 	</texture>
 	<texture>
 		<name>ButtonHover</name>
 		<path>Images/Button_Hover.png</path>
+		<premultiplyAlpha>true</premultiplyAlpha>
 	</texture>
 	<texture>
 		<name>ButtonInactive</name>
 		<path>Images/Button_Inactive.png</path>
+		<premultiplyAlpha>true</premultiplyAlpha>
 	</texture>
 	
 	<!--LineEdit-->

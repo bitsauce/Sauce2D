@@ -5,12 +5,14 @@
 #include "Gui/Canvas.h"
 #include "Gui/Gui.h"
 #include "Gui/Background.h"
+#include "Gui/DialogBoxCanvas.h"
 
 // TODO: Expand this sample so it can:
-// o Go from one menu to another (with crossfade)
-// o Manage a menu stack.
+// + Go from one menu to another (with crossfade)
+// + Manage a menu stack.
 //   Example: Main Menu -> Start Game -> Options -> Back -> Back -> Options
 //   Should both show the same options menu
+// + Test transparent canvases: Make it so that elements behind a transparent canvas are non-interactable
 // o Pop-up messages
 // o Sliders
 // o Animated buttons
@@ -19,10 +21,14 @@
 class GuiGame : public Game
 {
 	SpriteBatch *spriteBatch;
-	Canvas *canvas;
-	Button *button1;
-	Button *button2;
-	Button *button3;
+	Canvas *canvasMain;
+	Canvas *canvasOptions;
+	Canvas *canvasDialog;
+	Button *buttonSingleplayer;
+	Button *buttonMultiplayer;
+	Button *buttonOptions;
+	Button *buttonQuit;
+	Button *buttonBack;
 	LineEdit *lineEdit;
 	AspectRatioContainer *aspectRatioContainer;
 	Resource<Font> font;
@@ -48,50 +54,79 @@ public:
 
 		gui = new Gui();
 
-		canvas = new Canvas(getWindow());
+		canvasMain = new Canvas(getWindow());
+		canvasOptions = new Canvas(getWindow());
+		canvasDialog = new DialogBoxCanvas(gui, getWindow(), canvasOptions);
 
-		Background *bg = new Background(canvas);
+		Background *bg = new Background(canvasMain);
+		Background *bg2 = new Background(canvasOptions);
 
 		aspectRatioContainer = new AspectRatioContainer(bg, getWindow(), 1280, 1280.0f / 720.0f);
 		aspectRatioContainer->setAnchor(0.5f, 0.5f);
 		aspectRatioContainer->setOrigin(0.5f, 0.5f);
 
-		button1 = new Button(aspectRatioContainer, 150, 40);
-		button1->setSize(150.0f / 1280.0f, 40.0f / 720.0f);
-		button1->setAnchor(0.5f, 0.85f);
-		button1->setOrigin(0.5f, 0.5f);
-		button1->setPosition(0.0f, 0.0f);
+		// Singleplayer
+		buttonSingleplayer = new Button(aspectRatioContainer, 230, 40);
+		buttonSingleplayer->setText("Singleplayer");
+		buttonSingleplayer->setSize(230.0f / 1280.0f, 40.0f / 720.0f);
+		buttonSingleplayer->setAnchor(0.5f, 0.25f);
+		buttonSingleplayer->setOrigin(0.5f, 0.5f);
+		buttonSingleplayer->setPosition(0.0f, 0.0f);
+		//buttonSingleplayer->setOnClickCallback(bind(&Gui::pushCanvas, gui, canvasOptions));
 
-		button2 = new Button(aspectRatioContainer, 1280, 40);
-		button2->setSize(1.0f, 40.0f / 720.0f);
-		button2->setAnchor(0.5f, 1.0f - 20.0f / 720.0f);
-		button2->setOrigin(0.5f, 0.5f);
-		button2->setPosition(0.0f, 0.0f);
+		// Multiplayer
+		buttonMultiplayer = new Button(aspectRatioContainer, 230, 40);
+		buttonMultiplayer->setText("Multiplayer");
+		buttonMultiplayer->setSize(230.0f / 1280.0f, 40.0f / 720.0f);
+		buttonMultiplayer->setAnchor(0.5f, 0.25f);
+		buttonMultiplayer->setOrigin(0.5f, 0.5f);
+		buttonMultiplayer->setPosition(0.0f, (40.0f + 10.0f) / 720.0f);
+		buttonMultiplayer->setOnClickCallback(bind(&Gui::pushCanvas, gui, canvasDialog));
 
-		button3 = new Button(bg, 40, 40);
-		button3->setSize(40.0f / 1280.0f, 40.0f / 720.0f);
-		button3->setAnchor(1.0f, 0.0f);
-		button3->setOrigin(1.0f, 0.0f);
-		button3->setPosition(0.0f, 0.0f);
+		// Options
+		buttonOptions = new Button(aspectRatioContainer, 230, 40);
+		buttonOptions->setText("Options");
+		buttonOptions->setSize(230.0f / 1280.0f, 40.0f / 720.0f);
+		buttonOptions->setAnchor(0.5f, 0.25f);
+		buttonOptions->setOrigin(0.5f, 0.5f);
+		buttonOptions->setPosition(0.0f, (40.0f + 10.0f) / 720.0f * 2);
+		buttonOptions->setOnClickCallback(bind(&Gui::pushCanvas, gui, canvasOptions));
 
+		// Quit
+		buttonQuit = new Button(aspectRatioContainer, 230, 40);
+		buttonQuit->setText("Quit");
+		buttonQuit->setSize(230.0f / 1280.0f, 40.0f / 720.0f);
+		buttonQuit->setAnchor(0.5f, 0.25f);
+		buttonQuit->setOrigin(0.5f, 0.5f);
+		buttonQuit->setPosition(0.0f, (40.0f + 10.0f) / 720.0f * 3);
+		buttonQuit->setOnClickCallback(bind(&Game::end, this));
+
+		buttonBack = new Button(bg2, 40, 40);
+		buttonBack->setText("Back");
+		buttonBack->setSize(40.0f / 1280.0f, 40.0f / 720.0f);
+		buttonBack->setAnchor(1.0f, 0.0f);
+		buttonBack->setOrigin(1.0f, 0.0f);
+		buttonBack->setPosition(0.0f, 0.0f);
+		buttonBack->setOnClickCallback(bind(&Gui::popCanvas, gui));
+		/*
 		lineEdit = new LineEdit(aspectRatioContainer, graphicsContext, 200, 40);
 		lineEdit->setSize(200.0f / 1280.0f, 40.0f / 720.0f);
 		lineEdit->setPosition(0.0f, -0.5f);
 		lineEdit->setAnchor(0.5f, 0.85f);
 		lineEdit->setOrigin(0.5f, 0.5f);
 		lineEdit->setDefaultText("World name");
-
-		gui->pushCanvas(canvas);
+		*/
+		gui->pushCanvas(canvasMain);
 		addChildLast(gui);
 	}
 
 	void onEnd(GameEvent*)
 	{
-		delete button1;
-		delete button2;
+		delete buttonSingleplayer;
+		delete buttonOptions;
 		delete aspectRatioContainer;
-		delete button3;
-		delete canvas;
+		delete buttonBack;
+		delete canvasMain;
 		delete lineEdit;
 	}
 
@@ -113,7 +148,7 @@ public:
 		stringstream ss;
 		ss << "FPS: " << getFPS() << "\n";
 		ss << "Cursor position: " << getInputManager()->getPosition() << "\n";
-		ss << "Canvas size: " << canvas->getSize().x << "x" << canvas->getSize().y << " (" << canvas->getAspectRatio() << ")\n";
+		ss << "Canvas size: " << canvasMain->getSize().x << "x" << canvasMain->getSize().y << " (" << canvasMain->getAspectRatio() << ")\n";
 		ss << "Aspect ratio container size: " << aspectRatioContainer->getDrawSize().x << "x" << aspectRatioContainer->getDrawSize().y << " (" << aspectRatioContainer->getAspectRatio() << ")\n";
 
 		font->draw(spriteBatch, Vector2F(10.0f), ss.str());
