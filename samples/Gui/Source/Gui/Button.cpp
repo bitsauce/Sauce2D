@@ -58,17 +58,17 @@ void Button::onDraw(DrawEvent *e)
 
 	const Vector2I size(m_renderTarget->getWidth(), m_renderTarget->getHeight());
 	
-	graphicsContext->drawRectangle(0.0f,           0.0f,           16.0f, 16.0f, Color(255), TextureRegion(0.0f, 0.0f, 1.0f / 3.0f, 1.0f / 3.0f));
-	graphicsContext->drawRectangle(size.x - 16.0f, 0.0f,           16.0f, 16.0f, Color(255), TextureRegion(2.0f / 3.0f, 0.0f, 1.0f, 1.0f / 3.0f));
-	graphicsContext->drawRectangle(0.0f,           size.y - 16.0f, 16.0f, 16.0f, Color(255), TextureRegion(0.0f, 2.0f / 3.0f, 1.0f / 3.0f, 1.0f));
-	graphicsContext->drawRectangle(size.x - 16.0f, size.y - 16.0f, 16.0f, 16.0f, Color(255), TextureRegion(2.0f / 3.0f, 2.0f / 3.0f, 1.0f, 1.0f));
+	graphicsContext->drawRectangle(0.0f,           0.0f,           16.0f, 16.0f, Color::White, TextureRegion(0.0f, 0.0f, 1.0f / 3.0f, 1.0f / 3.0f));
+	graphicsContext->drawRectangle(size.x - 16.0f, 0.0f,           16.0f, 16.0f, Color::White, TextureRegion(2.0f / 3.0f, 0.0f, 1.0f, 1.0f / 3.0f));
+	graphicsContext->drawRectangle(0.0f,           size.y - 16.0f, 16.0f, 16.0f, Color::White, TextureRegion(0.0f, 2.0f / 3.0f, 1.0f / 3.0f, 1.0f));
+	graphicsContext->drawRectangle(size.x - 16.0f, size.y - 16.0f, 16.0f, 16.0f, Color::White, TextureRegion(2.0f / 3.0f, 2.0f / 3.0f, 1.0f, 1.0f));
 
-	graphicsContext->drawRectangle(16.0f,          0.0f,           size.x - 32.0f, 16.0f,          Color(255), TextureRegion(1.0f / 3.0f, 0.0f / 3.0f, 2.0f / 3.0f, 1.0f / 3.0f));
-	graphicsContext->drawRectangle(16.0f,          size.y - 16.0f, size.x - 32.0f, 16.0f,          Color(255), TextureRegion(1.0f / 3.0f, 2.0f / 3.0f, 2.0f / 3.0f, 3.0f / 3.0f));
-	graphicsContext->drawRectangle(0.0f,           16.0f,          16.0f,          size.y - 32.0f, Color(255), TextureRegion(0.0f / 3.0f, 1.0f / 3.0f, 1.0f / 3.0f, 2.0f / 3.0f));
-	graphicsContext->drawRectangle(size.x - 16.0f, 16.0f,          16.0f,          size.y - 32.0f, Color(255), TextureRegion(2.0f / 3.0f, 1.0f / 3.0f, 3.0f / 3.0f, 2.0f / 3.0f));
+	graphicsContext->drawRectangle(16.0f,          0.0f,           size.x - 32.0f, 16.0f,          Color::White, TextureRegion(1.0f / 3.0f, 0.0f / 3.0f, 2.0f / 3.0f, 1.0f / 3.0f));
+	graphicsContext->drawRectangle(16.0f,          size.y - 16.0f, size.x - 32.0f, 16.0f,          Color::White, TextureRegion(1.0f / 3.0f, 2.0f / 3.0f, 2.0f / 3.0f, 3.0f / 3.0f));
+	graphicsContext->drawRectangle(0.0f,           16.0f,          16.0f,          size.y - 32.0f, Color::White, TextureRegion(0.0f / 3.0f, 1.0f / 3.0f, 1.0f / 3.0f, 2.0f / 3.0f));
+	graphicsContext->drawRectangle(size.x - 16.0f, 16.0f,          16.0f,          size.y - 32.0f, Color::White, TextureRegion(2.0f / 3.0f, 1.0f / 3.0f, 3.0f / 3.0f, 2.0f / 3.0f));
 
-	graphicsContext->drawRectangle(Vector2F(16.0f), size - Vector2F(32.0f), Color(255), TextureRegion(1.0f / 3.0f, 1.0f / 3.0f, 2.0f / 3.0f, 2.0f / 3.0f));
+	graphicsContext->drawRectangle(Vector2F(16.0f), size - Vector2F(32.0f), Color::White, TextureRegion(1.0f / 3.0f, 1.0f / 3.0f, 2.0f / 3.0f, 2.0f / 3.0f));
 
 	graphicsContext->setTexture(0);
 

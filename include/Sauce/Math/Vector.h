@@ -603,15 +603,6 @@ public:
 		this->z = v.z;
 		this->w = w;
 	}
-	
-	inline T getR() const { return x; }
-	inline T setR(const T &v) { x = v; }
-	inline T getG() const { return y; }
-	inline T setG(const T &v) { y = v; }
-	inline T getB() const { return z; }
-	inline T setB(const T &v) { z = v; }
-	inline T getA() const { return w; }
-	inline T setA(const T &v) { w = v; }
 
 	inline Vector3<T> getRGB() const { return Vector3<T>(x, y, z); }
 	inline void setRGB(const Vector3<T> &rgb) { x = rgb.x; y = rgb.y; z = rgb.z; }
@@ -774,14 +765,12 @@ public:
 		return T(0);
 	}
 
-	template<typename U>
-	inline U magnitude() const
+	inline T magnitude() const
 	{
 		return sqrtf(x * x + y * y + z * z + w * w);
 	}
 
-	template<typename U>
-	inline U length() const
+	inline T length() const
 	{
 		return sqrtf(x * x + y * y + z * z + w * w);
 	}
@@ -871,11 +860,20 @@ typedef Vector4<int> Vector4I;
 typedef Vector4<uint> Vector4U;
 typedef Vector4<uchar> Vector4UB;
 
-class Color : public Vector4<uchar>
+class SAUCE_API Color : public Vector4<uchar>
 {
 public:
 	Color();
 	Color(const uchar r, const uchar g, const uchar b, const uchar a = 255);
+
+	inline uchar getR() const { return x; }
+	inline void setR(const uchar &v) { x = v; }
+	inline uchar getG() const { return y; }
+	inline void setG(const uchar &v) { y = v; }
+	inline uchar getB() const { return z; }
+	inline void setB(const uchar &v) { z = v; }
+	inline uchar getA() const { return w; }
+	inline void setA(const uchar &v) { w = v; }
 
 	static const Color Black;
 	static const Color White;

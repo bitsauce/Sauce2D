@@ -144,8 +144,8 @@ public:
 	void onStart(GameEvent *e)
 	{
 		rt1 = new RenderTarget2D(getWindow()->getWidth(), getWindow()->getHeight());
-		rt1 = new RenderTarget2D(200, 50);
-		rt1 = new RenderTarget2D(100, 100);
+		rt2 = new RenderTarget2D(200, 50);
+		rt3 = new RenderTarget2D(100, 100);
 	}
 
 	void onEnd(GameEvent *e)
@@ -159,15 +159,54 @@ public:
 	void onDraw(DrawEvent *e)
 	{
 		GraphicsContext* graphicsContext = e->getGraphicsContext();
-		graphicsContext->pushRenderTarget(r1);
+
+		graphicsContext->setBlendState(BlendState(BlendState::BLEND_SRC_ALPHA, BlendState::BLEND_ONE_MINUS_SRC_ALPHA, BlendState::BLEND_ONE, BlendState::BLEND_ONE_MINUS_SRC_ALPHA));
+		graphicsContext->pushState();
 		{
-			graphicsContext->pushRenderTarget(r2);
+			graphicsContext->setRenderTarget(rt1);
+			
+			graphicsContext->pushState();
 			{
-				graphicsContext->drawRectangle(0, 0, 100, 100, Color::Red);
+				graphicsContext->setBlendState(BlendState(BlendState::BLEND_ZERO, BlendState::BLEND_ZERO));
+				graphicsContext->drawRectangle(0, 0, rt1->getWidth(), rt1->getHeight());
 			}
-			graphicsContext->popRenderTarget(r2);
+			graphicsContext->popState();
+
+			graphicsContext->drawRectangle(100, 0, 100, 100, Color::Green);
+
+			graphicsContext->pushState();
+			{
+				graphicsContext->setRenderTarget(rt2);
+
+				graphicsContext->pushState();
+				{
+					graphicsContext->setBlendState(BlendState(BlendState::BLEND_ZERO, BlendState::BLEND_ZERO));
+					graphicsContext->drawRectangle(0, 0, rt2->getWidth(), rt2->getHeight());
+				}
+				graphicsContext->popState();
+
+				graphicsContext->clear(GraphicsContext::COLOR_BUFFER);
+				graphicsContext->drawRectangle(0, 0, 200, 200, Color(255, 0, 0, 75));
+			}
+			graphicsContext->popState();
+
+			graphicsContext->drawRectangle(0, 150, 200, 50, Color(255, 0, 0, 75));
+			graphicsContext->drawRectangle(0, 0, 100, 100, Color::Blue);
+
+			graphicsContext->setTexture(rt2->getTexture());
+			graphicsContext->setBlendState(BlendState(BlendState::PRESET_PREMULTIPLIED_ALPHA));
+			graphicsContext->drawRectangle(0, 100, 200, 50);
+			graphicsContext->setTexture(0);
 		}
-		graphicsContext->popRenderTarget();
+		graphicsContext->popState();
+
+		graphicsContext->setTexture(rt1->getTexture());
+		graphicsContext->setBlendState(BlendState(BlendState::PRESET_PREMULTIPLIED_ALPHA));
+		graphicsContext->drawRectangle(0, 0, getWindow()->getWidth(), getWindow()->getHeight());
+		graphicsContext->setBlendState(BlendState::PRESET_ALPHA_BLEND);
+		graphicsContext->setTexture(0);
+
+		graphicsContext->drawRectangle(0, 200, 200, 50, Color(255, 0, 0, 75));
 	}
 };
 

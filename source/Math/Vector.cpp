@@ -1,4 +1,3 @@
-#include "..\..\include\Sauce\Math\Vector.h"
 #include <Sauce/Math/Vector.h>
 
 const Vector2F Vector2F::Zero;

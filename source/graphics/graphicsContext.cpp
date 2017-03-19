@@ -33,14 +33,11 @@ Vertex *GraphicsContext::getVertices(const uint vertexCount)
 }
 
 GraphicsContext::GraphicsContext(Window *window) :
-	m_window(window),
-	m_width(0),
-	m_height(0),
-	m_renderTarget(nullptr),
-	m_shader(nullptr),
-	m_texture(nullptr),
-	m_blendState(BlendState::PRESET_ALPHA_BLEND)
+	m_window(window)
 {
+	State state;
+	m_stateStack.push(state);
+	m_currentState = &m_stateStack.top();
 	m_context = SDL_GL_CreateContext(window->getSDLHandle());
 }
 
@@ -98,110 +95,112 @@ void GraphicsContext::disableScissor()
 	glDisable(GL_SCISSOR_TEST);
 }
 
-void GraphicsContext::pushRenderTarget(RenderTarget2D *renderTarget)
-{
-	State newState = m_state;
-	newState.renderTarget = renderTarget;
-	pushState(newState);
-}
 
-void GraphicsContext::popRenderTarget()
+void GraphicsContext::setRenderTarget(RenderTarget2D *renderTarget)
 {
-	popState();
-}
-
-void GraphicsContext::pushState(const State &state)
-{
-	// Setup viewport and projection
-	if(m_stateStack.top().renderTarget != state.renderTarget)
+	// Setup render target
+	if(m_boundRenderTarget != renderTarget)
 	{
-		if(state.renderTarget)
+		if(renderTarget)
 		{
 			// Bind new render target
-			m_stateStack.top().renderTarget = state.renderTarget;
-			m_stateStack.top().renderTarget->bind();
+			m_boundRenderTarget = renderTarget;
+			m_boundRenderTarget->bind();
 
 			// Resize viewport
-			resizeViewport(m_stateStack.top().renderTarget->m_width, m_stateStack.top().renderTarget->m_height, true);
+			resizeViewport(m_boundRenderTarget->m_width, m_boundRenderTarget->m_height, true);
 		}
-		else if(m_stateStack.top().renderTarget)
+		else if(m_boundRenderTarget)
 		{
 			// Unbind render target
-			m_stateStack.top().renderTarget->unbind();
-			m_stateStack.top().renderTarget = 0;
+			m_boundRenderTarget->unbind();
+			m_boundRenderTarget = 0;
 
 			// Resize viewport
 			resizeViewport(m_window->getWidth(), m_window->getHeight());
 		}
 	}
+	m_currentState->renderTarget = renderTarget;
+}
 
-	m_stateStack.push(state);
+void GraphicsContext::pushState()
+{
+	m_stateStack.push(*m_currentState);
+	m_currentState = &m_stateStack.top();
+}
+
+void GraphicsContext::popState()
+{
+	m_stateStack.pop();
+	if(m_stateStack.empty()) THROW("GraphicsContext: State stack should not be empty.");
+	m_currentState = &m_stateStack.top();
+	setRenderTarget(m_currentState->renderTarget);
 }
 
 void GraphicsContext::setTransformationMatrix(const Matrix4 &projmat)
 {
-	while(!m_transformationMatrixStack.empty()) m_transformationMatrixStack.pop();
-	m_transformationMatrixStack.push(projmat);
+	while(!m_currentState->transformationMatrixStack.empty()) m_currentState->transformationMatrixStack.pop();
+	m_currentState->transformationMatrixStack.push(projmat);
 }
 
 Matrix4 GraphicsContext::getTransformationMatrix() const
 {
-	if(m_transformationMatrixStack.empty()) return Matrix4();
-	return m_transformationMatrixStack.top();
+	if(m_currentState->transformationMatrixStack.empty()) return Matrix4();
+	return m_currentState->transformationMatrixStack.top();
 }
 
 void GraphicsContext::pushMatrix(const Matrix4 &mat)
 {
-	if(m_transformationMatrixStack.empty()) m_transformationMatrixStack.push(mat);
-	else m_transformationMatrixStack.push(m_transformationMatrixStack.top() * mat);
+	if(m_currentState->transformationMatrixStack.empty()) m_currentState->transformationMatrixStack.push(mat);
+	else m_currentState->transformationMatrixStack.push(m_currentState->transformationMatrixStack.top() * mat);
 }
 
 void GraphicsContext::popMatrix()
 {
-	if(m_transformationMatrixStack.empty()) return;
-	m_transformationMatrixStack.pop();
+	if(m_currentState->transformationMatrixStack.empty()) return;
+	m_currentState->transformationMatrixStack.pop();
 }
 
 void GraphicsContext::setTexture(shared_ptr<Texture2D> texture)
 {
-	m_texture = texture;
+	m_currentState->texture = texture;
 }
 
 shared_ptr<Texture2D> GraphicsContext::getTexture() const
 {
-	return m_texture;
+	return m_currentState->texture;
 }
 
 void GraphicsContext::setShader(shared_ptr<Shader> shader)
 {
-	m_shader = shader;
+	m_currentState->shader = shader;
 }
 
 shared_ptr<Shader> GraphicsContext::getShader() const
 {
-	return m_shader;
+	return m_currentState->shader;
 }
 
 void GraphicsContext::setBlendState(const BlendState &blendState)
 {
-	m_blendState = blendState;
+	m_currentState->blendState = blendState;
 }
 
 BlendState GraphicsContext::getBlendState()
 {
-	return m_blendState;
+	return m_currentState->blendState;
 }
 
 void GraphicsContext::saveScreenshot(string path)
 {
 	// Get frame buffer data
-	uchar *data = new uchar[m_width * m_height * 4];
+	uchar *data = new uchar[m_currentState->width * m_currentState->height * 4];
 	glReadBuffer(GL_FRONT);
-	glReadPixels(0, 0, m_width, m_height, GL_RGBA, GL_UNSIGNED_BYTE, data);
+	glReadPixels(0, 0, m_currentState->width, m_currentState->height, GL_RGBA, GL_UNSIGNED_BYTE, data);
 	glReadBuffer(GL_BACK);
 
 	// NOTE: This function is not tested!
-	Pixmap pixmap(m_width, m_height, data);
+	Pixmap pixmap(m_currentState->width, m_currentState->height, data);
 	pixmap.flipY();
 	pixmap.exportToFile(path);
 
@@ -212,14 +211,14 @@ void GraphicsContext::saveScreenshot(string path)
 void GraphicsContext::resizeViewport(const uint w, const uint h, const bool flipY)
 {
 	// Set size
-	m_width = w;
-	m_height = h;
+	m_currentState->width = w;
+	m_currentState->height = h;
 
 	// Set orthographic projection
 	float l = 0.0f,
-		r = (float) m_width,
-		b = flipY ? 0.0f : (float) m_height,
-		t = flipY ? (float)m_height : 0.0f,
+		r = (float) m_currentState->width,
+		b = flipY ? 0.0f : (float) m_currentState->height,
+		t = flipY ? (float) m_currentState->height : 0.0f,
 		n = -1.0f,
 		f = 1.0f;
 
@@ -230,37 +229,37 @@ void GraphicsContext::resizeViewport(const uint w, const uint h, const bool flip
 		0.0f,				0.0f,					0.0f,				1.0f
 	};
 
-	m_projectionMatrix.set(projMat);
+	m_currentState->projectionMatrix.set(projMat);
 
 	// Set model-view to identity
 	setTransformationMatrix(Matrix4());
 
 	// Set viewport
-	glViewport(0, 0, m_width, m_height);
+	glViewport(0, 0, m_currentState->width, m_currentState->height);
 }
 
 void GraphicsContext::setProjectionMatrix(const Matrix4 matrix)
 {
-	m_projectionMatrix = matrix;
+	m_currentState->projectionMatrix = matrix;
 }
 
 void GraphicsContext::setupContext()
 {
 	// Set blend func
-	glBlendFuncSeparate(m_blendState.m_src, m_blendState.m_dst, m_blendState.m_alphaSrc, m_blendState.m_alphaDst);
+	glBlendFuncSeparate(m_currentState->blendState.m_src, m_currentState->blendState.m_dst, m_currentState->blendState.m_alphaSrc, m_currentState->blendState.m_alphaDst);
 
-	shared_ptr<Shader> shader = m_shader;
+	shared_ptr<Shader> shader = m_currentState->shader;
 	if(!shader)
 	{
 		shader = s_defaultShader;
-		shader->setSampler2D("u_Texture", m_texture == 0 ? s_defaultTexture : m_texture);
+		shader->setSampler2D("u_Texture", m_currentState->texture == 0 ? s_defaultTexture : m_currentState->texture);
 	}
 
 	// Enable shader
 	glUseProgram(shader->m_id);
 
 	// Set projection matrix
-	Matrix4 modelViewProjection = m_projectionMatrix * m_transformationMatrixStack.top();
+	Matrix4 modelViewProjection = m_currentState->projectionMatrix * m_currentState->transformationMatrixStack.top();
 	shader->setUniformMatrix4f("u_ModelViewProj", modelViewProjection.get());
 
 	GLuint target = 0;

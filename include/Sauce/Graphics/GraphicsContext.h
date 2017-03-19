@@ -25,6 +25,16 @@ public:
 	// State
 	struct State
 	{
+		State() :
+			width(0),
+			height(0),
+			texture(nullptr),
+			shader(nullptr),
+			blendState(BlendState::PRESET_ALPHA_BLEND),
+			renderTarget(nullptr)
+		{
+		}
+
 		uint width;
 		uint height;
 		shared_ptr<Texture2D> texture;
@@ -34,6 +44,9 @@ public:
 		stack<Matrix4> transformationMatrixStack;
 		Matrix4 projectionMatrix;
 	};
+
+	void pushState();
+	void popState();
 
 	/**
 	 * Graphics capabilites.
@@ -114,11 +127,7 @@ public:
 	 * TODO: Implement a render target stack.
 	 * \param renderTarget The target buffer to render to.
 	 */
-	void pushRenderTarget(RenderTarget2D *renderTarget);
-	void popRenderTarget();
-
-	void pushState(const State &state);
-	void popState();
+	void setRenderTarget(RenderTarget2D *renderTarget);
 
 	/**
 	 * Get current render target.
@@ -189,24 +198,22 @@ public:
 	BlendState getBlendState();
 
 	/**
-	 * Saves a screen shot of the back buffer to \p path as a PNG file.
-	 * \param path Screen shot destination path
-	 */
-	void saveScreenshot(string path);
-
-	/**
 	 * Resizes the viewport (the area of the screen rendered to).
 	 * \param w Width of the viewport in pixels
 	 * \param h Height of the viewport in pixels
 	 */
 	void resizeViewport(const uint w, const uint h, const bool flipY = false);
-
+	
+	/**
+	 * Set projection matrix
+	 */
 	void setProjectionMatrix(const Matrix4 matrix);
 
-	Vector2I getSize() const
-	{
-		return Vector2I(m_stateStack.top().width, m_stateStack.top().height);
-	}
+	/**
+	* Saves a screen shot of the back buffer to \p path as a PNG file.
+	* \param path Screen shot destination path
+	*/
+	void saveScreenshot(string path);
 
 	/**
 	 * Returns the width of the viewport.
@@ -223,6 +230,15 @@ public:
 	{
 		return m_stateStack.top().height;
 	}
+
+	/**
+	* Returns the size of the viewport.
+	*/
+	Vector2I getSize() const
+	{
+		return Vector2I(m_stateStack.top().width, m_stateStack.top().height);
+	}
+
 	/**
 	 * Renders an indexed primitive to the screen.
 	 * \param type Types of primitives to render.
@@ -351,6 +367,8 @@ private:
 	Window *m_window;
 
 	stack<State> m_stateStack;
+	State *m_currentState;
+	RenderTarget2D *m_boundRenderTarget;
 
 	vector<Vertex> m_vertices; // Vertices for when needed
 
