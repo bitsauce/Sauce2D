@@ -45,6 +45,7 @@ public:
 		Matrix4 projectionMatrix;
 	};
 
+	// TODO: For every set*, add a push*/pop* which uses the state stack
 	void pushState();
 	void popState();
 

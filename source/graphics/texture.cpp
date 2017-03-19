@@ -135,14 +135,7 @@ Texture2D::Texture2D(const PixelFormat &format)
 Texture2D::Texture2D(const uint width, const uint height, const void *data, const PixelFormat &format)
 {
 	Pixmap pixmap(width, height, format);
-	if(data == 0)
-	{
-		uchar *tmp = new uchar[format.getPixelSizeInBytes()];
-		memset(tmp, 0, format.getPixelSizeInBytes());
-		pixmap.fill(tmp);
-		delete[] tmp;
-	}
-	else
+	if(data)
 	{
 		pixmap.fill(data);
 	}
