@@ -78,11 +78,6 @@ public:
 	virtual void onMouseEvent(MouseEvent *e);
 
 protected:
-	void setSize2(Vector2F s)
-	{
-		m_rect.size = s;
-	}
-
 	void updateDrawRect();
 
 private:

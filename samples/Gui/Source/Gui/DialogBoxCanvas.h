@@ -4,14 +4,15 @@
 #include "Gui.h"
 #include "AspectRatioContainer.h"
 #include "Button.h"
+#include "Label.h"
 
 class DialogBoxCanvas : public Canvas
 {
 public:
-	DialogBoxCanvas(Gui *gui, Window *window, Canvas*c);
+	DialogBoxCanvas(Gui *gui, Window *window, const string &message/*, Type type = DIALOG_BOX_OK*/);
 
 private:
 	AspectRatioContainer *m_aspectRatioContainer;
 	Button *m_buttonOk;
-	Button *m_buttonOk2;
+	Label *m_message;
 };

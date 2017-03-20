@@ -1,11 +1,11 @@
 #include "Label.h"
 
-Label::Label(UiObject *parent) :
+Label::Label(UiObject *parent, GraphicsContext *g) :
 	UiObject(parent),
-	m_font(Resource<Font>("Font.fnt")),
-	m_text("")
+	m_font(Resource<Font>("Font")),
+	m_text(""),
+	m_spriteBatch(g)
 {
-	m_font.get()->setColor(Color(0, 0, 0, 255));
 }
 
 void Label::onDraw(DrawEvent *e)
@@ -13,9 +13,14 @@ void Label::onDraw(DrawEvent *e)
 	RectF rect = getDrawRect();
 	GraphicsContext *g = e->getGraphicsContext();
 
-	SpriteBatch *spriteBatch = (SpriteBatch*) e->getUserData();
-	m_font->setHeight(max(rect.size.y - 34.0f, 16.0f));
-	m_font->draw(spriteBatch, rect.getCenter() - Vector2F(0.0f, m_font->getHeight() * 0.5f), m_text);
+	m_font->setColor(Color(0, 0, 0, 255));
+
+	m_spriteBatch.begin();
+	m_font->setHeight(min(rect.size.y, 16.0f));
+	m_font->setColor(Color(0, 0, 0, 255));
+	m_font->drawBox(&m_spriteBatch, rect.position.x, rect.position.y - m_font->getHeight() * 0.5f, rect.size.x, m_text);
+	m_font->setHeight(16.0f);
+	m_spriteBatch.end();
 
 	UiObject::onDraw(e);
 }

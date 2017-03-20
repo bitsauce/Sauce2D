@@ -15,10 +15,19 @@ void Gui::onEvent(Event *e)
 	{
 		if(e->getType() == EVENT_WINDOW_SIZE_CHANGED)
 		{
+			// This accounts for the fringe case where we popped a non-transparent canvas and we resize
+			// the window during the trasition. In this case we should ignore the first non-transparent canvas
+			int transparentCounter = (m_transitionDirection != 0 && !m_canvas.front()->isTransparent()) ? 2 : 1;
 			for(Canvas *canvas : m_canvas)
 			{
 				canvas->onEvent(e);
-				if(!canvas->isTransparent()) break;
+				if(!canvas->isTransparent())
+				{
+					if(--transparentCounter == 0)
+					{
+						break;
+					}
+				}
 			}
 		}
 		else

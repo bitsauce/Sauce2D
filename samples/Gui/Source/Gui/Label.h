@@ -6,13 +6,19 @@
 class Label : public UiObject
 {
 public:
-	Label(UiObject *parent);
+	Label(UiObject *parent, GraphicsContext *g);
 
 	void onDraw(DrawEvent *e);
+
+	void setText(const string &text)
+	{
+		m_text = text;
+	}
 
 private:
 	Resource<Font> m_font;
 	string m_text;
+	SpriteBatch m_spriteBatch;
 };
 
 #endif // LABEL_H
