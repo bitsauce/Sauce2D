@@ -59,8 +59,7 @@ public:
 private:
 
 	// SpriteBatch state
-	State m_state;// , m_prevState;
-	//shared_ptr<Texture2D> m_prevTexture;
+	State m_state;
 
 	// Vertex & index buffers
 	Vertex *m_vertices;

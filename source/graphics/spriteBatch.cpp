@@ -12,9 +12,8 @@
 
 BEGIN_SAUCE_NAMESPACE
 
-SpriteBatch::SpriteBatch(GraphicsContext *graphicsContext, const uint maxSprites) :
-	m_graphicsContext(graphicsContext),
-	m_beingCalled(false),
+SpriteBatch::SpriteBatch(const uint maxSprites) :
+	m_graphicsContext(nullptr),
 	m_maxSpriteCount(maxSprites)
 {
 	m_sprites = new Sprite[maxSprites];
@@ -29,27 +28,23 @@ SpriteBatch::~SpriteBatch()
 	delete[] m_indices;
 }
 
-void SpriteBatch::begin(const State &state)
+void SpriteBatch::begin(GraphicsContext *graphicsContext, const State &state)
 {
-	if(m_beingCalled)
+	if(m_graphicsContext)
 	{
 		LOG("SpriteBatch::begin(): called twice before end()");
 		return;
 	}
 
-	m_beingCalled = true;
 	m_spriteCount = 0;
 	m_state = state;
-
-	m_prevState.transformationMatix = m_graphicsContext->getTransformationMatrix();
-	m_prevState.blendState = m_graphicsContext->getBlendState();
-	m_prevState.shader = m_graphicsContext->getShader();
-	m_prevTexture = m_graphicsContext->getTexture();
+	m_graphicsContext = graphicsContext;
+	m_graphicsContext->pushState();
 }
 
 void SpriteBatch::drawSprite(const Sprite &sprite)
 {
-	if(!m_beingCalled)
+	if(!m_graphicsContext)
 	{
 		LOG("SpriteBatch::drawSprite(): Called before begin()");
 		return;
@@ -72,7 +67,7 @@ void SpriteBatch::drawSprite(const Sprite &sprite)
 
 void SpriteBatch::drawText(const Vector2F &pos, const string &text, Font *font)
 {
-	if(!m_beingCalled)
+	if(!m_graphicsContext)
 	{
 		LOG("SpriteBatch::drawText(): Called before begin()");
 		return;
@@ -85,7 +80,7 @@ void SpriteBatch::drawText(const Vector2F &pos, const string &text, Font *font)
 
 void SpriteBatch::end()
 {
-	if(!m_beingCalled)
+	if(!m_graphicsContext)
 	{
 		LOG("SpriteBatch::end(): Called before begin()");
 		return;
@@ -165,17 +160,13 @@ void SpriteBatch::end()
 		}
 	}
 		
-	m_graphicsContext->setTransformationMatrix(m_prevState.transformationMatix);
-	m_graphicsContext->setBlendState(m_prevState.blendState);
-	m_graphicsContext->setShader(m_prevState.shader);
-	m_graphicsContext->setTexture(m_prevTexture);
-	
-	m_beingCalled = false;
+	m_graphicsContext->popState();
+	m_graphicsContext = nullptr;
 }
 
 void SpriteBatch::flush()
 {
-	if(!m_beingCalled)
+	if(!m_graphicsContext)
 	{
 		LOG("SpriteBatch::flush(): Called before begin()");
 		return;
@@ -183,7 +174,7 @@ void SpriteBatch::flush()
 
 	// Draw current and begin new batch using the same state
 	end();
-	begin(m_state);
+	begin(m_graphicsContext, m_state);
 }
 
 // TODO: Can we make this more efficient?
