@@ -19,7 +19,7 @@ class Sprite;
 class SAUCE_API SpriteBatch
 {
 public:
-	SpriteBatch(GraphicsContext *graphicsContext, const uint maxSprites = 2048);
+	SpriteBatch(const uint maxSprites = 2048);
 	~SpriteBatch();
 
 	enum SpriteSortMode
@@ -47,24 +47,20 @@ public:
 		shared_ptr<Shader> shader;
 	};
 
-	void begin(const State &state = State());
+	void begin(GraphicsContext *graphicsContext, const State &state = State());
 	void drawSprite(const Sprite &sprite);
 	void drawText(const Vector2F &pos, const string &text, Font *font);
 	void end();
 	void flush();
 
 	State getState() const { return m_state; }
-	GraphicsContext *getGraphicsContext() const { return m_graphicsContext; }
 	uint getTextureSwapCount() const;
 
 private:
 
 	// SpriteBatch state
-	State m_state, m_prevState;
-	shared_ptr<Texture2D> m_prevTexture;
-
-	// Set between begin() and end()
-	bool m_beingCalled;
+	State m_state;// , m_prevState;
+	//shared_ptr<Texture2D> m_prevTexture;
 
 	// Vertex & index buffers
 	Vertex *m_vertices;
@@ -72,8 +68,6 @@ private:
 	Sprite *m_sprites;
 	uint m_spriteCount;
 	const uint m_maxSpriteCount;
-
-	// Graphics context
 	GraphicsContext *m_graphicsContext;
 };
 
