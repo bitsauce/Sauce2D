@@ -15,12 +15,12 @@
 //   Should both show the same options menu
 // + Test transparent canvases: Make it so that elements behind a transparent canvas are non-interactable
 // + Pop-up messages
-// o SpriteBatch should rather take a GraphicsContext in the begin function. Doing this lets us avoid passing graphics contexts everywhere.
+// + SpriteBatch should rather take a GraphicsContext in the begin function. Doing this lets us avoid passing graphics contexts everywhere.
 // o Sliders (put them in the options menu. Maybe GUI scale and gamma?)
 // o Animated buttons
 // o Pop-up message background
 // o Generalization of all the Background* classes (maybe just an BitmapBackground class or something)
-// o Button sounds
+// o Button sounds (needs reimplementation of sound engine)
 
 class GuiGame : public Game
 {
@@ -60,7 +60,7 @@ public:
 		font = Resource<Font>("Font");
 
 		GraphicsContext *graphicsContext = getWindow()->getGraphicsContext();
-		spriteBatch = new SpriteBatch(graphicsContext);
+		spriteBatch = new SpriteBatch();
 
 		gui = new Gui();
 
@@ -151,7 +151,7 @@ public:
 	{
 		// Setup sprite batch
 		e->setUserData(spriteBatch);
-		spriteBatch->begin();
+		spriteBatch->begin(e->getGraphicsContext());
 
 		// Draw UI objects
 		SceneObject::onDraw(e);

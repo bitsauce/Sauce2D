@@ -15,7 +15,7 @@ class LineEdit : public UiObject
 {
 	friend class Cursor;
 public:
-	LineEdit(UiObject *parent, GraphicsContext *graphicsContext, const uint width, const uint height);
+	LineEdit(UiObject *parent, const uint width, const uint height);
 	~LineEdit();
 
 	/**

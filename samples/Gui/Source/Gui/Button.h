@@ -19,7 +19,7 @@ private:
 	Resource<Font> m_font;
 	string m_text;
 	RenderTarget2D *m_renderTarget;
-	SpriteBatch *m_spriteBatch;
+	SpriteBatch m_spriteBatch;
 	function<void()> m_clickCallback;
 };
 

@@ -10,7 +10,7 @@ SinglePlayerCanvas::SinglePlayerCanvas(Gui* gui, Window* window) :
 	m_aspectRatioContainer->setAnchor(0.5f, 0.5f);
 	m_aspectRatioContainer->setOrigin(0.5f, 0.5f);
 
-	m_lineEdit = new LineEdit(m_aspectRatioContainer, window->getGraphicsContext(), 230, 40);
+	m_lineEdit = new LineEdit(m_aspectRatioContainer, 230, 40);
 	m_lineEdit->setDefaultText("World name");
 	m_lineEdit->setSize(230.0f / 1280.0f, 40.0f / 720.0f);
 	m_lineEdit->setPosition(0.0f, 0.0f);

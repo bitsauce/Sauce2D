@@ -54,7 +54,7 @@ DialogBoxCanvas::DialogBoxCanvas(Gui *gui, Window *window, const string &message
 	m_buttonOk->setPosition(0.0f, -20.0f / 230.0f);
 	m_buttonOk->setOnClickCallback(bind(&Gui::popCanvas, gui));
 
-	m_message = new Label(bg3, window->getGraphicsContext());
+	m_message = new Label(bg3);
 	m_message->setText(message);
 	m_message->setSize(300.0f / 350.0f, 150.0f / 230.0f);
 	m_message->setAnchor(0.5f, 0.0f);

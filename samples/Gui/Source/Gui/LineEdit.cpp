@@ -1,6 +1,6 @@
 #include "LineEdit.h"
 
-LineEdit::LineEdit(UiObject *parent, GraphicsContext *graphicsContext, const uint width, const uint height) :
+LineEdit::LineEdit(UiObject *parent, const uint width, const uint height) :
 	UiObject(parent),
 	m_cursorTime(0.0f),
 	m_offsetX(0.0f),
@@ -10,7 +10,7 @@ LineEdit::LineEdit(UiObject *parent, GraphicsContext *graphicsContext, const uin
 	m_renderTarget(0),
 	m_dirtyGraphics(true),
 	m_dirtyTextGraphics(true),
-	m_spriteBatch(graphicsContext, 100),
+	m_spriteBatch(100),
 	m_wordBegin(0),
 	m_wordEnd(0),
 	m_defaultText(""),
@@ -156,7 +156,7 @@ void LineEdit::onDraw(DrawEvent *e)
 		// Draw and clip the text using scissoring rectangle
 		const float w = m_renderTargetText->getWidth(), h = m_renderTargetText->getHeight();
 		graphicsContext->enableScissor(8, 0, w - 16, h);
-		m_spriteBatch.begin(SpriteBatch::State(SpriteBatch::DEFERRED, BlendState(BlendState::BLEND_SRC_ALPHA, BlendState::BLEND_ONE_MINUS_SRC_ALPHA, BlendState::BLEND_ONE, BlendState::BLEND_ONE_MINUS_SRC_ALPHA)));
+		m_spriteBatch.begin(graphicsContext, SpriteBatch::State(SpriteBatch::DEFERRED, BlendState(BlendState::BLEND_SRC_ALPHA, BlendState::BLEND_ONE_MINUS_SRC_ALPHA, BlendState::BLEND_ONE, BlendState::BLEND_ONE_MINUS_SRC_ALPHA)));
 		m_font->draw(&m_spriteBatch, textOffset.x + dx, textOffset.y, visibleText);
 		m_spriteBatch.end();
 		graphicsContext->disableScissor();

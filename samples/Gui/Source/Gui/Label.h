@@ -6,7 +6,7 @@
 class Label : public UiObject
 {
 public:
-	Label(UiObject *parent, GraphicsContext *g);
+	Label(UiObject *parent);
 
 	void onDraw(DrawEvent *e);
 
