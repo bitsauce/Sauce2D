@@ -6,6 +6,7 @@
 #include "Gui/Gui.h"
 #include "Gui/Background.h"
 #include "Gui/DialogBoxCanvas.h"
+#include "Gui/Canvas/SinglePlayerCanvas.h"
 
 // TODO: Expand this sample so it can:
 // + Go from one menu to another (with crossfade)
@@ -14,7 +15,7 @@
 //   Should both show the same options menu
 // + Test transparent canvases: Make it so that elements behind a transparent canvas are non-interactable
 // + Pop-up messages
-// o SpriteBatch should rather take a GraphicsContext in the constructor. Doing this lets us avoid passing graphics contexts everywhere.
+// o SpriteBatch should rather take a GraphicsContext in the begin function. Doing this lets us avoid passing graphics contexts everywhere.
 // o Sliders (put them in the options menu. Maybe GUI scale and gamma?)
 // o Animated buttons
 // o Pop-up message background
@@ -27,7 +28,7 @@ class GuiGame : public Game
 	Canvas *canvasMain;
 	Canvas *canvasOptions;
 	Canvas *canvasDialog;
-	Canvas *canvasDialog2;
+	Canvas *canvasSingleplayer;
 	Button *buttonSingleplayer;
 	Button *buttonMultiplayer;
 	Button *buttonOptions;
@@ -67,7 +68,7 @@ public:
 		canvasOptions = new Canvas(getWindow());
 		canvasDialog = new DialogBoxCanvas(gui, getWindow(), "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In porttitor porttitor eros sed accumsan."
 			"Cras eleifend purus non est gravida euismod. Nunc laoreet orci turpis, ac varius sapien aliquet non. Aliquam eu ex fringilla, finibus ligula sit amet, tempor enim.");
-		canvasDialog2 = new DialogBoxCanvas(gui, getWindow(), "Singleplayer button clicked");
+		canvasSingleplayer = new SinglePlayerCanvas(gui, getWindow());
 
 		Background *bg = new Background(canvasMain);
 		Background *bg2 = new Background(canvasOptions);
@@ -83,7 +84,7 @@ public:
 		buttonSingleplayer->setAnchor(0.5f, 0.25f);
 		buttonSingleplayer->setOrigin(0.5f, 0.5f);
 		buttonSingleplayer->setPosition(0.0f, 0.0f);
-		buttonSingleplayer->setOnClickCallback(bind(&Gui::pushCanvas, gui, canvasDialog2));
+		buttonSingleplayer->setOnClickCallback(bind(&Gui::pushCanvas, gui, canvasSingleplayer));
 
 		// Multiplayer
 		buttonMultiplayer = new Button(aspectRatioContainer, 230, 40);

@@ -29,6 +29,9 @@
     <ClCompile Include="..\Source\Gui\DialogBoxCanvas.cpp">
       <Filter>Gui</Filter>
     </ClCompile>
+    <ClCompile Include="..\Source\Gui\Canvas\SinglePlayerCanvas.cpp">
+      <Filter>Gui\Canvas</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Source\Config.h" />
@@ -62,6 +65,9 @@
     <ClInclude Include="..\Source\Gui\DialogBoxCanvas.h">
       <Filter>Gui</Filter>
     </ClInclude>
+    <ClInclude Include="..\Source\Gui\Canvas\SinglePlayerCanvas.h">
+      <Filter>Gui\Canvas</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Xml Include="..\Data\Resources.xml" />
@@ -69,6 +75,9 @@
   <ItemGroup>
     <Filter Include="Gui">
       <UniqueIdentifier>{ddc1ae98-f3fb-4e09-bd26-6c59732d84a3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Gui\Canvas">
+      <UniqueIdentifier>{13a59a34-3437-41d8-9512-5c62c82a3508}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
