@@ -32,6 +32,9 @@
     <ClCompile Include="..\Source\Gui\Canvas\SinglePlayerCanvas.cpp">
       <Filter>Gui\Canvas</Filter>
     </ClCompile>
+    <ClCompile Include="..\Source\Gui\Slider.cpp">
+      <Filter>Gui</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Source\Config.h" />
@@ -67,6 +70,9 @@
     </ClInclude>
     <ClInclude Include="..\Source\Gui\Canvas\SinglePlayerCanvas.h">
       <Filter>Gui\Canvas</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Gui\Slider.h">
+      <Filter>Gui</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -97,6 +97,7 @@
     <ClCompile Include="..\Source\Gui\Gui.cpp" />
     <ClCompile Include="..\Source\Gui\Label.cpp" />
     <ClCompile Include="..\Source\Gui\LineEdit.cpp" />
+    <ClCompile Include="..\Source\Gui\Slider.cpp" />
     <ClCompile Include="..\Source\Gui\UiObject.cpp" />
     <ClCompile Include="..\Source\Main.cpp" />
   </ItemGroup>
@@ -111,6 +112,7 @@
     <ClInclude Include="..\Source\Gui\Gui.h" />
     <ClInclude Include="..\Source\Gui\Label.h" />
     <ClInclude Include="..\Source\Gui\LineEdit.h" />
+    <ClInclude Include="..\Source\Gui\Slider.h" />
     <ClInclude Include="..\Source\Gui\UiEvents.h" />
     <ClInclude Include="..\Source\Gui\UiObject.h" />
   </ItemGroup>

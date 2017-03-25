@@ -6,6 +6,7 @@
 #include "Gui/Gui.h"
 #include "Gui/Background.h"
 #include "Gui/DialogBoxCanvas.h"
+#include "Gui/Slider.h"
 #include "Gui/Canvas/SinglePlayerCanvas.h"
 
 // TODO: Expand this sample so it can:
@@ -34,6 +35,7 @@ class GuiGame : public Game
 	Button *buttonOptions;
 	Button *buttonQuit;
 	Button *buttonBack;
+	Slider *sliderGamma;
 	LineEdit *lineEdit;
 	AspectRatioContainer *aspectRatioContainer;
 	Resource<Font> font;

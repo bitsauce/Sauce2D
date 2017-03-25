@@ -538,10 +538,6 @@ void LineEdit::onKeyEvent(KeyEvent *e)
 		// Undo
 		case SAUCE_KEY_Z:
 		{
-			if(modShift)
-			{
-				goto redo;
-			}
 
 			if(modCtrl)
 			{
@@ -551,13 +547,16 @@ void LineEdit::onKeyEvent(KeyEvent *e)
 					m_dirtyTextGraphics = true;
 				}
 			}
+
+			else if(!modShift)
+			{
+				break;
+			}
 		}
-		break;
 
 		// Redo
 		case SAUCE_KEY_Y:
 		{
-			redo:
 			if(modCtrl)
 			{
 				if(!m_states.empty() && *m_undoItr != m_states.back())

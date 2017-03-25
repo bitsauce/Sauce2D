@@ -7,6 +7,9 @@ class Slider : public UiObject
 public:
 	Slider(UiObject *parent);
 
-private:
+	void onTick(TickEvent *e);
+	void onDraw(DrawEvent *e);
 
+private:
+	float m_percentage;
 };
