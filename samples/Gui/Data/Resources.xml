@@ -28,6 +28,13 @@
 		<premultiplyAlpha>true</premultiplyAlpha>
 	</texture>
 
+	<!--Slider-->
+	<texture>
+		<name>Slider</name>
+		<path>Images/Slider.png</path>
+		<premultiplyAlpha>true</premultiplyAlpha>
+	</texture>
+
 	<!--Fonts-->
 	<font>
 		<name>Font</name>

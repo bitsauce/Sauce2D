@@ -169,14 +169,14 @@ void LineEdit::onDraw(DrawEvent *e)
 	}
 
 	// Draw line edit visualization
-	graphicsContext->setBlendState(BlendState(BlendState::BLEND_ONE, BlendState::BLEND_ONE_MINUS_SRC_ALPHA));
+	//graphicsContext->setBlendState(BlendState(BlendState::BLEND_ONE, BlendState::BLEND_ONE_MINUS_SRC_ALPHA));
 	graphicsContext->setTexture(m_renderTarget->getTexture());
 	graphicsContext->drawRectangle(rect);
 	graphicsContext->setTexture(0);
 	graphicsContext->setTexture(m_renderTargetText->getTexture());
 	graphicsContext->drawRectangle(rect);
 	graphicsContext->setTexture(0);
-	graphicsContext->setBlendState(BlendState(BlendState::PRESET_ALPHA_BLEND));
+	//graphicsContext->setBlendState(BlendState(BlendState::PRESET_ALPHA_BLEND));
 
 	// Draw text cursor
 	if(isFocused() && m_cursorTime >= 0.5f)

@@ -7,6 +7,7 @@
 #include "Gui/Background.h"
 #include "Gui/Button.h"
 #include "Gui/DialogBoxCanvas.h"
+#include "Gui/Slider.h"
 
 class SinglePlayerCanvas : public Canvas
 {
@@ -18,4 +19,5 @@ private:
 	LineEdit *m_lineEdit;
 	Button *m_buttonBack;
 	Button *m_buttonOk;
+	Slider *m_slider;
 };
