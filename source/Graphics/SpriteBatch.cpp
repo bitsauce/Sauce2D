@@ -39,7 +39,6 @@ void SpriteBatch::begin(GraphicsContext *graphicsContext, const State &state)
 	m_spriteCount = 0;
 	m_state = state;
 	m_graphicsContext = graphicsContext;
-	m_graphicsContext->pushState();
 }
 
 void SpriteBatch::drawSprite(const Sprite &sprite)
@@ -85,6 +84,8 @@ void SpriteBatch::end()
 		LOG("SpriteBatch::end(): Called before begin()");
 		return;
 	}
+
+	m_graphicsContext->pushState();
 	
 	// Draw sprites
 	if(m_spriteCount > 0)
