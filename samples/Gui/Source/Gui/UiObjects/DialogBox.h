@@ -1,10 +1,6 @@
 #pragma once
 
-#include "Canvas.h"
-#include "Gui.h"
-#include "AspectRatioContainer.h"
-#include "Button.h"
-#include "Label.h"
+#include "Gui/Gui.h"
 
 class DialogBoxCanvas : public Canvas
 {

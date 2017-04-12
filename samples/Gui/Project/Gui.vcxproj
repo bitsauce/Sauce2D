@@ -88,33 +88,37 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\Source\Gui\AspectRatioContainer.cpp" />
-    <ClCompile Include="..\Source\Gui\Background.cpp" />
-    <ClCompile Include="..\Source\Gui\Button.cpp" />
-    <ClCompile Include="..\Source\Gui\Canvas.cpp" />
-    <ClCompile Include="..\Source\Gui\Canvas\SinglePlayerCanvas.cpp" />
-    <ClCompile Include="..\Source\Gui\DialogBoxCanvas.cpp" />
     <ClCompile Include="..\Source\Gui\Gui.cpp" />
-    <ClCompile Include="..\Source\Gui\Label.cpp" />
-    <ClCompile Include="..\Source\Gui\LineEdit.cpp" />
-    <ClCompile Include="..\Source\Gui\Slider.cpp" />
-    <ClCompile Include="..\Source\Gui\UiObject.cpp" />
+    <ClCompile Include="..\Source\Gui\Menu\MainMenu.cpp" />
+    <ClCompile Include="..\Source\Gui\Menu\OptionsMenu.cpp" />
+    <ClCompile Include="..\Source\Gui\Menu\SinglePlayerMenu.cpp" />
+    <ClCompile Include="..\Source\Gui\UiObjects\AspectRatioContainer.cpp" />
+    <ClCompile Include="..\Source\Gui\UiObjects\Background.cpp" />
+    <ClCompile Include="..\Source\Gui\UiObjects\Button.cpp" />
+    <ClCompile Include="..\Source\Gui\UiObjects\Canvas.cpp" />
+    <ClCompile Include="..\Source\Gui\UiObjects\DialogBox.cpp" />
+    <ClCompile Include="..\Source\Gui\UiObjects\Label.cpp" />
+    <ClCompile Include="..\Source\Gui\UiObjects\LineEdit.cpp" />
+    <ClCompile Include="..\Source\Gui\UiObjects\Slider.cpp" />
+    <ClCompile Include="..\Source\Gui\UiObjects\UiObject.cpp" />
     <ClCompile Include="..\Source\Main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Source\Config.h" />
-    <ClInclude Include="..\Source\Gui\AspectRatioContainer.h" />
-    <ClInclude Include="..\Source\Gui\Background.h" />
-    <ClInclude Include="..\Source\Gui\Button.h" />
-    <ClInclude Include="..\Source\Gui\Canvas.h" />
-    <ClInclude Include="..\Source\Gui\Canvas\SinglePlayerCanvas.h" />
-    <ClInclude Include="..\Source\Gui\DialogBoxCanvas.h" />
     <ClInclude Include="..\Source\Gui\Gui.h" />
-    <ClInclude Include="..\Source\Gui\Label.h" />
-    <ClInclude Include="..\Source\Gui\LineEdit.h" />
-    <ClInclude Include="..\Source\Gui\Slider.h" />
+    <ClInclude Include="..\Source\Gui\Menu\MainMenu.h" />
+    <ClInclude Include="..\Source\Gui\Menu\OptionsMenu.h" />
+    <ClInclude Include="..\Source\Gui\Menu\SinglePlayerMenu.h" />
     <ClInclude Include="..\Source\Gui\UiEvents.h" />
-    <ClInclude Include="..\Source\Gui\UiObject.h" />
+    <ClInclude Include="..\Source\Gui\UiObjects\AspectRatioContainer.h" />
+    <ClInclude Include="..\Source\Gui\UiObjects\Background.h" />
+    <ClInclude Include="..\Source\Gui\UiObjects\Button.h" />
+    <ClInclude Include="..\Source\Gui\UiObjects\Canvas.h" />
+    <ClInclude Include="..\Source\Gui\UiObjects\DialogBox.h" />
+    <ClInclude Include="..\Source\Gui\UiObjects\Label.h" />
+    <ClInclude Include="..\Source\Gui\UiObjects\LineEdit.h" />
+    <ClInclude Include="..\Source\Gui\UiObjects\Slider.h" />
+    <ClInclude Include="..\Source\Gui\UiObjects\UiObject.h" />
   </ItemGroup>
   <ItemGroup>
     <Xml Include="..\Data\Resources.xml" />

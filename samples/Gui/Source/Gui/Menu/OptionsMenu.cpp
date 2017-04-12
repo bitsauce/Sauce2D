@@ -1,4 +1,4 @@
-#include "SinglePlayerCanvas.h"
+#include "OptionsMenu.h"
 
 SinglePlayerCanvas::SinglePlayerCanvas(Gui* gui, Window* window) :
 	Canvas(window)

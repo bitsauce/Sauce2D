@@ -1,5 +1,4 @@
 #include "Gui.h"
-#include "Canvas.h"
 
 Gui::Gui() :
 	m_fadeTime(0.5f),

@@ -2,7 +2,7 @@
 #define UI_OBJECT_H
 
 #include "Config.h"
-#include "UiEvents.h"
+#include "Gui/UiEvents.h"
 
 class UiObject : public SceneObject
 {

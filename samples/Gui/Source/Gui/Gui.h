@@ -3,6 +3,15 @@
 #include "Config.h"
 #include "UiEvents.h"
 
+#include "UiObjects/AspectRatioContainer.h"
+#include "UiObjects/Button.h"
+#include "UiObjects/LineEdit.h"
+#include "UiObjects/Canvas.h"
+#include "UiObjects/Background.h"
+#include "UiObjects/DialogBox.h"
+#include "UiObjects/Slider.h"
+#include "UiObjects/Label.h"
+
 class Canvas;
 
 class Gui : public SceneObject

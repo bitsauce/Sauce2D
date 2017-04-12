@@ -1,4 +1,4 @@
-#include "DialogBoxCanvas.h"
+#include "DialogBox.h"
 
 class Background2 : public UiObject
 {

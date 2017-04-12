@@ -1,13 +1,7 @@
 #include "Config.h"
-#include "Gui/AspectRatioContainer.h"
-#include "Gui/Button.h"
-#include "Gui/LineEdit.h"
-#include "Gui/Canvas.h"
 #include "Gui/Gui.h"
-#include "Gui/Background.h"
-#include "Gui/DialogBoxCanvas.h"
-#include "Gui/Slider.h"
-#include "Gui/Canvas/SinglePlayerCanvas.h"
+
+#include "Gui/Menu/SinglePlayerMenu.h"
 
 // TODO: Expand this sample so it can:
 // + Go from one menu to another (with crossfade)

@@ -1,13 +1,6 @@
 #pragma once
 
 #include "Gui/Gui.h"
-#include "Gui/Canvas.h"
-#include "Gui/LineEdit.h"
-#include "Gui/AspectRatioContainer.h"
-#include "Gui/Background.h"
-#include "Gui/Button.h"
-#include "Gui/DialogBoxCanvas.h"
-#include "Gui/Slider.h"
 
 class SinglePlayerCanvas : public Canvas
 {

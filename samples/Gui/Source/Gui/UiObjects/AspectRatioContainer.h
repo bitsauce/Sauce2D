@@ -1,5 +1,5 @@
-#ifndef CANVAS_H
-#define CANVAS_H
+#ifndef ASPECT_RATIO_CONTAINER_H
+#define ASPECT_RATIO_CONTAINER_H
 
 #include "UiObject.h"
 
@@ -17,4 +17,4 @@ private:
 	const float m_aspectRatio;
 };
 
-#endif // CANVAS_H
+#endif // ASPECT_RATIO_CONTAINER_H
