@@ -1,6 +1,10 @@
 #pragma once
 
-#include "Gui/Gui.h"
+#include "Config.h"
+#include "Gui/UiObjects/Button.h"
+#include "Gui/UiObjects/Label.h"
+#include "Gui/UiObjects/Canvas.h"
+#include "Gui/UiObjects/AspectRatioContainer.h"
 
 class DialogBoxCanvas : public Canvas
 {

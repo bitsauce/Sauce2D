@@ -1,6 +1,6 @@
 #include "OptionsMenu.h"
 
-SinglePlayerCanvas::SinglePlayerCanvas(Gui* gui, Window* window) :
+OptionsMenuCanvas::OptionsMenuCanvas(Gui* gui, Window* window) :
 	Canvas(window)
 {
 	Background *bg = new Background(this);

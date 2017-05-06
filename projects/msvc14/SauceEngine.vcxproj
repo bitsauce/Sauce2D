@@ -154,7 +154,7 @@
     <Link>
       <AdditionalLibraryDirectories>
       </AdditionalLibraryDirectories>
-      <GenerateDebugInformation>Debug</GenerateDebugInformation>
+      <GenerateDebugInformation>DebugFull</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
       <AdditionalDependencies>$(ProjectDir)..\..\3rdparty\SDL\VisualC\SDL\$(Platform)\$(Configuration)\SDL2.lib;$(ProjectDir)..\..\3rdparty\SDL_image\VisualC\$(Platform)\$(Configuration)\SDL2_image.lib;$(ProjectDir)..\..\3rdparty\SDL_mixer\VisualC\$(Platform)\$(Configuration)\SDL2_mixer.lib;$(ProjectDir)..\..\3rdparty\gl3w\lib\$(Platform)\$(Configuration)\gl3w.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>

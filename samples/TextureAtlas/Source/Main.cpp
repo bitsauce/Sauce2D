@@ -44,7 +44,7 @@ public:
 		// Here we draw Image0 using the texture atlas
 		GraphicsContext *graphicsContext = e->getGraphicsContext();
 		graphicsContext->setTexture(textureAtlas->getTexture());
-		graphicsContext->drawRectangle(100, 100, 190, 177, Color(255), textureAtlas->get("Image1"));
+		graphicsContext->drawRectangle(100, 100, 190, 177, Color::White, textureAtlas->get("Image1"));
 		graphicsContext->setTexture(0);
 	}
 };

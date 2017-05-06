@@ -174,8 +174,9 @@ void SpriteBatch::flush()
 	}
 
 	// Draw current and begin new batch using the same state
+	GraphicsContext *graphicsContext = m_graphicsContext;
 	end();
-	begin(m_graphicsContext, m_state);
+	begin(graphicsContext, m_state);
 }
 
 // TODO: Can we make this more efficient?

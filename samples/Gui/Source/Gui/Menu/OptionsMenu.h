@@ -2,10 +2,10 @@
 
 #include "Gui/Gui.h"
 
-class SinglePlayerCanvas : public Canvas
+class OptionsMenuCanvas : public Canvas
 {
 public:
-	SinglePlayerCanvas(Gui *gui, Window *window);
+	OptionsMenuCanvas(Gui *gui, Window *window);
 
 private:
 	AspectRatioContainer *m_aspectRatioContainer;
