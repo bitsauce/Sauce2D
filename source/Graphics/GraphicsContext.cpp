@@ -1,5 +1,4 @@
-#include "..\..\include\Sauce\Graphics\GraphicsContext.h"
-#include <Sauce/graphics.h>
+#include <Sauce/Graphics.h>
 
 #define GL_CHECK_ERROR \
 	{ \

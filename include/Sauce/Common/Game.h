@@ -33,6 +33,7 @@
 #include <Sauce/Common/IniParser.h>
 #include <Sauce/Common/SceneObject.h>
 #include <Sauce/Common/Event.h>
+#include <Sauce/Common/Callstack.h>
 
 BEGIN_SAUCE_NAMESPACE
 
@@ -735,7 +736,7 @@ private:
 **	Exception class													**
 **********************************************************************/
 
-class SAUCE_API Exception
+class SAUCE_API Exception : public exception
 {
 public:
 
@@ -761,12 +762,22 @@ public:
 		return m_message;
 	}
 
+	const char *what() const { return m_message.c_str(); }
+
+	string callstack() const
+	{
+		return m_callstack.toString();
+	}
+
 private:
 	/** \brief	The message. */
 	string m_message;
 
 	/** \brief	The error code. */
 	RetCode m_errorCode;
+
+	/** \brief Callstack of point of error */
+	Callstack m_callstack;
 };
 
 class SAUCE_API Scene

@@ -146,6 +146,9 @@ public:
 		rt1 = new RenderTarget2D(getWindow()->getWidth(), getWindow()->getHeight());
 		rt2 = new RenderTarget2D(200, 50);
 		rt3 = new RenderTarget2D(100, 100);
+
+		int a = -1;
+		int *l=new int[a];
 	}
 
 	void onEnd(GameEvent *e)

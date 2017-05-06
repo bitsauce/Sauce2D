@@ -6,14 +6,15 @@
 BEGIN_SAUCE_NAMESPACE
 
 Exception::Exception(RetCode code, const char * msg, ...) :
-	m_errorCode(code)
+	m_errorCode(code),
+	m_callstack()
 {
 	va_list args;
 	va_start(args, msg);
 
-	int size = _scprintf(msg, args) + 1;
+	int size = _scprintf(msg, args);
 	m_message.resize(size);
-	vsprintf_s(&m_message[0], size, msg, args);
+	vsprintf_s(&m_message[0], size + 1, msg, args);
 
 	va_end(args);
 }
@@ -439,16 +440,14 @@ gameloopend:
 			onEvent(&e);
 		}
 	}
-	catch(Exception e)
+	catch(Exception &e)
 	{
-		SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "An error occured", e.message().c_str(), m_windows.front()->getSDLHandle());
-		LOG("An exception occured: %s", e.message().c_str());
+		stringstream ss;
+		ss << e.message() << endl << "------------------------------------------------------------------------------------------------" << endl;
+		ss << "Callstack: " << endl << e.callstack();
+		SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "An error occured", ss.str().c_str(), m_windows.front()->getSDLHandle());
+		LOG("An exception occured: %s", ss.str().c_str());
 		return e.errorCode();
-	}
-	catch(...)
-	{
-		LOG("Unknown exception occured.");
-		return SAUCE_UNKNOWN_EXCEPTION;
 	}
 	return SAUCE_OK;
 }
