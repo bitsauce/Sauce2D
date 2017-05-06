@@ -150,6 +150,9 @@
     <ClCompile Include="..\..\source\common\tinyxml2.cpp">
       <Filter>Source\Common</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\source\Common\Callstack.cpp">
+      <Filter>Source\Common</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\include\Sauce\Math\Matrix.h">
@@ -276,6 +279,9 @@
       <Filter>Include\Sauce\Common</Filter>
     </ClInclude>
     <ClInclude Include="..\..\include\Sauce\Common\SceneObject.h">
+      <Filter>Include\Sauce\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\Sauce\Common\Callstack.h">
       <Filter>Include\Sauce\Common</Filter>
     </ClInclude>
   </ItemGroup>

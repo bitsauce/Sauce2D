@@ -71,11 +71,11 @@ public:
 	void onStart(GameEvent *e)
 	{
 		// Create sprite batch
-		m_spriteBatch = new SpriteBatch(getWindow()->getGraphicsContext());
+		m_spriteBatch = new SpriteBatch();
 
 		// Load font
 		m_font = Resource<Font>("Fonts/Debug_Font");
-		m_font->setColor(Color(255));
+		m_font->setColor(Color::White);
 
 		// Load sprites
 		m_sceneTexture = Resource<Texture2D>("Sprites/Scene");
@@ -223,7 +223,7 @@ public:
 
 		// Draw tiles using repeat
 		context->setTexture(m_tileTexture);
-		context->drawRectangle(0, 0, viewSize.x, viewSize.y, Color(255), TextureRegion(0, 0, (float) viewSize.x / m_tileTexture->getWidth(), (float) viewSize.y / m_tileTexture->getHeight()));
+		context->drawRectangle(0, 0, viewSize.x, viewSize.y, Color::White, TextureRegion(0, 0, (float) viewSize.x / m_tileTexture->getWidth(), (float) viewSize.y / m_tileTexture->getHeight()));
 
 		// Draw scene
 		context->setTexture(m_sceneTexture);
@@ -285,7 +285,7 @@ public:
 		ss << endl;
 		ss << "Lights: " << m_lights.size() << endl;
 		ss << "Light map resolution: " << m_lightMapSize << "x" << m_lightMapSize << endl;
-		m_spriteBatch->begin();
+		m_spriteBatch->begin(context);
 		m_font->draw(m_spriteBatch, Vector2F(5.0f), ss.str());
 		m_spriteBatch->end();
 	}
