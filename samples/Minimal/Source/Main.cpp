@@ -1,17 +1,16 @@
-/* Main CrossGame header. Includes all the framework
-   classes and various STL classes. */
+/* Include the SauceEngine framework */
 #include <Sauce/Sauce.h>
 
 /* This just saves us some time as we don't
-   have to type cg::* in front of every CG
-   class/enum/etc */
+   have to type sauce::* in front of every
+   SauceEngine class, enum, etc. */
 using namespace sauce;
 
 /* This is our MinimalGame class.
-   It inherits from cgf::Game, which is the game managing class.
-   cgf::Game contains a bunch of virtual event methods. These
+   It inherits from cgf::Game, which is the game manager class.
+   sauce::Game contains a bunch of virtual event methods. These
    methods start with on* and are invoked at special times. 
-   For instance, onUpdate is called whenever the game needs to
+   For instance, onUpdate is called whenever the game wants to
    update its game state, and onKeyDown is called whenever a
    key on the keyboard is pressed.*/
 class MinimalGame : public Game
@@ -19,7 +18,7 @@ class MinimalGame : public Game
 public:
 	/* Consturctor for our game class */
 	MinimalGame() :
-		/* cg::Game class takes a string which is the game name. */
+		/* sauce::Game class takes a string which is the game name. */
 		Game("Minimal")
 	{
 	}

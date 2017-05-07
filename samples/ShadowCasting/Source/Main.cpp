@@ -60,9 +60,6 @@ public:
 	ShadowCastingGame() :
 		Game("ShadowCasting"),
 		m_spriteBatch(0),
-		m_font(0),
-		m_sceneTexture(0),
-		m_tileTexture(0),
 		m_occludersRenderTarget(0),
 		m_debugState(DEBUG_STATE_NONE)
 	{
