@@ -14,7 +14,7 @@
     <ProjectGuid>{732EE2F1-689C-43BB-B0A7-17F44AE5E056}</ProjectGuid>
     <RootNamespace>deferredlighting</RootNamespace>
     <ProjectName>Keybinds</ProjectName>
-    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.15063.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">

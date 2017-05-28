@@ -99,7 +99,7 @@
     <ProjectGuid>{F3F25B49-2C6B-4FF0-98FB-47695DF70B8A}</ProjectGuid>
     <RootNamespace>sanangeles</RootNamespace>
     <ProjectName>SauceEngine</ProjectName>
-    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.15063.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">

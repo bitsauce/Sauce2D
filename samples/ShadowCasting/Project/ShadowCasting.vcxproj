@@ -14,7 +14,7 @@
     <ProjectGuid>{92849309-7AA6-401E-8288-7FAFABA3C929}</ProjectGuid>
     <RootNamespace>deferredlighting</RootNamespace>
     <ProjectName>ShadowCasting</ProjectName>
-    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.15063.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">

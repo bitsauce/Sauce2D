@@ -14,7 +14,7 @@
     <ProjectGuid>{3A838EE6-19C4-4687-B7E4-06D574F4A7E8}</ProjectGuid>
     <RootNamespace>deferredlighting</RootNamespace>
     <ProjectName>SceneGraph</ProjectName>
-    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.15063.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">

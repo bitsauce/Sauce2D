@@ -14,7 +14,7 @@
     <ProjectGuid>{F1C5574E-6A8C-42FB-BBF0-6AAB04230C42}</ProjectGuid>
     <RootNamespace>deferredlighting</RootNamespace>
     <ProjectName>TextureAtlas</ProjectName>
-    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.15063.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
