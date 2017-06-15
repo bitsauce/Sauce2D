@@ -59,17 +59,4 @@ bool Random::chance(uint a, uint b)
 	return nextDouble() < (float)a/(float)b;
 }
 
-double Random::getDouble(uint32_t offset) const
-{
-	return getInt(offset) / 4294967295.0; // 2^32 - 1
-}
-
-uint32_t Random::getInt(uint32_t offset) const
-{
-	offset ^= offset << 13;
-	offset ^= offset >> 17;
-	offset ^= offset << 5;
-	return offset * 314159265;
-}
-
 END_SAUCE_NAMESPACE
