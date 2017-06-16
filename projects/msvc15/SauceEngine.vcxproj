@@ -38,7 +38,6 @@
     <ClCompile Include="..\..\source\Graphics\Vertex.cpp" />
     <ClCompile Include="..\..\source\Graphics\VertexBuffer.cpp" />
     <ClCompile Include="..\..\source\Graphics\Viewport.cpp" />
-    <ClCompile Include="..\..\source\Input\Input.cpp" />
     <ClCompile Include="..\..\source\Input\InputButton.cpp" />
     <ClCompile Include="..\..\source\Input\InputContext.cpp" />
     <ClCompile Include="..\..\source\Input\InputManager.cpp" />

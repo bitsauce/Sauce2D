@@ -47,6 +47,8 @@ private:
 	function<void(InputEvent*)> m_function;
 };
 
+typedef void Controller;
+
 /**
 * \class	InputManager
 *
@@ -54,6 +56,8 @@ private:
 */
 
 #include <Sauce/Math/Vector.h>
+
+#define AXIS_VALUE_TO_FLOAT(x) (float(x) / SHRT_MAX)
 
 class SAUCE_API InputManager
 {
@@ -66,11 +70,11 @@ public:
 	//void setCursorLimits(const int x, const int y, const int w, const int h);
 
 	// Key state function
-	bool getKeyState(const InputButton inputButton, SDL_GameController *controller = 0) const;
+	bool getKeyState(const InputButton inputButton, Controller *controller = 0) const;
 
 	// Buttons and axis
-	bool getButtonState(const InputButton inputButton, SDL_GameController *controller = 0) const;
-	short getAxisValue(const ControllerAxis axis, SDL_GameController *controller = 0) const;
+	bool getButtonState(const InputButton inputButton, Controller *controller = 0) const;
+	float getAxisValue(const ControllerAxis axis, Controller *controller = 0) const;
 
 	// Window-relative position
 	void getPosition(Sint32 *x, Sint32 *y) const;
@@ -115,6 +119,10 @@ public:
 
 	void removeKeybind(Keybind *keybind);
 
+	void addController(const uint id);
+	void removeController(const uint id);
+	void setTriggerThreshold(const float threshold) { m_triggerThreshold = threshold; }
+
 private:
 	// Update bindings
 	void updateKeybinds(InputEvent *e);
@@ -134,10 +142,14 @@ private:
 	list<Keybind*> m_contextKeybinds;
 
 	// Default controller
-	SDL_GameController *m_defaultController;
+	Controller *m_defaultController;
 
+	// Controllers
+	map<uint, Controller*> m_controllers;
+
+	// Controller trigger buttons
 	bool m_leftTrigger, m_rightTrigger;
-	short m_triggerThreshold;
+	float m_triggerThreshold;
 };
 
 

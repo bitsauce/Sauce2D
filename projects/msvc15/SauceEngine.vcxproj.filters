@@ -111,9 +111,6 @@
     <ClCompile Include="..\..\source\Graphics\Viewport.cpp">
       <Filter>Source\Graphics</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\source\Input\Input.cpp">
-      <Filter>Source\Input</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\source\Input\InputContext.cpp">
       <Filter>Source\Input</Filter>
     </ClCompile>

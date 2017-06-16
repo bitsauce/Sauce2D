@@ -117,6 +117,10 @@ int Game::run()
 			THROW("Unable to initialize SDL");
 		}
 
+		SDL_version sdlver;
+		SDL_GetVersion(&sdlver);
+		LOG("** SDL %i.%i.%i initialized **", sdlver.major, sdlver.minor, sdlver.patch);
+
 		// Initialize resource manager
 		m_resourceManager = new ResourceManager("Resources.xml");
 
@@ -220,27 +224,6 @@ int Game::run()
 		
 		// Set up SDL text input
 		SDL_StartTextInput();
-
-		// Open the first available controller
-		SDL_GameController *controller = 0;
-		for(int i = 0; i < SDL_NumJoysticks(); ++i)
-		{
-			if(SDL_IsGameController(i))
-			{
-				controller = SDL_GameControllerOpen(i);
-				if(controller)
-				{
-					//SDL_Joystick *joy = SDL_GameControllerGetJoystick(controller);
-					//int instanceID = SDL_JoystickInstanceID(joy);
-					m_inputManager->m_defaultController = controller;
-					break;
-				}
-				else
-				{
-					LOG("Could not open game controller %i: %s\n", i, SDL_GetError());
-				}
-			}
-		}
 
 		// Engine initialized
 		m_initialized = true;
@@ -385,15 +368,16 @@ int Game::run()
 
 					case SDL_CONTROLLERDEVICEADDED:
 					{
-						// If no default controller exists, make this default. Propagate some event
-						//AddController(sdlEvent.cdevice);
+						m_inputManager->addController(event.cdevice.which);
 					}
 					break;
 
 					case SDL_CONTROLLERDEVICEREMOVED:
 					{
-						// TODO: When the default controller is removed, pick the next controller as default (if any)
+						m_inputManager->removeController(event.cdevice.which);
+						
 						// Also propagate some event
+
 						//RemoveController(sdlEvent.cdevice);
 					}
 					break;
@@ -422,7 +406,7 @@ int Game::run()
 						{
 							if(!m_inputManager->getButtonState(SAUCE_CONTROLLER_BUTTON_RIGHT_TRIGGER))
 							{
-								if(event.caxis.value >= m_inputManager->m_triggerThreshold)
+								if(AXIS_VALUE_TO_FLOAT(event.caxis.value) >= m_inputManager->m_triggerThreshold)
 								{
 									m_inputManager->m_rightTrigger = true;
 									ControllerButtonEvent e(ControllerButtonEvent::DOWN, m_inputManager, SAUCE_CONTROLLER_BUTTON_RIGHT_TRIGGER);// , event.cbutton.which);
@@ -432,7 +416,7 @@ int Game::run()
 							}
 							else
 							{
-								if(event.caxis.value < m_inputManager->m_triggerThreshold)
+								if(AXIS_VALUE_TO_FLOAT(event.caxis.value) < m_inputManager->m_triggerThreshold)
 								{
 									m_inputManager->m_rightTrigger = false;
 									ControllerButtonEvent e(ControllerButtonEvent::UP, m_inputManager, SAUCE_CONTROLLER_BUTTON_RIGHT_TRIGGER);// , event.cbutton.which);

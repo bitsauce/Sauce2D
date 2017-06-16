@@ -108,8 +108,8 @@ public:
 		m_font->draw(m_spriteBatch, e->getGraphicsContext()->getSize() / 2, m_btn);
 		m_spriteBatch->end();
 
-		float x = float(getInputManager()->getAxisValue(SAUCE_CONTROLLER_AXIS_RIGHTX)) / SHRT_MAX;
-		float y = float(getInputManager()->getAxisValue(SAUCE_CONTROLLER_AXIS_RIGHTY)) / SHRT_MAX;
+		float x = getInputManager()->getAxisValue(SAUCE_CONTROLLER_AXIS_RIGHTX);
+		float y = getInputManager()->getAxisValue(SAUCE_CONTROLLER_AXIS_RIGHTY);
 		e->getGraphicsContext()->drawRectangle(300 + 100 * x, 110 + 100 * y, 1, 1);
 
 		Game::onDraw(e);
