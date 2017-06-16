@@ -24,7 +24,7 @@ public:
 		m_keybind = Keybind(SAUCE_KEY_1, bind(&Keybinds::keyFunc1, this, placeholders::_1));
 		input->addKeybind(&m_keybind); // Add it to the list of keybinds
 
-		// It is also posible to bind mouse buttons to functions
+		// It is also possible to bind mouse buttons to functions
 		m_shootKeybind = Keybind(SAUCE_MOUSE_BUTTON_LEFT, bind(&Keybinds::shoot, this, placeholders::_1));
 		input->addKeybind(&m_shootKeybind);
 

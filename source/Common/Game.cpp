@@ -288,26 +288,10 @@ int Game::run()
 					}
 					break;
 
-					case SDL_KEYDOWN:
+					case SDL_KEYUP: case SDL_KEYDOWN:
 					{
-						if(event.key.repeat == 0)
-						{
-							KeyEvent e(KeyEvent::DOWN, m_inputManager, (Scancode) event.key.keysym.scancode, event.key.keysym.mod);
-							onEvent(&e);
-							m_inputManager->updateKeybinds(&e);
-						}
-						else
-						{
-							KeyEvent e(KeyEvent::REPEAT, m_inputManager, (Scancode) event.key.keysym.scancode, event.key.keysym.mod);
-							onEvent(&e);
-							m_inputManager->updateKeybinds(&e);
-						}
-					}
-					break;
-
-					case SDL_KEYUP:
-					{
-						KeyEvent e(KeyEvent::UP, m_inputManager, (Scancode) event.key.keysym.scancode, event.key.keysym.mod);
+						// Send key input event
+						KeyEvent e(event.type == SDL_KEYDOWN ? (event.key.repeat == 0 ? KeyEvent::DOWN : KeyEvent::REPEAT) : KeyEvent::UP, m_inputManager, (Scancode)event.key.keysym.scancode, event.key.keysym.mod);
 						onEvent(&e);
 						m_inputManager->updateKeybinds(&e);
 					}
@@ -315,8 +299,10 @@ int Game::run()
 
 					case SDL_TEXTINPUT:
 					{
+						// If no modifiers are pressed
 						if((SDL_GetModState() & (KMOD_CTRL | KMOD_ALT)) == 0)
 						{
+							// Send text input event
 							TextEvent e(event.text.text[0]);
 							onEvent(&e);
 						}
@@ -325,8 +311,11 @@ int Game::run()
 
 					case SDL_MOUSEMOTION:
 					{
+						// Update mouse position
 						m_inputManager->m_x = event.motion.x;
 						m_inputManager->m_y = event.motion.y;
+
+						// Send mouse move event
 						MouseEvent e(MouseEvent::MOVE, m_inputManager, event.motion.x, event.motion.y, SAUCE_MOUSE_BUTTON_NONE, 0, 0);
 						onEvent(&e);
 					}
@@ -369,22 +358,22 @@ int Game::run()
 					case SDL_CONTROLLERDEVICEADDED:
 					{
 						m_inputManager->addController(event.cdevice.which);
+						//ControllerDeviceEvent e();
+						//onEvent(&e);
 					}
 					break;
 
 					case SDL_CONTROLLERDEVICEREMOVED:
 					{
 						m_inputManager->removeController(event.cdevice.which);
-						
-						// Also propagate some event
-
-						//RemoveController(sdlEvent.cdevice);
+						//ControllerDeviceEvent e();
+						//onEvent(&e);
 					}
 					break;
 
 					case SDL_CONTROLLERBUTTONDOWN:
 					{
-						// TODO: Propagate an onControllerButtonEvent
+						// Send controller button event
 						ControllerButtonEvent e(ControllerButtonEvent::DOWN, m_inputManager, (const ControllerButton)event.cbutton.button);// , event.cbutton.which);
 						onEvent(&e);
 						m_inputManager->updateKeybinds(&e);
@@ -393,7 +382,7 @@ int Game::run()
 
 					case SDL_CONTROLLERBUTTONUP:
 					{
-						// TODO: Propagate an onControllerButtonEvent
+						// Send controller button event
 						ControllerButtonEvent e(ControllerButtonEvent::UP, m_inputManager, (const ControllerButton) event.cbutton.button);// , event.cbutton.which);
 						onEvent(&e);
 						m_inputManager->updateKeybinds(&e);
@@ -402,12 +391,15 @@ int Game::run()
   
 					case SDL_CONTROLLERAXISMOTION:
 					{
+						// If the axis is a trigger button
 						if(event.caxis.axis == SDL_CONTROLLER_AXIS_TRIGGERRIGHT)
 						{
 							if(!m_inputManager->getButtonState(SAUCE_CONTROLLER_BUTTON_RIGHT_TRIGGER))
 							{
+								// And the axis exceedes the threshold value
 								if(AXIS_VALUE_TO_FLOAT(event.caxis.value) >= m_inputManager->m_triggerThreshold)
 								{
+									// Flag trigger as pressed and send controller button event
 									m_inputManager->m_rightTrigger = true;
 									ControllerButtonEvent e(ControllerButtonEvent::DOWN, m_inputManager, SAUCE_CONTROLLER_BUTTON_RIGHT_TRIGGER);// , event.cbutton.which);
 									onEvent(&e);
@@ -449,6 +441,7 @@ int Game::run()
 							}
 						}
 
+						// Send controller axis event
 						ControllerAxisEvent e(m_inputManager, (const ControllerAxis) event.caxis.axis, event.caxis.value);// , event.cbutton.which);
 						onEvent(&e);
 						m_inputManager->updateKeybinds(&e);

@@ -5,7 +5,13 @@ using namespace sauce;
 class GameControllerGame : public Game
 {
 public:
-	Keybind m_keybindA;
+	Keybind m_keybindLeft;
+	Keybind m_keybindRight;
+	Keybind m_keybindUp;
+	Keybind m_keybindDown;
+
+	Vector2F m_playerPos;
+
 	Resource<Font> m_font;
 	SpriteBatch *m_spriteBatch;
 	string m_btn;
@@ -20,21 +26,28 @@ public:
 		m_spriteBatch = new SpriteBatch;
 		m_font = Resource<Font>("Arial");
 
-		m_keybindA = Keybind(SAUCE_CONTROLLER_BUTTON_A, bind(&GameControllerGame::buttonA, this, placeholders::_1));
-		getInputManager()->addKeybind(&m_keybindA);
+		// TODO:
+		// o Implement keybind modes (3rd parameter)
+		// o Consider more closely how an input configuration file can be used with a controller
+		// o Add controller support to InputContexts
+		m_keybindLeft = Keybind(SAUCE_CONTROLLER_BUTTON_DPAD_LEFT, bind(&GameControllerGame::moveLeft, this, placeholders::_1), Keybind::TRIGGER_WHILE_PRESSED);
+		m_keybindRight = Keybind(SAUCE_CONTROLLER_BUTTON_DPAD_RIGHT, bind(&GameControllerGame::moveRight, this, placeholders::_1), Keybind::TRIGGER_WHILE_PRESSED);
+		m_keybindUp = Keybind(SAUCE_CONTROLLER_BUTTON_DPAD_UP, bind(&GameControllerGame::moveUp, this, placeholders::_1), Keybind::TRIGGER_WHILE_PRESSED);
+		m_keybindDown = Keybind(SAUCE_CONTROLLER_BUTTON_DPAD_DOWN, bind(&GameControllerGame::moveDown, this, placeholders::_1), Keybind::TRIGGER_WHILE_PRESSED);
+
+		InputManager *input = getInputManager();
+		input->addKeybind(&m_keybindLeft);
+		input->addKeybind(&m_keybindRight);
+		input->addKeybind(&m_keybindUp);
+		input->addKeybind(&m_keybindDown);
 
 		Game::onStart(e);
 	}
 
-	void buttonA(InputEvent *e)
-	{
-		switch(e->getType())
-		{
-		case EVENT_CONTROLLER_BUTTON_DOWN: m_btn = "A down"; break;
-		case EVENT_CONTROLLER_BUTTON_UP: m_btn = "A up"; break;
-		case EVENT_CONTROLLER_BUTTON_REPEAT: m_btn = "A repeat"; break;
-		}
-	}
+	void moveLeft(InputEvent *e) { m_playerPos.x -= 5; }
+	void moveRight(InputEvent *e) { m_playerPos.x += 5; }
+	void moveUp(InputEvent *e) { m_playerPos.y -= 5; }
+	void moveDown(InputEvent *e) { m_playerPos.y += 5; }
 
 	void onEnd(GameEvent *e)
 	{
@@ -103,6 +116,7 @@ public:
 
 		m_spriteBatch->begin(e->getGraphicsContext());
 		m_font->setColor(Color(255, 255, 255, 255));
+		m_font->setHeight(16.0f);
 		m_font->draw(m_spriteBatch, 10, 10, ss.str());
 		m_font->draw(m_spriteBatch, e->getGraphicsContext()->getWidth() - 10, 10, rss.str(), FONT_ALIGN_RIGHT);
 		m_font->draw(m_spriteBatch, e->getGraphicsContext()->getSize() / 2, m_btn);

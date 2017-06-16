@@ -20,7 +20,15 @@ class SAUCE_API Keybind
 {
 public:
 	Keybind();
-	Keybind(InputButton button, function<void(InputEvent*)> func = function<void(InputEvent*)>());
+	Keybind(InputButton button, function<void(InputEvent*)> func = function<void(InputEvent*)>(), const uint flags = TRIGGER_WHEN_PRESSED);
+
+	enum
+	{
+		TRIGGER_WHEN_PRESSED = 1 << 0,
+		TRIGGER_WHEN_RELEASED = 1 << 1,
+		TRIGGER_WHEN_REPEATING = 1 << 2,
+		TRIGGER_WHILE_PRESSED = 1 << 3
+	};
 
 	function<void(InputEvent*)> getFunction() const
 	{
@@ -121,7 +129,7 @@ public:
 
 	void addController(const uint id);
 	void removeController(const uint id);
-	void setTriggerThreshold(const float threshold) { m_triggerThreshold = threshold; }
+	void setAxisThreshold(const float threshold) { m_triggerThreshold = threshold; }
 
 private:
 	// Update bindings

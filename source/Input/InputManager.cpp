@@ -144,21 +144,28 @@ InputManager::InputManager(string contextFile) :
 	m_strToKey["rmb"] = SAUCE_MOUSE_BUTTON_RIGHT;
 	m_strToKey["wheel"] = SAUCE_MOUSE_BUTTON_MIDDLE;
 
-	m_strToKey["gamepad_a"] = SAUCE_CONTROLLER_BUTTON_A;
-	m_strToKey["gamepad_b"] = SAUCE_CONTROLLER_BUTTON_B;
-	m_strToKey["gamepad_x"] = SAUCE_CONTROLLER_BUTTON_X;
-	m_strToKey["gamepad_y"] = SAUCE_CONTROLLER_BUTTON_Y;
-	m_strToKey["gamepad_back"] = SAUCE_CONTROLLER_BUTTON_BACK;
-	m_strToKey["gamepad_guide"] = SAUCE_CONTROLLER_BUTTON_GUIDE;
-	m_strToKey["gamepad_start"] = SAUCE_CONTROLLER_BUTTON_START;
-	m_strToKey["gamepad_left_stick"] = SAUCE_CONTROLLER_BUTTON_LEFT_STICK;
-	m_strToKey["gamepad_right_stick"] = SAUCE_CONTROLLER_BUTTON_RIGHT_STICK;
-	m_strToKey["gamepad_left_shoulder"] = SAUCE_CONTROLLER_BUTTON_LEFT_SHOULDER;
-	m_strToKey["gamepad_right_shoulder"] = SAUCE_CONTROLLER_BUTTON_RIGHT_SHOULDER;
-	m_strToKey["gamepad_dpad_up"] = SAUCE_CONTROLLER_BUTTON_DPAD_UP;
-	m_strToKey["gamepad_dpad_down"] = SAUCE_CONTROLLER_BUTTON_DPAD_DOWN;
-	m_strToKey["gamepad_dpad_left"] = SAUCE_CONTROLLER_BUTTON_DPAD_LEFT;
-	m_strToKey["gamepad_dpad_right"] = SAUCE_CONTROLLER_BUTTON_DPAD_RIGHT;
+	m_strToKey["controller_a"] = SAUCE_CONTROLLER_BUTTON_A;
+	m_strToKey["controller_b"] = SAUCE_CONTROLLER_BUTTON_B;
+	m_strToKey["controller_x"] = SAUCE_CONTROLLER_BUTTON_X;
+	m_strToKey["controller_y"] = SAUCE_CONTROLLER_BUTTON_Y;
+	m_strToKey["controller_back"] = SAUCE_CONTROLLER_BUTTON_BACK;
+	m_strToKey["controller_guide"] = SAUCE_CONTROLLER_BUTTON_GUIDE;
+	m_strToKey["controller_start"] = SAUCE_CONTROLLER_BUTTON_START;
+	m_strToKey["controller_left_stick"] = SAUCE_CONTROLLER_BUTTON_LEFT_STICK;
+	m_strToKey["controller_right_stick"] = SAUCE_CONTROLLER_BUTTON_RIGHT_STICK;
+	m_strToKey["controller_left_shoulder"] = SAUCE_CONTROLLER_BUTTON_LEFT_SHOULDER;
+	m_strToKey["controller_right_shoulder"] = SAUCE_CONTROLLER_BUTTON_RIGHT_SHOULDER;
+	m_strToKey["controller_dpad_up"] = SAUCE_CONTROLLER_BUTTON_DPAD_UP;
+	m_strToKey["controller_dpad_down"] = SAUCE_CONTROLLER_BUTTON_DPAD_DOWN;
+	m_strToKey["controller_dpad_left"] = SAUCE_CONTROLLER_BUTTON_DPAD_LEFT;
+	m_strToKey["controller_dpad_right"] = SAUCE_CONTROLLER_BUTTON_DPAD_RIGHT;
+
+	m_strToKey["controller_axis_leftx"] = SAUCE_CONTROLLER_AXIS_LEFTX;
+	m_strToKey["controller_axis_lefty"] = SAUCE_CONTROLLER_AXIS_LEFTY;
+	m_strToKey["controller_axis_rightx"] = SAUCE_CONTROLLER_AXIS_RIGHTX;
+	m_strToKey["controller_axis_righty"] = SAUCE_CONTROLLER_AXIS_RIGHTY;
+	m_strToKey["controller_axis_trigger_left"] = SAUCE_CONTROLLER_AXIS_TRIGGER_LEFT;
+	m_strToKey["controller_axis_trigger_right"] = SAUCE_CONTROLLER_AXIS_TRIGGER_RIGHT;
 
 	// Load input config file
 	if(util::fileExists(contextFile))
@@ -349,14 +356,15 @@ bool InputManager::getKeyState(const InputButton inputButton, Controller *contro
 	//if(m_game->isEnabled(SAUCE_BLOCK_BACKGROUND_INPUT) && !m_game->getWindow()->checkFlags(SDL_WINDOW_INPUT_FOCUS)) return false;
 	switch(inputButton.getType())
 	{
-	case InputButton::KEYBOARD: return SDL_GetKeyboardState(NULL)[inputButton.getCode()];
-	case InputButton::MOUSE: return (SDL_GetMouseState(NULL, NULL) & SDL_BUTTON(inputButton.getCode())) != 0;
-	case InputButton::GAMEPAD:
-	{
-		if(inputButton.getCode() == SAUCE_CONTROLLER_BUTTON_LEFT_TRIGGER) return m_leftTrigger/*[controller]*/;
-		else if(inputButton.getCode() == SAUCE_CONTROLLER_BUTTON_RIGHT_TRIGGER) return m_rightTrigger/*[controller]*/;
-		else return SDL_GameControllerGetButton(static_cast<SDL_GameController*>(controller ? controller : m_defaultController), (SDL_GameControllerButton)inputButton.getCode()) != 0;
-	}
+		case InputButton::KEYBOARD: return SDL_GetKeyboardState(NULL)[inputButton.getCode()];
+		case InputButton::MOUSE: return (SDL_GetMouseState(NULL, NULL) & SDL_BUTTON(inputButton.getCode())) != 0;
+		case InputButton::CONTROLLER_BUTTON:
+		{
+			if(inputButton.getCode() == SAUCE_CONTROLLER_BUTTON_LEFT_TRIGGER) return m_leftTrigger/*[controller]*/;
+			else if(inputButton.getCode() == SAUCE_CONTROLLER_BUTTON_RIGHT_TRIGGER) return m_rightTrigger/*[controller]*/;
+			else return SDL_GameControllerGetButton(static_cast<SDL_GameController*>(controller ? controller : m_defaultController), (SDL_GameControllerButton)inputButton.getCode()) != 0;
+		}
+		case InputButton::CONTROLLER_AXIS: return getAxisValue((const ControllerAxis)inputButton.getCode(), controller) > m_triggerThreshold;
 	}
 	return false;
 }
@@ -377,7 +385,7 @@ Keybind::Keybind() :
 {
 }
 
-Keybind::Keybind(InputButton inputButton, function<void(InputEvent*)> func) :
+Keybind::Keybind(InputButton inputButton, function<void(InputEvent*)> func, const uint flags) :
 	m_inputButton(inputButton),
 	m_function(func)
 {

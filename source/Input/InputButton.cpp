@@ -26,9 +26,15 @@ InputButton::InputButton(const MouseButton mouseButton) :
 {
 }
 
-InputButton::InputButton(const ControllerButton gamepadButton) :
-	code(gamepadButton),
-	type(GAMEPAD)
+InputButton::InputButton(const ControllerButton controllerButton) :
+	code(controllerButton),
+	type(CONTROLLER_BUTTON)
+{
+}
+
+InputButton::InputButton(const ControllerAxis axis) :
+	code(axis),
+	type(CONTROLLER_AXIS)
 {
 }
 
@@ -53,10 +59,17 @@ InputButton &InputButton::operator=(const MouseButton mouseButton)
 	return *this;
 }
 
-InputButton &InputButton::operator=(const ControllerButton gamepadButton)
+InputButton &InputButton::operator=(const ControllerButton controllerButton)
 {
-	code = gamepadButton;
-	type = GAMEPAD;
+	code = controllerButton;
+	type = CONTROLLER_BUTTON;
+	return *this;
+}
+
+InputButton &InputButton::operator=(const ControllerAxis axis)
+{
+	code = axis;
+	type = CONTROLLER_AXIS;
 	return *this;
 }
 
@@ -80,9 +93,14 @@ bool InputButton::operator==(const MouseButton mouseButton)
 	return type == MOUSE && code == mouseButton;
 }
 
-bool InputButton::operator==(const ControllerButton gamepadButton)
+bool InputButton::operator==(const ControllerButton controllerButton)
 {
-	return type == GAMEPAD && code == gamepadButton;
+	return type == CONTROLLER_BUTTON && code == controllerButton;
+}
+
+bool InputButton::operator==(const ControllerAxis axis)
+{
+	return type == CONTROLLER_AXIS && code == axis;
 }
 
 InputButton::Type InputButton::getType() const
