@@ -8,7 +8,7 @@ Keybind::Keybind() :
 {
 }
 
-Keybind::Keybind(InputButton inputButton, function<void(KeyEvent*)> func) :
+Keybind::Keybind(InputButton inputButton, function<void(InputEvent*)> func) :
 	m_inputButton(inputButton),
 	m_function(func)
 {

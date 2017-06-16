@@ -15,7 +15,11 @@ BEGIN_SAUCE_NAMESPACE
 InputManager::InputManager(string contextFile) :
 	m_context(0),
 	m_x(0),
-	m_y(0)
+	m_y(0),
+	m_defaultController(0),
+	m_leftTrigger(false),
+	m_rightTrigger(false),
+	m_triggerThreshold(23000)
 {
 	// Set all str to key mappings
 	m_strToKey["space"] = SAUCE_SCANCODE_SPACE;
@@ -139,6 +143,22 @@ InputManager::InputManager(string contextFile) :
 	m_strToKey["lmb"] = SAUCE_MOUSE_BUTTON_LEFT;
 	m_strToKey["rmb"] = SAUCE_MOUSE_BUTTON_RIGHT;
 	m_strToKey["wheel"] = SAUCE_MOUSE_BUTTON_MIDDLE;
+
+	m_strToKey["gamepad_a"] = SAUCE_CONTROLLER_BUTTON_A;
+	m_strToKey["gamepad_b"] = SAUCE_CONTROLLER_BUTTON_B;
+	m_strToKey["gamepad_x"] = SAUCE_CONTROLLER_BUTTON_X;
+	m_strToKey["gamepad_y"] = SAUCE_CONTROLLER_BUTTON_Y;
+	m_strToKey["gamepad_back"] = SAUCE_CONTROLLER_BUTTON_BACK;
+	m_strToKey["gamepad_guide"] = SAUCE_CONTROLLER_BUTTON_GUIDE;
+	m_strToKey["gamepad_start"] = SAUCE_CONTROLLER_BUTTON_START;
+	m_strToKey["gamepad_left_stick"] = SAUCE_CONTROLLER_BUTTON_LEFT_STICK;
+	m_strToKey["gamepad_right_stick"] = SAUCE_CONTROLLER_BUTTON_RIGHT_STICK;
+	m_strToKey["gamepad_left_shoulder"] = SAUCE_CONTROLLER_BUTTON_LEFT_SHOULDER;
+	m_strToKey["gamepad_right_shoulder"] = SAUCE_CONTROLLER_BUTTON_RIGHT_SHOULDER;
+	m_strToKey["gamepad_dpad_up"] = SAUCE_CONTROLLER_BUTTON_DPAD_UP;
+	m_strToKey["gamepad_dpad_down"] = SAUCE_CONTROLLER_BUTTON_DPAD_DOWN;
+	m_strToKey["gamepad_dpad_left"] = SAUCE_CONTROLLER_BUTTON_DPAD_LEFT;
+	m_strToKey["gamepad_dpad_right"] = SAUCE_CONTROLLER_BUTTON_DPAD_RIGHT;
 
 	// Load input config file
 	if(util::fileExists(contextFile))
@@ -266,7 +286,7 @@ void InputManager::removeKeybind(Keybind *keybind)
 	m_keybinds.remove(keybind);
 }
 
-void InputManager::updateKeybinds(KeyEvent *e)
+void InputManager::updateKeybinds(InputEvent *e)
 {
 	//if(m_game->isEnabled(SAUCE_BLOCK_BACKGROUND_INPUT) && !m_game->getWindow()->checkFlags(SDL_WINDOW_INPUT_FOCUS)) return;
 
@@ -286,15 +306,31 @@ void InputManager::updateKeybinds(KeyEvent *e)
 	}
 }
 
-bool InputManager::getKeyState(const InputButton inputButton) const
+bool InputManager::getKeyState(const InputButton inputButton, SDL_GameController *controller) const
 {
 	//if(m_game->isEnabled(SAUCE_BLOCK_BACKGROUND_INPUT) && !m_game->getWindow()->checkFlags(SDL_WINDOW_INPUT_FOCUS)) return false;
 	switch(inputButton.getType())
 	{
 		case InputButton::KEYBOARD: return SDL_GetKeyboardState(NULL)[inputButton.getCode()];
 		case InputButton::MOUSE: return (SDL_GetMouseState(NULL, NULL) & SDL_BUTTON(inputButton.getCode())) != 0;
+		case InputButton::GAMEPAD:
+		{
+			if(inputButton.getCode() == SAUCE_CONTROLLER_BUTTON_LEFT_TRIGGER) return m_leftTrigger/*[controller]*/;
+			else if(inputButton.getCode() == SAUCE_CONTROLLER_BUTTON_RIGHT_TRIGGER) return m_rightTrigger/*[controller]*/;
+			else return SDL_GameControllerGetButton(controller ? controller : m_defaultController, (SDL_GameControllerButton)inputButton.getCode()) != 0;
+		}
 	}
 	return false;
+}
+
+bool InputManager::getButtonState(const InputButton inputButton, SDL_GameController * controller) const
+{
+	return getKeyState(inputButton, controller);
+}
+
+short InputManager::getAxisValue(const ControllerAxis axis, SDL_GameController *controller) const
+{
+	return SDL_GameControllerGetAxis(controller ? controller : m_defaultController, (SDL_GameControllerAxis) axis);
 }
 
 END_SAUCE_NAMESPACE

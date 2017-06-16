@@ -29,7 +29,7 @@ public:
 		input->addKeybind(&m_shootKeybind);
 
 		// Create an input context.
-		// Input contexts map symbolic strings to keys.
+		// Input contexts map strings to keys.
 		// For example: {{ "jump", SPACE }, {"run", LSHIFT }}
 		InputContext *context = new InputContext(input);
 
@@ -54,7 +54,7 @@ public:
 		input->getContext()->removeKeybind(&m_jumpKeybind);
 	}
 
-	void keyFunc1(KeyEvent *e)
+	void keyFunc1(InputEvent *e)
 	{
 		switch(e->getType())
 		{
@@ -69,7 +69,7 @@ public:
 		}
 	}
 
-	void keyFunc2(KeyEvent *e)
+	void keyFunc2(InputEvent *e)
 	{
 		switch(e->getType())
 		{
@@ -84,7 +84,7 @@ public:
 		}
 	}
 
-	void shoot(KeyEvent *e)
+	void shoot(InputEvent *e)
 	{
 		switch(e->getType())
 		{
@@ -94,7 +94,7 @@ public:
 		}
 	}
 
-	void jump(KeyEvent *e)
+	void jump(InputEvent *e)
 	{
 		switch(e->getType())
 		{

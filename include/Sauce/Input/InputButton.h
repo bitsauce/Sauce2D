@@ -22,14 +22,18 @@ public:
 	InputButton(const Keycode keycode);
 	InputButton(const Scancode scancode);
 	InputButton(const MouseButton mouseButton);
+	InputButton(const ControllerButton gamepadButton);
 
 	InputButton &operator=(const Scancode scancode);
 	InputButton &operator=(const Keycode keycode);
 	InputButton &operator=(const MouseButton mouseButton);
+	InputButton &operator=(const ControllerButton gamepadButton);
+
 	bool operator==(const InputButton inputButton);
 	bool operator==(const Scancode scancode);
 	bool operator==(const Keycode keycode);
 	bool operator==(const MouseButton mouseButton);
+	bool operator==(const ControllerButton gamepadButton);
 
 	Type getType() const;
 	uint getCode() const;

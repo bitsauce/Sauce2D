@@ -26,6 +26,12 @@ InputButton::InputButton(const MouseButton mouseButton) :
 {
 }
 
+InputButton::InputButton(const ControllerButton gamepadButton) :
+	code(gamepadButton),
+	type(GAMEPAD)
+{
+}
+
 InputButton &InputButton::operator=(const Scancode scancode)
 {
 	code = scancode;
@@ -47,6 +53,13 @@ InputButton &InputButton::operator=(const MouseButton mouseButton)
 	return *this;
 }
 
+InputButton &InputButton::operator=(const ControllerButton gamepadButton)
+{
+	code = gamepadButton;
+	type = GAMEPAD;
+	return *this;
+}
+
 bool InputButton::operator==(const InputButton inputButton)
 {
 	return type == inputButton.type && code == inputButton.code;
@@ -65,6 +78,11 @@ bool InputButton::operator==(const Keycode keycode)
 bool InputButton::operator==(const MouseButton mouseButton)
 {
 	return type == MOUSE && code == mouseButton;
+}
+
+bool InputButton::operator==(const ControllerButton gamepadButton)
+{
+	return type == GAMEPAD && code == gamepadButton;
 }
 
 InputButton::Type InputButton::getType() const

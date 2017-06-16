@@ -238,6 +238,27 @@ void Shader::setUniform1i(const string &name, const int v0)
 	}
 }
 
+void Shader::setUniform1iv(const string &name, const uint count, const int *v)
+{
+	map<string, Uniform*>::iterator itr;
+	if ((itr = m_uniforms.find(name)) != m_uniforms.end())
+	{
+		Uniform *uniform = itr->second;
+		if (uniform->type == GL_INT || uniform->type == GL_BOOL)
+		{
+			memcpy(uniform->data, v, count * INT_SIZE);
+		}
+		else
+		{
+			LOG("Uniform '%s' is not type 'int[]'", name.c_str());
+		}
+	}
+	else
+	{
+		LOG("Uniform '%s' does not exist.", name.c_str());
+	}
+}
+
 void Shader::setUniform2i(const string &name, const int v0, const int v1)
 {
 	map<string, Uniform*>::iterator itr;

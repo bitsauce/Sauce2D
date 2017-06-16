@@ -15,17 +15,21 @@ enum EventType
 	EVENT_STEP_BEGIN,
 	EVENT_STEP_END,
 	EVENT_WINDOW_SIZE_CHANGED,
+	EVENT_TEXT_INPUT,
 
 	EVENT_KEY_DOWN,
 	EVENT_KEY_UP,
 	EVENT_KEY_REPEAT,
 
-	EVENT_TEXT_INPUT,
-
 	EVENT_MOUSE_UP,
 	EVENT_MOUSE_DOWN,
 	EVENT_MOUSE_MOVE,
 	EVENT_MOUSE_WHEEL,
+
+	EVENT_CONTROLLER_BUTTON_DOWN,
+	EVENT_CONTROLLER_BUTTON_UP,
+	EVENT_CONTROLLER_BUTTON_REPEAT,
+	EVENT_CONTROLLER_AXIS,
 
 	EVENT_CUSTOM
 };
@@ -60,68 +64,6 @@ private:
 	void *m_userData;
 };
 
-class SAUCE_API KeyEvent : public Event
-{
-public:
-	enum Modifier
-	{
-		NONE = KMOD_NONE,
-		NUMLOCK = KMOD_NUM,
-		CAPSLOCK = KMOD_CAPS,
-		LCONTROL = KMOD_LCTRL,
-		RCONTROL = KMOD_RCTRL,
-		RSHIFT = KMOD_RSHIFT,
-		LSHIFT = KMOD_LSHIFT,
-		RALT = KMOD_RALT,
-		LALT = KMOD_LALT,
-		CTRL = KMOD_CTRL,
-		SHIFT = KMOD_SHIFT,
-		ALT = KMOD_ALT
-	};
-
-	enum KeyEventType
-	{
-		DOWN = EVENT_KEY_DOWN,
-		UP = EVENT_KEY_UP,
-		REPEAT = EVENT_KEY_REPEAT
-	};
-
-	KeyEvent(const KeyEventType type, InputManager *inputManager, const InputButton inputButton, const Uint16 modifiers) :
-		Event(type),
-		m_inputManager(inputManager),
-		m_inputButton(inputButton),
-		m_modifiers(modifiers)
-	{
-	}
-
-	InputManager *getInputManager() const
-	{
-		return m_inputManager;
-	}
-
-	InputButton getInputButton() const
-	{
-		return m_inputButton;
-	}
-
-	Keycode getKeycode() const;
-
-	Scancode getScancode() const
-	{
-		return (Scancode) m_inputButton.getCode();
-	}
-
-	Uint16 getModifiers() const
-	{
-		return m_modifiers;
-	}
-
-private:
-	InputManager * const m_inputManager;
-	const InputButton m_inputButton;
-	const Uint16 m_modifiers;
-};
-
 class SAUCE_API TextEvent : public Event
 {
 public:
@@ -138,63 +80,6 @@ public:
 
 private:
 	const char m_char;
-};
-
-class SAUCE_API MouseEvent : public Event
-{
-public:
-	enum MouseEventType
-	{
-		MOVE = EVENT_MOUSE_MOVE,
-		DOWN = EVENT_MOUSE_DOWN,
-		UP = EVENT_MOUSE_UP,
-		WHEEL = EVENT_MOUSE_WHEEL
-	};
-
-	MouseEvent(const MouseEventType type, const Sint32 x, const Sint32 y, const MouseButton button, const Sint32 wheelX, const Sint32 wheelY) :
-		Event(type),
-		m_x(x),
-		m_y(y),
-		m_button(button),
-		m_wheelX(wheelX),
-		m_wheelY(wheelY)
-	{
-	}
-
-	MouseButton getButton() const
-	{
-		return m_button;
-	}
-
-	Sint32 getX() const
-	{
-		return m_x;
-	}
-	
-	Sint32 getY() const
-	{
-		return m_y;
-	}
-
-	Vector2<Sint32> getPosition() const
-	{
-		return Vector2<Sint32>(m_x, m_y);
-	}
-
-	Sint32 getWheelX() const
-	{
-		return m_wheelX;
-	}
-
-	Sint32 getWheelY() const
-	{
-		return m_wheelY;
-	}
-
-private:
-	const Sint32 m_x, m_y;
-	const MouseButton m_button;
-	const Sint32 m_wheelX, m_wheelY;
 };
 
 class GraphicsContext;
@@ -309,6 +194,176 @@ public:
 		Event(type)
 	{
 	}
+};
+
+class SAUCE_API InputEvent : public Event
+{
+protected:
+	InputEvent(const uint type, InputManager *inputManager, const InputButton button) :
+		Event(type),
+		m_inputManager(inputManager),
+		m_inputButton(button)
+	{
+	}
+
+	InputEvent(const uint type, InputManager *inputManager) :
+		Event(type),
+		m_inputManager(inputManager),
+		m_inputButton()
+	{
+	}
+
+public:
+	InputManager *getInputManager() const
+	{
+		return m_inputManager;
+	}
+
+	InputButton getInputButton() const
+	{
+		return m_inputButton;
+	}
+
+protected:
+	InputManager * const m_inputManager;
+	const InputButton m_inputButton;
+};
+
+class SAUCE_API KeyEvent : public InputEvent
+{
+public:
+	enum Modifier
+	{
+		NONE = KMOD_NONE,
+		NUMLOCK = KMOD_NUM,
+		CAPSLOCK = KMOD_CAPS,
+		LCONTROL = KMOD_LCTRL,
+		RCONTROL = KMOD_RCTRL,
+		RSHIFT = KMOD_RSHIFT,
+		LSHIFT = KMOD_LSHIFT,
+		RALT = KMOD_RALT,
+		LALT = KMOD_LALT,
+		CTRL = KMOD_CTRL,
+		SHIFT = KMOD_SHIFT,
+		ALT = KMOD_ALT
+	};
+
+	enum KeyEventType
+	{
+		DOWN = EVENT_KEY_DOWN,
+		UP = EVENT_KEY_UP,
+		REPEAT = EVENT_KEY_REPEAT
+	};
+
+	KeyEvent(const KeyEventType type, InputManager *inputManager, const InputButton inputButton, const Uint16 modifiers) :
+		InputEvent(type, inputManager, inputButton),
+		m_modifiers(modifiers)
+	{
+	}
+
+	Keycode getKeycode() const;
+
+	Scancode getScancode() const
+	{
+		return (Scancode) m_inputButton.getCode();
+	}
+
+	Uint16 getModifiers() const
+	{
+		return m_modifiers;
+	}
+
+private:
+	const Uint16 m_modifiers;
+};
+
+class SAUCE_API MouseEvent : public InputEvent
+{
+public:
+	enum MouseEventType
+	{
+		MOVE = EVENT_MOUSE_MOVE,
+		DOWN = EVENT_MOUSE_DOWN,
+		UP = EVENT_MOUSE_UP,
+		WHEEL = EVENT_MOUSE_WHEEL
+	};
+
+	MouseEvent(const MouseEventType type, InputManager *inputManager, const Sint32 x, const Sint32 y, const MouseButton button, const Sint32 wheelX, const Sint32 wheelY) :
+		InputEvent(type, inputManager, button),
+		m_x(x),
+		m_y(y),
+		m_wheelX(wheelX),
+		m_wheelY(wheelY)
+	{
+	}
+
+	MouseButton getButton() const
+	{
+		return (MouseButton) getInputButton().getCode();
+	}
+
+	Sint32 getX() const
+	{
+		return m_x;
+	}
+
+	Sint32 getY() const
+	{
+		return m_y;
+	}
+
+	Vector2<Sint32> getPosition() const
+	{
+		return Vector2<Sint32>(m_x, m_y);
+	}
+
+	Sint32 getWheelX() const
+	{
+		return m_wheelX;
+	}
+
+	Sint32 getWheelY() const
+	{
+		return m_wheelY;
+	}
+
+private:
+	const Sint32 m_x, m_y;
+	const Sint32 m_wheelX, m_wheelY;
+};
+
+class SAUCE_API ControllerButtonEvent : public InputEvent
+{
+public:
+	enum ControllerButtonEventType
+	{
+		DOWN = EVENT_CONTROLLER_BUTTON_DOWN,
+		UP = EVENT_CONTROLLER_BUTTON_UP,
+		REPEAT = EVENT_CONTROLLER_BUTTON_REPEAT
+	};
+
+	ControllerButtonEvent(const ControllerButtonEventType type, InputManager *inputManager, const ControllerButton controllerButton) :
+		InputEvent(type, inputManager, controllerButton)
+	{
+	}
+};
+
+class SAUCE_API ControllerAxisEvent : public InputEvent
+{
+public:
+	ControllerAxisEvent(InputManager *inputManager, const ControllerAxis axis, const short value) :
+		InputEvent(EVENT_CONTROLLER_AXIS, inputManager),
+		m_axis(axis),
+		m_value(value)
+	{
+	}
+
+	ControllerAxis getAxis() const { return m_axis; }
+	short getValue() const { return m_value; }
+
+private:
+	const ControllerAxis m_axis;
+	const short m_value;
 };
 
 END_SAUCE_NAMESPACE

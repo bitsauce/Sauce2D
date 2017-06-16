@@ -7,7 +7,7 @@
 
 BEGIN_SAUCE_NAMESPACE
 
-class KeyEvent;
+class InputEvent;
 class InputContext;
 
 /**
@@ -20,14 +20,14 @@ class SAUCE_API Keybind
 {
 public:
 	Keybind();
-	Keybind(InputButton keycode, function<void(KeyEvent*)> func = function<void(KeyEvent*)>());
+	Keybind(InputButton button, function<void(InputEvent*)> func = function<void(InputEvent*)>());
 
-	function<void(KeyEvent*)> getFunction() const
+	function<void(InputEvent*)> getFunction() const
 	{
 		return m_function;
 	}
 
-	void setFunction(function<void(KeyEvent*)> func)
+	void setFunction(function<void(InputEvent*)> func)
 	{
 		m_function = func;
 	}
@@ -44,7 +44,7 @@ public:
 
 private:
 	InputButton m_inputButton;
-	function<void(KeyEvent*)> m_function;
+	function<void(InputEvent*)> m_function;
 };
 
 /**
@@ -66,7 +66,11 @@ public:
 	//void setCursorLimits(const int x, const int y, const int w, const int h);
 
 	// Key state function
-	bool getKeyState(const InputButton inputButton) const;
+	bool getKeyState(const InputButton inputButton, SDL_GameController *controller = 0) const;
+
+	// Buttons and axis
+	bool getButtonState(const InputButton inputButton, SDL_GameController *controller = 0) const;
+	short getAxisValue(const ControllerAxis axis, SDL_GameController *controller = 0) const;
 
 	// Window-relative position
 	void getPosition(Sint32 *x, Sint32 *y) const;
@@ -113,7 +117,7 @@ public:
 
 private:
 	// Update bindings
-	void updateKeybinds(KeyEvent *e);
+	void updateKeybinds(InputEvent *e);
 
 	// Cursor position
 	Sint32 m_x, m_y;
@@ -128,6 +132,12 @@ private:
 	// Key binds
 	list<Keybind*> m_keybinds;
 	list<Keybind*> m_contextKeybinds;
+
+	// Default controller
+	SDL_GameController *m_defaultController;
+
+	bool m_leftTrigger, m_rightTrigger;
+	short m_triggerThreshold;
 };
 
 

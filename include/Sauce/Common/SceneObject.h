@@ -246,6 +246,28 @@ public:
 		PROPAGATE_EVENT;
 	}
 
+
+	virtual void onControllerEvent(InputEvent *e)
+	{
+		switch(e->getType())
+		{
+			case EVENT_CONTROLLER_BUTTON_DOWN:
+			case EVENT_CONTROLLER_BUTTON_UP:
+			case EVENT_CONTROLLER_BUTTON_REPEAT: onControllerButton(static_cast<ControllerButtonEvent*>(e)); break;
+			case EVENT_CONTROLLER_AXIS: onControllerAxis(static_cast<ControllerAxisEvent*>(e)); break;
+		}
+	}
+
+	virtual void onControllerButton(ControllerButtonEvent *e)
+	{
+		PROPAGATE_EVENT;
+	}
+
+	virtual void onControllerAxis(ControllerAxisEvent *e)
+	{
+		PROPAGATE_EVENT;
+	}
+
 	/**
 	* \fn	virtual void EventObject::onEvent(Event *event)
 	*
@@ -268,12 +290,16 @@ public:
 			case EVENT_KEY_DOWN:
 			case EVENT_KEY_UP:
 			case EVENT_KEY_REPEAT: onKeyEvent(static_cast<KeyEvent*>(e)); break;
-			case EVENT_TEXT_INPUT: onTextInput(static_cast<TextEvent*>(e));
+			case EVENT_TEXT_INPUT: onTextInput(static_cast<TextEvent*>(e)); break;
 			case EVENT_MOUSE_UP:
 			case EVENT_MOUSE_DOWN:
 			case EVENT_MOUSE_MOVE:
 			case EVENT_MOUSE_WHEEL: onMouseEvent(static_cast<MouseEvent*>(e)); break;
 			case EVENT_WINDOW_SIZE_CHANGED: onWindowSizeChanged(static_cast<WindowEvent*>(e)); break;
+			case EVENT_CONTROLLER_BUTTON_UP:
+			case EVENT_CONTROLLER_BUTTON_DOWN:
+			case EVENT_CONTROLLER_BUTTON_REPEAT:
+			case EVENT_CONTROLLER_AXIS: onControllerEvent(static_cast<InputEvent*>(e)); break;
 		}
 	}
 

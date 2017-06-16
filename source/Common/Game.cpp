@@ -26,7 +26,7 @@ Keycode KeyEvent::getKeycode() const
 
 Game *Game::s_this = 0;
 
-// TODO: Might want to do some validation check on the name
+// TODO: Might want to do some file path validation check on the name
 // and org name so that the pref path won't bug out
 Game::Game(const string &name, const string &organization, const uint flags) :
 	m_name(name),
@@ -217,8 +217,30 @@ int Game::run()
 		m_inputManager = new InputManager("InputConfig.xml");
 
 		m_scene = new Scene(this);
-
+		
+		// Set up SDL text input
 		SDL_StartTextInput();
+
+		// Open the first available controller
+		SDL_GameController *controller = 0;
+		for(int i = 0; i < SDL_NumJoysticks(); ++i)
+		{
+			if(SDL_IsGameController(i))
+			{
+				controller = SDL_GameControllerOpen(i);
+				if(controller)
+				{
+					//SDL_Joystick *joy = SDL_GameControllerGetJoystick(controller);
+					//int instanceID = SDL_JoystickInstanceID(joy);
+					m_inputManager->m_defaultController = controller;
+					break;
+				}
+				else
+				{
+					LOG("Could not open game controller %i: %s\n", i, SDL_GetError());
+				}
+			}
+		}
 
 		// Engine initialized
 		m_initialized = true;
@@ -322,7 +344,7 @@ int Game::run()
 					{
 						m_inputManager->m_x = event.motion.x;
 						m_inputManager->m_y = event.motion.y;
-						MouseEvent e(MouseEvent::MOVE, event.motion.x, event.motion.y, SAUCE_MOUSE_BUTTON_NONE, 0, 0);
+						MouseEvent e(MouseEvent::MOVE, m_inputManager, event.motion.x, event.motion.y, SAUCE_MOUSE_BUTTON_NONE, 0, 0);
 						onEvent(&e);
 					}
 					break;
@@ -330,7 +352,7 @@ int Game::run()
 					case SDL_MOUSEBUTTONDOWN:
 					{
 						// MouseEvent
-						MouseEvent mouseEvent(MouseEvent::DOWN, m_inputManager->m_x, m_inputManager->m_y, (const MouseButton) event.button.button, 0, 0);
+						MouseEvent mouseEvent(MouseEvent::DOWN, m_inputManager, m_inputManager->m_x, m_inputManager->m_y, (const MouseButton) event.button.button, 0, 0);
 						onEvent(&mouseEvent);
 
 						// KeyEvent
@@ -343,7 +365,7 @@ int Game::run()
 					case SDL_MOUSEBUTTONUP:
 					{
 						// MouseEvent
-						MouseEvent e(MouseEvent::UP, m_inputManager->m_x, m_inputManager->m_y, (const MouseButton) event.button.button, 0, 0);
+						MouseEvent e(MouseEvent::UP, m_inputManager, m_inputManager->m_x, m_inputManager->m_y, (const MouseButton) event.button.button, 0, 0);
 						onEvent(&e);
 
 						// KeyEvent
@@ -356,8 +378,96 @@ int Game::run()
 					case SDL_MOUSEWHEEL:
 					{
 						// Scroll event
-						MouseEvent e(MouseEvent::WHEEL, m_inputManager->m_x, m_inputManager->m_y, SAUCE_MOUSE_BUTTON_NONE, event.wheel.x, event.wheel.y);
+						MouseEvent e(MouseEvent::WHEEL, m_inputManager, m_inputManager->m_x, m_inputManager->m_y, SAUCE_MOUSE_BUTTON_NONE, event.wheel.x, event.wheel.y);
 						onEvent(&e);
+					}
+					break;
+
+					case SDL_CONTROLLERDEVICEADDED:
+					{
+						// If no default controller exists, make this default. Propagate some event
+						//AddController(sdlEvent.cdevice);
+					}
+					break;
+
+					case SDL_CONTROLLERDEVICEREMOVED:
+					{
+						// TODO: When the default controller is removed, pick the next controller as default (if any)
+						// Also propagate some event
+						//RemoveController(sdlEvent.cdevice);
+					}
+					break;
+
+					case SDL_CONTROLLERBUTTONDOWN:
+					{
+						// TODO: Propagate an onControllerButtonEvent
+						ControllerButtonEvent e(ControllerButtonEvent::DOWN, m_inputManager, (const ControllerButton)event.cbutton.button);// , event.cbutton.which);
+						onEvent(&e);
+						m_inputManager->updateKeybinds(&e);
+					}
+					break;
+
+					case SDL_CONTROLLERBUTTONUP:
+					{
+						// TODO: Propagate an onControllerButtonEvent
+						ControllerButtonEvent e(ControllerButtonEvent::UP, m_inputManager, (const ControllerButton) event.cbutton.button);// , event.cbutton.which);
+						onEvent(&e);
+						m_inputManager->updateKeybinds(&e);
+					}
+					break;
+  
+					case SDL_CONTROLLERAXISMOTION:
+					{
+						if(event.caxis.axis == SDL_CONTROLLER_AXIS_TRIGGERRIGHT)
+						{
+							if(!m_inputManager->getButtonState(SAUCE_CONTROLLER_BUTTON_RIGHT_TRIGGER))
+							{
+								if(event.caxis.value >= m_inputManager->m_triggerThreshold)
+								{
+									m_inputManager->m_rightTrigger = true;
+									ControllerButtonEvent e(ControllerButtonEvent::DOWN, m_inputManager, SAUCE_CONTROLLER_BUTTON_RIGHT_TRIGGER);// , event.cbutton.which);
+									onEvent(&e);
+									m_inputManager->updateKeybinds(&e);
+								}
+							}
+							else
+							{
+								if(event.caxis.value < m_inputManager->m_triggerThreshold)
+								{
+									m_inputManager->m_rightTrigger = false;
+									ControllerButtonEvent e(ControllerButtonEvent::UP, m_inputManager, SAUCE_CONTROLLER_BUTTON_RIGHT_TRIGGER);// , event.cbutton.which);
+									onEvent(&e);
+									m_inputManager->updateKeybinds(&e);
+								}
+							}
+						}
+						else if(event.caxis.axis == SDL_CONTROLLER_AXIS_TRIGGERLEFT)
+						{
+							if(!m_inputManager->getButtonState(SAUCE_CONTROLLER_BUTTON_LEFT_TRIGGER))
+							{
+								if(event.caxis.value >= m_inputManager->m_triggerThreshold)
+								{
+									m_inputManager->m_leftTrigger = true;
+									ControllerButtonEvent e(ControllerButtonEvent::DOWN, m_inputManager, SAUCE_CONTROLLER_BUTTON_LEFT_TRIGGER);// , event.cbutton.which);
+									onEvent(&e);
+									m_inputManager->updateKeybinds(&e);
+								}
+							}
+							else
+							{
+								if(event.caxis.value < m_inputManager->m_triggerThreshold)
+								{
+									m_inputManager->m_leftTrigger = false;
+									ControllerButtonEvent e(ControllerButtonEvent::UP, m_inputManager, SAUCE_CONTROLLER_BUTTON_LEFT_TRIGGER);// , event.cbutton.which);
+									onEvent(&e);
+									m_inputManager->updateKeybinds(&e);
+								}
+							}
+						}
+
+						ControllerAxisEvent e(m_inputManager, (const ControllerAxis) event.caxis.axis, event.caxis.value);// , event.cbutton.which);
+						onEvent(&e);
+						m_inputManager->updateKeybinds(&e);
 					}
 					break;
 				}
