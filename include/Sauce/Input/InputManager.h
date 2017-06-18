@@ -55,7 +55,7 @@ private:
 	function<void(InputEvent*)> m_function;
 };
 
-typedef void Controller;
+typedef void ControllerDevice;
 
 /**
 * \class	InputManager
@@ -78,11 +78,11 @@ public:
 	//void setCursorLimits(const int x, const int y, const int w, const int h);
 
 	// Key state function
-	bool getKeyState(const InputButton inputButton, Controller *controller = 0) const;
+	bool getKeyState(const InputButton inputButton, ControllerDevice *controller = 0) const;
 
 	// Buttons and axis
-	bool getButtonState(const InputButton inputButton, Controller *controller = 0) const;
-	float getAxisValue(const ControllerAxis axis, Controller *controller = 0) const;
+	bool getButtonState(const InputButton inputButton, ControllerDevice *controller = 0) const;
+	float getAxisValue(const ControllerAxis axis, ControllerDevice *controller = 0) const;
 
 	// Window-relative position
 	void getPosition(Sint32 *x, Sint32 *y) const;
@@ -150,10 +150,10 @@ private:
 	list<Keybind*> m_contextKeybinds;
 
 	// Default controller
-	Controller *m_defaultController;
+	ControllerDevice *m_defaultController;
 
 	// Controllers
-	map<uint, Controller*> m_controllers;
+	map<uint, ControllerDevice*> m_controllers;
 
 	// Controller trigger buttons
 	bool m_leftTrigger, m_rightTrigger;

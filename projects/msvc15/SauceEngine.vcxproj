@@ -41,8 +41,6 @@
     <ClCompile Include="..\..\source\Input\InputButton.cpp" />
     <ClCompile Include="..\..\source\Input\InputContext.cpp" />
     <ClCompile Include="..\..\source\Input\InputManager.cpp" />
-    <ClCompile Include="..\..\source\Input\KeyListener.cpp" />
-    <ClCompile Include="..\..\source\Input\MouseListener.cpp" />
     <ClCompile Include="..\..\source\Math\Matrix.cpp" />
     <ClCompile Include="..\..\source\Math\Random.cpp" />
     <ClCompile Include="..\..\source\Math\Rectangle.cpp" />
@@ -83,8 +81,6 @@
     <ClInclude Include="..\..\include\Sauce\Input\Inputcontext.h" />
     <ClInclude Include="..\..\include\Sauce\Input\InputManager.h" />
     <ClInclude Include="..\..\include\Sauce\Input\Keycodes.h" />
-    <ClInclude Include="..\..\include\Sauce\Input\Keylistener.h" />
-    <ClInclude Include="..\..\include\Sauce\Input\MouseListener.h" />
     <ClInclude Include="..\..\include\Sauce\Input\Scancodes.h" />
     <ClInclude Include="..\..\include\Sauce\Math.h" />
     <ClInclude Include="..\..\include\Sauce\Math\Matrix.h" />

@@ -351,7 +351,7 @@ void InputManager::updateKeybinds(InputEvent *e)
 	}
 }
 
-bool InputManager::getKeyState(const InputButton inputButton, Controller *controller) const
+bool InputManager::getKeyState(const InputButton inputButton, ControllerDevice *controller) const
 {
 	//if(m_game->isEnabled(SAUCE_BLOCK_BACKGROUND_INPUT) && !m_game->getWindow()->checkFlags(SDL_WINDOW_INPUT_FOCUS)) return false;
 	switch(inputButton.getType())
@@ -369,12 +369,12 @@ bool InputManager::getKeyState(const InputButton inputButton, Controller *contro
 	return false;
 }
 
-bool InputManager::getButtonState(const InputButton inputButton, Controller *controller) const
+bool InputManager::getButtonState(const InputButton inputButton, ControllerDevice *controller) const
 {
 	return getKeyState(inputButton, controller);
 }
 
-float InputManager::getAxisValue(const ControllerAxis axis, Controller *controller) const
+float InputManager::getAxisValue(const ControllerAxis axis, ControllerDevice *controller) const
 {
 	return AXIS_VALUE_TO_FLOAT(SDL_GameControllerGetAxis(static_cast<SDL_GameController*>(controller ? controller : m_defaultController), (SDL_GameControllerAxis)axis));
 }
