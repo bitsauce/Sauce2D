@@ -269,11 +269,7 @@ void GraphicsContext::setupContext()
 		const Shader::Uniform *uniform = itr->second;
 		switch(uniform->type)
 		{
-<<<<<<< HEAD
-			case GL_INT: case GL_BOOL: glUniform1iv(uniform->loc, uniform->count, (GLint*) uniform->data); break;
-=======
 			case GL_INT: case GL_BOOL: glUniform1iv(uniform->loc, uniform->count, (const GLint*) uniform->data); break;
->>>>>>> 8da0a686971698ecb1b765cfe433231f357bdf82
 			case GL_INT_VEC2: case GL_BOOL_VEC2: glUniform2i(uniform->loc, ((GLint*) uniform->data)[0], ((GLint*) uniform->data)[1]); break;
 			case GL_INT_VEC3: case GL_BOOL_VEC3: glUniform3i(uniform->loc, ((GLint*) uniform->data)[0], ((GLint*) uniform->data)[1], ((GLint*) uniform->data)[2]); break;
 			case GL_INT_VEC4: case GL_BOOL_VEC4: glUniform4i(uniform->loc, ((GLint*) uniform->data)[0], ((GLint*) uniform->data)[1], ((GLint*) uniform->data)[2], ((GLint*) uniform->data)[3]); break;
