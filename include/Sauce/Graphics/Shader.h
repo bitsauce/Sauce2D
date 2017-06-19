@@ -24,6 +24,11 @@ public:
 	void setUniform3i(const string &name, const int v0, const int v1, const int v2);
 	void setUniform4i(const string &name, const int v0, const int v1, const int v2, const int v3);
 
+	void setUniform1iv(const string &name, const uint count, const int *v);
+	void setUniform2iv(const string &name, const uint count, const int *v);
+	void setUniform3iv(const string &name, const uint count, const int *v);
+	void setUniform4iv(const string &name, const uint count, const int *v);
+
 	void setUniform1ui(const string &name, const uint v0);
 	void setUniform2ui(const string &name, const uint v0, const uint v1);
 	void setUniform3ui(const string &name, const uint v0, const uint v1, const uint v2);

@@ -225,7 +225,14 @@ void Shader::setUniform1i(const string &name, const int v0)
 		Uniform *uniform = itr->second;
 		if(uniform->type == GL_INT || uniform->type == GL_BOOL)
 		{
-			((GLint*) uniform->data)[0] = v0;
+			if(uniform->count == 1)
+			{
+				((GLint*) uniform->data)[0] = v0;
+			}
+			else
+			{
+				LOG("Uniform '%s' is an array. Expected %i values'", name.c_str(), uniform->count);
+			}
 		}
 		else
 		{
@@ -299,6 +306,34 @@ void Shader::setUniform4i(const string &name, const int v0, const int v1, const 
 		else
 		{
 			LOG("Uniform '%s' is not type 'ivec4'", name.c_str());
+		}
+	}
+	else
+	{
+		LOG("Uniform '%s' does not exist.", name.c_str());
+	}
+}
+
+void Shader::setUniform1iv(const string &name, const uint count, const int *v)
+{
+	map<string, Uniform*>::iterator itr;
+	if((itr = m_uniforms.find(name)) != m_uniforms.end())
+	{
+		Uniform *uniform = itr->second;
+		if(uniform->type == GL_INT || uniform->type == GL_BOOL)
+		{
+			if(uniform->count == count)
+			{
+				memcpy(uniform->data, v, 1 * uniform->count * INT_SIZE);
+			}
+			else
+			{
+				LOG("Uniform '%s' has %i elements (got %i)", name.c_str(), uniform->count, count);
+			}
+		}
+		else
+		{
+			LOG("Uniform '%s' is not type 'int[]'", name.c_str());
 		}
 	}
 	else

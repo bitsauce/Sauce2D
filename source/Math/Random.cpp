@@ -12,64 +12,56 @@
 
 BEGIN_SAUCE_NAMESPACE
 
-void Random::setSeed(uint32_t seed)
+void Random::setSeed(const uint32_t seed)
 {
 	m_seed = seed;
 }
 
 double Random::nextDouble()
 {
-	// We have to cast to double because floats can only represent integers up to 2^23
-	return nextInt() / 4294967295.0; // 2^32 - 1
+	return nextInt() / 4294967295.0; // 2^32 - 1 = max int value
 }
 
-double Random::nextDouble(double max)
+double Random::nextDouble(const double max)
 {
 	return nextDouble() * max;
 }
 
-double Random::nextDouble(double min, double max)
+double Random::nextDouble(const double min, double max)
 {
-	double t = nextDouble();
-	return (1.0f-t)*min + t*max;
+	if(min > max)
+	{
+		return math::lerp(max, min, nextDouble());
+	}
+	return math::lerp(min, max, nextDouble());
 }
 
 uint32_t Random::nextInt()
 {
+	// xorshift
 	m_seed ^= m_seed << 13;
 	m_seed ^= m_seed >> 17;
 	m_seed ^= m_seed << 5;
 	return m_seed * 314159265;
 }
 
-uint32_t Random::nextInt(uint32_t max)
+uint32_t Random::nextInt(const uint32_t max)
 {
-	return nextInt() % (max+1);
+	return nextInt() % (max + 1);
 }
 
-uint32_t Random::nextInt(uint32_t min, uint32_t max)
+uint32_t Random::nextInt(const uint32_t min, const uint32_t max)
 {
 	if(min > max)
-		return nextInt() % (min-max+1) + max;
-	return nextInt() % (max-min+1) + min;
+	{
+		return nextInt() % (min - max + 1) + max;
+	}
+	return nextInt() % (max - min + 1) + min;
 }
 
 bool Random::chance(uint a, uint b)
 {
 	return nextDouble() < (float)a/(float)b;
-}
-
-double Random::getDouble(uint32_t offset) const
-{
-	return getInt(offset) / 4294967295.0; // 2^32 - 1
-}
-
-uint32_t Random::getInt(uint32_t offset) const
-{
-	offset ^= offset << 13;
-	offset ^= offset >> 17;
-	offset ^= offset << 5;
-	return offset * 314159265;
 }
 
 END_SAUCE_NAMESPACE
