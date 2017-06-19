@@ -11,9 +11,9 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{3A838EE6-19C4-4687-B7E4-06D574F4A7E8}</ProjectGuid>
+    <ProjectGuid>{61BA0901-09CC-45C4-B009-983765A2D28C}</ProjectGuid>
     <RootNamespace>deferredlighting</RootNamespace>
-    <ProjectName>SceneGraph</ProjectName>
+    <ProjectName>GameController</ProjectName>
     <WindowsTargetPlatformVersion>10.0.15063.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -42,11 +42,11 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <OutDir>..\Binaries\$(Platform)\$(Configuration)\</OutDir>
-    <TargetName>SceneGraph</TargetName>
+    <TargetName>GameController</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <OutDir>..\Binaries\$(Platform)\$(Configuration)\</OutDir>
-    <TargetName>SceneGraph</TargetName>
+    <TargetName>GameController</TargetName>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>

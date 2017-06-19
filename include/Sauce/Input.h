@@ -6,8 +6,6 @@
 
 #include <Sauce/Input/InputManager.h>
 #include <Sauce/Input/InputContext.h>
-#include <Sauce/Input/KeyListener.h>
-#include <Sauce/Input/MouseListener.h>
 #include <Sauce/Input/Keycodes.h>
 #include <Sauce/Input/Scancodes.h>
 

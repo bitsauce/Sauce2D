@@ -55,7 +55,7 @@ bool InputContext::getKeyState(string name) const
 	return m_inputManager->getKeyState(itr->second->getInputButton());
 }
 
-void InputContext::updateKeybinds(KeyEvent *e)
+void InputContext::updateKeybinds(InputEvent *e)
 {
 	for(map<string, Keybind*>::iterator itr = m_keybinds.begin(); itr != m_keybinds.end(); ++itr)
 	{

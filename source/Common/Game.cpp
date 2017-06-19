@@ -26,7 +26,7 @@ Keycode KeyEvent::getKeycode() const
 
 Game *Game::s_this = 0;
 
-// TODO: Might want to do some validation check on the name
+// TODO: Might want to do some file path validation check on the name
 // and org name so that the pref path won't bug out
 Game::Game(const string &name, const string &organization, const uint flags) :
 	m_name(name),
@@ -116,6 +116,10 @@ int Game::run()
 		{
 			THROW("Unable to initialize SDL");
 		}
+
+		SDL_version sdlver;
+		SDL_GetVersion(&sdlver);
+		LOG("** SDL %i.%i.%i initialized **", sdlver.major, sdlver.minor, sdlver.patch);
 
 		// Initialize resource manager
 		m_resourceManager = new ResourceManager("Resources.xml");
@@ -217,7 +221,8 @@ int Game::run()
 		m_inputManager = new InputManager("InputConfig.xml");
 
 		m_scene = new Scene(this);
-
+		
+		// Set up SDL text input
 		SDL_StartTextInput();
 
 		// Engine initialized
@@ -283,26 +288,10 @@ int Game::run()
 					}
 					break;
 
-					case SDL_KEYDOWN:
+					case SDL_KEYUP: case SDL_KEYDOWN:
 					{
-						if(event.key.repeat == 0)
-						{
-							KeyEvent e(KeyEvent::DOWN, m_inputManager, (Scancode) event.key.keysym.scancode, event.key.keysym.mod);
-							onEvent(&e);
-							m_inputManager->updateKeybinds(&e);
-						}
-						else
-						{
-							KeyEvent e(KeyEvent::REPEAT, m_inputManager, (Scancode) event.key.keysym.scancode, event.key.keysym.mod);
-							onEvent(&e);
-							m_inputManager->updateKeybinds(&e);
-						}
-					}
-					break;
-
-					case SDL_KEYUP:
-					{
-						KeyEvent e(KeyEvent::UP, m_inputManager, (Scancode) event.key.keysym.scancode, event.key.keysym.mod);
+						// Send key input event
+						KeyEvent e(event.type == SDL_KEYDOWN ? (event.key.repeat == 0 ? KeyEvent::DOWN : KeyEvent::REPEAT) : KeyEvent::UP, m_inputManager, (Scancode)event.key.keysym.scancode, event.key.keysym.mod);
 						onEvent(&e);
 						m_inputManager->updateKeybinds(&e);
 					}
@@ -310,8 +299,10 @@ int Game::run()
 
 					case SDL_TEXTINPUT:
 					{
+						// If no modifiers are pressed
 						if((SDL_GetModState() & (KMOD_CTRL | KMOD_ALT)) == 0)
 						{
+							// Send text input event
 							TextEvent e(event.text.text[0]);
 							onEvent(&e);
 						}
@@ -320,9 +311,12 @@ int Game::run()
 
 					case SDL_MOUSEMOTION:
 					{
+						// Update mouse position
 						m_inputManager->m_x = event.motion.x;
 						m_inputManager->m_y = event.motion.y;
-						MouseEvent e(MouseEvent::MOVE, event.motion.x, event.motion.y, SAUCE_MOUSE_BUTTON_NONE, 0, 0);
+
+						// Send mouse move event
+						MouseEvent e(MouseEvent::MOVE, m_inputManager, event.motion.x, event.motion.y, SAUCE_MOUSE_BUTTON_NONE, 0, 0);
 						onEvent(&e);
 					}
 					break;
@@ -330,7 +324,7 @@ int Game::run()
 					case SDL_MOUSEBUTTONDOWN:
 					{
 						// MouseEvent
-						MouseEvent mouseEvent(MouseEvent::DOWN, m_inputManager->m_x, m_inputManager->m_y, (const MouseButton) event.button.button, 0, 0);
+						MouseEvent mouseEvent(MouseEvent::DOWN, m_inputManager, m_inputManager->m_x, m_inputManager->m_y, (const MouseButton) event.button.button, 0, 0);
 						onEvent(&mouseEvent);
 
 						// KeyEvent
@@ -343,7 +337,7 @@ int Game::run()
 					case SDL_MOUSEBUTTONUP:
 					{
 						// MouseEvent
-						MouseEvent e(MouseEvent::UP, m_inputManager->m_x, m_inputManager->m_y, (const MouseButton) event.button.button, 0, 0);
+						MouseEvent e(MouseEvent::UP, m_inputManager, m_inputManager->m_x, m_inputManager->m_y, (const MouseButton) event.button.button, 0, 0);
 						onEvent(&e);
 
 						// KeyEvent
@@ -356,8 +350,101 @@ int Game::run()
 					case SDL_MOUSEWHEEL:
 					{
 						// Scroll event
-						MouseEvent e(MouseEvent::WHEEL, m_inputManager->m_x, m_inputManager->m_y, SAUCE_MOUSE_BUTTON_NONE, event.wheel.x, event.wheel.y);
+						MouseEvent e(MouseEvent::WHEEL, m_inputManager, m_inputManager->m_x, m_inputManager->m_y, SAUCE_MOUSE_BUTTON_NONE, event.wheel.x, event.wheel.y);
 						onEvent(&e);
+					}
+					break;
+
+					case SDL_CONTROLLERDEVICEADDED:
+					{
+						m_inputManager->addController(event.cdevice.which);
+						//ControllerDeviceEvent e();
+						//onEvent(&e);
+					}
+					break;
+
+					case SDL_CONTROLLERDEVICEREMOVED:
+					{
+						m_inputManager->removeController(event.cdevice.which);
+						//ControllerDeviceEvent e();
+						//onEvent(&e);
+					}
+					break;
+
+					case SDL_CONTROLLERBUTTONDOWN:
+					{
+						// Send controller button event
+						ControllerButtonEvent e(ControllerButtonEvent::DOWN, m_inputManager, (const ControllerButton)event.cbutton.button);// , event.cbutton.which);
+						onEvent(&e);
+						m_inputManager->updateKeybinds(&e);
+					}
+					break;
+
+					case SDL_CONTROLLERBUTTONUP:
+					{
+						// Send controller button event
+						ControllerButtonEvent e(ControllerButtonEvent::UP, m_inputManager, (const ControllerButton) event.cbutton.button);// , event.cbutton.which);
+						onEvent(&e);
+						m_inputManager->updateKeybinds(&e);
+					}
+					break;
+  
+					case SDL_CONTROLLERAXISMOTION:
+					{
+						// If the axis is a trigger button
+						if(event.caxis.axis == SDL_CONTROLLER_AXIS_TRIGGERRIGHT)
+						{
+							if(!m_inputManager->getButtonState(SAUCE_CONTROLLER_BUTTON_RIGHT_TRIGGER))
+							{
+								// And the axis exceedes the threshold value
+								if(AXIS_VALUE_TO_FLOAT(event.caxis.value) >= m_inputManager->m_triggerThreshold)
+								{
+									// Flag trigger as pressed and send controller button event
+									m_inputManager->m_rightTrigger = true;
+									ControllerButtonEvent e(ControllerButtonEvent::DOWN, m_inputManager, SAUCE_CONTROLLER_BUTTON_RIGHT_TRIGGER);// , event.cbutton.which);
+									onEvent(&e);
+									m_inputManager->updateKeybinds(&e);
+								}
+							}
+							else
+							{
+								if(AXIS_VALUE_TO_FLOAT(event.caxis.value) < m_inputManager->m_triggerThreshold)
+								{
+									m_inputManager->m_rightTrigger = false;
+									ControllerButtonEvent e(ControllerButtonEvent::UP, m_inputManager, SAUCE_CONTROLLER_BUTTON_RIGHT_TRIGGER);// , event.cbutton.which);
+									onEvent(&e);
+									m_inputManager->updateKeybinds(&e);
+								}
+							}
+						}
+						else if(event.caxis.axis == SDL_CONTROLLER_AXIS_TRIGGERLEFT)
+						{
+							if(!m_inputManager->getButtonState(SAUCE_CONTROLLER_BUTTON_LEFT_TRIGGER))
+							{
+								if(event.caxis.value >= m_inputManager->m_triggerThreshold)
+								{
+									m_inputManager->m_leftTrigger = true;
+									ControllerButtonEvent e(ControllerButtonEvent::DOWN, m_inputManager, SAUCE_CONTROLLER_BUTTON_LEFT_TRIGGER);// , event.cbutton.which);
+									onEvent(&e);
+									m_inputManager->updateKeybinds(&e);
+								}
+							}
+							else
+							{
+								if(event.caxis.value < m_inputManager->m_triggerThreshold)
+								{
+									m_inputManager->m_leftTrigger = false;
+									ControllerButtonEvent e(ControllerButtonEvent::UP, m_inputManager, SAUCE_CONTROLLER_BUTTON_LEFT_TRIGGER);// , event.cbutton.which);
+									onEvent(&e);
+									m_inputManager->updateKeybinds(&e);
+								}
+							}
+						}
+
+						// Send controller axis event
+						ControllerAxisEvent e(m_inputManager, (const ControllerAxis) event.caxis.axis, event.caxis.value);// , event.cbutton.which);
+						onEvent(&e);
+						m_inputManager->updateKeybinds(&e);
 					}
 					break;
 				}

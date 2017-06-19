@@ -286,3 +286,7 @@ __pycache__/
 *.btm.cs
 *.odx.cs
 *.xsd.cs
+
+# Custom
+!3rdparty/SDL_image/VisualC/Win32/Debug/lib*.dll
+!3rdparty/SDL_image/VisualC/Win32/Debug/zlib*.dll

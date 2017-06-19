@@ -7,7 +7,7 @@
 
 BEGIN_SAUCE_NAMESPACE
 
-class KeyEvent;
+class InputEvent;
 class InputContext;
 
 /**
@@ -20,14 +20,22 @@ class SAUCE_API Keybind
 {
 public:
 	Keybind();
-	Keybind(InputButton keycode, function<void(KeyEvent*)> func = function<void(KeyEvent*)>());
+	Keybind(InputButton button, function<void(InputEvent*)> func = function<void(InputEvent*)>(), const uint flags = TRIGGER_WHEN_PRESSED);
 
-	function<void(KeyEvent*)> getFunction() const
+	enum
+	{
+		TRIGGER_WHEN_PRESSED = 1 << 0,
+		TRIGGER_WHEN_RELEASED = 1 << 1,
+		TRIGGER_WHEN_REPEATING = 1 << 2,
+		TRIGGER_WHILE_PRESSED = 1 << 3
+	};
+
+	function<void(InputEvent*)> getFunction() const
 	{
 		return m_function;
 	}
 
-	void setFunction(function<void(KeyEvent*)> func)
+	void setFunction(function<void(InputEvent*)> func)
 	{
 		m_function = func;
 	}
@@ -44,8 +52,10 @@ public:
 
 private:
 	InputButton m_inputButton;
-	function<void(KeyEvent*)> m_function;
+	function<void(InputEvent*)> m_function;
 };
+
+typedef void ControllerDevice;
 
 /**
 * \class	InputManager
@@ -54,6 +64,8 @@ private:
 */
 
 #include <Sauce/Math/Vector.h>
+
+#define AXIS_VALUE_TO_FLOAT(x) (float(x) / SHRT_MAX)
 
 class SAUCE_API InputManager
 {
@@ -66,7 +78,11 @@ public:
 	//void setCursorLimits(const int x, const int y, const int w, const int h);
 
 	// Key state function
-	bool getKeyState(const InputButton inputButton) const;
+	bool getKeyState(const InputButton inputButton, ControllerDevice *controller = 0) const;
+
+	// Buttons and axis
+	bool getButtonState(const InputButton inputButton, ControllerDevice *controller = 0) const;
+	float getAxisValue(const ControllerAxis axis, ControllerDevice *controller = 0) const;
 
 	// Window-relative position
 	void getPosition(Sint32 *x, Sint32 *y) const;
@@ -111,9 +127,13 @@ public:
 
 	void removeKeybind(Keybind *keybind);
 
+	void addController(const uint id);
+	void removeController(const uint id);
+	void setAxisThreshold(const float threshold) { m_triggerThreshold = threshold; }
+
 private:
 	// Update bindings
-	void updateKeybinds(KeyEvent *e);
+	void updateKeybinds(InputEvent *e);
 
 	// Cursor position
 	Sint32 m_x, m_y;
@@ -128,6 +148,16 @@ private:
 	// Key binds
 	list<Keybind*> m_keybinds;
 	list<Keybind*> m_contextKeybinds;
+
+	// Default controller
+	ControllerDevice *m_defaultController;
+
+	// Controllers
+	map<uint, ControllerDevice*> m_controllers;
+
+	// Controller trigger buttons
+	bool m_leftTrigger, m_rightTrigger;
+	float m_triggerThreshold;
 };
 
 

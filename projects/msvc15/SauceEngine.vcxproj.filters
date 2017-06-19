@@ -111,16 +111,7 @@
     <ClCompile Include="..\..\source\Graphics\Viewport.cpp">
       <Filter>Source\Graphics</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\source\Input\Input.cpp">
-      <Filter>Source\Input</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\source\Input\InputContext.cpp">
-      <Filter>Source\Input</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\Input\KeyListener.cpp">
-      <Filter>Source\Input</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\source\Input\MouseListener.cpp">
       <Filter>Source\Input</Filter>
     </ClCompile>
     <ClCompile Include="..\..\source\Math\Matrix.cpp">
@@ -255,12 +246,6 @@
       <Filter>Include\Sauce\Input</Filter>
     </ClInclude>
     <ClInclude Include="..\..\include\Sauce\Input\Keycodes.h">
-      <Filter>Include\Sauce\Input</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\Sauce\Input\Keylistener.h">
-      <Filter>Include\Sauce\Input</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\Sauce\Input\MouseListener.h">
       <Filter>Include\Sauce\Input</Filter>
     </ClInclude>
     <ClInclude Include="..\..\include\Sauce\Input\Scancodes.h">

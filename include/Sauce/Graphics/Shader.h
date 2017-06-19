@@ -20,6 +20,7 @@ public:
 	
 	// Instance ->
 	void setUniform1i(const string &name, const int v0);
+	void setUniform1iv(const string &name, const uint count, const int *v);
 	void setUniform2i(const string &name, const int v0, const int v1);
 	void setUniform3i(const string &name, const int v0, const int v1, const int v2);
 	void setUniform4i(const string &name, const int v0, const int v1, const int v2, const int v3);

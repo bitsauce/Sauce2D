@@ -238,7 +238,7 @@ bool Window::handleEvent(SDL_Event &event, Game *game)
 
 			{
 				Vector2I position = game->getInputManager()->getPosition();
-				MouseEvent e(MouseEvent::MOVE, position.x, position.y, SAUCE_MOUSE_BUTTON_NONE, 0, 0);
+				MouseEvent e(MouseEvent::MOVE, game->getInputManager(), position.x, position.y, SAUCE_MOUSE_BUTTON_NONE, 0, 0);
 				game->onEvent(&e);
 			}
 		}

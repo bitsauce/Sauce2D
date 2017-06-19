@@ -65,7 +65,7 @@ private:
 	 * \param [in,out]	e	If non-null, the KeyEvent to process.
 	 */
 
-	void updateKeybinds(KeyEvent *e);
+	void updateKeybinds(InputEvent *e);
 
 	// Key binds
 	map<string, Keybind*> m_keybinds;

@@ -24,12 +24,12 @@ public:
 		m_keybind = Keybind(SAUCE_KEY_1, bind(&Keybinds::keyFunc1, this, placeholders::_1));
 		input->addKeybind(&m_keybind); // Add it to the list of keybinds
 
-		// It is also posible to bind mouse buttons to functions
+		// It is also possible to bind mouse buttons to functions
 		m_shootKeybind = Keybind(SAUCE_MOUSE_BUTTON_LEFT, bind(&Keybinds::shoot, this, placeholders::_1));
 		input->addKeybind(&m_shootKeybind);
 
 		// Create an input context.
-		// Input contexts map symbolic strings to keys.
+		// Input contexts map strings to keys.
 		// For example: {{ "jump", SPACE }, {"run", LSHIFT }}
 		InputContext *context = new InputContext(input);
 
@@ -54,7 +54,7 @@ public:
 		input->getContext()->removeKeybind(&m_jumpKeybind);
 	}
 
-	void keyFunc1(KeyEvent *e)
+	void keyFunc1(InputEvent *e)
 	{
 		switch(e->getType())
 		{
@@ -69,7 +69,7 @@ public:
 		}
 	}
 
-	void keyFunc2(KeyEvent *e)
+	void keyFunc2(InputEvent *e)
 	{
 		switch(e->getType())
 		{
@@ -84,7 +84,7 @@ public:
 		}
 	}
 
-	void shoot(KeyEvent *e)
+	void shoot(InputEvent *e)
 	{
 		switch(e->getType())
 		{
@@ -94,7 +94,7 @@ public:
 		}
 	}
 
-	void jump(KeyEvent *e)
+	void jump(InputEvent *e)
 	{
 		switch(e->getType())
 		{
