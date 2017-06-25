@@ -47,8 +47,9 @@ public:
 
 	inline void rotate(const T angle)
 	{
-		x = (x * cosf(angle)) - (y * sinf(angle));
-		y = (y * cosf(angle)) + (x * sinf(angle));
+		T tmpX = (x * cosf(angle)) - (y * sinf(angle));
+		y      = (y * cosf(angle)) + (x * sinf(angle));
+		x = tmpX;
 	}
 
 	inline T angle() const
@@ -77,7 +78,7 @@ public:
 		T len = magnitude();
 		if(len > T(0))
 		{
-			return Vector2(x / len, y / len);
+			return Vector2<T>(x / len, y / len);
 		}
 		return Vector2<T>();
 	}
