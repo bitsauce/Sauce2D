@@ -7,7 +7,6 @@
 BEGIN_SAUCE_NAMESPACE
 
 class Texture2D;
-class Shape;
 
 class SAUCE_API Sprite
 {

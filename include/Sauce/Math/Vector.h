@@ -75,7 +75,7 @@ public:
 
 	inline Vector2<T> normalized() const
 	{
-		T len = magnitude();
+		T len = length();
 		if(len > T(0))
 		{
 			return Vector2<T>(x / len, y / len);
@@ -101,14 +101,14 @@ public:
 		return sqrtf(pow((v2.x - x), 2) + pow((v2.y - y), 2));
 	}
 
-	inline T magnitude() const
-	{
-		return sqrtf(x * x + y * y);
-	}
-
 	inline T length() const
 	{
-		return magnitude();
+		return sqrtf(lengthSquared());
+	}
+
+	inline T lengthSquared() const
+	{
+		return x * x + y * y;
 	}
  
 	template<typename U>

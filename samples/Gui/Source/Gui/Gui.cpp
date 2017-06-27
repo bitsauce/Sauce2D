@@ -79,7 +79,7 @@ void Gui::onTick(TickEvent *e)
 
 			// Send a mouse move event to make sure the previous state is reset
 			Vector2F position = Game::Get()->getInputManager()->getPosition();
-			MouseEvent e(MouseEvent::MOVE, position.x, position.y, SAUCE_MOUSE_BUTTON_NONE, 0, 0);
+			MouseEvent e(MouseEvent::MOVE, Game::Get()->getInputManager(), position.x, position.y, SAUCE_MOUSE_BUTTON_NONE, 0, 0);
 			m_canvas.front()->onEvent(&e);
 		}
 		m_transitionDirection = 0;
