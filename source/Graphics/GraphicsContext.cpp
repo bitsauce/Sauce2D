@@ -663,7 +663,7 @@ void GraphicsContext::drawRectangleOutline(const Rect<float> &rect, const Color 
 
 void GraphicsContext::drawCircleGradient(const float x, const float y, const float radius, const uint segments, const Color &center, const Color &outer)
 {
-	// Make sure we have enought vertices
+	// Make sure we have enough vertices
 	if(m_vertices.size() < segments + 2)
 	{
 		m_vertices.resize(segments + 2);
@@ -697,6 +697,32 @@ void GraphicsContext::drawCircle(const float x, const float y, const float radiu
 void GraphicsContext::drawCircle(const Vector2F &pos, const float radius, const uint segments, const Color &color)
 {
 	drawCircleGradient(pos.x, pos.y, radius, segments, color, color);
+}
+
+void GraphicsContext::drawArrow(const float x0, const float y0, const float x1, const float y1, const Color & color)
+{
+	// Make sure we have enough vertices
+	if(m_vertices.size() < 6) m_vertices.resize(6);
+
+	m_vertices[0].set2f(VERTEX_POSITION, x0, y0); m_vertices[0].set4ub(VERTEX_COLOR, color.x, color.y, color.z, color.w); m_vertices[0].set2f(VERTEX_TEX_COORD, 0.f, 0.f);
+	m_vertices[1].set2f(VERTEX_POSITION, x1, y1); m_vertices[1].set4ub(VERTEX_COLOR, color.x, color.y, color.z, color.w); m_vertices[1].set2f(VERTEX_TEX_COORD, 0.f, 0.f);
+
+	Vector2F p0 = (Vector2F(x0, y0) - Vector2F(x1, y1)).normalized() * 10;
+	Vector2F p1 = p0;
+	const float angle = math::degToRad(30.f);
+	p0.rotate(-angle);
+	p1.rotate(angle);
+
+	p0 += Vector2F(x1, y1);
+	p1 += Vector2F(x1, y1);
+
+	m_vertices[2].set2f(VERTEX_POSITION, x1, y1); m_vertices[2].set4ub(VERTEX_COLOR, color.x, color.y, color.z, color.w); m_vertices[2].set2f(VERTEX_TEX_COORD, 0.f, 0.f);
+	m_vertices[3].set2f(VERTEX_POSITION, p0.x, p0.y); m_vertices[3].set4ub(VERTEX_COLOR, color.x, color.y, color.z, color.w); m_vertices[3].set2f(VERTEX_TEX_COORD, 0.f, 0.f);
+
+	m_vertices[4].set2f(VERTEX_POSITION, x1, y1); m_vertices[4].set4ub(VERTEX_COLOR, color.x, color.y, color.z, color.w); m_vertices[4].set2f(VERTEX_TEX_COORD, 0.f, 0.f);
+	m_vertices[5].set2f(VERTEX_POSITION, p1.x, p1.y); m_vertices[5].set4ub(VERTEX_COLOR, color.x, color.y, color.z, color.w); m_vertices[5].set2f(VERTEX_TEX_COORD, 0.f, 0.f);
+
+	drawPrimitives(PRIMITIVE_LINES, &m_vertices[0], 6);
 }
 
 END_SAUCE_NAMESPACE

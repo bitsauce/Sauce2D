@@ -177,6 +177,11 @@ int Game::run()
 		//glEnable(GL_ALPHA_TEST);
 		//glAlphaFunc(GL_LEQUAL, 0.0f);
 
+		glEnable(GL_LINE_SMOOTH);
+		//glEnable(GL_POLYGON_SMOOTH);
+		glHint(GL_LINE_SMOOTH_HINT, GL_NICEST);
+		//glHint(GL_POLYGON_SMOOTH_HINT, GL_NICEST);
+
 		glPointSize(4);
 
 		string vertexShader =

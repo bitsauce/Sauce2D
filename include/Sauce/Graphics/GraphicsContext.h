@@ -352,6 +352,17 @@ public:
 	void drawCircleGradient(const float x, const float y, const float radius, const uint segments, const Color &center = Color::White, const Color &outer = Color::White);
 	void drawCircle(const float x, const float y, const float radius, const uint segments, const Color &color = Color::White);
 
+	/**
+	 * Draws an arrow from a starting point to an ending point.
+	 * \param x0 Starting x-coordinate
+	 * \param y0 Starting y-coordinate
+	 * \param x1 Ending x-coordinate
+	 * \param y1 Ending y-coordinate
+	 * \param color %Color of the arrow
+	 */
+	void drawArrow(const float x0, const float y0, const float x1, const float y1, const Color &color = Color::White);
+	void drawArrow(const Vector2F p0, const Vector2F p1, const Color &color = Color::White) { drawArrow(p0.x, p0.y, p1.x, p1.y, color); }
+
 	SDL_GLContext getSDLHandle() const
 	{
 		return m_context;
