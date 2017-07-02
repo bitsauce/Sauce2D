@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26430.6
+VisualStudioVersion = 15.0.26430.14
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "gl3w", "..\..\3rdparty\gl3w\gl3w.vcxproj", "{E23AC19A-6A24-4EE6-B843-99001B2568F0}"
 EndProject
@@ -82,6 +82,9 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GameController", "..\..\sam
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PhysicsEngine", "..\..\samples\PhysicsEngine\Project\PhysicsEngine.vcxproj", "{7D9E7473-F52F-4E9A-A480-ED498907C9EA}"
+	ProjectSection(ProjectDependencies) = postProject
+		{F3F25B49-2C6B-4FF0-98FB-47695DF70B8A} = {F3F25B49-2C6B-4FF0-98FB-47695DF70B8A}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

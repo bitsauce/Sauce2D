@@ -1,61 +1,8 @@
 #include <Sauce/Sauce.h>
+#include "Shapes.h"
+#include "Manifold.h"
 
 using namespace sauce;
-
-class Shape
-{
-public:
-	enum Type
-	{
-		AABB,
-		CIRCLE
-	};
-
-	Shape(Type type) : m_type(type) {}
-
-	Type m_type;
-	bool colliding = false;
-	float mass = 2.0;
-	Vector2F velocity;
-	float restitution = 1.0f;
-};
-
-class Box : public Shape
-{
-public:
-	Box() : Shape(AABB) { }
-	Vector2F getCenter() const { return (min + max) / 2;  }
-	Vector2F min, max;
-};
-
-class Circle : public Shape
-{
-public:
-	Circle() : Shape(CIRCLE) {}
-	Vector2F position;
-	float radius;
-};
-
-class Manifold
-{
-public:
-	Manifold(Shape *a, Shape *b) :
-		a(a),
-		b(b),
-		penetration(0.0f),
-		normal(0.0f),
-		contactCount(0)
-	{
-		a = 0;
-		b = 0;
-	}
-
-	Shape * const a;
-	Shape * const b;
-	float penetration;
-	Vector2F normal;
-	int contactCount;
-};
 
 class PhysicsEngineGame : public Game
 {
@@ -104,9 +51,9 @@ public:
 		Vector2F inputPos = e->getPosition();
 		for(Shape *shape : shapes)
 		{
-			switch(shape->m_type)
+			switch(shape->getType())
 			{
-				case Shape::AABB:
+				case Shape::BOX:
 				{
 					Box *aabb = static_cast<Box*>(shape);
 					if(inputPos.x >= aabb->min.x && inputPos.x <= aabb->max.x && inputPos.y >= aabb->min.y && inputPos.y <= aabb->max.y)
@@ -141,14 +88,15 @@ public:
 
 	void onTick(TickEvent *e)
 	{
+		// Mouse drag movement
 		if(selectedShape)
 		{
-			switch(selectedShape->m_type)
+			switch(selectedShape->getType())
 			{
-			case Shape::AABB:
+			case Shape::BOX:
 			{
 				Box *aabb = static_cast<Box*>(selectedShape);
-				aabb->velocity = (getInputManager()->getPosition() - aabb->getCenter()) * 0.25f;
+				aabb->velocity = (getInputManager()->getPosition() - aabb->getCentroid()) * 0.25f;
 			}
 			break;
 
@@ -168,7 +116,8 @@ public:
 			{
 				if(shape == otherShape) continue;
 
-				if(shape->m_type == Shape::CIRCLE && otherShape->m_type == Shape::CIRCLE)
+				// Circle to circle collision
+				if(shape->getType() == Shape::CIRCLE && otherShape->getType() == Shape::CIRCLE)
 				{
 					Manifold manifold(shape, otherShape);
 					CircleToCircle(&manifold);
@@ -179,7 +128,8 @@ public:
 						break;
 					}
 				}
-				else if(shape->m_type == Shape::AABB && otherShape->m_type == Shape::CIRCLE)
+				// Box to circle collision
+				else if(shape->getType() == Shape::BOX && otherShape->getType() == Shape::CIRCLE)
 				{
 					Manifold manifold(shape, otherShape);
 					if(AABBToCircle(&manifold))
@@ -188,7 +138,8 @@ public:
 						break;
 					}
 				}
-				else if(shape->m_type == Shape::CIRCLE && otherShape->m_type == Shape::AABB)
+				// Circle to box collision
+				else if(shape->getType() == Shape::CIRCLE && otherShape->getType() == Shape::BOX)
 				{
 					Manifold manifold(otherShape, shape);
 					if(AABBToCircle(&manifold))
@@ -197,7 +148,8 @@ public:
 						break;
 					}
 				}
-				else if(shape->m_type == Shape::AABB && otherShape->m_type == Shape::AABB)
+				// Box to box collision
+				else if(shape->getType() == Shape::BOX && otherShape->getType() == Shape::BOX)
 				{
 					Manifold manifold(shape, otherShape);
 					if(AABBToAABB(&manifold))
@@ -209,9 +161,9 @@ public:
 			}
 			shape->colliding = colliding;
 			
-			switch(shape->m_type)
+			switch(shape->getType())
 			{
-			case Shape::AABB:
+			case Shape::BOX:
 			{
 				Box *aabb = static_cast<Box*>(shape);
 				aabb->min += aabb->velocity;
@@ -235,9 +187,9 @@ public:
 		for(Shape *shape : shapes)
 		{
 			Color c = shape->colliding ? Color::Blue : Color::White;
-			switch(shape->m_type)
+			switch(shape->getType())
 			{
-				case Shape::AABB:
+				case Shape::BOX:
 				{
 					Box *aabb = static_cast<Box*>(shape);
 					e->getGraphicsContext()->drawRectangle(aabb->min, aabb->max - aabb->min, c);
@@ -251,6 +203,7 @@ public:
 				}
 				break;
 			}
+			e->getGraphicsContext()->drawArrow(shape->getCentroid(), shape->getCentroid() + shape->velocity, Color::Red);
 		}
 		Game::onDraw(e);
 	}
@@ -285,30 +238,35 @@ public:
 		Circle *a = static_cast<Circle*>(m->a);
 		Circle *b = static_cast<Circle*>(m->b);
 
-		// Calculate translational vector, which is normal
+		// Calculate vector from a to b
 		Vector2F normal = b->position - a->position;
-
 		float lengthSquared = normal.lengthSquared();
 		float radius = a->radius + b->radius;
 
-		// Not in contact
+		// If their combined radius is less than the distance between,
+		// there is no contact
 		if(lengthSquared >= radius * radius)
 		{
 			m->contactCount = 0;
 			return;
 		}
 
+		// There is contact, calculate the distance using sqrt
 		float distance = std::sqrt(lengthSquared);
 		m->contactCount = 1;
 		if(distance == 0.0f)
 		{
+			// If the circles are at the exact same point,
+			// just pick a pre-determined normal vector
 			m->penetration = a->radius;
 			m->normal = Vector2F(1, 0);
 		}
 		else
 		{
+			// Calculate the penetation and normal vector
 			m->penetration = radius - distance;
-			m->normal = normal / distance; // Normalize "normal"
+			m->normal = normal / distance; // Normalize the vector forom a to b
+			                               // (will be the collision normal)
 		}
 	}
 
@@ -317,7 +275,7 @@ public:
 		Box *a = static_cast<Box*>(m->a);
 		Circle *b = static_cast<Circle*>(m->b);
 
-		Vector2F pointOnCircle = b->position + ((a->getCenter() - b->position).normalized() * b->radius);
+		Vector2F pointOnCircle = b->position + ((a->getCentroid() - b->position).normalized() * b->radius);
 		return RectF(a->min, a->max - a->min).contains(pointOnCircle);
 	}
 
