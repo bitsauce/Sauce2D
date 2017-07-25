@@ -152,8 +152,10 @@ public:
 				else if(shape->getType() == Shape::BOX && otherShape->getType() == Shape::BOX)
 				{
 					Manifold manifold(shape, otherShape);
-					if(AABBToAABB(&manifold))
+					AABBToAABB(&manifold);
+					if(manifold.contactCount > 0)
 					{
+						ResolveCollision(&manifold, shape, otherShape);
 						colliding = true;
 						break;
 					}
