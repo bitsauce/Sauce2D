@@ -31,15 +31,10 @@ Console::~Console()
 	s_this = 0;
 }
 
-/*void Console::log(const string &msg)
-{
-	Log(msg.c_str());
-}*/
-
 void Console::call_log(const char *msg, va_list args)
 {
 	// Get string length
-	int size = _vscprintf(msg, args) + 1;
+	int size = _vscprintf(msg, args);
 
 	// Create out string
 	string out;
@@ -47,7 +42,7 @@ void Console::call_log(const char *msg, va_list args)
 	
 	// Parse varargs
 #ifdef USE_CTR_SECURE
-	vsprintf_s(&out[0], size, msg, args);
+	vsprintf_s(&out[0], size + 1, msg, args);
 #else
 	vsprintf(out, msg, args);
 #endif

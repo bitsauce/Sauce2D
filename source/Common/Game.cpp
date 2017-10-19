@@ -12,9 +12,18 @@ Exception::Exception(RetCode code, const char * msg, ...) :
 	va_list args;
 	va_start(args, msg);
 
-	int size = _scprintf(msg, args);
+	// Get string length
+	int size = _vscprintf(msg, args);
+
+	// Create out string
 	m_message.resize(size);
+
+	// Parse varargs
+#ifdef USE_CTR_SECURE
 	vsprintf_s(&m_message[0], size + 1, msg, args);
+#else
+	vsprintf(out, msg, args);
+#endif
 
 	va_end(args);
 }

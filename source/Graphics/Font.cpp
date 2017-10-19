@@ -324,7 +324,7 @@ void Font::draw(SpriteBatch *spriteBatch, float x, float y, const string &text, 
 			drawX -= w;
 		}
 
-		drawInternal(spriteBatch, floor(drawX), floor(y), line, count);
+		drawInternal(spriteBatch, drawX, y, line, count);
 		y += m_scale * float(m_fontHeight);
 	}
 }
