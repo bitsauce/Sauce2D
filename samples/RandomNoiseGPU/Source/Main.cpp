@@ -17,14 +17,16 @@ public:
 
 	void onStart(GameEvent *e)
 	{
-		m_noiseShader = Resource<Shader>("Fractal2D_Gradient");
+		m_noiseShader = Resource<Shader>("Fractal2D");
+		//m_noiseShader = Resource<Shader>("Fractal2D_Gradient");
+		//m_noiseShader = Resource<Shader>("Voronoise");
 		m_gradientTexture = Resource<Texture2D>("Gradient");
 		m_renderTarget = shared_ptr<RenderTarget2D>(new RenderTarget2D(getWindow()->getWidth(), getWindow()->getHeight()));
 
-		/*m_noiseShader->setUniform1f("u_Frequency", 0.5f);
+		m_noiseShader->setUniform1f("u_Frequency", 0.5f);
 		m_noiseShader->setUniform1f("u_Gain", 0.5f);
 		m_noiseShader->setUniform1f("u_Lacunarity", 2.0f);
-		m_noiseShader->setUniform1i("u_Octaves", 8);*/
+		m_noiseShader->setUniform1i("u_Octaves", 8);
 		m_noiseShader->setSampler2D("u_Gradient", m_gradientTexture);
 
 		Game::onStart(e);
@@ -45,7 +47,7 @@ public:
 	{
 		GraphicsContext *context = e->getGraphicsContext();
 
-		//m_noiseShader->setUniform1f("u_Time", m_time + e->getAlpha() * 1.0f / 30.0f);
+		m_noiseShader->setUniform1f("u_Time", m_time + e->getAlpha() * 1.0f / 30.0f);
 
 		context->setRenderTarget(m_renderTarget.get());
 		context->setShader(m_noiseShader);

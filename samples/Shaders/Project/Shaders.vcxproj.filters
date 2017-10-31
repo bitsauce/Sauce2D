@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="..\Source\Main.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Xml Include="..\Data\Resources.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Data">
+      <UniqueIdentifier>{b7a4e8bd-2a4a-4c38-9787-e1f9e6480652}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\Data\Shader.frag">
+      <Filter>Data</Filter>
+    </None>
+    <None Include="..\Data\Shader.vert">
+      <Filter>Data</Filter>
+    </None>
+  </ItemGroup>
+</Project>

@@ -331,36 +331,48 @@ void Font::draw(SpriteBatch *spriteBatch, float x, float y, const string &text, 
 
 void Font::drawBox(SpriteBatch *spriteBatch, float x, float y, float width, const string &text, int count, FontAlign mode)
 {
-	if (count <= 0) {
+	list<BoxLine> lines = getBoxLines(width, text, count, mode);
+	for(BoxLine line : lines)
+	{
+		drawInternal(spriteBatch, x + line.xoffset, y + line.yoffset, line.text, line.text.size(), line.spacing);
+	}
+}
+
+list<Font::BoxLine> Font::getBoxLines(float width, const string &text, int count, FontAlign mode)
+{
+	if(count <= 0)
+	{
 		count = getTextLength(text);
 	}
 
 	float currWidth = 0, wordWidth;
 	int lineStart = 0, lineEnd = 0, wordStart = 0, wordEnd = 0;
 	int wordCount = 0;
+	
+	list<BoxLine> lines;
+	float yoffset = 0.0f;
 
 	const char *s = " ";
 	float spaceWidth = getStringWidth(s, 1);
 
-	enum { NONE, SOFT, HARD } breakType;
-	breakType = NONE;
+	BoxLine::BreakType breakType = BoxLine::NONE;
 
-	for (; lineStart < count;)
+	for(; lineStart < count;)
 	{
 		// Determine the extent of the line
-		for (;;)
+		for(;;)
 		{
 			// Determine the number of characters in the word
 			while(wordEnd < count &&
-				getTextChar(text, wordEnd) != ' ' &&
-				getTextChar(text, wordEnd) != '\n')
+				  getTextChar(text, wordEnd) != ' ' &&
+				  getTextChar(text, wordEnd) != '\n')
 			{
 				// Advance the cursor to the next character
 				getTextChar(text, wordEnd, &wordEnd);
 			}
 
 			// Determine the width of the word
-			if (wordEnd > wordStart)
+			if(wordEnd > wordStart)
 			{
 				wordCount++;
 				wordWidth = getStringWidth(&text[wordStart], wordEnd - wordStart);
@@ -381,30 +393,30 @@ void Font::drawBox(SpriteBatch *spriteBatch, float x, float y, float width, cons
 				lineEnd = wordEnd = linePos - 3;
 
 				// Set break type
-				breakType = HARD;
+				breakType = BoxLine::HARD;
 				break;
 			}
 			// Does the word fit on the line? The first word is always accepted.
-			else if (wordCount == 1 || currWidth + (wordCount > 1 ? spaceWidth : 0) + wordWidth <= width)
+			else if(wordCount == 1 || currWidth + (wordCount > 1 ? spaceWidth : 0) + wordWidth <= width)
 			{
 				// Increase the line extent to the end of the word
 				lineEnd = wordEnd;
 				currWidth += (wordCount > 1 ? spaceWidth : 0) + wordWidth;
 
 				// Did we reach the end of the line?
-				if (wordEnd == count || getTextChar(text, wordEnd) == '\n')
+				if(wordEnd == count || getTextChar(text, wordEnd) == '\n')
 				{
-					breakType = NONE;
+					breakType = BoxLine::NONE;
 
 					// Skip the newline character
-					if (wordEnd < count)
+					if(wordEnd < count)
 						// Advance the cursor to the next character
 						getTextChar(text, wordEnd, &wordEnd);
 					break;
 				}
 
 				// Skip the trailing space
-				if (wordEnd < count && getTextChar(text, wordEnd) == ' ')
+				if(wordEnd < count && getTextChar(text, wordEnd) == ' ')
 					// Advance the cursor to the next character
 					getTextChar(text, wordEnd, &wordEnd);
 				// Move to next word
@@ -412,10 +424,10 @@ void Font::drawBox(SpriteBatch *spriteBatch, float x, float y, float width, cons
 			}
 			else
 			{
-				breakType = SOFT;
+				breakType = BoxLine::SOFT;
 
 				// Skip the trailing space
-				if (wordEnd < count && getTextChar(text, wordEnd) == ' ')
+				if(wordEnd < count && getTextChar(text, wordEnd) == ' ')
 					// Advance the cursor to the next character
 					getTextChar(text, wordEnd, &wordEnd);
 				break;
@@ -423,31 +435,31 @@ void Font::drawBox(SpriteBatch *spriteBatch, float x, float y, float width, cons
 		}
 
 		// Write the line
-		if (mode == FONT_ALIGN_JUSTIFY)
+		if(mode == FONT_ALIGN_JUSTIFY)
 		{
 			float spacing = 0.0f;
-			if (breakType == SOFT)
+			if(breakType == BoxLine::SOFT)
 			{
-				if (wordCount > 2)
+				if(wordCount > 2)
 					spacing = (width - currWidth) / (wordCount - 2);
 				else
 					spacing = (width - currWidth);
 			}
-			drawInternal(spriteBatch, x, y, &text[lineStart], lineEnd - lineStart, spacing);
+			lines.push_back(BoxLine{ text.substr(lineStart, lineEnd - lineStart), 0, yoffset, spacing, breakType });
 		}
 		else
 		{
-			float cx = x;
-			if (mode == FONT_ALIGN_RIGHT)
-				cx = x + width - currWidth;
-			else if (mode == FONT_ALIGN_CENTER)
-				cx = x + 0.5f * (width - currWidth);
-			drawInternal(spriteBatch, x, y, &text[lineStart], lineEnd - lineStart);
+			float xoffset = 0.0f;
+			if(mode == FONT_ALIGN_RIGHT)
+				xoffset = width - currWidth;
+			else if(mode == FONT_ALIGN_CENTER)
+				xoffset = 0.5f * (width - currWidth);
+			lines.push_back(BoxLine{ text.substr(lineStart, lineEnd - lineStart), xoffset, yoffset, 0.0f, breakType });
 		}
 
 		switch(breakType)
 		{
-			case NONE:
+			case BoxLine::NONE:
 			{
 				// Skip the line break
 				if(lineEnd < count && getTextChar(text, lineEnd) == '\n')
@@ -457,10 +469,11 @@ void Font::drawBox(SpriteBatch *spriteBatch, float x, float y, float width, cons
 				}
 				currWidth = 0;
 				wordCount = 0;
+				lineStart = lineEnd;
 			}
 			break;
 
-			case SOFT:
+			case BoxLine::SOFT:
 			{
 				// Skip the trailing space
 				if(lineEnd < count && getTextChar(text, lineEnd) == ' ')
@@ -471,27 +484,30 @@ void Font::drawBox(SpriteBatch *spriteBatch, float x, float y, float width, cons
 
 				// We've already counted the first word on the next line
 				currWidth = wordWidth;
+				lineStart = lineEnd;
+				lineEnd = wordEnd;
 				wordCount = 1;
 			}
 			break;
 
-			case HARD:
+			case BoxLine::HARD:
 			{
 				// Add a hyphen at the end of the line when we enounter a hard line break
-				drawInternal(spriteBatch, x + getStringWidth(&text[lineStart], lineEnd - lineStart), y, "-", 1);
+				lines.back().text += "-";
 
 				// Set width and word count to 0 since we're starting anew on the next line
 				currWidth = 0;
 				wordCount = 0;
+				lineStart = lineEnd;
 				break;
 			}
 		}
 
 		// Move to next line
-		lineStart = lineEnd;
 		wordStart = wordEnd;
-		y += m_scale * float(m_fontHeight);
+		yoffset += m_scale * float(m_fontHeight);
 	}
+	return lines;
 }
 
 //=============================================================================

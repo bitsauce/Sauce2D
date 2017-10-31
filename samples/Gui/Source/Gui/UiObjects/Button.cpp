@@ -70,10 +70,10 @@ void Button::onDraw(DrawEvent *e)
 	graphicsContext->setTexture(0);
 
 	m_spriteBatch.begin(graphicsContext, SpriteBatch::State(SpriteBatch::DEFERRED, BlendState(BlendState::BLEND_SRC_ALPHA, BlendState::BLEND_ONE_MINUS_SRC_ALPHA, BlendState::BLEND_ONE, BlendState::BLEND_ONE_MINUS_SRC_ALPHA)));
-	m_font->setHeight(min(rect.size.y, 16.0f));
+	m_font->setHeight(min(float(rect.size.y), 17.0f));
 	m_font->setColor(Color(0, 0, 0, 255));
 	m_font->draw(&m_spriteBatch, Vector2I(rect.position + rect.size / 2 - Vector2F(0.0f, m_font->getHeight() * 0.5f)), m_text, FONT_ALIGN_CENTER);
-	m_font->setHeight(16.0f);
+	m_font->setHeight(17.0f);
 	m_spriteBatch.end();
 
 	UiObject::onDraw(e);
