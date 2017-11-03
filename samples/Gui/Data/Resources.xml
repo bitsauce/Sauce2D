@@ -38,6 +38,6 @@
 	<!--Fonts-->
 	<font>
 		<name>Font</name>
-		<path>Fonts/Font.fnt</path>
+		<path>Fonts/MenuFont.fnt</path>
 	</font>
 </resources>

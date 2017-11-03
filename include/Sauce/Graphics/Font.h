@@ -102,6 +102,20 @@ public:
 	void drawBox(SpriteBatch *spriteBatch, float x, float y, float width, const string &text, int count = -1, FontAlign mode = FONT_ALIGN_LEFT);
 	void drawBox(SpriteBatch *spriteBatch, const Vector2F &pos, float width, const string &text, int count = -1, FontAlign mode = FONT_ALIGN_LEFT) { drawBox(spriteBatch, pos.x, pos.y, width, text, count, mode); }
 
+	struct BoxLine
+	{
+		string text;
+		float xoffset;
+		float yoffset;
+		float spacing;
+		enum BreakType { NONE, SOFT, HARD } breakType;
+
+	};
+
+	list<BoxLine> getBoxLines(float width, const string &text, int count = -1, FontAlign mode = FONT_ALIGN_LEFT);
+
+	void drawInternal(SpriteBatch *spriteBatch, float x, float y, const string &text, int count, float spacing = 0);
+
 	void setHeight(float h);
 	float getHeight() const;
 
@@ -110,8 +124,6 @@ public:
 
 protected:
 	friend class FontLoader;
-
-	void drawInternal(SpriteBatch *spriteBatch, float x, float y, const string &text, int count, float spacing = 0);
 
 	float adjustForKerningPairs(int first, int second);
 	CharDescr *getChar(int id);

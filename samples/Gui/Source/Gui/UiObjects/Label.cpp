@@ -16,10 +16,10 @@ void Label::onDraw(DrawEvent *e)
 	m_font->setColor(Color(0, 0, 0, 255));
 
 	m_spriteBatch.begin(g);
-	m_font->setHeight(min(rect.size.y, 16.0f));
+	m_font->setHeight(min(float(rect.size.y), 17.0f));
 	m_font->setColor(Color(0, 0, 0, 255));
 	m_font->drawBox(&m_spriteBatch, rect.position.x, rect.position.y - m_font->getHeight() * 0.5f, rect.size.x, m_text);
-	m_font->setHeight(16.0f);
+	m_font->setHeight(17.0f);
 	m_spriteBatch.end();
 
 	UiObject::onDraw(e);
