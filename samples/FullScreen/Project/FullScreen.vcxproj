@@ -14,7 +14,7 @@
     <ProjectGuid>{10FC59C2-4E33-4135-A93B-6F89122293ED}</ProjectGuid>
     <RootNamespace>deferredlighting</RootNamespace>
     <ProjectName>FullScreen</ProjectName>
-    <WindowsTargetPlatformVersion>10.0.15063.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.16299.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
