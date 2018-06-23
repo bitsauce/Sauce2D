@@ -33,6 +33,7 @@ public:
 			blendState(BlendState::PRESET_ALPHA_BLEND),
 			renderTarget(nullptr)
 		{
+			transformationMatrixStack.push(Matrix4());
 		}
 
 		uint width;
@@ -139,29 +140,27 @@ public:
 	}
 	
 	/**
-	 * Sets the model-view matrix. This means that every vertex drawn after this
-	 * will be multiplied by \p mat.
-	 * \param mat The 4x4 matrix to be multiplied with every vertex.
-	 */
-	void setTransformationMatrix(const Matrix4 &mat);
-
-	/**
-	 * Gets the current model-view matrix
-	 */
-	Matrix4 getTransformationMatrix() const;
-
-	/**
-	 * Pushes a matrix onto the model-view matrix stack.
+	 * Pushes a matrix onto the transformation matrix stack.
 	 * The matrix is pushed as follows \code stack.push_back(stack.top() * mat) \endcode
 	 * \param mat Matrix to push on the stack.
 	 */
 	void pushMatrix(const Matrix4 &mat);
 
 	/**
-	 * Pops the top matrix of the model-view matrix stack.
+	 * Pops the top matrix from the transformation matrix stack.
 	 */
-	void popMatrix();
+	bool popMatrix();
+
+	/**
+	* Gets the top transformation matrix
+	*/
+	Matrix4 topMatrix() const;
 	
+	/**
+	 *	Clear matrix stack
+	 */
+	void clearMatrixStack();
+
 	/**
 	 * Set texture. Every primitive rendered after this will have \p texture
 	 * applied to it.

@@ -100,7 +100,8 @@ void SpriteBatch::end()
 				// to two or more instances of SpriteBatch without introducing conflicting
 				// graphics device settings. SpriteBatch defaults to DEFERRED mode.
 
-				m_graphicsContext->setTransformationMatrix(m_state.transformationMatix);
+				m_graphicsContext->clearMatrixStack();
+				m_graphicsContext->pushMatrix(m_state.transformationMatix);
 				m_graphicsContext->setBlendState(m_state.blendState);
 				m_graphicsContext->setShader(m_state.shader);
 

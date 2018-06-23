@@ -135,28 +135,30 @@ void GraphicsContext::popState()
 	setRenderTarget(m_currentState->renderTarget);
 }
 
-void GraphicsContext::setTransformationMatrix(const Matrix4 &projmat)
+void GraphicsContext::pushMatrix(const Matrix4 &mat)
 {
-	while(!m_currentState->transformationMatrixStack.empty()) m_currentState->transformationMatrixStack.pop();
-	m_currentState->transformationMatrixStack.push(projmat);
+	m_currentState->transformationMatrixStack.push(m_currentState->transformationMatrixStack.top() * mat);
 }
 
-Matrix4 GraphicsContext::getTransformationMatrix() const
+bool GraphicsContext::popMatrix()
+{
+	if(m_currentState->transformationMatrixStack.size() > 1)
+	{
+		m_currentState->transformationMatrixStack.pop();
+		return true;
+	}
+	return false;
+}
+
+Matrix4 GraphicsContext::topMatrix() const
 {
 	if(m_currentState->transformationMatrixStack.empty()) return Matrix4();
 	return m_currentState->transformationMatrixStack.top();
 }
 
-void GraphicsContext::pushMatrix(const Matrix4 &mat)
+void GraphicsContext::clearMatrixStack()
 {
-	if(m_currentState->transformationMatrixStack.empty()) m_currentState->transformationMatrixStack.push(mat);
-	else m_currentState->transformationMatrixStack.push(m_currentState->transformationMatrixStack.top() * mat);
-}
-
-void GraphicsContext::popMatrix()
-{
-	if(m_currentState->transformationMatrixStack.empty()) return;
-	m_currentState->transformationMatrixStack.pop();
+	while(popMatrix());
 }
 
 void GraphicsContext::setTexture(shared_ptr<Texture2D> texture)
@@ -222,8 +224,8 @@ void GraphicsContext::resizeViewport(const uint w, const uint h, const bool flip
 
 	m_currentState->projectionMatrix = createOrtographicMatrix(l, r, t, b, n, f);
 
-	// Set model-view to identity
-	setTransformationMatrix(Matrix4());
+	// Clear matrix stack
+	clearMatrixStack();
 
 	// Set viewport
 	glViewport(0, 0, m_currentState->width, m_currentState->height);
