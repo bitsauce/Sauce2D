@@ -204,7 +204,10 @@ public:
 	 * \param h Height of the viewport in pixels
 	 */
 	void resizeViewport(const uint w, const uint h, const bool flipY = false);
-	
+
+	Matrix4 createOrtographicMatrix(const float left, const float right, const float top, const float bottom, const float n = -1.0f, const float f = 1.0f) const;
+	Matrix4 createPerspectiveMatrix(const float left, const float right, const float top, const float bottom, const float n = -1.0f, const float f = 1.0f) const;
+
 	/**
 	 * Set projection matrix
 	 */
@@ -281,7 +284,6 @@ public:
 	 */
 	void drawRectangle(const Rect<float> &rect, const Color &color = Color::White, const TextureRegion &textureRegion = TextureRegion());
 
-
 	/**
 	 * Renders a rectangle.
 	 * \param pos Top-left corner of the rectangle.
@@ -309,7 +311,6 @@ public:
 	* \param textureRegion Texture region of the rectangle.
 	*/
 	void drawRectangleOutline(const Rect<float> &rect, const Color &color = Color::White, const TextureRegion &textureRegion = TextureRegion());
-
 
 	/**
 	* Renders a rectangle outline.

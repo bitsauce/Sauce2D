@@ -94,7 +94,6 @@ void GraphicsContext::disableScissor()
 	glDisable(GL_SCISSOR_TEST);
 }
 
-
 void GraphicsContext::setRenderTarget(RenderTarget2D *renderTarget)
 {
 	// Setup render target
@@ -221,20 +220,35 @@ void GraphicsContext::resizeViewport(const uint w, const uint h, const bool flip
 		n = -1.0f,
 		f = 1.0f;
 
-	float projMat[16] = {
-		2.0f / (r - l),		0.0f,					0.0f,				-((r + l) / (r - l)),
-		0.0f,				2.0f / (t - b),			0.0f,				-((t + b) / (t - b)),
-		0.0f,				0.0f,					-2.0f / (f - n),	-((f + n) / (f - n)),
-		0.0f,				0.0f,					0.0f,				1.0f
-	};
-
-	m_currentState->projectionMatrix.set(projMat);
+	m_currentState->projectionMatrix = createOrtographicMatrix(l, r, t, b, n, f);
 
 	// Set model-view to identity
 	setTransformationMatrix(Matrix4());
 
 	// Set viewport
 	glViewport(0, 0, m_currentState->width, m_currentState->height);
+}
+
+Matrix4 GraphicsContext::createOrtographicMatrix(const float l, const float r, const float t, const float b, const float n, const float f) const
+{
+	// Returns an ortographic projection matrix (typically for 2D rendering)
+	Matrix4 mat(
+		2.0f / (r - l), 0.0f,            0.0f,           -((r + l) / (r - l)),
+		0.0f,           2.0f / (t - b),  0.0f,           -((t + b) / (t - b)),
+		0.0f,           0.0f,           -2.0f / (f - n), -((f + n) / (f - n)),
+		0.0f,           0.0f,            0.0f,            1.0f);
+	return mat;
+}
+
+Matrix4 GraphicsContext::createPerspectiveMatrix(const float l, const float r, const float t, const float b, const float n, const float f) const
+{
+	// Returns a perspective matrix
+	Matrix4 mat(
+		1.0f / r, 0.0f,      0.0f,            0.0f,
+		0.0f,     1.0f / t,  0.0f,            0.0f,
+		0.0f,     0.0f,     -2.0f / (f - n), -((f + n) / (f - n)),
+		0.0f,     0.0f,      0.0f,            1.0f);
+	return mat;
 }
 
 void GraphicsContext::setProjectionMatrix(const Matrix4 matrix)
