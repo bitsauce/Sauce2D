@@ -1,3 +1,14 @@
+//     _____                        ______             _            
+//    / ____|                      |  ____|           (_)           
+//   | (___   __ _ _   _  ___ ___  | |__   _ __   __ _ _ _ __   ___ 
+//    \___ \ / _` | | | |/ __/ _ \ |  __| | '_ \ / _` | | '_ \ / _ \
+//    ____) | (_| | |_| | (_|  __/ | |____| | | | (_| | | | | |  __/
+//   |_____/ \__,_|\__,_|\___\___| |______|_| |_|\__, |_|_| |_|\___|
+//                                                __/ |             
+//                                               |___/              
+// Made by Marcus "Bitsauce" Loo Vergara
+// 2011-2018 (C)
+
 #include <Sauce/Common.h>
 #include <Sauce/Graphics.h>
 #include <Sauce/Input.h>
@@ -165,10 +176,13 @@ int Game::run()
 		VertexFormat::s_vct.set(VERTEX_COLOR, 4, SAUCE_UBYTE);
 		VertexFormat::s_vct.set(VERTEX_TEX_COORD, 2);
 
-		// Setup viewport
+		// Setup graphics context
 		Vector2I size;
 		mainWindow->getSize(&size.x, &size.y);
 		graphicsContext->resizeViewport(size.x, size.y);
+
+		// We default to an ortographic projection where top-left is (0, 0) and bottom-right is (w, h)
+		graphicsContext->setProjectionMatrix(graphicsContext->createOrtographicMatrix(0, size.x, 0, size.y));
 
 		// Init graphics
 		glGenVertexArrays(1, &GraphicsContext::s_vao);
@@ -190,6 +204,9 @@ int Game::run()
 		//glEnable(GL_POLYGON_SMOOTH);
 		glHint(GL_LINE_SMOOTH_HINT, GL_NICEST);
 		//glHint(GL_POLYGON_SMOOTH_HINT, GL_NICEST);
+
+		glEnable(GL_DEPTH_TEST);
+		glDepthFunc(GL_LESS);
 
 		glPointSize(4);
 
@@ -506,7 +523,7 @@ int Game::run()
 				onEvent(&e);
 			}
 			SDL_GL_SwapWindow(mainWindow->getSDLHandle());
-			glClear(GL_COLOR_BUFFER_BIT);
+			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 			// Add fps sample
 			if(deltaTime != 0.0f)

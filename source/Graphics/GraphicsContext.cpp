@@ -114,6 +114,7 @@ void GraphicsContext::setRenderTarget(RenderTarget2D *renderTarget)
 			m_boundRenderTarget->unbind();
 			m_boundRenderTarget = 0;
 
+			// TODO: Are these resizeViewport calls necesary? 
 			// Resize viewport
 			resizeViewport(m_window->getWidth(), m_window->getHeight());
 		}
@@ -214,25 +215,21 @@ void GraphicsContext::resizeViewport(const uint w, const uint h, const bool flip
 	m_currentState->width = w;
 	m_currentState->height = h;
 
-	// Set orthographic projection
-	float l = 0.0f,
-		r = (float) m_currentState->width,
-		b = flipY ? 0.0f : (float) m_currentState->height,
-		t = flipY ? (float) m_currentState->height : 0.0f,
-		n = -1.0f,
-		f = 1.0f;
-
-	m_currentState->projectionMatrix = createOrtographicMatrix(l, r, t, b, n, f);
-
-	// Clear matrix stack
-	clearMatrixStack();
-
 	// Set viewport
 	glViewport(0, 0, m_currentState->width, m_currentState->height);
 }
 
 Matrix4 GraphicsContext::createOrtographicMatrix(const float l, const float r, const float t, const float b, const float n, const float f) const
 {
+	/*
+	// TODO: Add flipY
+	float l = 0.0f,
+		r = (float) m_currentState->width,
+		b = flipY ? 0.0f : (float) m_currentState->height,
+		t = flipY ? (float) m_currentState->height : 0.0f,
+		n = -1.0f,
+		f = 1.0f;*/
+
 	// Returns an ortographic projection matrix (typically for 2D rendering)
 	Matrix4 mat(
 		2.0f / (r - l), 0.0f,            0.0f,           -((r + l) / (r - l)),
@@ -242,15 +239,34 @@ Matrix4 GraphicsContext::createOrtographicMatrix(const float l, const float r, c
 	return mat;
 }
 
-Matrix4 GraphicsContext::createPerspectiveMatrix(const float l, const float r, const float t, const float b, const float n, const float f) const
+Matrix4 GraphicsContext::createPerspectiveMatrix(const float fov, const float aspectRatio, const float zNear, const float zFar) const
 {
 	// Returns a perspective matrix
+	const float s = tanf(math::degToRad(fov / 2.0f));
 	Matrix4 mat(
-		1.0f / r, 0.0f,      0.0f,            0.0f,
-		0.0f,     1.0f / t,  0.0f,            0.0f,
-		0.0f,     0.0f,     -2.0f / (f - n), -((f + n) / (f - n)),
-		0.0f,     0.0f,      0.0f,            1.0f);
+		1.0f / (s * aspectRatio),    0.0f,      0.0f,                             0.0f,
+		0.0f,                        1.0f / s,  0.0f,                             0.0f,
+		0.0f,                        0.0f,     -(zFar + zNear) / (zFar - zNear), -(2 * zFar * zNear) / (zFar - zNear) ,
+		0.0f,                        0.0f,     -1.0f,                             0.0f);
 	return mat;
+}
+
+Matrix4 GraphicsContext::createLookAtMatrix(const Vector3F &position, const Vector3F &fwd) const
+{
+	const Vector3F worldUp(0.0f, 1.0f, 0.0f);
+	const Vector3F right = math::normalize(math::cross(worldUp, fwd));
+	const Vector3F up = math::cross(fwd, right);
+	Matrix4 cameraMatrix(
+		right.x, right.y, right.z, 0.0f,
+		up.x, up.y, up.z, 0.0f,
+		fwd.x, fwd.y, fwd.z, 0.0f,
+		0.0f, 0.0f, 0.0f, 1.0f);
+	Matrix4 cameraTranslate(
+		1, 0, 0, -position.x,
+		0, 1, 0, -position.y,
+		0, 0, 1, -position.z,
+		0.0f, 0.0f, 0.0f, 1.0f);
+	return cameraMatrix * cameraTranslate;
 }
 
 void GraphicsContext::setProjectionMatrix(const Matrix4 matrix)

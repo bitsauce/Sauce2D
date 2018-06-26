@@ -306,7 +306,7 @@ public:
 	{
 		this->x = v.x; this->y = v.y; this->z = z;
 	}
-	
+
 	inline T getR() const { return x; }
 	inline T setR(const T &v) { x = v; }
 	inline T getG() const { return y; }
@@ -323,7 +323,7 @@ public:
 	inline Vector2<T> getZX() const { return Vector2<T>(z, x); }
 	inline Vector2<T> getZY() const { return Vector2<T>(z, y); }
 	inline Vector2<T> getZZ() const { return Vector2<T>(z, z); }
-	
+
 	inline void setXX(const Vector2<T> &v) { x = v.y; }
 	inline void setXY(const Vector2<T> &v) { x = v.x; y = v.y; }
 	inline void setXZ(const Vector2<T> &v) { x = v.x; z = v.y; }
@@ -333,32 +333,12 @@ public:
 	inline void setZX(const Vector2<T> &v) { z = v.x; x = v.y; }
 	inline void setZY(const Vector2<T> &v) { z = v.x; y = v.y; }
 	inline void setZZ(const Vector2<T> &v) { z = v.y; }
- 
+
 	inline void set(const T x, const T y, const T z)
 	{
 		this->x = x;
 		this->y = y;
 		this->z = z;
-	}
-
-	template<typename U>
-	inline void rotate(const U angle)
-	{
-		// TODO: Missing implementation
-	}
-
-	template<typename U>
-	inline U angle() const
-	{
-		// TODO: Missing implementation
-		return 0.0f;
-	}
-
-	template<typename U>
-	inline U angle(const Vector3<T> &v2) const
-	{
-		// TODO: Missing implementation
-		return 0.0f;
 	}
 
 	inline void normalize()
@@ -369,15 +349,6 @@ public:
 			x /= len;
 			y /= len;
 			z /= len;
-		}
-	}
-
-	inline Vector3<T> normalized() const
-	{
-		T len = length();
-		if(len > T(0))
-		{
-			return Vector3<T>(x / len, y / len, z / len);
 		}
 	}
 
@@ -392,24 +363,11 @@ public:
 		return Vector3<T>((y * v2.z) - (z * v2.y), (z * v2.x) - (x * v2.z), (x * v2.y) - (y * v2.x));
 	}
 
-	template<typename U>
-	inline U distance(const Vector3<T>& v2) const
-	{
-		// TODO: Missing implementation
-		return 0.0f;
-	}
-
-	template<typename U>
-	inline U magnitude() const
-	{
-		return sqrtf(x * x + y * y + z * z);
-	}
-
-	template<typename U>
-	inline U length() const
-	{
-		return magnitude();
-	}
+#ifdef SAUCE_USE_FLOAT
+	inline float length() const { return sqrtf(x * x + y * y + z * z); }
+#else
+	inline double length() const { return sqrt(x * x + y * y + z * z); }
+#endif
  
 	inline Vector3<T>& operator=(const Vector3<T>& v2)
 	{

@@ -7,7 +7,7 @@
 //                                                __/ |             
 //                                               |___/              
 // Made by Marcus "Bitsauce" Loo Vergara
-// 2011-2016 (C)
+// 2011-2018 (C)
 
 #include <Sauce/Common.h>
 #include <Sauce/graphics.h>

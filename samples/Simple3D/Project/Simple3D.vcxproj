@@ -94,7 +94,20 @@
     </Manifest>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\Source\Camera.cpp" />
     <ClCompile Include="..\Source\Main.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\Data\Default.frag" />
+    <None Include="..\Data\Default.vert" />
+  </ItemGroup>
+  <ItemGroup>
+    <Xml Include="..\Data\Resources.xml">
+      <SubType>Designer</SubType>
+    </Xml>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\Source\Camera.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

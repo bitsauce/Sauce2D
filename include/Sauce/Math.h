@@ -38,26 +38,6 @@ namespace math
 	SAUCE_API Vector2F sqrt(const Vector2F &v);
 	SAUCE_API float pow(const float a, const float b);
 	SAUCE_API Vector2F pow(const Vector2F &v);
-
-	// Fast but inaccurate linear interpolation function
-	/*template<typename T> T lerp(const T &v0, const T &v1, const float t)
-	{
-		return v0 * (1.0f - t) + v1 * t;
-	}
-
-	// Slow but accurate linear interpolation function
-	// This will give correct values when v0 == v1, and it will give correct values when t = 0 or 1
-	template<typename T> T lerp2(const T &v0, const T &v1, float t)
-	{
-		if(t < 0.5f)
-		{
-			return v0 + (v1 - v0) * t;
-		}
-		else
-		{
-			return v1 - (v1 - v0) * (1.0f - t);
-		}
-	}*/
 	
 	template<typename T> T lerp(const T &v0, const T &v1, float t)
 	{
@@ -76,6 +56,24 @@ namespace math
 	SAUCE_API int mod(const int a, const int b);
 	SAUCE_API uint ror(const uint a, const uint b);
 	SAUCE_API uint rol(const uint a, const uint b);
+
+	/* Global Vector Functions */
+
+	template<typename T> Vector3<T> normalize(const Vector3<T> &v)
+	{
+#ifdef SAUCE_USE_FLOAT
+		const float len = v.length();
+		if(len > 0.0f) return v / len;
+#else
+		const double len = v.length();
+		if(len > 0.0) return v / len;
+#endif
+	}
+
+	template<typename T> Vector3<T> cross(const Vector3<T>& v1, const Vector3<T>& v2)
+	{
+		return Vector3<T>((v1.y * v2.z) - (v1.z * v2.y), (v1.z * v2.x) - (v1.x * v2.z), (v1.x * v2.y) - (v1.y * v2.x));
+	}
 }
 
 END_SAUCE_NAMESPACE

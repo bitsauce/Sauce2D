@@ -9,7 +9,7 @@ class DrawTextGame : public Game
 
 public:
 	DrawTextGame() :
-		Game("DrawText")
+		Game("DrawText", SAUCE_WINDOW_RESIZABLE)
 	{
 	}
 

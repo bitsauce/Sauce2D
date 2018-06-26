@@ -1,6 +1,11 @@
 <resources>
 	<font>
-		<name>Arial</name>
+		<name>Font/Arial</name>
 		<path>Arial.fnt</path>
 	</font>
+  <shader>
+    <name>Shader/Default</name>
+    <vertexFilePath>Default.vert</vertexFilePath>
+    <fragmentFilePath>Default.frag</fragmentFilePath>
+  </shader>
 </resources>

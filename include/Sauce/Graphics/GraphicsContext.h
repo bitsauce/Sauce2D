@@ -205,7 +205,8 @@ public:
 	void resizeViewport(const uint w, const uint h, const bool flipY = false);
 
 	Matrix4 createOrtographicMatrix(const float left, const float right, const float top, const float bottom, const float n = -1.0f, const float f = 1.0f) const;
-	Matrix4 createPerspectiveMatrix(const float left, const float right, const float top, const float bottom, const float n = -1.0f, const float f = 1.0f) const;
+	Matrix4 createPerspectiveMatrix(const float fov, const float aspectRatio, const float zNear, const float zFar) const;
+	Matrix4 createLookAtMatrix(const Vector3F &position, const Vector3F &fwd) const;
 
 	/**
 	 * Set projection matrix

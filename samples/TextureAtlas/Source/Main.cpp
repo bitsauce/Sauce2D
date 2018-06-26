@@ -7,7 +7,7 @@ class TextureAtlasGame : public Game
 	TextureAtlas *textureAtlas;
 public:
 	TextureAtlasGame() :
-		Game("TextureAtlas")
+		Game("TextureAtlas", SAUCE_WINDOW_RESIZABLE)
 	{
 	}
 
