@@ -58,7 +58,6 @@ namespace math
 	SAUCE_API uint rol(const uint a, const uint b);
 
 	/* Global Vector Functions */
-
 	template<typename T> Vector3<T> normalize(const Vector3<T> &v)
 	{
 #ifdef SAUCE_USE_FLOAT
@@ -69,7 +68,6 @@ namespace math
 		if(len > 0.0) return v / len;
 #endif
 	}
-
 	template<typename T> Vector3<T> cross(const Vector3<T>& v1, const Vector3<T>& v2)
 	{
 		return Vector3<T>((v1.y * v2.z) - (v1.z * v2.y), (v1.z * v2.x) - (v1.x * v2.z), (v1.x * v2.y) - (v1.y * v2.x));

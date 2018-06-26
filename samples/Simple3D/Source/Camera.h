@@ -11,7 +11,7 @@ public:
 	void onMouseEvent(MouseEvent *e);
 	void onKeyEvent(KeyEvent *e);
 
-	void setPosition(const Vector3F value) { m_position = value; }
+	void setPosition(const Vector3F value) { m_position = m_previousPosition = value; }
 	void setYaw(const float value) { m_yaw = value; }
 	void setPitch(const float value) { m_pitch = value; }
 	void setMoveSpeed(const float value) { m_moveSpeed = value; }
@@ -22,11 +22,12 @@ public:
 	Vector3F getUpVector() const;
 
 	Vector3F getPosition() const { return m_position; }
+	Vector3F getDrawPosition(const float alpha) const { return math::lerp(m_previousPosition, m_position, alpha); }
 	float getYaw() const { return m_yaw; }
 	float getPitch() const { return m_pitch; }
 
 private:
-	Vector3F m_position;
+	Vector3F m_position, m_previousPosition;
 	float m_yaw, m_pitch;
 
 	float m_rotationSpeed;

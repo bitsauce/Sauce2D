@@ -8,4 +8,8 @@
     <vertexFilePath>Default.vert</vertexFilePath>
     <fragmentFilePath>Default.frag</fragmentFilePath>
   </shader>
+  <texture>
+    <name>Texture/Sample</name>
+    <path>Texture.png</path>
+  </texture>
 </resources>

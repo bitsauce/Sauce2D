@@ -2,6 +2,7 @@
 
 Camera::Camera() :
 	m_position(0.f, 0.f, 0.f),
+	m_previousPosition(0.f, 0.f, 0.f),
 	m_yaw(0.f),
 	m_pitch(0.f),
 	m_rotationSpeed(0.01f),
@@ -16,42 +17,48 @@ void Camera::onTick(TickEvent *e)
 	int moveFwd   = (m_inputState.forward - m_inputState.backward);
 	int moveRight = (m_inputState.left - m_inputState.right);
 	int moveUp    = (m_inputState.up - m_inputState.down);
+	m_previousPosition = m_position;
 	m_position += getForwardVector() * moveFwd   * e->getDelta() * m_moveSpeed;
 	m_position += getRightVector()   * moveRight * e->getDelta() * m_moveSpeed;
 	m_position += getUpVector()      * moveUp    * e->getDelta() * m_moveSpeed;
 }
 
+float wrapAngle(float angle) {
+	while(angle >= PI * 2) angle -= PI * 2;
+	while(angle < 0) angle += PI * 2;
+	return angle;
+}
 
 void Camera::onMouseEvent(MouseEvent *e)
 {
 	switch(e->getType())
 	{
-	case EVENT_MOUSE_DOWN:
-	{
-		m_dragging = true;
-		m_previousMousePosition = e->getPosition();
-	}
-	break;
-
-	case EVENT_MOUSE_UP:
-	{
-		m_dragging = false;
-	}
-	break;
-
-	case EVENT_MOUSE_MOVE:
-	{
-		if(m_dragging)
+		case EVENT_MOUSE_DOWN:
 		{
-			// Update camera rotation
-			const Vector2F mousePosition = e->getPosition();
-			const Vector2F dt = mousePosition - m_previousMousePosition;
-			m_yaw += dt.x * m_rotationSpeed;
-			m_pitch -= dt.y * m_rotationSpeed;
-			m_previousMousePosition = mousePosition;
+			m_dragging = true;
+			m_previousMousePosition = e->getPosition();
 		}
-	}
-	break;
+		break;
+
+		case EVENT_MOUSE_UP:
+		{
+			m_dragging = false;
+		}
+		break;
+
+		case EVENT_MOUSE_MOVE:
+		{
+			if(m_dragging)
+			{
+				// Update camera rotation
+				const Vector2F mousePosition = e->getPosition();
+				const Vector2F dt = mousePosition - m_previousMousePosition;
+				m_yaw   = wrapAngle(m_yaw   + dt.x * m_rotationSpeed);
+				m_pitch = wrapAngle(m_pitch - dt.y * m_rotationSpeed);
+				m_previousMousePosition = mousePosition;
+			}
+		}
+		break;
 	}
 }
 

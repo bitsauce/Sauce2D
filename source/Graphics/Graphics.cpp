@@ -15,7 +15,8 @@
 BEGIN_SAUCE_NAMESPACE
 
 uint QUAD_INDICES[6] = {
-	0, 3, 2, 0, 2, 1
+	0, 1, 2,
+	0, 2, 3
 };
 
 Vector4F QUAD_VERTICES[4] = {

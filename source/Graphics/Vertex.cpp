@@ -129,17 +129,15 @@ bool VertexFormat::operator==(const VertexFormat &other)
 **********************************************************************/
 
 Vertex::Vertex() :
-	m_data(0),
-	m_format(VertexFormat::s_vct)
+	m_data(0)
 {
-	setFormat(m_format);
+	setFormat(VertexFormat::s_vct);
 }
 
 Vertex::Vertex(const Vertex &other) :
-	m_data(0),
-	m_format(other.m_format)
+	m_data(0)
 {
-	m_data = new char[m_format.getVertexSizeInBytes()];
+	setFormat(other.m_format);
 	memcpy(m_data, other.m_data, m_format.getVertexSizeInBytes());
 }
 
@@ -158,8 +156,8 @@ Vertex::~Vertex()
 void Vertex::setFormat(const VertexFormat &fmt)
 {
 	delete[] m_data;
-	m_data = new char[m_format.getVertexSizeInBytes()];
-	memset(m_data, 0, m_format.getVertexSizeInBytes());
+	m_data = new char[fmt.getVertexSizeInBytes()];
+	memset(m_data, 0, fmt.getVertexSizeInBytes());
 	m_format = fmt;
 }
 
