@@ -1,56 +1,58 @@
 /* Include the SauceEngine framework */
 #include <Sauce/Sauce.h>
-
-/* This just saves us some time as we don't
-   have to type sauce::* in front of every
-   SauceEngine class, enum, etc. */
 using namespace sauce;
 
-/* This is our MinimalGame class.
-   It inherits from cgf::Game, which is the game manager class.
-   sauce::Game contains a bunch of virtual event methods. These
-   methods start with on* and are invoked at special times. 
-   For instance, onUpdate is called whenever the game wants to
-   update its game state, and onKeyDown is called whenever a
-   key on the keyboard is pressed.*/
 class MinimalGame : public Game
 {
 public:
-	/* Consturctor for our game class */
+	/** 
+	 * Game constructor.
+	 * This method is generally empty since
+	 * initialization of resources need to happen in onStart()
+	 */
 	MinimalGame() :
-		/* sauce::Game class takes a string which is the game name. */
+		/* Title of the game. Used as window title and name of folder containing save files */
 		Game("Minimal")
 	{
 	}
 
-	/* onStart event. This event called once the framework has initialized,
-	   but before the game loop has started */
+	/** 
+	 * onStart() event.
+	 * This event called once the framework has initialized, but before the first tick.
+	 * Load resources and setup the window here.
+	 */
 	void onStart(GameEvent *e)
 	{
-		LOG("onStart");
 		Game::onStart(e);
 	}
 
-	/* onEnd event. This event is called when the game is closing. */
+	/**
+	 * onEnd() event.
+	 * This event is called when the game is closing.
+	 * Free all resources and save game state here.
+	 */
 	void onEnd(GameEvent *e)
 	{
-		LOG("onEnd");
 		Game::onEnd(e);
 	}
 
-	/* onTick event. This event is called when the framework wants to update
-	   the game state. */
+	/**
+	 * onTick() event.
+	 * This event is called when the framework should update the game state.
+	 * Things like physics and other simulations should go here.
+	 */
 	void onTick(TickEvent *e)
 	{
-		LOG("onTick");
 		Game::onTick(e);
 	}
 
-	/* onDraw event. This event is called then the framework wants to draw
-	   the current game state to the screen */
+	/**
+	 * onDraw event.
+	 * This event is called then the framework should draw the current game state to the screen.
+	 * Using the graphics context provided by e->getGraphicsContext() is generally how we draw to the screen. 
+	 */
 	void onDraw(DrawEvent *e)
 	{
-		LOG("onDraw");
 		Game::onDraw(e);
 	}
 };
@@ -58,8 +60,10 @@ public:
 /* Main entry point. This is where our program first starts executing. */
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, INT)
 {
-	/* To start our game we simply create our game object
-	   and call run() */
+	/** 
+	 * To start the game we simply create a game object and call run().
+	 * This function should typically not require modification.
+	 */
 	MinimalGame game;
 	return game.run();
 }
