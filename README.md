@@ -19,7 +19,7 @@ SauceEngine is a game engine built on the [Simple DirectMedia Library](https://w
 * Vertex, fragment and geometry shaders
 * Multiple render-targets
 * Integer textures
-* Can use any OpenGL verison for backend
+* Can use any OpenGL verison as backend
 
 **Input** 
 * Keyboard input
@@ -62,4 +62,5 @@ Traversal Order
 * Audio playback
 * ~~Networking~~ (example of networking throught RakNet in my other project, Overworld)
 * Multi-platform support
+* DirectX and Vulkan support
 * Multi-language support
