@@ -65,7 +65,7 @@ Game::Game(const string &name, const string &organization, const GraphicsBackend
 }
 
 Game::Game(const string &name, const uint flags) :
-	Game(name, SAUCE_DEFAULT_ORGANIZATION, SAUCE_OPEN_GL, flags)
+	Game(name, SAUCE_DEFAULT_ORGANIZATION, GraphicsBackend(), flags)
 {
 }
 
@@ -153,9 +153,9 @@ int Game::run()
 
 		// Initialize graphics context and window
 		GraphicsContext *graphicsContext = 0;
-		switch(m_graphicsBackend)
+		switch(m_graphicsBackend.type)
 		{
-			default: graphicsContext = new OpenGLContext(); break;
+			default: graphicsContext = new OpenGLContext(m_graphicsBackend.major, m_graphicsBackend.minor); break;
 		}
 		Window *mainWindow = graphicsContext->createWindow(m_name.c_str(), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 1280, 720, windowFlags);
 		m_windows.push_back(mainWindow);

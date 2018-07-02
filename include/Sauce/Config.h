@@ -130,11 +130,24 @@ enum MessageType
 /*********************************************************************
 **	Graphics backends												**
 **********************************************************************/
-enum GraphicsBackend
+struct GraphicsBackend
 {
-	SAUCE_OPEN_GL,
-	SAUCE_DIRECT_X,
-	SAUCE_VULKAN
+	enum Type
+	{
+		SAUCE_OPEN_GL,
+		SAUCE_DIRECT_X,
+		SAUCE_VULKAN
+	};
+
+	GraphicsBackend(const Type type = SAUCE_OPEN_GL, const int major = 3, const int minor = 1) :
+		type(type),
+		major(major),
+		minor(minor)
+	{
+	}
+
+	Type type;
+	int major, minor;
 };
 
 /*********************************************************************

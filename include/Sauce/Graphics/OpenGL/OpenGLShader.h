@@ -75,6 +75,8 @@ private:
 
 	GLuint m_id, m_vertShaderID, m_fragShaderID;
 	map<string, Uniform*> m_uniforms;
+
+	static string s_glslVersion;
 };
 
 template SAUCE_API class shared_ptr<Shader>;

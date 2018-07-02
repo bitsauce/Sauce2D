@@ -16,7 +16,7 @@ class SAUCE_API OpenGLContext : public GraphicsContext
 {
 	friend class Game;
 private:
-	OpenGLContext();
+	OpenGLContext(const int major, const int minor);
 	~OpenGLContext();
 
 	void setupContext();
@@ -121,8 +121,12 @@ public:
 	Shader *createShader(const string &vertexSource, const string &fragmentSource, const string &geometrySource);
 	RenderTarget2D *createRenderTarget(const uint width, const uint height, const uint targetCount = 1, const PixelFormat &fmt = PixelFormat());
 
+	string getGLSLVersion() const;
+
 private:
 	Window *createWindow(const string &title, const int x, const int y, const int w, const int h, const Uint32 flags);
+
+	const int m_majorVersion, m_minorVersion;
 };
 
 END_SAUCE_NAMESPACE

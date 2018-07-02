@@ -139,7 +139,7 @@ class Simple3DGame : public Game
 
 public:
 	Simple3DGame() :
-		Game("Simple3D")
+		Game("Simple3D", "SuperSauceEngine", GraphicsBackend(GraphicsBackend::SAUCE_OPEN_GL, 4, 5))
 	{
 	}
 

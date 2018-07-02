@@ -805,7 +805,7 @@ class SAUCE_API Game : public SceneObject
 public:
 	Game(const string &name,
 		 const string &organization = SAUCE_DEFAULT_ORGANIZATION,
-		 const GraphicsBackend &graphicsBackend = SAUCE_OPEN_GL,
+		 const GraphicsBackend &graphicsBackend = GraphicsBackend(),
 		 const uint flags = 0);
 	Game(const string &name, const uint flags);
 	~Game();

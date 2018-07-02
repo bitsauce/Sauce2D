@@ -20,6 +20,8 @@ const int PTR_SIZE = sizeof(void*);
 
 BEGIN_SAUCE_NAMESPACE
 
+string OpenGLShader::s_glslVersion;
+
 OpenGLShader::OpenGLShader(const string &vertexSource, const string &fragmentSource, const string &geometrySource) :
 	m_id(0),
 	m_vertShaderID(0),
@@ -38,8 +40,8 @@ void OpenGLShader::compileShader(const string &vertexSource, const string &fragm
 	GLint success;
 
 	// Create modified shader code
-	string vertexSourceModified = "#version 130\n" + string(vertexSource);
-	string fragmentSourceModified = "#version 130\n" + string(fragmentSource);
+	string vertexSourceModified = "#version " + s_glslVersion +"\n" + string(vertexSource);
+	string fragmentSourceModified = "#version " + s_glslVersion + "\n"  + string(fragmentSource);
 
 	LOG("Compiling vertex shader...");
 

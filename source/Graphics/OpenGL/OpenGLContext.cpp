@@ -37,7 +37,9 @@ GLuint OpenGLContext::s_vao = 0;
 GLuint OpenGLContext::s_vbo = 0;
 GLuint OpenGLContext::s_ibo = 0;
 
-OpenGLContext::OpenGLContext()
+OpenGLContext::OpenGLContext(const int major, const int minor) :
+	m_majorVersion(major),
+	m_minorVersion(minor)
 {
 }
 
@@ -203,8 +205,8 @@ Matrix4 OpenGLContext::createLookAtMatrix(const Vector3F &position, const Vector
 Window *OpenGLContext::createWindow(const string &title, const int x, const int y, const int w, const int h, const Uint32 flags)
 {
 	// Request opengl 3.1 context
-	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
-	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 1);
+	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, m_majorVersion);
+	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, m_minorVersion);
 
 	// Turn on double buffering with a 24bit Z buffer.
 	// You may need to change this to 16 or 32 for your system
@@ -225,10 +227,10 @@ Window *OpenGLContext::createWindow(const string &title, const int x, const int 
 	// Print GPU info
 	LOG("** Using GPU: %s (OpenGL %s) **", glGetString(GL_VENDOR), glGetString(GL_VERSION));
 
-	// Check OpenGL 3.1 support
-	if(!gl3wIsSupported(3, 1))
+	// Check OpenGL support
+	if(!gl3wIsSupported(m_majorVersion, m_minorVersion))
 	{
-		THROW("OpenGL 3.1 not supported\n");
+		THROW("OpenGL %i.%i not supported\n", m_majorVersion, m_minorVersion);
 	}
 
 	// Setup graphics context
@@ -295,6 +297,7 @@ Window *OpenGLContext::createWindow(const string &title, const int x, const int 
 		"	out_FragColor = texture(u_Texture, v_TexCoord) * v_VertexColor;\n"
 		"}\n";
 
+	OpenGLShader::s_glslVersion = getGLSLVersion();
 	s_defaultShader = shared_ptr<Shader>(new OpenGLShader(vertexShader, fragmentShader, ""));
 
 	// Create blank texture
@@ -655,6 +658,47 @@ void OpenGLContext::drawPrimitives(const PrimitiveType type, const VertexBuffer 
 RenderTarget2D *OpenGLContext::createRenderTarget(const uint width, const uint height, const uint targetCount, const PixelFormat &format)
 {
 	return static_cast<RenderTarget2D*>(new OpenGLRenderTarget2D(this, width, height, targetCount, format));
+}
+
+string OpenGLContext::getGLSLVersion() const
+{
+	switch(m_majorVersion)
+	{
+		case 2:
+		{
+			switch(m_minorVersion)
+			{
+				case 0: return "110";
+				case 1: return "120";
+			}
+		}
+
+		case 3:
+		{
+			switch(m_minorVersion)
+			{
+				case 0: return "130";
+				case 1: return "140";
+				case 2: return "150";
+				case 3: return "330";
+			}
+		}
+
+		case 4:
+		{
+			switch(m_minorVersion)
+			{
+				case 0: return "400";
+				case 1: return "410";
+				case 2: return "420";
+				case 3: return "430";
+				case 4: return "440";
+				case 5: return "450";
+				case 6: return "460";
+			}
+		}
+	}
+	return "150";
 }
 
 Texture2D *OpenGLContext::createTexture(const Pixmap &pixmap)
