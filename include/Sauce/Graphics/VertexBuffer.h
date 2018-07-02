@@ -12,7 +12,7 @@ class Vertex;
 **********************************************************************/
 class SAUCE_API VertexBuffer
 {
-	friend class GraphicsContext;
+	friend class OpenGLContext;
 public:
 	// Add vertices and indices to the batch
 	void setData(const Vertex *vertices, const uint vertexCount);
@@ -68,7 +68,7 @@ public:
 **********************************************************************/
 class SAUCE_API IndexBuffer
 {
-	friend class GraphicsContext;
+	friend class OpenGLContext;
 public:
 	// Add vertices and indices to the batch
 	void setData(const uint *indices, const uint indexCount);

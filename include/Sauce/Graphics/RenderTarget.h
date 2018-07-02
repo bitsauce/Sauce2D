@@ -10,22 +10,19 @@ BEGIN_SAUCE_NAMESPACE
 class SAUCE_API RenderTarget2D
 {
 	friend class GraphicsContext;
+protected:
+	RenderTarget2D(GraphicsContext *graphicsContext, const uint width, const uint height, const uint targetCount = 1, const PixelFormat &fmt = PixelFormat());
+	RenderTarget2D(GraphicsContext *graphicsContext, shared_ptr<Texture2D> target);
+
 public:
-	RenderTarget2D(const uint width, const uint height, const uint targetCount = 1, const PixelFormat &fmt = PixelFormat());
-	RenderTarget2D(shared_ptr<Texture2D> target);
-	~RenderTarget2D();
-
+	virtual ~RenderTarget2D();
 	shared_ptr<Texture2D> getTexture(const uint target = 0) { if(target < m_textureCount) return m_textures[target]; else return nullptr; }
-
 	uint getWidth() const { return m_width; }
 	uint getHeight() const { return m_height; }
 
-private:
-	void bind();
-	void unbind();
-
-	GLuint m_id;
-	GLenum *m_buffers;
+protected:
+	virtual void bind() = 0;
+	virtual void unbind() = 0;
 
 	uint m_width, m_height;
 	uint m_textureCount;

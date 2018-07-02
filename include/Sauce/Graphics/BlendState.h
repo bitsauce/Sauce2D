@@ -8,6 +8,7 @@ BEGIN_SAUCE_NAMESPACE
 class SAUCE_API BlendState
 {
 	friend class GraphicsContext;
+	friend class OpenGLContext;
 public:
 
 	enum BlendFactor

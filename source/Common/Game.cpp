@@ -48,9 +48,10 @@ Game *Game::s_this = 0;
 
 // TODO: Might want to do some file path validation check on the name
 // and org name so that the pref path won't bug out
-Game::Game(const string &name, const string &organization, const uint flags) :
+Game::Game(const string &name, const string &organization, const GraphicsBackend &graphicsBackend, const uint flags) :
 	m_name(name),
 	m_organization(organization),
+	m_graphicsBackend(graphicsBackend),
 	m_flags(flags),
 	m_initialized(false),
 	m_paused(false),
@@ -64,7 +65,7 @@ Game::Game(const string &name, const string &organization, const uint flags) :
 }
 
 Game::Game(const string &name, const uint flags) :
-	Game(name, SAUCE_DEFAULT_ORGANIZATION, flags)
+	Game(name, SAUCE_DEFAULT_ORGANIZATION, SAUCE_OPEN_GL, flags)
 {
 }
 
@@ -144,112 +145,25 @@ int Game::run()
 		// Initialize resource manager
 		m_resourceManager = new ResourceManager("Resources.xml");
 
-		Uint8 windowFlags = 0;
+		Uint32 windowFlags = 0;
 		if(isEnabled(SAUCE_WINDOW_RESIZABLE))
 		{
 			windowFlags |= SDL_WINDOW_RESIZABLE;
 		}
 
-		// Initialize window
-		Window *mainWindow = new Window(m_name.c_str(), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 1280, 720, windowFlags);
+		// Initialize graphics context and window
+		GraphicsContext *graphicsContext = 0;
+		switch(m_graphicsBackend)
+		{
+			default: graphicsContext = new OpenGLContext(); break;
+		}
+		Window *mainWindow = graphicsContext->createWindow(m_name.c_str(), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 1280, 720, windowFlags);
 		m_windows.push_back(mainWindow);
-		GraphicsContext *graphicsContext = mainWindow->getGraphicsContext();
-
-		// TODO: Concider moving these to a function of sorts (initGraphics())
-		// Initialize GL3W
-		if(gl3wInit() != 0)
-		{
-			THROW("GL3W did not initialize!");
-		}
-
-		// Print GPU info
-		LOG("** Using GPU: %s (OpenGL %s) **", glGetString(GL_VENDOR), glGetString(GL_VERSION));
-
-		// Check OpenGL 3.1 support
-		if(!gl3wIsSupported(3, 1))
-		{
-			THROW("OpenGL 3.1 not supported\n");
-		}
 
 		// Setup default vertex format
-		VertexFormat::s_vct.set(VERTEX_POSITION, 2);
+		VertexFormat::s_vct.set(VERTEX_POSITION, 2, SAUCE_FLOAT);
 		VertexFormat::s_vct.set(VERTEX_COLOR, 4, SAUCE_UBYTE);
-		VertexFormat::s_vct.set(VERTEX_TEX_COORD, 2);
-
-		// Setup graphics context
-		Vector2I size;
-		mainWindow->getSize(&size.x, &size.y);
-		graphicsContext->resizeViewport(size.x, size.y);
-
-		// We default to an ortographic projection where top-left is (0, 0) and bottom-right is (w, h)
-		graphicsContext->setProjectionMatrix(graphicsContext->createOrtographicMatrix(0, size.x, 0, size.y));
-
-		// Init graphics
-		glGenVertexArrays(1, &GraphicsContext::s_vao);
-		glBindVertexArray(GraphicsContext::s_vao);
-		glGenBuffers(1, &GraphicsContext::s_vbo);
-		glGenBuffers(1, &GraphicsContext::s_ibo);
-
-		glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
-
-		// Enable blend
-		glEnable(GL_BLEND);
-		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-
-		// Enable alpha test // Optimization?
-		//glEnable(GL_ALPHA_TEST);
-		//glAlphaFunc(GL_LEQUAL, 0.0f);
-
-		glEnable(GL_LINE_SMOOTH);
-		//glEnable(GL_POLYGON_SMOOTH);
-		glHint(GL_LINE_SMOOTH_HINT, GL_NICEST);
-		//glHint(GL_POLYGON_SMOOTH_HINT, GL_NICEST);
-
-		glEnable(GL_DEPTH_TEST);
-		glDepthFunc(GL_LESS);
-
-		glEnable(GL_CULL_FACE);
-		glCullFace(GL_FRONT);
-
-		glPointSize(4);
-
-		string vertexShader =
-			"\n"
-			"in vec2 in_Position;\n"
-			"in vec2 in_TexCoord;\n"
-			"in vec4 in_VertexColor;\n"
-			"\n"
-			"out vec2 v_TexCoord;\n"
-			"out vec4 v_VertexColor;\n"
-			"\n"
-			"uniform mat4 u_ModelViewProj;\n"
-			"\n"
-			"void main()\n"
-			"{\n"
-			"	gl_Position = vec4(in_Position, 0.0, 1.0) * u_ModelViewProj;\n"
-			"	v_TexCoord = in_TexCoord;\n"
-			"	v_VertexColor = in_VertexColor;\n"
-			"}\n";
-
-		string fragmentShader =
-			"\n"
-			"in vec2 v_TexCoord;\n"
-			"in vec4 v_VertexColor;\n"
-			"\n"
-			"out vec4 out_FragColor;\n"
-			"\n"
-			"uniform sampler2D u_Texture;"
-			"\n"
-			"void main()\n"
-			"{\n"
-			"	out_FragColor = texture(u_Texture, v_TexCoord) * v_VertexColor;\n"
-			"}\n";
-
-		GraphicsContext::s_defaultShader = shared_ptr<Shader>(new Shader(vertexShader, fragmentShader));
-
-		uchar pixel[4];
-		pixel[0] = pixel[1] = pixel[2] = pixel[3] = 255;
-		GraphicsContext::s_defaultTexture = shared_ptr<Texture2D>(new Texture2D(1, 1, pixel));
+		VertexFormat::s_vct.set(VERTEX_TEX_COORD, 2, SAUCE_FLOAT);
 
 		// Initialize input handler
 		m_inputManager = new InputManager("InputConfig.xml");

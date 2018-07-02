@@ -11,74 +11,39 @@ class SAUCE_API Shader
 	friend class GraphicsContext;
 	friend class ResourceManager;
 public:
-	Shader(const string &vertexSource, const string &fragmentSource);
-	~Shader();
+	Shader();
+	virtual ~Shader();
 
-	void bindFragLocation(const uint location, const string &name);
+	virtual void bindFragLocation(const uint location, const string &name) = 0;
 
-	void link();
+	virtual void link() = 0;
 	
-	// Instance ->
-	void setUniform1i(const string &name, const int v0);
-	void setUniform2i(const string &name, const int v0, const int v1);
-	void setUniform3i(const string &name, const int v0, const int v1, const int v2);
-	void setUniform4i(const string &name, const int v0, const int v1, const int v2, const int v3);
+	virtual void setUniform1i(const string &name, const int v0) = 0;
+	virtual void setUniform2i(const string &name, const int v0, const int v1) = 0;
+	virtual void setUniform3i(const string &name, const int v0, const int v1, const int v2) = 0;
+	virtual void setUniform4i(const string &name, const int v0, const int v1, const int v2, const int v3) = 0;
 
-	void setUniform1iv(const string &name, const uint count, const int *v);
-	void setUniform2iv(const string &name, const uint count, const int *v);
-	void setUniform3iv(const string &name, const uint count, const int *v);
-	void setUniform4iv(const string &name, const uint count, const int *v);
+	virtual void setUniform1iv(const string &name, const uint count, const int *v) = 0;
+	virtual void setUniform2iv(const string &name, const uint count, const int *v) = 0;
+	virtual void setUniform3iv(const string &name, const uint count, const int *v) = 0;
+	virtual void setUniform4iv(const string &name, const uint count, const int *v) = 0;
 
-	void setUniform1ui(const string &name, const uint v0);
-	void setUniform2ui(const string &name, const uint v0, const uint v1);
-	void setUniform3ui(const string &name, const uint v0, const uint v1, const uint v2);
-	void setUniform4ui(const string &name, const uint v0, const uint v1, const uint v2, const uint v3);
+	virtual void setUniform1ui(const string &name, const uint v0) = 0;
+	virtual void setUniform2ui(const string &name, const uint v0, const uint v1) = 0;
+	virtual void setUniform3ui(const string &name, const uint v0, const uint v1, const uint v2) = 0;
+	virtual void setUniform4ui(const string &name, const uint v0, const uint v1, const uint v2, const uint v3) = 0;
 
-	void setUniform1f(const string &name, const float v0);
-	void setUniform2f(const string &name, const float v0, const float v1);
-	void setUniform2f(const string &name, const float *v);
-	void setUniform3f(const string &name, const float v0, const float v1, const float v2);
-	void setUniform4f(const string &name, const float v0, const float v1, const float v2, const float v3);
-	void setUniform4f(const string &name, const float *v);
-	void setUniformMatrix4f(const string &name, const float *v0);
-	void setSampler2D(const string &name, shared_ptr<Texture2D> texture);
+	virtual void setUniform1f(const string &name, const float v0) = 0;
+	virtual void setUniform2f(const string &name, const float v0, const float v1) = 0;
+	virtual void setUniform2f(const string &name, const float *v) = 0;
+	virtual void setUniform3f(const string &name, const float v0, const float v1, const float v2) = 0;
+	virtual void setUniform4f(const string &name, const float v0, const float v1, const float v2, const float v3) = 0;
+	virtual void setUniform4f(const string &name, const float *v) = 0;
+	virtual void setUniformMatrix4f(const string &name, const float *v0) = 0;
+	virtual void setSampler2D(const string &name, shared_ptr<Texture2D> texture) = 0;
 
-	void setUniformColor(const string &name, const Color &color);
-	void setUniformColorRGB(const string &name, const ColorRGB &color);
-	// <- Instance
-
-	void exportAssembly(const string &fileName);
-
-private:
-
-	Shader(ResourceDesc *desc);
-
-	void init(const string &vertexSource, const string &fragmentSource);
-
-	// Uniform struct
-	struct Uniform
-	{
-		Uniform() :
-			type(0),
-			loc(0),
-			count(0),
-			data(0)
-		{
-		}
-
-		~Uniform()
-		{
-			delete[] data;
-		}
-
-		GLenum type;
-		int loc;
-		int count;
-		void *data;
-	};
-
-	GLuint m_id, m_vertShaderID, m_fragShaderID;
-	map<string, Uniform*> m_uniforms;
+	virtual void setUniformColor(const string &name, const Color &color) = 0;
+	virtual void setUniformColorRGB(const string &name, const ColorRGB &color) = 0;
 };
 
 template SAUCE_API class shared_ptr<Shader>;
@@ -86,10 +51,11 @@ template SAUCE_API class shared_ptr<Shader>;
 class ShaderResourceDesc : public ResourceDesc
 {
 public:
-	ShaderResourceDesc(const string &name, const string &vertexFilePath, const string &fragmentFilePath) :
+	ShaderResourceDesc(const string &name, const string &vertexFilePath, const string &fragmentFilePath, const string &geometryFilePath) :
 		ResourceDesc(RESOURCE_TYPE_TEXTURE, name),
 		m_vertexFilePath(vertexFilePath),
-		m_fragmentFilePath(fragmentFilePath)
+		m_fragmentFilePath(fragmentFilePath),
+		m_geometryFilePath(geometryFilePath)
 	{
 	}
 
@@ -97,14 +63,23 @@ public:
 	{
 		return m_vertexFilePath;
 	}
-	
+
 	string getFragmentFilePath() const
 	{
 		return m_fragmentFilePath;
 	}
 
+	string getGeometryFilePath() const
+	{
+		return m_geometryFilePath;
+	}
+
+	void *create() const;
+
 private:
-	const string m_vertexFilePath, m_fragmentFilePath;
+	const string m_vertexFilePath;
+	const string m_fragmentFilePath;
+	const string m_geometryFilePath;
 };
 
 END_SAUCE_NAMESPACE

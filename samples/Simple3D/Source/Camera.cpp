@@ -71,8 +71,8 @@ void Camera::onKeyEvent(KeyEvent *e)
 		case SAUCE_KEY_S: m_inputState.backward = pressed; break;
 		case SAUCE_KEY_A: m_inputState.left = pressed; break;
 		case SAUCE_KEY_D: m_inputState.right = pressed; break;
-		case SAUCE_KEY_LSHIFT: m_inputState.up = pressed; break;
-		case SAUCE_KEY_SPACE: m_inputState.down = pressed; break;
+		case SAUCE_KEY_LSHIFT: m_inputState.down = pressed; break;
+		case SAUCE_KEY_SPACE: m_inputState.up = pressed; break;
 	}
 }
 

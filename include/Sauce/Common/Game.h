@@ -528,15 +528,15 @@ public:
 	 *
 	 * \brief	Constructor.
 	 *
-	 * \param	title	The title.
-	 * \param	x	 	The int to process.
-	 * \param	y	 	The int to process.
-	 * \param	w	 	The int to process.
-	 * \param	h	 	The int to process.
-	 * \param	flags	The flags.
+	 * \param	title	        Window title
+	 * \param	x	 	        Initial x-position of window
+	 * \param	y               Initial y-position of window
+	 * \param	w	 	        Initial width of window
+	 * \param	h	 	        Initial height of window
+	 * \param	flags	        Additional window flags
 	 */
 
-	Window(const string &title, const int x, const int y, const int w, const int h, const Uint32 flags);
+	Window(GraphicsContext *graphicsContext, const string &title, const int x, const int y, const int w, const int h, const Uint32 flags);
 
 	/**
 	 * \fn	Window::~Window();
@@ -803,7 +803,10 @@ class SpriteBatch;
 class SAUCE_API Game : public SceneObject
 {
 public:
-	Game(const string &name, const string &organization = SAUCE_DEFAULT_ORGANIZATION, const uint flags = 0);
+	Game(const string &name,
+		 const string &organization = SAUCE_DEFAULT_ORGANIZATION,
+		 const GraphicsBackend &graphicsBackend = SAUCE_OPEN_GL,
+		 const uint flags = 0);
 	Game(const string &name, const uint flags);
 	~Game();
 
@@ -882,6 +885,7 @@ private:
 	 */
 
 	const string m_name, m_organization;
+	const GraphicsBackend m_graphicsBackend;
 	
 	/** \brief	Initialized? */
 	bool m_initialized;

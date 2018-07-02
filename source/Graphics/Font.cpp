@@ -61,10 +61,8 @@ public:
 // This is the Font class that is used to write text with bitmap fonts.
 //=============================================================================
 
-Font::Font(ResourceDesc *desc_)
+Font::Font(const string &filepath)
 {
-	FontResourceDesc *desc = (FontResourceDesc*) desc_;
-
 	m_fontHeight = 0;
 	m_base = 0;
 	m_scaleW = 0;
@@ -76,7 +74,7 @@ Font::Font(ResourceDesc *desc_)
 	m_depth = 0.0f;
 
 	// Load the font
-	FileReader *file = new FileReader(desc->getPath());
+	FileReader *file = new FileReader(filepath);
 	if(file->isOpen())
 	{
 		// Determine format by reading the first bytes of the file
@@ -86,11 +84,11 @@ Font::Font(ResourceDesc *desc_)
 		FontLoader *loader = 0;
 		if(strcmp(fmt, "BMF") == 0)
 		{
-			loader = new FontLoaderBinaryFormat(file, this, desc->getPath());
+			loader = new FontLoaderBinaryFormat(file, this, filepath);
 		}
 		else
 		{
-			loader = new FontLoaderTextFormat(file, this, desc->getPath());
+			loader = new FontLoaderTextFormat(file, this, filepath);
 		}
 
 		loader->Load();
@@ -541,7 +539,8 @@ void FontLoader::loadPage(int id, const char *pageFile, string fontFile)
 	// Load the font textures
 	fontFile += pageFile;
 
-	m_font->m_pages[id] = shared_ptr<Texture2D>(new Texture2D(Pixmap(fontFile)));
+	GraphicsContext *graphicsContext = Game::Get()->getWindow()->getGraphicsContext();
+	m_font->m_pages[id] = shared_ptr<Texture2D>(graphicsContext->createTexture(Pixmap(fontFile)));
 }
 
 void FontLoader::SetFontInfo(int outlineThickness)
@@ -1144,4 +1143,10 @@ void FontLoaderBinaryFormat::ReadKerningPairsBlock(int size)
 	}
 }
 
+void *FontResourceDesc::create() const
+{
+	return new Font(m_path);
+}
+
 END_SAUCE_NAMESPACE
+

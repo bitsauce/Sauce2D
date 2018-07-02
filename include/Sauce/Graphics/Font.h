@@ -46,7 +46,7 @@ enum FontAlign
 class SAUCE_API Font
 {
 public:
-	Font(ResourceDesc *desc);
+	Font(const string& filepath);
 	~Font();
 
 	void setTextEncoding(FontTextEncoding encoding);
@@ -150,6 +150,23 @@ protected:
 };
 
 template SAUCE_API class shared_ptr<Font>;
+
+class FontResourceDesc : public ResourceDesc
+{
+public:
+	FontResourceDesc(const string &name, const string &path, const bool premultiplyAlpha) :
+		ResourceDesc(RESOURCE_TYPE_FONT, name),
+		m_premultiplyAlpha(premultiplyAlpha),
+		m_path(path)
+	{
+	}
+
+	void *create() const;
+
+private:
+	const bool m_premultiplyAlpha;
+	const string m_path;
+};
 
 END_SAUCE_NAMESPACE
 

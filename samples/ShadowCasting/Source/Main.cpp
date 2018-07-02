@@ -101,9 +101,10 @@ public:
 		delete m_shadowMapRenderTarget;
 		delete m_shadowsRenderTarget;
 
-		m_occludersRenderTarget = new RenderTarget2D(size, size);
-		m_shadowMapRenderTarget = new RenderTarget2D(size, 1);
-		m_shadowsRenderTarget = new RenderTarget2D(viewSize.x, viewSize.y);
+		GraphicsContext *graphicsContext = getWindow()->getGraphicsContext();
+		m_occludersRenderTarget = graphicsContext->createRenderTarget(size, size);
+		m_shadowMapRenderTarget = graphicsContext->createRenderTarget(size, 1);
+		m_shadowsRenderTarget   = graphicsContext->createRenderTarget(viewSize.x, viewSize.y);
 		m_shadowMapRenderTarget->getTexture()->setWrapping(Texture2D::REPEAT);
 
 		m_lightMapSize = size;
@@ -162,9 +163,9 @@ public:
 		drawScene(context);
 
 		// Fill shadows render target with black
-		context->setRenderTarget(m_shadowsRenderTarget);
+		context->pushRenderTarget(m_shadowsRenderTarget);
 		context->clear(GraphicsContext::COLOR_BUFFER, Color(20, 20, 20, 255));
-		context->setRenderTarget(0);
+		context->popRenderTarget();
 
 		// Draw lights
 		for(Light *l : m_lights)
@@ -235,21 +236,23 @@ public:
 		context->disable(GraphicsContext::BLEND);
 
 		// Draw occluders to render target
-		context->setRenderTarget(m_occludersRenderTarget);
+		context->pushRenderTarget(m_occludersRenderTarget);
 		context->clear(GraphicsContext::COLOR_BUFFER);
 		context->setTexture(m_sceneTexture);
 		context->drawRectangle(((Vector2F(light->radius * 0.5f) - light->position) / light->radius) * m_lightMapSize, m_sceneTexture->getSize() * m_lightMapSize / light->radius);
+		context->popRenderTarget();
 
 		// Create 1D shadow map
-		context->setRenderTarget(m_shadowMapRenderTarget);
+		context->pushRenderTarget(m_shadowMapRenderTarget);
 		context->setShader(m_shadowMapShader);
 		m_shadowMapShader->setUniform2f("u_Resolution", m_lightMapSize, m_lightMapSize);
 		m_shadowMapShader->setUniform1f("u_Scale", 1.0f);
 		m_shadowMapShader->setSampler2D("u_Texture", m_occludersRenderTarget->getTexture());
 		context->drawRectangle(0.0f, 0.0f, m_lightMapSize, m_shadowMapRenderTarget->getHeight());
+		context->popRenderTarget();
 
 		// Render the shadows
-		context->setRenderTarget(dest);
+		context->pushRenderTarget(dest);
 		context->enable(GraphicsContext::BLEND);
 		context->setBlendState(BlendState::PRESET_ADDITIVE);
 		context->setShader(m_shadowRenderShader);
@@ -258,12 +261,7 @@ public:
 		m_shadowRenderShader->setUniform1f("u_SoftShadows", 1.0f);
 		m_shadowRenderShader->setSampler2D("u_Texture", m_shadowMapRenderTarget->getTexture());
 		context->drawRectangle(light->position - Vector2F(light->radius * 0.5f), Vector2F(light->radius));
-
-		// Reset
-		context->setBlendState(BlendState::PRESET_ALPHA_BLEND);
-		context->setShader(0);
-		context->setRenderTarget(0);
-		context->setTexture(0);
+		context->popRenderTarget();
 	}
 
 	void drawInfo(GraphicsContext *context)

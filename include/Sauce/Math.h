@@ -67,6 +67,7 @@ namespace math
 		const double len = v.length();
 		if(len > 0.0) return v / len;
 #endif
+		return Vector3<T>(float(0));
 	}
 	template<typename T> Vector3<T> cross(const Vector3<T>& v1, const Vector3<T>& v2)
 	{

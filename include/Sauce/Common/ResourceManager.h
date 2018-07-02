@@ -53,6 +53,8 @@ public:
 		return m_type;
 	}
 
+	virtual void *create() const = 0;
+
 private:
 	const ResourceType m_type;
 	const string m_name;
@@ -110,7 +112,7 @@ private:
 			if((itr = m_resourceDesc.find(name)) != m_resourceDesc.end())
 			{
 				// Load resource
-				shared_ptr<T> resource(new T(itr->second));
+				shared_ptr<T> resource(static_cast<T*>(itr->second->create()));
 				if(resource)
 				{
 					m_resources[name] = new ResourceGuard<T>(resource);

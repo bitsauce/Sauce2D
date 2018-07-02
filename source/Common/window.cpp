@@ -18,26 +18,15 @@ BEGIN_SAUCE_NAMESPACE
 // Window
 //--------------------------------------------------------------------
 
-Window::Window(const string &title, const int x, const int y, const int w, const int h, const Uint32 flags)
+Window::Window(GraphicsContext *graphicsContext, const string &title, const int x, const int y, const int w, const int h, const Uint32 flags) :
+	m_graphicsContext(graphicsContext)
 {
-	// Request opengl 3.1 context
-	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
-	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 1);
-
-	// Turn on double buffering with a 24bit Z buffer.
-	// You may need to change this to 16 or 32 for your system
-	SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
-	SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 24);
-
 	// Create our window
-	m_window = SDL_CreateWindow(title.c_str(), x, y, w, h, SDL_WINDOW_OPENGL | flags);
+	m_window = SDL_CreateWindow(title.c_str(), x, y, w, h, flags);
 	if(!m_window)
 	{
-		THROW("Window could not initialize");
+		THROW("Could not create window");
 	}
-
-	// Create graphics manager of this window
-	m_graphicsContext = new GraphicsContext(this);
 }
 
 Window::~Window()
@@ -230,7 +219,7 @@ bool Window::handleEvent(SDL_Event &event, Game *game)
 		{
 			// Resize viewport
 			int width = event.window.data1, height = event.window.data2;
-			m_graphicsContext->resizeViewport(width, height);
+			m_graphicsContext->setSize(width, height);
 
 			// Call event
 			{

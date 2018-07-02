@@ -229,8 +229,8 @@ void Sprite::getVertices(Vertex *vertices, uint *indices, const uint indexOffset
 
 	vertices[0].set2f(VERTEX_TEX_COORD, m_textureRegion.uv0.x, m_textureRegion.uv0.y);
 	vertices[1].set2f(VERTEX_TEX_COORD, m_textureRegion.uv1.x, m_textureRegion.uv0.y);
-	vertices[2].set2f(VERTEX_TEX_COORD, m_textureRegion.uv1.x, m_textureRegion.uv1.y);
-	vertices[3].set2f(VERTEX_TEX_COORD, m_textureRegion.uv0.x, m_textureRegion.uv1.y);
+	vertices[2].set2f(VERTEX_TEX_COORD, m_textureRegion.uv0.x, m_textureRegion.uv1.y);
+	vertices[3].set2f(VERTEX_TEX_COORD, m_textureRegion.uv1.x, m_textureRegion.uv1.y);
 	
 	indices[0] = indexOffset + QUAD_INDICES[0];
 	indices[1] = indexOffset + QUAD_INDICES[1];

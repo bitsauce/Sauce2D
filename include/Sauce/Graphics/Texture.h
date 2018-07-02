@@ -12,11 +12,8 @@ class SAUCE_API Texture2D
 	friend class GraphicsContext;
 	friend class Shader;
 public:
-	Texture2D(const PixelFormat &format = PixelFormat());
-	Texture2D(const uint width, const uint height, const void *data = 0, const PixelFormat &format = PixelFormat());
-	Texture2D(const Pixmap &pixmap);
-	Texture2D(const Texture2D &other);
-	~Texture2D();
+	Texture2D();
+	virtual ~Texture2D();
 
 	// Mipmapping
 	void enableMipmaps();
@@ -50,24 +47,19 @@ public:
 	uint getHeight() const;
 	Vector2I getSize() const { return Vector2I(getWidth(), getHeight()); }
 
-	// Pixmap (texture data)
-	Pixmap getPixmap() const;
-	void updatePixmap(const Pixmap &pixmap);
-	void updatePixmap(const uint x, const uint y, const Pixmap &pixmap);
-	void clear();
+	// Texture data functions
+	virtual Pixmap getPixmap() const = 0;
+	virtual void updatePixmap(const Pixmap &pixmap) = 0;
+	virtual void updatePixmap(const uint x, const uint y, const Pixmap &pixmap) = 0;
+	virtual void clear() = 0;
 
 	void exportToFile(string path);
 
-	Texture2D(ResourceDesc *desc);
+protected:
+	virtual void updateFiltering() = 0;
 
-private:
-	void init(const Pixmap &pixmap);
-	void updateFiltering();
-
-	GLuint m_id;
-
-	GLint m_filter;
-	GLint m_wrapping;
+	TextureFilter m_filter;
+	TextureWrapping m_wrapping;
 
 	bool m_mipmaps;
 	bool m_mipmapsGenerated;
@@ -89,40 +81,7 @@ public:
 	{
 	}
 
-	string getPath() const
-	{
-		return m_path;
-	}
-
-	bool getPremultiplyAlpha() const
-	{
-		return m_premultiplyAlpha;
-	}
-
-private:
-	const bool m_premultiplyAlpha;
-	const string m_path;
-};
-
-class FontResourceDesc : public ResourceDesc
-{
-public:
-	FontResourceDesc(const string &name, const string &path, const bool premultiplyAlpha) :
-		ResourceDesc(RESOURCE_TYPE_FONT, name),
-		m_premultiplyAlpha(premultiplyAlpha),
-		m_path(path)
-	{
-	}
-
-	string getPath() const
-	{
-		return m_path;
-	}
-
-	bool getPremultiplyAlpha() const
-	{
-		return m_premultiplyAlpha;
-	}
+	void *create() const;
 
 private:
 	const bool m_premultiplyAlpha;

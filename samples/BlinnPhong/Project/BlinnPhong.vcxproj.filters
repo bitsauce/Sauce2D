@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="..\Source\Main.cpp" />
+    <ClCompile Include="..\Source\PointLight.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Data">
+      <UniqueIdentifier>{5829c773-a5ef-4d54-93ba-c7651e11d507}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\Data\Arial.fnt">
+      <Filter>Data</Filter>
+    </None>
+    <None Include="..\Data\Default.frag">
+      <Filter>Data</Filter>
+    </None>
+    <None Include="..\Data\Default.vert">
+      <Filter>Data</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="..\Data\Arial_0.png">
+      <Filter>Data</Filter>
+    </Image>
+    <Image Include="..\Data\Texture.png">
+      <Filter>Data</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <Xml Include="..\Data\Resources.xml">
+      <Filter>Data</Filter>
+    </Xml>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\Source\PointLight.h" />
+  </ItemGroup>
+</Project>

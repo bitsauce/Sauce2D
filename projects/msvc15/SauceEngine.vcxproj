@@ -27,6 +27,10 @@
     <ClCompile Include="..\..\source\Graphics\Font.cpp" />
     <ClCompile Include="..\..\source\Graphics\Graphics.cpp" />
     <ClCompile Include="..\..\source\Graphics\GraphicsContext.cpp" />
+    <ClCompile Include="..\..\source\Graphics\OpenGL\OpenGLContext.cpp" />
+    <ClCompile Include="..\..\source\Graphics\OpenGL\OpenGLRenderTarget.cpp" />
+    <ClCompile Include="..\..\source\Graphics\OpenGL\OpenGLShader.cpp" />
+    <ClCompile Include="..\..\source\Graphics\OpenGL\OpenGLTexture.cpp" />
     <ClCompile Include="..\..\source\Graphics\Pixmap.cpp" />
     <ClCompile Include="..\..\source\Graphics\RenderTarget.cpp" />
     <ClCompile Include="..\..\source\Graphics\Shader.cpp" />
@@ -65,6 +69,10 @@
     <ClInclude Include="..\..\include\Sauce\Graphics\Font.h" />
     <ClInclude Include="..\..\include\Sauce\Graphics\Font_Old.h" />
     <ClInclude Include="..\..\include\Sauce\Graphics\GraphicsContext.h" />
+    <ClInclude Include="..\..\include\Sauce\Graphics\OpenGL\OpenGLContext.h" />
+    <ClInclude Include="..\..\include\Sauce\Graphics\OpenGL\OpenGLRenderTarget.h" />
+    <ClInclude Include="..\..\include\Sauce\Graphics\OpenGL\OpenGLShader.h" />
+    <ClInclude Include="..\..\include\Sauce\Graphics\OpenGL\OpenGLTexture.h" />
     <ClInclude Include="..\..\include\Sauce\Graphics\Pixmap.h" />
     <ClInclude Include="..\..\include\Sauce\Graphics\RenderTarget.h" />
     <ClInclude Include="..\..\include\Sauce\Graphics\Shader.h" />

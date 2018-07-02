@@ -145,9 +145,12 @@ public:
 
 	void onDraw(DrawEvent *e)
 	{
+		//e->getGraphicsContext()->disable(GraphicsContext::DEPTH_TEST);
+		
 		// Setup sprite batch
 		e->setUserData(spriteBatch);
 		spriteBatch->begin(e->getGraphicsContext());
+
 
 		// Draw UI objects
 		SceneObject::onDraw(e);

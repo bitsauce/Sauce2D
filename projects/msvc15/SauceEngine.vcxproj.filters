@@ -37,6 +37,12 @@
     <Filter Include="Include\Sauce\Input">
       <UniqueIdentifier>{889fa578-c5c1-448a-81f3-c8f13efdd921}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source\Graphics\OpenGL">
+      <UniqueIdentifier>{8f405f79-6087-4116-b7bd-8226390624d6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Include\Sauce\Graphics\OpenGL">
+      <UniqueIdentifier>{af7f8e82-3777-400c-9017-a54dd4e8ebb3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\source\Common\Window.cpp">
@@ -143,6 +149,18 @@
     </ClCompile>
     <ClCompile Include="..\..\source\Common\Callstack.cpp">
       <Filter>Source\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\Graphics\OpenGL\OpenGLContext.cpp">
+      <Filter>Source\Graphics\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\Graphics\OpenGL\OpenGLShader.cpp">
+      <Filter>Source\Graphics\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\Graphics\OpenGL\OpenGLTexture.cpp">
+      <Filter>Source\Graphics\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\source\Graphics\OpenGL\OpenGLRenderTarget.cpp">
+      <Filter>Source\Graphics\OpenGL</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -268,6 +286,18 @@
     </ClInclude>
     <ClInclude Include="..\..\include\Sauce\Common\Callstack.h">
       <Filter>Include\Sauce\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\Sauce\Graphics\OpenGL\OpenGLContext.h">
+      <Filter>Include\Sauce\Graphics\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\Sauce\Graphics\OpenGL\OpenGLShader.h">
+      <Filter>Include\Sauce\Graphics\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\Sauce\Graphics\OpenGL\OpenGLTexture.h">
+      <Filter>Include\Sauce\Graphics\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\Sauce\Graphics\OpenGL\OpenGLRenderTarget.h">
+      <Filter>Include\Sauce\Graphics\OpenGL</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

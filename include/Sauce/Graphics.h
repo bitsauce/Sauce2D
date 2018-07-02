@@ -3,6 +3,7 @@
 
 #include <Sauce/Math.h>
 #include <Sauce/Graphics/GraphicsContext.h>
+#include <Sauce/Graphics/OpenGL/OpenGLContext.h>
 #include <Sauce/Graphics/BlendState.h>
 #include <Sauce/Graphics/Animation.h>
 #include <Sauce/Graphics/Spritebatch.h>

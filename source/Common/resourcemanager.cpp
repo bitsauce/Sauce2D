@@ -1,6 +1,7 @@
 
 #include <Sauce/Common.h>
 #include <Sauce/Graphics/Texture.h>
+#include <Sauce/Graphics/Font.h>
 #include <Sauce/Graphics/Shader.h>
 
 BEGIN_SAUCE_NAMESPACE
@@ -68,9 +69,10 @@ ResourceManager::ResourceManager(const string &resourceFile)
 				{
 					tinyxml2::XMLElement *vertexFilePath = resourceNode->FirstChildElement("vertexFilePath");
 					tinyxml2::XMLElement *fragmentFilePath = resourceNode->FirstChildElement("fragmentFilePath");
+					tinyxml2::XMLElement *geometryFilePath = resourceNode->FirstChildElement("geometryFilePath");
 					if(vertexFilePath && fragmentFilePath)
 					{
-						m_resourceDesc[name->GetText()] = new ShaderResourceDesc(name->GetText(), vertexFilePath->GetText(), fragmentFilePath->GetText());
+						m_resourceDesc[name->GetText()] = new ShaderResourceDesc(name->GetText(), vertexFilePath->GetText(), fragmentFilePath->GetText(), geometryFilePath ? geometryFilePath->GetText() : "");
 					}
 				}
 			}

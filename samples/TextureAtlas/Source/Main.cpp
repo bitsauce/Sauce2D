@@ -14,7 +14,7 @@ public:
 	void onStart(GameEvent*)
 	{
 		// Setup texture atlas
-		textureAtlas = new TextureAtlas();
+		textureAtlas = new TextureAtlas(getWindow()->getGraphicsContext());
 
 		// Here we load Image0, Image1, ..., until Image[i] is not a file.
 		int i = 0;

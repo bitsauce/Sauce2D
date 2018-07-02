@@ -3,14 +3,14 @@
 
 BEGIN_SAUCE_NAMESPACE
 
-TextureAtlas::TextureAtlas(const int width, const int height, const int border) :
+TextureAtlas::TextureAtlas(GraphicsContext *graphicsContext, const int width, const int height, const int border) :
 	m_border(border),
 	m_texture(0),
 	m_width(width),
 	m_height(height)
 {
 	// Create a texture for the atlas
-	m_texture = shared_ptr<Texture2D>(new Texture2D(width, height));
+	m_texture = shared_ptr<Texture2D>(graphicsContext->createTexture(width, height));
 	m_rectanglePacker.setMaxWidth(width);
 }
 

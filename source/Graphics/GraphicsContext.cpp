@@ -1,14 +1,5 @@
 #include <Sauce/Graphics.h>
 
-#define GL_CHECK_ERROR \
-	{ \
-		GLenum error; \
-		if((error = glGetError()) != GL_NO_ERROR) \
-		{ \
-			THROW("glGetError() returned 0x%X", error); \
-		} \
-	}
-
 BEGIN_SAUCE_NAMESPACE
 
 // Default shader. Used when no shader is set.
@@ -16,11 +7,6 @@ shared_ptr<Shader> GraphicsContext::s_defaultShader = 0;
 
 // Default texture. Empty texture used when no texture is set.
 shared_ptr<Texture2D> GraphicsContext::s_defaultTexture = 0;
-
-// Vertex array object
-GLuint GraphicsContext::s_vao = 0;
-GLuint GraphicsContext::s_vbo = 0;
-GLuint GraphicsContext::s_ibo = 0;
 
 Vertex *GraphicsContext::getVertices(const uint vertexCount)
 {
@@ -31,95 +17,62 @@ Vertex *GraphicsContext::getVertices(const uint vertexCount)
 	return &m_vertices[0];
 }
 
-GraphicsContext::GraphicsContext(Window *window) :
-	m_window(window)
+GraphicsContext::GraphicsContext()
 {
 	State state;
 	m_stateStack.push(state);
 	m_currentState = &m_stateStack.top();
-	m_context = SDL_GL_CreateContext(window->getSDLHandle());
 }
 
 GraphicsContext::~GraphicsContext()
 {
-	glDeleteBuffers(1, &s_vbo);
-	glDeleteVertexArrays(1, &s_vao);
-	SDL_GL_DeleteContext(m_context);
 }
 
-void GraphicsContext::enable(const Capability cap)
+void GraphicsContext::pushRenderTarget(RenderTarget2D *renderTarget)
 {
-	glEnable(cap);
-}
-
-void GraphicsContext::disable(const Capability cap)
-{
-	glDisable(cap);
-}
-
-bool GraphicsContext::isEnabled(const Capability cap)
-{
-	return (bool)glIsEnabled(cap);
-}
-
-void GraphicsContext::setPointSize(const float pointSize)
-{
-	glPointSize(pointSize);
-}
-
-void GraphicsContext::setLineWidth(const float lineWidth)
-{
-	glLineWidth(lineWidth);
-}
-
-void GraphicsContext::clear(const uint mask, const Color &fillColor)
-{
-	if(mask & COLOR_BUFFER) glClearColor(fillColor.getR() / 255.0f, fillColor.getG() / 255.0f, fillColor.getB() / 255.0f, fillColor.getA() / 255.0f);
-	if(mask & DEPTH_BUFFER) glClearDepth(fillColor.getR() / 255.0f);
-	if(mask & STENCIL_BUFFER) glClearStencil(fillColor.getR() / 255.0f);
-	glClear(mask);
-	if(mask & COLOR_BUFFER) glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
-	if(mask & DEPTH_BUFFER) glClearDepth(0.0f);
-	if(mask & STENCIL_BUFFER) glClearStencil(0.0f);
-}
-
-void GraphicsContext::enableScissor(const int x, const int y, const int w, const int h)
-{
-	glEnable(GL_SCISSOR_TEST);
-	glScissor(x, y, w, h);
-}
-
-void GraphicsContext::disableScissor()
-{
-	glDisable(GL_SCISSOR_TEST);
-}
-
-void GraphicsContext::setRenderTarget(RenderTarget2D *renderTarget)
-{
-	// Setup render target
-	if(m_boundRenderTarget != renderTarget)
+	// Unbind previous render target
+	if(m_currentState->renderTarget)
 	{
-		if(renderTarget)
-		{
-			// Bind new render target
-			m_boundRenderTarget = renderTarget;
-			m_boundRenderTarget->bind();
-
-			// Resize viewport
-			resizeViewport(m_boundRenderTarget->m_width, m_boundRenderTarget->m_height, true);
-		}
-		else if(m_boundRenderTarget)
-		{
-			// Unbind render target
-			m_boundRenderTarget->unbind();
-			m_boundRenderTarget = 0;
-
-			// TODO: Are these resizeViewport calls necesary? 
-			// Resize viewport
-			resizeViewport(m_window->getWidth(), m_window->getHeight());
-		}
+		m_currentState->renderTarget->unbind();
 	}
+
+	// Push state
+	pushState();
+
+	// Bind render target
 	m_currentState->renderTarget = renderTarget;
+	m_currentState->renderTarget->bind();
+
+	// Resize viewport
+	setProjectionMatrix(createOrtographicMatrix(0, renderTarget->m_width, renderTarget->m_height, 0)); // TODO: Maybe this shouldn't be here?
+	setSize(renderTarget->m_width, renderTarget->m_height);
+}
+
+void GraphicsContext::popRenderTarget()
+{
+	// Unbind previous render target
+	if(m_currentState->renderTarget)
+	{
+		m_currentState->renderTarget->unbind();
+	}
+
+	// Pop state
+	popState();
+
+	// Resize viewport
+	if(m_currentState->renderTarget)
+	{
+		// Bind render target
+		m_currentState->renderTarget->bind();
+
+		// Resize viewport
+		setProjectionMatrix(createOrtographicMatrix(0, m_currentState->renderTarget->m_width, m_currentState->renderTarget->m_height, 0)); // TODO: Maybe this shouldn't be here?
+		setSize(m_currentState->renderTarget->m_width, m_currentState->renderTarget->m_height);
+	}
+	else
+	{
+		setSize(m_window->getWidth(), m_window->getHeight());
+	}
 }
 
 void GraphicsContext::pushState()
@@ -133,7 +86,6 @@ void GraphicsContext::popState()
 	m_stateStack.pop();
 	if(m_stateStack.empty()) THROW("GraphicsContext: State stack should not be empty.");
 	m_currentState = &m_stateStack.top();
-	setRenderTarget(m_currentState->renderTarget);
 }
 
 void GraphicsContext::pushMatrix(const Matrix4 &mat)
@@ -192,430 +144,20 @@ BlendState GraphicsContext::getBlendState()
 	return m_currentState->blendState;
 }
 
-void GraphicsContext::saveScreenshot(string path)
-{
-	// Get frame buffer data
-	uchar *data = new uchar[m_currentState->width * m_currentState->height * 4];
-	glReadBuffer(GL_FRONT);
-	glReadPixels(0, 0, m_currentState->width, m_currentState->height, GL_RGBA, GL_UNSIGNED_BYTE, data);
-	glReadBuffer(GL_BACK);
-
-	// NOTE: This function is not tested!
-	Pixmap pixmap(m_currentState->width, m_currentState->height, data);
-	pixmap.flipY();
-	pixmap.exportToFile(path);
-
-	delete[] data;
-}
-
 // Orthographic projection
-void GraphicsContext::resizeViewport(const uint w, const uint h, const bool flipY)
+void GraphicsContext::setSize(const uint w, const uint h)
 {
 	// Set size
 	m_currentState->width = w;
 	m_currentState->height = h;
 
 	// Set viewport
-	glViewport(0, 0, m_currentState->width, m_currentState->height);
-}
-
-Matrix4 GraphicsContext::createOrtographicMatrix(const float l, const float r, const float t, const float b, const float n, const float f) const
-{
-	/*
-	// TODO: Add flipY
-	float l = 0.0f,
-		r = (float) m_currentState->width,
-		b = flipY ? 0.0f : (float) m_currentState->height,
-		t = flipY ? (float) m_currentState->height : 0.0f,
-		n = -1.0f,
-		f = 1.0f;*/
-
-	// Returns an ortographic projection matrix (typically for 2D rendering)
-	Matrix4 mat(
-		2.0f / (r - l), 0.0f,            0.0f,           -((r + l) / (r - l)),
-		0.0f,           2.0f / (t - b),  0.0f,           -((t + b) / (t - b)),
-		0.0f,           0.0f,           -2.0f / (f - n), -((f + n) / (f - n)),
-		0.0f,           0.0f,            0.0f,            1.0f);
-	return mat;
-}
-
-Matrix4 GraphicsContext::createPerspectiveMatrix(const float fov, const float aspectRatio, const float zNear, const float zFar) const
-{
-	// Returns a perspective matrix
-	const float s = tanf(math::degToRad(fov / 2.0f));
-	Matrix4 mat(
-		1.0f / (s * aspectRatio),    0.0f,      0.0f,                             0.0f,
-		0.0f,                        1.0f / s,  0.0f,                             0.0f,
-		0.0f,                        0.0f,     -(zFar + zNear) / (zFar - zNear), -(2 * zFar * zNear) / (zFar - zNear) ,
-		0.0f,                        0.0f,     -1.0f,                             0.0f);
-	return mat;
-}
-
-Matrix4 GraphicsContext::createLookAtMatrix(const Vector3F &position, const Vector3F &fwd) const
-{
-	const Vector3F worldUp(0.0f, 1.0f, 0.0f);
-	const Vector3F right = math::normalize(math::cross(worldUp, fwd));
-	const Vector3F up = math::cross(fwd, right);
-	Matrix4 cameraMatrix(
-		right.x, right.y, right.z, 0.0f,
-		up.x, up.y, up.z, 0.0f,
-		fwd.x, fwd.y, fwd.z, 0.0f,
-		0.0f, 0.0f, 0.0f, 1.0f);
-	Matrix4 cameraTranslate(
-		1, 0, 0, -position.x,
-		0, 1, 0, -position.y,
-		0, 0, 1, -position.z,
-		0.0f, 0.0f, 0.0f, 1.0f);
-	return cameraMatrix * cameraTranslate;
+	setViewportSize(w, h);
 }
 
 void GraphicsContext::setProjectionMatrix(const Matrix4 matrix)
 {
 	m_currentState->projectionMatrix = matrix;
-}
-
-void GraphicsContext::setupContext()
-{
-	// Set blend func
-	glBlendFuncSeparate(m_currentState->blendState.m_src, m_currentState->blendState.m_dst, m_currentState->blendState.m_alphaSrc, m_currentState->blendState.m_alphaDst);
-
-	shared_ptr<Shader> shader = m_currentState->shader;
-	if(!shader)
-	{
-		shader = s_defaultShader;
-		shader->setSampler2D("u_Texture", m_currentState->texture == 0 ? s_defaultTexture : m_currentState->texture);
-	}
-
-	// Enable shader
-	glUseProgram(shader->m_id);
-
-	// Set projection matrix
-	Matrix4 modelViewProjection = m_currentState->projectionMatrix * m_currentState->transformationMatrixStack.top();
-	shader->setUniformMatrix4f("u_ModelViewProj", modelViewProjection.get());
-
-	GLuint target = 0;
-
-	// Set all uniforms
-	for(map<string, Shader::Uniform*>::iterator itr = shader->m_uniforms.begin(); itr != shader->m_uniforms.end(); ++itr)
-	{
-		const Shader::Uniform *uniform = itr->second;
-		switch(uniform->type)
-		{
-			case GL_INT: case GL_BOOL: glUniform1iv(uniform->loc, uniform->count, (const GLint*) uniform->data); break;
-			case GL_INT_VEC2: case GL_BOOL_VEC2: glUniform2i(uniform->loc, ((GLint*) uniform->data)[0], ((GLint*) uniform->data)[1]); break;
-			case GL_INT_VEC3: case GL_BOOL_VEC3: glUniform3i(uniform->loc, ((GLint*) uniform->data)[0], ((GLint*) uniform->data)[1], ((GLint*) uniform->data)[2]); break;
-			case GL_INT_VEC4: case GL_BOOL_VEC4: glUniform4i(uniform->loc, ((GLint*) uniform->data)[0], ((GLint*) uniform->data)[1], ((GLint*) uniform->data)[2], ((GLint*) uniform->data)[3]); break;
-
-			case GL_UNSIGNED_INT: glUniform1ui(uniform->loc, ((GLuint*) uniform->data)[0]); break;
-			case GL_UNSIGNED_INT_VEC2: glUniform2ui(uniform->loc, ((GLuint*) uniform->data)[0], ((GLuint*) uniform->data)[1]); break;
-			case GL_UNSIGNED_INT_VEC3: glUniform3ui(uniform->loc, ((GLuint*) uniform->data)[0], ((GLuint*) uniform->data)[1], ((GLuint*) uniform->data)[2]); break;
-			case GL_UNSIGNED_INT_VEC4: glUniform4ui(uniform->loc, ((GLuint*) uniform->data)[0], ((GLuint*) uniform->data)[1], ((GLuint*) uniform->data)[2], ((GLuint*) uniform->data)[3]); break;
-
-			case GL_FLOAT: glUniform1f(uniform->loc, ((GLfloat*) uniform->data)[0]); break;
-			case GL_FLOAT_VEC2: glUniform2fv(uniform->loc, uniform->count, (const GLfloat*) uniform->data); break;
-			case GL_FLOAT_VEC3: glUniform3f(uniform->loc, ((GLfloat*) uniform->data)[0], ((GLfloat*) uniform->data)[1], ((GLfloat*) uniform->data)[2]); break;
-			case GL_FLOAT_VEC4: glUniform4fv(uniform->loc, uniform->count, (const GLfloat*) uniform->data); break;
-
-			case GL_FLOAT_MAT4: glUniformMatrix4fv(uniform->loc, 1, GL_FALSE, (GLfloat*) uniform->data); break;
-
-			case GL_UNSIGNED_INT_SAMPLER_2D:
-			case GL_INT_SAMPLER_2D:
-			case GL_SAMPLER_2D:
-			{
-				glActiveTexture(GL_TEXTURE0 + target);
-				glBindTexture(GL_TEXTURE_2D, ((GLuint*) uniform->data)[0]);
-				glUniform1i(uniform->loc, target++);
-			}
-			break;
-		}
-	}
-}
-
-void GraphicsContext::drawIndexedPrimitives(const PrimitiveType type, const Vertex *vertices, const uint vertexCount, const uint *indices, const uint indexCount)
-{
-	// If there are no vertices to draw, do nothing
-	if(vertexCount == 0 || indexCount == 0) return;
-
-	setupContext();
-
-	// Get vertices and vertex data
-	VertexFormat fmt = vertices->getFormat();
-	int vertexSizeInBytes = fmt.getVertexSizeInBytes();
-	char *vertexData = new char[vertexCount * vertexSizeInBytes];
-	for(uint i = 0; i < vertexCount; ++i)
-	{
-		vertices[i].getData(vertexData + i * vertexSizeInBytes);
-	}
-
-	// Bind buffers
-	glBindBuffer(GL_ARRAY_BUFFER, s_vbo);
-	glBufferData(GL_ARRAY_BUFFER, vertexCount * vertexSizeInBytes, vertexData, GL_DYNAMIC_DRAW);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, s_ibo);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, indexCount * sizeof(uint), indices, GL_DYNAMIC_DRAW);
-
-	// Set array pointers
-	for(int i = 0; i < VERTEX_ATTRIB_MAX; i++)
-	{
-		VertexAttribute attrib = VertexAttribute(i);
-		switch(attrib)
-		{
-			case VERTEX_POSITION:
-				if(fmt.isAttributeEnabled(attrib))
-				{
-					glEnableVertexAttribArray(0);
-					glVertexAttribPointer(0, fmt.getElementCount(attrib), fmt.getDataType(attrib), GL_FALSE, vertexSizeInBytes, (void*) fmt.getAttributeOffset(attrib));
-				}
-				else
-				{
-					glDisableVertexAttribArray(0);
-				}
-				break;
-
-			case VERTEX_COLOR:
-				if(fmt.isAttributeEnabled(attrib))
-				{
-					glEnableVertexAttribArray(1);
-					glVertexAttribPointer(1, fmt.getElementCount(attrib), fmt.getDataType(attrib), GL_TRUE, vertexSizeInBytes, (void*) fmt.getAttributeOffset(attrib));
-				}
-				else
-				{
-					glDisableVertexAttribArray(1);
-				}
-				break;
-
-			case VERTEX_TEX_COORD:
-				if(fmt.isAttributeEnabled(attrib))
-				{
-					glEnableVertexAttribArray(2);
-					glVertexAttribPointer(2, fmt.getElementCount(attrib), fmt.getDataType(attrib), GL_FALSE, vertexSizeInBytes, (void*) fmt.getAttributeOffset(attrib));
-				}
-				else
-				{
-					glDisableVertexAttribArray(2);
-				}
-				break;
-		}
-	}
-
-	// Draw primitives
-	glDrawElements(type, indexCount, GL_UNSIGNED_INT, 0);
-
-	// Reset vbo buffers
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-
-	GL_CHECK_ERROR;
-
-	// Release vertex data
-	delete[] vertexData;
-}
-
-void GraphicsContext::drawIndexedPrimitives(const PrimitiveType type, const VertexBuffer *vbo, const IndexBuffer *ibo)
-{
-	// If one of the buffers are empty, do nothing
-	if(vbo->getSize() == 0 || ibo->getSize() == 0) return; 
-
-	setupContext();
-
-	// Bind vertices and indices array
-	glBindBuffer(GL_ARRAY_BUFFER, vbo->m_id);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo->m_id);
-
-	// Set array pointers
-	VertexFormat fmt = vbo->getVertexFormat();
-	int stride = fmt.getVertexSizeInBytes();
-	for(int i = 0; i < VERTEX_ATTRIB_MAX; i++)
-	{
-		VertexAttribute attrib = VertexAttribute(i);
-		switch(attrib)
-		{
-			case VERTEX_POSITION:
-				if(fmt.isAttributeEnabled(attrib))
-				{
-					glEnableVertexAttribArray(0);
-					glVertexAttribPointer(0, fmt.getElementCount(attrib), fmt.getDataType(attrib), GL_FALSE, stride, (void*) fmt.getAttributeOffset(attrib));
-				}
-				else
-				{
-					glDisableVertexAttribArray(0);
-				}
-				break;
-
-			case VERTEX_COLOR:
-				if(fmt.isAttributeEnabled(attrib))
-				{
-					glEnableVertexAttribArray(1);
-					glVertexAttribPointer(1, fmt.getElementCount(attrib), fmt.getDataType(attrib), GL_TRUE, stride, (void*) fmt.getAttributeOffset(attrib));
-				}
-				else
-				{
-					glDisableVertexAttribArray(1);
-				}
-				break;
-
-			case VERTEX_TEX_COORD:
-				if(fmt.isAttributeEnabled(attrib))
-				{
-					glEnableVertexAttribArray(2);
-					glVertexAttribPointer(2, fmt.getElementCount(attrib), fmt.getDataType(attrib), GL_FALSE, stride, (void*) fmt.getAttributeOffset(attrib));
-				}
-				else
-				{
-					glDisableVertexAttribArray(2);
-				}
-				break;
-		}
-	}
-
-	// Draw vbo
-	glDrawElements(type, ibo->getSize(), GL_UNSIGNED_INT, 0);
-
-	// Reset vbo buffers
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-
-	GL_CHECK_ERROR;
-}
-
-void GraphicsContext::drawPrimitives(const PrimitiveType type, const Vertex *vertices, const uint vertexCount)
-{
-	// If there are no vertices to draw, do nothing
-	if(vertexCount == 0) return;
-
-	setupContext();
-
-	// Get vertices and vertex data
-	VertexFormat fmt = vertices->getFormat();
-	int vertexSizeInBytes = fmt.getVertexSizeInBytes();
-	char *vertexData = new char[vertexCount * vertexSizeInBytes];
-	for(uint i = 0; i < vertexCount; ++i)
-	{
-		vertices[i].getData(vertexData + i * vertexSizeInBytes);
-	}
-
-	// Bind buffer
-	glBindBuffer(GL_ARRAY_BUFFER, s_vbo);
-	glBufferData(GL_ARRAY_BUFFER, vertexCount * vertexSizeInBytes, vertexData, GL_DYNAMIC_DRAW);
-
-	// Set array pointers
-	for(int i = 0; i < VERTEX_ATTRIB_MAX; i++)
-	{
-		VertexAttribute attrib = VertexAttribute(i);
-		switch(attrib)
-		{
-			case VERTEX_POSITION:
-				if(fmt.isAttributeEnabled(attrib))
-				{
-					glEnableVertexAttribArray(0);
-					glVertexAttribPointer(0, fmt.getElementCount(attrib), fmt.getDataType(attrib), GL_FALSE, vertexSizeInBytes, (void*) fmt.getAttributeOffset(attrib));
-				}
-				else
-				{
-					glDisableVertexAttribArray(0);
-				}
-				break;
-
-			case VERTEX_COLOR:
-				if(fmt.isAttributeEnabled(attrib))
-				{
-					glEnableVertexAttribArray(1);
-					glVertexAttribPointer(1, fmt.getElementCount(attrib), fmt.getDataType(attrib), GL_TRUE, vertexSizeInBytes, (void*) fmt.getAttributeOffset(attrib));
-				}
-				else
-				{
-					glDisableVertexAttribArray(1);
-				}
-				break;
-
-			case VERTEX_TEX_COORD:
-				if(fmt.isAttributeEnabled(attrib))
-				{
-					glEnableVertexAttribArray(2);
-					glVertexAttribPointer(2, fmt.getElementCount(attrib), fmt.getDataType(attrib), GL_FALSE, vertexSizeInBytes, (void*) fmt.getAttributeOffset(attrib));
-				}
-				else
-				{
-					glDisableVertexAttribArray(2);
-				}
-				break;
-		}
-	}
-
-	// Draw primitives
-	glDrawArrays(type, 0, vertexCount);
-
-	// Reset vbo buffers
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
-
-	GL_CHECK_ERROR;
-
-	// Release vertex data
-	delete[] vertexData;
-}
-
-void GraphicsContext::drawPrimitives(const PrimitiveType type, const VertexBuffer *vbo)
-{
-	// If the buffer is empty, do nothing
-	if(vbo->getSize() == 0) return;
-
-	setupContext();
-
-	// Bind vertices and indices array
-	glBindBuffer(GL_ARRAY_BUFFER, vbo->m_id);
-
-	// Set array pointers
-	VertexFormat fmt = vbo->getVertexFormat();
-	int stride = fmt.getVertexSizeInBytes();
-	for(int i = 0; i < VERTEX_ATTRIB_MAX; i++)
-	{
-		VertexAttribute attrib = VertexAttribute(i);
-		switch(attrib)
-		{
-			case VERTEX_POSITION:
-				if(fmt.isAttributeEnabled(attrib))
-				{
-					glEnableVertexAttribArray(0);
-					glVertexAttribPointer(0, fmt.getElementCount(attrib), fmt.getDataType(attrib), GL_FALSE, stride, (void*) fmt.getAttributeOffset(attrib));
-				}
-				else
-				{
-					glDisableVertexAttribArray(0);
-				}
-				break;
-
-			case VERTEX_COLOR:
-				if(fmt.isAttributeEnabled(attrib))
-				{
-					glEnableVertexAttribArray(1);
-					glVertexAttribPointer(1, fmt.getElementCount(attrib), fmt.getDataType(attrib), GL_TRUE, stride, (void*) fmt.getAttributeOffset(attrib));
-				}
-				else
-				{
-					glDisableVertexAttribArray(1);
-				}
-				break;
-
-			case VERTEX_TEX_COORD:
-				if(fmt.isAttributeEnabled(attrib))
-				{
-					glEnableVertexAttribArray(2);
-					glVertexAttribPointer(2, fmt.getElementCount(attrib), fmt.getDataType(attrib), GL_FALSE, stride, (void*) fmt.getAttributeOffset(attrib));
-				}
-				else
-				{
-					glDisableVertexAttribArray(2);
-				}
-				break;
-		}
-	}
-
-	// Draw vbo
-	glDrawArrays(type, 0, vbo->getSize());
-
-	// Reset vbo buffers
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
-
-	GL_CHECK_ERROR;
 }
 
 void GraphicsContext::drawRectangle(const float x, const float y, const float width, const float height, const Color &color, const TextureRegion &textureRegion)
@@ -731,7 +273,7 @@ void GraphicsContext::drawCircle(const Vector2F &pos, const float radius, const 
 	drawCircleGradient(pos.x, pos.y, radius, segments, color, color);
 }
 
-void GraphicsContext::drawArrow(const float x0, const float y0, const float x1, const float y1, const Color & color)
+void GraphicsContext::drawArrow(const float x0, const float y0, const float x1, const float y1, const Color &color)
 {
 	// Make sure we have enough vertices
 	if(m_vertices.size() < 6) m_vertices.resize(6);
@@ -757,4 +299,23 @@ void GraphicsContext::drawArrow(const float x0, const float y0, const float x1, 
 	drawPrimitives(PRIMITIVE_LINES, &m_vertices[0], 6);
 }
 
+Texture2D *GraphicsContext::createTexture(const uint width, const uint height, const void *data, const PixelFormat & format)
+{
+	Pixmap pixmap(width, height, format);
+	if(data) pixmap.fill(data);
+	return createTexture(pixmap);
+}
+
+Texture2D *GraphicsContext::createTexture(const PixelFormat &format)
+{
+	Pixmap pixmap(format);
+	return createTexture(pixmap);
+}
+
+Texture2D *GraphicsContext::createTexture(const Texture2D &texture)
+{
+	return createTexture(texture.getPixmap());
+}
+
 END_SAUCE_NAMESPACE
+

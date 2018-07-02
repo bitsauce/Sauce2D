@@ -8,7 +8,7 @@ Button::Button(UiObject *parent, const uint btnWidth, const uint btnHeight) :
 	m_font(Resource<Font>("Font")),
 	m_spriteBatch(100)
 {
-	m_renderTarget = new RenderTarget2D(btnWidth, btnHeight);
+	m_renderTarget = Game::Get()->getWindow()->getGraphicsContext()->createRenderTarget(btnWidth, btnHeight);
 }
 
 void Button::onClick(ClickEvent *e)
@@ -31,8 +31,7 @@ void Button::onDraw(DrawEvent *e)
 	GraphicsContext *graphicsContext = e->getGraphicsContext();
 
 	// Draw button to render target
-	graphicsContext->pushState();
-	graphicsContext->setRenderTarget(m_renderTarget);
+	graphicsContext->pushRenderTarget(m_renderTarget);
 	graphicsContext->setBlendState(BlendState(BlendState::BLEND_SRC_ALPHA, BlendState::BLEND_ZERO, BlendState::BLEND_ONE, BlendState::BLEND_ZERO));
 
 	if(isPressed() && isHovered())
@@ -61,7 +60,7 @@ void Button::onDraw(DrawEvent *e)
 	graphicsContext->drawRectangle(size.x - 16.0f, 16.0f,          16.0f,          size.y - 32.0f, Color::White, TextureRegion(2.0f / 3.0f, 1.0f / 3.0f, 3.0f / 3.0f, 2.0f / 3.0f));
 
 	graphicsContext->drawRectangle(Vector2F(16.0f), size - Vector2F(32.0f), Color::White, TextureRegion(1.0f / 3.0f, 1.0f / 3.0f, 2.0f / 3.0f, 2.0f / 3.0f));
-	graphicsContext->popState();
+	graphicsContext->popRenderTarget();
 
 	// Draw button from render target
 	RectI rect = getDrawRect();

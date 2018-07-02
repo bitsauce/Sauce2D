@@ -17,7 +17,7 @@ LineEdit::LineEdit(UiObject *parent, const uint width, const uint height) :
 	m_color(0, 0, 0, 255)
 {
 	setText("");
-	m_renderTarget = new RenderTarget2D(width, height);
+	m_renderTarget = Game::Get()->getWindow()->getGraphicsContext()->createRenderTarget(width, height);
 }
 
 LineEdit::~LineEdit()
@@ -82,8 +82,7 @@ void LineEdit::onDraw(DrawEvent *e)
 	if(m_dirtyGraphics)
 	{
 		// Update line edit visualization
-		graphicsContext->pushState();
-		graphicsContext->setRenderTarget(m_renderTarget);
+		graphicsContext->pushRenderTarget(m_renderTarget);
 		graphicsContext->setBlendState(BlendState(BlendState::BLEND_SRC_ALPHA, BlendState::BLEND_ZERO, BlendState::BLEND_ONE, BlendState::BLEND_ZERO));
 
 		// Set texture
@@ -107,7 +106,7 @@ void LineEdit::onDraw(DrawEvent *e)
 		graphicsContext->drawRectangle(0.0f, 16.0f, 16.0f, h - 32.0f, Color::White, TextureRegion(0.0f / 3.0f, 1.0f / 3.0f, 1.0f / 3.0f, 2.0f / 3.0f));
 		graphicsContext->drawRectangle(w - 16.0f, 16.0f, 16.0f, h - 32.0f, Color::White, TextureRegion(2.0f / 3.0f, 1.0f / 3.0f, 3.0f / 3.0f, 2.0f / 3.0f));
 		graphicsContext->drawRectangle(16.0f, 16.0f, w - 32.0f, h - 32.0f, Color::White, TextureRegion(1.0f / 3.0f, 1.0f / 3.0f, 2.0f / 3.0f, 2.0f / 3.0f));
-		graphicsContext->popState();
+		graphicsContext->popRenderTarget();
 
 		m_dirtyGraphics = false;
 	}
@@ -124,8 +123,7 @@ void LineEdit::onDraw(DrawEvent *e)
 	// Update text graphics if dirty
 	if(m_dirtyTextGraphics)
 	{
-		graphicsContext->pushState();
-		graphicsContext->setRenderTarget(m_renderTargetText);
+		graphicsContext->pushRenderTarget(m_renderTargetText);
 
 		// Clear previous text
 		// OPTIMIZATION: Only update the text which changed
@@ -162,7 +160,7 @@ void LineEdit::onDraw(DrawEvent *e)
 		graphicsContext->disableScissor();
 
 		// Reset render target
-		graphicsContext->popState();
+		graphicsContext->popRenderTarget();
 
 		// No longer dirty
 		m_dirtyTextGraphics = false;
@@ -206,7 +204,7 @@ void LineEdit::onDraw(DrawEvent *e)
 void LineEdit::onResize(ResizeEvent *e)
 {
 	delete m_renderTargetText;
-	m_renderTargetText = new RenderTarget2D(e->getWidth(), e->getHeight());
+	m_renderTargetText = Game::Get()->getWindow()->getGraphicsContext()->createRenderTarget(e->getWidth(), e->getHeight());
 	m_dirtyTextGraphics = true;
 }
 
